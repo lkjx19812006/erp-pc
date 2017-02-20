@@ -1,4 +1,5 @@
 <template>
+  <div>
     <div  id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
@@ -12,9 +13,6 @@
         </div>
         <validator name="validation">
           <div class="edit-model">
-            <!--<div class="cover_loading">-->
-              <!--<pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>-->
-            <!--</div>-->
             <div class="cover_loading">
               <pulse-loader :loading="breedParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -245,6 +243,7 @@
           </div>
         </validator>
     </div>
+</div>
 </template>
 <script>
 import searchbreedModel  from '../Intention/breedsearch'
@@ -407,13 +406,9 @@ export default {
             this.breedParam.show=true;
       },
       searchCustomer:function(){
-            this.empNameParam.show=true;
-            /*if("employeeId" in this.param){
-                this.empNameParam.employeeId = this.param.employeeId;
-            }*/
+          this.empNameParam.show=true;
       },
       showAddBreed:function(){
-
           if(this.param.items.length == 0||this.param.items[this.param.items.length-1].breedId != ''){
               this.breedInfo.status = 1;    
               this.breedInfo.breedId='';
@@ -463,7 +458,7 @@ export default {
       showModifyBreed:function(index){
           this.breedInfo.status = 2;
           this.updateParam.index = index;
-          this.breedInfo.breedId=this.param.items[index].breedId,
+          this.breedInfo.breedId=this.param.items[index].breedId;
           this.breedInfo.breedName=this.param.items[index].breedName,
           this.breedInfo.qualification=this.param.items[index].qualification,
           this.breedInfo.quality=this.param.items[index].quality,
@@ -472,7 +467,7 @@ export default {
           this.breedInfo.number=this.param.items[index].number,
           this.breedInfo.unit=this.param.items[index].unit,
           this.breedInfo.pack=this.param.items[index].pack,
-        
+          this.breedParam.id = this.breedInfo.breedId;
           this.updateParam.show = true;
       },
       modifyBreed:function(){
@@ -491,7 +486,6 @@ export default {
       deleteBreed:function(index){
          this.param.items.splice(index,1);
       },
-
       cancelAddBreed:function(){
           this.param.items.pop();
           this.breedInfo.status = 0;
@@ -593,9 +587,9 @@ export default {
       console.log(this.param.items.length);
       this.getIntlIntentionDetail(this.param);
       if(this.param.breedId){
-        this.breedParam.breedName = this.param.breedName;
-        this.breedParam.id = this.param.breedId;
-        this.getBreedDetail(this.breedParam);
+          this.breedParam.breedName = this.param.breedName;
+          this.breedParam.id = this.param.breedId;
+          this.getBreedDetail(this.breedParam);
       }
     
       if(this.param.country){

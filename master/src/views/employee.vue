@@ -288,7 +288,7 @@ export default {
     data() {
         return {
             loadParam: {
-                loading: true,
+                loading: false,
                 color: '#5dc596',
                 size: '15px',
                 /*list: true,*/   //部门以列表的形式展现(只展示叶子节点),
@@ -364,7 +364,7 @@ export default {
             }
             for(var key in this.initEmployeeList){
               if(key!=sub){
-                if(this.$store.state.table.basicBaseList.employeeList[key].checked==true){
+                if(this.$store.state.table.basicBaseList.employeeList[key].checked){
                     this.$store.state.table.basicBaseList.employeeList[key].checked=false;
                 }
               }
@@ -588,5 +588,8 @@ export default {
 #table_box table th,#table_box table td{
   width: 96px;
   min-width:94px;
+}
+.form-control{
+  box-shadow: none;
 }
 </style>

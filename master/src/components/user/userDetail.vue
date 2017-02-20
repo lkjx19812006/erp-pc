@@ -658,6 +658,7 @@ export default {
         }
         if(this.intentionAuditParam.arr.length === 0){
           this.tipParam.show = true;
+          this.tipParam.name = '请先选择意向';
         }else{
           this.intentionAuditParam.show = true;
         }

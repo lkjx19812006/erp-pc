@@ -1,5 +1,5 @@
 <template>
-
+<div>
     <!-- 我的客户 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==0">
          <my-client></my-client>
@@ -28,7 +28,7 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==6">
         <call-count></call-count>
     </div>
-
+</div>
 </template>
 <script>
 import myClient from '../components/clientRelate/clientList/myClient'

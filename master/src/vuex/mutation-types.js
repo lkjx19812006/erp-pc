@@ -154,6 +154,7 @@ export const ABSTRACT_GET_DATA = 'ABSTRACT_GET_DATA' //获取数据并赋值
 export const ABSTRACT_UPDATE_DATA = 'ABSTRACT_UPDATE_DATA' //更新数据
 export const ABSTRACT_DELETE_DATA = 'ABSTRACT_DELETE_DATA' //删除数据
 export const ABSTRACT_ADD_DATA = 'ABSTRACT_ADD_DATA' //新增数据
+export const ABSTRACT_GET_DETAIL = 'ABSTRACT_GET_DETAIL' //获取数据详情
 
 
 export const ADD_FILES_DATA = 'ADD_FILES_DATA' //新增上传文件

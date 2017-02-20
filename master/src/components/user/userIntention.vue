@@ -1,4 +1,5 @@
 <template>
+<div>
     <div  id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
@@ -332,6 +333,7 @@
           </div>
         </validator>
     </div>
+</div>
 </template>
 <script>
 import searchbreedModel  from '../Intention/breedsearch'

@@ -424,3 +424,7 @@ export const initEmailCount= (state) => { //获取邮件统计
   return JSON.parse(JSON.stringify(state.table.basicBaseList.emailCount));
 }
 
+export const initScopeDetail = (state) => { //获取权限详情
+  return JSON.parse(JSON.stringify(state.tablelist.power.detail));
+}
+
