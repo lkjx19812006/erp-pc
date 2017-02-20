@@ -4757,8 +4757,6 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
                 
                 param.itemsTotal += temp.number * temp.price * 100/100 ;
 
-                //param.cost += temp.number * temp.costPrice * 100/100 ;
-
                 param.goods.push(temp);
             })
             if(!param.incidentals){
@@ -4767,7 +4765,6 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
             if(!param.preferential){
                 param.preferential = 0;
             }
-
             param.total = (param.itemsTotal * 1000 + parseFloat(param.incidentals)*1000 - parseFloat(param.preferential)*1000)/1000
         }
 
