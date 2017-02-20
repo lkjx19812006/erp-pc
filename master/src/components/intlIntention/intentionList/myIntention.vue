@@ -271,6 +271,9 @@ export default {
                 link:'',
                 intentionId:'',
                 inquireType:'',
+                post:'',
+                postcode:'',
+                destination:'',
                 comment:''
             },
             affirmOfferParam:{
@@ -279,7 +282,6 @@ export default {
                 id:'',
                 index:'',
                 description:''
-
             },
             cancelInquireParam:{
                 show:false,
@@ -367,14 +369,13 @@ export default {
             this.getIntlIntentionList(this.loadParam);
         },
         inquire:function(id,index,time){
-            console.log('inquire');
-            console.log(time);
             this.inquireParam.link = '/intlIntention/inquire';
             this.inquireParam.index = index;
             this.inquireParam.inquireTime = time;
             this.inquireParam.intentionId = id;
             this.inquireParam.inquireType = '';
             this.inquireParam.comment = '';
+            this.inquireParam.destination = this.initMyIntlIntentionList[index].port,
             this.inquireParam.show = true;
         },
         inquireAgain:function(id,index,time){
@@ -385,6 +386,7 @@ export default {
             this.inquireParam.intentionId = id;
             this.inquireParam.inquireType = '';
             this.inquireParam.comment = '';
+            this.inquireParam.destination = this.initMyIntlIntentionList[index].port,
             this.inquireParam.show = true;
         },
         intentionSearch:function(){

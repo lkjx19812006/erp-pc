@@ -26,7 +26,6 @@ module.exports = {
                 /* target: 'http://192.168.1.248:70',*/
                 target: 'http://192.168.1.133:8080',
                /*target: 'http://192.168.1.200:8080',*/
-
                 changeOrigin: true
             }
         },

@@ -4956,11 +4956,17 @@ export const getIntlItemHistory = ({ dispatch }, param) => { //国际意向条�
 }
 
 export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向(再)询价
-    console.log(param.inquireTime);
+    console.log(param);
     const data = {
         intentionId: param.intentionId,
         inquireType: param.inquireType,
         comment: param.comment
+    }
+    if(param.port){
+        data.port = param.port;
+    }
+    if(param.postcode){
+        data.postcode = param.postcode;
     }
     Vue.http({
         method: "POST",
