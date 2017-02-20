@@ -490,7 +490,10 @@ export default {
 
         },
         addCompute:function(){ //优惠增加
-          this.altogether = this.param.itemsTotal;
+          if(!this.altogether){
+             this.altogether = this.param.itemsTotal;
+          }
+          
           var saith = 0;
           if(this.param.preferential&&this.param.preferential!=''){
              saith=parseFloat(this.param.preferential);
@@ -504,7 +507,9 @@ export default {
           }
         },
         reduce:function(){ //优惠减少
-          this.altogether = this.param.itemsTotal;
+          if(!this.altogether){
+             this.altogether = this.param.itemsTotal;
+          }
           var saith = 0;
           if(this.param.preferential&&this.param.preferential!=''&&this.param.preferential>0){
              saith=parseFloat(this.param.preferential);
@@ -516,7 +521,9 @@ export default {
           
         },
         addIncidentals:function(){ //杂费增加
-          this.altogether = this.param.itemsTotal;
+          if(!this.altogether){
+             this.altogether = this.param.itemsTotal;
+          }
           var saith = 0;
           if(this.param.incidentals&&this.param.incidentals!=''){
              saith=parseFloat(this.param.incidentals);
@@ -530,7 +537,9 @@ export default {
           }
         },
         subduction:function(){ //杂费减少
-          this.altogether = this.param.itemsTotal;
+          if(!this.altogether){
+             this.altogether = this.param.itemsTotal;
+          }
           var saith = 0;
           if(this.param.incidentals&&this.param.incidentals!=''&&this.param.incidentals>0){
              saith=parseFloat(this.param.incidentals);
@@ -576,7 +585,9 @@ export default {
             this.param.goods[index].costPrice=0;
           }
           
-          this.altogether = this.param.itemsTotal;
+          if(!this.altogether){
+             this.altogether = this.param.itemsTotal;
+          }
           this.breedInfo.status = 2;
           this.updateParam.index = index;
           this.breedInfo.breedId=this.param.goods[index].breedId;
@@ -605,7 +616,9 @@ export default {
           this.costmoney -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.costPrice);*/
         },
         showAddBreed:function(){
-          this.altogether = this.param.itemsTotal;
+          if(!this.altogether){
+             this.altogether = this.param.itemsTotal;
+          }
           if(this.param.goods.length == 0||this.param.goods[this.param.goods.length-1].breedId != ''){
               this.breedInfo.status = 1; 
               this.breedInfo.breedId='';
