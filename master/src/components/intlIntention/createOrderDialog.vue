@@ -1,4 +1,5 @@
 <template>
+  <div>>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
     <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
@@ -11,9 +12,9 @@
         <div class="edit-content">
             <h3>{{$t('static.new_order')}}</h3>
         </div>
-      <validator name="validation">
+        <validator name="validation">
           <div class="edit-model">
-               <div>
+              <div>
                  <div style="margin-bottom:10px;">
                      <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
                      <h5 style="display:inline">{{$t('static.medicinal_material_information')}}</h5>
@@ -208,20 +209,20 @@
                       
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.postcodes')}} <span class="system_danger" v-if="$validation.code.postcode">{{$t('static.postcodes')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:code="['postcode']" value="{{param.zipCode}}" />
+                              <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:code="['postcode']"  />
                           </div>
                            
                           <div class="editpage-input clearfix">
                               <label class="editlabel">{{$t('static.preferential')}}</label>
                               <div class="clearfix left">
                                 <button class="btn btn-default left" style="font-size: 16px" @click="addCompute()">+</button>
-                                <input type="number" class="edit-input" v-model="param.preferential" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" value="{{param.preferential}}"/>
+                                <input type="number" class="edit-input" v-model="param.preferential" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" />
                                 <button class="btn btn-default right" style="font-size: 16px" @click="reduce()">-</button>
                               </div>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.discount_note')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" value="{{param.preferentialDesc}}"/>
+                              <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" />
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.total')}}</label>
@@ -229,7 +230,7 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.comment')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
+                              <input type="text" class="form-control edit-input" v-model="param.comments" />
                           </div>
                           
                       </div>
@@ -253,28 +254,28 @@
                         
                           <div class="editpage-input" >
                               <label class="editlabel">{{$t('static.currency')}} </label>
-                               <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==0">
-                                  <option value="0" selected>CNY人民币</option>
+                               <select type="text" class="form-control edit-input"  v-model="param.currency"  v-if="param.intl==0">
+                                  <option value="1" selected>CNY人民币</option>
                                  <!--  <option value="1">是</option> -->
                               </select>
-                              <select type="text" class="form-control edit-input"  v-model="param.currency"   value="{{param.currency}}" v-if="param.intl==1">
-                                  <option value="0">CNY人民币</option>
-                                  <option value="1" selected>USD美元</option>
-                                  <option value="2">EUR欧元</option>
-                                  <option value="3">HKD港币</option>
-                                  <option value="4">GBP英镑</option>
-                                  <option value="5">JPY日元</option>
-                                  <option value="6">KRW韩元</option>
-                                  <option value="7">CAD加元</option>
-                                  <option value="8">AUD澳元</option>
-                                  <option value="9">CHF瑞郎</option>
-                                  <option value="10">SGD新加坡元</option>
-                                  <option value="11">MYR马来西亚币</option>
-                                  <option value="12">IDR印尼</option>
-                                  <option value="13">NZD新西兰</option>
-                                  <option value="14">VND越南</option>
-                                  <option value="15">THB泰铢</option>
-                                  <option value="16">PHP菲律宾</option>
+                              <select type="text" class="form-control edit-input"  v-model="param.currency"   v-if="param.intl==1">
+                                  <option value="1">CNY人民币</option>
+                                  <option value="2" selected>USD美元</option>
+                                  <option value="3">EUR欧元</option>
+                                  <option value="4">HKD港币</option>
+                                  <option value="5">GBP英镑</option>
+                                  <option value="6">JPY日元</option>
+                                  <option value="7">KRW韩元</option>
+                                  <option value="8">CAD加元</option>
+                                  <option value="9">AUD澳元</option>
+                                  <option value="10">CHF瑞郎</option>
+                                  <option value="11">SGD新加坡元</option>
+                                  <option value="12">MYR马来西亚币</option>
+                                  <option value="13">IDR印尼</option>
+                                  <option value="14">NZD新西兰</option>
+                                  <option value="15">VND越南</option>
+                                  <option value="16">THB泰铢</option>
+                                  <option value="17">PHP菲律宾</option>
                               </select>
                           </div>
                           <!-- <div class="editpage-input">
@@ -290,20 +291,20 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">{{$t('static.enter_address')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"    v-validate:addr="['required']" value="{{param.consigneeAdd}}" />
+                              <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"    v-validate:addr="['required']"  />
                           </div>
                           <div class="editpage-input clearfix">
                               <label class="editlabel">{{$t('static.sundry_fees')}}</label>
                               <div class="clearfix left">
                                 <button class="btn btn-default left" style="font-size: 16px" @click="addIncidentals()">+</button>
-                                <input type="number" class="edit-input" v-model="param.incidentals" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" value="{{param.incidentals}}" @keyup=""/>
+                                <input type="number" class="edit-input" v-model="param.incidentals" style="width:60%;display:inline-block;float:left;border:none;text-align: center;"  @keyup=""/>
                                 <button class="btn btn-default right" style="font-size: 16px" @click="subduction()">-</button>
                               </div>
                           </div>
                           
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.fee_explain')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
+                              <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" />
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.cost_price')}}</label>
@@ -320,9 +321,9 @@
             <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.goods.length>0&&param.goods[param.goods.length-1].breedId!=''"  @click="confirm(param)">{{$t('static.confirm')}}</button>
             <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.confirm')}}</button>
           </div>
-      </validator>
+        </validator>
     </div>
-
+  </div>
 </template>
 <script>
 import vSelect from  '../tools/vueSelect/components/Select'

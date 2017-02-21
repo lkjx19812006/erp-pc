@@ -207,8 +207,8 @@ var locales = {
       pending:'待处理',
       wait_for_payment:'等待付款',
       wait_for_audit:'待审核',
-      wait_for_delivery:'待发货',
-      wait_for_receiving:'待收货',
+      wait_for_delivery:'发货',
+      wait_for_receiving:'收货',
       completed:'已完成',
       canceled:'已取消',
       out_of_date:'已过期',
@@ -412,6 +412,8 @@ var locales = {
       //client
       installment:'分期付款',
       paid:'已支付',
+      start_time:'起始时间',
+      end_time:'结束时间',
       destination:'目的港口'
     }
   },
@@ -819,6 +821,8 @@ var locales = {
       wait_payment:'Waiting to pay',
       installment:'Installment payment',
       paid:'Paid',
+      start_time:'Start time',
+      end_time:'End time',
       destination:'Destination port'
     }
   }

@@ -672,7 +672,7 @@
         padding: 35px 10px 0 10px;
     }
     .transfer{
-        margin-right: 15px;
+        margin-right: 10px;
     }
     .order_table {
         margin-top: 0px;

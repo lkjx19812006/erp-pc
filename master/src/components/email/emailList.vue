@@ -77,16 +77,13 @@
             </div>
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
-                    <tr>
-                        
+                    <tr>   
                         <th>邮箱</th>
                         <th>主题</th>
                         <th>发件人</th>
                         <th>发件人姓名</th>
                         <th>收件人</th>
-                        <th>发送时间</th>
-                        
-                        
+                        <th>发送时间</th>  
                     </tr>
                 </thead>
                 <tbody>
@@ -97,7 +94,6 @@
                         <td>{{item.sendName}}</td>
                         <td>{{item.receiveNo}}</td>
                         <td>{{item.sendDate}}</td>
-                        
                     </tr>
                 </tbody>
             </table>

@@ -239,7 +239,7 @@
                                                           titles:'申请分期审核',
                                                           link:paymentAudit
                                                       })"> 
-                                                  <img src="/static/images/apply.png"  style="width:47px" />
+                                                  <img src="/static/images/{{$t('static.img_apply')}}.png"/>
                                                   </a>
                                                   <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;"  v-if="item.type==0&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                           show:true,
@@ -379,7 +379,7 @@
                                                     url:'/customer/file/',
                                                     key:'contractList',
                                                     headline:'orderDetail'
-                                                  })">删除</button>
+                                                  })">{{$t('static.del')}}</button>
                                               </td>
                                           </tr>
                                        </tbody>

@@ -129,7 +129,7 @@ export default {
     height: 100%;
     position: fixed;
     width: 200px;
-    overflow: hidden;
+    overflow: hidden !important;
     white-space: nowrap;
     z-index: 999;
 }
@@ -202,10 +202,6 @@ export default {
 }
 
 
-/*.v-link-active ~ .bshow dd:first-of-type span {
-    color: #fa6705;
-}*/
-
 .active_font {
     color: #fa6705 !important;
 }
@@ -233,7 +229,8 @@ export default {
 
 .bshow_dl .fold_line {
     height: 32px;
-    display: inline-block;
+    display: inline-block;、
+    overflow:hidden;
     color: #fff;
     position: absolute;
     margin-top: -12px;
