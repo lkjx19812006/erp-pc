@@ -1,6 +1,6 @@
 <template>
   <div>
-    <editorder-model :param.sync="dialogParam" v-if="dialogParam.show"></editorder-model>
+    <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
     <createorder-model :param="createParam" v-if="createParam.show"></createorder-model>
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
@@ -620,6 +620,7 @@
               this.reapplyParam.callback = this.orderBack;
             },
             updateOrder:function(param,goods){
+              console.log(param)
                 this.dialogParam=param;
                 var _this = this;
                 if(goods==null){

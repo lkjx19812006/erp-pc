@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle" @click="param.show=false"></span>
         </div>
         <div class="edit-content">
-            <h3>分期付款</h3>
+            <h3>{{$t('static.installment')}}</h3>
         </div>
         <validator name="validation">
           <form novalidate>
@@ -19,8 +19,8 @@
                                 <th>分期比例</th>
                                 <th>分期支付时间</th>
                                 <th>额外支付时间</th>
-                                <th>分期说明</th>
-                                <th>申请备注</th>
+                                <th>{{$t('static.install_reason')}}</th>
+                                <th>{{$t('static.apply_note')}}</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="editpage-input col-md-6">
                                      <label class="editlabel" >分期金额 <span class="system_danger" v-if="breedInfo.amount==''">{{$t('static.required')}}</span>
-                                     <span class="system_danger" v-if="breedInfo.amount*100>(param.total*100-sum)">不能超过订单总金额</span></label>
+                                     <!-- <span class="system_danger" v-if="breedInfo.amount*100>(param.total*100-sum)">不能超过订单总金额</span></label> -->
                                      <input type="number" v-if="breedInfo.ratio==1" v-model="breedInfo.amount" value="{{param.total}}" class="form-control edit-input"   />
                                      <input type="number" v-else v-model="breedInfo.amount"  value="{{breedInfo.amount}}" class="form-control edit-input" v-validate:amount="{required:true}"  />
                                 </div>
@@ -83,7 +83,7 @@
                                      <input type="text" v-model="breedInfo.extra" class="form-control edit-input" v-validate:extral="{required:true}"  style="width:95%;float:left" /> <span> 天</span>
                                 </div>
                                 <div class="editpage-input col-md-12">
-                                     <label class="editlabel">分期说明<span class="system_danger" v-if="$inner.description.required">{{$t('static.required')}}</span></label>
+                                     <label class="editlabel">{{$t('static.install_detail')}}<span class="system_danger" v-if="$inner.description.required">{{$t('static.required')}}</span></label>
                                      <input type="text" v-show="false" v-model="breedInfo.description" class="form-control edit-input"  />
                                      <div type="text" class="edit-input" >
                                          <input-select
@@ -97,7 +97,7 @@
                                      <!-- <textarea class="form-control" v-model="breedInfo.description" value="{{breedInfo.description}}" style="resize:none; border:1px solid #ddd;" rows="5" v-validate:description="{required:true}"></textarea> -->
                                 </div>  
                                 <div class="client-detailInfo  col-md-12">
-                                    <label class="editlabel">申请备注</label>
+                                    <label class="editlabel">{{$t('static.apply_note')}}</label>
                                     <textarea class="form-control" v-model="breedInfo.comment" value="{{breedInfo.comment}}" style="resize:none; border:1px solid #ddd;" rows="5" ></textarea>
                                 </div>
                                     

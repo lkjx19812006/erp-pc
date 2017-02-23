@@ -14,43 +14,42 @@
         <div slot="top">
 
           <dl class="clear left transfer">
-             <dt class="left transfer marg_top">任务状态：</dt>
+             <dt class="left transfer marg_top">{{$t('static.task_status')}}：</dt>
              <div class="btn-group">
                  <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.link=='/order/toDoOrderList'}" @click="selectLink('/order/toDoOrderList')">
-                    待处理任务
+                    {{$t('static.pending_task')}}
                  </button>
                  <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.link==='/order/doneOrderList'}" @click="selectLink('/order/doneOrderList')">
-                    已处理任务
+                    {{$t('static.complete_task')}}
                  </button>
                  
              </div>
           </dl>
 
           <dl class="clear left transfer">
-             <dt class="left transfer marg_top">业务类型：</dt>
+             <dt class="left transfer marg_top">{{$t('static.business_type')}}：</dt>
              <div class="btn-group">
                  <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.processDefineKey==''}" @click="selectType('')">
                     {{$t('static.please_select')}}
                  </button>
                  <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.processDefineKey=='order_validate'}" @click="selectType('order_validate')">
-                    订单审核
+                    {{$t('static.order_review')}}
                  </button>
                  <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.processDefineKey==='order_send'}" @click="selectType('order_send')">
-                    发货审核
+                     {{$t('static.delivery_review')}}
                  </button>
                  <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.processDefineKey=='order_supplementary_contract'}" @click="selectType('order_supplementary_contract')">
-                    补充合同审核
+                    {{$t('static.contract_review')}}
                  </button>
                  <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.processDefineKey==='order_after_sales'}" @click="selectType('order_after_sales')">
-                    售后审核
+                    {{$t('static.aftersales')}}
                  </button>
-                 
              </div>
           </dl>
 
           <dl class="clear left transfer">
               <div class="left">
-                  <dt class="left transfer marg_top">起止时间：</dt>
+                  <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
                   <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
                   </mz-datepicker>
               </div>
@@ -75,56 +74,54 @@
               <thead>
                   <tr>
                       <!-- <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th> -->
-                      <th>业务类型</th>
-                      <th>任务阶段</th>
-                      <th>任务描述</th>
+                      <th>{{$t('static.business_type')}}</th>
+                      <th>{{$t('static.task_state')}}</th>
+                      <th>{{$t('static.task_detail')}}</th>
                       <th>{{$t('static.create_time')}}</th>
-                      
                       <th>{{$t('static.handle')}}</th> 
                   </tr>
               </thead>
               <tbody>
                   <tr v-for="item in initToDoOrderlist"  v-cloak>
                     <!-- <td  @click.stop="">
-                      <label v-if="item.validate<=0&&(item.orderStatus==0||item.orderStatus==70)" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
-                    </td> -->
+                        <label v-if="item.validate<=0&&(item.orderStatus==0||item.orderStatus==70)" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
+                      </td>
+                    -->
                     <td>
-                      <div v-if="item.bizType=='order_validate'">订单审核</div>
-                      <div v-if="item.bizType=='order_send'">发货审核</div>
-                      <div v-if="item.bizType=='order_supplementary_contract'">补充合同审核</div>
-                      <div v-if="item.bizType=='order_after_sales'">售后审核</div>
+                      <div v-if="item.bizType=='order_validate'">{{$t('static.order_review')}}</div>
+                      <div v-if="item.bizType=='order_send'">{{$t('static.delivery_review')}}</div>
+                      <div v-if="item.bizType=='order_supplementary_contract'">{{$t('static.contract_review')}}</div>
+                      <div v-if="item.bizType=='order_after_sales'">{{$t('static.aftersales')}}</div>
                     </td>
                     <td>
                       <!-- 订单审核 -->
-                      <div v-if="item.taskKey=='governor_validate'">主管审核</div>
-                      <div v-if="item.taskKey=='employee_handle'">业务员处理</div>
+                      <div v-if="item.taskKey=='governor_validate'">{{$t('static.management_approval')}}</div>
+                      <div v-if="item.taskKey=='employee_handle'">{{$t('static.salesman')}}</div>
                       <div v-if="item.taskKey=='law_validate'">法务审核</div>
                       <div v-if="item.taskKey=='supply_validate'">供应部审核</div>
                       <div v-if="item.taskKey=='warehouse_validate'">仓库审核</div>
                       <div v-if="item.taskKey=='manager_validate'">经理审核</div>
                       <div v-if="item.taskKey=='financial_validate'">财务审核</div>
                       <!-- 发货审核-->
-                      <div v-if="item.taskKey=='order_send_governor_validate'">主管审核</div>
-                      <div v-if="item.taskKey=='order_send_employee_handle'">业务员处理</div>
-                      <div v-if="item.taskKey=='order_send_warehouse_validate'">业务员/仓库发货</div>
+                      <div v-if="item.taskKey=='order_send_governor_validate'">{{$t('static.management_approval')}}</div>
+                      <div v-if="item.taskKey=='order_send_employee_handle'">{{$t('static.salesman')}}</div>
+                      <div v-if="item.taskKey=='order_send_warehouse_validate'">{{$t('static.salesman')}}{{$t('static.shipped')}}</div>
                       <!-- 合同审核-->
-                      <div v-if="item.taskKey=='supplementary_contract_governor_validate'">主管审核</div>
-                      <div v-if="item.taskKey=='supplementary_contract_employee_handle'">补充合同修改</div>
-                      <div v-if="item.taskKey=='supplementary_contract_refund'">退款</div>
+                      <div v-if="item.taskKey=='supplementary_contract_governor_validate'">{{$t('static.management_approval')}}</div>
+                      <div v-if="item.taskKey=='supplementary_contract_employee_handle'">{{$t('static.supply_contract')}}</div>
+                      <div v-if="item.taskKey=='supplementary_contract_refund'">{{$t('static.refund')}}</div>
                       <!-- 售后申请-->
-                      <div v-if="item.taskKey=='after_sales_governor_validate'">主管审核</div>
-                      <div v-if="item.taskKey=='after_sales_employee_handle'">业务员处理</div>
-                      <div v-if="item.taskKey=='after_sales_receipt'">收货确认</div>
-                      <div v-if="item.taskKey=='after_sales_disputed_handle'">收货异议处理</div>
-                      <div v-if="item.taskKey=='after_sales_refund'">退货退款</div>
-                      <div v-if="item.taskKey=='after_sales_resend'">重新发货</div>
-                        
+                      <div v-if="item.taskKey=='after_sales_governor_validate'">{{$t('static.management_approval')}}</div>
+                      <div v-if="item.taskKey=='after_sales_employee_handle'">{{$t('static.salesman')}}</div>
+                      <div v-if="item.taskKey=='after_sales_receipt'">{{$t('static.confirm_receipt')}}</div>
+                      <div v-if="item.taskKey=='after_sales_disputed_handle'">{{$t('static.receive')}}{{$t('static.objection_handl')}}</div>
+                      <div v-if="item.taskKey=='after_sales_refund'">{{$t('static.reutrned')}}{{$t('static.refund')}}</div>
+                      <div v-if="item.taskKey=='after_sales_resend'">{{$t('static.reapply_delivery')}}</div>       
                     </td>
                     <td>{{item.taskDesc}}</td>
                     <td>{{item.date}}</td>
-
                     <td>
-                        <div><a @click="showRecord(item)">记录</a></div>
+                        <div><a @click="showRecord(item)">{{$t('static.records')}}</a></div>
                         <div><a @click="showDetail(item.bizId,item.bizType)">{{$t('static.details')}}</a></div>
                         <div v-if="item.bizType=='order_validate'&&loadParam.link=='/order/toDoOrderList'">
                             <a v-if="item.taskKey!='employee_handle'" @click="showAudit(item)">{{$t('static.review')}}</a>
@@ -132,19 +129,19 @@
                         </div>
                         <div v-if="item.bizType=='order_send'&&loadParam.link=='/order/toDoOrderList'">
                             <a  v-if="item.taskKey=='order_send_governor_validate'"  @click="sendAudit(item)">{{$t('static.review')}}</a>
-                            <a v-if="item.taskKey=='order_send_warehouse_validate'"  @click="deliverGoods(item)">发货</a>
+                            <a v-if="item.taskKey=='order_send_warehouse_validate'"  @click="deliverGoods(item)">{{$t('static.shipped')}}</a>
                             <a  v-if="item.taskKey=='order_send_employee_handle'"  @click="sendAudit(item)">{{$t('static.reapply')}}</a>
                         </div>
                         <div v-if="item.bizType=='order_supplementary_contract'&&loadParam.link=='/order/toDoOrderList'">
-                            <a v-if="item.taskKey=='supplementary_contract_governor_validate'" @click="receiveAudit(item)">合同审核</a>
+                            <a v-if="item.taskKey=='supplementary_contract_governor_validate'" @click="receiveAudit(item)">{{$t('static.contract_review')}}</a>
                             <a v-if="item.taskKey=='supplementary_contract_employee_handle'"  @click="showAudit(item)">{{$t('static.reapply')}}</a>
                         </div>
                         <div v-if="item.bizType=='order_after_sales'&&loadParam.link=='/order/toDoOrderList'">
-                            <a v-if="item.taskKey=='after_sales_governor_validate'" @click="showAudit(item)">售后审核</a>
-                            <a v-if="item.taskKey=='after_sales_receipt'" @click="showAudit(item)">收货确认</a>
-                            <a v-if="item.taskKey=='after_sales_resend'" @click="showAudit(item)">重新发货</a>
+                            <a v-if="item.taskKey=='after_sales_governor_validate'" @click="showAudit(item)">{{$t('static.aftersales')}}</a>
+                            <a v-if="item.taskKey=='after_sales_receipt'" @click="showAudit(item)">{{$t('static.confirm_receipt')}}</a>
+                            <a v-if="item.taskKey=='after_sales_resend'" @click="showAudit(item)">{{$t('static.reapply_delivery')}}</a>
                             <a v-if="item.taskKey=='after_sales_employee_handle'" @click="showAudit(item)">{{$t('static.reapply')}}</a>
-                            <a v-if="item.taskKey=='after_sales_disputed_handle'" @click="showAudit(item)">业务员异议处理</a>
+                            <a v-if="item.taskKey=='after_sales_disputed_handle'" @click="showAudit(item)">{{$t('static.objection_handl')}}</a>
                         </div>
                     </td>
                   </tr>
