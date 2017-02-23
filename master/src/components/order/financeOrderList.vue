@@ -137,6 +137,7 @@
                   <a class="operate" v-if="item.pr==0&&item.validate==2">
                     等待业务员{{item.employeeName}}确认
                   </a>
+                  <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.bizType=='order'" @click="openPDF(item)">打开PDF</button>
                 </td>
               </tr>
             </tbody>
@@ -160,7 +161,8 @@
   } from '../../vuex/getters'
   import {
     getFinanceList,
-    paymentAudit
+    paymentAudit,
+    downOrderDetailPDF
   } from '../../vuex/actions'
   export default {
     components: {
@@ -176,7 +178,8 @@
       },
       actions: {
         getFinanceList,
-        paymentAudit
+        paymentAudit,
+        downOrderDetailPDF
       }
     },
     data() {
@@ -246,6 +249,9 @@
           this.tipsParam.show= true;
           this.tipsParam.alert= true;
           this.tipsParam.name= title;
+      },
+      openPDF:function(item) {
+         this.downOrderDetailPDF(item); 
       }
     },
     events: {
