@@ -32,7 +32,7 @@
                         </select>
                     </div>
                     <div class="editpage-input col-md-6" v-if="param.type==1">
-                        <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required" >{{$t('static.required')}}</span></label>
+                        <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required" >{{$t('static.required')}}</span></label>
                         <input  type="text" class="form-control edit-input"  readonly="true"  v-model="employeeParam.consignerName" v-validate:shipper="{required:true}"  @click="selectEmployee(param.consigner,employeeParam.consignerName)"  />
                        <!--  <select  class="form-control edit-input" v-model="param.consigner">
                            <option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
@@ -43,8 +43,8 @@
                     <div style="margin-top:20px;">
                        <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
                        <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
-                       <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}"  style="margin-right:40px;" @click="selectConsignee()">选择收货地址</button>
-                       <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}"  style="margin-right:20px;" @click="createConsignee()">填写收货地址</button>
+                       <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}"  style="margin-right:40px;" @click="selectConsignee()">{{$t('static.select_addr')}}</button>
+                       <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}"  style="margin-right:20px;" @click="createConsignee()">{{$t('static.shipped_addr')}}</button>
                     </div>
                     <div class="clearfix">
                         <!-- 客户选择 -->
@@ -78,12 +78,12 @@
                         <!-- 收货人信息 -->
                         <div class="editpage-input col-md-4">
                             <label class="editlabel" v-if="param.type==1">{{$t('static.consignee_name')}}</label>
-                            <label class="editlabel" v-if="param.type==0">发货人姓名</label>
+                            <label class="editlabel" v-if="param.type==0">{{$t('static.send_person')}} {{$t('static.name')}}</label>
                             <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.customerName}}"  />
                         </div> 
                         <div class="editpage-input col-md-4" >
                             <label class="editlabel"  v-if="param.type==1">{{$t('static.consignee_phone')}} <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
-                            <label class="editlabel" v-if="param.type==0">发货人手机</label>
+                            <label class="editlabel" v-if="param.type==0">{{$t('static.send_person')}} {{$t('static.cellphone')}}</label>
                             <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  value="{{param.consigneePhone}}"/>
                         </div>  
                         

@@ -228,7 +228,7 @@
                                 key:'orderDetail',
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'
-                        })" v-if="(item.orderStatus==20||item.orderStatus==10)&&item.type==0" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">申请付款
+                        })" v-if="(item.orderStatus==20||item.orderStatus==10)&&item.type==0" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">{{$t('static.apply_payment')}}
                         </button>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==0">
                               <img src="/static/images/{{$t('static.img_paid')}}.png"  title="待客户收款" alt="待客户收款" />
@@ -240,20 +240,20 @@
                                 key:'orderDetail',
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'
-                        })" v-if="(item.orderStatus==20||item.orderStatus==30)&&item.type==1" style="background:#fff;color:#eea236;padding:2px 4px;font-size: 12px;">申请收款
+                        })" v-if="(item.orderStatus==20||item.orderStatus==30)&&item.type==1" style="background:#fff;color:#eea236;padding:2px 4px;font-size: 12px;">{{$t('static.apply_income')}}
                         </button>
                         <!-- 销售订单发货流程start-->
-                        <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">申请发货
+                        <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">{{$t('static.apply_send')}}
                         </button>
-                        <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.logistics==1&&item.taskKey=='order_send_governor_validate'" style="color:#333;">等待主管{{item.verifierName}}审核</a>
-                        <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 3px;">重新申请发货
+                        <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.logistics==1&&item.taskKey=='order_send_governor_validate'" style="color:#333;">{{$t('static.management_approval')}}{{item.verifierName}}</a>
+                        <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 3px;">{{$t('static.reapply_delivery')}}
                         </button>
-                        <button class="btn btn-warning" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 5px;">发货
+                        <button class="btn btn-warning" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 5px;">{{$t('static.shipped')}}
                         </button>
                         <!-- 销售订单发货流程end -->
                         <button class="btn btn-success" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70||(item.orderStatus >=60&&item.type==0)" style="background:#fff;color:#eea236;padding:1px 5px;color:#398439">{{$t('static.order_over')}}
                          </button>
-                        <button class="btn btn-success"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==60&&item.type==1&&(item.logistics==3||item.logistics==2)" style="background:#fff;color:#398439;padding:1px 5px;">质量合格收货
+                        <button class="btn btn-success"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==60&&item.type==1&&(item.logistics==3||item.logistics==2)" style="background:#fff;color:#398439;padding:1px 5px;">{{$t('static.quality_satisfied')}}
                         </button>
                         <button class="btn btn-danger"  @click="addContract({
                             show:true,
@@ -265,9 +265,9 @@
                             contractText:'',
                             url:'/order/quality/contract/start',
                             link:applyContract,
-                            titles:'订单补充合同',
+                            titles:this.$t('static.supply_contract'),
                             images:''
-                          })" v-if="item.orderStatus==60&&item.type==1&&(item.logistics==3||item.logistics==2)" style="background:#fff;color:#eea236;padding:1px 5px;">补充合同
+                          })" v-if="item.orderStatus==60&&item.type==1&&(item.logistics==3||item.logistics==2)" style="background:#fff;color:#eea236;padding:1px 5px;">{{$t('static.supply_contract')}}
                         </button>
                         <button class="btn btn-danger"  @click="afterSales({
                             show:true,
@@ -279,18 +279,18 @@
                             type:'',
                             url:'/order/quality/after/sales/start',
                             link:afterSalesApply,
-                            titles:'售后申请',
+                            titles:this.$t('static.apply_sales'),
                             images:''
-                          })" v-if="item.orderStatus==60&&item.type==1&&(item.logistics==3||item.logistics==2)" style="background:#fff;color:#eea236;padding:1px 5px;">售后申请
+                          })" v-if="item.orderStatus==60&&item.type==1&&(item.logistics==3||item.logistics==2)" style="background:#fff;color:#eea236;padding:1px 5px;">{{$t('static.apply_sales')}}
                         </button>
                         <!-- <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==2" style="background:#fff;color:#eea236;padding:1px 5px;">确认收货
                         </button> -->
-                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1" style="background:#fff;color:#eea236;padding:1px 5px;">待客户付款</button>
-                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">收货
+                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1" style="background:#fff;color:#eea236;padding:1px 5px;">{{$t('static.pending_payment')}}</button>
+                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">{{$t('static.receive')}}
                         </button>
-                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">待客户发货
+                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">{{$t('static.pending_shipped')}}
                         </button>
-                        <button class="btn btn-primary" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">收货
+                        <button class="btn btn-primary" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">{{$t('static.receive')}}
                           </button>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==0">
                             <img src="/static/images/{{$t('static.img_handle')}}.png"  title="订单待处理" alt="订单待处理"/>
@@ -402,7 +402,7 @@
                 line_height:0,
                 createParam:{
                     show:false,
-                    title1:'新建订单',
+                    title1:this.$t('static.new_order'),
                     type:1,
                     sourceType:0,
                     sample:0,
@@ -557,10 +557,10 @@
                 this.auditParam.validate = validate;
                 this.auditParam.show = true;
                 if(validate == 0){
-                    this.auditParam.title = '申请订单审核';
+                    this.auditParam.title = this.$t('static.review_application');
                 }
                 if(validate == -2){
-                    this.auditParam.title = '重新申请订单审核';
+                    this.auditParam.title = this.$t('static.reapply');
                 }
                 this.auditParam.callback = this.applyBack;
             },
@@ -609,14 +609,14 @@
               this.applyParam.show=true;
               this.applyParam.orderId=item.id;
               this.applyParam.sub=sub;
-              this.applyParam.titles='申请发货';
+              this.applyParam.titles=this.$t('static.apply_send');
               this.applyParam.callback = this.orderBack;
             },
             reapplySend:function(item,sub){
               this.reapplyParam.show=true;
               this.reapplyParam.orderId=item.id;
               this.reapplyParam.sub=sub;
-              this.reapplyParam.title='重新申请发货';
+              this.reapplyParam.title=this.$t('static.reapply_delivery');
               this.reapplyParam.callback = this.orderBack;
             },
             updateOrder:function(param,goods){
@@ -652,10 +652,10 @@
                     this.disposeParam.tips="订单处理完成，待财务付款！";
                 }
                 if(item.orderStatus==-1){
-                    this.disposeParam.tips="订单已取消！";
+                    this.disposeParam.tips=this.$t('static.cancle_order');
                 }
                 if(item.orderStatus==-2){
-                    this.disposeParam.tips="订单已过期！";
+                    this.disposeParam.tips=this.$t('static.expired_order');
                 }
                 if(item.orderStatus==20&&item.type==0){
                     this.disposeParam.tips="订单处理完成，待财务付款！";
@@ -666,7 +666,7 @@
                   this.disposeParam.confirmReceipt=true;
                 }
                 if(item.orderStatus==40&&item.type==0){
-                    this.disposeParam.tips="等待客户发货！";
+                    this.disposeParam.tips= this.$t('static.pending_shipped');
                     this.disposeParam.sendoff=true;
                 }
                 if(item.orderStatus==50&&item.type==0){
@@ -674,10 +674,10 @@
                     this.disposeParam.delivery = true;
                 }
                 if(item.orderStatus==60&&item.type==0){
-                    this.disposeParam.tips="买家已收货，订单已完成！";
+                    this.disposeParam.tips= "买家已收货，订单已完成！";
                 }
                 if(item.orderStatus==70&&item.type==0){
-                    this.disposeParam.tips="买家已收货，订单已完成！";
+                    this.disposeParam.tips=this.$t('static.order_over');
                 }
                 /*--销售状态type==1--*/
                 if(item.orderStatus==0&&item.type==1){
@@ -709,7 +709,7 @@
                     this.disposeParam.estimate = true;
                 }
                 if(item.orderStatus==70&&item.type==1){
-                    this.disposeParam.tips="订单已完成！";
+                    this.disposeParam.tips=this.$t('static.order_over');
                 }
                 this.disposeParam.callback = this.orderBack;
             },

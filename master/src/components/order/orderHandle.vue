@@ -29,7 +29,7 @@
            <dt class="left transfer marg_top">业务类型：</dt>
            <div class="btn-group">
                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.processDefineKey==''}" @click="selectType('')">
-                  全部
+                  {{$t('static.please_select')}}
                </button>
                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.processDefineKey=='order_validate'}" @click="selectType('order_validate')">
                   订单审核
@@ -77,7 +77,7 @@
                     <th>业务类型</th>
                     <th>任务阶段</th>
                     <th>任务描述</th>
-                    <th>任务创建时间</th>
+                    <th>{{$t('static.create_time')}}</th>
                     
                     <th>{{$t('static.handle')}}</th> 
                 </tr>
@@ -124,25 +124,25 @@
 
                   <td>
                       <div><a @click="showRecord(item)">记录</a></div>
-                      <div><a @click="showDetail(item.bizId,item.bizType)">详情</a></div>
+                      <div><a @click="showDetail(item.bizId,item.bizType)">{{$t('static.details')}}</a></div>
                       <div v-if="item.bizType=='order_validate'&&loadParam.link=='/order/toDoOrderList'">
-                          <a v-if="item.taskKey!='employee_handle'" @click="showAudit(item)">审核</a>
-                          <a v-else @click="showAudit(item)">重新申请</a>
+                          <a v-if="item.taskKey!='employee_handle'" @click="showAudit(item)">{{$t('static.review')}}</a>
+                          <a v-else @click="showAudit(item)">{{$t('static.reapply')}}</a>
                       </div>
                       <div v-if="item.bizType=='order_send'&&loadParam.link=='/order/toDoOrderList'">
-                          <a  v-if="item.taskKey=='order_send_governor_validate'"  @click="sendAudit(item)">审核</a>
+                          <a  v-if="item.taskKey=='order_send_governor_validate'"  @click="sendAudit(item)">{{$t('static.review')}}</a>
                           <a v-if="item.taskKey=='order_send_warehouse_validate'"  @click="deliverGoods(item)">发货</a>
-                          <a  v-if="item.taskKey=='order_send_employee_handle'"  @click="sendAudit(item)">重新申请</a>
+                          <a  v-if="item.taskKey=='order_send_employee_handle'"  @click="sendAudit(item)">{{$t('static.reapply')}}</a>
                       </div>
                       <div v-if="item.bizType=='order_supplementary_contract'&&loadParam.link=='/order/toDoOrderList'">
                           <a v-if="item.taskKey=='supplementary_contract_governor_validate'" @click="receiveAudit(item)">合同审核</a>
-                          <a v-if="item.taskKey=='supplementary_contract_employee_handle'"  @click="showAudit(item)">重新申请</a>
+                          <a v-if="item.taskKey=='supplementary_contract_employee_handle'"  @click="showAudit(item)">{{$t('static.reapply')}}</a>
                       </div>
                       <div v-if="item.bizType=='order_after_sales'&&loadParam.link=='/order/toDoOrderList'">
                           <a v-if="item.taskKey=='after_sales_governor_validate'" @click="showAudit(item)">售后审核</a>
                           <a v-if="item.taskKey=='after_sales_receipt'" @click="showAudit(item)">收货确认</a>
                           <a v-if="item.taskKey=='after_sales_resend'" @click="showAudit(item)">重新发货</a>
-                          <a v-if="item.taskKey=='after_sales_employee_handle'" @click="showAudit(item)">重新申请</a>
+                          <a v-if="item.taskKey=='after_sales_employee_handle'" @click="showAudit(item)">{{$t('static.reapply')}}</a>
                           <a v-if="item.taskKey=='after_sales_disputed_handle'" @click="showAudit(item)">业务员异议处理</a>
                       </div>
                   </td>

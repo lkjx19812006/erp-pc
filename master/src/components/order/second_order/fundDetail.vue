@@ -1,5 +1,6 @@
 <template>
     <shadow-model :param="param">
+        <language-model v-show="false"></language-model> 
         <div class="cover_loading">
             <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
         </div>
@@ -17,16 +18,17 @@
             <div class="client-section clearfix" @click.stop="">
               <h4 class="section_title">{{$t('static.details')}}</h4>
                 <ul class="clearfix" style="margin-top:20px;font-size: 13px">
-                  <li class="col-md-4">支付类型：<label>{{initFundDetail.bizType | bizType}}{{initFundDetail.type | payMent}}</li>
-                  <li class="col-md-4">支付名称：<label>{{initFundDetail.payName}}</label></li>
-                  <li class="col-md-4">用户名：<label>{{initFundDetail.payUserName}}</li>
-                  <li class="col-md-4">账&nbsp;&nbsp;&nbsp;&nbsp;号：<label>{{initFundDetail.payNumber}}</li>
-                  <li class="col-md-4" v-show="initFundDetail.payWay==2">支付分行：<label>{{initFundDetail.payName}}</li>
-                  <li class="col-md-4">支付金额：<label>{{initFundDetail.amount}}</li>
-                  <li class="col-md-4" v-if="initFundDetail.pr==0">收/付款状态：<label>未收款/付款</li>
-                  <li class="col-md-4" v-if="initFundDetail.pr==1&&initFundDetail.type==1">支付状态：<label>已确认收款</li>
-                  <li class="col-md-4" v-if="initFundDetail.pr==1&&initFundDetail.type==0">支付状态：<label>已确认付款</li>
-                  <li class="col-md-4">创建时间：<label>{{initFundDetail.ctime}}</li>
+                  <li class="col-md-4" v-if="this.language=='zh_CN'">{{$t('static.payment_type')}}：<label>{{initFundDetail.bizType | bizType  initFundDetail.bizType initFundDetail.type }}</li>
+                  <li class="col-md-4" v-if="this.language=='en'">{{$t('static.payment_type')}}：<label>{{initFundDetail.bizType | enbizType  initFundDetail.bizType initFundDetail.type }}</li>
+                  <li class="col-md-4">{{$t('static.payment_name')}}：<label>{{initFundDetail.payName}}</label></li>
+                  <li class="col-md-4">{{$t('static.userName')}}：<label>{{initFundDetail.payUserName}}</li>
+                  <li class="col-md-4">{{$t('static.account')}}：<label>{{initFundDetail.payNumber}}</li>
+                  <li class="col-md-4" v-show="initFundDetail.payWay==2">{{$t('static.paid_branch')}}：<label>{{initFundDetail.payName}}</li>
+                  <li class="col-md-4">{{$t('static.order_amount')}}：<label>{{initFundDetail.amount}}</li>
+                  <li class="col-md-4" v-if="initFundDetail.pr==0">{{$t('static.payment')}}：<label>{{$t('static.notpayment')}}</li>
+                  <li class="col-md-4" v-if="initFundDetail.pr==1&&initFundDetail.type==1">{{$t('static.paystatus')}}：<label>{{$t('static.confirm_recipt')}}</li>
+                  <li class="col-md-4" v-if="initFundDetail.pr==1&&initFundDetail.type==0">{{$t('static.paystatus')}}：<label>{{$t('static.confirm_paid')}}</li>
+                  <li class="col-md-4">{{$t('static.create_time')}}：<label>{{initFundDetail.ctime}}</li>
                 </ul>
                 <ul class="clearfix">
                   <li v-for="img in initFundDetail.images" class="col-md-4">
@@ -38,6 +40,7 @@
     </shadow-model>
 </template>
 <script>
+import languageModel from '../../tools/language.vue'
 import{
     initFundDetail
 } from '../../../vuex/getters'
@@ -47,12 +50,13 @@ import {
 import shadowModel from '../../mguan/shadow.vue'
 export default {
     components: {
-        shadowModel
+        shadowModel,
+        languageModel
     },
     data() {
         return {
-            changeShow: true,
-            
+          changeShow: true, 
+          language:''  
         }
     },
     props:['param'],
@@ -72,6 +76,7 @@ export default {
     },
     created(){
        this.getFundDetail(this.param);
+       this.language = localStorage.lang;
     }
 }
 </script>
