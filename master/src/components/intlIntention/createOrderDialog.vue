@@ -230,10 +230,6 @@
                               <label class="editlabel">{{$t('static.total')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.total" readonly="true" />
                           </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.comment')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.comments" />
-                          </div>
                           
                       </div>
                       <div class="editpageright">
