@@ -345,7 +345,7 @@
         orderStatu,
         getOrderDetail,
         applyContract,
-        afterSalesApply
+        afterSalesApply    
     } from '../../vuex/actions'
     export default {
         components: {

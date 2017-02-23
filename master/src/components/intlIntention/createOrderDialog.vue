@@ -26,7 +26,7 @@
                            <th>{{$t('static.breed')}}</th>
                            <th>{{$t('static.unit')}}</th>
                            <th>{{$t('static.price')}}</th>
-                           <th>{{$t('static.cost_price')}}</th>
+                           <!-- <th>{{$t('static.cost_price')}}</th> -->
                            <th>{{$t('static.quality')}}</th>
                            <th>{{$t('static.quantity')}}</th> 
                            <th>{{$t('static.specification')}}</th> 
@@ -41,7 +41,7 @@
                              <td>{{item.breedName}}</td>
                              <td>{{item.unit | Unit}}</td>
                              <td>{{item.price}}</td>
-                             <td>{{item.costPrice}}</td>
+                             <!-- <td>{{item.costPrice}}</td> -->
                              <td>{{item.quality}}</td>
                              <td>{{item.number}}</td>
                              <td>{{item.spec}}</td>
@@ -117,7 +117,8 @@
                                        </div>
                                     </div>
                                 </div>
-                                <div class="editpage-input">
+                                <!-- 成本价格，国际部不应该看到 -->
+                                <!-- <div class="editpage-input">
                                     <label class="editlabel" >{{$t('static.cost_price')}}<span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span></label>
                                     <div style="clear:both;height:36px;">
                                        <div class="left" style="width:45%;">
@@ -129,7 +130,7 @@
                                           </select>
                                        </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.origin')}}</label>
                                      <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input"  disabled="disabled" placeholder="请先选择一个品种"/>
@@ -145,7 +146,7 @@
                                      </div>
 
                                 </div>
-                                <div style="margin-top:10px;text-align:right">
+                                <div style="margin-top:50px;text-align:right">
                                     <button type="button" class="btn btn-confirm">
                                         <div v-if="breedInfo.status==1" @click="cancelAddBreed()">{{$t('static.cancel')}}</div>
                                         <div v-if="breedInfo.status==2" @click="cancelModifyBreed()">{{$t('static.cancel')}}</div>
@@ -156,7 +157,8 @@
                                     </button>
                                     <button type="button" class="btn btn-confirm" v-else disabled="disabled">{{$t('static.save')}}</button>
                                     
-                                </div>  
+                                </div> 
+
                              </div>
                        </div>  
                     </validator> 
@@ -237,7 +239,7 @@
                       <div class="editpageright">
                           <div class="editpage-input" v-if="param.type==1">
                             <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">选择发货人</span></label>
-                            <input  type="text" class="form-control" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
+                            <input  type="text" class="form-control edit-input" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
                           </div>  
                           <!-- <div class="editpage-input">
                               <label class="editlabel">{{$t('static.client_phone')}} <span class="system_danger" v-if="$validation.custtel.required">{{$t('static.required')}}</span></label>
@@ -306,10 +308,15 @@
                               <label class="editlabel">{{$t('static.fee_explain')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" />
                           </div>
+
                           <div class="editpage-input">
+                              <label class="editlabel">{{$t('static.comment')}}</label>
+                              <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
+                          </div>
+                          <!-- <div class="editpage-input">
                               <label class="editlabel">{{$t('static.cost_price')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.cost" readonly="true" />
-                          </div>
+                          </div> -->
                          
                       </div>
                   </div>
@@ -435,8 +442,8 @@ export default {
             },
             saith:0, //点击按钮计算
             sum:0, //点击按钮计算
-            altogether:0, //所有商品的总金额,
-            costmoney:0, //所有商品成本的总金额
+            altogether:"", //所有商品的总金额,
+            //costmoney:0, //所有商品成本的总金额
         }
     },
     vuex: {
@@ -462,7 +469,6 @@ export default {
     },
     methods:{
         selectProvince:function(){
-            console.log('selectProvince');
             this.province = '';
             this.city = '';
             this.district = '';
@@ -491,7 +497,7 @@ export default {
 
         },
         addCompute:function(){ //优惠增加
-          if(!this.altogether){
+          if(this.altogether===""){
              this.altogether = this.param.itemsTotal;
           }
           
@@ -508,7 +514,7 @@ export default {
           }
         },
         reduce:function(){ //优惠减少
-          if(!this.altogether){
+          if(this.altogether===""){
              this.altogether = this.param.itemsTotal;
           }
           var saith = 0;
@@ -522,7 +528,7 @@ export default {
           
         },
         addIncidentals:function(){ //杂费增加
-          if(!this.altogether){
+          if(this.altogether===""){
              this.altogether = this.param.itemsTotal;
           }
           var saith = 0;
@@ -538,7 +544,7 @@ export default {
           }
         },
         subduction:function(){ //杂费减少
-          if(!this.altogether){
+          if(this.altogether===""){
              this.altogether = this.param.itemsTotal;
           }
           var saith = 0;
@@ -578,15 +584,15 @@ export default {
           this.breedInfo.status = 0;
           this.addParam.show = false; 
           this.altogether += (parseFloat(this.param.goods[this.param.goods.length-1].price)*parseFloat(this.param.goods[this.param.goods.length-1].number)*1000)/1000;
-          this.costmoney += (parseFloat(this.param.goods[this.param.goods.length-1].costPrice)*parseFloat(this.param.goods[this.param.goods.length-1].number)*1000)/1000;
-          console.log(this.costmoney)
+          /*this.costmoney += (parseFloat(this.param.goods[this.param.goods.length-1].costPrice)*parseFloat(this.param.goods[this.param.goods.length-1].number)*1000)/1000;*/
+          
         },
         showModifyBreed:function(index){
           if(this.param.goods[index].costPrice==undefined){
             this.param.goods[index].costPrice=0;
           }
           
-          if(!this.altogether){
+          if(this.altogether===""){
              this.altogether = this.param.itemsTotal;
           }
           this.breedInfo.status = 2;
@@ -608,7 +614,7 @@ export default {
           this.updateParam.show = true;
        
           this.altogether -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.price);
-          this.costmoney -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.costPrice);
+          //this.costmoney -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.costPrice);
 
           /*if(this.param.goods[index].price==''||this.param.goods[index].price==null){
             this.breedInfo.price=0;
@@ -617,7 +623,7 @@ export default {
           this.costmoney -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.costPrice);*/
         },
         showAddBreed:function(){
-          if(!this.altogether){
+          if(this.altogether===""){
              this.altogether = this.param.itemsTotal;
           }
           if(this.param.goods.length == 0||this.param.goods[this.param.goods.length-1].breedId != ''){
@@ -630,7 +636,7 @@ export default {
               this.breedInfo.spec='';
               this.breedInfo.number='';
               this.breedInfo.unit='';
-              this.breedInfo.costPrice='';
+              this.breedInfo.costPrice=0;
               this.breedInfo.price='';
               this.breedInfo.sourceType=1;
               this.param.goods.push({
@@ -651,8 +657,11 @@ export default {
           
         },
         deleteBreed:function(index){
+           if(this.altogether===""){
+             this.altogether = this.param.itemsTotal;
+           }
            this.altogether -=parseFloat(this.param.goods[index].number)*parseFloat(this.param.goods[index].price);
-           this.costmoney -=parseFloat(this.param.goods[index].number)*parseFloat(this.param.goods[index].costPrice);
+           //this.costmoney -=parseFloat(this.param.goods[index].number)*parseFloat(this.param.goods[index].costPrice);
            this.param.goods.splice(index,1);
         },
         cancelAddBreed:function(){
@@ -683,14 +692,14 @@ export default {
           this.updateParam.show = false;
           
           this.altogether += (parseFloat(this.param.goods[this.updateParam.index].number)*parseFloat(this.param.goods[this.updateParam.index].price)*100)/100;
-          this.costmoney += (parseFloat(this.param.goods[this.updateParam.index].number)*parseFloat(this.param.goods[this.updateParam.index].costPrice)*100)/100;
+         /* this.costmoney += (parseFloat(this.param.goods[this.updateParam.index].number)*parseFloat(this.param.goods[this.updateParam.index].costPrice)*100)/100;*/
           
         },
         cancelModifyBreed:function(){
           this.breedInfo.status = 0;
           this.updateParam.show = false; 
           this.altogether += (parseFloat(this.updateParam.number)*parseFloat(this.updateParam.price)*100)/100;
-          this.costmoney += (parseFloat(this.updateParam.number)*parseFloat(this.updateParam.costPrice)*100)/100;
+          //this.costmoney += (parseFloat(this.updateParam.number)*parseFloat(this.updateParam.costPrice)*100)/100;
           this.updateParam.number = 0;
           this.updateParam.price = 0;
         },
@@ -735,22 +744,21 @@ export default {
                 this.altogether = this.altogether + '';
                 this.altogether = this.altogether.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
             }
-            if(patt.test(this.costmoney)){   //如果超过两位小数，则只保留前两位小数
+            /*if(patt.test(this.costmoney)){   //如果超过两位小数，则只保留前两位小数
                 this.costmoney = this.costmoney + '';
                 this.costmoney = this.costmoney.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
-            }
+            }*/
             //this.param.incidentals.replace(/^(\-)*(\d+)\.(\d\d)*$/,'$1$2.$3');
             this.param.total = (parseFloat(this.altogether)*1000+parseFloat(this.param.incidentals)*1000 - parseFloat(this.param.preferential)*1000)/1000;
-            this.param.cost = (parseFloat(this.costmoney)*1000+parseFloat(this.param.incidentals)*1000 - parseFloat(this.param.preferential)*1000)/1000;
-            console.log(this.costmoney)
-            console.log(this.param.cost)
+            /*this.param.cost = (parseFloat(this.costmoney)*1000+parseFloat(this.param.incidentals)*1000 - parseFloat(this.param.preferential)*1000)/1000;*/
+            
         }
     },
     watch:{
         'param.incidentals':'changeTotal',
         'param.preferential':'changeTotal',
         'altogether':'changeTotal',
-        'costmoney':'changeTotal',
+        //'costmoney':'changeTotal',
     },
     events:{
         breed:function(breed){
@@ -768,7 +776,6 @@ export default {
             //this.getBreedDetail(this.breedParam);
         },
         selectEmpOrOrg:function(employee){
-            console.log(employee)
             this.employeeParam.consigner = employee.employeeId;
             this.employeeParam.consignerName = employee.employeeName;
             this.param.consigner = this.employeeParam.consigner;
@@ -779,17 +786,14 @@ export default {
         }
     },
     created(){
-      console.log(this.param);
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
         this.getIntlIntentionDetail(this.param);
         this.getUnitList();
-        console.log(this.param.goods)
          if(this.param.breedId){
             this.breedParam.breedName = this.param.breedName;
             this.breedParam.id = this.param.breedId;
             this.getBreedDetail(this.breedParam);
-            console.log(this.breedParam)
           }
         if(this.param.country){
           this.countryParam.country=this.param.country;

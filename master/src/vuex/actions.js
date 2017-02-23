@@ -1402,9 +1402,9 @@ export const paymentConfirm = ({ dispatch }, param) => { //确定收款
 
 export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     console.log(param)
-    var files= param.images;
+    /*var files= param.images;
     var img = files.split(",");//字符串转化为数组
-    img.toString();
+    img.toString();*/
     const body = {
         payWay:param.payWay,
     };
@@ -1448,7 +1448,7 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
         body.paySubName = param.paySubName;
     }
     if (param.images) {
-        body.images = img;
+        body.images = param.images;
     }
     console.log(body)
     Vue.http({
@@ -1675,8 +1675,6 @@ export const orderCancle = ({ dispatch }, param, data) => { //订单取消状态
 }
 
 export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单支付状态(已更改流程，此步骤接口未经过)
-    console.log(param)
-    console.log(undelinePay)
     undelinePay.images = '';
     if (undelinePay.image_f) {
         undelinePay.images += undelinePay.image_f + ','
@@ -1817,6 +1815,32 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
     })
 }
 
+export const downOrderDetailPDF = ({ dispatch }, param) => { //下载订单详情PDF
+    param.loading =true;
+    var url = apiUrl.orderList + '/order/downOrderDetailPDF';
+    var body = {
+        id: param.bizSubId,      //分期ID
+        orderId: param.bizId     //订单ID
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: url,
+        emulateJSON: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        window.open(res.json().result);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+}
 export const getSystemData = ({ dispatch }, param) => { //枚举类型
     param.loading = true;
     Vue.http({
