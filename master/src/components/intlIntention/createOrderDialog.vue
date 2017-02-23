@@ -809,11 +809,11 @@ export default {
 }
 .modal_con{
   z-index: 1083;
-  top:45px;
+  width:950px;
 }
 .top-title{
   position: fixed;
-  width: 800px;
+  width: 950px;
 }
 
 .edit-model {
@@ -877,7 +877,8 @@ export default {
     border-top: 1px solid #ddd;
     text-align: right;
     padding: 10px 20px;
-    margin-top: 50px;
+    width: 950px;
+    margin-top: 0;
 }
 
 .edit_footer button {

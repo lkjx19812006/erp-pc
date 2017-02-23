@@ -218,7 +218,7 @@
                         url:'/order/',
                         goods:item.goods,
                         goodsBack:[]
-                        },item.goods)">编辑
+                        },item.goods)">{{$t('static.edit')}}
                       </button>
                       <div v-if="item.validate==2">
                         <button class="btn btn-danger"  @click="clickOn({
@@ -251,7 +251,7 @@
                         <button class="btn btn-warning" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 5px;">发货
                         </button>
                         <!-- 销售订单发货流程end -->
-                        <button class="btn btn-success" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70||(item.orderStatus >=60&&item.type==0)" style="background:#fff;color:#eea236;padding:1px 5px;color:#398439">订单已完成
+                        <button class="btn btn-success" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70||(item.orderStatus >=60&&item.type==0)" style="background:#fff;color:#eea236;padding:1px 5px;color:#398439">{{$t('static.order_over')}}
                          </button>
                         <button class="btn btn-success"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==60&&item.type==1&&(item.logistics==3||item.logistics==2)" style="background:#fff;color:#398439;padding:1px 5px;">质量合格收货
                         </button>
@@ -302,8 +302,8 @@
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-2">
                             <img src="/static/images/{{$t('static.deadline')}}.png"  title="订单已过期" alt="订单已过期"/>
                         </a>
-                        <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)">申请审核</button>
-                        <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2&&(item.orderStatus==0||item.orderStatus==70)">重新申请</button>  
+                        <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)">{{$t('static.review_application')}}</button>
+                        <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2&&(item.orderStatus==0||item.orderStatus==70)">{{$t('static.reapply')}}</button>  
                   </td>
                 </tr>
             </tbody>

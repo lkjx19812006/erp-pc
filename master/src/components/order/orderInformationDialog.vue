@@ -882,10 +882,11 @@ export default {
 }
 .modal_con{
   z-index: 1083;
+  width: 950px;
 }
 .top-title{
   position: fixed;
-  width: 800px;
+  width: 950px;
 }
 
 .edit-model {
@@ -950,6 +951,7 @@ export default {
     text-align: right;
     padding: 10px 20px;
     margin-top: 50px;
+    width: 950px;
 }
 .table{
   display: table;

@@ -53,7 +53,7 @@
             </div>
             <!-- 处理订单0 -->
             <div class="clearfix logical_color" v-if="param.handle">
-                <input type="button" class="btn  btn-confirm right"  @click="accept({
+              <input type="button" class="btn  btn-confirm right"  @click="accept({
                     id:initOrderDetail.id,
                     show:true,
                     orderStatus:'',

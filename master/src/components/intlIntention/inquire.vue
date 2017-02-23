@@ -48,7 +48,7 @@
                            <input type="text" v-validate:destination="{required:true}" v-model='param.port' class="form-control edit-input"  />
                         </div>
                         <!-- 邮编 -->
-                        <div class="editpage-input" v-if="param.inquireType=='FFDEX'||param.inquireType=='DHL'||param.inquireType=='UPS'||param.inquireType=='TNT'||param.inquireType=='EMS'||param.inquireType=='Post Office-by Sea'||param.inquireType=='Post Office-by Air'||param.inquireType=='E-Post'||param.inquireType=='other'">
+                        <div class="editpage-input" v-if="param.inquireType=='FEDEX'||param.inquireType=='DHL'||param.inquireType=='UPS'||param.inquireType=='TNT'||param.inquireType=='EMS'||param.inquireType=='Post Office-by Sea'||param.inquireType=='Post Office-by Air'||param.inquireType=='E-Post'||param.inquireType=='other'">
                            <label class="editlabel">{{$t('static.postcodes')}} <span class="system_danger" v-if="$validation.postcode.required">{{$t('static.required')}}</span></label>
                            <input type="text" v-validate:postcode="{required:true}" v-model='param.postcode' class="form-control edit-input" />
                         </div>
@@ -125,7 +125,7 @@ export default {
 .modal_con{
     z-index:1086;
     width:400px;
-    height:350px;
+    height:420px;
     top:0;
 }
 .edit_footer{
