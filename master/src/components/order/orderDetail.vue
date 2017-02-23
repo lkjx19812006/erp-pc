@@ -39,7 +39,7 @@
                                     loading:true,
                                     key:'orderDetail',
                                     contact:'/order/myList'
-                                    })">（采购订单详情）</a></mg-label>
+                                    })">（{{$t('static.purchase')}}{{$t('static.details')}}）</a></mg-label>
                                   <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link==''">{{$t('static.purchase')}}</mg-label>
                                   <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link!==''">{{$t('static.purchase')}}<a slot="" @click="linkDetail({
                                     show:true,
@@ -47,7 +47,7 @@
                                     loading:true,
                                     key:'orderDetail',
                                     contact:'/order/myList'
-                                    })">（销售订单详情）</a></mg-label>
+                                    })">（{{$t('static.sell')}}{{$t('static.details')}}）</a></mg-label>
                                   <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
                                   <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
                                   <mg-label :title="$t('static.consignee_phone')">{{initOrderDetail.consigneePhone}}</mg-label>
@@ -147,7 +147,7 @@
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                       {{$t('static.pay_evidence')}}（0）
                                       </a>
-                                      <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">客户已收货，商品质量符合客户要求！</span>
+                                      <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">{{$t('static.quality_satisfied')}}</span>
                                       <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.edit')}}</button>
                                       <button v-else></button>
                                   </h4>
@@ -156,20 +156,20 @@
                                   <div class="panel-body panel-set">
                                       <table class="table  contactSet">
                                         <thead>
-                                          <th>分期类型</th>
-                                          <th colspan="6">分期说明</th>
+                                          <th>{{$t('static.install_type')}}</th>
+                                          <th colspan="6">{{$t('static.install_detail')}}</th>
                                           <!-- <th>付款比例</th> -->
                                          <!--  <th>分期支付时间</th> -->
-                                          <th>分期原因</th> 
-                                          <th>申请状态</th>
-                                          <th>申请备注</th>
+                                          <th>{{$t('static.install_reason')}}</th> 
+                                          <th>{{$t('static.apply_status')}}</th>
+                                          <th>{{$t('static.apply_note')}}</th>
                                           <th>{{$t('static.create_time')}}</th>
                                           <th></th>
                                         </thead>
                                         <tbody>
                                           <tr v-for="item in initOrderDetail.stages.arr">
-                                              <td v-if="item.type==0">付款</td>
-                                              <td v-if="item.type==1">收款</td>
+                                              <td v-if="item.type==0">{{$t('static.paid')}}</td>
+                                              <td v-if="item.type==1">{{$t('static.income')}}</td>
                                               <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}}立即支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
                                               <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}}的{{item.extra}}天内支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
                                               <td>{{item.comment}}</td>
@@ -182,7 +182,7 @@
                                                   bizId:item.orderId,
                                                   bizSubId:item.id,
                                                   url:'/fund/requestRecord'
-                                                  })">未申请收款/付款</td>
+                                                  })">{{$t('static.notpayment')}}</td>
                                               <td v-if="item.validate==1"  style="color:#91a0ff;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,
@@ -192,7 +192,7 @@
                                                   bizId:item.orderId,
                                                   bizSubId:item.id,
                                                   url:'/fund/requestRecord'
-                                                  })">申请收款/付款中</td>
+                                                  })">{{$t('static.notpayment')}}</td>
                                               <td v-if="item.validate==2" style="color:green;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,
@@ -202,7 +202,7 @@
                                                   bizId:item.orderId,
                                                   bizSubId:item.id,
                                                   url:'/fund/requestRecord'
-                                                  })">已收款/付款</td>
+                                                  })">{{$t('static.applypayment')}}</td>
                                               <td v-if="item.validate==3" style="color:red;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,
@@ -216,7 +216,7 @@
                                               <td>{{item.comment}}</td>
                                               <td>{{item.ctime}}</td>
                                               <td v-if="param.contact=='/order/myList'">
-                                                  <a class="operate" v-if="item.type==1&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
+                                                  <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;"  v-if="item.type==1&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                           show:true,
                                                           sub:$index,
                                                           bizId:item.orderId,
@@ -236,11 +236,10 @@
                                                           image_t:'',
                                                           images:'',
                                                           url:'/fund/createByOrderStages',
-                                                          titles:'申请分期审核',
+                                                          titles:this.$t('static.review_application'),
                                                           link:paymentAudit
-                                                      })"> 
-                                                  <img src="/static/images/apply.png"  style="width:47px" />
-                                                  </a>
+                                                      })"> {{$t('static.review_application')}}
+                                                  </button>
                                                   <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;"  v-if="item.type==0&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                           show:true,
                                                           sub:$index,
@@ -260,9 +259,9 @@
                                                           image_t:'',
                                                           images:'',
                                                           url:'/fund/createByOrderStages',
-                                                          titles:'申请支付',
+                                                          titles:this.$t('static.review_application'),
                                                           link:paymentAudit
-                                                        })">申请付款</button>
+                                                        })">{{$t('static.apply_payment')}}</button>
                                                   </a>
                                                   <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                           show:true,
@@ -284,7 +283,7 @@
                                                           url:'/fund/createByOrderStages',
                                                           titles:'重新申请支付',
                                                           link:paymentAudit
-                                                      })">重新申请支付</button>
+                                                      })">{{$t('static.reapply')}}</button>
                                                   <a class="operate" v-if="item.type==1&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                           show:true,
                                                           sub:$index,
@@ -326,12 +325,12 @@
                                         })">
                                       <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.contractList.arr.length!==null">
-                                        合同凭证（{{initOrderDetail.contractList.arr.length}}）
+                                        {{$t('static.contract')}}（{{initOrderDetail.contractList.arr.length}}）
                                       </a>
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                      合同凭证（0）
+                                      {{$t('static.contract')}}（0）
                                       </a>
-                                      <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">客户已收货，商品质量符合客户要求！</span>
+                                      <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">{{$t('static.quality_satisfied')}}！</span>
                                           <button type="button" class="btn btn-base pull-right" @click.stop="createcredence({
                                               show:true,
                                               orderId:initOrderDetail.id,
@@ -379,7 +378,7 @@
                                                     url:'/customer/file/',
                                                     key:'contractList',
                                                     headline:'orderDetail'
-                                                  })">删除</button>
+                                                  })">{{$t('static.del')}}</button>
                                               </td>
                                           </tr>
                                        </tbody>
@@ -853,6 +852,9 @@ section article {
 .table>tbody>tr>td img{
     width: 100px;
     margin: 0
+}
+.table>tbody>tr>td a img{
+    width: auto;
 }
 .table{display: table;}
 .btn-orange {

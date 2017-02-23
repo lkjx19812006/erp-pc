@@ -3,8 +3,6 @@
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
-            
-
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer" >
                     <!-- <div class="client-detailInfo col-xs-6"> -->
@@ -32,7 +30,6 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        
                         <th>日期</th>
                         <th>邮箱</th>
                         <th>发件数量</th>
@@ -49,7 +46,6 @@
                 </tbody>
             </table>
         </div>
-
         <!--底部分页-->
         <!-- <pagination :combination="loadParam"  slot="page"></pagination> -->
 
@@ -165,7 +161,7 @@ export default {
 }
 #table_box table th,#table_box table td{
     width: 430px;
-    min-width: 430px;
+    min-width: 427px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;

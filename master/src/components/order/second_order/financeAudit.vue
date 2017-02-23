@@ -12,63 +12,63 @@
             <div class="edit-model">
                <section class="editsection clearfix" v-cloak>
                     <div class="editpage-input col-md-12" v-if="param.titles=='确认收款'||param.titles=='确认付款'">
-                       <label class="editlabel">订单流水号 <span class="system_danger" v-if="$validation.prno.required">必填项</span></label>
+                       <label class="editlabel">{{$t('static.pay_no')}} <span class="system_danger" v-if="$validation.prno.required">{{$t('static.required')}}</span></label>
                        <input type="text" class="form-control" v-validate:prno="{required:true}" v-model='param.prNo' value="{{param.prNo}}"/>
                     </div>
                     <div class="editpage-input col-md-12" v-if="param.titles=='确认收款'||param.titles=='确认付款'">
-                       <label class="editlabel">备注</label>
+                       <label class="editlabel">{{$t('static.comment')}}</label>
                        <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" value="{{param.description}}"></textarea>
                     </div>
                     <div class="editpage-input col-md-12" v-if="param.titles=='审核合同'||param.titles=='售后审核'||param.titles=='确认收货'">
-                       <label class="editlabel">审核说明</label>
+                       <label class="editlabel">{{$t('static.approve_comment')}}</label>
                        <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" ></textarea>
                     </div>
-                     <div class="editpage-input col-md-12" v-if="param.titles=='申请审核'">
-                       <label class="editlabel">审核说明</label>
+                     <div class="editpage-input col-md-12" v-if="param.titles==this.$t('static.review_application')">
+                       <label class="editlabel">{{$t('static.approve_comment')}}</label>
                        <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" ></textarea>
                     </div>
                     <div class="editpage-input col-md-12" v-if="param.titles=='售后异议处理'">
-                       <label class="editlabel">异议处理说明</label>
+                       <label class="editlabel">{{$t('static.objection_handl')}}{{$t('details')}}</label>
                        <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" ></textarea>
                     </div>
                     <div class="editpage-input col-md-12" v-if="param.titles=='重新申请审核'">
-                       <label class="editlabel">备注</label>
+                       <label class="editlabel">{{$t('static.comment')}}</label>
                        <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5"></textarea>
                     </div>
                     <div class="editpage-input col-md-12" v-if="param.titles!='审核合同'&&param.titles!='重新申请审核'&&param.titles!='售后审核'&&param.titles!='售后异议处理'&&param.titles!=='确认收货'" style="max-height:200px;overflow-y:auto;">
-                         <label class="editlabel">支付/收款凭证</label>
+                         <label class="editlabel">{{$t('static.payment')}}</label>
                          <press-image :value.sync="param.image_f" :type.sync="type" :param="imageParam"></press-image>
                     </div>
                </section>
             </div>
             <div class="edit_footer" v-if="param.titles=='确认收款'||param.titles=='确认付款'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-               <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="reject(param)">不通过</button>
-                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="agree(param)">确定</button>
-                <button type="button" class="btn  btn-confirm" v-else disabled="true" >通过审核</button>
+               <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="reject(param)">{{$t('static.reject')}}</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="agree(param)">{{$t('static.confirm')}}</button>
+                <button type="button" class="btn  btn-confirm" v-else disabled="true" >{{$t('static.approved')}}</button>
             </div>
             <div class="edit_footer" v-if="param.titles=='审核合同'||param.titles=='售后审核'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-               <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="bargainReject(param)">不通过</button>
-                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="bargainPass(param)">确定</button>
-                <button type="button" class="btn  btn-confirm" v-else disabled="true" >通过审核</button>
+               <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="bargainReject(param)">{{$t('static.reject')}}</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="bargainPass(param)">{{$t('static.confirm')}}</button>
+                <button type="button" class="btn  btn-confirm" v-else disabled="true" >{{$t('static.approved')}}</button>
             </div>
             <div class="edit_footer" v-if="param.titles=='重新申请审核'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-               <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="cancelContract(param)">取消申请</button>
-                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="referTo(param)">提交</button>
-                <button type="button" class="btn  btn-confirm" v-else disabled="true" >提交</button>
+               <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="cancelContract(param)">{{$t('static.cancel')}}</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="referTo(param)">{{$t('static.submit')}}</button>
+                <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.submit')}}</button>
             </div>
-            <div class="edit_footer" v-if="param.titles=='确定收款'||param.titles=='申请审核'">
+            <div class="edit_footer" v-if="param.titles==this.$t('static.confirm_income')||param.titles==this.$t('static.review_application')">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show=false)">{{$t('static.confirm')}}</button>
-                <button type="button" class="btn  btn-confirm" v-else disabled="true" >确定</button>
+                <button type="button" class="btn  btn-confirm" v-else disabled="true" >{{$t('static.confirm')}}</button>
             </div>
             <div class="edit_footer" v-if="param.titles=='售后异议处理'||param.titles=='确认收货'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-               <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.titles=='售后异议处理'" @click="param.link(param,param.show=false)" >异议处理</button>
-                <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.titles=='确认收货'" @click="bargainReject(param)">不合格</button>
-                <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.titles=='确认收货'" @click="bargainPass(param)">合格</button>
+               <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.titles=='售后异议处理'" @click="param.link(param,param.show=false)" >{{$t('static.objection_handl')}}</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.titles=='确认收货'" @click="bargainReject(param)">{{$t('static.unqualified')}}</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.titles=='确认收货'" @click="bargainPass(param)">{{$t('static.satisfied')}}</button>
             </div>
         </validator>
     </div>

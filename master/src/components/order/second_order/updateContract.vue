@@ -11,19 +11,19 @@
             <div class="edit-model">
                <section class="editsection clearfix" v-cloak>
                     <div class="editpage-input col-md-12">
-                       <label class="editlabel">调整差额 <span class="system_danger" v-if="$validation.adjust.required">{{$t('static.required')}}</span></label>
+                       <label class="editlabel">{{$t('static.diferencia')}} <span class="system_danger" v-if="$validation.adjust.required">{{$t('static.required')}}</span></label>
                        <input type="number" class="form-control" v-model="param.adjusted"  v-validate:adjust="{required:true}"/>
                     </div>
                     <div class="editpage-input col-md-12">
-                       <label class="editlabel">补充合同文本 <span class="system_danger" v-if="$validation.text.required">{{$t('static.required')}}</span></label>
+                       <label class="editlabel">{{$t('static.contract_note')}} <span class="system_danger" v-if="$validation.text.required">{{$t('static.required')}}</span></label>
                        <textarea v-model='param.contractText' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;font-size: 13px;" rows="5" placeholder="请说明补充理由" v-validate:text="{required:true}"></textarea>
                     </div>
                     <div class="editpage-input col-md-12">
-                       <label class="editlabel">备注</label>
+                       <label class="editlabel">{{$t('static.comment')}}</label>
                        <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;font-size: 13px;" rows="3"></textarea>
                     </div>
                     <div class="editpage-input col-md-12">
-                         <label class="editlabel">支付/收款凭证</label>
+                         <label class="editlabel">{{$t('static.payment')}}</label>
                          <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;width:20%"></press-image>
                          <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
                          <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
@@ -33,7 +33,7 @@
             <div class="edit_footer">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm()">{{$t('static.confirm')}}</button>
-                <button type="button" class="btn  btn-confirm" v-else disabled="true" >确定</button>
+                <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.confirm')}}</button>
             </div>
         </validator>
     </div>

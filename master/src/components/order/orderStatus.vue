@@ -34,7 +34,7 @@
             </div>
             <div class="order_info clearfix">
               <div class="col-xs-6 pull-left clearfix" >
-                <div class="col-xs-3 col-md-4 pull-left" v-for="item in initOrderDetail.goods.arr">
+                <div class="col-xs-3 col-md-4 pull-left"style="white-space: normal;"  v-for="item in initOrderDetail.goods.arr">
                   <p>{{item.breedName}}</p>
                   <p>{{item.price}}元/{{item.unit}}</p>
                   <p>{{$t('static.quantity')}}：{{item.number}}</p>
@@ -319,7 +319,7 @@
                     orderStatus:'',
                     link:'/order/receiveConfirm',
                     key:param.key
-                  },param.show=false)"  value="确认客户收货" />
+                  },param.show=false)"  value="{{$t('static.condirm_receive')}}" />
                 <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
                   id:initOrderDetail.logisticses.arr[0].id,
                   lcompanyId:initOrderDetail.logisticses.arr[0].logistics,

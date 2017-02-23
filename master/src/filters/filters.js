@@ -21,21 +21,42 @@ Vue.filter('telstate', function(val){
 Vue.filter('payMent', function(val){
 	var val = val;
 	if(val==0){
-		 return '付款';
+		return '付款';
 	}else if(val==1){
 		return '收款'
 	}else{
 		return val;
 	}
 });
-Vue.filter('bizType', function(val){
+
+Vue.filter('bizType', function(val,bizType,type){
 	var val = val;
-	if(val=='order'){
-		 return '订单';
-	}else if(val=='order_after_sales_refund'){
+	var type = type;
+	var bizType = bizType;
+	if(val=='order'&&type==0){
+		 return '付款订单';
+	}else if(val=='order'&&type==1){
+		 return '收款订单';
+	}else if(bizType=='order_after_sales_refund'){
 		return '售后退款订单'
-	}else if(val=='order_refund'){
+	}else if(bizType=='order_refund'){
 		return '补充合同退款订单'
+	}else{
+		return val;
+	}
+});
+Vue.filter('enbizType', function(val,bizType,type){
+	var val = val;
+	var type = type;
+	var bizType = bizType;
+	if(val=='order'&&type==0){
+		 return 'Payment order';
+	}else if(val=='order'&&type==1){
+		 return 'Receipt order';
+	}else if(bizType=='order_after_sales_refund'){
+		return 'Refund for aftersales changes'
+	}else if(bizType=='order_refund'){
+		return 'Refund for order changes'
 	}else{
 		return val;
 	}
@@ -55,7 +76,7 @@ Vue.filter('assess', function(val,type,logistic,name,taskKey){ //订单状态判
 	if(val==60&&type==1&&logistic==2){
 		 return '已发货（仓库审核）';
 	}else if(val==60&&type==1&&logistic==3){
-		return '等待检验'
+		return '质量检验'
 	}else if(val==60&&type==1&&logistic==40){
 		return '已完成订单（质量合格）'
 	}else if(val==60&&type==1&&logistic==50){
@@ -690,20 +711,67 @@ Vue.filter('orderstatus',function(val){     //订单状态
 	}
 })
 
+Vue.filter('salesRecord',function(val,type){     //订单退换货
+	var val = val;
+	var type = type;
+	if(val==null){
+		return this.$t('static.wait_approval');
+	}else if(val==0){
+		 return this.$t('static.wait_approval');
+	}else if(val==1&&type==0){
+		 return this.$t('static.dispatch');
+	}else if(val==1&&type==1){
+		 return this.$t('static.dispatch');
+	}else if(val==2&&type==0){
+		 return '换货成功';
+	}else if(val==2&&type==1){
+		 return '退货成功';
+	}else if(val==-2){
+		 return this.$t('static.unapproved');
+	}
+	else if(val==3){
+		 return this.$t('static.receive');
+	}else if(val==-1&&type==0){
+		 return this.$t('static.canceled_apply');
+	}else if(val==-1&&type==1){
+		 return this.$t('static.canceled_apply');
+	}else{
+		return val;
+	}
+})
+
 Vue.filter('Auditing',function(val){     //订单审核
 	var val = val;
 	if(val==null){
-		return '初始状态';
+		return this.$t('static.wait_approval');
 	}else if(val==0){
-		 return '初始状态';
+		 return this.$t('static.wait_approval');
 	}else if(val==1){
-		 return '申请审核中';
+		 return this.$t('static.applied');
 	}else if(val==2){
-		 return '审核通过';
+		 return this.$t('static.approved');
 	}else if(val==-2){
-		 return '审核未通过';
+		 return this.$t('static.unapproved');
 	}else if(val==-1){
-		 return '已取消申请';
+		 return this.$t('static.canceled_apply');
+	}else{
+		return val;
+	}
+})
+Vue.filter('EnAuditing',function(val){     //订单审核
+	var val = val;
+	if(val==null){
+		return 'Waiting for an approval';
+	}else if(val==0){
+		 return 'Waiting for an approval';
+	}else if(val==1){
+		 return 'Under review';
+	}else if(val==2){
+		 return 'Approved';
+	}else if(val==-2){
+		 return 'Audit not passed';
+	}else if(val==-1){
+		 return 'Cancelled';
 	}else{
 		return val;
 	}
@@ -727,6 +795,7 @@ Vue.filter('Audit',function(val){     //寄样审核
 		 return '审核未通过';
 	}
 })
+
 Vue.filter('drugsStatus',function(val){     //药款状态
 	var val = val;
 	if(val==0){

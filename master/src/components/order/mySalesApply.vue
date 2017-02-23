@@ -8,36 +8,36 @@
       <div slot="top">
           <div class="clearfix">
             <dl class="clear left transfer">
-               <dt class="left transfer marg_top">订单类型：</dt>
+               <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
                <dd class="left">
                   <select class="form-control" v-model="loadParam.orderType" @change="selectSearch()">
-                    <option value="">全部</option>
-                    <option value="0">采购</option>
-                    <option value="1">销售</option>
+                    <option value="">{{$t('static.please_select')}}</option>
+                    <option value="0">{{$t('static.purchase')}}</option>
+                    <option value="1">{{$t('static.sell')}}</option>
                   </select>
                </dd>
             </dl>
             <dl class="clear left transfer">
-               <dt class="left  marg_top">商品名称：</dt>
+               <dt class="left  marg_top">{{$t('static.breed')}}：</dt>
                <dd class="left">
                   <input type="text"  class="form-control" v-model="loadParam.orderDesc"  @keyup.enter="selectSearch()"/>
                </dd>
             </dl>
             <dl class="clear left transfer">
-               <dt class="left transfer marg_top">订单号：</dt>
+               <dt class="left transfer marg_top">{{$t('static.order_no')}}：</dt>
                <dd class="left">
                   <input type="text"  class="form-control" v-model="loadParam.orderNo"  @keyup.enter="selectSearch()"/>
                </dd>
             </dl>
             
             <dl class="clear left transfer">
-               <dt class="left transfer marg_top">客户名称：</dt>
+               <dt class="left transfer marg_top">{{$t('static.client_name')}}：</dt>
                <dd class="left">
                   <input type="text"  class="form-control" v-model="loadParam.customerName"  @keyup.enter="selectSearch()"/>
                </dd>
             </dl>
             <dl class="clear left transfer">
-               <dt class="left transfer marg_top">客户手机：</dt>
+               <dt class="left transfer marg_top">{{$t('static.client_phone')}}：</dt>
                <dd class="left">
                   <input type="text"  class="form-control" v-model="loadParam.customerPhone"  @keyup.enter="selectSearch()"/>
                </dd>
@@ -57,40 +57,40 @@
           <table class="table table-hover table_color table-striped" v-cloak id="tab">
             <thead>
                 <tr>
-                  <th>日期</th>
-                  <th>售后类型</th>
-                  <th>客户名称</th>
-                  <th>客户电话</th>
-                  <th>订单商品</th>
-                  <th>订单号</th>
-                  <th>订单类型</th>
-                  <th>收货人</th>
-                  <th>发货人</th>
-                  <th>备注</th>
-                  <th>说明</th>
-                  <th>状态说明</th>
-                  <th>操作</th>
+                  <th>{{$t('static.date')}}</th>
+                  <th>{{$t('static.aftersales_type')}}</th>
+                  <th>{{$t('static.client_name')}}</th>
+                  <th>{{$t('static.client_phone')}}</th>
+                  <th>{{$t('static.breed')}}</th>
+                  <th>{{$t('static.order_no')}}</th>
+                  <th>{{$t('static.order_type')}}</th>
+                  <th>{{$t('static.consignee')}}</th>
+                  <th>{{$t('static.send_person')}}</th>
+                  <th>{{$t('static.comment')}}</th>
+                  <th>{{$t('static.explanation')}}</th>
+                  <th>{{$t('static.status')}} {{$t('static.explanation')}}</th>
+                  <th>{{$t('static.handle')}}</th>
                 </tr>
             </thead>
             <tbody>
               <tr v-for="item in initMyAfterSales">
                 <td>{{item.ctime | dateTime}}</td>
-                <td v-if="item.type==0">换货</td>
-                <td v-if="item.type==1">退货</td>
+                <td v-if="item.type==0">{{$t('static.replacement')}}</td>
+                <td v-if="item.type==1">{{$t('static.reutrned')}}</td>
                 <td>{{item.customerName}}</td>
                 <td>{{item.customerPhone}}</td>
                 <td>{{item.orderDesc}}</td>
                 <td>{{item.orderNo}}</td>
-                <td v-if="item.orderType==0">采购</td>
-                <td v-if="item.orderType==1">销售</td>
+                <td v-if="item.orderType==0">{{$t('static.purchase')}}</td>
+                <td v-if="item.orderType==1">{{$t('static.sell')}}</td>
                 <td>{{item.consigneeName}}</td>
                 <td>{{item.shipperName}}</td>
                 <td>{{item.comment}}</td>
                 <td>{{item.description}}</td>
-                <td v-if="item.taskKey=='after_sales_refund'&&item.validate==1">待{{item.handlerName}}处理</td>
+                <td v-if="item.taskKey=='after_sales_refund'&&item.validate==1">{{$t('static.un_finance')}}</td>
                 <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==0">待{{item.handlerName}}发货</td>
-                <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==2">已发货，请到我的订单确认收货</td>
-                <td v-if="item.taskKey!=='after_sales_refund'&&item.taskKey!=='after_sales_resend'">{{item.validate | Auditing}}</td>
+                <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==2">{{$t('static.sent_confirm')}}</td>
+                <td v-if="item.taskKey!=='after_sales_refund'&&item.taskKey!=='after_sales_resend'">{{item.validate | salesRecord item.type}}</td>
                 <td>
                     <a class="operate" v-if="item.validate==-2" @click="editPayment({
                             show:true,
@@ -111,7 +111,7 @@
                             url:'/order/quality/after/sales/edit',
                             titles:'编辑',
                             link:afterSalseEdit
-                        })"><img src="/static/images/edit.png"/></a>
+                        })"><img src="/static/images/{{$t('static.img_edit')}}.png"/></a>
                     <a class="operate" v-if="item.validate==-2&&item.taskKey=='after_sales_employee_handle'" @click="applyInfo({
                           show:true,
                           sub:$index,
@@ -132,7 +132,7 @@
                               url:'/order/quality/after/sales/validate',
                               titles:'确认收货',
                               link:contractCheck
-                    })">收货确认</button>
+                    })">{{$t('static.confirm_receipt')}}</button>
                     <button class="btn btn-primary" v-if="item.validate==-2&&item.taskKey=='after_sales_disputed_handle'" style="background:#fff;color:#2e6da4;padding:2px 5px;" 
                           @click="applyInfo({
                               show:true,
@@ -142,8 +142,8 @@
                               url:'/order/quality/after/sales/disputed',
                               titles:'售后异议处理',
                               link:contractCheck
-                    })">异议处理</button>
-                    <button class="btn btn-primary" v-if="item.taskKey=='after_sales_resend'&&item.handler==initLogin.id&&item.logistics==0" style="background:#fff;color:#2e6da4;padding:2px 5px;"  @click="salesResend(item,$index)">重新发货</button>
+                    })">{{$t('static.objection_handl')}}</button>
+                    <button class="btn btn-primary" v-if="item.taskKey=='after_sales_resend'&&item.handler==initLogin.id&&item.logistics==0" style="background:#fff;color:#2e6da4;padding:2px 5px;"  @click="salesResend(item,$index)">{{$t('static.reapply_delivery')}}</button>
                 </td>
               </tr>
             </tbody>
@@ -273,7 +273,6 @@
         this.resendParam.orderId = item.orderId;
         this.resendParam.validate = item.validate;
         this.resendParam.callback = this.callback;
-        console.log(this.resendParam)
       },
       applyInfo:function(item){
         this.financeParam.show = true;

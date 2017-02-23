@@ -12,27 +12,27 @@
             <div class="edit-model">
                <section class="editsection clearfix" v-cloak>
                     <div class="editpage-input col-md-6">
-                       <label class="editlabel">售后方式 <span class="system_danger" v-if="$validation.adjust.required">{{$t('static.required')}}</span></label>
+                       <label class="editlabel">{{$t('static.sales_mothod')}} <span class="system_danger" v-if="$validation.adjust.required">{{$t('static.required')}}</span></label>
                        <input type="text" v-show="false" class="form-control" v-model="param.type"  v-validate:adjust="{required:true}"/>
                        <select class="form-control" v-model="param.type" @change="clickSwitch()">
-                          <option value="0">换货</option>
-                          <option value="1">退货</option>
+                          <option value="0">{{$t('static.replacement')}}</option>
+                          <option value="1">{{$t('static.reutrned')}}</option>
                        </select>
                     </div>
                     <div class="editpage-input col-md-6">
-                       <label class="editlabel">收货人 <span class="system_danger" v-if="$validation.consignee.required">{{$t('static.required')}}</span></label>
+                       <label class="editlabel">{{$t('static.receive_person')}} <span class="system_danger" v-if="$validation.consignee.required">{{$t('static.required')}}</span></label>
                        <input type="text"  class="form-control" v-model="employeeParam.consigneeName"  v-validate:consignee="{required:true}" value="{{param.consigneeName}}" readonly="true"  @click="selectEmployee(param.consignee,employeeParam.consigneeName,receive)" />
                     </div>
                     <div class="editpage-input col-md-6" v-if="param.type==0">
-                       <label class="editlabel">发货人 <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
+                       <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
                        <input type="text"  class="form-control" v-model="employeeParam.shipperName"  v-validate:shipper="{required:true}" value="{{param.shipperName}}" readonly="true"  @click="selectEmployee(param.shipper,employeeParam.shipperName,deliver)" />
                     </div>
                     <div class="editpage-input col-md-12">
-                       <label class="editlabel">备注</label>
+                       <label class="editlabel">{{$t('static.comment')}}</label>
                        <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;font-size: 13px;" rows="5"></textarea>
                     </div>
                     <div class="editpage-input col-md-12">
-                         <label class="editlabel">上传凭证</label>
+                         <label class="editlabel">{{$t('static.upload_attachments')}}</label>
                          <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;width:20%"></press-image>
                          <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
                          <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
@@ -42,7 +42,7 @@
             <div class="edit_footer">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm()">{{$t('static.confirm')}}</button>
-                <button type="button" class="btn  btn-confirm" v-else disabled="true" >确定</button>
+                <button type="button" class="btn  btn-confirm" v-else disabled="true" >{{$t('static.confirm')}}</button>
             </div>
         </validator>
     </div>
