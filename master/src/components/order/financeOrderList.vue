@@ -146,9 +146,9 @@
                     <a class="operate" v-if="item.type==0&&item.pr==0&&item.validate==2">
                       等待业务员{{item.employeeName}}确认
                     </a>
+                    <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.bizType=='order'" @click="openPDF(item)">打开PDF</button>
                   </td>
                 </tr>
-<<<<<<< HEAD
               </tbody>
             </table>
         </div>
@@ -156,78 +156,6 @@
         <pagination :combination="loadParam"  slot="page"></pagination>
     </mglist-model>
   </div>
-=======
-            </thead>
-            <tbody>
-              <tr v-for="item in initFinanceList">
-                <td>{{item.ctime}}</td>
-                <td><a @click="clickOn({
-                    sub:$index,
-                    id:item.id,
-                    loading:true,
-                    show:true,
-                    key:'fundRecord'
-                  })">{{item.bizType | bizType}}{{item.type | payMent}}</a>
-                </td>
-                <td>{{item.amount}}</td>
-                <td>{{item.currency | Currency}}</td>
-                <td>{{item.payName}}<span v-if="item.paySubName!==''">（{{item.paySubName}}）</span></td>
-                <td>{{item.employeeName}}</td>
-                <td>{{item.payUserName}}</td>
-                <td>{{item.payNumber}}</td>
-                <td>{{item.ctime}}</td>
-                <td>{{item.comment}}</td>
-                <td>{{item.prNo}}</td>
-                <td v-if="item.validate==0">未审核</td>
-                <td v-if="item.validate==1"><div style="background:#483D8B;color:#fff;">申请收/付款中</div></td>
-                <td v-if="item.validate==2"><div style="background:green;color:#fff;">审核成功</div></td>
-                <td v-if="item.validate==3"><div style="background:red;color:#fff;">审核未通过</div></td>
-                <td v-if="item.pr==0&&item.type==0">未付款</td>
-                <td v-if="item.pr==0&&item.type==1">未收款</td>
-                <td v-if="item.pr==1&&item.type==0"><div style="background:green;color:#fff;">已确认付款</div></td>
-                <td v-if="item.pr==1&&item.type==1&&item.bizType=='order'"><div style="background:green;color:#fff;">已确认收款</div></td>
-                <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_refund'"><div style="background:green;color:#fff;">已确认付款</div></td>
-                <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_after_sales_refund'"><div style="background:green;color:#fff;">已确认退款</div></td>
-                <td>
-                  <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.validate==1&&item.type==1" @click="applyInfo({
-                              show:true,
-                              sub:$index,
-                              id:item.id,
-                              validate:item.validate,
-                              prNo:'',
-                              description:'',
-                              image_f:'',
-                              images:'',
-                              url:'/fund/validate',
-                              titles:'确认收款',
-                              link:paymentAudit
-                          })">审核收款</button>
-                   <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.validate==1&&item.type==0" @click="applyInfo({
-                              show:true,
-                              sub:$index,
-                              id:item.id,
-                              validate:item.validate,
-                              description:'',
-                              image_f:'',
-                              images:'',
-                              url:'/fund/validate',
-                              titles:'确认付款',
-                              link:paymentAudit
-                          })">确认付款</button>
-                  <a class="operate" v-if="item.pr==0&&item.validate==2">
-                    等待业务员{{item.employeeName}}确认
-                  </a>
-                  <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.bizType=='order'" @click="openPDF(item)">打开PDF</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-      </div>
-       <!-- 底部分页 -->
-      <pagination :combination="loadParam"  slot="page"></pagination>
-  </mglist-model>
-
->>>>>>> ad5039fb006b4540ff17eabf462fdbd864511036
 </template>
 <script>
   import pagination from '../pagination'
