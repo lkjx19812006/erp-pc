@@ -721,11 +721,11 @@ Vue.filter('salesRecord',function(val,type){     //订单退换货
 	}else if(val==1&&type==0){
 		 return this.$t('static.dispatch');
 	}else if(val==1&&type==1){
-		 return this.$t('static.dispatch');
+		 return this.$t('static.wait_receipt');
 	}else if(val==2&&type==0){
-		 return '换货成功';
+		 return this.$t('static.replacement')+this.$t('static.success');
 	}else if(val==2&&type==1){
-		 return '退货成功';
+		 return this.$t('static.reutrned')+this.$t('static.success');
 	}else if(val==-2){
 		 return this.$t('static.unapproved');
 	}

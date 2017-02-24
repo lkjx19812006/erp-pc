@@ -3,6 +3,7 @@
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
   <resend-model :param="resendParam" v-if="resendParam.show"></resend-model>
+  <aftersales-model :param="salesParam" v-if="salesParam.show"></aftersales-model>
   <mglist-model>
       <!-- 头部搜索 -->
       <div slot="top">
@@ -77,7 +78,14 @@
                 <td>{{item.ctime | dateTime}}</td>
                 <td v-if="item.type==0">{{$t('static.replacement')}}</td>
                 <td v-if="item.type==1">{{$t('static.reutrned')}}</td>
-                <td>{{item.customerName}}</td>
+                <td><a @click="details({
+                    id:item.id,
+                    show:true,
+                    loading:false,
+                    url:'/order/quality/after/sales/details/',
+                    index:$index
+                  })">{{item.customerName}}</a>
+                </td>
                 <td>{{item.customerPhone}}</td>
                 <td>{{item.orderDesc}}</td>
                 <td>{{item.orderNo}}</td>
@@ -92,7 +100,7 @@
                 <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==2">{{$t('static.sent_confirm')}}</td>
                 <td v-if="item.taskKey!=='after_sales_refund'&&item.taskKey!=='after_sales_resend'">{{item.validate | salesRecord item.type}}</td>
                 <td>
-                    <a class="operate" v-if="item.validate==-2" @click="editPayment({
+                    <a class="operate" v-if="item.validate==-2||item.validate==0" @click="editPayment({
                             show:true,
                             sub:$index,
                             id:item.id,
@@ -112,11 +120,21 @@
                             titles:'编辑',
                             link:afterSalseEdit
                         })"><img src="/static/images/{{$t('static.img_edit')}}.png"/></a>
+                    <!-- 申请审核 -->
+                    <button class="btn btn-warning" style="padding:1px 3px;background-color: #fff;color:#eea236;" v-if="item.validate==0" v-show="false" @click="applyInfo({
+                          show:true,
+                          sub:$index,
+                          id:item.id,
+                          validate:item.validate,
+                          comment:'',
+                          url:'/order/quality/after/sales/restartOrCancel',
+                          titles:this.$t('static.review_application'),
+                          link:contractCheck
+                      })">{{$t('static.review_application')}}</button>
                     <a class="operate" v-if="item.validate==-2&&item.taskKey=='after_sales_employee_handle'" @click="applyInfo({
                           show:true,
                           sub:$index,
                           id:item.id,
-                          //orderId:item.orderId,
                           validate:item.validate,
                           comment:'',
                           url:'/order/quality/after/sales/restartOrCancel',
@@ -164,6 +182,7 @@
   import updateModel from '../../components/order/second_order/afterSalesApply'
   import resendModel from '../order/second_order/afterResendPage'
   import mglistModel from '../mguan/mgListComponent.vue'
+  import aftersalesModel from '../order/second_order/orderReceiveDetail'
   import {
     initMyAfterSales,
     initLogin 
@@ -172,8 +191,7 @@
     getSalesApplyList,
     paymentConfirm,
     contractCheck,
-    afterSalseEdit,
-    
+    afterSalseEdit
   } from '../../vuex/actions'
   export default {
     components: {
@@ -183,6 +201,7 @@
       tipsModel,
       updateModel,
       resendModel,
+      aftersalesModel,
       mglistModel
     },
     vuex: {
@@ -194,8 +213,7 @@
         getSalesApplyList,
         paymentConfirm,
         contractCheck,
-        afterSalseEdit,
-        
+        afterSalseEdit
       }
     },
     data() {
@@ -240,6 +258,9 @@
         editParam: {
           show: false
         },
+        salesParam:{
+          show:false
+        },
         tipsParam:{
           show:false,
           alert:true,
@@ -266,6 +287,9 @@
         this.loadParam.orderNo='';
         this.loadParam.orderType='';
         this.getSalesApplyList(this.loadParam);
+      },
+      details:function(item){
+          this.salesParam = item;
       },
       salesResend:function(item,sub){ //重新发货
         this.resendParam.show = true;

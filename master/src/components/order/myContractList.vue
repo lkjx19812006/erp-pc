@@ -2,6 +2,7 @@
   <update-model :param="editParam" v-if="editParam.show"></update-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
+  <contract-model :param="contractParam" v-if="contractParam.show"></contract-model>
   <language-model v-show="false"></language-model>
   <mglist-model>
       <!-- 头部搜索 -->
@@ -74,7 +75,14 @@
             <tbody>
               <tr v-for="item in initMyContractList">
                 <td>{{item.ctime | dateTime}}</td>
-                <td>{{item.customerName}}</td>
+                <td><a @click="details({
+                  id:item.id,
+                  show:true,
+                  loading:false,
+                  url:'/order/contract/details/',
+                  index:$index
+                  })">{{item.customerName}}</a>
+                </td>
                 <td>{{item.customerPhone}}</td>
                 <td>{{item.orderDesc}}</td>
                 <td>{{item.orderNo}}</td>
@@ -135,6 +143,7 @@
   import updateModel from '../../components/order/second_order/updateContract'
   import mglistModel from '../mguan/mgListComponent.vue'
   import languageModel from '../tools/language.vue'
+  import contractModel from '../order/second_order/orderReceiveDetail'
   import {
     initMyContractList
   } from '../../vuex/getters'
@@ -152,7 +161,8 @@
       tipsModel,
       updateModel,
       mglistModel,
-      languageModel 
+      languageModel,
+      contractModel
     },
     vuex: {
       getters: {
@@ -183,6 +193,9 @@
           validate:'',
           total:0
         },
+        contractParam:{
+          show:false
+        },
         editParam: {
           show: false
         },
@@ -205,6 +218,9 @@
       clickday:function(validate){
          this.loadParam.validate = validate;
          this.getMyContractList(this.loadParam);
+      },
+      details:function(item){
+         this.contractParam = item;
       },
       resetTime:function(){
         this.loadParam.orderDesc='';

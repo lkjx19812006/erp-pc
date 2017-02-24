@@ -1,5 +1,6 @@
 <template>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+  <div>
+    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show" @click="param.show=false">
         <div @click="close()" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -33,6 +34,7 @@
             </div>
         </section>
     </div>
+  </div>  
 </template>
 <script>
 import{

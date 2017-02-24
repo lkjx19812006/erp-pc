@@ -2,7 +2,7 @@
   <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
-
+  <aftersales-model :param="salesParam" v-if="salesParam.show"></aftersales-model>
   <mglist-model>
       <!-- 头部搜索 -->
       <div slot="top">
@@ -76,7 +76,14 @@
                 <td>{{item.ctime | dateTime}}</td>
                 <td v-if="item.type==0">{{$t('static.replacement')}}</td>
                 <td v-if="item.type==1">{{$t('static.reutrned')}}</td>
-                <td>{{item.customerName}}</td>
+                <td><a @click="details({
+                    id:item.id,
+                    show:true,
+                    loading:false,
+                    url:'/order/quality/after/sales/details/',
+                    index:$index
+                  })">{{item.customerName}}</a>
+                </td>
                 <td>{{item.customerPhone}}</td>
                 <td>{{item.orderDesc}}</td>
                 <td>{{item.orderNo}}</td>
@@ -121,7 +128,8 @@
   import changeMenu from '../../components/tools/tabs/tabs.js'
   import auditModel  from './second_order/financeAudit'
   import tipsModel from '../../components/tips/tipDialog'
-  import mglistModel from '../mguan/mgListComponent.vue'
+  import mglistModel from '../mguan/mgListComponent'
+  import aftersalesModel from '../order/second_order/orderReceiveDetail'
   import {
     initOrgAfterSales
   } from '../../vuex/getters'
@@ -136,6 +144,7 @@
       detailModel,
       auditModel,
       tipsModel,
+      aftersalesModel,
       mglistModel
     },
     vuex: {
@@ -169,6 +178,9 @@
         changeParam: {
           show: false
         },
+        salesParam:{
+          show:false
+        },
         tipsParam:{
           show:false,
           alert:true,
@@ -199,6 +211,9 @@
         this.loadParam.orderNo='';
         this.loadParam.orderType='';
         this.getSalesApplyList(this.loadParam);
+      },
+      details:function(item){
+        this.salesParam = item;
       },
       applyInfo:function(item){
         this.financeParam.show = true;
