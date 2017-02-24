@@ -133,6 +133,15 @@ export const initDistrictlist = (state) => {
 export const initEnterpriselist = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.enterpriseList));
 }
+export const initCompanyProductlist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.companyProductList));
+}
+export const initCompanyLicenselist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.companyLicenseList));
+}
+export const initRelativeCompanylist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.relativeCompanyList));
+}
 export const initConponentlist = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.componentList));
 }

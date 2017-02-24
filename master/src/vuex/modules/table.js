@@ -13,6 +13,9 @@ import {
    SYSTEM_DATA,
    PROVINCE_DATA,
    SERVICE_ENTERPRISE,
+   COMPANY_PRODUCT_DATA,
+   COMPANY_LICENSE_DATA,
+   RELATIVE_COMPANY_DATA,
    SERVICE_COMPONENT,
    SERVICE_DRAW,
    DELETE_SHOW_STATUE,
@@ -319,6 +322,9 @@ const state = {
             { "id": 0, "number": "00", "category": "0ww", "name": "上海ee冕冠", "tel": "13162875213", "legal_person": "卡卡", "principal": "来啦", "biz_scope": "包括很多、很多、、、", "province": "上海虹口区", "city": "虹口区", "address": "上海虹口江湾镇", "release_date": "2015-07-07", "due_date": "2018-07-07", "show": "true" },
             { "id": 1, "number": "11", "category": "3243", "name": "上海冕冠", "tel": "13162875213", "legal_person": "卡卡", "principal": "来啦", "biz_scope": "包括很多、很多、、、", "province": "上海虹口区", "city": "虹口区", "address": "上海虹口江湾镇", "release_date": "2015-07-07", "due_date": "2018-07-07", "show": "false" }
         ],
+        companyProductList: [],
+        companyLicenseList: [],
+        relativeCompanyList: [],
         componentList: [
             { "code": 0, "name": "人参", "company_name": "饮片厂", "breed_name": "ddd", "quantity": "0.5g", "unit": "克", "status": "提取物" },
             { "code": 1, "name": "红茶", "company_name": "药品厂", "breed_name": "ffd", "quantity": "0.5g", "unit": "克", "status": "药材" }
@@ -1016,6 +1022,15 @@ const mutations = {
 
     [SERVICE_ENTERPRISE](state, data) { //企业
         state.basicBaseList.enterpriseList = data;
+    },
+    [COMPANY_PRODUCT_DATA](state, data) { //企业产品
+        state.basicBaseList.companyProductList = data;
+    },
+    [COMPANY_LICENSE_DATA](state, data) { //企业证书
+        state.basicBaseList.companyLicenseList = data;
+    },
+    [RELATIVE_COMPANY_DATA](state, data) { //相关企业列表
+        state.basicBaseList.relativeCompanyList = data;
     },
     [SERVICE_DRAW](state, data) { //提取物
         state.basicBaseList.drawList = data;

@@ -1817,10 +1817,9 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
 
 export const downOrderDetailPDF = ({ dispatch }, param) => { //下载订单详情PDF
     param.loading =true;
-    var url = apiUrl.orderList + '/order/downOrderDetailPDF';
+    var url = apiUrl.orderList + '/fund/downPDFVoucher';
     var body = {
-        id: param.bizSubId,      //分期ID
-        orderId: param.bizId     //订单ID
+        id: param.id      
     }
 
     Vue.http({
@@ -2385,7 +2384,106 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
     });
 }
 
+export const getCompanyProduct = ({ dispatch }, param) => { //企业产品
+    param.loading = true;
+    var url = apiUrl.clientList + '/company/products?page=' + param.cur + '&pageSize=15';
+    
+    if(param.name){
+        url += "&name=" + param.name;
+    }
+    if(param.type){
+        url += "&type=" + param.type;
+    }
+    if(param.approvalNo){
+        url += "&approvalNo=" + param.approvalNo;
+    }
+    if(param.companyName){
+        url += "&companyName=" + param.companyName;
+    }
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj = res.json().result.list;
+        dispatch(types.COMPANY_PRODUCT_DATA, obj);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+}
 
+export const getRetiveCompany = ({ dispatch }, param) => { //根据产品名称获取公司
+    param.loading = true;
+    var url = apiUrl.clientList + param.link + '?page=' + param.cur + '&pageSize=15';
+    if(param.name){
+        url += '&name=' + param.name;
+    }
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj = res.json().result.list;
+        dispatch(types.RELATIVE_COMPANY_DATA, obj);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+}
+
+export const getCompanyLicense = ({ dispatch }, param) => { //企业证书
+    param.loading = true;
+    var url = apiUrl.clientList + '/company/licenses?page=' + param.cur + '&pageSize=15';
+    if(param.name){
+        url += "&name=" + param.name;
+    }
+    if(param.number!==""){
+        url += "&number=" + param.number;
+    }
+    if(param.companyName){
+        url += "&companyName=" + param.companyName;
+    }
+    if(param.productName!==""){
+        url += "&productName=" + param.productName;
+    }
+    if(param.releaseDateStart!==""){
+        url += "&releaseDateStart=" + param.releaseDateStart;
+    }
+    if(param.releaseDateEnd!==""){
+        url += "&releaseDateEnd=" + param.releaseDateEnd;
+    }
+    
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj = res.json().result.list;
+        dispatch(types.COMPANY_LICENSE_DATA, obj);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+}
 
 export const getComponentData = ({ dispatch }, param) => { //成分
     param.loading = true;

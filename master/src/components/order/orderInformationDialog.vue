@@ -55,7 +55,7 @@
                     <div class="editpage-input col-md-4">
                         <label class="editlabel">{{$t('static.international')}}</label>
                         <select type="text" class="form-control edit-input" v-model="param.intl"  @change="selectBizType()">
-                            <option value="0" selected="true">{{$t('static.no')}}</option>
+                            <option value="0">{{$t('static.no')}}</option>
                             <option value="1">{{$t('static.yes')}}</option>
                         </select>
                     </div>
