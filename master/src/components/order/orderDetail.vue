@@ -74,7 +74,6 @@
                                         {{$t('static.commodity_order')}}（{{initOrderDetail.goods.arr.length}}）
                                       </a>
                                       <span class="pull-right" style="color:#000;line-height:27px;font-size: 13px;">{{$t('static.breed')}}{{$t('static.total')}}：{{initOrderDetail.goods.total}}元</span>
-                                     
                                   </h4>
                               </div>
                               <div class="panel-collapse" v-if="initOrderDetail.goods.arr.length!==null" v-show="initOrderDetail.goods.show">
@@ -170,8 +169,8 @@
                                           <tr v-for="item in initOrderDetail.stages.arr">
                                               <td v-if="item.type==0">{{$t('static.paid')}}</td>
                                               <td v-if="item.type==1">{{$t('static.income')}}</td>
-                                              <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}}立即支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
-                                              <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}}的{{item.extra}}天内支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
+                                              <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{$t('static.immediately_pay')}}（{{$t('static.order_amount')}} {{item.ratio | advanced}}）</td>
+                                              <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{$t('static.immediately_pay')}} {{$t('static.ins')}} {{item.extra}} {{$t('static.day')}}（{{$t('static.order_amount')}} {{item.ratio | advanced}}）</td>
                                               <td>{{item.comment}}</td>
                                               <td v-if="item.validate==0" style="color:#91a0ff;cursor:pointer" @click="apply_Record({
                                                   sub:$index,

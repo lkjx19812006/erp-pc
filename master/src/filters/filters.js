@@ -184,11 +184,11 @@ Vue.filter('orderDescript', function(val){
 	if(val==null){
 		 return '无';
 	}else if(val==20){
-		return '合同签订后';
+		return this.$t('static.signing_contract');
 	}else if(val==60){
-		return '确认收货后';
+		return this.$t('static.confirm_receipt');
 	}else if(val==70){
-		return  '订单完成后';
+		return  this.$t('static.order_over');
 	}else {
 		return val;
 	}

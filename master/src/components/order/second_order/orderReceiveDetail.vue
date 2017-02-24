@@ -21,14 +21,14 @@
             <div class="client-section clearfix" @click.stop="">
               <h4 class="section_title">{{$t('static.details')}}</h4>
                 <ul class="clearfix" style="margin-top:20px;font-size: 13px; white-space: normal;">
-                  <li class="col-md-6 col-xs-6">商品名称：<label>{{initReceiptDetail.orderDesc}}</li>
-                  <li class="col-md-6 col-xs-6">客户名称：<label>{{initReceiptDetail.customerName}}</label></li>
-                  <li class="col-md-6 col-xs-6">客户手机：<label>{{initReceiptDetail.customerPhone}}</li>
-                  <li class="col-md-6 col-xs-6">订单流水号：<label>{{initReceiptDetail.orderNo}}</li>
-                  <li class="col-md-6 col-xs-6" v-if="param.url=='/order/contract/details/'">合同文本：<label>{{initReceiptDetail.contractText}}</li>
-                  <li class="col-md-6 col-xs-6" v-if="param.url=='/order/contract/details/'">调整差额：<label>{{initReceiptDetail.adjusted}}</li>
-                  <li class="col-md-6 col-xs-6">备注：<label>{{initReceiptDetail.comment}}</li>
-                  <li class="col-md-6 col-xs-6">创建时间：<label>{{initReceiptDetail.ctime | dateTime}}</li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.breed')}}：<label>{{initReceiptDetail.orderDesc}}</li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.client_name')}}：<label>{{initReceiptDetail.customerName}}</label></li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.client_phone')}}：<label>{{initReceiptDetail.customerPhone}}</li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.pay_no')}}：<label>{{initReceiptDetail.orderNo}}</li>
+                  <li class="col-md-6 col-xs-6" v-if="param.url=='/order/contract/details/'">{{$t('static.contract_note')}}：<label>{{initReceiptDetail.contractText}}</li>
+                  <li class="col-md-6 col-xs-6" v-if="param.url=='/order/contract/details/'">{{$t('static.diferencia')}}：<label>{{initReceiptDetail.adjusted}}</li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.comment')}}：<label>{{initReceiptDetail.comment}}</li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.create_time')}}：<label>{{initReceiptDetail.ctime | dateTime}}</li>
                 </ul>
             </div>
         </section>

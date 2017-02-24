@@ -1,69 +1,70 @@
 <template>
-  <tree-dialog v-if="treeParam.show" :param="treeParam" ></tree-dialog>
-	 <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-     <div class="cover_loading">
-         <pulse-loader :loading="loadParam.loading||orgParam.loading" :color="color" :size="size"></pulse-loader>
-     </div>
-
-	 <div class="container modal_con" v-show="param.show">
-       <div @click="param.show = false" class="top-title">
-            <span class="glyphicon glyphicon-remove-circle"></span>
+    <div>
+        <tree-dialog v-if="treeParam.show" :param="treeParam" ></tree-dialog>
+	    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+        <div class="cover_loading">
+            <pulse-loader :loading="loadParam.loading||orgParam.loading" :color="color" :size="size"></pulse-loader>
         </div>
-	    <div class="model-header">
-            <h4>业务员</h4>
-	    	<div class="con_list">
-    			<div class="trans_service clearfix" v-show="currentView==1">
-                    <div style="margin:30px 10px 15px 10px" class="clearfix">
-                        <div class="input-group col-xs-4 pull-left" @click="treeParam.show=true">
-                            <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
-                            <input type="text" class="form-control"  placeholder="点击选择部门"   value="{{treeParam.orgName}}">
-                            <!--<input type="button" class="form-control" value="根据部门查找" @click="treeParam.show=true"/>-->
-                        </div> 
-                        <div class="col-xs-1 pull-left"></div>
-                        <div class="input-group col-xs-4 pull-left">
-                            <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
-                            <input type="text" class="form-control" v-model="loadParam.name" placeholder="{{$t('static.enter_salesman')}}" @keyup.enter="employSearch()">
+    	<div class="container modal_con" v-show="param.show">
+           <div @click="param.show = false" class="top-title">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+            </div>
+    	    <div class="model-header">
+                <h4>{{$t('static.salesman')}}</h4>
+    	    	<div class="con_list">
+        			<div class="trans_service clearfix" v-show="currentView==1">
+                        <div style="margin:30px 10px 15px 10px" class="clearfix">
+                            <div class="input-group col-xs-4 pull-left" @click="treeParam.show=true">
+                                <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
+                                <input type="text" class="form-control"  placeholder="点击选择部门"   value="{{treeParam.orgName}}">
+                                <!--<input type="button" class="form-control" value="根据部门查找" @click="treeParam.show=true"/>-->
+                            </div> 
+                            <div class="col-xs-1 pull-left"></div>
+                            <div class="input-group col-xs-4 pull-left">
+                                <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
+                                <input type="text" class="form-control" v-model="loadParam.name" placeholder="{{$t('static.enter_salesman')}}" @keyup.enter="employSearch()">
 
+                            </div>
+                            <button type="button" class="new_btn" @click="reset()">{{$t('static.clear_all')}}</button>
+                            <button type="button" class="new_btn" style="margin-right:10px;" @click="employSearch()">{{$t('static.search')}}</button>
                         </div>
-                        <button type="button" class="new_btn" @click="reset()">{{$t('static.clear_all')}}</button>
-                        <button type="button" class="new_btn" style="margin-right:10px;" @click="employSearch()">{{$t('static.search')}}</button>
-                    </div>
-                    <div class="cover_loading">
-                        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-                    </div>    
-		            <table class="table table-hover table_color table-striped" style="text-align:center" v-cloak>
-		                <thead>
-		                    <tr>
-		                        <th></th>
-		                        <th>姓名</th>
-		                        <th>部门</th>
-		                        <th>手机</th>
-		                    </tr>
-		                </thead>
-		                <tbody>
-		                    <tr v-for="item in initEmployeeList"  @click="selectEmployee($index,item)">
-		                       <td  @click.stop="">
-		                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectEmployee($index,item)"></label>
-		                        </td>
-		                        <td>{{item.name}}</td>
-		                        <td>{{item.orgName}}</td>
-		                        <td>{{item.mobile}}</td>
-		                    </tr>
+                        <div class="cover_loading">
+                            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+                        </div>    
+    		            <table class="table table-hover table_color table-striped" style="text-align:center" v-cloak>
+    		                <thead>
+    		                    <tr>
+    		                        <th></th>
+    		                        <th>{{$t('static.name')}}</th>
+    		                        <th>{{$t('static.department')}}</th>
+    		                        <th>{{$t('static.cellphone')}}</th>
+    		                    </tr>
+    		                </thead>
+    		                <tbody>
+    		                    <tr v-for="item in initEmployeeList"  @click="selectEmployee($index,item)">
+    		                       <td  @click.stop="">
+    		                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectEmployee($index,item)"></label>
+    		                        </td>
+    		                        <td>{{item.name}}</td>
+    		                        <td>{{item.orgName}}</td>
+    		                        <td>{{item.mobile}}</td>
+    		                    </tr>
 
-		                </tbody>
-		            </table>
-                    <div class="base_pagination">
-                        <pagination :combination="loadParam"></pagination>
-                    </div>
-                    <div class="edit_footer">
-                        <button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
-                        <button type="button" class="btn btn-orange" @click="confirmEmp()">确定</button>
-                    </div>
-    			</div>
+    		                </tbody>
+    		            </table>
+                        <div class="base_pagination">
+                            <pagination :combination="loadParam"></pagination>
+                        </div>
+                        <div class="edit_footer">
+                            <button type="button" class="btn btn-close"  @click="param.show = fasle">{{$t('static.cancel')}}</button>
+                            <button type="button" class="btn btn-orange" @click="confirmEmp()">{{$t('static.confirm')}}</button>
+                        </div>
+        			</div>
 
-	    	</div>
-	    </div>
-	</div>
+    	    	</div>
+    	    </div>
+    	</div>
+    </div>
 </template>
 <script>
 import pagination from '../../pagination'

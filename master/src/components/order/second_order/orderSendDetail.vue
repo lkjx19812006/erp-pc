@@ -21,13 +21,13 @@
             <div class="client-section clearfix" @click.stop="">
               <h4 class="section_title">{{$t('static.details')}}</h4>
                 <ul class="clearfix" style="margin-top:20px;font-size: 13px; white-space: normal;">
-                  <li class="col-md-6 col-xs-6">商品名称：<label>{{initOrderDetail.goodsDesc}}</li>
-                  <li class="col-md-6 col-xs-6">客户名称：<label>{{initOrderDetail.customerName}}</label></li>
-                  <li class="col-md-6 col-xs-6">客户手机：<label>{{initOrderDetail.customerPhone}}</li>
-                  <li class="col-md-6 col-xs-6">收货人名称：<label>{{initOrderDetail.consignee}}</li>
-                  <li class="col-md-6 col-xs-6">收货人电话：<label>{{initOrderDetail.consigneePhone}}</li>
-                  <li class="col-md-6 col-xs-6">收货地址：<label>{{initOrderDetail.consigneeAddr}}</li>
-                  <li class="col-md-6 col-xs-6">创建时间：<label>{{initOrderDetail.ctime}}</li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.breed')}}：<label>{{initOrderDetail.goodsDesc}}</li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.client_name')}}：<label>{{initOrderDetail.customerName}}</label></li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.client_phone')}}：<label>{{initOrderDetail.customerPhone}}</li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.consignee_name')}}：<label>{{initOrderDetail.consignee}}</li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.consignee_phone')}}：<label>{{initOrderDetail.consigneePhone}}</li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.consignee_address')}}：<label>{{initOrderDetail.consigneeAddr}}</li>
+                  <li class="col-md-6 col-xs-6">{{$t('static.create_time')}}：<label>{{initOrderDetail.ctime}}</li>
                 </ul>
                 <ul class="clearfix">
                   <li v-for="img in initOrderDetail.images" class="col-md-4">

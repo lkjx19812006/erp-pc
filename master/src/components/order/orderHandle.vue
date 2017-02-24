@@ -97,11 +97,11 @@
                       <!-- 订单审核 -->
                       <div v-if="item.taskKey=='governor_validate'">{{$t('static.management_approval')}}</div>
                       <div v-if="item.taskKey=='employee_handle'">{{$t('static.salesman')}}</div>
-                      <div v-if="item.taskKey=='law_validate'">法务审核</div>
-                      <div v-if="item.taskKey=='supply_validate'">供应部审核</div>
-                      <div v-if="item.taskKey=='warehouse_validate'">仓库审核</div>
-                      <div v-if="item.taskKey=='manager_validate'">经理审核</div>
-                      <div v-if="item.taskKey=='financial_validate'">财务审核</div>
+                      <div v-if="item.taskKey=='law_validate'">{{$t('static.legel')}}{{$t('static.verified')}}</div>
+                      <div v-if="item.taskKey=='supply_validate'">{{$t('static.supplier')}}{{$t('static.verified')}}</div>
+                      <div v-if="item.taskKey=='warehouse_validate'">{{$t('static.warehouse')}}{{$t('static.verified')}}</div>
+                      <div v-if="item.taskKey=='manager_validate'">{{$t('static.manager')}}{{$t('static.verified')}}</div>
+                      <div v-if="item.taskKey=='financial_validate'">{{$t('static.finance')}}{{$t('static.verified')}}</div>
                       <!-- 发货审核-->
                       <div v-if="item.taskKey=='order_send_governor_validate'">{{$t('static.management_approval')}}</div>
                       <div v-if="item.taskKey=='order_send_employee_handle'">{{$t('static.salesman')}}</div>
