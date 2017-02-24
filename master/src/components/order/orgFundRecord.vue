@@ -112,7 +112,7 @@
                 <td v-if="item.pr==0&&item.type==0">{{$t('static.not_paid')}}</td>
                 <td v-if="item.pr==0&&item.type==1">{{$t('static.not_receive')}}</td>
                 <td v-if="item.pr==1&&item.type==0"><div style="background:green;color:#fff;">{{$t('static.confirm_paid')}}</div></td>
-                <td v-if="item.pr==1&&item.type==1"><div style="background:green;color:#fff;">{{$t('static.comfirm_recipt')}}</div></td>
+                <td v-if="item.pr==1&&item.type==1"><div style="background:green;color:#fff;">{{$t('static.confirm_recipt')}}</div></td>
               </tr>
             </tbody>
           </table>

@@ -4,7 +4,7 @@
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
     <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
     <consignee-model :param="consigneeParam" v-if="consigneeParam.show"></consignee-model>
-    <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
       <div @click="param.show=false" class="top-title">
           <span class="glyphicon glyphicon-remove-circle"></span>
@@ -16,20 +16,20 @@
           <div class="edit-model">
               <div class="clearfix">
                 <div class="editpage-input col-md-6">
-                      <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
-                      <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
-                      <select  class="form-control edit-input" v-model="param.type"   >
-                          <option value="0">{{$t('static.purchase')}}</option>
-                          <option value="1">{{$t('static.sell')}}</option>
-                      </select>
+                    <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
+                    <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
+                    <select  class="form-control edit-input" v-model="param.type"   >
+                        <option value="0">{{$t('static.purchase')}}</option>
+                        <option value="1">{{$t('static.sell')}}</option>
+                    </select>
                 </div>
                 <div class="editpage-input col-md-6">
-                      <label class="editlabel">{{$t('static.order_status')}}</label>
-                      <select  class="form-control edit-input" v-model="param.orderStatus" >
-                          <option value="0">{{$t('static.create_order')}}</option>
-                          <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
-                          <option value="70">{{$t('static.order_over')}}</option>
-                      </select>
+                    <label class="editlabel">{{$t('static.order_status')}}</label>
+                    <select  class="form-control edit-input" v-model="param.orderStatus" >
+                        <option value="0">{{$t('static.create_order')}}</option>
+                        <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
+                        <option value="70">{{$t('static.order_over')}}</option>
+                    </select>
                 </div>
                 <div class="editpage-input col-md-6" v-if="param.type==1">
                     <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
@@ -79,8 +79,7 @@
                         <label class="editlabel" v-if="param.type==1">{{$t('static.consignee_phone')}} <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
                         <label class="editlabel" v-if="param.type==0">{{$t('static.send_person')}} {{$t('static.cellphone')}}</label>
                         <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  value="{{param.consigneePhone}}"/>
-                    </div>  
-                    
+                    </div>
                     <div class="editpage-input col-md-4">
                         <label class="editlabel">{{$t('static.country')}}</label>
                         <div type="text" class="edit-input">

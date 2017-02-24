@@ -33,15 +33,15 @@
                 </div>
             </div>
             <div class="order_info clearfix">
-              <div class="col-xs-6 pull-left clearfix" >
+              <div class="col-xs-8 pull-left clearfix" >
                 <div class="col-xs-3 col-md-4 pull-left"style="white-space: normal;"  v-for="item in initOrderDetail.goods.arr">
-                  <p>{{item.breedName}}</p>
+                  <p style="font-weight:700">{{item.breedName}}</p>
                   <p>{{item.price}}元/{{item.unit}}</p>
                   <p>{{$t('static.quantity')}}：{{item.number}}</p>
                   <p>{{$t('static.order_time')}}：{{item.ctime}}</p>
                 </div>
               </div>
-              <div class="col-xs-6 pull-left" style="padding-left:13%;border-left: 1px solid #ddd;">
+              <div class="col-xs-4 pull-left" style="padding-left:10%;border-left: 1px solid #ddd;">
                  <div>
                       <label>{{$t('static.sundry_fees')}}：</label><span style="color:#fa6705">¥{{initOrderDetail.incidentals}}</span><br>
                       <label>{{$t('static.fee_explain')}}：</label><span style="color:#fa6705">{{initOrderDetail.incidentalsDesc}}</span><br>
@@ -197,10 +197,10 @@
           <div class="message clearfix">
               <p class="order-message">{{$t('static.logistics_info')}}</p>
               <div class="clearfix col-md-6">
-                <span class="pull-left">选择发货方式：</span>
+                <span class="pull-left">{{$t('static.shipped_method')}}：</span>
                 <select v-model="salesLogistic.way" class="form-control left">
-                   <option value="0" selected>第三方物流</option>
-                   <option value="1">包车自运</option>
+                   <option value="0" selected>{{$t('static.thrid_logistics')}}</option>
+                   <option value="1">{{$t('static.driver_self')}}</option>
                 </select>
               </div>
               <!-- 上传物流 -->
@@ -229,20 +229,20 @@
               <!-- 司机信息 -->
               <div class="space_15 clearfix col-md-12" v-if="salesLogistic.way==1">
                 <div class="logical_color clearfix col-md-6">
-                  <span class="pull-left">司机姓名 <span class="system_danger" v-if="$validation.drivername.required">{{$t('static.required')}}</span></span>
-                  <input type="text" class="form-control left" placeholder="请输入司机姓名" v-model="salesLogistic.driverName" v-validate:drivername="{required:true}" />
+                  <span class="pull-left">{{$t('static.driver_name')}} <span class="system_danger" v-if="$validation.drivername.required">{{$t('static.required')}}</span></span>
+                  <input type="text" class="form-control left" placeholder="{{$t('static.driver_name')}}" v-model="salesLogistic.driverName" v-validate:drivername="{required:true}" />
                 </div>
                 <div class="logical_color clearfix col-md-6">
-                  <span class="pull-left">身份证号 <span class="system_danger" v-if="$validation.drivernumber.IdentityCard">{{$t('static.required')}}</span></span>
-                  <input type="text" class="form-control left" placeholder="请输入司机身份证号" v-model="salesLogistic.driverPid" v-validate:drivernumber="['IdentityCard']" />
+                  <span class="pull-left">{{$t('static.ID_number')}} <span class="system_danger" v-if="$validation.drivernumber.IdentityCard">{{$t('static.required')}}</span></span>
+                  <input type="text" class="form-control left" placeholder="{{$t('static.ID_number')}}" v-model="salesLogistic.driverPid" v-validate:drivernumber="['IdentityCard']" />
                 </div>
                 <div class="logical_color clearfix col-md-6">
-                  <span class="pull-left">司机联系方式 <span class="system_danger" v-if="$validation.drivertel.phone">{{$t('static.required')}}</span></span>
-                  <input type="tel" class="form-control left" placeholder="请输入司机联系方式" v-model="salesLogistic.driverTel" v-validate:drivertel="['phone']" />
+                  <span class="pull-left">{{$t('static.driver_phone')}} <span class="system_danger" v-if="$validation.drivertel.phone">{{$t('static.required')}}</span></span>
+                  <input type="tel" class="form-control left" placeholder="{{$t('static.driver_phone')}}" v-model="salesLogistic.driverTel" v-validate:drivertel="['phone']" />
                 </div>
                 <div class="logical_color clearfix col-md-6">
-                  <span class="pull-left">车辆车牌号 <span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
-                  <input type="text" class="form-control left" placeholder="请输入车牌号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                  <span class="pull-left">{{$t('static.license_number')}} <span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                  <input type="text" class="form-control left" placeholder="{{$t('static.license_number')}}" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
                 </div>
                 <div class="logical_color col-md-12">
                   <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img1.required">{{$t('static.required')}}</span></span>
@@ -375,7 +375,7 @@
                show:true,
                link:'/order/quality/qualified',
                key:param.key
-              })">合格</button>
+              })">{{$t('static.confirm')}}</button>
             <!-- <button type="button" class="btn btn-info margin-10 right"  @click="addContract({
                 show:true,
                 orderId:param.id,

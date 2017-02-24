@@ -2,6 +2,7 @@
   <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
+  <contract-model :param="contractParam" v-if="contractParam.show"></contract-model>
   <language-model v-show="false"></language-model>
   <mglist-model>
       <!-- 头部搜索 -->
@@ -75,7 +76,14 @@
             <tbody>
               <tr v-for="item in initOrgContractList">
                 <td>{{item.ctime | dateTime}}</td>
-                <td>{{item.customerName}}</td>
+                <td><a @click="details({
+                    id:item.id,
+                    show:true,
+                    loading:false,
+                    url:'/order/contract/details/',
+                    index:$index
+                  })">{{item.customerName}}</a>
+                </td>
               <!-- <td><a @click="clickOn({
                     sub:$index,
                     id:item.id,
@@ -127,6 +135,7 @@
   import tipsModel from '../../components/tips/tipDialog'
   import mglistModel from '../mguan/mgListComponent.vue'
   import languageModel from '../tools/language.vue'
+  import contractModel from '../order/second_order/orderReceiveDetail'
   import {
     initOrgContractList
   } from '../../vuex/getters'
@@ -142,7 +151,8 @@
       auditModel,
       tipsModel,
       languageModel,
-      mglistModel
+      mglistModel,
+      contractModel
     },
     vuex: {
       getters: {
@@ -175,6 +185,9 @@
         language:'',
         changeParam: {
           show: false
+        },
+        contractParam:{
+          show:false
         },
         tipsParam:{
           show:false,
@@ -211,6 +224,9 @@
         this.financeParam.show = true;
         this.financeParam = item;
         this.financeParam.callback = this.callback;
+      },
+      details:function(item){
+         this.contractParam = item;
       },
       callback:function(title){
           this.tipsParam.show= true;

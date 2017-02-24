@@ -184,11 +184,11 @@ Vue.filter('orderDescript', function(val){
 	if(val==null){
 		 return '无';
 	}else if(val==20){
-		return '合同签订后';
+		return this.$t('static.signing_contract');
 	}else if(val==60){
-		return '确认收货后';
+		return this.$t('static.confirm_receipt');
 	}else if(val==70){
-		return  '订单完成后';
+		return  this.$t('static.order_over');
 	}else {
 		return val;
 	}
@@ -721,11 +721,11 @@ Vue.filter('salesRecord',function(val,type){     //订单退换货
 	}else if(val==1&&type==0){
 		 return this.$t('static.dispatch');
 	}else if(val==1&&type==1){
-		 return this.$t('static.dispatch');
+		 return this.$t('static.wait_receipt');
 	}else if(val==2&&type==0){
-		 return '换货成功';
+		 return this.$t('static.replacement')+this.$t('static.success');
 	}else if(val==2&&type==1){
-		 return '退货成功';
+		 return this.$t('static.reutrned')+this.$t('static.success');
 	}else if(val==-2){
 		 return this.$t('static.unapproved');
 	}

@@ -129,7 +129,8 @@ export default {
     height: 100%;
     position: fixed;
     width: 200px;
-    overflow: hidden !important;
+   /*  overflow-x: hidden !important;
+   overflow-y: auto !important; */
     white-space: nowrap;
     z-index: 999;
 }
@@ -142,7 +143,8 @@ export default {
     width: 50px;
     height: 100%;
     position: fixed;
-    overflow: hidden !important;
+    /* overflow-x: hidden !important;
+    overflow-y: auto !important; */
     white-space: nowrap;
     z-index: 999;
 }

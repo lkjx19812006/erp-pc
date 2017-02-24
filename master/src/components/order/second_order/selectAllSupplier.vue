@@ -6,18 +6,18 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 	    <div class="model-header">
-	    	<h4>选择供应商</h4>
+	    	<h4>{{$t('static.supplier')}}</h4>
 	    	<div class="con_list">
                 <div style="margin:10px 10px 15px 10px" class="clearfix">
                     <div class="input-group col-xs-4 pull-left">
                         <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
-                        <input type="text" class="form-control"  placeholder="供应商姓名" v-model="loadParam.name"  @keyup.enter="selectSearch()">
+                        <input type="text" class="form-control"  placeholder="{{$t('static.supplier_name')}}" v-model="loadParam.name"  @keyup.enter="selectSearch()">
                     </div> 
                     <div class="col-xs-1 pull-left"></div>
                     <div class="input-group col-xs-4 pull-left">
                         <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
                         <select v-model="loadParam.type"  class="form-control"  @change="selectSearch()">
-                            <option value="">全部</option>
+                            <option value="">{{$t('static.please_select')}}</option>
                             <option value="0">其它</option>
                             <option value="1">合作社</option>
                             <option value="2">药商</option>
@@ -56,10 +56,10 @@
 		                <thead>
 		                    <tr>
 		                        <th></th>
-		                        <th>供应商名称</th>
-		                        <th>客户类型</th>
-		                        <th>主要联系人</th>
-                                <th>手机号</th>
+		                        <th>{{$t('static.supplier_name')}}</th>
+		                        <th>{{$t('static.client_type')}}</th>
+		                        <th>{{$t('static.contact')}}</th>
+                                <th>{{$t('static.cellphone')}}</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
@@ -78,9 +78,9 @@
                         <pagination :combination="loadParam"></pagination>
                     </div>
                     <div class="edit_footer">
-                        <button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
-                        <button type="button"  class="btn btn-orange" v-if="param.customer==''" disabled="true">确定</button>
-                        <button type="button"  class="btn btn-orange" v-else  @click="confirmEmp()" >确定</button>
+                        <button type="button" class="btn btn-close"  @click="param.show = fasle">{{$t('static.cancel')}}</button>
+                        <button type="button"  class="btn btn-orange" v-if="param.customer==''" disabled="true">{{$t('static.confirm')}}</button>
+                        <button type="button"  class="btn btn-orange" v-else  @click="confirmEmp()" >{{$t('static.confirm')}}</button>
                     </div>
     			</div>
 	    	</div>
