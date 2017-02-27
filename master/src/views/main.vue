@@ -73,7 +73,7 @@
                         <a @click="salesDetail(item.bizId)">{{$t('static.details')}}</a>
                         <a @click="showRecord(item)">{{$t('static.records')}}</a>
                         <a v-if="item.taskKey=='after_sales_governor_validate'" @click="showAudit(item)">{{$t('static.aftersales')}}</a>
-                        <a v-if="item.taskKey=='after_sales_receipt'" @click="showAudit(item)">{{$t('static.confirmation_delivery')}}</a>
+                        <a v-if="item.taskKey=='after_sales_receipt'" @click="showAudit(item)">{{$t('static.confirm_receipt')}}</a>
                         <a v-if="item.taskKey=='after_sales_resend'" @click="showAudit(item)">{{$t('static.reapply_delivery')}}</a>
                         <a v-if="item.taskKey=='after_sales_employee_handle'" @click="showAudit(item)">{{$t('static.reapply')}}</a>
                         <a v-if="item.taskKey=='after_sales_disputed_handle'" @click="showAudit(item)">{{$t('static.salesman')}}{{$t('static.objection_handl')}}</a>
@@ -394,6 +394,7 @@ export default {
 }
 .message_view_right a {
     font-size: 13px;
+    margin:0px 5px;
 }
 .employee_top{
     margin-bottom: 20px;

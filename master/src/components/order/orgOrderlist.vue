@@ -162,7 +162,7 @@
                     <!-- <td  @click.stop="">
                       <label v-if="item.validate==1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                     </td> -->
-                    <td>{{item.ctime}}</td>
+                    <td>{{item.tradeTime | subtime}}</td>
                     <td v-if="item.type==1">{{$t('static.sell')}}</td>
                     <td v-if="item.type==0">{{$t('static.purchase')}}</td>
                     <td v-if="item.mode==1">{{$t('static.together')}}</td>

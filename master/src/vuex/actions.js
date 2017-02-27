@@ -1144,6 +1144,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         city: data.city,
         employee: data.employee,
         org: data.org,
+        tradeTime:data.tradeTime.substring(0,10),
         district: data.district,
         consigneeAddr:data.consigneeAddr,
         comments: data.comments,
@@ -1197,6 +1198,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             data.prepaid = res.json().result.prepaid;
             data.ctime = new Date();
             data.consignee = res.json().result.consignee;
+            data.tradeTime = res.json().result.tradeTime;
             data.consigner = res.json().result.consigner;
             data.consigneePhone = res.json().result.consigneePhone;
             data.consigneeAddr = res.json().result.consigneeAddr;
@@ -1211,6 +1213,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     });
 }
 export const alterOrder = ({ dispatch }, param) => { //修改订单
+    console.log(param.tradeTime)
     if(param.city==null||param.city==''||!param.city){
         param.city=''; 
     }
@@ -1235,6 +1238,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         country: param.country,
         province: param.province,
         city: param.city,
+        tradeTime:param.tradeTime.substring(0,10),
         district: param.district,
         customerName: param.customerName,
         consigneeAddr:param.consigneeAddr,
@@ -7369,9 +7373,8 @@ export const getMyContractList = ({ dispatch }, param) => { //补充合同列表
 }
 
 export const contractCheck = ({ dispatch }, param) => {  //审核合同和重新申请补充合同或者取消以及售后申请审核
-    console.log(param);
     const body = {
-        id:param.id, 
+        id : param.id,
     }
     if(param.validate){
         body.validate = param.validate;
@@ -7382,10 +7385,18 @@ export const contractCheck = ({ dispatch }, param) => {  //审核合同和重新
     if(param.orderId){
         body.orderId = param.orderId;
     }
+    if(param.shipper&&param.type==0){
+        body.shipper = param.shipper;
+    }
+    if(param.type){
+        body.type = param.type;
+    }
+    if(param.consignee){
+        body.consignee = param.consignee;
+    }
     if(param.comment){
         body.comment = param.comment;
     }
-    console.log(body);
     Vue.http({
         method: 'POST',
         url: apiUrl.commonList + param.url,

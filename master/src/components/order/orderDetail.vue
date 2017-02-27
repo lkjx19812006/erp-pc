@@ -191,7 +191,7 @@
                                                   bizId:item.orderId,
                                                   bizSubId:item.id,
                                                   url:'/fund/requestRecord'
-                                                  })">{{$t('static.notpayment')}}</td>
+                                                  })">{{$t('static.applypayment')}}</td>
                                               <td v-if="item.validate==2" style="color:green;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,
@@ -201,7 +201,7 @@
                                                   bizId:item.orderId,
                                                   bizSubId:item.id,
                                                   url:'/fund/requestRecord'
-                                                  })">{{$t('static.applypayment')}}</td>
+                                                  })">{{$t('static.yetpayment')}}</td>
                                               <td v-if="item.validate==3" style="color:red;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,

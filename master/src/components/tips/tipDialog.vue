@@ -7,8 +7,10 @@
                 <img src="/static/images/bee.png"  class="pull-left" height="138" width="111"/>
                 <div class="tips_name" v-if="param.name=='确定取消询价?'">{{$t('static.cancel_inquire')}}</div>
                 <!-- <div class="tips_name" v-if="param.name==='确认删除文件?'">{{$t('static.del_file')}}</div> -->
-                <div class="tips_name" v-if="param.name=='确认删除?'">{{$t('static.del_confirm')}}</div>
-                <div class="tips_name" v-if="param.name!='确定取消询价?'&&param.name!='确认删除?'">{{param.name}}</div>
+                <div class="tips_name" v-if="param.name=='确认删除?'">{{$t('static.del_confirm')}}</div> 
+                <div class="tips_name" v-if="param.apply">{{param.apply}} ?</div>
+                <div class="tips_name" v-if="param.name!='确定取消询价?'&&param.name!='确认删除?'&&!param.apply">{{param.name}}</div>
+
             </div>
             <div class="model-footer" v-if="param.alert">
                 <input type="button" class="btn btn-close"  @click="param.show = false"  value="{{$t('static.confirm')}}"/>
@@ -19,6 +21,10 @@
             <div class="model-footer" v-if="param.confirm">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
                 <input type="button" class="btn  btn-confirm"  @click="param.callback(),param.show = false" value="{{$t('static.confirm')}}" />
+            </div>
+            <div class="model-footer" v-if="param.apply">
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+                <input type="button" class="btn  btn-confirm"  @click="param.link(param,param.show = false)" value="{{$t('static.confirm')}}" />
             </div>
         </div>
     </div>

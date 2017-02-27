@@ -38,6 +38,11 @@
                            <option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
                        </select> -->
                     </div>
+                    <div class="editpage-input col-md-6">
+                        <label class="editlabel">{{$t('static.transcation')}}</label>
+                        <mz-datepicker :time.sync="param.tradeTime" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
                 </div>
                 <section class="editsection">
                     <div style="margin-top:20px;">
@@ -914,6 +919,20 @@ export default {
                 this.costmoney +=parseFloat(this.param.goods[i].number)*parseFloat(this.param.goods[i].costPrice);
             }
             this.supplierParam.supplierName = this.param.customerName;
+        }
+        if(!this.param.tradeTime){
+            var date = new Date();
+            date.setDate(date.getDate());
+            var year = date.getFullYear();
+            var month = date.getMonth()+1;
+            var day = date.getDate();
+            if(month < 10){
+              month = '0'+month;
+            }
+            if(day < 10){
+              day = '0'+day;
+            }
+            this.param.tradeTime = year+"-"+month+"-"+day+" 00:00:00";
         }
     }
 }

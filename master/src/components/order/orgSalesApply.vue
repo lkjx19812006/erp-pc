@@ -92,14 +92,14 @@
                 <td>{{item.consigneeName}}</td>
                 <td>{{item.shipperName}}</td>
                 <td>{{item.comment}}</td>
-                <td v-if="item.taskKey===''||item.taskKey=='after_sales_governor_validate'">{{item.validate | salesRecord item.type}}</td>
-                <td v-if="item.validate==-1&&item.taskKey=='after_sales_employee_handle'">{{item.validate | salesRecord item.type}}</td>
-                <td v-if="item.validate==1&&item.taskKey=='after_sales_receipt'">{{item.validate | salesRecord item.type}}（待{{item.handlerName}}收货确认）</td>
+                <td v-if="item.taskKey===''||item.taskKey=='after_sales_governor_validate'">{{item.validate | salesRecord item.type item.taskKey}}</td>
+                <td v-if="item.validate==-1&&item.taskKey=='after_sales_employee_handle'">{{item.validate | salesRecord item.type item.taskKey}}</td>
+                <td v-if="item.validate==1&&item.taskKey=='after_sales_receipt'">{{item.validate | salesRecord item.type item.taskKey}}（待{{item.handlerName}}收货确认）</td>
                 <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==0">待{{item.handlerName}}发货</td>
                 <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==2">{{$t('static.sent_confirm')}}</td>
                 <td v-if="item.validate==-2&&item.taskKey=='after_sales_employee_handle'">{{item.validate | Auditing}}（待{{item.handlerName}}处理）</td>
                 <td v-if="item.taskKey=='after_sales_refund'&&item.validate==1">待{{item.handlerName}}处理</td>
-                <td v-if="item.taskKey=='after_sales_disputed_handle'&&item.validate==-1">{{item.validate | salesRecord item.type }}</td>
+                <td v-if="item.taskKey=='after_sales_disputed_handle'&&item.validate==-1">{{item.validate | salesRecord item.type item.taskKey}}</td>
                 <td>
                     <button class="btn btn-primary btn-edit" v-if="item.validate==1&&(item.taskKey===''||item.taskKey=='after_sales_governor_validate')" @click="applyInfo({
                           show:true,
