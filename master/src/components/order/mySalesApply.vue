@@ -100,10 +100,8 @@
                   <td v-if="item.taskKey=='after_sales_refund'&&item.validate==1">{{$t('static.un_finance')}}</td>
                   <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==0">待{{item.handlerName}}发货</td>
                   <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==2">{{$t('static.sent_confirm')}}</td>
-                  <td>
-                      <div v-if="item.taskKey!=='after_sales_refund'&&item.taskKey!=='after_sales_resend'" style="float: left;">{{item.validate | salesRecord item.type item.taskKey}}</div>
-                      <div v-if="item.validate==1&&item.taskKey=='after_sales_receipt'" >（待{{item.handlerName}}收货确认）</div>
-                      
+                  <td  v-if="item.taskKey!=='after_sales_refund'&&item.taskKey!=='after_sales_resend'">{{item.validate | salesRecord item.type item.taskKey}}
+                      <span v-if="item.validate==1&&item.taskKey=='after_sales_receipt'" >（待{{item.handlerName}}收货确认）</span>
                   </td>
                   <td>
                       <a class="operate" v-if="item.validate==-2||item.validate==0" @click="editPayment({
