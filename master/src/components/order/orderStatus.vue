@@ -175,7 +175,7 @@
                 </div>
                 <div class="logical_color clearfix col-md-6">
                   <span class="pull-left">{{$t('static.logistics_no')}} <span class="system_danger" v-if="$validation.logisticno.required">{{$t('static.required')}}</span></span>
-                  <input type="number" class="form-control left" placeholder="{{$t('static.willpay')}}" v-model="uploadLogistic.lcompanyNo" v-validate:logisticno="{required:true}" />
+                  <input type="text" class="form-control left" placeholder="{{$t('static.willpay')}}" v-model="uploadLogistic.lcompanyNo" v-validate:logisticno="{required:true}" />
                 </div>
                 <div class="logical_color col-md-12">
                   <label class="editlabel">{{$t('static.upload_logistcs')}}</label>
@@ -214,7 +214,7 @@
                 </div>
                 <div class="logical_color clearfix col-md-6">
                   <span class="pull-left">{{$t('static.logistics_no')}} <span class="system_danger" v-if="$validation.logisticno.required">{{$t('static.required')}}</span></span>
-                  <input type="number" class="form-control left" placeholder="{{$t('static.willpay')}}" v-model="salesLogistic.number" v-validate:logisticno="{required:true}" />
+                  <input type="text" class="form-control left" placeholder="{{$t('static.willpay')}}" v-model="salesLogistic.number" v-validate:logisticno="{required:true}" />
                 </div>
                 <div class="logical_color col-md-12">
                   <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img.required">{{$t('static.required')}}</span></span>

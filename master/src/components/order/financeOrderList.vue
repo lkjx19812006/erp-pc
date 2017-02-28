@@ -140,7 +140,8 @@
                                 description:'',
                                 image_f:'',
                                 images:'',
-                                url:'/fund/validate',
+                                url:'/fund/validate
+',
                                 titles:'确认付款',
                                 link:paymentAudit
                             })">确认付款</button>

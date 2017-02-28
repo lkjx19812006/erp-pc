@@ -13,7 +13,7 @@
                     <div class="cover_loading">
                         <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
                     </div>
-                    
+        
                     <table class="table table-hover table_head table-striped " v-cloak>
                         <thead>
                             <tr>
