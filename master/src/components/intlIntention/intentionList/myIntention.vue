@@ -365,7 +365,6 @@ export default {
     methods: {
         clickday:function(inquire){
             this.loadParam.inquire = inquire;
-            console.log(this.loadParam.inquire)
             this.getIntlIntentionList(this.loadParam);
         },
         inquire:function(id,index,time){

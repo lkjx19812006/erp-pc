@@ -2,6 +2,7 @@
     <updatecompany-model :param="companylistParam" v-if="companylistParam.show"></updatecompany-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
+    <product-detail :param="productDetailParam" v-if="productDetailParam.show"></product-detail>
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1"  @click="param.show=false" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
       <div class="cover_loading" v-if="param.id!=initCompanyDetail.id">
@@ -223,7 +224,7 @@
                                         <tr v-for="item in initCompanyDetail.companyProducts.arr">
                                             <td>{{item.companyName}}</td>
                                             <td>{{item.type}}</td>
-                                            <td>{{item.name}}</td>
+                                            <td><a @click="getProductDetail(item.id)">{{item.name}}</a></td>
                                             <td>{{item.status}}</td>
                                         </tr>
                                     </tbody>
@@ -285,6 +286,7 @@ import updatecompanyModel from '../serviceBaselist/breedDetailDialog/createConta
 import filter from '../../filters/filters'
 import transferModel  from '../user/userTransfer'
 import deletebreedModel  from './breedDetailDialog/deleteBreedDetail'
+import productDetail from './companyProductDetail'
 import {
     initCompanyDetail
 } from '../../vuex/getters'
@@ -298,7 +300,8 @@ export default {
         updatecompanyModel,
         filter,
         deletebreedModel,
-        transferModel
+        transferModel,
+        productDetail
     },
     data() {
         return {
@@ -325,9 +328,14 @@ export default {
                 province:'',
                 city:''
             },
-          deleteParam:{
-            show:false
-          }
+            deleteParam:{
+                show:false
+            },
+            productDetailParam: {
+                show: false,
+                link: '/company/getProductDetail/',
+                id: ''
+            }
         }
     },
     props:['param'],
@@ -371,6 +379,10 @@ export default {
               this.deleteParam.url=param.url;
               this.deleteParam.index=param.index;
               this.deleteParam.id=param.id;
+        },
+        getProductDetail: function(id){
+            this.productDetailParam.show = true;
+            this.productDetailParam.id = id;
         }
     },
     filter: (filter, {})
@@ -380,8 +392,12 @@ export default {
 table{
   margin:0;
 }
+.modal{
+    z-index: 1060;
+}
 .modal_con{
     width: 70%;
+    z-index: 1060;
 }
 .top-title{
   width: 70%;

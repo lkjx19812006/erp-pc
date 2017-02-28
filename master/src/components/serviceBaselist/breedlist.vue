@@ -164,6 +164,7 @@ export default {
             },
             changeParam: {
                 show: false,
+                link: '/details/',
                 id: ''
             }
 
