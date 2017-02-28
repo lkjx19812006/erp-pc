@@ -25,7 +25,7 @@
                    <dt class="left transfer marg_top">{{$t("static.province_of_phone")}}：</dt>
                    <dd class="left">
                         <select v-model="loadParam.phoneProvinceName"  class="form-control" @change="selectSearch()" >
-                            <option value="">全部</option>
+                            <option value="">{{$t('static.please_select')}}</option>
                             <option v-for="item in initProvince">{{item.cname}}</option>
                         </select>
                    </dd>
@@ -40,9 +40,9 @@
 
                 <!-- 单个业务员搜索 -->
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
+                   <dt class="left transfer marg_top">{{$t('static.salesman')}}：</dt>
                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName"  @click="selectEmployee()">
                    </dd>
                 </dl>
                 

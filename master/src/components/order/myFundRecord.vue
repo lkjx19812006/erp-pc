@@ -111,7 +111,7 @@
                 <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_refund'"><div style="background:green;color:#fff;">{{$t('static.confirm_paid')}}</div></td>
                 <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_after_sales_refund'"><div style="background:green;color:#fff;">{{$t('static.confirm_refund')}}</div></td>
                 <td>
-                  <a class="operate" v-if="item.type==0&&item.pr==0&&item.validate==2" @click="applyInfo({
+                  <button class="btn btn-default btn-cut" v-if="item.type==0&&item.pr==0&&item.validate==2" @click="applyInfo({
                             show:true,
                             sub:$index,
                             id:item.id,
@@ -122,7 +122,7 @@
                             url:'/fund/proceedsConfirm',
                             titles:this.$t('static.confirm_income'),
                             link:paymentConfirm
-                        })"><img src="/static/images/surePayment.png"/></a>
+                            })">{{$t('static.confirm_income')}}</button>
                   <a class="operate" v-if="item.validate==0" @click="editClick({
                             show:true,
                             sub:$index,

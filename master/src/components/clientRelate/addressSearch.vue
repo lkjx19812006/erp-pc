@@ -1,74 +1,61 @@
 <template>
-    <createaddr-model :param="addressParam" v-if="addressParam.show"></createaddr-model>
-    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
-    <div class="container modal_con" v-show="param.show">
-        <div @click="param.show = false" class="top-title">
-            <span class="glyphicon glyphicon-remove-circle"></span>
-        </div>
-        <div class="model-header">
-            <h4>收货人地址信息</h4>
-            <div class="trans_service clearfix">
-                <div class="cover_loading">
-                    <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+    <div>
+        <createaddr-model :param="addressParam" v-if="addressParam.show"></createaddr-model>
+        <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+        <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
+        <div class="container modal_con" v-show="param.show">
+            <div @click="param.show = false" class="top-title">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+            </div>
+            <div class="model-header">
+                <h4>{{$t('static.select_addr')}}</h4>
+                <div class="trans_service clearfix">
+                    <div class="cover_loading">
+                        <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+                    </div>
+                    
+                    <table class="table table-hover table_head table-striped " v-cloak>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{{$t('static.receive_person')}}</th>
+                                <th>{{$t('static.cellphone')}}</th>
+                                <th>{{$t('static.address')}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in initAddressList" @click="serviceselected($index,item)">
+                               <td >
+                                   <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"></label>
+                                </td>
+                                <td>{{item.contactName}}</td>
+                                <td>{{item.contactPhone}}</td>
+                                <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.detailAddr}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="padding-left:25%">
+                        <div style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showCreateAddress({
+                         customerId:param.customerId,
+                         show:true,
+                         title:'地址',
+                         type:'',
+                         contactName:'',
+                         contactPhone:'',
+                         sex:'',
+                         country:'',
+                         province:'',
+                         city:'',
+                         district:'',
+                         street:'',
+                         detailAddr:'',
+                         address:'',
+                         link:createAddress,
+                         url:'/customer/insertAddress',
+                         key:'addresses'
+                         })">{{$t('static.add_addr')}}</div>   
+                    </div>
                 </div>
-                
-                <table class="table table-hover table_head table-striped " v-cloak>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>收货人</th>
-                            <th>手机号</th>
-                            <th>地址</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in initAddressList" @click="serviceselected($index,item)">
-                           <td >
-                               <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"></label>
-                            </td>
-                            <td>{{item.contactName}}</td>
-                            <td>{{item.contactPhone}}</td>
-                            <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.detailAddr}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div style="padding-left:25%">
-                    <div style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showCreateAddress({
-                                             customerId:param.customerId,
-                                             show:true,
-                                             title:'地址',
-                                             typelist:'类型',
-                                             namelist:'联系人姓名',
-                                             phonelist:'联系人电话',
-                                             sexlist:'性别',
-                                             countylist:'国家',
-                                             provicelist:'所在省',
-                                             citylist:'所在市',
-                                             addr_detail:'地址',
-                                             distlist:'所在区域',
-                                             streetlist:'所在街道',
-                                             addr:'详细地址',
-                                             type:'',
-                                             contactName:'',
-                                             contactPhone:'',
-                                             sex:'',
-                                             country:'',
-                                             province:'',
-                                             city:'',
-                                             district:'',
-                                             street:'',
-                                             detailAddr:'',
-                                             address:'',
-                                             link:createAddress,
-                                             url:'/customer/insertAddress',
-                                             key:'addresses'
-                                             })">新增收货地址</div>   
-                </div>
-                <!-- <div class="edit_footer">
-                    <button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-                    <input  type="button" class="btn btn-orange" @click="selected(param,param.show=false)" value="确定"/>
-                </div> -->
             </div>
         </div>
     </div>
