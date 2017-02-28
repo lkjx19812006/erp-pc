@@ -1,5 +1,5 @@
 <template>
-  <div>>
+  <div>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
     <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
@@ -233,8 +233,13 @@
                           
                       </div>
                       <div class="editpageright">
+                          <div class="editpage-input">
+                              <label class="editlabel">{{$t('static.transcation')}}</label>
+                              <mz-datepicker :time.sync="param.tradeTime" format="yyyy/MM/dd HH:mm:ss">
+                              </mz-datepicker>
+                          </div>
                           <div class="editpage-input" v-if="param.type==1">
-                            <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">选择发货人</span></label>
+                            <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
                             <input  type="text" class="form-control edit-input" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
                           </div>  
                           <!-- <div class="editpage-input">
@@ -304,20 +309,17 @@
                               <label class="editlabel">{{$t('static.fee_explain')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" />
                           </div>
-
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.comment')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
-                          </div>
                           <!-- <div class="editpage-input">
                               <label class="editlabel">{{$t('static.cost_price')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.cost" readonly="true" />
                           </div> -->
-                         
                       </div>
                   </div>
+                  <div class="editpage-input col-md-12" style="padding-left: 0;">
+                      <label class="editlabel">{{$t('static.comment')}}</label>
+                      <textarea class="form-control" v-model="param.comments" ></textarea>
+                  </div>
               </section>
-             
           </div>
           <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
@@ -800,6 +802,20 @@ export default {
           this.province.cname=this.param.province;
           this.city.cname=this.param.city;
           this.district.cname=this.param.district;
+        }
+        if(!this.param.tradeTime){
+            var date = new Date();
+            date.setDate(date.getDate());
+            var year = date.getFullYear();
+            var month = date.getMonth()+1;
+            var day = date.getDate();
+            if(month < 10){
+              month = '0'+month;
+            }
+            if(day < 10){
+              day = '0'+day;
+            }
+            this.param.tradeTime = year+"-"+month+"-"+day+" 00:00:00";
         }
     }
 }

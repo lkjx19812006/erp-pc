@@ -121,6 +121,7 @@ export default {
       this.personalParam.wechat= this.initEmployeeDetail.wechat;
       this.personalParam.goodfield= this.initEmployeeDetail.goodfield;
       this.personalParam.name= this.initEmployeeDetail.name;
+      this.personalParam.email = this.initEmployeeDetail.email;
       this.personalParam.photo = this.initEmployeeDetail.photo;
       this.personalParam.url ='/employee/';
       this.personalParam.key='employeeList';
