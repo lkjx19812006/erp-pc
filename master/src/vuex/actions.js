@@ -2423,6 +2423,46 @@ export const getCompanyProduct = ({ dispatch }, param) => { //企业产品
     });
 }
 
+export const getCompanyProductDetail = ({ dispatch }, param) => { //(公司)企业产品详情
+    param.loading = true;
+    var url = apiUrl.clientList + param.link + param.id;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var detail = res.json().result;
+        var drugList = detail.drugList;
+        var breedList = [];
+        if(drugList.length>0&&drugList[0].component){   //如果配方存在
+            let list = drugList[0].component.split(";");
+            let length = list.length;
+            if(length>1){         //最后一个为"",应该去掉
+               for(let i=0;i<length-1;i++) {
+                    let temp = list[i].split(":");
+                    if(temp.length>=2){
+                        let breed = {
+                            name: temp[0],
+                            number: temp[1]
+                        };
+                        breedList.push(breed);
+                    }
+                    
+                } 
+            }
+        }
+        detail.drugList[0].componentArr = breedList;
+        dispatch(types.COMPANY_PRODUCT_DETAIL, detail);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+}
+
 export const getRetiveCompany = ({ dispatch }, param) => { //根据产品名称获取公司
     param.loading = true;
     var url = apiUrl.clientList + param.link + '?page=' + param.cur + '&pageSize=15';
@@ -2597,10 +2637,16 @@ export const getBreedData = ({ dispatch }, param) => { //药材
         param.loading = false;
     });
 }
-export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情
+export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情(根据ID或者根据name)
+    var url = apiUrl.breedList + param.link;
+    if(param.id) {
+        url += param.id;
+    }else if(param.name) {
+        url += param.name;
+    }
     Vue.http({
         method: 'GET',
-        url: apiUrl.breedList + '/details/' + param.id,
+        url: url,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -2608,6 +2654,11 @@ export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情
     }).then((res) => {
         param.loading = false;
         var breed = res.json().result;
+        if(breed===null){
+            param.show = false;
+            param.callback("品种不存在");
+            return ;
+        }
         var arr = breed.specs;
         breed.specs = {
             arr: arr,
@@ -2640,7 +2691,6 @@ export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情
         for (var j in breed.units.arr) {
             breed.units.arr[j].show = false;
         }
-        console.log(breed);
         dispatch(types.BREED_DETAIL_DATA, breed);
     }, (res) => {
         param.loading = false;

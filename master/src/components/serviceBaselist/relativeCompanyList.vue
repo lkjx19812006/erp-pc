@@ -106,10 +106,10 @@ export default{
 </script>
 <style scoped>
 .modal{
-    z-index: 1070;
+    z-index: 1020;
 }
 .modal_con{
-    z-index: 1070;
+    z-index: 1020;
 }
 .change_trans{
     margin-top: 20px;

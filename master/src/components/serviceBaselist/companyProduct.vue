@@ -1,5 +1,6 @@
 <template>
     <relative-company :param="relativeParam" v-if="relativeParam.show"></relative-company>
+    <product-detail :param="detailParam" v-if="detailParam.show"></product-detail>
     <mglist-model>
         <!-- 头部搜索 -->
         <div slot="top">
@@ -61,16 +62,18 @@
                         <th>产品规格</th>
                         <th>批准文号</th>
                         <th>批准时间</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in initCompanyProductlist">
-                        <td><a @click="getRelativeCompany(item.name)">{{item.name}}</a></td>
+                        <td><a @click="getDetail(item.id)">{{item.name}}</a></td>
                         <td>{{item.type}}</td>
                         <td>{{item.companyName}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.approvalNo}}</td>
                         <td>{{item.approvalTime}}</td>
+                        <td><a @click="getRelativeCompany(item.name)">关联公司</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -87,11 +90,12 @@ import common from '../../common/common'
 import tipsModel from '../../components/tips/tipDialog'
 import mglistModel from '../mguan/mgListComponent.vue'
 import relativeCompany from './relativeCompanyList'
+import productDetail from './companyProductDetail'
 import {
     initCompanyProductlist
 } from '../../vuex/getters'
 import {
-    getCompanyProduct,
+    getCompanyProduct
 } from '../../vuex/actions'
 export default {
     components: {
@@ -99,7 +103,8 @@ export default {
         filter,
         tipsModel,
         mglistModel,
-        relativeCompany
+        relativeCompany,
+        productDetail
     },
     data() {
         return {
@@ -119,8 +124,13 @@ export default {
             },
             relativeParam: {
                 show: false,
-                link:'/company/getCompanyByProductName',
+                link: '/company/getCompanyByProductName',
                 name: ''
+            },
+            detailParam: {
+                show: false,
+                link: '/company/getProductDetail/',
+                id: ''
             }
         }
     },
@@ -129,7 +139,7 @@ export default {
             initCompanyProductlist
         },
         actions: {
-            getCompanyProduct,
+            getCompanyProduct
         }
 
     },
@@ -148,6 +158,10 @@ export default {
         getRelativeCompany: function(name){
             this.relativeParam.name = name;
             this.relativeParam.show = true;
+        },
+        getDetail: function(id){
+            this.detailParam.show = true;
+            this.detailParam.id = id;
         }   
     },
     events: {
@@ -179,7 +193,7 @@ export default {
     margin-right:15px;
 }
  #table_box  table th,#table_box  table td{
-    width: 286px;
-    min-width: 286px;
+    width: 242px;
+    min-width: 242px;
 }
 </style>

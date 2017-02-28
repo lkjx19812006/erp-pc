@@ -133,13 +133,16 @@ export const initDistrictlist = (state) => {
 export const initEnterpriselist = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.enterpriseList));
 }
-export const initCompanyProductlist = (state) => {
+export const initCompanyProductlist = (state) => {    //企业产品列表
     return JSON.parse(JSON.stringify(state.table.basicBaseList.companyProductList));
 }
-export const initCompanyLicenselist = (state) => {
+export const initCompanyProductDetail = (state) => {    //企业产品详情
+    return JSON.parse(JSON.stringify(state.table.companyProductDetail));
+}
+export const initCompanyLicenselist = (state) => {   //企业证书列表
     return JSON.parse(JSON.stringify(state.table.basicBaseList.companyLicenseList));
 }
-export const initRelativeCompanylist = (state) => {
+export const initRelativeCompanylist = (state) => {    //关联企业
     return JSON.parse(JSON.stringify(state.table.basicBaseList.relativeCompanyList));
 }
 export const initConponentlist = (state) => {

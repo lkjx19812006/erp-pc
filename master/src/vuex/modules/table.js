@@ -14,6 +14,7 @@ import {
    PROVINCE_DATA,
    SERVICE_ENTERPRISE,
    COMPANY_PRODUCT_DATA,
+   COMPANY_PRODUCT_DETAIL,
    COMPANY_LICENSE_DATA,
    RELATIVE_COMPANY_DATA,
    SERVICE_COMPONENT,
@@ -563,6 +564,7 @@ const state = {
             show: true
         }
     },
+    companyProductDetail: {"drugList":[]},
     clientDetail: {
         "type": "0",
         "name": "sunny",
@@ -1025,6 +1027,9 @@ const mutations = {
     },
     [COMPANY_PRODUCT_DATA](state, data) { //企业产品
         state.basicBaseList.companyProductList = data;
+    },
+    [COMPANY_PRODUCT_DETAIL](state, data) { //企业产品详情
+        state.companyProductDetail = data;
     },
     [COMPANY_LICENSE_DATA](state, data) { //企业证书
         state.basicBaseList.companyLicenseList = data;
