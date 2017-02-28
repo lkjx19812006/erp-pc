@@ -12,17 +12,17 @@
 	            </div>
 				<div class="clear">
 					<dl class="clear left transfer">
-	                     <dt class="left marg_top">品种：</dt>
-	                     <dd class="left">
-	                        <input type="text" class="form-control" v-model="loadParam.name"  @keyUp.enter="employNameSearch()"  placeholder="请输入品种名称"/>
-	                     </dd>
-	                </dl>
-	                <dl class="clear left transfer">
 	                     <dt class="left marg_top">{{$t('static.breed')}}：</dt>
 	                     <dd class="left">
-	                        <input type="text" class="form-control" v-model="loadParam.eName"  @keyUp.enter="employNameSearch()"  placeholder="Please enter the name of the breed"/>
+	                        <input type="text" class="form-control" v-model="loadParam.name"  @keyUp.enter="employNameSearch()"  placeholder="{{$t('static.breed')}}"/>
 	                     </dd>
 	                </dl>
+<!-- 	                <dl class="clear left transfer">
+     <dt class="left marg_top">{{$t('static.breed')}}：</dt>
+     <dd class="left">
+        <input type="text" class="form-control" v-model="loadParam.eName"  @keyUp.enter="employNameSearch()"  placeholder="Please enter the name of the breed"/>
+     </dd>
+</dl> -->
 	                <!-- <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
 	                    <input type="text" class=" search_input" v-model="loadParam.eName" placeholder="Please enter the name of the breed" @keyUp.enter="employNameSearch()">
@@ -38,9 +38,9 @@
 	                <thead>
 	                    <tr>
 	                    	<th></th>
-	                        <th>品种名称</th>
+	                        <th>{{$t('static.breed')}}</th>
 	                        <th>English name</th>
-	                        <th>类别</th>
+	                        <th>{{$t('static.type')}}</th>
 	                    </tr>
 	                </thead>
 	                <tbody>

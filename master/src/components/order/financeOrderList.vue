@@ -116,7 +116,8 @@
                   <td v-if="item.pr==1&&item.type==0"><div style="background:green;color:#fff;">{{$t('static.confirm_paid')}}</div></td>
                   <td v-if="item.pr==1&&item.type==1&&item.bizType=='order'"><div style="background:green;color:#fff;">{{$t('static.confirm_recipt')}}</div></td>
                   <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_refund'"><div style="background:green;color:#fff;">{{$t('static.confirm_paid')}}</div></td>
-                  <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_after_sales_refund'"><div style="background:green;color:#fff;">{{$t('static.confirm_refund')}}</div></td>
+                  <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_after_sales_refund'">
+                    <div style="background:green;color:#fff;">{{$t('static.confirm_refund')}}</div></td>
                   <td>
                     <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.validate==1&&item.type==1" @click="applyInfo({
                                 show:true,
@@ -146,7 +147,7 @@
                     <a class="operate" v-if="item.type==0&&item.pr==0&&item.validate==2">
                       等待业务员{{item.employeeName}}确认
                     </a>
-                    <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.bizType=='order'" @click="openPDF(item)">打开PDF</button>
+                    <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.bizType=='order'||item.bizType=='order_after_sales_refund'" @click="openPDF(item)">打开PDF</button>
                   </td>
                 </tr>
               </tbody>

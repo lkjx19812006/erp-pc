@@ -74,7 +74,7 @@ Vue.filter('assess', function(val,type,logistic,name,taskKey){ //订单状态判
 		name=name;
 	}
 	if(val==60&&type==1&&logistic==2){
-		 return '已发货（仓库审核）';
+		 return '已发货';
 	}else if(val==60&&type==1&&logistic==3){
 		return '质量检验'
 	}else if(val==60&&type==1&&logistic==40){
@@ -123,15 +123,15 @@ Vue.filter('Enassess', function(val,type,logistic,name,taskKey){ //订单状态�
 		name=name;
 	}
 	if(val==60&&type==1&&logistic==2){
-		 return 'Awaiting comment（仓库审核）';
+		 return 'Awaiting comment';
 	}else if(val==60&&type==1&&logistic==3){
-		return '质量检验'
+		return 'Awaiting comment'
 	}else if(val==60&&type==1&&logistic==40){
-		return 'Lost communication（质量合格）'
+		return 'Lost communication'
 	}else if(val==60&&type==1&&logistic==50){
-		return 'Awaiting comment（补充合同申请）'
+		return 'Awaiting comment（Secondary contract）'
 	}else if(val==60&&type==1&&logistic==60){
-		return 'Awaiting comment（售后处理中）'
+		return 'Awaiting comment（Aftersales changes）'
 	}else if(val==60&&type==0){
 		return 'Awaiting comment'
 	}else if(val==70){
@@ -647,6 +647,15 @@ Vue.filter('date',function(val){      //将时间的时分秒去掉
 		return val;
 	}
 })
+Vue.filter('subtime',function(val){      //将时间的时分秒去掉
+	var val = val;
+	if(val){
+		val = val.substring(0,10);
+	}else{
+		val = "";
+	}
+	return val;
+})
 Vue.filter('dateTime',function(val){      //将时间的时分秒去掉
 	var val = val;
 	var now = new Date();
@@ -711,25 +720,30 @@ Vue.filter('orderstatus',function(val){     //订单状态
 	}
 })
 
-Vue.filter('salesRecord',function(val,type){     //订单退换货
+Vue.filter('salesRecord',function(val,type,task){     //订单退换货
 	var val = val;
 	var type = type;
+	var task = task;
 	if(val==null){
 		return this.$t('static.wait_approval');
 	}else if(val==0){
 		 return this.$t('static.wait_approval');
-	}else if(val==1&&type==0){
+	}else if(val==1&&type==0&&task=='after_sales_governor_validate'){
+		 /*return this.$t('static.dispatch');*/
+		 return  this.$t('static.management_approval')
+	}else if(val==1&&type==0&&task=='after_sales_receipt'){
 		 return this.$t('static.dispatch');
-	}else if(val==1&&type==1){
+	}else if(val==1&&type==0&&task=='after_sales_receipt'){
 		 return this.$t('static.wait_receipt');
+	}else if(val==1&&type==1&&task=='after_sales_governor_validate'){
+		 return  this.$t('static.management_approval')
 	}else if(val==2&&type==0){
 		 return this.$t('static.replacement')+this.$t('static.success');
 	}else if(val==2&&type==1){
 		 return this.$t('static.reutrned')+this.$t('static.success');
 	}else if(val==-2){
 		 return this.$t('static.unapproved');
-	}
-	else if(val==3){
+	}else if(val==3){
 		 return this.$t('static.receive');
 	}else if(val==-1&&type==0){
 		 return this.$t('static.canceled_apply');

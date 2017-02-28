@@ -35,6 +35,11 @@
                     <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
                     <input  type="text" class="form-control edit-input"  v-model="employeeParam.consignerName"  v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
                 </div>
+                <div class="editpage-input col-md-6">
+                    <label class="editlabel">{{$t('static.transcation')}}</label>
+                    <mz-datepicker :time.sync="param.tradeTime" format="yyyy/MM/dd HH:mm:ss">
+                    </mz-datepicker>
+                </div>
               </div>
               <section class="editsection">
                   <div style="margin-top:20px;">

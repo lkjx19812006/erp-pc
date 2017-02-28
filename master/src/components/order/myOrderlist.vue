@@ -142,7 +142,7 @@
                   <!-- <td  @click.stop="">
                     <label v-if="item.validate<=0&&(item.orderStatus==0||item.orderStatus==70)" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                   </td> -->
-                  <td>{{item.ctime}}</td>
+                  <td>{{item.tradeTime | subtime}}</td>
                   <td v-if="item.type==1">{{$t('static.sell')}}</td>
                   <td v-if="item.type==0">{{$t('static.purchase')}}</td>
                   <td v-if="item.mode==1">{{$t('static.together')}}</td>
@@ -201,6 +201,7 @@
                         employee:item.employee,
                         customerName:item.customerName,
                         org:item.org,
+                        tradeTime:item.tradeTime,
                         district:item.district,
                         orderStatus:item.orderStatus,
                         consigneeAddr:item.consigneeAddr,
@@ -245,7 +246,7 @@
                         <!-- 销售订单发货流程start-->
                         <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">{{$t('static.apply_send')}}
                         </button>
-                        <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.logistics==1&&item.taskKey=='order_send_governor_validate'" style="color:#333;">{{$t('static.management_approval')}}{{item.verifierName}}</a>
+                        <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.logistics==1&&item.taskKey=='order_send_governor_validate'" style="color:#333;">{{$t('static.management_approval')}}</a>
                         <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 3px;">{{$t('static.reapply_delivery')}}
                         </button>
                         <button class="btn btn-warning" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 5px;">{{$t('static.shipped')}}
@@ -409,6 +410,7 @@
                     intl:0,
                     customer:'',
                     currency:'',
+                    tradeTime:'',
                     addressId:'',    //地址ID，如果为空，表示是新增的收货地址,否则是已存在的收货地址
                     consignee:'',
                     consigneePhone:'',

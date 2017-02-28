@@ -154,7 +154,7 @@
               </thead>
               <tbody>
                   <tr v-for="item in initAllOrderlist"  v-cloak>
-                    <td>{{item.ctime}}</td>
+                    <td>{{item.tradeTime | subtime}}</td>
                     <td v-if="item.type==1">{{$t('static.sell')}}</td>
                     <td v-if="item.type==0">{{$t('static.purchase')}}</td>
                     <td v-if="item.mode==1">{{$t('static.together')}}</td>

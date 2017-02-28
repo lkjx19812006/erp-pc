@@ -33,9 +33,10 @@
                     </div>
                     <div class="editpage-input col-md-12">
                          <label class="editlabel">{{$t('static.upload_attachments')}}</label>
-                         <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;width:20%"></press-image>
+                         <press-image :value.sync="param.image_f" :type="type" :param="imageParam" ></press-image>
+                         <!-- <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;width:20%"></press-image>
                          <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
-                         <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                         <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image> -->
                     </div>
                </section>
             </div>
@@ -48,14 +49,8 @@
     </div>
 </template>
 <script>
-import pressImage from '../../imagePress'
+import pressImage from '../../tools/upload/imagePressMul'
 import personnelModel  from  '../second_order/allEmployee'
-import {
-
-} from '../../../vuex/getters'
-import {
-
-} from '../../../vuex/actions'
 export default {
     components: {
         pressImage,
@@ -83,12 +78,6 @@ export default {
         }
     },
     vuex: {
-       getters: {
-
-        },
-        actions: {
-            
-        }
     },
     methods: {
         confirm:function(){
@@ -130,10 +119,20 @@ export default {
                 this.employeeParam.shipper = person.employeeId;
             }
             console.log(this.param.consignee)
+        },
+        getFiles: function(files){
+            this.param.files = '';
+            for(let i = 0;i<files.length;i++){
+                if(i==0){
+                    this.param.files = files[0].path;
+                }else{
+                    this.param.files = this.param.files + "," + files[i].path;
+                }
+            }
         }
     },
     created() {
-
+        console.log(this.param)
    }
 
 }

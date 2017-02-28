@@ -43,7 +43,7 @@
                         </tbody>
                     </table>
                     <div style="padding-left:25%">
-                       <div v-if="breedInfo.status==0&&this.sum < this.param.total*100" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0;cursor:pointer" @click="showAddBreed()">添加支付分期</div> 
+                       <div v-if="breedInfo.status==0&&this.sum < this.param.total*1000" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0;cursor:pointer" @click="showAddBreed()">添加支付分期</div> 
                          
                     </div>
                     <validator name="inner">   
@@ -108,7 +108,7 @@
                                         <div v-if="breedInfo.status==2" @click="cancelModifyBreed()">{{$t('static.cancel')}}</div>
                                     </button>
 
-                                    <button type="button" class="btn btn-confirm" v-if="$inner.valid&&(param.total*100-sum-breedInfo.amount*100)>=0">
+                                    <button type="button" class="btn btn-confirm" v-if="$inner.valid&&(param.total*1000-sum-breedInfo.amount*1000)>=0">
                                         <div v-if="breedInfo.status==1" @click="addBreed()">{{$t('static.save')}}</div>
                                         <!-- <div v-if="(breedInfo.status==1||breedInfo.status==2)&&this.sum > this.param.total" @click="addBreed()">{{$t('static.save')}}</div> -->
                                         <div v-if="breedInfo.status==2" @click="modifyBreed()">{{$t('static.save')}}</div>
@@ -123,7 +123,7 @@
             </div>
             <div class="edit_footer">
                 <button type="button" class="btn btn-default btn-close" @click="closeInfo()">{{$t('static.cancel')}}</button>
-                <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.stages.length>0&&sum == param.total*100"  @click="confirm()">{{$t('static.confirm')}}</button>
+                <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.stages.length>0&&sum == param.total*1000"  @click="confirm()">{{$t('static.confirm')}}</button>
                 <!-- <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.stages.length>0&&this.sum!=this.param.total"  disabled="true">总金额不对</button> -->
                 <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.confirm')}}</button>
             </div> 
@@ -190,7 +190,7 @@
           this.sum = 0;
           this.scale = 0;
           for(var i=0;i < this.param.stages.length;i++){
-             this.sum +=parseFloat(this.param.stages[i].amount)*100;
+             this.sum +=parseFloat(this.param.stages[i].amount)*1000;
              this.scale +=parseInt(this.param.stages[i].ratio*10);
           }
           this.modifySum = this.sum;
@@ -204,7 +204,7 @@
           this.breedInfo.comment=this.param.stages[index].comment;
           this.breedInfo.extra=this.param.stages[index].extra;
           this.updateParam.show = true;
-          this.sum -=parseFloat(this.param.stages[index].amount)*100;
+          this.sum -=parseFloat(this.param.stages[index].amount)*1000;
           this.scale -=parseInt(this.param.stages[index].ratio*10);
           console.log(this.sum);
           console.log(this.scale);
@@ -219,7 +219,7 @@
             console.log(this.scale);
         },
         deleteBreed:function(index){
-            this.sum -=parseFloat(this.param.stages[index].amount)*100;
+            this.sum -=parseFloat(this.param.stages[index].amount)*1000;
             this.scale -=parseInt(this.param.stages[index].ratio*10);
             console.log(this.sum);
             console.log(this.scale);
@@ -260,7 +260,7 @@
           this.param.stages[this.updateParam.index].comment=this.breedInfo.comment;
           this.param.stages[this.updateParam.index].extra=this.breedInfo.extra;
           /*this.param.items[this.updateParam.index].orderId=this.breedInfo.id,*/
-          this.sum +=parseFloat(this.breedInfo.amount)*100;
+          this.sum +=parseFloat(this.breedInfo.amount)*1000;
           this.scale +=parseInt(this.breedInfo.ratio*10);
           this.breedInfo.status = 0;
           this.updateParam.show = false;
@@ -278,7 +278,7 @@
           this.breedInfo.status = 0;
           this.addParam.show = false; 
           console.log(this.param.stages)
-          this.sum += parseFloat(this.breedInfo.amount)*100;
+          this.sum += parseFloat(this.breedInfo.amount)*1000;
           this.scale +=parseInt(this.breedInfo.ratio*10);
           console.log(this.sum);
           console.log(this.scale);
@@ -306,7 +306,7 @@
               this.addParam.show = true;
           }  
           for(var i=0;i < this.param.stages.length-1;i++){
-             this.sum +=parseFloat(this.param.stages[i].amount)*100;
+             this.sum +=parseFloat(this.param.stages[i].amount)*1000;
              this.scale +=parseInt(this.param.stages[i].ratio*10);
           }
           console.log(this.sum);
@@ -322,7 +322,7 @@
     created(){
         if(this.param.stages.length>0){
             for(var i=0;i < this.param.stages.length;i++){
-                this.sum +=parseFloat(this.param.stages[i].amount)*100;
+                this.sum +=parseFloat(this.param.stages[i].amount)*1000;
                 this.scale +=parseInt(this.param.stages[i].ratio*10);
             }
         }
