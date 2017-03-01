@@ -2654,7 +2654,8 @@ export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情(�
     }).then((res) => {
         param.loading = false;
         var breed = res.json().result;
-        if(breed===null){
+        if(breed===null
+){
             param.show = false;
             param.callback("品种不存在");
             return ;

@@ -5,20 +5,18 @@
         <!-- 头部搜索 -->
         <div slot="top">
             <div class="clearfix">
-                <div class="pull-right" >
-                    <button class="btn btn-primary transfer"   @click="selectSearch()">刷新</button>
+                <div class="pull-right">
+                    <button class="btn btn-primary transfer" @click="selectSearch()">刷新</button>
                 </div>
-                
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">产品名称：</dt>
-                   <dd class="left">
-                        <input type="text" v-model="loadParam.name" class="form-control" placeholder="按回车搜索" @keyup.enter="selectSearch()"/>
-                   </dd>
+                    <dt class="left transfer marg_top">产品名称：</dt>
+                    <dd class="left">
+                        <input type="text" v-model="loadParam.name" class="form-control" placeholder="按回车搜索" @keyup.enter="selectSearch()" />
+                    </dd>
                 </dl>
-
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">产品类别：</dt>
-                   <dd class="left">
+                    <dt class="left transfer marg_top">产品类别：</dt>
+                    <dd class="left">
                         <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
                             <option value="" selected>全部</option>
                             <option value="中成药">中成药</option>
@@ -26,26 +24,22 @@
                             <option value="提取物">提取物</option>
                             <option value="饮片">饮片</option>
                         </select>
-                   </dd>
+                    </dd>
                 </dl>
-
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">公司名称：</dt>
-                   <dd class="left">
-                        <input type="text" v-model="loadParam.companyName" class="form-control" placeholder="按回车搜索" @keyup.enter="selectSearch()"/>
-                   </dd>
+                    <dt class="left transfer marg_top">公司名称：</dt>
+                    <dd class="left">
+                        <input type="text" v-model="loadParam.companyName" class="form-control" placeholder="按回车搜索" @keyup.enter="selectSearch()" />
+                    </dd>
                 </dl>
-                
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">批准文号：</dt>
-                   <dd class="left">
-                        <input type="text" v-model="loadParam.approvalNo" class="form-control" placeholder="按回车搜索" @keyup.enter="selectSearch()"/>
-                   </dd>
+                    <dt class="left transfer marg_top">批准文号：</dt>
+                    <dd class="left">
+                        <input type="text" v-model="loadParam.approvalNo" class="form-control" placeholder="按回车搜索" @keyup.enter="selectSearch()" />
+                    </dd>
                 </dl>
-                
-                
-                <button class="btn btn-default transfer"   @click="selectSearch()">搜索</button>
-                <button class="btn btn-default transfer"   @click="resetCondition()">清空条件</button>
+                <button class="btn btn-default transfer" @click="selectSearch()">搜索</button>
+                <button class="btn btn-default transfer" @click="resetCondition()">清空条件</button>
             </div>
         </div>
         <!-- 中间列表 -->
@@ -73,15 +67,14 @@
                         <td>{{item.spec}}</td>
                         <td>{{item.approvalNo}}</td>
                         <td>{{item.approvalTime}}</td>
-                        <td><a @click="getRelativeCompany(item.name)">关联公司</a></td>
+                        <td><a @click="getRelativeCompany(item.name)">关联企业</a></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-         <!-- 底部分页 -->
-        <pagination :combination="loadParam"  slot="page"></pagination>
+        <!-- 底部分页 -->
+        <pagination :combination="loadParam" slot="page"></pagination>
     </mglist-model>
-    
 </template>
 <script>
 import pagination from '../../components/pagination'
@@ -109,17 +102,17 @@ export default {
     data() {
         return {
             loadParam: {
-                show:false,
+                show: false,
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
                 all: 8,
-                total:0,
-                name:'',
-                type:'',
-                approvalNo:'',
-                companyName:''
+                total: 0,
+                name: '',
+                type: '',
+                approvalNo: '',
+                companyName: ''
 
             },
             relativeParam: {
@@ -145,24 +138,24 @@ export default {
     },
 
     methods: {
-        selectSearch: function(){
+        selectSearch: function() {
             this.getCompanyProduct(this.loadParam)
         },
-        resetCondition: function(){
-            this.loadParam.name='';
-            this.loadParam.type='';
-            this.loadParam.approvalNo='';
-            this.loadParam.companyName='';
+        resetCondition: function() {
+            this.loadParam.name = '';
+            this.loadParam.type = '';
+            this.loadParam.approvalNo = '';
+            this.loadParam.companyName = '';
             this.getCompanyProduct(this.loadParam);
         },
-        getRelativeCompany: function(name){
+        getRelativeCompany: function(name) {
             this.relativeParam.name = name;
             this.relativeParam.show = true;
         },
-        getDetail: function(id){
+        getDetail: function(id) {
             this.detailParam.show = true;
             this.detailParam.id = id;
-        }   
+        }
     },
     events: {
         fresh: function(input) {
@@ -170,8 +163,8 @@ export default {
             this.getCompanyProduct(this.loadParam);
         }
     },
-    ready(){
-      common('tab','table_box',1);
+    ready() {
+        common('tab', 'table_box', 1);
     },
     filter: (filter, {}),
     created() {
@@ -180,19 +173,22 @@ export default {
 }
 </script>
 <style scoped>
-
-.name_search{
-    margin-right:3%;
+.name_search {
+    margin-right: 3%;
 }
-.new_btn{
-    padding:7px 10px;
+
+.new_btn {
+    padding: 7px 10px;
     float: none;
     cursor: pointer;
 }
-.transfer{
-    margin-right:15px;
+
+.transfer {
+    margin-right: 15px;
 }
- #table_box  table th,#table_box  table td{
+
+#table_box table th,
+#table_box table td {
     width: 242px;
     min-width: 242px;
 }
