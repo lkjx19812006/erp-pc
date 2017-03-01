@@ -1365,17 +1365,9 @@ export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分
 }
 
 export const paymentConfirm = ({ dispatch }, param) => { //确定收款
-    console.log(param)
-        /*    param.images = '';
-            if (param.image_f) {
-                param.images += param.image_f + ','
-            }
-            if (param.image_s) { param.images += param.image_s + ',' }
-            if (param.image_t) { param.images += param.image_t }*/
     var ss = param.images;
     var img = ss.split(","); //字符串转化为数组
     img.toString();
-    console.log(img)
     const body = {
         id: param.id,
         images: img
@@ -1750,9 +1742,17 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             orderDetail.payPics = {};
             orderDetail.payPics.arr = payPics;
             orderDetail.payPics.show = true;
+            payPics.url = [];
             for (var i in orderDetail.payPics.arr) {
                 orderDetail.payPics.arr[i].show = false;
+                if (orderDetail.payPics.arr[i].url) {
+                    var img = orderDetail.payPics.arr[i].url;
+                    var file = img.split(',');
+                    payPics.url = payPics.url.concat(file);
+                }
+
             }
+
             var sendPics = orderDetail.sendPics;
             orderDetail.sendPics = {};
             orderDetail.sendPics.arr = sendPics;
@@ -1760,6 +1760,7 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             for (var i in orderDetail.sendPics.arr) {
                 orderDetail.sendPics.arr[i].show = false;
             }
+
             var attachFiles = orderDetail.attachFiles;
             orderDetail.attachFiles = {};
             orderDetail.attachFiles.arr = attachFiles;
@@ -1767,6 +1768,7 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             for (var i in orderDetail.attachFiles.arr) {
                 orderDetail.attachFiles.arr[i].show = false;
             }
+
             var logisticses = orderDetail.logisticses;
             orderDetail.logisticses = {};
             orderDetail.logisticses.arr = logisticses;
@@ -1779,9 +1781,11 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             orderDetail.contractList = {};
             orderDetail.contractList.arr = contractList;
             orderDetail.contractList.show = true;
+            console.log(orderDetail.contractList.arr)
             for (var i in orderDetail.contractList.arr) {
                 orderDetail.contractList.arr[i].show = false;
             }
+
             var stages = orderDetail.stages;
             orderDetail.stages = {};
             orderDetail.stages.arr = stages;
@@ -2437,21 +2441,21 @@ export const getCompanyProductDetail = ({ dispatch }, param) => { //(公司)企�
         var detail = res.json().result;
         var drugList = detail.drugList;
         var breedList = [];
-        if(drugList.length>0&&drugList[0].component){   //如果配方存在
+        if (drugList.length > 0 && drugList[0].component) { //如果配方存在
             let list = drugList[0].component.split(";");
             let length = list.length;
-            if(length>1){         //最后一个为"",应该去掉
-               for(let i=0;i<length-1;i++) {
+            if (length > 1) { //最后一个为"",应该去掉
+                for (let i = 0; i < length - 1; i++) {
                     let temp = list[i].split(":");
-                    if(temp.length>=2){
+                    if (temp.length >= 2) {
                         let breed = {
                             name: temp[0],
                             number: temp[1]
                         };
                         breedList.push(breed);
                     }
-                    
-                } 
+
+                }
             }
         }
         detail.drugList[0].componentArr = breedList;
@@ -2639,9 +2643,9 @@ export const getBreedData = ({ dispatch }, param) => { //药材
 }
 export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情(根据ID或者根据name)
     var url = apiUrl.breedList + param.link;
-    if(param.id) {
+    if (param.id) {
         url += param.id;
-    }else if(param.name) {
+    } else if (param.name) {
         url += param.name;
     }
     Vue.http({
@@ -2654,10 +2658,10 @@ export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情(�
     }).then((res) => {
         param.loading = false;
         var breed = res.json().result;
-        if(breed===null){
+        if (breed === null) {
             param.show = false;
             param.callback("品种不存在");
-            return ;
+            return;
         }
         var arr = breed.specs;
         breed.specs = {
@@ -7140,6 +7144,14 @@ export const getFundDetail = ({ dispatch }, param) => { //获取资金记录详�
     }).then((res) => {
         param.loading = false;
         var product = res.json().result;
+        product.url = [];
+        var img = res.json().result.images;
+        for (var i in img) {
+            var url = img[i].split(",");
+            console.log(url)
+            product.url = product.url.concat(url);
+        }
+
         dispatch(types.FUND_DETAIL_DATA, product);
     }, (res) => {
         console.log('fail');
@@ -7645,6 +7657,13 @@ export const getReceiptDetail = ({ dispatch }, param) => { //合同、售后详�
     }).then((res) => {
         var contract = res.json().result;
         contract.url = param.url;
+        /*contract.img = [];
+var img = res.json().result.images;
+for (var i in img) {
+    var file = img[i].split(',');
+    contract.img = contract.img.concat(file);
+}
+*/
         dispatch(types.SALES_DETAIL, contract);
         param.loading = false;
     }, (res) => {

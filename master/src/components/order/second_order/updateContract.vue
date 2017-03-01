@@ -9,26 +9,26 @@
         </div>
         <validator name="validation">
             <div class="edit-model">
-               <section class="editsection clearfix" v-cloak>
+                <section class="editsection clearfix" v-cloak>
                     <div class="editpage-input col-md-12">
-                       <label class="editlabel">{{$t('static.diferencia')}} <span class="system_danger" v-if="$validation.adjust.required">{{$t('static.required')}}</span></label>
-                       <input type="number" class="form-control" v-model="param.adjusted"  v-validate:adjust="{required:true}"/>
+                        <label class="editlabel">{{$t('static.diferencia')}} <span class="system_danger" v-if="$validation.adjust.required">{{$t('static.required')}}</span></label>
+                        <input type="number" class="form-control" v-model="param.adjusted" v-validate:adjust="{required:true}" />
                     </div>
                     <div class="editpage-input col-md-12">
-                       <label class="editlabel">{{$t('static.contract_note')}} <span class="system_danger" v-if="$validation.text.required">{{$t('static.required')}}</span></label>
-                       <textarea v-model='param.contractText' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;font-size: 13px;" rows="5" placeholder="请说明补充理由" v-validate:text="{required:true}"></textarea>
+                        <label class="editlabel">{{$t('static.contract_note')}} <span class="system_danger" v-if="$validation.text.required">{{$t('static.required')}}</span></label>
+                        <textarea v-model='param.contractText' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;font-size: 13px;" rows="5" placeholder="请说明补充理由" v-validate:text="{required:true}"></textarea>
                     </div>
                     <div class="editpage-input col-md-12">
-                       <label class="editlabel">{{$t('static.comment')}}</label>
-                       <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;font-size: 13px;" rows="3"></textarea>
+                        <label class="editlabel">{{$t('static.comment')}}</label>
+                        <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;font-size: 13px;" rows="3"></textarea>
                     </div>
                     <div class="editpage-input col-md-12">
-                         <label class="editlabel">{{$t('static.payment')}}</label>
-                         <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;width:20%"></press-image>
-                         <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
-                         <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                        <label class="editlabel">{{$t('static.payment')}}</label>
+                        <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;width:20%"></press-image>
+                        <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                        <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
                     </div>
-               </section>
+                </section>
             </div>
             <div class="edit_footer">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
@@ -40,13 +40,6 @@
 </template>
 <script>
 import pressImage from '../../imagePress'
-import {
-
-} from '../../../vuex/getters'
-import {
-
-    
-} from '../../../vuex/actions'
 export default {
     components: {
         pressImage
@@ -54,47 +47,49 @@ export default {
     props: ['param'],
     data() {
         return {
-            type:"image/jpeg,image/jpg,image/png",
-            imageParam:{
-               url:'/crm/api/v1/file/',
-               qiniu:false
+            type: "image/jpeg,image/jpg,image/png",
+            imageParam: {
+                url: '/crm/api/v1/file/',
+                qiniu: false
             },
-            amount:'',
+            amount: '',
         }
     },
     vuex: {
-       getters: {
+        getters: {
 
         },
         actions: {
-            
+
         }
     },
     methods: {
-        confirm:function(){
-            this.param.show =false;
+        confirm: function() {
+            this.param.show = false;
             this.param.link(this.param);
         }
     },
     created() {
 
-   }
+    }
 
 }
 </script>
 <style scoped>
-.modal{
-    z-index:1102;
-}
-.modal_con{
-    z-index:1102;
+.modal {
+    z-index: 1102;
 }
 
-.top-title{
+.modal_con {
+    z-index: 1102;
+}
+
+.top-title {
     width: 100%;
     position: absolute;
-    top:0;
+    top: 0;
 }
+
 .edit-input {
     height: 36px;
     line-height: 36px;
@@ -132,4 +127,3 @@ export default {
     display: inline-block;
 }
 </style>
-
