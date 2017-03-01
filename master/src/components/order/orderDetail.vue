@@ -358,11 +358,11 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.contractList.arr">
-                                                        <td v-if="item.url.indexOf('jpeg','png','jpg','gif','bmp')>0">{{item.fileType}}</td>
+                                                        <td v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0">{{item.fileType}}</td>
                                                         <td v-else>others</td>
                                                         <td>{{item.bizType}}</td>
                                                         <td>
-                                                            <img :src="item.url" v-if="item.url.indexOf('jpeg','png','jpg','gif','bmp')>0" @click="clickBig(item.url)" style="margin:auto" />
+                                                            <img :src="item.url " v-if="item.url.indexOf( 'jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0" @click="clickBig(item.url)" style="margin:auto" />
                                                             <a v-else href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
@@ -390,29 +390,29 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
-                                            link:'',
-                                            crete:'payPics'
-                                            })">
-                                      <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
-                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.payPics.arr.length!==null">
-                                        {{$t('static.pay_evidence')}}（{{initOrderDetail.payPics.arr.length}}）<span v-if="param.orderStatus<30&&param.contact=='/order/myList'" class="system_danger">{{$t('static.pay_tips')}}</span>
-                                      </a>
-                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                      {{$t('static.pay_evidence')}}（0）<span class="system_danger" v-if="param.orderStatus<30&&param.contact=='/order/myList'">{{$t('static.pay_tips')}}</span>
-                                      </a>
-                                      <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
-                                          show:true,
-                                          orderId:initOrderDetail.id,
-                                          route:uploadDocument,
-                                          link:'/order/attachSubmit/',
-                                          description:'',
-                                          bizType:'order_pay',
-                                          payPics:'',
-                                          titles:'上传支付凭证'
-                                          })"  v-if="(initOrderDetail.payPics.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">{{$t('static.new')}}</button>
-                                     <!--  <button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button> -->
-                                      <a v-else></a>
-                                  </h4>
+                                                  link:'',
+                                                  crete:'payPics'
+                                                  })">
+                                            <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.payPics.arr.length!==null">
+                                              {{$t('static.pay_evidence')}}（{{initOrderDetail.payPics.arr.length}}）<span v-if="param.orderStatus<30&&param.contact=='/order/myList'" class="system_danger">{{$t('static.pay_tips')}}</span>
+                                            </a>
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                            {{$t('static.pay_evidence')}}（0）<span class="system_danger" v-if="param.orderStatus<30&&param.contact=='/order/myList'">{{$t('static.pay_tips')}}</span>
+                                            </a>
+                                            <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
+                                                show:true,
+                                                orderId:initOrderDetail.id,
+                                                route:uploadDocument,
+                                                link:'/order/attachSubmit/',
+                                                description:'',
+                                                bizType:'order_pay',
+                                                payPics:'',
+                                                titles:'上传支付凭证'
+                                                })"  v-if="(initOrderDetail.payPics.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">{{$t('static.new')}}</button>
+                                           <!--  <button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button> -->
+                                            <a v-else></a>
+                                        </h4>
                                     </div>
                                     <div class="panel-collapse" v-if="initOrderDetail.payPics.arr.length&&!initOrderDetail.payPics.show" v-cloak>
                                         <div class="panel-body panel-set">
@@ -425,11 +425,11 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.payPics.arr">
-                                                        <td v-if="item.url.indexOf('jpeg','png','jpg','gif','bmp')>0">{{item.fileType}}</td>
+                                                        <td v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0">{{item.fileType}}</td>
                                                         <td v-else>others</td>
                                                         <td>{{item.bizType}}</td>
                                                         <td>
-                                                            <img :src="item.url" v-if="item.url.indexOf('jpeg','png','jpg','gif','bmp')>0" @click="clickBig(item.url)" style="margin:auto" />
+                                                            <img :src="item.url" v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0" @click="clickBig(item.url)" style="margin:auto" />
                                                             <a v-else href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
@@ -475,11 +475,11 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.attachFiles.arr">
-                                                        <td v-if="item.url.indexOf('jpeg','png','jpg','gif','bmp')>0">{{item.fileType}}</td>
+                                                        <td v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0">{{item.fileType}}</td>
                                                         <td v-else>others</td>
                                                         <td>{{item.bizType}}</td>
                                                         <td>
-                                                            <img :src="item.url" v-if="item.url.indexOf('jpeg','png','jpg','gif','bmp')>0" @click="clickBig(item.url)" style="margin:auto" />
+                                                            <img :src="item.url" v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0" @click="clickBig(item.url)" style="margin:auto" />
                                                             <a v-else href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
@@ -531,11 +531,11 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.sendPics.arr">
-                                                        <td v-if="item.url.indexOf('jpeg','png','jpg','gif','bmp')>0">{{item.fileType}}</td>
+                                                        <td v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0">{{item.fileType}}</td>
                                                         <td v-else>others</td>
                                                         <td>{{item.bizType}}</td>
                                                         <td>
-                                                            <img :src="item.url" v-if="item.url.indexOf('jpeg','png','jpg','gif','bmp')>0" @click="clickBig(item.url)" style="margin:auto" />
+                                                            <img :src="item.url" v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0" @click="clickBig(item.url)" style="margin:auto" />
                                                             <a v-else href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
