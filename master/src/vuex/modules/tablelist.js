@@ -13,7 +13,7 @@ const state = {
 	 	list:{
               "code": 200,
               "msg": "success",
-            "result": {
+              "result": {
                 "pageNum": 1,
                 "pageSize": 10,
                 "size": 10,
@@ -190,9 +190,13 @@ const mutations = {
 	[ABSTRACT_GET_DATA](state, data) {
         console.log(data);
         if(data.name=='menu'){
-            for(var i in data.list.result){
-                for(var m in data.list.result[i].subcategory){
+            for(var i in data.list.result){ //一级
+                for(var m in data.list.result[i].subcategory){ //二级
                     data.list.result[i].subcategory[m].show=false;
+                    for(var n in data.list.result[i].subcategory[m].subcategory){ //三级
+                        data.list.result[i].subcategory[m].subcategory[n].show=false;
+                    }
+                    
                 }
             }
         }

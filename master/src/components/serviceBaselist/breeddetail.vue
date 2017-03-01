@@ -6,7 +6,7 @@
     <tip-model :param="tipsParam" v-if="tipsParam.show"></tip-model>
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" @click="param.show=false"></div>
     <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
-        <div class="cover_loading" v-if="param.id!=initBreedDetail.id">
+        <div class="cover_loading" v-if="param.id!=initBreedDetail.id&&param.name!=initBreedDetail.name">
             <pulse-loader :loading="true" :color="color" :size="size"></pulse-loader>
         </div>
         <div class="client-section clearfix" v-cloak>
@@ -474,7 +474,6 @@ import {
 import {
     getCategoryData,
     updateBreedInfo,
-    getBreedDetail,
     specDel,
     createSpec,
     saveAlias,
@@ -550,7 +549,6 @@ export default {
         actions: {
             getCategoryData,
             updateBreedInfo,
-            getBreedDetail,
             specDel,
             createSpec,
             saveAlias,
@@ -599,6 +597,12 @@ export default {
 }
 </script>
 <style scoped>
+.modal{
+    z-index: 1081;
+}
+.modal_con{
+    z-index: 1081;
+}
 .top-title{
     right: 0;
     top: 91px;

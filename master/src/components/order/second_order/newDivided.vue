@@ -1,36 +1,37 @@
 <template>
-	<div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+  <div>
+	  <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div class="top-title">
             <span class="glyphicon glyphicon-remove-circle" @click="param.show=false"></span>
         </div>
         <div class="edit-content">
-            <h3>分期付款</h3>
+            <h3>{{$t('static.installment')}}{{this.sum}}{{this.param.total*100}}</h3>
         </div>
         <validator name="validation">
           <form novalidate>
             <div class="edit-model">
                 <div>
-                    <h4 style="text-align: left;font-size: 14px;">分期信息<span class="system_danger"> 请将所有的分期填写完整才可以提交哦</span></h4>
+                    <h4 style="text-align: left;font-size: 14px;">{{$t('static.install_detail')}}<span class="system_danger">{{$t('static.install_tips')}}</span></h4>
                     <table class="table table-hover table_color table-striped ">
                         <thead>
-                            <tr>
-                                <th>分期金额</th>
-                                <th>分期比例</th>
-                                <th>分期支付时间</th>
-                                <th>额外支付时间</th>
-                                <th>分期说明</th>
-                                <th>申请备注</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
+                          <tr>
+                              <th>{{$t('static.install_amount')}}</th>
+                              <th>{{$t('static.install_ratio')}}</th>
+                              <th>{{$t('static.paid_time')}}</th>
+                              <th>{{$t('static.install_extra')}}</th>
+                              <th>{{$t('static.install_reason')}}</th>
+                              <th>{{$t('static.apply_note')}}</th>
+                              <th></th>
+                              <th></th>
+                          </tr>
                         </thead>
                         <tbody>
                             <tr v-for="item in param.stages">
                                 <td>{{item.amount}}</td>
                                 <td>{{item.ratio}}</td>
-                                <td v-if="item.orderStatus==20">合同签订后</td>
-                                <td v-if="item.orderStatus==60">确认收货后</td>
+                                <td v-if="item.orderStatus==20">{{$t('static.signing_contract')}}</td>
+                                <td v-if="item.orderStatus==60">{{$t('static.confirm_receipt')}}</td>
                                 <td>{{item.extra}}天</td>
                                 <td>{{item.description}}</td>
                                 <td>{{item.comment}}</td>
@@ -49,17 +50,17 @@
                        <div v-if="addParam.show||updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
                              <div class="clearfix">
                                 <div class="editpage-input col-md-6">
-                                     <label class="editlabel">分期支付时间 <span class="system_danger" v-if="$inner.status.required">{{$t('static.required')}}</span></label>
+                                     <label class="editlabel">{{$t('static.paid_time')}} <span class="system_danger" v-if="$inner.status.required">{{$t('static.required')}}</span></label>
                                      <select v-model="breedInfo.orderStatus" class="form-control edit-input" v-validate:status="{required:true}">
-                                        <option  value="20">合同签订后</option>
-                                        <option  value="60">已确认收货</option>
+                                        <option  value="20">{{$t('static.signing_contract')}}</option>
+                                        <option  value="60">{{$t('static.confirm_receipt')}}</option>
                                      </select>
                                 </div>
                                 <div class="editpage-input col-md-6">
-                                     <label class="editlabel">分期比例<span class="system_danger" v-if="breedInfo.ratio==''">{{$t('static.required')}}</span>
+                                     <label class="editlabel">{{$t('static.install_ratio')}}<span class="system_danger" v-if="breedInfo.ratio==''">{{$t('static.required')}}</span>
                                      <span class="system_danger" v-if="((breedInfo.ratio)*10) > (10-scale)">分期比例不能超过100%</span></label>
                                      <select v-model="breedInfo.ratio" class="form-control edit-input" v-validate:ratio="{required:true}" @change="calculate()">
-                                        <option  value="1">全额付款</option>
+                                        <option  value="1">100%</option>
                                         <option  value="0.1">10%</option>
                                         <option  value="0.2">20%</option>
                                         <option  value="0.3">30%</option>
@@ -72,18 +73,18 @@
                                      </select>
                                 </div>
                                 <div class="editpage-input col-md-6">
-                                     <label class="editlabel" >分期金额 <span class="system_danger" v-if="breedInfo.amount==''">{{$t('static.required')}}</span>
-                                     <span class="system_danger" v-if="breedInfo.amount*100>(param.total*100-sum)">不能超过订单总金额</span></label>
+                                     <label class="editlabel">{{$t('static.install_amount')}} <span class="system_danger" v-if="breedInfo.amount==''">{{$t('static.required')}}</span>
+                                     <!-- <span class="system_danger" v-if="breedInfo.amount*100>(param.total*100-sum)">不能超过订单总金额</span></label> -->
                                      <input type="number" v-if="breedInfo.ratio==1" v-model="breedInfo.amount" value="{{param.total}}" class="form-control edit-input"   />
                                      <input type="number" v-else v-model="breedInfo.amount"  value="{{breedInfo.amount}}" class="form-control edit-input" v-validate:amount="{required:true}"  />
                                 </div>
                                 
                                 <div class="editpage-input col-md-6">
-                                     <label class="editlabel">额外支付时间 <span class="system_danger" v-if="$inner.extral.required">{{$t('static.required')}}</span></label>
+                                     <label class="editlabel">{{$t('static.install_extra')}} <span class="system_danger" v-if="$inner.extral.required">{{$t('static.required')}}</span></label>
                                      <input type="text" v-model="breedInfo.extra" class="form-control edit-input" v-validate:extral="{required:true}"  style="width:95%;float:left" /> <span> 天</span>
                                 </div>
                                 <div class="editpage-input col-md-12">
-                                     <label class="editlabel">分期说明<span class="system_danger" v-if="$inner.description.required">{{$t('static.required')}}</span></label>
+                                     <label class="editlabel">{{$t('static.install_detail')}}<span class="system_danger" v-if="$inner.description.required">{{$t('static.required')}}</span></label>
                                      <input type="text" v-show="false" v-model="breedInfo.description" class="form-control edit-input"  />
                                      <div type="text" class="edit-input" >
                                          <input-select
@@ -97,7 +98,7 @@
                                      <!-- <textarea class="form-control" v-model="breedInfo.description" value="{{breedInfo.description}}" style="resize:none; border:1px solid #ddd;" rows="5" v-validate:description="{required:true}"></textarea> -->
                                 </div>  
                                 <div class="client-detailInfo  col-md-12">
-                                    <label class="editlabel">申请备注</label>
+                                    <label class="editlabel">{{$t('static.apply_note')}}</label>
                                     <textarea class="form-control" v-model="breedInfo.comment" value="{{breedInfo.comment}}" style="resize:none; border:1px solid #ddd;" rows="5" ></textarea>
                                 </div>
                                     
@@ -129,7 +130,7 @@
           </form>
         </validator>
     </div>
-
+  </div>
 </template>
 <script>
   import vSelect from '../../tools/vueSelect/components/Select'
@@ -210,7 +211,7 @@
         },
         calculate:function(){
             console.log(this.scale)
-            this.breedInfo.amount = (this.breedInfo.ratio*1000)*this.param.total/1000
+            this.breedInfo.amount = (this.breedInfo.ratio*100)*this.param.total/100
             ;
             console.log(((this.breedInfo.ratio)*10) >= (10-this.scale))
             console.log((this.breedInfo.ratio)*10)
@@ -314,19 +315,19 @@
         },
         confirm:function(param){
             this.param.show=false;
-            console.log(this.param);
             this.param.callback=this.param.callback;
             this.dividedPayment(this.param);
         }
     },
     created(){
         if(this.param.stages.length>0){
+          console.log('www')
             for(var i=0;i < this.param.stages.length;i++){
                 this.sum +=parseFloat(this.param.stages[i].amount)*100;
                 this.scale +=parseInt(this.param.stages[i].ratio*10);
             }
         }
-
+        console.log(this.sum)
     }
 	}
 </script>
@@ -337,6 +338,9 @@
 .modal_con{
     width: 760px;
     z-index: 1086
+}
+.edit-model{
+  padding: 10px 5px;
 }
 .edit_footer{
      width: 760px;

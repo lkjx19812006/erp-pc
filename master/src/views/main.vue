@@ -34,8 +34,8 @@
         </div>
         <div class="employee_right col-md-4">
             <p class="employee_right_title clear">
-                <span class="left">消息</span>
-                <button class="btn btn-primary right" @click="refresh()">刷新</button>
+                <span class="left">{{$t('static.order_message')}}</span>
+                <button class="btn btn-primary right" @click="refresh()">{{$t('static.refresh')}}</button>
             </p>
             <div class="employee_right_message">
                 <div class="cover_loading">
@@ -49,34 +49,34 @@
                     </div>
                     <div class="message_view_right" v-if="item.bizType=='order_validate'">
                         <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
-                        <a @click="showOrderDetail(item.bizId)">详情</a>
-                        <a @click="showRecord(item)">记录</a>
-                        <a v-if="item.taskKey!='employee_handle'" @click="showAudit(item)">审核</a>
-                        <a v-else @click="showAudit(item)">重新申请</a>
+                        <a @click="showOrderDetail(item.bizId)">{{$t('static.details')}}</a>
+                        <a @click="showRecord(item)">{{$t('static.records')}}</a>
+                        <a v-if="item.taskKey!='employee_handle'" @click="showAudit(item)">{{$t('static.review')}}</a>
+                        <a v-else @click="showAudit(item)">{{$t('static.reapply')}}</a>
                     </div>
                     <div class="message_view_right" v-if="item.bizType=='order_send'">
-                        <a @click="orderSend(item.bizId)">详情</a>
-                        <a @click="showRecord(item)">记录</a>
-                        <a  v-if="item.taskKey=='order_send_governor_validate'"  @click="sendAudit(item)">审核</a>
-                        <a v-if="item.taskKey=='order_send_warehouse_validate'"  @click="deliverGoods(item)">发货</a>
-                        <a  v-if="item.taskKey=='order_send_employee_handle'"  @click="sendAudit(item)">重新申请</a>
+                        <a @click="orderSend(item.bizId)">{{$t('static.details')}}</a>
+                        <a @click="showRecord(item)">{{$t('static.records')}}</a>
+                        <a  v-if="item.taskKey=='order_send_governor_validate'"  @click="sendAudit(item)">{{$t('static.review')}}</a>
+                        <a v-if="item.taskKey=='order_send_warehouse_validate'"  @click="deliverGoods(item)">{{$t('static.shipped')}}</a>
+                        <a  v-if="item.taskKey=='order_send_employee_handle'"  @click="sendAudit(item)">{{$t('static.reapply')}}</a>
                     </div>
                     <div class="message_view_right" v-if="item.bizType=='order_supplementary_contract'">
                         <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
-                        <a @click="compactDetail(item.bizId)">详情</a>
-                        <a @click="showRecord(item)">记录</a>
-                        <a v-if="item.taskKey=='supplementary_contract_governor_validate'" @click="receiveAudit(item)">合同审核</a>
-                        <a v-if="item.taskKey=='supplementary_contract_employee_handle'"  @click="showAudit(item)">重新申请</a>
+                        <a @click="compactDetail(item.bizId)">{{$t('static.details')}}</a>
+                        <a @click="showRecord(item)">{{$t('static.records')}}</a>
+                        <a v-if="item.taskKey=='supplementary_contract_governor_validate'" @click="receiveAudit(item)">{{$t('static.contract_review')}}</a>
+                        <a v-if="item.taskKey=='supplementary_contract_employee_handle'"  @click="showAudit(item)">{{$t('static.reapply')}}</a>
                     </div>
                     <div class="message_view_right" v-if="item.bizType=='order_after_sales'">
                         <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
-                        <a @click="salesDetail(item.bizId)">详情</a>
-                        <a @click="showRecord(item)">记录</a>
-                        <a v-if="item.taskKey=='after_sales_governor_validate'" @click="showAudit(item)">售后审核</a>
-                        <a v-if="item.taskKey=='after_sales_receipt'" @click="showAudit(item)">收货确认</a>
-                        <a v-if="item.taskKey=='after_sales_resend'" @click="showAudit(item)">重新发货</a>
-                        <a v-if="item.taskKey=='after_sales_employee_handle'" @click="showAudit(item)">重新申请</a>
-                        <a v-if="item.taskKey=='after_sales_disputed_handle'" @click="showAudit(item)">业务员异议处理</a>
+                        <a @click="salesDetail(item.bizId)">{{$t('static.details')}}</a>
+                        <a @click="showRecord(item)">{{$t('static.records')}}</a>
+                        <a v-if="item.taskKey=='after_sales_governor_validate'" @click="showAudit(item)">{{$t('static.aftersales')}}</a>
+                        <a v-if="item.taskKey=='after_sales_receipt'" @click="showAudit(item)">{{$t('static.confirm_receipt')}}</a>
+                        <a v-if="item.taskKey=='after_sales_resend'" @click="showAudit(item)">{{$t('static.reapply_delivery')}}</a>
+                        <a v-if="item.taskKey=='after_sales_employee_handle'" @click="showAudit(item)">{{$t('static.reapply')}}</a>
+                        <a v-if="item.taskKey=='after_sales_disputed_handle'" @click="showAudit(item)">{{$t('static.salesman')}}{{$t('static.objection_handl')}}</a>
                         
                     </div>
                     
@@ -394,6 +394,7 @@ export default {
 }
 .message_view_right a {
     font-size: 13px;
+    margin:0px 5px;
 }
 .employee_top{
     margin-bottom: 20px;

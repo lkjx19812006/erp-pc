@@ -13,6 +13,10 @@ import {
    SYSTEM_DATA,
    PROVINCE_DATA,
    SERVICE_ENTERPRISE,
+   COMPANY_PRODUCT_DATA,
+   COMPANY_PRODUCT_DETAIL,
+   COMPANY_LICENSE_DATA,
+   RELATIVE_COMPANY_DATA,
    SERVICE_COMPONENT,
    SERVICE_DRAW,
    DELETE_SHOW_STATUE,
@@ -120,7 +124,9 @@ import {
    USER_TYPE,
    CALL_RECORD_DATA,
    CALL_COUNT_DATA,
-   CALL_RECORD_VOICE_DATA
+   CALL_RECORD_VOICE_DATA,
+   EMAIL_DATA,
+   EMAIL_COUNT
 
 } from '../mutation-types'
 
@@ -317,6 +323,9 @@ const state = {
             { "id": 0, "number": "00", "category": "0ww", "name": "上海ee冕冠", "tel": "13162875213", "legal_person": "卡卡", "principal": "来啦", "biz_scope": "包括很多、很多、、、", "province": "上海虹口区", "city": "虹口区", "address": "上海虹口江湾镇", "release_date": "2015-07-07", "due_date": "2018-07-07", "show": "true" },
             { "id": 1, "number": "11", "category": "3243", "name": "上海冕冠", "tel": "13162875213", "legal_person": "卡卡", "principal": "来啦", "biz_scope": "包括很多、很多、、、", "province": "上海虹口区", "city": "虹口区", "address": "上海虹口江湾镇", "release_date": "2015-07-07", "due_date": "2018-07-07", "show": "false" }
         ],
+        companyProductList: [],
+        companyLicenseList: [],
+        relativeCompanyList: [],
         componentList: [
             { "code": 0, "name": "人参", "company_name": "饮片厂", "breed_name": "ddd", "quantity": "0.5g", "unit": "克", "status": "提取物" },
             { "code": 1, "name": "红茶", "company_name": "药品厂", "breed_name": "ffd", "quantity": "0.5g", "unit": "克", "status": "药材" }
@@ -480,6 +489,10 @@ const state = {
         orderRolloutList:{
           list:[]
         },
+        //邮件列表
+        emailList:[],
+        //邮件统计
+        emailCount:[],
         userTypeList:[{
           "name": "其它","id": 0
         }]
@@ -551,6 +564,7 @@ const state = {
             show: true
         }
     },
+    companyProductDetail: {"drugList":[]},
     clientDetail: {
         "type": "0",
         "name": "sunny",
@@ -1010,6 +1024,18 @@ const mutations = {
 
     [SERVICE_ENTERPRISE](state, data) { //企业
         state.basicBaseList.enterpriseList = data;
+    },
+    [COMPANY_PRODUCT_DATA](state, data) { //企业产品
+        state.basicBaseList.companyProductList = data;
+    },
+    [COMPANY_PRODUCT_DETAIL](state, data) { //企业产品详情
+        state.companyProductDetail = data;
+    },
+    [COMPANY_LICENSE_DATA](state, data) { //企业证书
+        state.basicBaseList.companyLicenseList = data;
+    },
+    [RELATIVE_COMPANY_DATA](state, data) { //相关企业列表
+        state.basicBaseList.relativeCompanyList = data;
     },
     [SERVICE_DRAW](state, data) { //提取物
         state.basicBaseList.drawList = data;
@@ -1938,9 +1964,14 @@ const mutations = {
     },
     [CALL_RECORD_VOICE_DATA](state,data){
         state.basicBaseList.callRecordList[data.index].refile = data.refile;
+    },
+    [EMAIL_DATA](state,data){
+        state.basicBaseList.emailList = data;
+    },
+    [EMAIL_COUNT](state,data){
+        state.basicBaseList.emailCount = data;
     }
     
-
 }
 
 export default {

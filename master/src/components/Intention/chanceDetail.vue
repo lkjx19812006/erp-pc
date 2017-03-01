@@ -6,7 +6,7 @@
   <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
   <label-model :param="labelParam" v-if="labelParam.show"></label-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"  @click="param.show=false"></div>
-    <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
+    <div class="container modal_con modal_overall" v-show="param.show" >
         <div class="top-title">
             <span class="glyphicon glyphicon-remove-circle"  @click="param.show=false" ></span>
         </div>
@@ -20,18 +20,12 @@
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
                         <span class="navbar-brand navbar-name">{{param.customerName}}</span>
                     </div>
-                    <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
-                         <li>
-                            <!-- <button type="button" class="btn btn-base"  @click="createOffer()">新建报价</button> -->
-                        </li>
-
-                    </ul>
                 </div>
             </nav>
         </div>
         <section>
             <div class="client-section clearfix" >
-                <div class="col-md-12" @click.stop="">
+              <div class="col-md-12">
                     <h4 class="section_title">详情</h4>
                     <article>
                         <div class="edit-detail">
@@ -368,6 +362,7 @@ export default {
                 zipCode:'',     //邮编
                 country:'',
                 province:'',
+                tradeTime:'',
                 city:'',
                 district:'',
                 cost:0,

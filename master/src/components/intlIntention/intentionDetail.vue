@@ -99,7 +99,7 @@
                     </article>
                 </div>
 
-                <div class="col-md-11 client-detail">
+                <div class="col-md-12 client-detail">
                     <h4 class="section_title">{{$t('static.related_information')}}</h4>
                     <article>
                         <div class="panel-group">
@@ -122,6 +122,7 @@
                                       <table class="table contactSet">
                                         <thead>
                                           <th>{{$t('static.inquire_type')}}</th>
+                                          <th>{{$t('static.destination')}}/{{$t('static.postcodes')}}</th>
                                           <th>{{$t('static.inquire_time')}}</th>
                                           <th>{{$t('static.inquiry_state')}}</th>
                                           <th>{{$t('static.product_price')}}</th>
@@ -135,6 +136,10 @@
                                                 <td>
                                                     <a class="underline" v-if="item.inquire==3" @click="getInquireInfo(item.id)">{{item.inquireType}}</a>
                                                     <span v-else>{{item.inquireType}}</span>
+                                                </td>
+                                                <td>
+                                                  <div v-if="item.inquireType=='CIF'||item.inquireType=='FCA'||item.inquireType=='FAS'||item.inquireType=='CPT'||item.inquireType=='CFR'||item.inquireType=='CIP'||item.inquireType=='DAT'||item.inquireType=='DAP'||item.inquireType=='DDP'||item.inquireType=='DAP'||item.inquireType=='EXW'||item.inquireType=='FOB'||item.inquireType=='DDP'">{{item.port}}</div>
+                                                  <div v-else>{{item.postcode}}</div>
                                                 </td>
                                                 <td>{{item.ctime}}</td>
                                                 <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
@@ -300,7 +305,13 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td><img :src="item.url" style="max-width: 150px;"  @click="clickBig(item.url)"/></td>
+                                                <td>
+                                                  <img :src="item.url" v-if="item.fileType=='images'" style="max-width: 150px;"  @click="clickBig(item.url)"/>
+                                                  <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf'">
+                                                  <img  src="/static/images/word.png" v-if="item.fileType=='word'">
+                                                  <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
+                                                  <img  src="/static/images/breedinfo.png" v-if="item.fileType=='other'">
+                                                </td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 

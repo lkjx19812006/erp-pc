@@ -25,6 +25,12 @@
                     <div class="pull-left col-xs-3" style="font-size:16px;">{{$t('static.passWord')}}:</div>
                     <input type="password" class="form-control" v-model="loginParam.password" v-validate:password="['required']" @keyup.enter="confirm()"/>
                 </div>
+                <div class="client-detailInfo  col-xs-12" style="margin-top:10px" v-if="loginParam.required">
+                    <div class="pull-left col-xs-3" style="font-size:16px;">验证码:</div>
+                    <input type="text" class="form-control pull-left" style="width:120px" v-model="loginParam.captcha" @keyup.enter="confirm()"/>
+                    <span class="system_danger pull-left" style="line-height:32px" v-show="loginParam.captcha===''" >请输入验证码</span>
+                </div>
+
 
                 <div class="model-footer col-xs-12" v-if="true">
                     <!-- <span class="pull-left" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="checked=!checked"></span>
@@ -63,6 +69,8 @@ export default {
            loginParam:{
                 no:'',
                 password:'',
+                captcha:'',   //验证码
+                required:false,   //是否需要验证
                 loading:false,
                 show:false,
                 alert:true
@@ -87,6 +95,15 @@ export default {
        actions:{
            login
        }
+    },
+    watch: {
+        'loginParam.required':function(curr,old){
+            if(curr){
+              document.getElementsByClassName("container")[0].style.height = "305px";
+            }else{
+              document.getElementsByClassName("container")[0].style.height = "247px";
+            }
+        }
     },
     methods: {
         confirm:function(){
@@ -166,6 +183,7 @@ export default {
           return test;
         },
       loginCallback:function(){
+        console.log("denglu success");
         this.$route.router.go({name: 'home'});
       }
 

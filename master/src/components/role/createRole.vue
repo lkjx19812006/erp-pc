@@ -25,7 +25,7 @@
                                 <input type="text" class="form-control"  v-model="param.remark"  />
                             </div>
                         </div>
-                        <div class="clearfix" v-show="false">
+                        <div class="clearfix" style="display:none;">
                             <div class="table-responsive">
                                 <table class="table" >
                                     <tr  v-for="item in list.result">
@@ -118,7 +118,7 @@
                                 </table>
                             </div>
                         </div>
-                        <!-- 权限修改设计 -->
+                        <!-- 权限修改样式 -->
                         <div>
                             <div class="clear">
                                 <ul v-for="item in list.result">
@@ -133,19 +133,15 @@
                                                 </label>
                                                 <p class="line_text">{{subItem.cname}}</p>
                                                 <!-- 三级功能 -->
-                                                <!-- <div  class="sub_second clear" v-for="secondItem in subItem.subcategory"> </div> -->
-                                                <ul  class="sub_second clear" v-show="false"> 
-                                                    <li class="clear">
-                                                        <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
-                                                        </label>
-                                                        <p class="line_text">{{secondItem.cname}}22</p>
-                                                    </li>
-                                                    <li class="clear">
-                                                        <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
-                                                        </label>
-                                                        <p class="line_text">{{secondItem.cname}}22</p>
-                                                    </li>
-                                                </ul> 
+                                                <div  class="clear" > 
+                                                    <ul  class="sub_second clear"> 
+                                                        <li class="clear" v-for="secondItem in subItem.subcategory">
+                                                            <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
+                                                            </label>
+                                                            <p class="line_text">{{secondItem.cname}}</p>
+                                                        </li>
+                                                    </ul> 
+                                                </div>
                                             </div>
                                         </div>
                                     </li>
@@ -196,67 +192,89 @@ export default {
         }
     },
     methods:{
-     selectShow:function(item){
-        item.show=!item.show;
-        if(item.pid==0){
-            for(let i in item.subcategory){
-                item.subcategory[i].show=item.show;
-            }
-        }else{
-            let category;
-            for(let i in this.list.result){
-                if(this.list.result[i].id==item.pid){
-                   category= this.list.result[i];
+        selectShow:function(item){
+            item.show = !item.show;
+            this.selectParentNode(item);
+            this.selectChildNode(item);
+        },
+        //选择父节点时，所有子节点做相应的改变
+        selectParentNode:function(item){
+            if(item.subcategory.length!==0){
+                for(let i=0;i< item.subcategory.length;i++){
+                    item.subcategory[i].show = item.show;
+                    this.selectParentNode(item.subcategory[i]);
                 }
-            }
-            category.show=item.show;
-            console.log(item.show)
-            if(!item.show){
-                for(let i in category.subcategory){
-                    if(category.subcategory[i].show){
-                       category.show=true; 
+            }    
+        },
+        //选择子节点
+        selectChildNode:function(item){
+            if(item.pid!==0){
+                for(let j=0; j< this.list.result.length; j++){
+                    if(this.list.result[j].subcategory.length>0 && this.list.result[j].id == item.pid){
+                        if(item.show){
+                            this.list.result[j].show = true;
+                            break;
+                        }else{
+                            if(item.type==1){
+                                this.list.result[j].show = true;
+                                break;
+                            }else{
+                                this.list.result[j].show = false;
+                                for(let k=0; k<this.list.result[j].subcategory.length; k++){
+                                    if(this.list.result[j].subcategory[k].show){
+                                        this.list.result[j].show = true;
+                                        break;
+                                    }
+                                } 
+                            }
+                            
+                        }
                     }
                 }
             }
-        }
-     },
-     save:function(){
-        function CurentTime()
-        { 
-        var now = new Date();
-        var year = now.getFullYear();       //年
-        var month = now.getMonth() + 1;     //月
-        var day = now.getDate();            //日
-        var hh = now.getHours();            //时
-        var mm = now.getMinutes();          //分
-        var clock = year + "-";
-        if(month < 10)
-            clock += "0";
-        clock += month + "-";
-        if(day < 10)
-            clock += "0";
-        clock += day + " ";
-        if(hh < 10)
-            clock += "0";
-        clock += hh + ":";
-        if (mm < 10) clock += '0'; 
-        clock += mm; 
-        return(clock); 
-    } 
-        let idArr=[];
-        for(let i in this.list.result){
-            if(this.list.result[i].show){
-                idArr.push(this.list.result[i].id);
-            }
-            for(let m in this.list.result[i].subcategory){
-                if(this.list.result[i].subcategory[m].show){
-                   idArr.push(this.list.result[i].subcategory[m].id); 
+        },
+        save:function(){
+            function CurentTime(){ 
+                var now = new Date();
+                var year = now.getFullYear();       //年
+                var month = now.getMonth() + 1;     //月
+                var day = now.getDate();            //日
+                var hh = now.getHours();            //时
+                var mm = now.getMinutes();          //分
+                var clock = year + "-";
+                if(month < 10)
+                    clock += "0";
+                clock += month + "-";
+                if(day < 10)
+                    clock += "0";
+                clock += day + " ";
+                if(hh < 10)
+                    clock += "0";
+                clock += hh + ":";
+                if (mm < 10) clock += '0'; 
+                clock += mm; 
+                return(clock); 
+            } 
+            let idArr=[];
+            for(let i in this.list.result){ //一级
+                if(this.list.result[i].show){
+                    idArr.push(this.list.result[i].id);
+                }
+                for(let m in this.list.result[i].subcategory){  //二级
+                    if(this.list.result[i].subcategory[m].show){
+                       idArr.push(this.list.result[i].subcategory[m].id); 
+                    }
+                    for(let k in this.list.result[i].subcategory[m].subcategory){ //三级
+                        if(this.list.result[i].subcategory[m].subcategory[k].show){
+                            idArr.push(this.list.result[i].subcategory[m].subcategory[k].id); 
+                        }
+                        console.log(idArr)
+                    }
                 }
             }
-        }
-        if(idArr.length==0){
-            return alert("请选择功能");
-        }
+            if(idArr.length==0){
+                return alert("请选择功能");
+            }
             this.param.body={
                 cname:this.param.cname,
                 menus:idArr.join(","),
@@ -272,25 +290,29 @@ export default {
             }else{
               this.baseAddData(this.param);  
             }
-     
-     },
-     getDataInit:function(){
-       if(this.param.menus){
-        let idArr=this.param.menus.split(',');
-        for(let item in idArr){
-            for(let m in this.list.result){
-                if(this.list.result[m].id==idArr[item]){
-                    this.list.result[m].show=true;
-                }
-                for(let n in this.list.result[m].subcategory){
-                    if(this.list.result[m].subcategory[n].id==idArr[item]){
-                        this.list.result[m].subcategory[n].show=true;
+        },
+        getDataInit:function(){
+            if(this.param.menus){
+                let idArr=this.param.menus.split(',');
+                for(let item in idArr){
+                    for(let m in this.list.result){
+                        if(this.list.result[m].id==idArr[item]){
+                            this.list.result[m].show=true;
+                        }
+                        for(let n in this.list.result[m].subcategory){
+                            if(this.list.result[m].subcategory[n].id==idArr[item]){
+                                this.list.result[m].subcategory[n].show=true;
+                            }
+                            for(let k in this.list.result[m].subcategory[n].subcategory){
+                                if(this.list.result[m].subcategory[n].subcategory[k].id==idArr[item]){
+                                    this.list.result[m].subcategory[n].subcategory[k].show=true;
+                                }
+                            }
+                        }
                     }
                 }
             }
-        }
-       }
-     } 
+        } 
     },
     created(){
         this.param.keyName='menu';

@@ -43,6 +43,10 @@ export const USER_TYPE = 'USER_TYPE' //数据类型
 export const SYSTEM_DATA = 'SYSTEM_DATA' //系统数据
 export const PROVINCE_DATA = 'PROVINCE_DATA' //省市区列表数据
 export const SERVICE_ENTERPRISE = 'SERVICE_ENTERPRISE' //业务企业数据
+export const COMPANY_PRODUCT_DATA = 'COMPANY_PRODUCT_DATA'  //企业产品
+export const COMPANY_PRODUCT_DETAIL = 'COMPANY_PRODUCT_DETAIL'  //企业产品详情
+export const COMPANY_LICENSE_DATA = 'COMPANY_LICENSE_DATA'  //企业证书
+export const RELATIVE_COMPANY_DATA = 'RELATIVE_COMPANY_DATA'  //相关企业列表
 export const SERVICE_COMPONENT = 'SERVICE_COMPONENT' //业务成分数据
 export const SERVICE_DRAW = 'SERVICE_DRAW' //业务提取物数据
 export const ADD_DATA = 'ADD_DATA' //添加枚举类型数据
@@ -176,6 +180,11 @@ export const CONTRACT_LIST ='CONTRACT_LIST' //补充合同列表的数据
 export const AFTER_SALES ='AFTER_SALES' //售后申请列表的数据
 
 export const SALES_DETAIL ='SALES_DETAIL' //合同、售后详情页面
+
+export const EMAIL_DATA ='EMAIL_DATA' //邮件列表
+export const EMAIL_COUNT ='EMAIL_COUNT' //邮件列表
+
+
 
 
 

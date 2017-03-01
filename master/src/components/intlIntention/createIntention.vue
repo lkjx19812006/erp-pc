@@ -485,7 +485,7 @@ export default {
           this.breedInfo.number=this.param.items[index].number,
           this.breedInfo.unit=this.param.items[index].unit,
           this.breedInfo.pack=this.param.items[index].pack,
-        
+          this.breedParam.id = this.breedInfo.breedId;
           this.updateParam.show = true;
       },
       modifyBreed:function(){

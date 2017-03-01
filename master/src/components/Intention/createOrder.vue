@@ -133,6 +133,11 @@
                     <h5 style="border-bottom:1px solid #ddd;color:#fa6705;margin-bottom: 0;padding-bottom:10px">订单信息</h5>
                     <div class="clear">
                       <div class="editpage-input col-md-6">
+                          <label class="editlabel">{{$t('static.transcation')}}</label>
+                          <mz-datepicker :time.sync="param.tradeTime" format="yyyy/MM/dd HH:mm:ss">
+                          </mz-datepicker>
+                      </div>
+                      <div class="editpage-input col-md-6">
                           <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
                           <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
                           <select  class="form-control edit-input" v-model="param.type" @click="exChange()">
@@ -140,6 +145,7 @@
                               <option value="1">{{$t('static.sell')}}</option>
                           </select>
                       </div>
+                      
                       <div class="editpage-input col-md-6" v-if="param.type==1">
                         <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required" >{{$t('static.required')}}</span></label>
                         <input  type="text" class="form-control edit-input"  readonly="true"  v-model="employeeParam.consignerName" v-validate:shipper="{required:true}"  @click="selectEmployee(param.consigner,employeeParam.consignerName)"  />
@@ -568,6 +574,20 @@ export default {
         this.param.cost = (parseFloat(this.param.goods[0].costPrice*this.param.goods[0].number)*100+parseFloat(this.param.incidentals)*100 - parseFloat(this.param.preferential)*100)/100;
         if(this.param.customerName){
            this.supplierParam.supplierName = this.param.customerName;
+        }
+        if(!this.param.tradeTime){
+            var date = new Date();
+            date.setDate(date.getDate());
+            var year = date.getFullYear();
+            var month = date.getMonth()+1;
+            var day = date.getDate();
+            if(month < 10){
+              month = '0'+month;
+            }
+            if(day < 10){
+              day = '0'+day;
+            }
+            this.param.tradeTime = year+"-"+month+"-"+day+" 00:00:00";
         }
     }
 }

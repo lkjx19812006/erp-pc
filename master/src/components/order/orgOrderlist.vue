@@ -49,7 +49,7 @@
 
                 <dl class="clear left transfer">
                     <div class="left">
-                        <dt class="left transfer marg_top">起止时间：</dt>
+                        <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
                         <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
@@ -74,7 +74,7 @@
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
                    <dd class="left">
-                         <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
+                        <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
                             <option value="">{{$t('static.please_select')}}</option>
                             <option value="1">{{$t('static.together')}}</option>
                             <option value="2">{{$t('static.three_side')}}</option>
@@ -83,14 +83,14 @@
                    </dd>
                 </dl>
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">审核状态：</dt>
+                   <dt class="left transfer marg_top">{{$t('static.review_status')}}：</dt>
                    <dd class="left">
-                         <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
+                        <select class="form-control" v-model="loadParam.validate" @change="selectSearch()">
                             <option value="">{{$t('static.please_select')}}</option>
-                            <option value="0">未审核</option>
-                            <option value="1">待审核</option>
-                            <option value="2">审核通过</option>
-                            <option value="-2">审核未通过</option>
+                            <option value="0">{{$t('static.wait_approval')}}</option>
+                            <option value="1">{{$t('static.approving')}}</option>
+                            <option value="2">{{$t('static.approved')}}</option>
+                            <option value="-2">{{$t('static.unapproved')}}</option>
                         </select>
                    </dd>
                 </dl>
@@ -104,9 +104,9 @@
 
                 <!-- 单个业务员搜索 -->
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
+                   <dt class="left transfer marg_top">{{$t('static.salesman')}}：</dt>
                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="{{$t('static.select_salesman')}}" @click="selectEmployee()">
                    </dd>
                 </dl>
 
@@ -117,7 +117,7 @@
                     </dd>
                 </dl>
 
-                <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
+                <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">{{$t('static.export_order')}}</a></button>
 
                 <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
                 
@@ -162,7 +162,7 @@
                     <!-- <td  @click.stop="">
                       <label v-if="item.validate==1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                     </td> -->
-                    <td>{{item.ctime}}</td>
+                    <td>{{item.tradeTime | subtime}}</td>
                     <td v-if="item.type==1">{{$t('static.sell')}}</td>
                     <td v-if="item.type==0">{{$t('static.purchase')}}</td>
                     <td v-if="item.mode==1">{{$t('static.together')}}</td>
@@ -288,10 +288,10 @@
                         </div>
                    </td> -->
                    <td>
-                      <a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
-                        <img src="/static/images/orgcheck.png"  title="审核" alt="审核" />
-                      </a>
-                      <button class="btn btn-warning" v-if="item.validate==2&&(item.verifier == $store.state.table.login.id)&&item.logistics==1&&(item.taskKey=='order_send_governor_validate'||item.taskKey=='financial_validate')" @click="orderSend(item.id,$index)" style="background:#fff;color:#eea236;padding:1px 3px;">审核发货</button>
+                      <button class="btn btn-warning btn-apply" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
+                        {{$t('static.verified')}}
+                      </button>
+                      <button class="btn btn-warning" v-if="item.validate==2&&(item.verifier == $store.state.table.login.id)&&item.logistics==1&&(item.taskKey=='order_send_governor_validate'||item.taskKey=='financial_validate')" @click="orderSend(item.id,$index)" style="background:#fff;color:#eea236;padding:1px 3px;">{{$t('static.verified')}}{{$t('static.shipped')}}</button>
                    </td>
                   </tr>
               </tbody>
@@ -302,14 +302,14 @@
     </mglist-model>
 
       <div style="font-size:14px;">
-        <span style="margin-left:1%;color:red">总金额：{{initOrgOrderStatis.totalSum | money}}元</span>
-        <span style="margin-left:1%;color:red">已支付金额：{{initOrgOrderStatis.prepaidSum | money}}元</span>
-        <span style="margin-left:1%;color:red">未支付金额：{{initOrgOrderStatis.unpaidSum | money}}元</span>
-        <span style="margin-left:1%;">成本总金额：{{initOrgOrderStatis.costSum | money}}元</span>
-        <span style="margin-left:1%;">商品总金额：{{initOrgOrderStatis.amountSum  | money}}元</span>
-        <span style="margin-left:1%;">订单数量：{{initOrgOrderStatis.orderCount | money}}笔</span>
-        <span style="margin-left:1%;">特惠总金额：{{initOrgOrderStatis.preferentialSum  | money}}元</span>
-        <span style="margin-left:1%;">杂费总金额：{{initOrgOrderStatis.incidentalsSum | money}}元</span>
+        <span style="margin-left:1%;color:red">{{$t('static.total_money')}}：{{initOrgOrderStatis.totalSum | money}}元</span>
+        <span style="margin-left:1%;color:red">{{$t('static.paid_amount')}}：{{initOrgOrderStatis.prepaidSum | money}}元</span>
+        <span style="margin-left:1%;color:red">{{$t('static.unpaid_amount')}}：{{initOrgOrderStatis.unpaidSum | money}}元</span>
+        <span style="margin-left:1%;">{{$t('static.costprice')}}：{{initOrgOrderStatis.costSum | money}}元</span>
+        <span style="margin-left:1%;">{{$t('static.order_total')}}：{{initOrgOrderStatis.amountSum  | money}}元</span>
+        <span style="margin-left:1%;">{{$t('static.order_num')}}：{{initOrgOrderStatis.orderCount | money}}笔</span>
+        <span style="margin-left:1%;">{{$t('static.discount')}}：{{initOrgOrderStatis.preferentialSum  | money}}元</span>
+        <span style="margin-left:1%;">{{$t('static.extra_total')}}：{{initOrgOrderStatis.incidentalsSum | money}}元</span>
       </div>
   </div>  
 </template>
@@ -583,7 +583,7 @@
                 this.auditParam.id = id;
                 this.auditParam.index = index;
                 this.auditParam.show = true;
-                this.auditParam.title = '审核订单';
+                this.auditParam.title = this.$t('static.order_review');
                 this.auditParam.callback = this.applyBack;
             },
             orderSend:function(id,index){
@@ -672,7 +672,7 @@
         padding: 35px 10px 0 10px;
     }
     .transfer{
-        margin-right: 15px;
+        margin-right: 10px;
     }
     .order_table {
         margin-top: 0px;

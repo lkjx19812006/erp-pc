@@ -21,8 +21,8 @@
       
       <div class="model-footer" v-if="param.audit===true">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-        <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="不通过" />
-        <input type="button" class="btn  btn-confirm"  @click="param.pass(),param.show = false" value="通过" />
+        <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="{{$t('static.reject')}}" />
+        <input type="button" class="btn  btn-confirm"  @click="param.pass(),param.show = false" value="{{$t('static.pass')}}" />
       </div>
 
       <div class="model-footer" v-if="param.tracking">
@@ -34,39 +34,39 @@
 
       <div class="model-footer" v-if="param.taskKey=='employee_handle'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-        <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="重新申请" />
+        <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="{{$t('static.reapply')}}" />
         <input type="button" class="btn  btn-confirm"  @click="param.pass(),param.show = false" value="取消订单" />
       </div>
     <!-- 审核发货申请 -->
       <div class="model-footer" v-if="param.titles=='审核发货申请'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-        <input type="button" class="btn  btn-confirm"  @click="param.sendRefuse(),param.show = false" value="不通过" />
-        <input type="button" class="btn  btn-confirm"  @click="param.sendPass(),param.show = false" value="通过" />
+        <input type="button" class="btn  btn-confirm"  @click="param.sendRefuse(),param.show = false" value="{{$t('static.reject')}}" />
+        <input type="button" class="btn  btn-confirm"  @click="param.sendPass(),param.show = false" value="{{$t('static.pass')}}" />
       </div>
      <!-- 审核补充合同 -->
       <div class="model-footer" v-if="param.taskKey=='supplementary_contract_employee_handle'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-        <input type="button" class="btn  btn-confirm"  @click="param.sendRefuse(),param.show = false" value="取消补充合同" />
-        <input type="button" class="btn  btn-confirm"  @click="param.sendPass(),param.show = false" value="重新申请" />
+        <input type="button" class="btn  btn-confirm"  @click="param.sendRefuse(),param.show = false" value="{{$t('static.cancel')}}" />
+        <input type="button" class="btn  btn-confirm"  @click="param.sendPass(),param.show = false" value="{{$t('static.reapply')}}" />
       </div>
     <!-- 重新或取消发货申请 -->
-      <div class="model-footer" v-if="param.title=='重新申请发货'||param.taskKey=='order_send_employee_handle'">
+      <div class="model-footer" v-if="param.title==this.$t('static.reapply_delivery')||param.taskKey=='order_send_employee_handle'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
         <!-- <input type="button" class="btn  btn-confirm"  @click="cancelApply(param)" value="取消发货" /> -->
-        <input type="button" class="btn  btn-confirm"  @click="confirmApply(param)" value="确定" />
+        <input type="button" class="btn  btn-confirm"  @click="confirmApply(param)" value="{{$t('static.confirm')}}" />
       </div>
       <div class="model-footer" v-if="param.key=='mySampleList'&&param.url!='/sample/validate/cancel/'">
-        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-        <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.show = false" value="申请" />
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+        <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.show = false" value="{{$t('static.review_application')}}" />
       </div>
       <div class="model-footer" v-if="param.key=='mySampleList'&&param.url=='/sample/validate/cancel/'">
-        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
         <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.show = false" value="取消申请" />
       </div>
       <div class="model-footer" v-if="param.key=='orgSampleList'">
-        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-        <input type="button" class="btn  btn-confirm"  @click="refuse(param)" value="不通过" />
-        <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.show = false" value="通过" />
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+        <input type="button" class="btn  btn-confirm"  @click="refuse(param)" value="{{$t('static.reject')}}" />
+        <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.show = false" value="{{$t('static.pass')}}" />
       </div>
     </div>
   </div>

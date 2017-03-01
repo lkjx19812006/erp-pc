@@ -2,42 +2,43 @@
   <update-model :param="editParam" v-if="editParam.show"></update-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
-  
+  <contract-model :param="contractParam" v-if="contractParam.show"></contract-model>
+  <language-model v-show="false"></language-model>
   <mglist-model>
       <!-- 头部搜索 -->
       <div slot="top">
         <div class="clearfix">
           <dl class="clear left transfer">
-             <dt class="left transfer marg_top">订单类型：</dt>
+             <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
              <dd class="left">
                 <select class="form-control" v-model="loadParam.orderType" @change="selectSearch()">
-                  <option value="">全部</option>
-                  <option value="0">采购</option>
-                  <option value="1">销售</option>
+                  <option value="">{{$t('static.please_select')}}</option>
+                  <option value="0">{{$t('static.purchase')}}</option>
+                  <option value="1">{{$t('static.sell')}}</option>
                 </select>
              </dd>
           </dl>
           <dl class="clear left transfer">
-             <dt class="left  marg_top">商品名称：</dt>
+             <dt class="left  marg_top">{{$t('static.breed')}}：</dt>
              <dd class="left">
                 <input type="text"  class="form-control" v-model="loadParam.orderDesc"  @keyup.enter="selectSearch()"/>
              </dd>
           </dl>
           <dl class="clear left transfer">
-             <dt class="left transfer marg_top">订单号：</dt>
+             <dt class="left transfer marg_top">{{$t('static.order_no')}}：</dt>
              <dd class="left">
                 <input type="text"  class="form-control" v-model="loadParam.orderNo"  @keyup.enter="selectSearch()"/>
              </dd>
           </dl>
           
           <dl class="clear left transfer">
-             <dt class="left transfer marg_top">客户名称：</dt>
+             <dt class="left transfer marg_top">{{$t('static.client_name')}}：</dt>
              <dd class="left">
                 <input type="text"  class="form-control" v-model="loadParam.customerName"  @keyup.enter="selectSearch()"/>
              </dd>
           </dl>
           <dl class="clear left transfer">
-             <dt class="left transfer marg_top">客户手机：</dt>
+             <dt class="left transfer marg_top">{{$t('static.client_phone')}}：</dt>
              <dd class="left">
                 <input type="text"  class="form-control" v-model="loadParam.customerPhone"  @keyup.enter="selectSearch()"/>
              </dd>
@@ -57,34 +58,42 @@
           <table class="table table-hover table_color table-striped" v-cloak id="tab">
             <thead>
                 <tr>
-                  <th>日期</th>
-                  <th>客户名称</th>
-                  <th>客户电话</th>
-                  <th>订单商品</th>
-                  <th>订单号</th>
-                  <th>订单类型</th>
-                  <th>调整差额</th>
-                  <th>补充合同文本</th>
-                  <th>备注</th>
-                  <th>审核说明</th>
-                  <th>审核状态</th>
-                  <th>操作</th>
+                  <th>{{$t('static.date')}}</th>
+                  <th>{{$t('static.client_name')}}</th>
+                  <th>{{$t('static.client_phone')}}</th>
+                  <th>{{$t('static.breed')}}</th>
+                  <th>{{$t('static.order_no')}}</th>
+                  <th>{{$t('static.order_type')}}</th>
+                  <th>{{$t('static.diferencia')}}</th>
+                  <th>{{$t('static.contract_note')}}</th>
+                  <th>{{$t('static.comment')}}</th>
+                  <th>{{$t('static.approve_comment')}}</th>
+                  <th>{{$t('static.review_status')}}</th>
+                  <th>{{$t('static.handle')}}</th>
                 </tr>
             </thead>
             <tbody>
               <tr v-for="item in initMyContractList">
                 <td>{{item.ctime | dateTime}}</td>
-                <td>{{item.customerName}}</td>
+                <td><a @click="details({
+                  id:item.id,
+                  show:true,
+                  loading:false,
+                  url:'/order/contract/details/',
+                  index:$index
+                  })">{{item.customerName}}</a>
+                </td>
                 <td>{{item.customerPhone}}</td>
                 <td>{{item.orderDesc}}</td>
                 <td>{{item.orderNo}}</td>
-                <td v-if="item.orderType==0">采购</td>
-                <td v-if="item.orderType==1">销售</td>
+                <td v-if="item.orderType==0">{{$t('static.purchase')}}</td>
+                <td v-if="item.orderType==1">{{$t('static.sell')}}</td>
                 <td>{{item.adjusted}}</td>
                 <td>{{item.contractText}}</td>
                 <td>{{item.comment}}</td>
                 <td>{{item.description}}</td>
-                <td>{{item.validate | Auditing}}</td>
+                <td v-if="this.language=='zh_CN'">{{item.validate | Auditing}}</td>
+                <td v-if="this.language=='en'">{{item.validate | EnAuditing}}</td>
                 <td>
                     <a class="operate" v-if="item.validate==-2" @click="editPayment({
                             show:true,
@@ -102,7 +111,7 @@
                             url:'/order/contract/edit',
                             titles:'编辑',
                             link:contractEdit
-                        })"><img src="/static/images/edit.png"/></a>
+                        })"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑" /></a>
                     <a class="operate" v-if="item.validate==-2&&item.taskKey=='supplementary_contract_employee_handle'" @click="applyInfo({
                           show:true,
                           sub:$index,
@@ -113,7 +122,7 @@
                           url:'/order/quality/contract/restartOrCancel',
                           titles:'重新申请审核',
                           link:contractCheck
-                      })"><img src="/static/images/{{$t('static.img_reset')}}.png"/></a>
+                      })"><img src="/static/images/{{$t('static.img_reset')}}.png" alt="重新申请审核"/></a>
                 </td>
               </tr>
             </tbody>
@@ -133,6 +142,8 @@
   import tipsModel from '../../components/tips/tipDialog'
   import updateModel from '../../components/order/second_order/updateContract'
   import mglistModel from '../mguan/mgListComponent.vue'
+  import languageModel from '../tools/language.vue'
+  import contractModel from '../order/second_order/orderReceiveDetail'
   import {
     initMyContractList
   } from '../../vuex/getters'
@@ -149,7 +160,9 @@
       auditModel,
       tipsModel,
       updateModel,
-      mglistModel
+      mglistModel,
+      languageModel,
+      contractModel
     },
     vuex: {
       getters: {
@@ -180,6 +193,9 @@
           validate:'',
           total:0
         },
+        contractParam:{
+          show:false
+        },
         editParam: {
           show: false
         },
@@ -188,6 +204,7 @@
           alert:true,
           name:''
         },
+        language:'',
         financeParam:{
           show:false
         },
@@ -201,6 +218,9 @@
       clickday:function(validate){
          this.loadParam.validate = validate;
          this.getMyContractList(this.loadParam);
+      },
+      details:function(item){
+         this.contractParam = item;
       },
       resetTime:function(){
         this.loadParam.orderDesc='';
@@ -238,6 +258,7 @@
       },
     created() {
       changeMenu(this.$store.state.count.isTop,this.getMyContractList,this.loadParam,localStorage.myFundParam); 
+      this.language = localStorage.lang;
     }
   }
 </script>
