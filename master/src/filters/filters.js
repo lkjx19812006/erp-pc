@@ -733,7 +733,7 @@ Vue.filter('salesRecord',function(val,type,task){     //订单退换货
 		 return  this.$t('static.management_approval')
 	}else if(val==1&&type==0&&task=='after_sales_receipt'){
 		 return this.$t('static.dispatch');
-	}else if(val==1&&type==0&&task=='after_sales_receipt'){
+	}else if(val==1&&type==1&&task=='after_sales_receipt'){
 		 return this.$t('static.wait_receipt');
 	}else if(val==1&&type==1&&task=='after_sales_governor_validate'){
 		 return  this.$t('static.management_approval')

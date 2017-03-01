@@ -64,6 +64,16 @@
                             </div>
                         </div>
                         <div class="clearfix">
+                            <div class="client-detailInfo  col-md-6 col-xs-12">
+                                <label>{{$t('static.wechat')}} <span class="system_danger" v-if="$validation.wechart.wechart">{{$t('static.validate_wechat')}}</span></label>
+                                <input type="text" class="form-control" v-validate:wechart="['wechart']" v-model="param.wechat" />
+                            </div>
+                            <div class="client-detailInfo  col-md-6 col-xs-12">
+                                <label>{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.email.email">{{$t('static.enter_email')}}</span></label>
+                                <input type="text" class="form-control" v-validate:email="['email']" v-model="param.email" />
+                            </div>
+                        </div>
+                        <div class="clearfix">
                             <div class="client-detailInfo  col-md-6 col-xs-12" v-if="param.title=='编辑员工'">
                                 <label>是否在职</label>
                                 <select class="form-control" v-model="param.leave" value="{{param.leave}}">

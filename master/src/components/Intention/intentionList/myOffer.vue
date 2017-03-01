@@ -188,6 +188,7 @@ export default {
                 country:'',
                 province:'',
                 city:'',
+                tradeTime:'',
                 total:0,
                 cost:0,
                 district:'',

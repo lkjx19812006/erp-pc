@@ -362,6 +362,7 @@ export default {
                 zipCode:'',     //邮编
                 country:'',
                 province:'',
+                tradeTime:'',
                 city:'',
                 district:'',
                 cost:0,

@@ -712,6 +712,7 @@ export default {
            this.createOrderParam.sub = sub;
            console.log(item)
            this.createOrderParam.customer = item.customerId;
+           this.createOrderParam.tradeTime = item.tradeTime;
            this.createOrderParam.customerName = item.customerName;
            this.createOrderParam.type = item.type;
            this.createOrderParam.goods[0].sourceId= item.id;
