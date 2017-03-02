@@ -2437,24 +2437,24 @@ export const getCompanyProductDetail = ({ dispatch }, param) => { //(公司)企�
         var detail = res.json().result;
         var drugList = detail.drugList;
         var breedList = [];
-        if(drugList.length>0&&drugList[0].component){   //如果配方存在
+        if (drugList.length > 0 && drugList[0].component) { //如果配方存在
             let list = drugList[0].component.split(";");
             let length = list.length;
-            if(length>1){         //最后一个为"",应该去掉
-               for(let i=0;i<length-1;i++) {
+            if (length > 1) { //最后一个为"",应该去掉
+                for (let i = 0; i < length - 1; i++) {
                     let temp = list[i].split(":");
-                    if(temp.length>=2){
+                    if (temp.length >= 2) {
                         let breed = {
                             name: temp[0],
                             number: temp[1]
                         };
                         breedList.push(breed);
                     }
-                    
-                } 
+
+                }
             }
+            detail.drugList[0].componentArr = breedList;
         }
-        detail.drugList[0].componentArr = breedList;
         dispatch(types.COMPANY_PRODUCT_DETAIL, detail);
         param.loading = false;
     }, (res) => {
@@ -2638,11 +2638,11 @@ export const getBreedData = ({ dispatch }, param) => { //药材
     });
 }
 export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情(根据ID或者根据name)
-    var url = apiUrl.breedList + param.link;
-    if(param.id) {
-        url += param.id;
-    }else if(param.name) {
-        url += param.name;
+    var url = apiUrl.breedList;
+    if (param.id) {
+        url += "/details/" + param.id;
+    } else if (param.name) {
+        url += "/detailByName/" + param.name;
     }
     Vue.http({
         method: 'GET',
@@ -2654,11 +2654,10 @@ export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情(�
     }).then((res) => {
         param.loading = false;
         var breed = res.json().result;
-        if(breed===null
-){
+        if (breed === null) {
             param.show = false;
             param.callback("品种不存在");
-            return ;
+            return;
         }
         var arr = breed.specs;
         breed.specs = {
