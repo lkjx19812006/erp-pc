@@ -372,6 +372,8 @@ export default {
                     if (this.$store.state.table.basicBaseList.employeeList[key].checked) {
                         this.$store.state.table.basicBaseList.employeeList[key].checked = false;
                     }
+
+
                 }
             }
         },
@@ -391,6 +393,7 @@ export default {
             }
             this.transferParam.callback = this.callback;
         },
+
         becomeManager: function() {
             for (var i in this.initEmployeeList) {
                 if (this.initEmployeeList[i].checked) {

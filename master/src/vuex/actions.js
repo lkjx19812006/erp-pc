@@ -3674,7 +3674,6 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         "principal": data.principal,
         "bizScope": data.bizScope,
         "province": data.province,
-        "city": data.city,
         "address": data.address,
         "comments": data.comments,
         "contacts": data.contacts,
@@ -3689,6 +3688,9 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
     }
     if (data.supplier == 1) {
         Cdata.supplier = data.supplier;
+    }
+    if (data.city) {
+        Cdata.city = data.city;
     }
     console.log(Cdata);
     Vue.http({
@@ -3759,7 +3761,6 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         email: param.email,
         province: param.province,
         country: param.country,
-        city: param.city,
         address: param.address,
         comments: param.comments,
         tel: param.tel,
@@ -3767,12 +3768,17 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         orgId: param.orgId,
         employeeId: param.employeeId,
         creditLevel: param.creditLevel,
-        cityName: param.cityName,
         countryName: param.countryName,
         provinceName: param.provinceName
     }
     if (param.supplier) {
         data.supplier = param.supplier;
+    }
+    if (param.city) {
+        data.city = param.city;
+    }
+    if (param.cityName) {
+        data.cityName = param.cityName;
     }
     if (param.tracking) {
         data = '';
