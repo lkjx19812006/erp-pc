@@ -2457,8 +2457,8 @@ export const getCompanyProductDetail = ({ dispatch }, param) => { //(公司)企�
 
                 }
             }
+            detail.drugList[0].componentArr = breedList;
         }
-        detail.drugList[0].componentArr = breedList;
         dispatch(types.COMPANY_PRODUCT_DETAIL, detail);
         param.loading = false;
     }, (res) => {
@@ -2642,11 +2642,12 @@ export const getBreedData = ({ dispatch }, param) => { //药材
     });
 }
 export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情(根据ID或者根据name)
-    var url = apiUrl.breedList + param.link;
+
+    var url = apiUrl.breedList;
     if (param.id) {
-        url += param.id;
+        url += "/details/" + param.id;
     } else if (param.name) {
-        url += param.name;
+        url += "/detailByName/" + param.name;
     }
     Vue.http({
         method: 'GET',
