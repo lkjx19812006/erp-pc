@@ -369,16 +369,16 @@
                                                         <td>{{item.ctime}}</td>
                                                         <td v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2">
                                                             <button class="btn btn-default" @click="deleteCompact({
-                                                    id:item.id,
-                                                    sub:$index,
-                                                    show:true,
-                                                    name:'合同凭证',
-                                                    title:'合同凭证',
-                                                    link:specDel,
-                                                    url:'/customer/file/',
-                                                    key:'contractList',
-                                                    headline:'orderDetail'
-                                                  })">{{$t('static.del')}}</button>
+                                                            id:item.id,
+                                                            sub:$index,
+                                                            show:true,
+                                                            name:'合同凭证',
+                                                            title:'合同凭证',
+                                                            link:specDel,
+                                                            url:'/customer/file/',
+                                                            key:'contractList',
+                                                            headline:'orderDetail'
+                                                          })">{{$t('static.del')}}</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
