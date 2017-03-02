@@ -44,12 +44,15 @@
                     <div class="right">
                         <button type="button" class="btn btn-primary pull-right transfer" @click="loadByCondition()">刷新</button>
                         <button type="button" class="btn btn-default pull-right transfer" @click="employeeTransfer({
-                          arr:[],
-                          name:'test',
-                          employeeId:'',
-                          orgId:'',
-                          show:true
-                          })">划转至部门</button>
+                        arr:[],
+                        name:'test',
+                        employeeId:'',
+                        orgId:'',
+                        show:true
+                        })">划转至部门</button>
+                        <button type="button" class="btn btn-default pull-right transfer" @click="becomeManager()">
+                            划转为主管
+                        </button>
                         <button class="btn btn-default pull-right " @click="newData({
                          title:'新建员工',
                          show:true,
@@ -106,6 +109,7 @@
                             <th>工号</th>
                             <th>部门</th>
                             <th>职位</th>
+                            <th>是否主管</th>
                             <th>手机号</th>
                             <th>分机号</th>
                             <th>入职时间</th>
@@ -148,6 +152,10 @@
                             <td>{{item.no}}</td>
                             <td>{{item.orgName}}</td>
                             <td>{{item.position}}</td>
+                            <td>
+                                <div v-if="item.ismanager==0">否</div>
+                                <div v-if="item.ismanager==1">是</div>
+                            </td>
                             <td>{{item.mobile}}</td>
                             <td>{{item.extno}}</td>
                             <td>{{item.entrydate | date}}</td>
@@ -266,7 +274,8 @@ import {
     transferOrg,
     specDel,
     getOrgDetail,
-    alterOrg
+    alterOrg,
+    transferManager
 } from '../vuex/actions'
 export default {
     components: {
@@ -363,6 +372,8 @@ export default {
                     if (this.$store.state.table.basicBaseList.employeeList[key].checked) {
                         this.$store.state.table.basicBaseList.employeeList[key].checked = false;
                     }
+
+
                 }
             }
         },
@@ -374,6 +385,23 @@ export default {
             }
             if (this.transferParam.employeeId !== '') {
                 this.transferParam.show = true;
+            } else {
+                this.tipsParam.show = true;
+                this.tipsParam.alert = true;
+                this.tipsParam.name = '请选择员工';
+                this.tipsParam.confirm = false;
+            }
+            this.transferParam.callback = this.callback;
+        },
+
+        becomeManager: function() {
+            for (var i in this.initEmployeeList) {
+                if (this.initEmployeeList[i].checked) {
+                    this.transferParam.employeeId = this.initEmployeeList[i].id;
+                }
+            }
+            if (this.transferParam.employeeId !== '') {
+                this.transferManager(this.transferParam);
             } else {
                 this.tipsParam.show = true;
                 this.tipsParam.alert = true;
@@ -445,6 +473,7 @@ export default {
             this.tipsParam.alert = true;
             this.getEmployeeList(this.loadParam);
             this.getOrgList(this.loadParam);
+            this.transferParam.employeeId = '';
         },
         modify: function(initEmployeeList) {
             this.createParam = initEmployeeList;
@@ -497,7 +526,8 @@ export default {
             transferOrg,
             specDel,
             getOrgDetail,
-            alterOrg
+            alterOrg,
+            transferManager
         }
     },
     events: {
@@ -591,8 +621,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 96px;
-    min-width: 94px;
+    width: 90px;
+    min-width: 90px;
 }
 
 .form-control {
