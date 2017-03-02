@@ -3788,8 +3788,6 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
             auditComment: param.auditComment
         };
     }
-    console.log(data);
-    return;
     Vue.http({
         method: 'PUT',
         url: apiUrl.clientList + '/customer/',

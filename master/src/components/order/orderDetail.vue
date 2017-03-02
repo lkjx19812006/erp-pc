@@ -358,12 +358,12 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.contractList.arr">
-                                                        <td v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0">{{item.fileType}}</td>
+                                                        <td v-if="item.url | file">{{item.fileType}}</td>
                                                         <td v-else>others</td>
                                                         <td>{{item.bizType}}</td>
                                                         <td>
-                                                            <img :src="item.url " v-if="item.url.indexOf( 'jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0" @click="clickBig(item.url)" style="margin:auto" />
-                                                            <a v-else href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
+                                                            <img :src="item.url |file" v-if="item.url | file" @click="clickBig(item.url)" style="margin:auto" />
+                                                            <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
                                                         <td>{{item.ctime}}</td>
@@ -425,12 +425,12 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.payPics.arr">
-                                                        <td v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0">{{item.fileType}}</td>
+                                                        <td v-if="item.url | file">{{item.fileType}}</td>
                                                         <td v-else>others</td>
                                                         <td>{{item.bizType}}</td>
                                                         <td>
-                                                            <img :src="item.url" v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0" @click="clickBig(item.url)" style="margin:auto" />
-                                                            <a v-else href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
+                                                            <img :src="item.url | file" v-if="item.url | file" @click="clickBig(item.url)" style="margin:auto" />
+                                                            <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
                                                     </tr>
@@ -475,12 +475,12 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.attachFiles.arr">
-                                                        <td v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0">{{item.fileType}}</td>
+                                                        <td v-if="item.url | file">{{item.fileType}}</td>
                                                         <td v-else>others</td>
                                                         <td>{{item.bizType}}</td>
                                                         <td>
-                                                            <img :src="item.url" v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0" @click="clickBig(item.url)" style="margin:auto" />
-                                                            <a v-else href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
+                                                            <img :src="item.url | file" v-if="item.url | file" @click="clickBig(item.url)" style="margin:auto" />
+                                                            <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
                                                         <td>
@@ -531,12 +531,12 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.sendPics.arr">
-                                                        <td v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0">{{item.fileType}}</td>
+                                                        <td v-if="item.url | file">{{item.fileType}}</td>
                                                         <td v-else>others</td>
                                                         <td>{{item.bizType}}</td>
                                                         <td>
-                                                            <img :src="item.url" v-if="item.url.indexOf('jpeg')>0||item.url.indexOf('png')>0||item.url.indexOf('jpg')>0||item.url.indexOf('bmp')>0||item.url.indexOf('gif')>0" @click="clickBig(item.url)" style="margin:auto" />
-                                                            <a v-else href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
+                                                            <img :src="item.url |file" v-if="item.url | file" @click="clickBig(item.url)" style="margin:auto" />
+                                                            <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
                                                     </tr>
