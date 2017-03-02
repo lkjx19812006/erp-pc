@@ -336,7 +336,6 @@
                                               route:uploadDocument,
                                               link:'/order/attachSubmit/',
                                               description:'',
-  
                                               bizType:'order_contract',
                                               orderContractList:'',
                                               titles:'上传合同'

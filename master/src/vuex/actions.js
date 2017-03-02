@@ -1243,6 +1243,8 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         customerName: param.customerName,
         consigneeAddr: param.consigneeAddr,
         comments: param.comments,
+        orderStatus: param.orderStatus
+,
         goods: param.goods
     }
     if (param.consigner) {
