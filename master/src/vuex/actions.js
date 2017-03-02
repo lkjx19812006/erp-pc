@@ -4441,6 +4441,36 @@ export const transferOrg = ({ dispatch }, param) => { //员工部门划转信息
         console.log('fail');
     });
 }
+
+export const transferManager = ({ dispatch }, param) => { //员工划转为主管
+    const transferdata = {
+        id: param.employeeId
+    }
+    console.log(transferdata)
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.clientList + '/employee/transferManager',
+        emulateHTTP: false,
+        body: transferdata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('划转主管成功')
+            /*dispatch(types.CUSTOMER_TRANSFER, param);*/
+        if (res.json().result) {
+            param.callback(res.json().result);
+        } else {
+            param.callback("划转主管成功");
+        }
+
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
 export const getIntentionList = ({ dispatch }, param) => { //意向信息列表以及搜索
     param.loading = true;
     console.log(param);
