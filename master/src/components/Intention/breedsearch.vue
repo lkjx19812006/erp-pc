@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show = false" class="top-title">
@@ -58,6 +59,58 @@
                 <pagination :combination="loadParam"></pagination>
             </div>
         </div>
+=======
+    <div>
+        <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+        <div class="container modal_con" v-show="param.show">
+            <div @click="param.show = false" class="top-title">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+            </div>
+            <div class="model-header">
+                <h4>{{$t('static.breed')}}</h4>
+                <div class="trans_service clearfix">
+                    <div class="cover_loading">
+                        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+                    </div>
+                    <div class="clear">
+                        <dl class="clear left transfer">
+                            <dt class="left marg_top">{{$t('static.breed')}}：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.name" @keyUp.enter="employNameSearch()" placeholder="{{$t('static.breed')}}" />
+                            </dd>
+                        </dl>
+                        <div class="name_search clearfix transfer" style="border:none">
+                            <input type="button" class="btn btn-default" height="24" width="24" value="{{$t('static.search')}}" @click="employNameSearch()">
+                            <button type="button" class="btn btn-default transfer" @click="resetTime()">{{$t('static.clear_all')}}</button>
+                        </div>
+                    </div>
+                    <table class="table table-hover table_head table-striped " v-cloak>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{{$t('static.breed')}}</th>
+                                <th>English name</th>
+                                <th>{{$t('static.type')}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in initBreedlist" @click="serviceselected($index,item.id,item.name,item.eName)">
+                                <td>
+                                    <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"></label>
+                                </td>
+                                <td>{{item.name}}</td>
+                                <td>{{item.eName}}</td>
+                                <td>{{item.categoryName}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="base_pagination">
+                    <pagination :combination="loadParam"></pagination>
+                </div>
+            </div>
+        </div>
+>>>>>>> 572873824622419c8da63e9970c50ba4ecb1f031
     </div>
 </template>
 <script>
