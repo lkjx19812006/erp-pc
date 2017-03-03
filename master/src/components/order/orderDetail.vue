@@ -244,11 +244,8 @@
                                                                   link:paymentAudit
                                                               })"> {{$t('static.review_application')}}
                                                             </button>
-<<<<<<< HEAD
                                                             <!-- 申请审核按钮 -->
-=======
                                                             <!-- 申请付款 -->
->>>>>>> 2ad759023ab68dfb94b91938ff32bddaee29c234
                                                             <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                                   show:true,
                                                                   sub:$index,
@@ -325,11 +322,7 @@
                                         </div>
                                     </div>
                                 </div>
-<<<<<<< HEAD
-                                <!-- 合同 -->
-=======
                                 <!-- 合同凭证 -->
->>>>>>> 2ad759023ab68dfb94b91938ff32bddaee29c234
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
