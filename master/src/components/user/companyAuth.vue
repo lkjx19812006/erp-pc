@@ -1,52 +1,53 @@
 <template>
-    <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
-    <div class="container modal_con" v-show="param.show">
-        <div @click="param.show=false" class="top-title">
-            <span class="glyphicon glyphicon-remove-circle"></span>
-        </div>
-        <div class="edit-content">
-            <h3>企业认证</h3>
-        </div>
-        <div class="edit-model">
-           <section class="editsection" v-cloak>
-               <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-               <div class="editpage">
-               <div class="editpageleft">
-                    <div class="editpage-input">
-                           <label class="editlabel">备注</label>
-                           <input type="text" v-model='param.ccomment' class="form-control edit-input" value="{{param.ccomment}}" />
-                       </div>
-
-                       <div class="editpage-input">
-                           <table class="table table_color contactSet">
-                                <thead>
-                                    <th>名称</th>
-                                    <th>文件类型</th>
-                                    <th>预览</th>
-                                    <td>所属文件</td>
-                                    <th>描述<th>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in initIdentify.files">
-                                        <td>{{item.name}}</td>
-                                        <td>{{item.fileType}}</td>
-                                        <td><img :src="item.path" width="200" @click="clickBig(item.path)" /></td>
-                                        <td>{{item.bizType}}</td>
-                                        <td>{{item.description}}</td>
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                       </div>
-                 </div>
-               </div>
-           </section>
-        </div>
-        <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.ctype=2,param.show = false)">通过</button>
-            <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.ctype=3,param.show = false)">不通过</button>
+    <div>
+        <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
+        <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
+        <div class="container modal_con" v-show="param.show">
+            <div @click="param.show=false" class="top-title">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+            </div>
+            <div class="edit-content">
+                <h3>企业认证</h3>
+            </div>
+            <div class="edit-model">
+                <section class="editsection" v-cloak>
+                    <input type="hidden" class="form-control edit-input" value="{{param.id}}" />
+                    <div class="editpage">
+                        <div class="editpageleft">
+                            <div class="editpage-input">
+                                <label class="editlabel">备注</label>
+                                <input type="text" v-model='param.ccomment' class="form-control edit-input" value="{{param.ccomment}}" />
+                            </div>
+                            <div class="editpage-input">
+                                <table class="table table_color contactSet">
+                                    <thead>
+                                        <th>名称</th>
+                                        <th>文件类型</th>
+                                        <th>预览</th>
+                                        <td>所属文件</td>
+                                        <th>描述
+                                            <th>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="item in initIdentify.files">
+                                            <td>{{item.name}}</td>
+                                            <td>{{item.fileType}}</td>
+                                            <td><img :src="item.path" width="200" @click="clickBig(item.path)" /></td>
+                                            <td>{{item.bizType}}</td>
+                                            <td>{{item.description}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="edit_footer">
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+                <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.ctype=2,param.show = false)">通过</button>
+                <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.ctype=3,param.show = false)">不通过</button>
+            </div>
         </div>
     </div>
 </template>
@@ -60,20 +61,20 @@ import {
     getAuthInfo
 } from '../../vuex/actions'
 export default {
-    components:{
+    components: {
         pictureModel
     },
     props: ['param'],
     data() {
         return {
-            pictureParam:{
-                show:false,
-                img:''
+            pictureParam: {
+                show: false,
+                img: ''
             }
         }
     },
     vuex: {
-       getters: {
+        getters: {
             initIdentify
         },
         actions: {
@@ -92,30 +93,33 @@ export default {
         }
     },
     methods: {
-       clickBig:function(img){
-          this.pictureParam.show = true;
-          this.pictureParam.img = img;
+        clickBig: function(img) {
+            this.pictureParam.show = true;
+            this.pictureParam.img = img;
         }
     },
     created() {
         this.getAuthInfo(this.param);
-  }
+    }
 }
 </script>
 <style scoped>
-.modal{
- z-index: 1083
+.modal {
+    z-index: 1083
 }
-.modal_con{
-  z-index: 1084;
+
+.modal_con {
+    z-index: 1084;
 }
+
 .big-font {
     font-size: 36px;
 }
-.top-title{
-  left: 0;
-  right: 0;
-  width: 800px;
+
+.top-title {
+    left: 0;
+    right: 0;
+    width: 800px;
 }
 
 .edit-model {
@@ -207,7 +211,8 @@ export default {
 .editpage-image {
     display: inline-block;
 }
-table{
+
+table {
     display: table;
 }
 </style>

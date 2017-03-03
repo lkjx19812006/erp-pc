@@ -7,7 +7,6 @@
     <div class="service-data" v-if="$route.path.split('=')[1]==1">
         <withdraw-model></withdraw-model>
     </div>
-    
 </template>
 <script>
 import accountModel from '../components/drugs/drugsList/account'
@@ -18,7 +17,7 @@ export default {
     components: {
         accountModel,
         withdrawModel,
-   
+
     },
     data() {
         return {
