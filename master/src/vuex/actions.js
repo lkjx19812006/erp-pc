@@ -1459,6 +1459,7 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        console.log(res.json().result)
         param.callback(res.json().msg);
         if (res.json().code == 200) {
             param.validate = res.json().result.validate;

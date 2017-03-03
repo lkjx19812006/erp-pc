@@ -558,6 +558,7 @@ export default {
             this.tipsParam.alert = true;
             this.getEmpolyeeOrder(this.loadParam);
         },
+       
         orderCheck: function(id, index, validate) {
             this.auditParam.id = id;
             this.auditParam.index = index;
@@ -609,6 +610,7 @@ export default {
             this.loadParam.show = true;
             this.loadParam.link = '/order/myList';
         },
+        // 点击申请收款弹出子弹框
         clickOn: function(param) {
             this.detailParam = param;
         },
