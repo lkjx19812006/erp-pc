@@ -432,7 +432,6 @@ var locales = {
             end_time: '结束时间',
             destination: '目的港口',
             date: '日期',
-
             apply_income: '申请收款',
             apply_payment: '申请付款',
             apply_send: '申请发货',

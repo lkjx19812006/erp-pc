@@ -1407,9 +1407,7 @@ const mutations = {
     },
     [ORDER_UPLOAD_DATA](state, data) { //新建订单详情凭证
         console.log(data);
-        if (data.titles == '申请分期审核' || data.titles == '重新申请审核'|| data.titles == '申请审核') {
-            console.log(data.validate)
-            
+        if (data.titles == '申请分期审核' || data.titles == '申请审核' || data.titles == 'Apply for approval' || data.titles == '重新申请审核' || data.titles == '重新申请支付') {
             state.orderDetail.stages.arr[data.sub].validate = data.validate;
         }
 

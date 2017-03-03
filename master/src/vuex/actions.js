@@ -1398,13 +1398,9 @@ export const paymentConfirm = ({ dispatch }, param) => { //确定收款
 }
 
 export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
-    console.log(param)
-        /*var files= param.images;
-        var img = files.split(",");//字符串转化为数组
-        img.toString();*/
     const body = {
         payWay: param.payWay,
-    };
+    }
     if (param.id && param.id != '') {
         body.id = param.id;
     }
@@ -1447,7 +1443,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if (param.images) {
         body.images = param.images;
     }
-    console.log(body)
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.url,
@@ -1471,7 +1466,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
             dispatch(types.ORDER_UPLOAD_DATA, param);
         }
         if (param.titles == '分期审核' || param.titles == '确认付款' || param.titles == '确认收款') {
-
             param.validate = res.json().result.validate;
             param.pr = res.json().result.pr;
             param.prNo = res.json().result.prNo;
@@ -1483,7 +1477,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
             param = res.json().result;
             dispatch(types.MY_FUND_LIST, param);
         }
-        console.log(param)
     }, (res) => {
         console.log('fail');
     });
@@ -2019,7 +2012,6 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
     if (!param.cur) {
         param.cur = '';
     }
-
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/sys/location/country/?page=' + param.cur + '&pageSize=15',
@@ -2049,6 +2041,8 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
                     return getProvinceList({ dispatch }, object);
                 }
             }
+        } else {
+            param.country = '';
         }
 
     }, (res) => {

@@ -7,8 +7,7 @@
         <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
         <personalauth-model :param="personalParam" v-if="personalParam.show"></personalauth-model>
         <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
-        <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
-        <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
+        <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
         <mglist-model>
             <!-- 头部搜索-->
             <div slot="top">
@@ -322,7 +321,6 @@ import alterinfoModel from '../components/user/userUpdate'
 import transferModel from '../components/user/userTransfer'
 import auditModel from '../components/user/userAudit'
 import detailModel from '../components/user/userDetail'
-import searchModel from '../components/user/userSearch'
 import intentionModel from '../components/user/userIntention'
 import common from '../common/common'
 import changeMenu from '../components/tools/tabs/tabs.js'
@@ -352,7 +350,6 @@ export default {
         alterinfoModel,
         transferModel,
         detailModel,
-        searchModel,
         intentionModel,
         auditModel,
         personalauthModel,
