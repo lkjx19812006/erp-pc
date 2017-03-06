@@ -3,31 +3,45 @@
         <ul v-for="item in initCurrencylist">
             <li>{{item.name}}</li>
         </ul>
+        
+        <ul v-for="item in initClientcount.day">
+            <li>{{item.countType}}</li>
+        </ul>
     </div>
 </template>
 <script>
 import {
-    initCurrencylist
+    initCurrencylist,
+    initClientcount,
+    initLogin
 } from '../vuex/getters.js'
 import {
-    getCurrencyList
+    getCurrencyList,
+    getClientcount 
 } from '../vuex/actions.js'
 export default {
     components: {
 
     },
     data() {
-        return {
-
-        }
+       return {
+         hello :'json',
+         loadParam:{
+            employeeId:this.initLogin.id,
+            loading:false
+         }
+         
+       }
     },
     vuex: {
         actions: {
-            getCurrencyList
+            getCurrencyList,
+            getClientcount 
         },
         getters: {
-            initCurrencylist
-
+            initCurrencylist,
+            initLogin,
+            initClientcount
         }
     },
     methods: {
@@ -35,36 +49,11 @@ export default {
     },
     created() {
         this.getCurrencyList();
+        this.getClientcount(this.loadParam);
+
     }
 }
 </script>
 <style scoped>
-/* body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
- }  */
-
-#app {
-    color: #2c3e50;
-    max-width: 100%;
-    font-family: Source Sans Pro, Helvetica, sans-serif;
-    text-align: left;
-}
-
-#app a {
-    color: #42b983;
-    text-decoration: none;
-}
-
-.logo {
-    width: 100px;
-    height: 100px
-}
-
-.image_demo {
-    width: 200px;
-    height: 200px
-}
+  
 </style>
