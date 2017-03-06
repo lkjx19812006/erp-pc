@@ -263,6 +263,29 @@
                                                                               link:paymentAudit
                                                                             })">
                                                             {{$t('static.apply_payment')}}</button></a>
+                                                            <!-- 申请付款 -->
+                                                            <!-- <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==1&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
+                                                                  show:true,
+                                                                  sub:$index,
+                                                                  bizId:item.orderId,
+                                                                  bizSubId:item.id,
+                                                                  validate:item.validate,
+                                                                  type:item.type,
+                                                                  payWay:'',
+                                                                  payName:'',
+                                                                  paySubName:'',
+                                                                  currency:initOrderDetail.currency,
+                                                                  payUserName:'',
+                                                                  payNumber:'',
+                                                                  comment:'',
+                                                                  image_f:'',
+                                                                  image_s:'',
+                                                                  image_t:'',
+                                                                  images:'',
+                                                                  url:'/fund/createByOrderStages',
+                                                                  titles:this.$t('static.review_application'),
+                                                                  link:paymentAudit
+                                                                })">{{$t('static.apply_payment')}}</button> -->
                                                             <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                           show:true,
                                                           sub:$index,

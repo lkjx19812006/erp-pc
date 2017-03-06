@@ -50,7 +50,6 @@ export default {
     created() {
         this.getCurrencyList();
         this.getClientcount(this.loadParam);
-
     }
 }
 </script>
