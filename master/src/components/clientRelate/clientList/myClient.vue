@@ -184,8 +184,10 @@
                             <th>{{$t('static.main_product')}}</th>
                             <th v-if="this.initLogin.orgId==29">跟进状态</th>
                             <th v-if="this.initLogin.orgId==29">跟进说明</th>
-                            <th>{{$t("static.operation")}}</th>
-                            <th v-if="this.initLogin.orgId==29">跟进</th>
+                            <th>
+                                <span>{{$t("static.operation")}}</span>
+                                <span v-if="this.initLogin.orgId==29"></span>
+                            </th>
                         </tr>
                     </thead>
                     <tr>
@@ -193,7 +195,7 @@
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
                         </th>
                         <th style="color:#fa6705;font-size: 14px">全选</th>
-                        <th colspan="14"></th>
+                        <th colspan="13"></th>
                         <th v-if="this.initLogin.orgId==29"></th>
                         <th v-if="this.initLogin.orgId==29"></th>
                         <th v-if="this.initLogin.orgId==29"></th>
@@ -264,8 +266,8 @@
                                     })">
                                 <a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" />
                                 </a>
+                                <a v-if="this.initLogin.orgId==29" class="btn btn-success" style="padding:1px 5px;font-size: 12px;" @click="updateTracking(item,$index)">跟进</a>
                             </td>
-                            <td v-if="this.initLogin.orgId==29"><a class="btn btn-success" style="padding:1px 5px;font-size: 12px;" @click="updateTracking(item,$index)">跟进</a></td>
                         </tr>
                     </tbody>
                 </table>

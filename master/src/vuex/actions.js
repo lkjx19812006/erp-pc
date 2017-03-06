@@ -5190,9 +5190,11 @@ export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向(�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('询价成功')
         if (param.cancleCallback) {
             param.cancleCallback(res.json().msg);
+        }
+        if (param.callback) {
+            param.callback(res.json().msg);
         }
         param.show = false;
         param.inquire = 1;
