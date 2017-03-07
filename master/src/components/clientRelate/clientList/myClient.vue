@@ -131,6 +131,7 @@
                                             province:'',
                                             city:'',
                                             address:'',
+                                            email:'',
                                             employee:'',
                                             employeeId:this.initLogin.id,
                                             employeeName:this.initLogin.name,

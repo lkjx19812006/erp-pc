@@ -5,8 +5,16 @@
             <div class="btn btn-primary right" @click="refresh()">刷新</div>
         </div>
         <!-- 日期统计 -->
-        <div class="order_table clearfix" style="margin-top: 15px;">
-            <div class="btn-group left">
+        <div class="order_table clearfix" style="margin-top: 15px;" id="top">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.orderType==1}" @click="clickType(1)">
+                    销售
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.orderType===0}" @click="clickType(0)">
+                    采购
+                </button>
+            </div>
+            <div class="btn-group">
                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='day'}" @click="clickChange('day')">
                     日
                 </button>
@@ -23,7 +31,7 @@
                     年
                 </button>
             </div>
-            <div class="btn-group clearfix">
+            <div class="btn-group clearfix right">
                 <div class="clear transfer">
                     <div class="left">
                         <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
@@ -35,6 +43,9 @@
                         <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
+                    <button type="button" class="btn btn-default" style="margin-left: 15px;" @click="search
+                    ()">搜索</button>
+                    <button type="button" class="btn btn-default" @click="resetCondition()">{{$t("static.clear_all")}}</button>
                 </div>
             </div>
             <div class="cover_loading">
@@ -43,132 +54,95 @@
             <table class="table table-hover table_color table-bordered table-striped " v-cloak>
                 <thead>
                     <tr style="background:none;color:#000">
-                        <th rowspan="1"></th>
-                        <th colspan="11">销售订单</th>
-                        <th colspan="11">采购订单</th>
-                    </tr>
-                    <tr style="background:none;color:#000">
-                        <th rowspan="2">全部</th>
-                        <th rowspan="1"></th>
-                        <th colspan="3">全部订单</th>
-                        <th colspan="3">全部已完成</th>
-                        <th colspan="4">进行中订单</th>
-                        <th rowspan="1"></th>
-                        <th colspan="3">全部订单</th>
-                        <th colspan="3">全部已完成</th>
-                        <th colspan="4">进行中订单</th>
-                    </tr>
-                    <tr style="background:none;color:#000">
-                        <th>货币</th>
+                        <th>全部</th>
+                        <th>币种</th>
                         <th>订单数</th>
-                        <th>重量</th>
                         <th>订单金额</th>
-                        <th>订单数</th>
-                        <th>重量</th>
-                        <th>订单金额</th>
-                        <th>订单数</th>
-                        <th>重量</th>
-                        <th>订单金额</th>
-                        <th>应收账款</th>
-                        <th>货币</th>
-                        <th>订单数</th>
-                        <th>重量</th>
-                        <th>订单金额</th>
-                        <th>订单数</th>
-                        <th>重量</th>
-                        <th>订单金额</th>
-                        <th>订单数</th>
-                        <th>重量</th>
-                        <th>订单金额</th>
-                        <th>应付账款</th>
+                        <th>成本</th>
+                        <th>杂费</th>
+                        <th>优惠</th>
+                        <th>已付</th>
+                        <th>应收</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td rowspan="10">{{$store.state.table.login.name}}</td>
+                        <td rowspan="10">{{initOrderStatics.name}}</td>
                     </tr>
-                    <tr>
-                        <td>人民币</td>
-                        <td>{{initMyOrderCount.salesAllNum | isnull}}</td>
-                        <td>{{initMyOrderCount.salesAllWeight | isnull}}kg</td>
-                        <td>{{initMyOrderCount.salesAllTotal | isnull}}元</td>
-                        <td>{{initMyOrderCount.salesEndNum | isnull}}</td>
-                        <td>{{initMyOrderCount.salesEndWeight | isnull}}kg</td>
-                        <td>{{initMyOrderCount.salesEndTotal | isnull}}元</td>
-                        <td>{{initMyOrderCount.salesIngNum | isnull}}</td>
-                        <td>{{initMyOrderCount.salesIngWeight | isnull}}kg</td>
-                        <td>{{initMyOrderCount.salesIngTotal | isnull}}元</td>
-                        <td>{{initMyOrderCount.salesReceivables | isnull}}元</td>
-                        <td>人民币</td>
-                        <td>{{initMyOrderCount.buyAllNum | isnull}}</td>
-                        <td>{{initMyOrderCount.buyAllWeight | isnull}}kg</td>
-                        <td>{{initMyOrderCount.buyAllTotal | isnull}}元</td>
-                        <td>{{initMyOrderCount.buyEndNum | isnull}}</td>
-                        <td>{{initMyOrderCount.buyEndWeight | isnull}}kg</td>
-                        <td>{{initMyOrderCount.buyEndTotal | isnull}}元</td>
-                        <td>{{initMyOrderCount.buyIngNum | isnull}}</td>
-                        <td>{{initMyOrderCount.buyIngWeight | isnull}}kg</td>
-                        <td>{{initMyOrderCount.buyIngTotal | isnull}}元</td>
-                        <td>{{initMyOrderCount.buyPayable | isnull}}元</td>
-                    </tr>
-                    <tr>
-                        <td>美元</td>
-                        <td>{{initMyOrderCount.salesAllNum | isnull}}</td>
-                        <td>{{initMyOrderCount.salesAllWeight | isnull}}kg</td>
-                        <td>{{initMyOrderCount.salesAllTotal | isnull}}元</td>
-                        <td>{{initMyOrderCount.salesEndNum | isnull}}</td>
-                        <td>{{initMyOrderCount.salesEndWeight | isnull}}kg</td>
-                        <td>{{initMyOrderCount.salesEndTotal | isnull}}元</td>
-                        <td>{{initMyOrderCount.salesIngNum | isnull}}</td>
-                        <td>{{initMyOrderCount.salesIngWeight | isnull}}kg</td>
-                        <td>{{initMyOrderCount.salesIngTotal | isnull}}元</td>
-                        <td>{{initMyOrderCount.salesReceivables | isnull}}元</td>
-                        <td>美元</td>
-                        <td>{{initMyOrderCount.buyAllNum | isnull}}</td>
-                        <td>{{initMyOrderCount.buyAllWeight | isnull}}kg</td>
-                        <td>{{initMyOrderCount.buyAllTotal | isnull}}元</td>
-                        <td>{{initMyOrderCount.buyEndNum | isnull}}</td>
-                        <td>{{initMyOrderCount.buyEndWeight | isnull}}kg</td>
-                        <td>{{initMyOrderCount.buyEndTotal | isnull}}元</td>
-                        <td>{{initMyOrderCount.buyIngNum | isnull}}</td>
-                        <td>{{initMyOrderCount.buyIngWeight | isnull}}kg</td>
-                        <td>{{initMyOrderCount.buyIngTotal | isnull}}元</td>
-                        <td>{{initMyOrderCount.buyPayable | isnull}}元</td>
+                    <tr v-for="item in initOrderStatics.statisticsList">
+                        <td>{{item.currency}}</td>
+                        <td>{{item.orderCount}}</td>
+                        <td>{{item.amountSum}}</td>
+                        <td>{{item.costSum}}</td>
+                        <td>{{item.incidentalsSum}}</td>
+                        <td>{{item.preferentialSum}}</td>
+                        <td>{{item.prepaidSum}}</td>
+                        <td>{{item.totalSum}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="module clear" style="max-height:500px;overflow:auto">
-            <div class="btn-group" style="margin-top:20px">
-                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': timeParam.timeType=='day'}" @click="clickChange('day')">
+        <div class="order_table" style="max-height:500px;overflow:auto" id="table_box">
+            <div class="btn-group" style="position:fixed;height:32px;z-index: 200;">
+                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='detail'}" @click="changeGroupType('detail')">
                     详情列表
                 </button>
-                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': timeParam.timeType=='11'}" @click="clickChange('day')">
+                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='employee'}" @click="changeGroupType('employee')">
                     人员列表
                 </button>
-                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': timeParam.timeType=='111'}" @click="clickChange('day')">
+                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='department'}" @click="changeGroupType('department')">
                     部门列表
                 </button>
-                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': timeParam.timeType=='week'}" @click="clickChange('week')">
+                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='customer_type'}" @click="changeGroupType('customer_type')">
                     客户类型
                 </button>
-                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': timeParam.timeType=='month'}" @click="clickChange('month')">
+                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='phone_province'}" @click="changeGroupType('phone_province')">
                     地区
                 </button>
-                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': timeParam.timeType=='quarter'}" @click="clickChange('quarter')">
+                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='breed_id'}" @click="changeGroupType('breed_id')">
                     品种
                 </button>
-                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': timeParam.timeType=='year'}" @click="clickChange('year')">
+                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='location'}" @click="changeGroupType('location')">
                     产地
                 </button>
             </div>
-            <table class="table table-hover table_color table-bordered table-striped " v-cloak>
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <!-- 详情列表 -->
+            <table class="table table-hover table_color table-bordered table-striped " v-cloak id="tab" v-if="groupType=='detail'" style="margin-top:32px;">
                 <tr style="background:none;color:#000">
-                    <th rowspan="2">全部</th>
-                    <th colspan="7">销售订单</th>
-                    <th colspan="7">采购订单</th>
+                    <th>业务员</th>
+                    <th>成交时间</th>
+                    <th>订单商品</th>
+                    <th>类型</th>
+                    <th>货币</th>
+                    <th>订单金额</th>
+                    <th>成本</th>
+                    <th>杂费</th>
+                    <th>优惠</th>
+                    <th>已付</th>
+                    <th>应收</th>
                 </tr>
+                <tr v-for="item in initMyOrderCount">
+                    <td>{{item.employeeName}}</td>
+                    <td>{{item.tradeTime}}</td>
+                    <td>{{item.goodsDesc}}</td>
+                    <td v-if="item.type==0">{{$t('static.purchase')}}</td>
+                    <td v-if="item.type==1">{{$t('static.sell')}}</td>
+                    <td>{{item.currency | Currency}}</td>
+                    <td>{{item.total}}</td>
+                    <td>{{item.cost}}</td>
+                    <td>{{item.incidentals}}</td>
+                    <td>{{item.preferential}}</td>
+                    <td>{{item.prepaid}}</td>
+                    <td>{{item.total}}</td>
+                </tr>
+            </table>
+            <!-- 人员列表 -->
+            <table class="table table-hover table_color table-bordered table-striped " v-cloak id="tab" v-if="groupType=='employee'" style="margin-top:32px;">
                 <tr style="background:none;color:#000">
+                    <th>业务员</th>
                     <th>订单数</th>
                     <th>订单金额</th>
                     <th>成本</th>
@@ -176,54 +150,102 @@
                     <th>优惠</th>
                     <th>已付</th>
                     <th>应收</th>
+                </tr>
+                <tbody v-for="item in initOrgOrderCount">
+                    <tr>
+                        <td rowspan="10">{{item.name}}</td>
+                    </tr>
+                    <tr v-for="item in initOrgOrderCount[$index].statisticsList">
+                        <td>{{item.orderCount}}</td>
+                        <td>{{item.amountSum}}{{item.currency}}</td>
+                        <td>{{item.costSum}}</td>
+                        <td>{{item.incidentalsSum}}</td>
+                        <td>{{item.preferentialSum}}</td>
+                        <td>{{item.prepaidSum}}</td>
+                        <td>{{item.totalSum}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 部门列表 -->
+            <table class="table table-hover table_color table-bordered table-striped " v-cloak id="tab" v-if="groupType=='department'" style="margin-top:32px;">
+                <tr style="background:none;color:#000">
+                    <th>部门</th>
                     <th>订单数</th>
                     <th>订单金额</th>
                     <th>成本</th>
                     <th>杂费</th>
                     <th>优惠</th>
                     <th>已付</th>
-                    <th>应付</th>
+                    <th>应收</th>
                 </tr>
-                <tr v-for="item in initMyTimeOrderCount">
-                    <td>
-                        <div v-if="timeParam.timeType=='day'">{{item.date}}</div>
-                        <div v-if="timeParam.timeType=='week'">{{item.date}}周</div>
-                        <div v-if="timeParam.timeType=='month'">{{item.date}}月</div>
-                        <div v-if="timeParam.timeType=='quarter'">{{item.date}}季度</div>
-                        <div v-if="timeParam.timeType=='year'">{{item.date}}年</div>
-                    </td>
-                    <td>{{item.salesNewNum}}</td>
-                    <td>{{item.salesNewWeight}}kg</td>
-                    <td>{{item.salesNewTotal}}元</td>
-                    <td>{{item.salesEndNum}}</td>
-                    <td>{{item.salesEndWeight}}kg</td>
-                    <td>{{item.salesEndTotal}}元</td>
-                    <td>{{item.buyNewNum}}</td>
-                    <td>{{item.buyNewWeight}}kg</td>
-                    <td>{{item.buyNewTotal}}元</td>
-                    <td>{{item.buyEndNum}}</td>
-                    <td>{{item.buyEndWeight}}kg</td>
-                    <td>{{item.buyEndTotal}}元</td>
-                    <td>{{item.buyEndWeight}}kg</td>
-                    <td>{{item.buyEndTotal}}元</td>
-                </tr>
+                <tbody v-for="item in initOrgOrderCount">
+                    <tr>
+                        <td rowspan="10">{{item.name}}</td>
+                    </tr>
+                    <tr v-for="item in initOrgOrderCount[$index].statisticsList">
+                        <td>{{item.orderCount}}</td>
+                        <td>{{item.amountSum}}{{item.currency}}</td>
+                        <td>{{item.costSum}}</td>
+                        <td>{{item.incidentalsSum}}</td>
+                        <td>{{item.preferentialSum}}</td>
+                        <td>{{item.prepaidSum}}</td>
+                        <td>{{item.totalSum}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-hover table_color table-bordered table-striped " v-cloak id="tab" v-if="groupType=='customer_type'||groupType=='phone_province'||groupType=='breed_id'||groupType=='location'" style="margin-top:32px;">
+                <thead>
+                    <tr style="background:none;color:#000">
+                        <th>序号</th>
+                        <th>
+                            <span v-if="groupType=='customer_type'">客户类型</span>
+                            <span v-if="groupType=='customerName'">人员列表</span>
+                            <span v-if="groupType=='phone_province'">地区</span>
+                            <span v-if="groupType=='breed_id'">品种</span>
+                            <span v-if="groupType=='location'">产地</span>
+                        </th>
+                        <th>订单笔数</th>
+                        <th>重量</th>
+                        <th>订单金额</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in initOrgOrderSortCount">
+                        <td width="100px">{{$index+1}}</td>
+                        <td>
+                            <span v-if="groupType=='customer_type'">{{item.customerTypeName}}</span>
+                            <span v-if="groupType=='phone_province'">{{item.phoneProvince}}</span>
+                            <span v-if="groupType=='breed_id'">{{item.breedName}}</span>
+                            <span v-if="groupType=='location'">{{item.location}}</span>
+                        </td>
+                        <td>{{item.total}}笔</td>
+                        <td>{{item.totalNumber}}kg</td>
+                        <td>{{item.totalAmount}}元</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
 </template>
 <script>
+import {
+    initAllOrderCount,
+    initMyTimeOrderCount,
+    initOrderStatics,
+    initOrgOrderSortCount,
+    initOrgOrderCount,
+    initMyOrderCount //详情列表
+} from '../../vuex/getters'
+import {
+    getOrgCountList, //部门列表
+    getOrderCountList, //全部订单统计
+    getTimeOrderCount,
+    getOrderCount //详情列表
+} from '../../vuex/actions'
 import filter from '../../filters/filters'
 import pagination from '../pagination'
 import mzDatepicker from '../calendar/vue.datepicker.js'
-import {
-    initMyOrderCount,
-    initMyTimeOrderCount
-} from '../../vuex/getters'
-import {
-    getOrderCount,
-    getTimeOrderCount
-} from '../../vuex/actions'
-
+import common from '../../common/common.js'
 export default {
     components: {
         pagination,
@@ -235,48 +257,130 @@ export default {
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
-                link: "/report/order/total",
-                key: "myOrderCount",
-                objType: 'employee',
-                employee: this.$store.state.table.login.id,
-                endTime: ''
+                endTime: '',
+                link: '/report/order/org/totalStatistics',
+                key: "allOrderCount",
+                startTime: '',
+                orderType: 1,
+                timeType: ''
             },
-            timeParam: {
+            employeeParam: { //业务员列表
                 loading: true,
-                link: "/report/order/new/add",
-                timeType: "day",
-                objType: "employee",
-                employee: this.$store.state.table.login.id,
+                color: '#5dc596',
+                size: '15px',
+                link: "/report/order/employee/totalStatistics",
+                key: "orgOrderCount",
+                endTime: '',
+                startTime: '',
+                orderType: 1,
+                timeType: '',
             },
+            orgParam: { //部门列表
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                link: "/report/order/org/totalStatistics",
+                key: "orgOrderCount",
+                endTime: '',
+                startTime: '',
+                orderType: 1,
+                timeType: '',
+            },
+            detailParam: {
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                endTime: '',
+                key: "allOrderCount",
+                startTime: '',
+                orderType: 1,
+                timeType: ''
+            },
+            sortParam: {
+                loading: true,
+                link: "/report/order/type",
+                key: "orgOrderSortCount",
+                groupType: 'customer_type'
+            },
+            groupType: 'detail',
             currentView: 1,
         }
     },
     methods: {
         clickChange: function(timeType) {
-            this.timeParam.timeType = timeType;
-            this.getTimeOrderCount(this.timeParam);
+            this.loadParam.timeType = timeType;
+            this.loadParam.startTime = '';
+            this.loadParam.endTime = '';
+            this.getOrderCountList(this.loadParam);
+            this.getOrgCountList(this.loadParam);
+        },
+        changeGroupType: function(groupType) {
+            if (groupType == 'detail') {
+                this.groupType = groupType;
+                this.getOrderCount(this.detailParam);
+            } else if (groupType == 'employee') {
+                this.groupType = groupType;
+                this.getOrgCountList(this.employeeParam)
+            } else if (groupType == 'department') {
+                this.groupType = groupType;
+                this.getOrgCountList(this.orgParam)
+            } else {
+                this.groupType = groupType;
+                this.sortParam.groupType = groupType;
+                this.getOrgCountList(this.sortParam);
+            }
+
+        },
+        clickType: function(type) {
+            this.loadParam.orderType = type;
+            this.getOrderCountList(this.loadParam);
+            this.getOrgCountList(this.loadParam)
+        },
+        search: function() {
+            this.loadParam.timeType = '';
+            this.getOrderCountList(this.loadParam);
+            this.getOrgCountList(this.loadParam);
+        },
+        resetCondition: function() {
+            this.loadParam.timeType = '';
+            this.loadParam.startTime = '';
+            this.loadParam.endTime = '';
+            this.loadParam.orderType = '';
+            this.getOrderCountList(this.loadParam);
+            this.getOrgCountList(this.loadParam);
         },
         refresh: function() {
-            this.getOrderCount(this.loadParam);
-            this.getTimeOrderCount(this.timeParam);
+            this.getOrgCountList(this.loadParam); //部门列表
+            this.getOrderCountList(this.loadParam); //全部订单
+            this.getOrgCountList(this.sortParam); //客户类型、地区、品种、产地
         }
     },
     vuex: {
         getters: {
+            initAllOrderCount,
+            initMyTimeOrderCount,
+            initOrderStatics,
+            initOrgOrderSortCount,
             initMyOrderCount,
-            initMyTimeOrderCount
+            initOrgOrderCount
         },
         actions: {
-            getOrderCount,
-            getTimeOrderCount
+            getOrgCountList,
+            getTimeOrderCount,
+            getOrderCountList,
+            getOrderCount //详情列表
+
         }
     },
     events: {
 
     },
     created() {
-        this.getOrderCount(this.loadParam);
-        this.getTimeOrderCount(this.timeParam);
+        this.getOrgCountList(this.loadParam);
+        this.getOrderCount(this.detailParam);
+        this.getOrderCountList(this.loadParam);
+        this.getOrgCountList(this.sortParam)
+        console.log(this.initOrderStatics)
         if (!this.loadParam.endTime) {
             var date = new Date();
             date.setDate(date.getDate());
@@ -292,7 +396,7 @@ export default {
             this.loadParam.endTime = year + "-" + month + "-" + day + " 00:00:00";
         }
     },
-    filter: (filter, {})
+    filter: (filter, {}),
 }
 </script>
 <style scoped>
@@ -308,10 +412,18 @@ export default {
     color: #fff;
 }
 
+.order_table {
+    text-align: left;
+}
+
 .table {
     margin-bottom: 20px;
     position: relative;
     display: table;
+}
+
+.table>thead>tr>th {
+    font-weight: 700;
 }
 
 .btn-warning {

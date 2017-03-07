@@ -466,6 +466,9 @@ export const getOrderStatistical = ({ dispatch }, param) => { //简单的订单�
         if (key == 'type' && param[key] !== '') {
             body[key] = param[key];
         }
+        if (key == 'validate' && param[key] !== '') {
+            body[key] = param[key];
+        }
         if (key == 'org' && param[key] !== '') {
             body[key] = param[key];
         }
@@ -6623,9 +6626,12 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
 
 export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交易统计)
     if (param) param.loading = true;
-    var url = apiUrl.clientList + param.link + '?';
-    if (param.objType && param.objType !== '') {
-        url += "&objType=" + param.objType;
+    var url = apiUrl.clientList + '/report/order/list' + '?';
+    if (param.endTime && param.endTime !== '') {
+        url += "&endTime=" + param.endTime;
+    }
+    if (param.startTime && param.startTime !== '') {
+        url += "&startTime=" + param.startTime;
     }
     if (param.employee && param.employee !== '') {
         url += "&employee=" + param.employee;
@@ -6636,7 +6642,104 @@ export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交
     if (param.groupType && param.groupType !== '') {
         url += "&groupType=" + param.groupType;
     }
-
+    if (param.timeType && param.timeType !== '') {
+        url += "&timeType=" + param.timeType;
+    }
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        var orderCount = res.json().result;
+        dispatch(types.MY_ORDER_COUNT, orderCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+export const getOrgCountList
+ = ({ dispatch }, param) => { //订单统计(有部门,全部以及部门的客户类型搜索等)
+    if (param) param.loading = true;
+    var url = apiUrl.clientList + param.link + '?';
+    if (param.endTime && param.endTime !== '') {
+        url += "&endTime=" + param.endTime;
+    }
+    if (param.startTime && param.startTime !== '') {
+        url += "&startTime=" + param.startTime;
+    }
+    if (param.employee && param.employee !== '') {
+        url += "&employee=" + param.employee;
+    }
+    if (param.org && param.org !== '') {
+        url += "&org=" + param.org;
+    }
+    if (param.groupType && param.groupType !== '') {
+        url += "&groupType=" + param.groupType;
+    }
+    if (param.timeType && param.timeType !== '') {
+        url += "&timeType=" + param.timeType;
+    }
+    if (param.orderType && param.orderType !== '') {
+        url += "&orderType=" + param.orderType;
+    }
+    if (param.orderType == 0) {
+        url += "&orderType=" + 0;
+    }
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        console.log(param.key)
+        var orderCount = res.json().result;
+        if (param.key) {
+            orderCount.key = param.key;
+        }
+        dispatch(types.ORG_ORDER_COUNT, orderCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+export const getOrderCountList = ({ dispatch }, param) => { //全部订单统计(头部)
+    if (param) param.loading = true;
+    var url = apiUrl.clientList + '/report/order/totalStatistics' + '?';
+    if (param.endTime && param.endTime !== '') {
+        url += "&endTime=" + param.endTime;
+    }
+    if (param.startTime && param.startTime !== '') {
+        url += "&startTime=" + param.startTime;
+    }
+    if (param.employee && param.employee !== '') {
+        url += "&employee=" + param.employee;
+    }
+    if (param.org && param.org !== '') {
+        url += "&org=" + param.org;
+    }
+    if (param.orderType && param.orderType !== '') {
+        url += "&orderType=" + param.orderType;
+    }
+    if (param.orderType == 0) {
+        url += "&orderType=" + 0;
+    }
+    if (param.groupType && param.groupType !== '') {
+        url += "&groupType=" + param.groupType;
+    }
+    if (param.timeType && param.timeType !== '') {
+        url += "&timeType=" + param.timeType;
+    }
     Vue.http({
         method: 'GET',
         url: url,
@@ -6651,13 +6754,12 @@ export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交
         console.log(res.json().result)
         var orderCount = res.json().result;
         orderCount.key = param.key;
-        dispatch(types.MY_ORDER_COUNT, orderCount);
+        dispatch(types.ORDER_COUNT, orderCount);
     }, (res) => {
         param.loading = false;
         console.log('fail');
     })
 }
-
 export const getTimeOrderCount = ({ dispatch }, param) => { //我的订单统计(时间维度:日周月季年)
     if (param) param.loading = true;
     var url = apiUrl.clientList + param.link + '?';

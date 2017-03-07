@@ -625,11 +625,9 @@ export default {
             this.loadParam.loading = false;
         },
         clickOn: function(param) {
-
             this.detailParam = param;
         },
         updateOrder: function(param) {
-
             this.dialogParam = param;
         }
     },
