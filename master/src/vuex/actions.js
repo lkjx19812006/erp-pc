@@ -3490,7 +3490,6 @@ export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及�
 }
 
 export const getEmployeeDetail = ({ dispatch }, param) => { //员工列表以及搜索
-    console.log(param)
     param.loading = true;
     var apiurl = apiUrl.clientList + '/employee/' + param.id;
     Vue.http({
