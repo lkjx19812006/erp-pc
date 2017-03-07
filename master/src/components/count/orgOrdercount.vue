@@ -61,8 +61,10 @@
                         <th>成本</th>
                         <th>杂费</th>
                         <th>优惠</th>
-                        <th>已付</th>
-                        <th>应收</th>
+                        <th v-if="loadParam.orderType==0">已付</th>
+                        <th v-if="loadParam.orderType==0">未付</th>
+                        <th v-if="loadParam.orderType==1">已收</th>
+                        <th v-if="loadParam.orderType==1">应收</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,7 +73,7 @@
                     </tr>
                     <tr v-for="item in initOrgOrderCount.statisticsList">
                         <td>{{item.currency}}</td>
-                        <td>{{item.orderCount}}</td>
+                        <td>{{item.orderCount}}笔</td>
                         <td>{{item.amountSum}}</td>
                         <td>{{item.costSum}}</td>
                         <td>{{item.incidentalsSum}}</td>
@@ -86,10 +88,10 @@
         <div class="order_table" style="max-height:500px;overflow:auto" id="table_box">
             <div class="btn-group" style="position:fixed;height:32px;z-index: 200;">
                 <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='detail'}" @click="changeGroupType('detail')">
-                    详情列表
+                    详情
                 </button>
                 <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='employee'}" @click="changeGroupType('employee')">
-                    人员列表
+                    员工
                 </button>
                 <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='customer_type'}" @click="changeGroupType('customer_type')">
                     客户类型
@@ -149,8 +151,10 @@
                     <th>成本</th>
                     <th>杂费</th>
                     <th>优惠</th>
-                    <th>已付</th>
-                    <th>应收</th>
+                    <th v-if="loadParam.orderType==0">已付</th>
+                    <th v-if="loadParam.orderType==0">未付</th>
+                    <th v-if="loadParam.orderType==1">已收</th>
+                    <th v-if="loadParam.orderType==1">应收</th>
                 </tr>
                 <tr v-for="item in initMyOrderCount">
                     <td>{{item.employeeName}}</td>
@@ -164,7 +168,7 @@
                     <td>{{item.incidentals}}</td>
                     <td>{{item.preferential}}</td>
                     <td>{{item.prepaid}}</td>
-                    <td>{{item.total}}</td>
+                    <td>{{item.unpaid}}</td>
                 </tr>
             </table>
             <!-- 人员列表 -->
@@ -176,15 +180,17 @@
                     <th>成本</th>
                     <th>杂费</th>
                     <th>优惠</th>
-                    <th>已付</th>
-                    <th>应收</th>
+                    <th v-if="loadParam.orderType==0">已付</th>
+                    <th v-if="loadParam.orderType==0">未付</th>
+                    <th v-if="loadParam.orderType==1">已收</th>
+                    <th v-if="loadParam.orderType==1">应收</th>
                 </tr>
                 <tbody v-for="item in initOrgCountList">
                     <tr>
                         <td rowspan="10">{{item.name}}</td>
                     </tr>
                     <tr v-for="item in initOrgCountList[$index].statisticsList">
-                        <td>{{item.orderCount}}</td>
+                        <td>{{item.orderCount}}笔</td>
                         <td>{{item.amountSum}}{{item.currency}}</td>
                         <td>{{item.costSum}}</td>
                         <td>{{item.incidentalsSum}}</td>
@@ -271,6 +277,7 @@ export default {
         clickType: function(type) {
             this.loadParam.orderType = type;
             this.getOrgCountList(this.loadParam);
+            this.getOrderCount(this.loadParam)
         },
         clickChange: function(type) {
             this.loadParam.timeType = type;

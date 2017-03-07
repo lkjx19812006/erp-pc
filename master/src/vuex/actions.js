@@ -566,10 +566,10 @@ export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列�
     }).then((res) => {
         var drugAccountList = res.json().result.list;
         // 如果用户名为空，为它添加匿名
-        for(var i = 0; i< drugAccountList.length; i++){
-           if(drugAccountList[i].userName == ''){
-               drugAccountList[i].userName = '匿名' 
-           }  
+        for (var i = 0; i < drugAccountList.length; i++) {
+            if (drugAccountList[i].userName == '') {
+                drugAccountList[i].userName = '匿名'
+            }
         }
         dispatch(types.DRUG_ACCOUNT_DATA, drugAccountList);
         param.all = res.json().result.pages;
@@ -1422,9 +1422,15 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if (param.prNo && param.prNo != '') {
         body.prNo = param.prNo;
     }
-    /*if(param.amount&&param.amount!=''){
+    if (param.amount && param.amount != '') {
         body.amount = param.amount;
-    }*/
+    }
+    if (param.country && param.country != '') {
+        body.payCountry = param.country;
+    }
+    if (param.amount == 0) {
+        body.amount = 0;
+    }
     if (param.description && param.description != '') {
         body.description = param.description;
     }
@@ -1452,6 +1458,7 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if (param.images) {
         body.images = param.images;
     }
+    console.log(body)
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.url,
@@ -6653,6 +6660,9 @@ export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交
     if (param.timeType && param.timeType !== '') {
         url += "&timeType=" + param.timeType;
     }
+    if (param.orderType && param.orderType !== '') {
+        url += "&orderType=" + param.orderType;
+    }
     Vue.http({
         method: 'GET',
         url: url,
@@ -6671,8 +6681,7 @@ export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交
         console.log('fail');
     })
 }
-export const getOrgCountList
- = ({ dispatch }, param) => { //订单统计(有部门,全部以及部门的客户类型搜索等)
+export const getOrgCountList = ({ dispatch }, param) => { //订单统计(有部门,全部以及部门的客户类型搜索等)
     if (param) param.loading = true;
     var url = apiUrl.clientList + param.link + '?';
     if (param.endTime && param.endTime !== '') {
