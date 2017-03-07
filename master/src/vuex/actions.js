@@ -18,7 +18,7 @@ export const login = ({ dispatch }, data) => { //登录
     console.log(body);
     Vue.http({
         method: 'POST',
-        url: apiUrl.orderList + '/employee/login',
+        url: apiUrl.orderList + data.link,
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -111,7 +111,6 @@ export const login = ({ dispatch }, data) => { //登录
             dispatch(types.LOGIN_DATA, loginInfo);
             dispatch(types.INIT_LIST, result);
             //本地存储左侧菜单
-            console.log(result.menus);
             for (var i in result.menus) {
                 result.menus[i].show = false;
             }
@@ -562,6 +561,12 @@ export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列�
         }
     }).then((res) => {
         var drugAccountList = res.json().result.list;
+        // 如果用户名为空，为它添加匿名
+        for (var i = 0; i < drugAccountList.length; i++) {
+            if (drugAccountList[i].userName == '') {
+                drugAccountList[i].userName = '匿名'
+            }
+        }
         dispatch(types.DRUG_ACCOUNT_DATA, drugAccountList);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
@@ -735,6 +740,44 @@ export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核
             localStorage.purchaseOrderCheckParam = JSON.stringify(param);
         }
 
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const getUserOrder = ({ dispatch }, param) => { //注册客户的订单列表
+    param.loading = true;
+    const body = {
+        page: param.cur,
+        pageSize: 15
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var orderList = res.json().result.list;
+        for (var i in orderList) {
+            orderList[i].checked = false;
+            orderList[i].show = false;
+        }
+        console.log('订单查询成功')
+        orderList.key = param.key;
+        dispatch(types.ORDER_TABLE, orderList);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+
+        localStorage.myOrderParam = JSON.stringify(param);
 
     }, (res) => {
         console.log('fail');
@@ -1243,6 +1286,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         customerName: param.customerName,
         consigneeAddr: param.consigneeAddr,
         comments: param.comments,
+        orderStatus: param.orderStatus,
         goods: param.goods
     }
     if (param.consigner) {
@@ -1397,13 +1441,9 @@ export const paymentConfirm = ({ dispatch }, param) => { //确定收款
 }
 
 export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
-    console.log(param)
-        /*var files= param.images;
-        var img = files.split(",");//字符串转化为数组
-        img.toString();*/
     const body = {
         payWay: param.payWay,
-    };
+    }
     if (param.id && param.id != '') {
         body.id = param.id;
     }
@@ -1446,7 +1486,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if (param.images) {
         body.images = param.images;
     }
-    console.log(body)
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.url,
@@ -1458,6 +1497,7 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        console.log(res.json().result)
         param.callback(res.json().msg);
         if (res.json().code == 200) {
             param.validate = res.json().result.validate;
@@ -1469,7 +1509,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
             dispatch(types.ORDER_UPLOAD_DATA, param);
         }
         if (param.titles == '分期审核' || param.titles == '确认付款' || param.titles == '确认收款') {
-
             param.validate = res.json().result.validate;
             param.pr = res.json().result.pr;
             param.prNo = res.json().result.prNo;
@@ -1481,7 +1520,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
             param = res.json().result;
             dispatch(types.MY_FUND_LIST, param);
         }
-        console.log(param)
     }, (res) => {
         console.log('fail');
     });
@@ -2017,7 +2055,6 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
     if (!param.cur) {
         param.cur = '';
     }
-
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/sys/location/country/?page=' + param.cur + '&pageSize=15',
@@ -2047,6 +2084,8 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
                     return getProvinceList({ dispatch }, object);
                 }
             }
+        } else {
+            param.country = '';
         }
 
     }, (res) => {
@@ -5656,7 +5695,6 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
         22: '西药生产商',
         23: '饮片厂'
     }
-    console.log(param);
     const updatedata = {
         id: param.id
     }
@@ -6053,7 +6091,8 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         "number": param.number,
         "quality": param.quality,
         "duedate": param.duedate,
-        "images": param.images
+        "images": param.images,
+        'description': param.description
     }
     Vue.http({
         method: "PUT",
@@ -6080,7 +6119,6 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
 }
 
 export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增意向
-    console.log(param);
     if (param.files) {
         param.images = param.files;
     }
@@ -6119,10 +6157,11 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
         "duedate": param.duedate,
         "images": param.images,
         "inType": param.inType,
-        "validate": param.validate
+        "validate": param.validate,
+        "description": param.description
 
     }
-    console.log(data1);
+
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,
@@ -6555,6 +6594,7 @@ export const getUnitList = ({ dispatch }, param) => { //常用单位接口
     })
 }
 export const getCurrencyList = ({ dispatch }, param) => { //常用货币接口
+    console.log(param)
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/sys/enum/currency',

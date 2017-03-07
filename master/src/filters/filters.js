@@ -73,18 +73,16 @@ Vue.filter('assess', function(val, type, logistic, name, taskKey) { //订单状�
     } else {
         name = name;
     }
-    if (val == 60 && type == 1 && logistic == 2) {
+    if (val == 60 && logistic == 2) {
         return '已发货';
-    } else if (val == 60 && type == 1 && logistic == 3) {
+    } else if (val == 60 && logistic == 3) {
         return '质量检验'
-    } else if (val == 60 && type == 1 && logistic == 40) {
+    } else if (val == 60 && logistic == 40) {
         return '已完成订单（质量合格）'
-    } else if (val == 60 && type == 1 && logistic == 50) {
+    } else if (val == 60 && logistic == 50) {
         return '已完成订单（补充合同申请）'
-    } else if (val == 60 && type == 1 && logistic == 60) {
+    } else if (val == 60 && logistic == 60) {
         return '已完成订单（售后处理中）'
-    } else if (val == 60 && type == 0) {
-        return '质量检验'
     } else if (val == 70) {
         return '已完成订单'
     } else if (val == 0) {
@@ -122,18 +120,16 @@ Vue.filter('Enassess', function(val, type, logistic, name, taskKey) { //订单�
     } else {
         name = name;
     }
-    if (val == 60 && type == 1 && logistic == 2) {
+    if (val == 60 && logistic == 2) {
         return 'Awaiting comment';
-    } else if (val == 60 && type == 1 && logistic == 3) {
+    } else if (val == 60 && logistic == 3) {
         return 'Awaiting comment'
-    } else if (val == 60 && type == 1 && logistic == 40) {
+    } else if (val == 60 && logistic == 40) {
         return 'Lost communication'
-    } else if (val == 60 && type == 1 && logistic == 50) {
+    } else if (val == 60 && logistic == 50) {
         return 'Awaiting comment（Secondary contract）'
-    } else if (val == 60 && type == 1 && logistic == 60) {
+    } else if (val == 60 && logistic == 60) {
         return 'Awaiting comment（Aftersales changes）'
-    } else if (val == 60 && type == 0) {
-        return 'Awaiting comment'
     } else if (val == 70) {
         return 'Lost communication'
     } else if (val == 0) {

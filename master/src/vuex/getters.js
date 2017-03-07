@@ -344,7 +344,7 @@ export const initCurrencylist = (state) => {
 }
 /*---我的客户统计---*/
 export const initClientcount = (state) => {
-    console.log(state.count)
+  console.log(state.count)
   return parseJson(state.count.countList);
 }
 /*---订单统计---*/

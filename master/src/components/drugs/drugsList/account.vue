@@ -72,10 +72,7 @@
                        <td>{{item.freezeMoney}}</td>
                        <td>{{item.integral}}</td>
                        <td>{{item.credit}}</td>
-                       <td>{{item.createTime}}</td>
-                       
-                      
-                        
+                       <td>{{item.createTime}}</td>       
                     </tr>
                 </tbody>
             </table>

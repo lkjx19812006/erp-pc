@@ -232,6 +232,12 @@
                          <label class="editlabel">详细地址</label>
                          <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
                        </div>
+                       
+                       <!-- 客户备注 -->
+                       <div class="remark">
+                          <label class="editlabel">客户备注</label>
+                          <textarea class="form-control edit-input" v-model="param.description" ></textarea>
+                       </div>
 
                      </div>
 
@@ -765,5 +771,11 @@ export default {
 .editpage-image {
     display: inline-block;
 }
-
+.remark{ 
+  margin-top: 15px
+}
+.remark textarea{
+  width: 650px;
+  min-height: 70px;
+}
 </style>
