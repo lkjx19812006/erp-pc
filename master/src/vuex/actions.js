@@ -565,6 +565,12 @@ export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列�
         }
     }).then((res) => {
         var drugAccountList = res.json().result.list;
+        // 如果用户名为空，为它添加匿名
+        for(var i = 0; i< drugAccountList.length; i++){
+           if(drugAccountList[i].userName == ''){
+               drugAccountList[i].userName = '匿名' 
+           }  
+        }
         dispatch(types.DRUG_ACCOUNT_DATA, drugAccountList);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
@@ -6055,7 +6061,8 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         "number": param.number,
         "quality": param.quality,
         "duedate": param.duedate,
-        "images": param.images
+        "images": param.images,
+        'description': param.description
     }
     Vue.http({
         method: "PUT",
@@ -6082,7 +6089,6 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
 }
 
 export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增意向
-    console.log(param);
     if (param.files) {
         param.images = param.files;
     }
@@ -6121,10 +6127,11 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
         "duedate": param.duedate,
         "images": param.images,
         "inType": param.inType,
-        "validate": param.validate
+        "validate": param.validate,
+        "description": param.description
 
     }
-    console.log(data1);
+
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,
@@ -6557,6 +6564,7 @@ export const getUnitList = ({ dispatch }, param) => { //常用单位接口
     })
 }
 export const getCurrencyList = ({ dispatch }, param) => { //常用货币接口
+    console.log(param)
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/sys/enum/currency',
