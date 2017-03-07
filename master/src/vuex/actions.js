@@ -18,7 +18,7 @@ export const login = ({ dispatch }, data) => { //登录
     console.log(body);
     Vue.http({
         method: 'POST',
-        url: apiUrl.orderList + '/employee/login',
+        url: apiUrl.orderList + data.link,
         emulateHTTP: true,
         body: body,
         emulateJSON: false,

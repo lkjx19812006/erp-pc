@@ -73,7 +73,9 @@ export default {
                 required:false,   //是否需要验证
                 loading:false,
                 show:false,
-                alert:true
+                alert:true,
+                link:'/employee/login'
+
            },
 
            base64DecodeChars:[

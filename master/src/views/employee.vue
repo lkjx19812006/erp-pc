@@ -121,7 +121,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in initEmployeeList">
+                        <tr v-for="item in initEmployeeList" @click = 'linkLogin(item.no,item.password)'>
                             <td @click.stop="">
                                 <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                             </td>
@@ -275,7 +275,8 @@ import {
     specDel,
     getOrgDetail,
     alterOrg,
-    transferManager
+    transferManager,
+    login
 } from '../vuex/actions'
 export default {
     components: {
@@ -508,6 +509,10 @@ export default {
             this.getEmployeeList(this.loadParam);
             this.loadParam.id = this.loadParam.orgId;
             this.getOrgDetail(this.loadParam)
+        },
+        linkLogin: function(no,password){
+           // this.login(param)
+           console.log(password)
         }
     },
     vuex: {
@@ -527,7 +532,8 @@ export default {
             specDel,
             getOrgDetail,
             alterOrg,
-            transferManager
+            transferManager,
+            login
         }
     },
     events: {

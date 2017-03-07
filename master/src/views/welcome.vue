@@ -4,9 +4,6 @@
             <li>{{item.name}}</li>
         </ul>
         
-        <ul v-for="item in initClientcount.day">
-            <li>{{item.countType}}</li>
-        </ul>
     </div>
 </template>
 <script>
@@ -25,7 +22,7 @@ export default {
     },
     data() {
        return {
-         hello :'json',
+         hello :222,
          loadParam:{
             employeeId:this.initLogin.id,
             loading:false
@@ -45,11 +42,10 @@ export default {
         }
     },
     methods: {
-
+      
     },
     created() {
-        this.getCurrencyList();
-        this.getClientcount(this.loadParam);
+       
     }
 }
 </script>
