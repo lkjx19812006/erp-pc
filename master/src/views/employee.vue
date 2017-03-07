@@ -539,8 +539,6 @@ export default {
                 name: 'login'
             });
         },
-
-
     },
     vuex: {
         getters: {

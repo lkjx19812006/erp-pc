@@ -542,6 +542,12 @@ Vue.filter('classify', function(val) { //客户分类
         return '供应商';
     } else if (val == '买卖') {
         return '买卖';
+    } else if (val == 1) {
+        return '采购商';
+    } else if (val == 2) {
+        return '供应商';
+    } else if (val == 3) {
+        return '买卖';
     } else {
         return val;
     }

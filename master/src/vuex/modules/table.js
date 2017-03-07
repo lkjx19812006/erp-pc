@@ -254,6 +254,7 @@ const state = {
         //流程记录
         flowRecord: [],
         //订单列表
+        userOrderList: [],
         myOrderList: [{
             "id": "5726ea3bf22125bcdcff7820",
             "type": 0,
