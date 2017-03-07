@@ -43,10 +43,10 @@ export const USER_TYPE = 'USER_TYPE' //数据类型
 export const SYSTEM_DATA = 'SYSTEM_DATA' //系统数据
 export const PROVINCE_DATA = 'PROVINCE_DATA' //省市区列表数据
 export const SERVICE_ENTERPRISE = 'SERVICE_ENTERPRISE' //业务企业数据
-export const COMPANY_PRODUCT_DATA = 'COMPANY_PRODUCT_DATA'  //企业产品
-export const COMPANY_PRODUCT_DETAIL = 'COMPANY_PRODUCT_DETAIL'  //企业产品详情
-export const COMPANY_LICENSE_DATA = 'COMPANY_LICENSE_DATA'  //企业证书
-export const RELATIVE_COMPANY_DATA = 'RELATIVE_COMPANY_DATA'  //相关企业列表
+export const COMPANY_PRODUCT_DATA = 'COMPANY_PRODUCT_DATA' //企业产品
+export const COMPANY_PRODUCT_DETAIL = 'COMPANY_PRODUCT_DETAIL' //企业产品详情
+export const COMPANY_LICENSE_DATA = 'COMPANY_LICENSE_DATA' //企业证书
+export const RELATIVE_COMPANY_DATA = 'RELATIVE_COMPANY_DATA' //相关企业列表
 export const SERVICE_COMPONENT = 'SERVICE_COMPONENT' //业务成分数据
 export const SERVICE_DRAW = 'SERVICE_DRAW' //业务提取物数据
 export const ADD_DATA = 'ADD_DATA' //添加枚举类型数据
@@ -84,8 +84,8 @@ export const CUSTOMER_CONTACT_DATA = 'CUSTOMER_CONTACT_DATA' // 新增客户联�
 export const ADD_LABEL_DATA = 'ADD_LABEL_DATA' // 新增标签
 export const UPDATE_LABEL_DETAIL = 'UPDATE_LABEL_DETAIL' // 修改标签
 export const ADD_PRODUCT_DATA = 'ADD_PRODUCT_DATA' // 新增客户产品
-export const FILE_DATA ='FILE_DATA'  // 新增客户文件
-export const ADD_CERTIFICATE_DATA ='ADD_CERTIFICATE_DATA'  // 新增供应商文件
+export const FILE_DATA = 'FILE_DATA' // 新增客户文件
+export const ADD_CERTIFICATE_DATA = 'ADD_CERTIFICATE_DATA' // 新增供应商文件
 export const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA' // 修改客户产品
 export const CUSTOMER_BATCH_DELETE = 'CUSTOMER_BATCH_DELETE' //客户批量删除
 export const CUSTOMER_BATCH_SUPPLIER = 'CUSTOMER_BATCH_SUPPLIER' //客户批量提取为供应商
@@ -93,65 +93,65 @@ export const ALTER_PRODUCT_DATA = 'ALTER_PRODUCT_DATA' // 修改供应商产品
 export const SUPPLY_PRODUCT_DATA = 'SUPPLY_PRODUCT_DATA' // 新增供应商产品
 export const PRODUCT_DATA = 'PRODUCT_DATA' // 供应商产品列表
 export const PRODUCT_DETAIL_DATA = 'PRODUCT_DETAIL_DATA' // 供应商产品详情
-export const CUSTOMER_TRANSFER='CUSTOMER_TRANSFER' //客户划转
+export const CUSTOMER_TRANSFER = 'CUSTOMER_TRANSFER' //客户划转
 
-export const CALL_RECORD_DATA='CALL_RECORD_DATA' //客户通话记录
-export const CALL_COUNT_DATA='CALL_COUNT_DATA' //客户通话记录统计
-export const CALL_RECORD_VOICE_DATA='CALL_RECORD_VOICE_DATA' //客户通话记录录音
+export const CALL_RECORD_DATA = 'CALL_RECORD_DATA' //客户通话记录
+export const CALL_COUNT_DATA = 'CALL_COUNT_DATA' //客户通话记录统计
+export const CALL_RECORD_VOICE_DATA = 'CALL_RECORD_VOICE_DATA' //客户通话记录录音
 
-export const INTENTION_LIST_DATA ='INTENTION_LIST_DATA'  //意向数据列表
-export const SUPPLY_DEMAND_DATA ='SUPPLY_DEMAND_DATA'  //意向数据列表
-export const INTENTION_DETAIL_DATA ='INTENTION_DETAIL_DATA'  //意向详情
-export const INTENTION_UP_DOWN ='INTENTION_UP_DOWN'  //意向批量上下架
-export const OFFER_LIST_DATA ='OFFER_LIST_DATA'  //报价数据列表
-export const MSG_LIST_DATA ='MSG_LIST_DATA'  //留言数据列表
-export const MSG_UPDATE_DATA ='MSG_UPDATE_DATA'  //修改留言信息
-export const INTENTION_DATA = 'INTENTION_DATA'  // 新增意向以及机会划转为意向
+export const INTENTION_LIST_DATA = 'INTENTION_LIST_DATA' //意向数据列表
+export const SUPPLY_DEMAND_DATA = 'SUPPLY_DEMAND_DATA' //意向数据列表
+export const INTENTION_DETAIL_DATA = 'INTENTION_DETAIL_DATA' //意向详情
+export const INTENTION_UP_DOWN = 'INTENTION_UP_DOWN' //意向批量上下架
+export const OFFER_LIST_DATA = 'OFFER_LIST_DATA' //报价数据列表
+export const MSG_LIST_DATA = 'MSG_LIST_DATA' //留言数据列表
+export const MSG_UPDATE_DATA = 'MSG_UPDATE_DATA' //修改留言信息
+export const INTENTION_DATA = 'INTENTION_DATA' // 新增意向以及机会划转为意向
 export const UPDATA_INTENTION_DATA = 'UPDATA_INTENTION_DATA' //修改意向
 export const INTENTION_OFFER_DETAIL = 'INTENTION_OFFER_DETAIL' //意向报价详情
 
-export const INTLINTENTION_LIST_DATA ='INTLINTENTION_LIST_DATA'  //国际意向数据列表
-export const INTLINTENTION_DETAIL_DATA ='INTLINTENTION_DETAIL_DATA'  //国际意向详情
-export const ADD_INTLINTENTION_DATA ='ADD_INTLINTENTION_DATA'  //新增国际意向
-export const UPDATA_INTLINTENTION_DATA ='UPDATA_INTLINTENTION_DATA'  //修改国际意向
-export const DELETE_INTLINTENTION_DATA ='DELETE_INTLINTENTION_DATA'  //删除国际意向
-export const INQUIRE_DATA ='INQUIRE_DATA'  //国际意向询价
-export const CONFIRM_OFFER ='CONFIRM_OFFER'  //确认报价
-export const ITEM_INQUIRE ='ITEM_INQUIRE'  //条目再询价
+export const INTLINTENTION_LIST_DATA = 'INTLINTENTION_LIST_DATA' //国际意向数据列表
+export const INTLINTENTION_DETAIL_DATA = 'INTLINTENTION_DETAIL_DATA' //国际意向详情
+export const ADD_INTLINTENTION_DATA = 'ADD_INTLINTENTION_DATA' //新增国际意向
+export const UPDATA_INTLINTENTION_DATA = 'UPDATA_INTLINTENTION_DATA' //修改国际意向
+export const DELETE_INTLINTENTION_DATA = 'DELETE_INTLINTENTION_DATA' //删除国际意向
+export const INQUIRE_DATA = 'INQUIRE_DATA' //国际意向询价
+export const CONFIRM_OFFER = 'CONFIRM_OFFER' //确认报价
+export const ITEM_INQUIRE = 'ITEM_INQUIRE' //条目再询价
 
-export const INTLINTENTION_INQUIRE_LIST_DATA ='INTLINTENTION_INQUIRE_LIST_DATA'  //国际意向询价列表
-export const INTLINTENTION_INQUIRE_DETAIL_DATA ='INTLINTENTION_INQUIRE_DETAIL_DATA'  //国际意向询价详情
-export const ITEM_HISTORY_DATA ='ITEM_HISTORY_DATA'  //国际意向条目历史记录
-export const ORIGIN_OFFER_DATA ='ORIGIN_OFFER_DATA'  //原材料报价
-export const OTHER_OFFER_DATA ='OTHER_OFFER_DATA'  //增（改）其他报价
-export const DEL_OTHER_OFFER ='DEL_OTHER_OFFER'  //删除其他报价
-export const UPLOAD_INTL_INTENT_FILE ='UPLOAD_INTL_INTENT_FILE'  //上传国际意向（原和其他）文件
-export const DEL_INTL_INTENT_FILE ='DEL_INTL_INTENT_FILE'  //删除国际意向（原和其他）文件
+export const INTLINTENTION_INQUIRE_LIST_DATA = 'INTLINTENTION_INQUIRE_LIST_DATA' //国际意向询价列表
+export const INTLINTENTION_INQUIRE_DETAIL_DATA = 'INTLINTENTION_INQUIRE_DETAIL_DATA' //国际意向询价详情
+export const ITEM_HISTORY_DATA = 'ITEM_HISTORY_DATA' //国际意向条目历史记录
+export const ORIGIN_OFFER_DATA = 'ORIGIN_OFFER_DATA' //原材料报价
+export const OTHER_OFFER_DATA = 'OTHER_OFFER_DATA' //增（改）其他报价
+export const DEL_OTHER_OFFER = 'DEL_OTHER_OFFER' //删除其他报价
+export const UPLOAD_INTL_INTENT_FILE = 'UPLOAD_INTL_INTENT_FILE' //上传国际意向（原和其他）文件
+export const DEL_INTL_INTENT_FILE = 'DEL_INTL_INTENT_FILE' //删除国际意向（原和其他）文件
 
-export const USER_DATA = 'USER_DATA'   //会员列表
+export const USER_DATA = 'USER_DATA' //会员列表
 export const QUICK_EDIT = 'QUICK_EDIT'
-export const UPDATE_USER_DATA = 'UPDATE_USER_DATA'   //修改会员信息
-export const BATCH_UPDATE_USER_DATA = 'BATCH_UPDATE_USER_DATA'  //批量修改会员信息
-export const BATCH_USER_INTENTION_AUDIT = 'BATCH_USER_INTENTION_AUDIT'  //批量审核会员意向
-export const USER_DETAIL_DATA = 'USER_DETAIL_DATA'   //会员详情
+export const UPDATE_USER_DATA = 'UPDATE_USER_DATA' //修改会员信息
+export const BATCH_UPDATE_USER_DATA = 'BATCH_UPDATE_USER_DATA' //批量修改会员信息
+export const BATCH_USER_INTENTION_AUDIT = 'BATCH_USER_INTENTION_AUDIT' //批量审核会员意向
+export const USER_DETAIL_DATA = 'USER_DETAIL_DATA' //会员详情
 
-export const ORG_DATA = 'ORG_DATA'    //部门列表
-export const ORG_DETAIL = 'ORG_DETAIL'    //部门详情页面
-export const ROLE_DATA = 'ROLE_DATA'    //角色列表
+export const ORG_DATA = 'ORG_DATA' //部门列表
+export const ORG_DETAIL = 'ORG_DETAIL' //部门详情页面
+export const ROLE_DATA = 'ROLE_DATA' //角色列表
 
-export const EMPLOYEE_DATA ='EMPLOYEE_DATA'  //员工（业务员）列表数据
-export const ADD_EMPLOYEE_DATA = 'ADD_EMPLOYEE_DATA'  //新增员工信息
-export const UPDATE_EMPLOY_DATA ='UPDATE_EMPLOY_DATA' //修改员工信息
+export const EMPLOYEE_DATA = 'EMPLOYEE_DATA' //员工（业务员）列表数据
+export const ADD_EMPLOYEE_DATA = 'ADD_EMPLOYEE_DATA' //新增员工信息
+export const UPDATE_EMPLOY_DATA = 'UPDATE_EMPLOY_DATA' //修改员工信息
 export const EMPLOYEE_DETAIL = 'EMPLOYEE_DETAIL' //员工详情
 
-export const IDENTIFY_DATA ='IDENTIFY_DATA' //认证信息
+export const IDENTIFY_DATA = 'IDENTIFY_DATA' //认证信息
 
-export const UPDATE_TRACKING_DATA ='UPDATE_TRACKING_DATA' //跟新跟进信息
+export const UPDATE_TRACKING_DATA = 'UPDATE_TRACKING_DATA' //跟新跟进信息
 
-export const COUNTRY_LIST ='COUNTRY_LIST' //获取国家列表
-export const PROVINCE_LIST ='PROVINCE_LIST' //获取国家中的省数据
-export const CITY_LIST ='CITY_LIST' //获取市列表
-export const DISTRICT_LIST ='DISTRICT_LIST' //获取区列表
+export const COUNTRY_LIST = 'COUNTRY_LIST' //获取国家列表
+export const PROVINCE_LIST = 'PROVINCE_LIST' //获取国家中的省数据
+export const CITY_LIST = 'CITY_LIST' //获取市列表
+export const DISTRICT_LIST = 'DISTRICT_LIST' //获取区列表
 
 
 export const ABSTRACT_GET_DATA = 'ABSTRACT_GET_DATA' //获取数据并赋值
@@ -166,27 +166,22 @@ export const FILES_DATA_LIST = 'FILES_DATA_LIST' //文件/资质证书列表
 
 export const MY_CLIENT_COUNT = 'MY_CLIENT_COUNT' //我的客户统计
 export const MY_ORDER_COUNT = 'MY_ORDER_COUNT' //我的订单统计
+export const ORDER_COUNT = 'ORDER_COUNT' //全部的订单统计
+export const ORG_ORDER_COUNT = 'ORG_ORDER_COUNT' //部门订单统计
 export const MY_TIME_ORDER_COUNT = 'MY_TIME_ORDER_COUNT' //我的订单统计(时间维度)
-export const MY_FUND_LIST = 'MY_FUND_LIST'  //我的资金记录
-export const ORG_FUND_LIST = 'ORG_FUND_LIST'  //部门资金记录
-export const FUND_DETAIL_DATA = 'FUND_DETAIL_DATA'  //资金记录详情
-export const FINANCE_LIST = 'FINANCE_LIST'  //财务资金审核
-export const ITEM_SUPPLIER_LIST = 'ITEM_SUPPLIER_LIST'  //产品供应商获取
+export const MY_FUND_LIST = 'MY_FUND_LIST' //我的资金记录
+export const ORG_FUND_LIST = 'ORG_FUND_LIST' //部门资金记录
+export const FUND_DETAIL_DATA = 'FUND_DETAIL_DATA' //资金记录详情
+export const FINANCE_LIST = 'FINANCE_LIST' //财务资金审核
+export const ITEM_SUPPLIER_LIST = 'ITEM_SUPPLIER_LIST' //产品供应商获取
 
-export const BANK_LIST ='BANK_LIST' //获取银行数据
-export const BANK_BRANCH_LIST ='BANK_BRANCH_LIST' //获取银行分支的数据
+export const BANK_LIST = 'BANK_LIST' //获取银行数据
+export const BANK_BRANCH_LIST = 'BANK_BRANCH_LIST' //获取银行分支的数据
 
-export const CONTRACT_LIST ='CONTRACT_LIST' //补充合同列表的数据
-export const AFTER_SALES ='AFTER_SALES' //售后申请列表的数据
+export const CONTRACT_LIST = 'CONTRACT_LIST' //补充合同列表的数据
+export const AFTER_SALES = 'AFTER_SALES' //售后申请列表的数据
 
-export const SALES_DETAIL ='SALES_DETAIL' //合同、售后详情页面
+export const SALES_DETAIL = 'SALES_DETAIL' //合同、售后详情页面
 
-export const EMAIL_DATA ='EMAIL_DATA' //邮件列表
-export const EMAIL_COUNT ='EMAIL_COUNT' //邮件列表
-
-
-
-
-
-
-
+export const EMAIL_DATA = 'EMAIL_DATA' //邮件列表
+export const EMAIL_COUNT = 'EMAIL_COUNT' //邮件列表

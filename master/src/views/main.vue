@@ -10,7 +10,7 @@
         <deliver-model :param="deliverParam" v-if="deliverParam.show"></deliver-model>
         <div class="employee clear">
             <div class="employee_left col-md-8">
-                <div class="employee_top" @click="freshLinecharts(getLinechart)">
+                <!-- <div class="employee_top" @click="freshLinecharts(getLinechart)">
                     <a class="select_btn clear">
                         <span class="select_btn_person">个人业绩</span>
                         <span class="select_btn_img"><img src="/static/images/down_arrow.png" height="13" width="24" /></span>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="employee_line">
                     <div class="linechart" v-echarts="getLinechart.options" :loading="getLinechart.load"></div>
-                </div>
+                </div> -->
                 <div class="complete_rate">
                     <span>个人业绩完成率</span>
                     <a class="select_btn" @click="freshPiecharts(getPiechart)">
@@ -378,8 +378,6 @@ export default {
 
 .employee_left {
     position: relative;
-    /* width: 950px; */
-    border-right: 1px solid #ccc;
     padding-right: 30px;
 }
 
