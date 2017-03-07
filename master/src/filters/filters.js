@@ -881,7 +881,7 @@ Vue.filter('offerAgain', function(val) { // 报价状态
 
 Vue.filter('Currency', function(val) { //订单货币方式
     var val = val;
-    if (val == 1 || val == 0) {
+    if (val == 1 || val === 0) {
         return 'CNY人民币';
     }
     if (val == 2) {
