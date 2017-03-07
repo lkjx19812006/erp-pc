@@ -59,6 +59,10 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==14">
       <orderhandle-model></orderHandle-model>
     </div>
+    <!-- 注册订单列表 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==15">
+      <register-order-list></register-order-list>
+    </div>
 </template>
 <script>
 import paymentRecord from '../components/order/paymentRecordList'
@@ -76,7 +80,7 @@ import myafterapplyModel from '../components/order/mySalesApply'
 import orgafterapplyModel from  '../components/order/orgSalesApply'
 import orderhandleModel from '../components/order/orderHandle'
 import ordersupplyList from '../components/order/intentionalOrder'
-
+import registerOrderList from '../components/order/registerOrderList'
 export default {
     components: {
         paymentRecord,
@@ -93,8 +97,8 @@ export default {
         orgafterapplyModel,
         myafterapplyModel,
         ordersupplyList,
-        orderhandleModel
-
+        orderhandleModel,
+        registerOrderList
     }
 }
 </script>

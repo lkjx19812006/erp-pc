@@ -18,7 +18,7 @@ export const login = ({ dispatch }, data) => { //登录
     console.log(body);
     Vue.http({
         method: 'POST',
-        url: apiUrl.orderList + '/employee/login',
+        url: apiUrl.orderList + data.link,
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -111,7 +111,6 @@ export const login = ({ dispatch }, data) => { //登录
             dispatch(types.LOGIN_DATA, loginInfo);
             dispatch(types.INIT_LIST, result);
             //本地存储左侧菜单
-            console.log(result.menus);
             for (var i in result.menus) {
                 result.menus[i].show = false;
             }
@@ -751,9 +750,72 @@ export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核
     })
 }
 
+export const getUserOrder = ({ dispatch }, param) => { //注册客户的订单列表
+    param.loading = true;
+    const body = {
+        page: param.cur,
+        pageSize: 15,
+    }
+    if (param.type) {
+        body.type = param.type;
+    }
+    if (param.mode) {
+        body.mode = param.mode;
+    }
+    if (param.orderStatus) {
+        body.orderStatus = param.orderStatus;
+    }
+    if (param.validate) {
+        body.validate = param.validate;
+    }
+    if (param.consignee) {
+        body.consignee = param.consignee;
+    }
+    if (param.consigneePhone) {
+        body.consigneePhone = param.consigneePhone;
+    }
+    if (param.endTime) {
+        body.endTime = param.endTime;
+    }
+    if (param.startTime) {
+        body.startTime = param.startTime;
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var orderList = res.json().result.list;
+        for (var i in orderList) {
+            orderList[i].checked = false;
+            orderList[i].show = false;
+        }
+        console.log('订单查询成功')
+        orderList.key = param.key;
+        dispatch(types.ORDER_TABLE, orderList);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+
+        localStorage.userOrderParam = JSON.stringify(param);
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(我的订单)列表
     console.log(param)
         //console.log(param.link)
+
     param.loading = true;
     const body = {
         employee: param.employee,
@@ -3502,7 +3564,6 @@ export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及�
 }
 
 export const getEmployeeDetail = ({ dispatch }, param) => { //员工列表以及搜索
-    console.log(param)
     param.loading = true;
     var apiurl = apiUrl.clientList + '/employee/' + param.id;
     Vue.http({
@@ -5671,7 +5732,6 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
         22: '西药生产商',
         23: '饮片厂'
     }
-    console.log(param);
     const updatedata = {
         id: param.id
     }

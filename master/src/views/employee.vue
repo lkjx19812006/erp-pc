@@ -121,11 +121,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in initEmployeeList">
+                        <tr v-for="item in initEmployeeList" @dblclick="quickLogin(item.no)">
                             <td @click.stop="">
                                 <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                             </td>
-                            <td class="underline" @click="clickOn({
+                            <td class="underline" @click.stop="clickOn({
                                 sub:$index,
                                 id:item.id,
                                 show:true,
@@ -263,7 +263,8 @@ import {
     getList,
     initEmployeeList,
     initOrgDetail,
-    initOrgList
+    initOrgList,
+    initLogin
 } from '../vuex/getters'
 import {
     getEmployeeList,
@@ -275,7 +276,8 @@ import {
     specDel,
     getOrgDetail,
     alterOrg,
-    transferManager
+    transferManager,
+    login
 } from '../vuex/actions'
 export default {
     components: {
@@ -354,6 +356,12 @@ export default {
                 orgId: '',
                 employeeId: '',
                 transferCustomer: '',
+            },
+            loginParam: {
+                loading: true,
+                no: '',
+                link: '/employee/loginWithoutPassword',
+                loginCallback: ''
             }
         }
     },
@@ -508,14 +516,37 @@ export default {
             this.getEmployeeList(this.loadParam);
             this.loadParam.id = this.loadParam.orgId;
             this.getOrgDetail(this.loadParam)
-        }
+        },
+        quickLogin: function(no) {
+            if (this.initLogin.no == "admin") { //只有登录的是系统管理员才能直接登录
+                //this.exit();
+                this.loginParam.no = no;
+                this.loginParam.loginCallback = this.loginCallback;
+                this.login(this.loginParam);
+            }
+        },
+        loginCallback: function() {
+            this.$route.router.go({
+                name: 'home'
+            });
+        },
+        exit: function() {
+            document.cookie = "no=;expires=";
+            document.cookie = "id=;expires=";
+            document.cookie = "orgId=;expires=";
+            document.cookie = "name=;expires=";
+            this.$route.router.go({
+                name: 'login'
+            });
+        },
     },
     vuex: {
         getters: {
             getList,
             initEmployeeList,
             initOrgList,
-            initOrgDetail
+            initOrgDetail,
+            initLogin
         },
         actions: {
             getEmployeeList,
@@ -527,7 +558,8 @@ export default {
             specDel,
             getOrgDetail,
             alterOrg,
-            transferManager
+            transferManager,
+            login
         }
     },
     events: {

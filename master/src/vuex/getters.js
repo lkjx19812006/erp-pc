@@ -40,13 +40,14 @@ export const getLinechart = (state) => {
 }
 
 export const getPiechart = (state) => {
-        const option = {
-            options: JSON.parse(JSON.stringify(state.echarts.PieChartOption)),
-            load: JSON.parse(JSON.stringify(state.echarts.PieChartLoading))
-        };
-        return option;
-    }
-    /*---待办事项---*/
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.PieChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.PieChartLoading))
+    };
+    return option;
+}
+
+/*---待办事项---*/
 export const initBacklogList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.backlogList));
 }
@@ -58,9 +59,13 @@ export const initFlowRecord = (state) => {
 }
 
 export const initUserType = (state) => {
-        return JSON.parse(JSON.stringify(state.table.basicBaseList.userTypeList));
-    }
-    /*---订单数据---*/
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.userTypeList));
+}
+
+/*---订单数据---*/
+export const initUserOrderlist = (state) => {
+    return parseJson(state.table.basicBaseList.userOrderList);
+}
 export const initMyOrderlist = (state) => {
     return parseJson(state.table.basicBaseList.myOrderList);
 }
