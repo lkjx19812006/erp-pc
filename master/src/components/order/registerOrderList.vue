@@ -92,7 +92,6 @@
                             <th>{{$t('static.consignee_name')}}</th>
                             <th>{{$t('static.consignee_phone')}}</th>
                             <th>{{$t('static.consignee_address')}}</th>
-                            <!-- <th>{{$t('static.payment_method')}}</th> -->
                             <th>{{$t('static.order_status')}}</th>
                             <th>{{$t('static.order_source')}}</th>
                             <th>{{$t('static.review_status')}}</th>
@@ -173,7 +172,6 @@ import {
     getUserOrder,
     getOrderDetail,
     transferOrder
-
 } from '../../vuex/actions'
 export default {
     components: {
@@ -283,7 +281,6 @@ export default {
         transferCallback: function(name) {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
-
         }
 
     },

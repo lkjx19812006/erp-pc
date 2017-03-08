@@ -39,6 +39,7 @@
                                         <option>Post Office-by Sea</option>
                                         <option>Post Office-by Air</option>
                                         <option>E-Post</option>
+                                        <option>Border Trade</option>
                                         <option>other</option>
                                     </select>
                                 </div>
@@ -102,8 +103,7 @@ export default {
     methods: {
         confirm: function() {
             this.param.show = false;
-            this.intlIntentionInquire
-(this.param);
+            this.intlIntentionInquire(this.param);
         },
 
     },
