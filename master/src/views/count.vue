@@ -23,6 +23,10 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==5">
         <allorder-count></allorder-count>
     </div>
+     <!-- 订单统计样式-->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==6">
+        <org-manage></org-manage>
+    </div>
 </template>
 <script>
 import personalCount from '../components/count/myCount'
@@ -31,6 +35,7 @@ import orderCount from '../components/count/myOrdercount'
 import orgorderCount from '../components/count/orgOrdercount'
 import allCount from '../components/count/allClientCount'
 import allorderCount from '../components/count/allOrderCount'
+import orgManage from '../components/count/orgManage'
 export default {
     components: {
         personalCount,
@@ -38,7 +43,8 @@ export default {
         orgorderCount,
         orderCount,
         allCount,
-        allorderCount
+        allorderCount,
+        orgManage
     }
 }
 </script>

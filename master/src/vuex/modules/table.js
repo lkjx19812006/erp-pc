@@ -125,8 +125,8 @@ import {
     CALL_COUNT_DATA,
     CALL_RECORD_VOICE_DATA,
     EMAIL_DATA,
-    EMAIL_COUNT
-
+    EMAIL_COUNT,
+    MY_ORG_COUNT
 } from '../mutation-types'
 
 
@@ -1128,7 +1128,8 @@ const state = {
     identify: {},
     trackingDetail: {},
     employeeDetail: {},
-    orgDetail: {}
+    orgDetail: {},
+    orgCount: {} //部门统计state
 }
 
 const mutations = {
@@ -2415,6 +2416,13 @@ const mutations = {
     },
     [EMAIL_COUNT](state, data) {
         state.basicBaseList.emailCount = data;
+    },
+
+    // 部门统计
+    [MY_ORG_COUNT](state, data) {
+        console.log(state.orgCount)
+        state.orgCount = data;
+        // console.log(data)
     }
 
 }

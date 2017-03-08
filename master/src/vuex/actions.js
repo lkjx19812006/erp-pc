@@ -6898,6 +6898,28 @@ export const getTimeOrderCount = ({ dispatch }, param) => { //我的订单统计
     })
 }
 
+
+/*---部门统计---*/
+export const getOrgCount = ({ dispatch }, param) => { 
+    var OrgUrl = apiUrl.clientList + '/report/order/all';
+    Vue.http({
+        method: 'GET',
+        url: OrgUrl,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var orgCount = res.json().result;
+        dispatch(types.MY_ORG_COUNT, orgCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
 export const getEmployeeCount = ({ dispatch }, param) => { //部门获取员工列表以及搜索
     param.loading = true;
     var apiurl = apiUrl.clientList + '/employee/?' + '&page=' + param.cur + '&pageSize=50';
