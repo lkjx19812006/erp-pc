@@ -142,7 +142,7 @@
                             <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                             <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
                             <td>
-                                <a @click="transferToEmployee(item)">划转</a>
+                                <a @click="transferToEmployee(item,$index)">划转</a>
                             </td>
                         </tr>
                     </tbody>
@@ -273,12 +273,14 @@ export default {
         },
 
         //订单划转到业务员
-        transferToEmployee: function(item) {
+        transferToEmployee: function(item,itemSub) {
             this.transferParam.id = item.id;
             this.transferParam.user = item.user;
             this.transferParam.employee = "";
             this.transferParam.callback = this.transferCallback;
             this.transferParam.show = true;
+            this.transferParam.itemSub = itemSub;
+            
         },
         transferCallback: function(name) {
             this.tipsParam.show = true;
