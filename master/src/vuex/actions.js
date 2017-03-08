@@ -1517,9 +1517,15 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if (param.prNo && param.prNo != '') {
         body.prNo = param.prNo;
     }
-    /*if(param.amount&&param.amount!=''){
+    if (param.amount && param.amount != '') {
         body.amount = param.amount;
-    }*/
+    }
+    if (param.country && param.country != '') {
+        body.payCountry = param.country;
+    }
+    if (param.amount == 0) {
+        body.amount = 0;
+    }
     if (param.description && param.description != '') {
         body.description = param.description;
     }
@@ -1547,6 +1553,7 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if (param.images) {
         body.images = param.images;
     }
+    console.log(body)
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.url,
@@ -6745,6 +6752,9 @@ export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交
     }
     if (param.timeType && param.timeType !== '') {
         url += "&timeType=" + param.timeType;
+    }
+    if (param.orderType && param.orderType !== '') {
+        url += "&orderType=" + param.orderType;
     }
     Vue.http({
         method: 'GET',

@@ -250,15 +250,15 @@
             <!-- 底部分页 -->
             <pagination :combination="loadParam" slot="page"></pagination>
         </mglist-model>
-        <div style="font-size:14px;">
-            <span style="margin-left:1%;color:red">总金额：{{initAllOrderStatis.totalSum | money}}元</span>
-            <span style="margin-left:1%;color:red">已支付金额：{{initAllOrderStatis.prepaidSum | money}}元</span>
-            <span style="margin-left:1%;color:red">未支付金额：{{initAllOrderStatis.unpaidSum | money}}元</span>
-            <span style="margin-left:1%;">成本总金额：{{initAllOrderStatis.costSum | money}}元</span>
-            <span style="margin-left:1%;">商品总金额：{{initAllOrderStatis.amountSum  | money}}元</span>
+        <div style="font-size:14px;white-space: normal">
+            <span style="margin-left:1%;color:red">总金额：{{initAllOrderStatis.totalSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;color:red">已支付金额：{{initAllOrderStatis.prepaidSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;color:red">未支付金额：{{initAllOrderStatis.unpaidSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;">成本总金额：{{initAllOrderStatis.costSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;">商品总金额：{{initAllOrderStatis.amountSum  | money}} {{initAllOrderStatis.currency | Currency}}</span>
             <span style="margin-left:1%;">订单数量：{{initAllOrderStatis.orderCount | money}}笔</span>
-            <span style="margin-left:1%;">特惠总金额：{{initAllOrderStatis.preferentialSum  | money}}元</span>
-            <span style="margin-left:1%;">杂费总金额：{{initAllOrderStatis.incidentalsSum | money}}元</span>
+            <span style="margin-left:1%;">特惠总金额：{{initAllOrderStatis.preferentialSum  | money}} {{initAllOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;">杂费总金额：{{initAllOrderStatis.incidentalsSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
         </div>
     </div>
 </template>

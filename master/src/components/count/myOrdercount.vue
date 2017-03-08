@@ -61,8 +61,10 @@
                         <th>成本</th>
                         <th>杂费</th>
                         <th>优惠</th>
-                        <th>已付</th>
-                        <th>应收</th>
+                        <th v-if="loadParam.orderType==0">已付</th>
+                        <th v-if="loadParam.orderType==0">未付</th>
+                        <th v-if="loadParam.orderType==1">已收</th>
+                        <th v-if="loadParam.orderType==1">应收</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,7 +73,7 @@
                     </tr>
                     <tr v-for="item in initOrderStatics.statisticsList">
                         <td>{{item.currency}}</td>
-                        <td>{{item.orderCount}}</td>
+                        <td>{{item.orderCount}}笔</td>
                         <td>{{item.amountSum}}</td>
                         <td>{{item.costSum}}</td>
                         <td>{{item.incidentalsSum}}</td>

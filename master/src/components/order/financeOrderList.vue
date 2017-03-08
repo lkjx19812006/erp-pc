@@ -67,6 +67,7 @@
                             <th>{{$t('static.type')}}</th>
                             <th>{{$t('static.order_amount')}}</th>
                             <th>{{$t('static.currency')}}</th>
+                            <th>{{$t('static.country')}}</th>
                             <th>{{$t('static.payment_name')}}</th>
                             <th>{{$t('static.salesman')}}</th>
                             <th>{{$t('static.userName')}}</th>
@@ -84,22 +85,23 @@
                             <td>{{item.ctime}}</td>
                             <td>
                                 <a v-if="this.language=='zh_CN'" @click="clickOn({
-                      sub:$index,
-                      id:item.id,
-                      loading:true,
-                      show:true,
-                      key:'fundRecord'
-                    })">{{item.bizType | bizType item.bizType item.type}}</a>
+                                      sub:$index,
+                                      id:item.id,
+                                      loading:true,
+                                      show:true,
+                                      key:'fundRecord'
+                                    })">{{item.bizType | bizType item.bizType item.type}}</a>
                                 <a v-if="this.language=='en'" @click="clickOn({
-                      sub:$index,
-                      id:item.id,
-                      loading:true,
-                      show:true,
-                      key:'fundRecord'
-                    })">{{item.bizType | enbizType item.bizType item.type}}</a>
+                                      sub:$index,
+                                      id:item.id,
+                                      loading:true,
+                                      show:true,
+                                      key:'fundRecord'
+                                    })">{{item.bizType | enbizType item.bizType item.type}}</a>
                             </td>
                             <td>{{item.amount}}</td>
                             <td>{{item.currency | Currency}}</td>
+                            <td>{{item.payCountryName}}</td>
                             <td>{{item.payName}}<span v-if="item.paySubName!==''">（{{item.paySubName}}）</span></td>
                             <td>{{item.employeeName}}</td>
                             <td>{{item.payUserName}}</td>
@@ -343,7 +345,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 122px;
-    min-width: 120px;
+    width: 114px;
+    min-width: 113px;
 }
 </style>

@@ -15,52 +15,89 @@
                     <!-- 申请分期 -->
                     <section class="editsection clearfix" v-cloak v-if="param.titles==this.$t('static.review_application')">
                         <div class="editpage-input col-md-6">
-                            <label class="editlabel">{{$t('static.payment_method')}} <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
-                            <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
-                            <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
-                                <option value="2">{{$t('static.pingan')}}</option>
-                                <option value="0">{{$t('static.offline')}}</option>
-                                <option value="1">{{$t('static.alipay')}}</option>
-                                <option value="4">WeChat</option>
-                                <option value="3">{{$t('static.yaokuan')}}</option>
-                            </select>
-                        </div>
-                        <div class="editpage-input col-md-6" v-if="param.payWay!=2">
-                            <label class="editlabel">{{$t('static.name')}} <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
-                            <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
-                            <select class="form-control edit-input" v-model="param.payName">
-                                <option>{{$t('static.offline')}}</option>
-                                <option>{{$t('static.alipay')}}</option>
-                                <option>Wechat</option>
-                                <option>{{$t('static.yaokuan')}}</option>
-                            </select>
-                        </div>
-                        <div class="editpage-input col-md-6" v-if="param.payWay==2">
-                            <label class="editlabel">{{$t('static.bank_name')}} <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
-                            <input type="text" v-validate:payname="{required:true}" v-show="false" v-model="payName.name" class="form-control edit-input" />
-                            <div class="form-control edit-input" style="padding:0;border:none">
-                                <v-select :debounce="250" :value.sync="payName" :on-change="selectProvince" :options="initBankList" placeholder="银行名称" label="name">
+                            <label class="editlabel">{{$t('static.country')}} <span class="system_danger" v-if="$validation.country.required">{{$t('static.required')}}</span></label>
+                            <input type="text" v-validate:country="{required:true}" v-show="false" v-model="param.country" class="form-control edit-input" />
+                            <div type="text" class="edit-input">
+                                <v-select :debounce="250" :value.sync="country" :on-change="clickCountry" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
                                 </v-select>
                             </div>
-                            <!-- <select class="form-control edit-input" v-model="param.payName">
-                            <option v-for="item in initBankList">{{item.name}}</option>
-                       </select> -->
                         </div>
-                        <div class="editpage-input col-md-6" v-if="param.payWay==2">
-                            <label class="editlabel">{{$t('static.paid_branch')}}</label>
-                            <input type="text" v-model="param.paySubName" v-if="payName.name==''" disabled="true" class="form-control edit-input" placeholder="请先选择一个银行" />
-                            <input type="text" v-model="param.paySubName" v-if="payName.name!==''" class="form-control edit-input" @click="branch({
-                          show:true,
-                          name:this.payName.name
-                        })" />
+                        <!-- 判断是否国际 -->
+                        <div v-if="param.country==7">
+                            <div class="editpage-input col-md-6">
+                                <label class="editlabel">{{$t('static.payment_method')}} <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
+                                <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
+                                    <option value="2">{{$t('static.pingan')}}</option>
+                                    <option value="0">{{$t('static.offline')}}</option>
+                                    <option value="1">{{$t('static.alipay')}}</option>
+                                    <option value="4">WeChat</option>
+                                    <option value="3">{{$t('static.yaokuan')}}</option>
+                                </select>
+                            </div>
+                            <div class="editpage-input col-md-6" v-if="param.payWay!=2">
+                                <label class="editlabel">{{$t('static.name')}} <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
+                                <select class="form-control edit-input" v-model="param.payName">
+                                    <option>{{$t('static.offline')}}</option>
+                                    <option>{{$t('static.alipay')}}</option>
+                                    <option>Wechat</option>
+                                    <option>{{$t('static.yaokuan')}}</option>
+                                </select>
+                            </div>
+                            <div class="editpage-input col-md-6" v-if="param.payWay==2">
+                                <label class="editlabel">{{$t('static.bank_name')}} <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:payname="{required:true}" v-show="false" v-model="payName.name" class="form-control edit-input" />
+                                <div class="form-control edit-input" style="padding:0;border:none">
+                                    <v-select :debounce="250" :value.sync="payName" :on-change="selectProvince" :options="initBankList" placeholder="银行名称" label="name">
+                                    </v-select>
+                                </div>
+                                <!-- <select class="form-control edit-input" v-model="param.payName">
+                                    <option v-for="item in initBankList">{{item.name}}</option>
+                               </select> -->
+                            </div>
+                            <div class="editpage-input col-md-6" v-if="param.payWay==2">
+                                <label class="editlabel">{{$t('static.paid_branch')}}</label>
+                                <input type="text" v-model="param.paySubName" v-if="payName.name==''" disabled="true" class="form-control edit-input" placeholder="请先选择一个银行" />
+                                <input type="text" v-model="param.paySubName" v-if="payName.name!==''" class="form-control edit-input" @click="branch({
+                              show:true,
+                              name:this.payName.name
+                            })" />
+                            </div>
+                            <div class="editpage-input col-md-6">
+                                <label class="editlabel">{{$t('static.userName')}} <span class="system_danger" v-if="$validation.payuser.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-model="param.payUserName" v-validate:payuser="['required']" class="form-control edit-input" />
+                            </div>
+                            <div class="editpage-input col-md-6">
+                                <label class="editlabel">{{$t('static.account')}} <span class="system_danger" v-if="$validation.paynumber.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-model="param.payNumber" class="form-control edit-input" v-validate:paynumber="['required']" />
+                            </div>
                         </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">{{$t('static.userName')}} <span class="system_danger" v-if="$validation.payuser.required">{{$t('static.required')}}</span></label>
-                            <input type="text" v-model="param.payUserName" v-validate:payuser="['required']" class="form-control edit-input" />
-                        </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">{{$t('static.account')}} <span class="system_danger" v-if="$validation.paynumber.required">{{$t('static.required')}}</span></label>
-                            <input type="text" v-model="param.payNumber" class="form-control edit-input" v-validate:paynumber="['required']" />
+                        <div v-if="param.country!==7">
+                            <div class="editpage-input col-md-6">
+                                <label class="editlabel">{{$t('static.payment_method')}} <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
+                                <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
+                                    <option value="2">{{$t('static.pingan')}}</option>
+                                    <option value="5">PayPal</option>
+                                </select>
+                            </div>
+                            <div class="editpage-input col-md-6" v-show="false">
+                                <label class="editlabel">{{$t('static.name')}} <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
+                                <select class="form-control edit-input" v-model="param.payName">
+                                    <option>{{$t('static.pingan')}}</option>
+                                    <option>PayPal</option>
+                                </select>
+                            </div>
+                            <div class="editpage-input col-md-6">
+                                <label class="editlabel">{{$t('static.pattern')}} <span class="system_danger" v-if="$validation.pi.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:pi="{required:true}" v-model="param.payNumber" class="form-control edit-input" />
+                            </div>
+                            <div class="editpage-input col-md-6">
+                                <label class="editlabel">{{$t('static.total_money')}} <span class="system_danger" v-if="$validation.amount.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:amount="{required:true}" v-model="param.amount" class="form-control edit-input" />
+                            </div>
                         </div>
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.currency')}}</label>
@@ -80,48 +117,85 @@
                     <!-- 重新申请审核 -->
                     <section class="editsection clearfix" v-cloak v-if="param.titles=='重新申请审核'||param.titles=='重新申请支付'">
                         <div class="editpage-input col-md-6">
-                            <label class="editlabel">{{$t('static.payment_method')}} <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
-                            <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
-                            <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
-                                <option value="2">{{$t('static.pingan')}}</option>
-                                <option value="0">{{$t('static.offline')}}</option>
-                                <option value="1">{{$t('static.alipay')}}</option>
-                                <option value="4">WeChat</option>
-                                <option value="3">{{$t('static.yaokuan')}}</option>
-                            </select>
+                            <label class="editlabel">{{$t('static.country')}} <span class="system_danger" v-if="$validation.country.required">{{$t('static.required')}}</span></label>
+                            <input type="text" v-validate:country="{required:true}" v-show="false" v-model="param.country" class="form-control edit-input" />
+                            <div type="text" class="edit-input">
+                                <v-select :debounce="250" :value.sync="country" :on-change="clickCountry" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
+                                </v-select>
+                            </div>
                         </div>
-                        <div class="editpage-input col-md-6" v-if="param.payWay!=2">
-                            <label class="editlabel">{{$t('static.name')}} <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
-                            <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
-                            <select class="form-control edit-input" v-model="param.payName">
-                                <option>{{$t('static.offline')}}</option>
-                                <option>{{$t('static.alipay')}}</option>
-                                <option>Wechat</option>
-                                <option>{{$t('static.yaokuan')}}</option>
-                            </select>
-                        </div>
-                        <div class="editpage-input col-md-6" v-if="param.payWay==2">
-                            <label class="editlabel">{{$t('static.bank_name')}} <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
-                            <input type="text" v-validate:payname="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
-                            <select class="form-control edit-input" v-model="param.payName">
-                                <option v-for="item in initBankList">{{item.name}}</option>
-                            </select>
-                        </div>
-                        <div class="editpage-input col-md-6" v-if="param.payWay==2">
-                            <label class="editlabel">{{$t('static.paid_branch')}}</label>
-                            <!-- <select class="form-control edit-input" v-model="initMyFundList[initMyFundList.length-1].paySubName"> -->
-                            <input type="text" v-model="param.paySubName" class="form-control edit-input" @click="branch({
+                        <!-- 判断是否国际 -->
+                        <div v-if="param.country==7">
+                            <div class="editpage-input col-md-6">
+                                <label class="editlabel">{{$t('static.payment_method')}} <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
+                                <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
+                                    <option value="2">{{$t('static.pingan')}}</option>
+                                    <option value="0">{{$t('static.offline')}}</option>
+                                    <option value="1">{{$t('static.alipay')}}</option>
+                                    <option value="4">WeChat</option>
+                                    <option value="3">{{$t('static.yaokuan')}}</option>
+                                </select>
+                            </div>
+                            <div class="editpage-input col-md-6" v-if="param.payWay!=2">
+                                <label class="editlabel">{{$t('static.name')}} <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
+                                <select class="form-control edit-input" v-model="param.payName">
+                                    <option>{{$t('static.offline')}}</option>
+                                    <option>{{$t('static.alipay')}}</option>
+                                    <option>Wechat</option>
+                                    <option>{{$t('static.yaokuan')}}</option>
+                                </select>
+                            </div>
+                            <div class="editpage-input col-md-6" v-if="param.payWay==2">
+                                <label class="editlabel">{{$t('static.bank_name')}} <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:payname="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
+                                <select class="form-control edit-input" v-model="param.payName">
+                                    <option v-for="item in initBankList">{{item.name}}</option>
+                                </select>
+                            </div>
+                            <div class="editpage-input col-md-6" v-if="param.payWay==2">
+                                <label class="editlabel">{{$t('static.paid_branch')}}</label>
+                                <!-- <select class="form-control edit-input" v-model="initMyFundList[initMyFundList.length-1].paySubName"> -->
+                                <input type="text" v-model="param.paySubName" class="form-control edit-input" @click="branch({
                             show:true,
                             name:this.param.payName
                           })" />
+                            </div>
+                            <div class="editpage-input col-md-6">
+                                <label class="editlabel">{{$t('static.userName')}} <span class="system_danger" v-if="$validation.payuser.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-model="param.payUserName" v-validate:payuser="['required']" class="form-control edit-input" />
+                            </div>
+                            <div class="editpage-input col-md-6">
+                                <label class="editlabel">{{$t('static.account')}} <span class="system_danger" v-if="$validation.paynumber.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-model="param.payNumber" class="form-control edit-input" v-validate:paynumber="['required']" />
+                            </div>
                         </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">{{$t('static.userName')}} <span class="system_danger" v-if="$validation.payuser.required">{{$t('static.required')}}</span></label>
-                            <input type="text" v-model="param.payUserName" v-validate:payuser="['required']" class="form-control edit-input" />
-                        </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">{{$t('static.account')}} <span class="system_danger" v-if="$validation.paynumber.required">{{$t('static.required')}}</span></label>
-                            <input type="text" v-model="param.payNumber" class="form-control edit-input" v-validate:paynumber="['required']" />
+                        <div v-if="param.country!==7">
+                            <div class="editpage-input col-md-6">
+                                <label class="editlabel">{{$t('static.payment_method')}} <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
+                                <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
+                                    <option value="2">{{$t('static.pingan')}}</option>
+                                    <option value="5">PayPal</option>
+                                </select>
+                            </div>
+                            <div class="editpage-input col-md-6" v-show="false">
+                                <label class="editlabel">{{$t('static.name')}} <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
+                                <select class="form-control edit-input" v-model="param.payName">
+                                    <option>{{$t('static.pingan')}}</option>
+                                    <option>PayPal</option>
+                                </select>
+                            </div>
+                            <div class="editpage-input col-md-6">
+                                <label class="editlabel">{{$t('static.pattern')}} <span class="system_danger" v-if="$validation.pi.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:pi="{required:true}" v-model="param.payNumber" class="form-control edit-input" />
+                            </div>
+                            <div class="editpage-input col-md-6">
+                                <label class="editlabel">{{$t('static.total_money')}} <span class="system_danger" v-if="$validation.amount.required">{{$t('static.required')}}</span></label>
+                                <input type="text" v-validate:amount="{required:true}" v-model="param.amount" class="form-control edit-input" />
+                            </div>
                         </div>
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.currency')}}</label>
@@ -229,6 +303,7 @@ import bankModel from './bankBranch'
 import {
     initMyFundList,
     initBankList,
+    initCountrylist,
     initBankBranchList,
     initCurrencylist
 } from '../../../vuex/getters'
@@ -237,6 +312,7 @@ import {
     getBankList,
     getBankBranchList,
     getCurrencyList,
+    getCountryList,
     orderApplySend
 } from '../../../vuex/actions'
 export default {
@@ -250,12 +326,14 @@ export default {
         getters: {
             initMyFundList,
             initBankList,
+            initCountrylist,
             initBankBranchList,
             initCurrencylist
         },
         actions: {
             getMyFundList,
             getBankList,
+            getCountryList,
             getCurrencyList,
             getBankBranchList,
             orderApplySend
@@ -276,6 +354,11 @@ export default {
                 bizSubId: this.param.bizSubId,
                 bizId: this.param.bizId,
                 total: 0
+            },
+            country: {
+                cname: '',
+                nameEn: '',
+                cnameEn: ''
             },
             resetCheckParam: {
                 amount: '',
@@ -307,6 +390,11 @@ export default {
     },
 
     methods: {
+        clickCountry: function() {
+            this.param.country = this.country.id;
+            console.log(this.param.country)
+            console.log(this.country.cnameEn)
+        },
         branch: function(item) {
             this.branchParam.show = true;
             this.branchParam = item;
@@ -325,15 +413,21 @@ export default {
             } else if (this.param.payWay == 4) {
                 this.param.payName = 'Wechat';
                 this.param.paySubName = "";
+            } else if (this.param.payWay == 5) {
+                this.param.payName = 'PayPal';
+                this.param.paySubName = "";
+            } else if (this.param.payWay == 2 && this.param.country !== 7) {
+                this.param.payName = this.$t('static.pingan');
+                this.param.paySubName = "";
             }
         },
-        confirm:function(item){
-          this.param.show=false;
-          if(this.payName.name){
-            this.param.payName=this.payName.name;
-          }
-          console.log(this.param);
-          this.param.link(this.param);
+        confirm: function(item) {
+            this.param.show = false;
+            if (this.payName.name) {
+                this.param.payName = this.payName.name;
+            }
+            console.log(this.param);
+            this.param.link(this.param);
         },
         confirmReset: function(item) {
             console.log(item)
@@ -368,7 +462,8 @@ export default {
     },
     created() {
         this.getCurrencyList(this.loadParam);
-        console.log(this.param.titles)
+        this.getCountryList(this.loadParam)
+        console.log(this.param.country)
         this.getBankList(this.payName);
         if (this.param.payName && this.param.titles == '申请分期审核') {
             this.payName.name = this.param.payName;

@@ -34,20 +34,20 @@
                                         <mg-label :title="$t('static.order_no')">{{initOrderDetail.no}}</mg-label>
                                         <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link==''">{{$t('static.sell')}}</mg-label>
                                         <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link!==''">{{$t('static.sell')}}<a slot="" @click="linkDetail({
-                                    show:true,
-                                    id:initOrderDetail.link,
-                                    loading:true,
-                                    key:'orderDetail',
-                                    contact:'/order/myList'
-                                    })">（{{$t('static.purchase')}}{{$t('static.details')}}）</a></mg-label>
+                                            show:true,
+                                            id:initOrderDetail.link,
+                                            loading:true,
+                                            key:'orderDetail',
+                                            contact:'/order/myList'
+                                            })">（{{$t('static.purchase')}}{{$t('static.details')}}）</a></mg-label>
                                         <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link==''">{{$t('static.purchase')}}</mg-label>
                                         <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link!==''">{{$t('static.purchase')}}<a slot="" @click="linkDetail({
-                                    show:true,
-                                    id:initOrderDetail.link,
-                                    loading:true,
-                                    key:'orderDetail',
-                                    contact:'/order/myList'
-                                    })">（{{$t('static.sell')}}{{$t('static.details')}}）</a></mg-label>
+                                            show:true,
+                                            id:initOrderDetail.link,
+                                            loading:true,
+                                            key:'orderDetail',
+                                            contact:'/order/myList'
+                                            })">（{{$t('static.sell')}}{{$t('static.details')}}）</a></mg-label>
                                         <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
                                         <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
                                         <mg-label :title="$t('static.consignee_phone')">{{initOrderDetail.consigneePhone}}</mg-label>
@@ -73,7 +73,7 @@
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" >
                                         {{$t('static.commodity_order')}}（{{initOrderDetail.goods.arr.length}}）
                                       </a>
-                                      <span class="pull-right" style="color:#000;line-height:27px;font-size: 13px;">{{$t('static.breed')}}{{$t('static.total')}}：{{initOrderDetail.goods.total}}元</span>
+                                      <span class="pull-right" style="color:#000;line-height:27px;font-size: 13px;">{{$t('static.breed')}}{{$t('static.total')}}：{{initOrderDetail.goods.total}} {{initOrderDetail.currency | Currency}}</span>
                                   </h4>
                                     </div>
                                     <div class="panel-collapse" v-if="initOrderDetail.goods.arr.length!==null" v-show="initOrderDetail.goods.show">
@@ -97,10 +97,10 @@
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.quality}}</td>
-                                                        <td>{{item.price}}元/{{item.unit | Unit}}</td>
-                                                        <td>{{item.costPrice}}元/{{item.unit | Unit}}</td>
+                                                        <td>{{item.price}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
+                                                        <td>{{item.costPrice}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
                                                         <td>{{item.cost}}</td>
-                                                        <td>{{item.amount}}元</td>
+                                                        <td>{{item.amount}} （{{initOrderDetail.currency | Currency}}）</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -125,8 +125,8 @@
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.quality}}</td>
-                                                        <td>{{item.price}}元/{{item.unit | Unit}}</td>
-                                                        <td>{{item.amount}}元</td>
+                                                        <td>{{item.price}}（{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
+                                                        <td>{{item.amount}}（{{initOrderDetail.currency | Currency}}）</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -169,100 +169,106 @@
                                                     <tr v-for="item in initOrderDetail.stages.arr">
                                                         <td v-if="item.type==0">{{$t('static.paid')}}</td>
                                                         <td v-if="item.type==1">{{$t('static.income')}}</td>
-                                                        <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{$t('static.immediately_pay')}}（{{$t('static.order_amount')}} {{item.ratio | advanced}}）</td>
-                                                        <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{$t('static.immediately_pay')}} {{$t('static.ins')}} {{item.extra}} {{$t('static.day')}}（{{$t('static.order_amount')}} {{item.ratio | advanced}}）</td>
+                                                        <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}}（{{$t('static.order_amount')}} {{item.ratio | advanced}}）</td>
+                                                        <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}} {{$t('static.ins')}} {{item.extra}} {{$t('static.day')}}（{{$t('static.order_amount')}} {{item.ratio | advanced}}）</td>
                                                         <td>{{item.comment}}</td>
                                                         <td v-if="item.validate==0" style="color:#91a0ff;cursor:pointer" @click="apply_Record({
-                                                  sub:$index,
-                                                  show:true,
-                                                  loading:false,
-                                                  type:item.type,
-                                                  bizType:'order',
-                                                  bizId:item.orderId,
-                                                  bizSubId:item.id,
-                                                  url:'/fund/requestRecord'
-                                                  })">{{$t('static.notpayment')}}</td>
+                                                              sub:$index,
+                                                              show:true,
+                                                              loading:false,
+                                                              type:item.type,
+                                                              bizType:'order',
+                                                              bizId:item.orderId,
+                                                              bizSubId:item.id,
+                                                              url:'/fund/requestRecord'
+                                                              })">{{$t('static.notpayment')}}</td>
                                                         <td v-if="item.validate==1" style="color:#91a0ff;cursor:pointer" @click="apply_Record({
-                                                  sub:$index,
-                                                  show:true,
-                                                  loading:false,
-                                                  type:item.type,
-                                                  bizType:'order',
-                                                  bizId:item.orderId,
-                                                  bizSubId:item.id,
-                                                  url:'/fund/requestRecord'
-                                                  })">{{$t('static.applypayment')}}</td>
+                                                              sub:$index,
+                                                              show:true,
+                                                              loading:false,
+                                                              type:item.type,
+                                                              bizType:'order',
+                                                              bizId:item.orderId,
+                                                              bizSubId:item.id,
+                                                              url:'/fund/requestRecord'
+                                                              })">{{$t('static.applypayment')}}</td>
                                                         <td v-if="item.validate==2" style="color:green;cursor:pointer" @click="apply_Record({
-                                                  sub:$index,
-                                                  show:true,
-                                                  loading:false,
-                                                  type:item.type,
-                                                  bizType:'order',
-                                                  bizId:item.orderId,
-                                                  bizSubId:item.id,
-                                                  url:'/fund/requestRecord'
-                                                  })">{{$t('static.yetpayment')}}</td>
+                                                              sub:$index,
+                                                              show:true,
+                                                              loading:false,
+                                                              type:item.type,
+                                                              bizType:'order',
+                                                              bizId:item.orderId,
+                                                              bizSubId:item.id,
+                                                              url:'/fund/requestRecord'
+                                                              })">{{$t('static.yetpayment')}}</td>
                                                         <td v-if="item.validate==3" style="color:red;cursor:pointer" @click="apply_Record({
-                                                  sub:$index,
-                                                  show:true,
-                                                  loading:false,
-                                                  type:item.type,
-                                                  bizType:'order',
-                                                  bizId:item.orderId,
-                                                  bizSubId:item.id,
-                                                  url:'/fund/requestRecord'
-                                                  })">{{$t('static.unapproved')}}</td>
+                                                              sub:$index,
+                                                              show:true,
+                                                              loading:false,
+                                                              type:item.type,
+                                                              bizType:'order',
+                                                              bizId:item.orderId,
+                                                              bizSubId:item.id,
+                                                              url:'/fund/requestRecord'
+                                                              })">{{$t('static.unapproved')}}</td>
                                                         <td>{{item.comment}}</td>
                                                         <td>{{item.ctime}}</td>
                                                         <td v-if="param.contact=='/order/myList'">
+                                                            <!-- 申请收款 -->
                                                             <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==1&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
-                                                          show:true,
-                                                          sub:$index,
-                                                          bizId:item.orderId,
-                                                          bizSubId:item.id,
-                                                          validate:item.validate,
-                                                          type:item.type,
-                                                          payWay:'',
-                                                          payName:'',
-                                                          currency:initOrderDetail.currency,
-                                                          paySubName:'',
-                                                          payUserName:'',
-                                                          extra:item.extra,
-                                                          payNumber:'',
-                                                          comment:'',
-                                                          image_f:'',
-                                                          image_s:'',
-                                                          image_t:'',
-                                                          images:'',
-                                                          url:'/fund/createByOrderStages',
-                                                          titles:this.$t('static.review_application'),
-                                                          link:paymentAudit
-                                                      })"> {{$t('static.review_application')}}
+                                                                  show:true,
+                                                                  sub:$index,
+                                                                  bizId:item.orderId,
+                                                                  bizSubId:item.id,
+                                                                  validate:item.validate,
+                                                                  type:item.type,
+                                                                  payWay:'',
+                                                                  payName:'',
+                                                                  currency:initOrderDetail.currency,
+                                                                  paySubName:'',
+                                                                  payUserName:'',
+                                                                  extra:item.extra,
+                                                                  payNumber:'',
+                                                                  amount:item.amount,
+                                                                  country:initOrderDetail.country,
+                                                                  comment:'',
+                                                                  image_f:'',
+                                                                  image_s:'',
+                                                                  image_t:'',
+                                                                  images:'',
+                                                                  url:'/fund/createByOrderStages',
+                                                                  titles:this.$t('static.review_application'),
+                                                                  link:paymentAudit
+                                                                  })"> {{$t('static.review_application')}}
                                                             </button>
-                                                            <!-- 申请审核按钮 -->
-                                                            <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="    applyInfo({
-                                                                              show:true,
-                                                                              sub:$index,
-                                                                              bizId:item.orderId,
-                                                                              bizSubId:item.id,
-                                                                              validate:item.validate,
-                                                                              type:item.type,
-                                                                              payWay:'',
-                                                                              payName:'',
-                                                                              paySubName:'',
-                                                                              currency:initOrderDetail.currency,
-                                                                              payUserName:'',
-                                                                              payNumber:'',
-                                                                              comment:'',
-                                                                              image_f:'',
-                                                                              image_s:'',
-                                                                              image_t:'',
-                                                                              images:'',
-                                                                              url:'/fund/createByOrderStages',
-                                                                              titles:this.$t('static.review_application'),
-                                                                              link:paymentAudit
-                                                                            })">
-                                                            {{$t('static.apply_payment')}}</button></a>
+                                                            <!-- 申请付款 -->
+                                                            <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
+                                                                  show:true,
+                                                                  sub:$index,
+                                                                  bizId:item.orderId,
+                                                                  bizSubId:item.id,
+                                                                  validate:item.validate,
+                                                                  type:item.type,
+                                                                  payWay:'',
+                                                                  payName:'',
+                                                                  paySubName:'',
+                                                                  currency:initOrderDetail.currency,
+                                                                  amount:item.amount,
+                                                                  country:initOrderDetail.country,
+                                                                  payUserName:'',
+                                                                  payNumber:'',
+                                                                  comment:'',
+                                                                  image_f:'',
+                                                                  image_s:'',
+                                                                  image_t:'',
+                                                                  images:'',
+                                                                  url:'/fund/createByOrderStages',
+                                                                  titles:this.$t('static.review_application'),
+                                                                  link:paymentAudit
+                                                                })">
+                                                                {{$t('static.apply_payment')}}</button>
+                                                            </a>
                                                             <!-- 申请付款 -->
                                                             <!-- <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==1&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                                   show:true,
@@ -287,50 +293,54 @@
                                                                   link:paymentAudit
                                                                 })">{{$t('static.apply_payment')}}</button> -->
                                                             <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
-                                                          show:true,
-                                                          sub:$index,
-                                                          bizId:item.orderId,
-                                                          bizSubId:item.id,
-                                                          loading:false,
-                                                          cur:1,
-                                                          type:item.type,
-                                                          validate:item.validate,
-                                                          payWay:'',
-                                                          currency:1,
-                                                          payName:'',
-                                                          paySubName:'',
-                                                          payUserName:'',
-                                                          payNumber:'',
-                                                          comment:'',
-                                                          images:'',
-                                                          url:'/fund/createByOrderStages',
-                                                          titles:'重新申请支付',
-                                                          link:paymentAudit
-                                                      })">{{$t('static.reapply')}}</button>
+                                                                  show:true,
+                                                                  sub:$index,
+                                                                  bizId:item.orderId,
+                                                                  bizSubId:item.id,
+                                                                  loading:false,
+                                                                  cur:1,
+                                                                  type:item.type,
+                                                                  validate:item.validate,
+                                                                  payWay:'',
+                                                                  currency:initOrderDetail.currency,
+                                                                  amount:item.amount,
+                                                                  country:initOrderDetail.country,
+                                                                  payName:'',
+                                                                  paySubName:'',
+                                                                  payUserName:'',
+                                                                  payNumber:'',
+                                                                  comment:'',
+                                                                  images:'',
+                                                                  url:'/fund/createByOrderStages',
+                                                                  titles:'重新申请支付',
+                                                                  link:paymentAudit
+                                                              })">{{$t('static.reapply')}}</button>
                                                             <a class="operate" v-if="item.type==1&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
-                                                          show:true,
-                                                          sub:$index,
-                                                          bizId:item.orderId,
-                                                          bizSubId:item.id,
-                                                          loading:false,
-                                                          cur:1,
-                                                          currency:1,
-                                                          type:item.type,
-                                                          validate:item.validate,
-                                                          payWay:'',
-                                                          payName:'',
-                                                          paySubName:'',
-                                                          payUserName:'',
-                                                          payNumber:'',
-                                                          comment:'',
-                                                          image_f:'',
-                                                          image_s:'',
-                                                          image_t:'',
-                                                          images:'',
-                                                          url:'/fund/createByOrderStages',
-                                                          titles:'重新申请审核',
-                                                          link:paymentAudit
-                                                      })">
+                                                                      show:true,
+                                                                      sub:$index,
+                                                                      bizId:item.orderId,
+                                                                      bizSubId:item.id,
+                                                                      loading:false,
+                                                                      cur:1,
+                                                                      currency:initOrderDetail.currency,
+                                                                      amount:item.amount,
+                                                                       country:initOrderDetail.country,
+                                                                      type:item.type,
+                                                                      validate:item.validate,
+                                                                      payWay:'',
+                                                                      payName:'',
+                                                                      paySubName:'',
+                                                                      payUserName:'',
+                                                                      payNumber:'',
+                                                                      comment:'',
+                                                                      image_f:'',
+                                                                      image_s:'',
+                                                                      image_t:'',
+                                                                      images:'',
+                                                                      url:'/fund/createByOrderStages',
+                                                                      titles:'重新申请审核',
+                                                                      link:paymentAudit
+                                                                  })">
                                                                 <img src="/static/images/reset.png" style="width:47px" />
                                                             </a>
                                                         </td>
@@ -712,7 +722,7 @@ export default {
             console.log(item)
             this.auditParam = item;
             this.auditParam.callback = this.callback;
-            if (item.titles == '重新申请审核'||item.titles == '重新申请支付') {
+            if (item.titles == '重新申请审核' || item.titles == '重新申请支付') {
                 this.getMyFundList(item);
                 if (this.initMyFundList != '' && this.initMyFundList[0]) {
                     console.log(this.initMyFundList[0])
