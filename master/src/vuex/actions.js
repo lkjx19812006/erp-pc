@@ -818,6 +818,8 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
         userId: param.user,
         employee: param.employee
     }
+    console.log(param)
+    dispatch(types.ORDER_TABLE, param);
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
@@ -832,7 +834,6 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
         param.callback(res.json().result);
     }, (res) => {
         console.log('fail');
-
     })
 }
 
