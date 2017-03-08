@@ -830,13 +830,7 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        /*var orderList = res.json().result.list;
-
-dispatch(types.ORDER_TABLE, orderList);
-param.all = res.json().result.pages;
-param.total = res.json().result.total;
-*/
-
+        param.callback(res.json().result);
         console.log('success');
 
     }, (res) => {

@@ -3,6 +3,7 @@
         <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
         <search-model :param="loadParam" v-if="loadParam.show"></search-model>
         <employee-model :param="transferParam" v-if="transferParam.show"></employee-model>
+        <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <language-model v-show="false"></language-model>
         <mglist-model>
             <!-- 头部搜索 -->
@@ -16,22 +17,6 @@
                                     <option value="">{{$t('static.please_select')}}</option>
                                     <option value="0">{{$t('static.purchase')}}</option>
                                     <option value="1">{{$t('static.sell')}}</option>
-                                </select>
-                            </dd>
-                        </dl>
-                        <dl class="clear left transfer">
-                            <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
-                            <dd class="left">
-                                <select v-model="loadParam.orderStatus" class="form-control" @change="selectSearch()">
-                                    <option value="">{{$t('static.please_select')}}</option>
-                                    <option value="0">{{$t('static.create_order')}}</option>
-                                    <option value="10">{{$t('static.order_procing')}}</option>
-                                    <option value="20">{{$t('static.waiting_order')}}</option>
-                                    <option value="30">{{$t('static.awaiting_review')}}</option>
-                                    <option value="40">{{$t('static.wait_ship')}}</option>
-                                    <option value="50">{{$t('static.wait_receipt')}}</option>
-                                    <option value="60">{{$t('static.awaiting_comment')}}</option>
-                                    <option value="70">{{$t('static.order_over')}}</option>
                                 </select>
                             </dd>
                         </dl>
@@ -63,18 +48,6 @@
                                     <option value="1">{{$t('static.together')}}</option>
                                     <option value="2">{{$t('static.three_side')}}</option>
                                     <option value="3">{{$t('static.self_support')}}</option>
-                                </select>
-                            </dd>
-                        </dl>
-                        <dl class="clear left transfer">
-                            <dt class="left transfer marg_top">{{$t('static.review_status')}}：</dt>
-                            <dd class="left">
-                                <select class="form-control" v-model="loadParam.validate" @change="selectSearch()">
-                                    <option value="">{{$t('static.please_select')}}</option>
-                                    <option value="0">{{$t('static.wait_approval')}}</option>
-                                    <option value="1">{{$t('static.approving')}}</option>
-                                    <option value="2">{{$t('static.approved')}}</option>
-                                    <option value="-2">{{$t('static.unapproved')}}</option>
                                 </select>
                             </dd>
                         </dl>
@@ -189,6 +162,7 @@ import changeMenu from '../../components/tools/tabs/tabs.js'
 import mglistModel from '../mguan/mgListComponent.vue'
 import languageModel from '../tools/language.vue'
 import employeeModel from '../clientRelate/searchEmpInfo.vue'
+import tipsdialogModel from '../tips/tipDialog.vue'
 
 import {
     getList,
@@ -208,7 +182,8 @@ export default {
         filter,
         mglistModel,
         languageModel,
-        employeeModel
+        employeeModel,
+        tipsdialogModel
     },
     data() {
         return {
@@ -242,9 +217,15 @@ export default {
             transferParam: {
                 show: false,
                 link: '/order/transferToEmployee',
+                callback: '',
                 employee: '',
                 id: '',
                 user: ''
+            },
+            tipsParam: {
+                show: false,
+                alert: true,
+                name: ''
             }
 
         }
@@ -296,8 +277,15 @@ export default {
             this.transferParam.id = item.id;
             this.transferParam.user = item.user;
             this.transferParam.employee = "";
+            this.transferParam.callback = this.transferCallback;
             this.transferParam.show = true;
+        },
+        transferCallback: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+
         }
+
     },
 
     events: {
