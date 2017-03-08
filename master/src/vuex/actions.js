@@ -812,6 +812,39 @@ export const getUserOrder = ({ dispatch }, param) => { //注册客户的订单�
     })
 }
 
+export const transferOrder = ({ dispatch }, param) => { //注册客户订单划转
+    const body = {
+        id: param.id,
+        userId: param.user,
+        employee: param.employee
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        /*var orderList = res.json().result.list;
+
+dispatch(types.ORDER_TABLE, orderList);
+param.all = res.json().result.pages;
+param.total = res.json().result.total;
+*/
+
+        console.log('success');
+
+    }, (res) => {
+        console.log('fail');
+
+    })
+}
+
 export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(我的订单)列表
     console.log(param)
         //console.log(param.link)

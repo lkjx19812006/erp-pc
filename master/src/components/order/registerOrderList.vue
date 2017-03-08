@@ -2,6 +2,7 @@
     <div>
         <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
         <search-model :param="loadParam" v-if="loadParam.show"></search-model>
+        <employee-model :param="transferParam" v-if="transferParam.show"></employee-model>
         <language-model v-show="false"></language-model>
         <mglist-model>
             <!-- 头部搜索 -->
@@ -168,7 +169,7 @@
                             <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                             <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
                             <td>
-                                <a @click="transferToEmployee()">划转</a>
+                                <a @click="transferToEmployee(item)">划转</a>
                             </td>
                         </tr>
                     </tbody>
@@ -187,6 +188,7 @@ import common from '../../common/common'
 import changeMenu from '../../components/tools/tabs/tabs.js'
 import mglistModel from '../mguan/mgListComponent.vue'
 import languageModel from '../tools/language.vue'
+import employeeModel from '../clientRelate/searchEmpInfo.vue'
 
 import {
     getList,
@@ -195,7 +197,8 @@ import {
 } from '../../vuex/getters'
 import {
     getUserOrder,
-    getOrderDetail
+    getOrderDetail,
+    transferOrder
 
 } from '../../vuex/actions'
 export default {
@@ -204,7 +207,8 @@ export default {
         detailModel,
         filter,
         mglistModel,
-        languageModel
+        languageModel,
+        employeeModel
     },
     data() {
         return {
@@ -235,6 +239,13 @@ export default {
             detailParam: {
                 show: false
             },
+            transferParam: {
+                show: false,
+                link: '/order/transferToEmployee',
+                employee: '',
+                id: '',
+                user: ''
+            }
 
         }
     },
@@ -247,6 +258,7 @@ export default {
         actions: {
             getUserOrder,
             getOrderDetail,
+            transferOrder
 
         }
     },
@@ -280,8 +292,11 @@ export default {
         },
 
         //订单划转到业务员
-        transferToEmployee: function() {
-
+        transferToEmployee: function(item) {
+            this.transferParam.id = item.id;
+            this.transferParam.user = item.user;
+            this.transferParam.employee = "";
+            this.transferParam.show = true;
         }
     },
 
@@ -289,6 +304,10 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getUserOrder(this.loadParam);
+        },
+        a: function(employeeInfo) {
+            this.transferParam.employee = employeeInfo.employeeId;
+            this.transferOrder(this.transferParam);
         }
     },
     filter: (filter, {}),
