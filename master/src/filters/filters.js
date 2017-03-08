@@ -17,6 +17,16 @@ Vue.filter('telstate', function(val) {
         return '' + val;
     }
 });
+Vue.filter('Sample', function(val) { //是否样品
+    var val = val;
+    if (val == 0) {
+        return this.$t('static.no');
+    } else if (val == 0) {
+        return this.$t('static.yes');
+    } else {
+        return val;
+    }
+});
 
 Vue.filter('payMent', function(val) {
     var val = val;

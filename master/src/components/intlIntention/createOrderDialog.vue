@@ -171,6 +171,13 @@
                                     <label class="editlabel">{{$t('static.postcodes')}} <span class="system_danger" v-if="$validation.code.postcode">{{$t('static.postcodes')}}</span></label>
                                     <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:code="['postcode']" />
                                 </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">{{$t('static.sample_order')}}</label>
+                                    <select type="text" class="form-control edit-input" v-model="param.sample" value="{{param.sample}}">
+                                        <option value="0" selected>{{$t('static.no')}}</option>
+                                        <option value="1">{{$t('static.yes')}}</option>
+                                    </select>
+                                </div>
                                 <div class="editpage-input clearfix">
                                     <label class="editlabel">{{$t('static.preferential')}}</label>
                                     <div class="clearfix left">
@@ -198,10 +205,6 @@
                                     <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
                                     <input type="text" class="form-control edit-input" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)" />
                                 </div>
-                                <!-- <div class="editpage-input">
-                                  <label class="editlabel">{{$t('static.client_phone')}} <span class="system_danger" v-if="$validation.custtel.required">{{$t('static.required')}}</span></label>
-                                  <input type="text" class="form-control edit-input" v-model="param.customerPhone"   v-validate:custtel="['required']" value="{{param.customerPhone}}" disabled="true"/>
-                              </div> -->
                                 <div class="editpage-input" v-if="param.different=='国际'">
                                     <label class="editlabel">{{$t('static.consignee_phone')}} <span class="system_danger" v-if="$validation.intl.intlphone">{{$t('static.enter_phone')}}</span></label>
                                     <input type="text" class="form-control edit-input" v-model="param.consigneePhone" v-validate:intl="['intlphone']" value="{{param.customerPhone}}" />
@@ -211,40 +214,19 @@
                                     <input type="text" class="form-control edit-input" v-model="param.consigneePhone" value="{{param.customerPhone}}" />
                                 </div>
                                 <div class="editpage-input">
+                                    <label class="editlabel">{{$t('static.city')}}</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.city" placeholder="{{$t('static.city')}}">
+                                </div>
+                                <div class="editpage-input">
                                     <label class="editlabel">{{$t('static.currency')}} </label>
                                     <select type="text" class="form-control edit-input" v-model="param.currency" v-if="param.intl==0">
                                         <option value="1" selected>CNY人民币</option>
+                                        <option v-for="item in initCurrencylist" value="{{item.id}}">{{item.name}}{{item.cname}}</option>
                                     </select>
                                     <select type="text" class="form-control edit-input" v-model="param.currency" v-if="param.intl==1">
-                                        <option value="1">CNY人民币</option>
                                         <option value="2" selected>USD美元</option>
-                                        <option value="3">EUR欧元</option>
-                                        <option value="4">HKD港币</option>
-                                        <option value="5">GBP英镑</option>
-                                        <option value="6">JPY日元</option>
-                                        <option value="7">KRW韩元</option>
-                                        <option value="8">CAD加元</option>
-                                        <option value="9">AUD澳元</option>
-                                        <option value="10">CHF瑞郎</option>
-                                        <option value="11">SGD新加坡元</option>
-                                        <option value="12">MYR马来西亚币</option>
-                                        <option value="13">IDR印尼</option>
-                                        <option value="14">NZD新西兰</option>
-                                        <option value="15">VND越南</option>
-                                        <option value="16">THB泰铢</option>
-                                        <option value="17">PHP菲律宾</option>
+                                        <option v-for="item in initCurrencylist" value="{{item.id}}">{{item.name}}{{item.cname}}</option>
                                     </select>
-                                </div>
-                                <!-- <div class="editpage-input">
-                                      <label class="editlabel">{{$t('static.sample_order')}}</label>
-                                      <select type="text" class="form-control edit-input" v-model="param.sample" value="{{param.sample}}" >
-                                          <option value="0" selected>{{$t('static.no')}}</option>
-                                          <option value="1">{{$t('static.yes')}}</option>
-                                      </select>
-                                  </div> -->
-                                <div class="editpage-input">
-                                    <label class="editlabel">{{$t('static.city')}}</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.city" placeholder="{{$t('static.city')}}">
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">{{$t('static.enter_address')}}</span></label>
@@ -299,6 +281,7 @@ import {
     initBreedDetail,
     initIntlIntentionDetail,
     initUnitlist,
+    initCurrencylist
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -308,6 +291,7 @@ import {
     getDistrictList,
     createOrder,
     getUnitList,
+    getCurrencyList,
     getIntlIntentionDetail
 } from '../../vuex/actions'
 export default {
@@ -405,7 +389,8 @@ export default {
             initDistrictlist,
             initBreedDetail,
             initIntlIntentionDetail,
-            initUnitlist
+            initUnitlist,
+            initCurrencylist
         },
         actions: {
             getCountryList,
@@ -414,6 +399,7 @@ export default {
             getBreedDetail,
             getDistrictList,
             createOrder,
+            getCurrencyList,
             getIntlIntentionDetail,
             getUnitList
         }
@@ -542,7 +528,6 @@ export default {
             if (this.param.goods[index].costPrice == undefined) {
                 this.param.goods[index].costPrice = 0;
             }
-
             if (this.altogether === "") {
                 this.altogether = this.param.itemsTotal;
             }
@@ -559,11 +544,9 @@ export default {
             this.breedInfo.price = this.param.goods[index].price;
             this.breedInfo.costPrice = this.param.goods[index].costPrice;
             this.breedInfo.sourceType = this.param.goods[index].sourceType;
-
             this.updateParam.number = this.param.goods[index].number;
             this.updateParam.price = this.param.goods[index].price;
             this.updateParam.show = true;
-
             this.altogether -= parseFloat(this.breedInfo.number) * parseFloat(this.breedInfo.price);
             //this.costmoney -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.costPrice);
 
@@ -677,7 +660,6 @@ export default {
             this.createOrder(this.param);
         },
         changeTotal: function() {
-
             var patt = new RegExp(/\.\d{3,}/);
             if (!this.param.incidentals) {
                 this.param.incidentals = 0
@@ -702,7 +684,6 @@ export default {
             //this.param.incidentals.replace(/^(\-)*(\d+)\.(\d\d)*$/,'$1$2.$3');
             this.param.total = (parseFloat(this.altogether) * 1000 + parseFloat(this.param.incidentals) * 1000 - parseFloat(this.param.preferential) * 1000) / 1000;
             /*this.param.cost = (parseFloat(this.costmoney)*1000+parseFloat(this.param.incidentals)*1000 - parseFloat(this.param.preferential)*1000)/1000;*/
-
         }
     },
     watch: {
@@ -740,6 +721,7 @@ export default {
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
         this.getIntlIntentionDetail(this.param);
+        this.getCurrencyList();
         this.getUnitList();
         if (this.param.breedId) {
             this.breedParam.breedName = this.param.breedName;
