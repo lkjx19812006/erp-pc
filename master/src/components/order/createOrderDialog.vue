@@ -65,19 +65,21 @@
                                 <input type="text" class="form-control edit-input" v-model="supplierParam.supplierName" v-validate:supplier="{required:true}" readonly="true" @click="selectSupplier()" />
                             </div>
                             <div class="editpage-input col-md-4">
-                                <label class="editlabel">{{$t('static.international')}}</label>
+                                <label class="editlabel">{{$t('static.international')}} <span class="system_danger" v-if="$validation.intl.required">{{$t('static.required')}}</span>
+                                </label>
+                                <input type="text" class="form-control edit-input" v-model="param.intl" v-validate:intl="{required:true}" v-show="false" />
                                 <select type="text" class="form-control edit-input" v-model="param.intl" @change="selectBizType()">
-                                    <option value="0" selected="true">{{$t('static.no')}}</option>
+                                    <option value="0">{{$t('static.no')}}</option>
                                     <option value="1">{{$t('static.yes')}}</option>
                                 </select>
                             </div>
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.currency')}}</label>
-                                <select type="text" class="form-control edit-input" v-model="param.currency" value="{{param.currency}}" v-if="param.intl==0">
-                                    <option value="1" selected>CNY人民币</option>
+                                <select type="text" class="form-control edit-input" v-model="param.currency" v-if="param.intl==0">
+                                    <option value="1" selected>CNY人民币元</option>
                                     <option v-for="item in initCurrencylist" value="{{item.id}}">{{item.name}}{{item.cname}}</option>
                                 </select>
-                                <select type="text" class="form-control edit-input" v-model="param.currency" value="{{param.currency}}" v-if="param.intl==1">
+                                <select type="text" class="form-control edit-input" v-model="param.currency" v-if="param.intl==1">
                                     <option value="2" selected>USD美元</option>
                                     <option v-for="item in initCurrencylist" value="{{item.id}}">{{item.name}}{{item.cname}}</option>
                                 </select>
@@ -97,14 +99,14 @@
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.country')}}</label>
                                 <div type="text" class="edit-input">
-                                    <v-select :debounce="250" :value.sync="country" :on-change="selectProvince" :options="initCountrylist" placeholder="国家/Country" label="cname">
+                                    <v-select :debounce="250" :value.sync="country" :on-change="selectProvince" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
                                     </v-select>
                                 </div>
                             </div>
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.province')}}</label>
-                                <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_country_first')}}" />
-                                <div v-if="country.cname" type="text" class="edit-input">
+                                <input type="text" v-if="!country.cnameEn" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_country_first')}}" />
+                                <div v-if="country.cnameEn" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
                                     </v-select>
                                 </div>
@@ -439,6 +441,7 @@ export default {
             country: {
                 id: '',
                 cname: '',
+                cnameEn: ''
             },
             province: {
                 id: '',
@@ -747,22 +750,19 @@ export default {
             this.updateParam.price = 0;
         },
         selectBizType: function() {
-            console.log('addad');
-            this.param.currency = '';
             if (this.param.intl == 0) {
 
             }
             if (this.param.intl == 1) {}
         },
         confirm: function(param) {
-            this.param.country = this.country.cname;
+            this.param.country = this.country.cnameEn;
             this.param.province = this.province.cname;
             this.param.city = this.city.cname;
             this.param.district = this.district.cname;
             this.param.show = false;
             this.param.consigneeAddr = param.consigneeAddr;
             //如果this.param.addressId = 0,则新增客户地址
-            console.log(this.param.consigneeAddr);
             this.param.callback = this.param.callback;
             this.createOrder(this.param);
         },
@@ -791,7 +791,7 @@ export default {
             console.log(this.param.incidentals);
             //this.param.incidentals.replace(/^(\-)*(\d+)\.(\d\d)*$/,'$1$2.$3');
             this.param.total = (parseFloat(this.altogether) * 1000 + parseFloat(this.param.incidentals) * 1000 - parseFloat(this.param.preferential) * 1000) / 1000;
-            this.param.cost = (parseFloat(this.costmoney) * 1000 + parseFloat(this.param.incidentals) * 1000 - parseFloat(this.param.preferential) * 1000) / 1000;
+            this.param.cost = (parseFloat(this.costmoney) * 1000) / 1000;
         }
     },
     watch: {
@@ -819,7 +819,6 @@ export default {
             this.param.customerPhone = customer.customerPhone;
             this.param.consigneePhone = customer.customerPhone;
             this.param.customer = customer.customerId;
-
             this.consigneeParam.customerId = customer.customerId;
         },
         supplier: function(item) {
@@ -835,7 +834,6 @@ export default {
             this.param.consigneePhone = this.supplierParam.consigneePhone;
         },
         address: function(address) {
-            console.log(address);
             this.param.consignee = address.contactName;
             this.param.consigneePhone = address.contactPhone;
             this.country.cname = address.country;
@@ -847,7 +845,6 @@ export default {
 
         },
         selectEmpOrOrg: function(employee) {
-            console.log(employee)
             this.employeeParam.consigner = employee.employeeId;
             this.employeeParam.consignerName = employee.employeeName;
             this.param.consigner = this.employeeParam.consigner;
@@ -860,7 +857,6 @@ export default {
         this.getEmployeeList(this.orgParam);
         this.getUnitList();
         this.getCurrencyList();
-        console.log(this.param);
         if (this.param.customer) {
             this.consigneeParam.customerId = this.param.customer;
         }
