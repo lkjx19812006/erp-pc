@@ -840,9 +840,6 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
 }
 
 export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(我的订单)列表
-    console.log(param)
-        //console.log(param.link)
-
     param.loading = true;
     const body = {
         employee: param.employee,
