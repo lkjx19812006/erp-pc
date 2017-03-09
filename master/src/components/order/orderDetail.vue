@@ -87,8 +87,8 @@
                                                     <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                                     <th>{{$t('static.quality')}}</th>
                                                     <th>{{$t('static.price')}}</th>
-                                                    <th>{{$t('static.cost_price')}}</th>
-                                                    <th>{{$t('static.cost')}}{{$t('static.total')}}</th>
+                                                    <th v-if="this.initLogin.orgId !=='11'">{{$t('static.cost_price')}}</th>
+                                                    <th v-if="this.initLogin.orgId !=='11'">{{$t('static.cost')}}{{$t('static.total')}}</th>
                                                     <th>{{$t('static.total')}}</th>
                                                 </thead>
                                                 <tbody>
@@ -99,8 +99,8 @@
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.price}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
-                                                        <td>{{item.costPrice}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
-                                                        <td>{{item.cost}}</td>
+                                                        <td v-if="this.initLogin.orgId !=='11'">{{item.costPrice}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
+                                                        <td v-if="this.initLogin.orgId !=='11'">{{item.cost}}</td>
                                                         <td>{{item.amount}} （{{initOrderDetail.currency | Currency}}）</td>
                                                     </tr>
                                                 </tbody>
@@ -134,6 +134,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- 分期付款 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
@@ -610,7 +611,8 @@ import shadowModel from '../mguan/shadow.vue'
 import deleteModel from '../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import {
     initOrderDetail,
-    initMyFundList
+    initMyFundList,
+    initLogin
 } from '../../vuex/getters'
 import {
     getOrderDetail,
@@ -700,7 +702,8 @@ export default {
     vuex: {
         getters: {
             initOrderDetail,
-            initMyFundList
+            initMyFundList,
+            initLogin
         },
         actions: {
             getOrderDetail,
