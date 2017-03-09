@@ -61,8 +61,9 @@
               <div class="total">
                  <div class="total-lsit" v-for = "key in item.statisticsList">
 	                 <label>订单金额:</label><span>{{key.totalSum}}</span><br/>
-	                 <label>应收/应付:</label><span>{{key.unpaidSum}}</span><br/>
-	                 <label>货币:</label><span>{{key.currency}}</span>
+	                 <div v-if="loadParam.orderType==1"><label>应收:</label><span>{{key.unpaidSum}}</span></div>
+	                 <div v-if="loadParam.orderType==0"><label>应付:</label><span>{{key.unpaidSum}}</span></div>
+	                 <label>货币:</label><span>{{key.currency | Currency}}</span>
                  </div>
               </div>
               <!-- 业务员 应收金额 应收 应付 列表 -->
@@ -71,7 +72,8 @@
                 	 <tr class="tb-header">
                 		<td>业务员</td>
                 		<td>订单金额</td>
-                		<td>应收/应付</td>
+                		<td v-if="loadParam.orderType==1">应收</td>
+                		<td v-if="loadParam.orderType==0">应付</td>
                 		<td>币种</td>
                 	 </tr>
                 	 <tbody v-for="detail in item.lowerList">
@@ -81,49 +83,13 @@
 					    <tr class="tb-content" v-for="classified in detail.statisticsList">
 						    <td>{{classified.totalSum}}</td>
 						    <td>{{classified.prepaidSum}}</td>
-						    <td>{{classified.currency}}</td>				    
+						    <td>{{classified.currency | Currency}}</td>				    
 					    </tr>
                 	 </tbody>
 					 
                  </table> 
                </div>
              </div>
-               <!-- 业务中的一项 -->
-           <div class="listItem" v-for = "item in initOrgCount">
-              <div class="title">
-                 <span>{{item.name}}</span>
-              </div>
-              <div class="total">
-                 <div class="total-lsit" v-for = "key in item.statisticsList">
-	                 <label>订单金额:</label><span>{{key.totalSum}}</span><br/>
-	                 <label>应收/应付:</label><span>{{key.unpaidSum}}</span><br/>
-	                 <label>货币:</label><span>{{key.currency}}</span>
-                 </div>
-              </div>
-              <!-- 业务员 应收金额 应收 应付 列表 -->
-              <div class="table">
-                <table>
-                	 <tr class="tb-header">
-                		<td>业务员</td>
-                		<td>订单金额</td>
-                		<td>应收/应付</td>
-                		<td>币种</td>
-                	 </tr>
-                	 <tbody v-for="detail in item.lowerList">
-                	 	<tr class="tb-content" >
-						    <td rowspan="10">{{detail.name}}</td>
-						</tr>
-					    <tr class="tb-content" v-for="classified in detail.statisticsList">
-						    <td>{{classified.totalSum}}</td>
-						    <td>{{classified.prepaidSum}}</td>
-						    <td>{{classified.currency}}</td>				    
-					    </tr>
-                	 </tbody>
-					 
-                 </table> 
-               </div>
-             </div>
-          
           
            </div>
 
@@ -146,10 +112,25 @@
 		},
 		data() {
 	        return {
+	        	loadParam:{
+	        		orderType : 1,
+	        		startTime : '',
+	        		endTime : ''
+	        	}
 	        }    
 	    },
 	    methods:{
+           refresh:function(){
+              this.getOrgCount(this.loadParam);
+	       },
+	       clickType: function(type){
+	       	  this.loadParam.orderType = type;
+              this.getOrgCount(this.loadParam);
 
+	       },
+	       search:function(){
+              this.getOrgCount(this.loadParam)
+	       }
 	    },
 	    vuex: {
 	       getters:{
@@ -161,7 +142,7 @@
 	    },
 	   
 	    created() {
-	       this.getOrgCount();
+	       this.getOrgCount(this.loadParam);
 	       for(var i in this.initOrgCount){
 	       		for(var j in this.initOrgCount[i].lowerList){
 	       			for(var k in this.initOrgCount[i].lowerList[j].statisticsList){
@@ -170,7 +151,9 @@
 	       			}
 	       		}
 	       }
+	      
 	    },
+	    
 	    ready(){
 	        window.onresize=function(){  
 			    const tablefrom = document.body.clientHeight-document.getElementById('top').offsetHeight-200;
@@ -180,8 +163,9 @@
 			    const tablefrom = document.body.clientHeight-document.getElementById('top').offsetHeight-200;  
 			    document.getElementById('listContent').style.height = tablefrom + 'px';
 			    console.log(tablefrom)     
-			};
-    }
+			}
+
+      }
 	}
 </script>
 <style scoped>

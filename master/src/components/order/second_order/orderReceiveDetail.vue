@@ -49,7 +49,8 @@
                     </ul>
                     <ul class="col-md-12  clearfix">
                         <li v-for="img in initReceiptDetail.images" class="navbar-img">
-                            <img v-if="img" :src="img" alt="图片" height="100px" @click="bigPicture(img)" />
+                            <img v-if="img | file" :src="img" alt="图片" height="100px" @click="bigPicture(img)" />
+                            <a v-else href="{{img}}" download="" style="display: inline-block;width: 100px;margin-top: 10%"><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                         </li>
                     </ul>
                 </div>
