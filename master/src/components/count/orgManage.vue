@@ -178,8 +178,9 @@
 			}
 			window.onload=function(){  
 			    const tablefrom = document.body.clientHeight-document.getElementById('top').offsetHeight-200;  
-			    document.getElementById('listContent').style.height = tablefrom + 'px';     
-			}
+			    document.getElementById('listContent').style.height = tablefrom + 'px';
+			    console.log(tablefrom)     
+			};
     }
 	}
 </script>
