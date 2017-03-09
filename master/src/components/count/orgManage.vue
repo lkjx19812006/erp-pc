@@ -14,23 +14,6 @@
                     采购
                 </button>
             </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='day'}" @click="clickChange('day')">
-                    日
-                </button>
-                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='week'}" @click="clickChange('week')">
-                    周
-                </button>
-                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='month'}" @click="clickChange('month')">
-                    月
-                </button>
-                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='quarter'}" @click="clickChange('quarter')">
-                    季
-                </button>
-                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='year'}" @click="clickChange('year')">
-                    年
-                </button>
-            </div>
             <!-- 搜索起止时间 -->
 	        <div class="btn-group clearfix right">
 	            <div class="clear transfer">
@@ -130,6 +113,12 @@
 	       },
 	       search:function(){
               this.getOrgCount(this.loadParam)
+	       },
+	       resetCondition:function(){
+	       	  this.loadParam.startTime = '';
+	       	  this.loadParam.endTime = '';
+	       	  this.loadParam.orderType = 1;
+	       	  this.getOrgCount();	  
 	       }
 	    },
 	    vuex: {
