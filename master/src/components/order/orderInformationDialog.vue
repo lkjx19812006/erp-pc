@@ -144,7 +144,7 @@
                                     <th>{{$t('static.breed')}}</th>
                                     <th>{{$t('static.unit')}}</th>
                                     <th>{{$t('static.price')}}</th>
-                                    <th>{{$t('static.cost_price')}}</th>
+                                    <th v-if="this.initLogin.orgId !== '11'">{{$t('static.cost_price')}}</th>
                                     <th>{{$t('static.quality')}}</th>
                                     <th>{{$t('static.quantity')}}</th>
                                     <th>{{$t('static.specification')}}</th>
@@ -159,7 +159,7 @@
                                     <td>{{item.breedName}}</td>
                                     <td>{{item.unit | Unit}}</td>
                                     <td>{{item.price}}</td>
-                                    <td>{{item.costPrice}}</td>
+                                    <td v-if="this.initLogin.orgId !== '11'">{{item.costPrice}}</td>
                                     <td>{{item.quality}}</td>
                                     <td>{{item.number}}</td>
                                     <td>{{item.spec}}</td>
@@ -217,7 +217,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="editpage-input col-md-6">
+                                    <div class="editpage-input col-md-6" v-if="this.initLogin.orgId !== '11'">
                                         <label class="editlabel">{{$t('static.cost_price')}}<span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span></label>
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
@@ -298,7 +298,7 @@
                             <label class="editlabel">{{$t('static.total')}}</label>
                             <input type="text" class="form-control edit-input" v-model="param.total" readonly="true" />
                         </div>
-                        <div class="editpage-input col-md-6">
+                        <div class="editpage-input col-md-6" v-if="this.initLogin.orgId !== '11'">
                             <label class="editlabel">{{$t('static.cost_price')}}</label>
                             <input type="text" class="form-control edit-input" v-model="param.cost" readonly="true" />
                         </div>
@@ -332,7 +332,8 @@ import {
     initDistrictlist,
     initBreedDetail,
     initCurrencylist,
-    initUnitlist
+    initUnitlist,
+    initLogin
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -356,7 +357,6 @@ export default {
         inputSelect,
         searchemgModel,
         consigneeModel
-
     },
     props: ['param'],
     data() {
@@ -450,7 +450,8 @@ export default {
             initDistrictlist,
             initBreedDetail,
             initCurrencylist,
-            initUnitlist
+            initUnitlist,
+            initLogin
         },
         actions: {
             getCountryList,
