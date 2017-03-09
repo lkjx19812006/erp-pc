@@ -1,59 +1,58 @@
-
 <template>
-    <drugs-model :param="disposeParam" v-if="disposeParam.show"></drugs-model>
-    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con" v-show="param.show"  @click="param.show=false">
-<!--     <div class="client_body" v-show="!disposeParam.show"> -->
-      <div class="top-title" @click="param.show=false">
-            <span class="glyphicon glyphicon-remove-circle"></span>
-        </div>
-        <div class="cover_loading">
-            <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
-        </div>
-        <div class="client_nav">
-            <nav class="navbar navbar-client" role="navigation">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <span class="navbar-brand navbar-name" href="#">{{initDrugsDetail.userName}}</span>
+    <div>
+        <drugs-model :param="disposeParam" v-if="disposeParam.show"></drugs-model>
+        <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+        <div class="container modal_con" v-show="param.show" @click="param.show=false">
+            <div class="top-title" @click="param.show=false">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+            </div>
+            <div class="cover_loading">
+                <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <div class="client_nav">
+                <nav class="navbar navbar-client" role="navigation">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
+                            <span class="navbar-brand navbar-name" href="#">{{initDrugsDetail.userName}}</span>
+                        </div>
                     </div>
-                </div>
-            </nav>
-        </div>
-        <section>
-            <div class="client-section clearfix" >
-                <div class="col-md-12">
-                    <h4 class="section_title">{{$t('static.related_information')}}</h4>
-                    <article @click.stop="">
-                        <div class="panel-group">
-                            <div class="panel panel-default" style="border:none">
-                                <ul class="clearfix">
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <label>{{$t('static.client_name')}}：</label>{{initDrugsDetail.userName}}
-                                    </div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <label>{{$t('static.normal_amount')}}：</label>{{initDrugsDetail.normalMoney}}
-                                    </div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6" v-if="param.rollOutMoney">
-                                        <label>{{$t('static.transfer_amount')}}：</label>{{initDrugsDetail.rollOutMoney}}
-                                    </div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6" v-if="!param.rollOutMoney">
-                                        <label>{{$t('static.transfer_amount')}}：</label>0
-                                    </div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <label>{{$t('static.freezing_amount')}}：</label>{{initDrugsDetail.freezeMoney}}
-                                    </div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <label>{{$t('static.status')}}：</label>{{initDrugsDetail.status | drugsStatus}}
-                                    </div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <label>{{$t('static.create_time')}}：</label>{{initDrugsDetail.createTime}}
-                                    </div>
-                                </ul>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                </nav>
+            </div>
+            <section>
+                <div class="client-section clearfix">
+                    <div class="col-md-12">
+                        <h4 class="section_title">{{$t('static.related_information')}}</h4>
+                        <article @click.stop="">
+                            <div class="panel-group">
+                                <div class="panel panel-default" style="border:none">
+                                    <ul class="clearfix">
+                                        <div class="col-md-3 col-sm-4 col-xs-6">
+                                            <label>{{$t('static.client_name')}}：</label>{{initDrugsDetail.userName}}
+                                        </div>
+                                        <div class="col-md-3 col-sm-4 col-xs-6">
+                                            <label>{{$t('static.normal_amount')}}：</label>{{initDrugsDetail.normalMoney}}
+                                        </div>
+                                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="param.rollOutMoney">
+                                            <label>{{$t('static.transfer_amount')}}：</label>{{initDrugsDetail.rollOutMoney}}
+                                        </div>
+                                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="!param.rollOutMoney">
+                                            <label>{{$t('static.transfer_amount')}}：</label>0
+                                        </div>
+                                        <div class="col-md-3 col-sm-4 col-xs-6">
+                                            <label>{{$t('static.freezing_amount')}}：</label>{{initDrugsDetail.freezeMoney}}
+                                        </div>
+                                        <div class="col-md-3 col-sm-4 col-xs-6">
+                                            <label>{{$t('static.status')}}：</label>{{initDrugsDetail.status | drugsStatus}}
+                                        </div>
+                                        <div class="col-md-3 col-sm-4 col-xs-6">
+                                            <label>{{$t('static.create_time')}}：</label>{{initDrugsDetail.createTime}}
+                                        </div>
+                                    </ul>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:'',
                                               crete:'moneyRecords'
                                               })">
@@ -63,33 +62,33 @@
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
                                     </h4>
-                                </div>
-                                <div class="panel-collapse" v-if="initDrugsDetail.moneyRecords.arr.length!=null" v-show="initDrugsDetail.moneyRecords.show">
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>{{$t('static.link_types')}}</th>
-                                            <th>{{$t('static.order_source')}}</th>
-                                            <th>{{$t('static.out_instatus')}}</th>
-                                            <th>{{$t('static.status')}}</th>
-                                            <th>{{$t('static.create_time')}}</th>
-                                          </thead>
-                                        <tbody>
-                                            <tr v-for="item in initDrugsDetail.moneyRecords.arr">
-                                                <td>{{item.linkType | linktype}}</td>
-                                                <td>{{item.desc}}</td>
-                                                <td>{{item.amount.toFixed(2)}}</td>
-                                                <td>{{item.status | drugsStatus}}</td>
-                                                <td>{{item.createTime}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    </div>
+                                    <div class="panel-collapse" v-if="initDrugsDetail.moneyRecords.arr.length!=null" v-show="initDrugsDetail.moneyRecords.show">
+                                        <div class="panel-body panel-set">
+                                            <table class="table  contactSet">
+                                                <thead>
+                                                    <th>{{$t('static.link_types')}}</th>
+                                                    <th>{{$t('static.order_source')}}</th>
+                                                    <th>{{$t('static.out_instatus')}}</th>
+                                                    <th>{{$t('static.status')}}</th>
+                                                    <th>{{$t('static.create_time')}}</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in initDrugsDetail.moneyRecords.arr">
+                                                        <td>{{item.linkType | linktype}}</td>
+                                                        <td>{{item.desc}}</td>
+                                                        <td>{{item.amount.toFixed(2)}}</td>
+                                                        <td>{{item.status | drugsStatus}}</td>
+                                                        <td>{{item.createTime}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:'',
                                               crete:'moneyRollIns'
                                               })">
@@ -109,37 +108,37 @@
                                            titles:'上传支付凭证'
                                            })"  v-if="(initDrugsDetail.moneyRollIns.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">新建</button> -->
                                     </h4>
-                                </div>
-                                <div class="panel-collapse" v-if="initDrugsDetail.moneyRollIns.arr.length&&!initDrugsDetail.moneyRollIns.show" v-cloak>
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>{{$t('static.payment_method')}}</th>
-                                            <th>{{$t('static.normal_amount')}}</th>
-                                            <th>{{$t('static.freezing_amount')}}</th>
-                                            <th>{{$t('static.roll_in')}}</th>
-                                            <th>{{$t('static.paystatus')}}</th>
-                                            <th>{{$t('static.status')}}</th>
-                                            <th>{{$t('static.create_time')}}</th>
-                                          </thead>
-                                        <tbody>
-                                            <tr v-for="item in initDrugsDetail.moneyRollIns.arr">
-                                                <td>{{item.payType | payType}}</td>
-                                                <td>{{item.normalMoney.toFixed(2)}}</td>
-                                                <td>{{item.freezeMoney.toFixed(2)}}</td>
-                                                <td>{{item.amount.toFixed(2)}}</td>
-                                                <td>{{item.payStatus}}</td>
-                                                <td>{{item.status | drugsStatus}}</td>
-                                                <td>{{item.createTime}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    </div>
+                                    <div class="panel-collapse" v-if="initDrugsDetail.moneyRollIns.arr.length&&!initDrugsDetail.moneyRollIns.show" v-cloak>
+                                        <div class="panel-body panel-set">
+                                            <table class="table  contactSet">
+                                                <thead>
+                                                    <th>{{$t('static.payment_method')}}</th>
+                                                    <th>{{$t('static.normal_amount')}}</th>
+                                                    <th>{{$t('static.freezing_amount')}}</th>
+                                                    <th>{{$t('static.roll_in')}}</th>
+                                                    <th>{{$t('static.paystatus')}}</th>
+                                                    <th>{{$t('static.status')}}</th>
+                                                    <th>{{$t('static.create_time')}}</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in initDrugsDetail.moneyRollIns.arr">
+                                                        <td>{{item.payType | payType}}</td>
+                                                        <td>{{item.normalMoney.toFixed(2)}}</td>
+                                                        <td>{{item.freezeMoney.toFixed(2)}}</td>
+                                                        <td>{{item.amount.toFixed(2)}}</td>
+                                                        <td>{{item.payStatus}}</td>
+                                                        <td>{{item.status | drugsStatus}}</td>
+                                                        <td>{{item.createTime}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:'',
                                               crete:'moneyRollOuts'
                                               })">
@@ -148,121 +147,122 @@
                                           {{$t('static.rollout')}}（{{initDrugsDetail.moneyRollOuts.arr.length}}）
                                         </a>
                                     </h4>
-                                </div>
-                                <div class="panel-collapse" v-show="!initDrugsDetail.moneyRollOuts.show">
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>{{$t('static.client_name')}}</th>
-                                            <th>{{$t('static.account_number')}}</th>
-                                            <th>{{$t('static.normal_amount')}}</th>
-                                            <th>{{$t('static.freezing_amount')}}</th>
-                                            <th>{{$t('static.transfer_amount')}}</th>
-                                            <th>{{$t('static.status')}}</th>
-                                            <th>{{$t('static.create_time')}}</th>
-                                            <th>{{$t('static.handle')}}</th>
-                                          </thead>
-                                        <tbody>
-                                            <tr v-for="item in initDrugsDetail.moneyRollOuts.arr">
-                                                <td>{{item.name}}</td>
-                                                <td>{{item.bank}}</td>
-                                                <td>{{item.normalMoney.toFixed(2)}}</td>
-                                                <td>{{item.freezeMoney.toFixed(2)}}</td>
-                                                <td>{{item.amount.toFixed(2)}}</td>
-                                                <td>{{item.status | drugsStatus}}</td>
-                                                <td>{{item.ctime}}</td>
-                                                <td>
-									                <a class="operate" v-if="item.status==2" @click="drugs({
-									                	status:item.status,
-									                	id:item.id,
-									                	moneyId:item.moneyId,
-									                	userId:item.userId,
-									                	show:false,
-                                                		sub:$index,
-                                                		key:'moneyRollOuts'
-									                	})"><img src="/static/images/Financialtransfer.png" height="18" width="48" title="转账处理中" alt="转账处理中"></a>
-									                <a class="operate" v-if="item.status==3" @click="drugs({
-									                	status:item.status,
-									                	id:item.id,
-									                	moneyId:item.moneyId,
-									                	userId:item.userId,
-									                	show:false,
-                                                		sub:$index,
-                                                		key:'moneyRollOuts'
-									                	})"><img src="/static/images/Financialover.png" height="18" width="48" title="转出成功" alt="转出成功"></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    </div>
+                                    <div class="panel-collapse" v-show="!initDrugsDetail.moneyRollOuts.show">
+                                        <div class="panel-body panel-set">
+                                            <table class="table  contactSet">
+                                                <thead>
+                                                    <th>{{$t('static.client_name')}}</th>
+                                                    <th>{{$t('static.account_number')}}</th>
+                                                    <th>{{$t('static.normal_amount')}}</th>
+                                                    <th>{{$t('static.freezing_amount')}}</th>
+                                                    <th>{{$t('static.transfer_amount')}}</th>
+                                                    <th>{{$t('static.status')}}</th>
+                                                    <th>{{$t('static.create_time')}}</th>
+                                                    <th>{{$t('static.handle')}}</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in initDrugsDetail.moneyRollOuts.arr">
+                                                        <td>{{item.name}}</td>
+                                                        <td>{{item.bank}}</td>
+                                                        <td>{{item.normalMoney.toFixed(2)}}</td>
+                                                        <td>{{item.freezeMoney.toFixed(2)}}</td>
+                                                        <td>{{item.amount.toFixed(2)}}</td>
+                                                        <td>{{item.status | drugsStatus}}</td>
+                                                        <td>{{item.ctime}}</td>
+                                                        <td>
+                                                            <a class="operate" v-if="item.status==2" @click="drugs({
+                                                        status:item.status,
+                                                        id:item.id,
+                                                        moneyId:item.moneyId,
+                                                        userId:item.userId,
+                                                        show:false,
+                                                        sub:$index,
+                                                        key:'moneyRollOuts'
+                                                        })"><img src="/static/images/Financialtransfer.png" height="18" width="48" title="转账处理中" alt="转账处理中"></a>
+                                                            <a class="operate" v-if="item.status==3" @click="drugs({
+                                                        status:item.status,
+                                                        id:item.id,
+                                                        moneyId:item.moneyId,
+                                                        userId:item.userId,
+                                                        show:false,
+                                                        sub:$index,
+                                                        key:'moneyRollOuts'
+                                                        })"><img src="/static/images/Financialover.png" height="18" width="48" title="转出成功" alt="转出成功"></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                    </div>
                 </div>
-            </div>
-        </section>
-       </div>
+            </section>
+        </div>
+    </div>
 </template>
 <script>
-import  drugsModel  from  '../drugs/drugsStatus'
+import drugsModel from '../drugs/drugsStatus'
 import {
-  initDrugsDetail
+    initDrugsDetail
 } from '../../vuex/getters'
 import {
-  getDrugsDetail
+    getDrugsDetail
 } from '../../vuex/actions'
 export default {
     components: {
-       drugsModel
+        drugsModel
     },
-    props:['param'],
-    data(){
-      return {
-        show:true,
-        disposeParam:{
-          show:false,
-          title:'',
-          link:'/money/rollOutHandle'
+    props: ['param'],
+    data() {
+        return {
+            show: true,
+            disposeParam: {
+                show: false,
+                title: '',
+                link: '/money/rollOutHandle'
+            }
         }
-      }
     },
-    vuex:{
-      getters:{
-        initDrugsDetail
-      },
-      actions:{
-        getDrugsDetail,
-      }
+    vuex: {
+        getters: {
+            initDrugsDetail
+        },
+        actions: {
+            getDrugsDetail,
+        }
     },
-    methods:{
-         enfoldment:function(param){
-          	console.log(this.$store.state.table.rolloutDetail[param.crete])
-            if(this.$store.state.table.rolloutDetail[param.crete].arr.length==0){
-                this.$store.state.table.rolloutDetail[param.crete].show=false;
+    methods: {
+        enfoldment: function(param) {
+            console.log(this.$store.state.table.rolloutDetail[param.crete])
+            if (this.$store.state.table.rolloutDetail[param.crete].arr.length == 0) {
+                this.$store.state.table.rolloutDetail[param.crete].show = false;
             }
             this.$store.state.table.rolloutDetail[param.crete].show = !this.$store.state.table.rolloutDetail[param.crete].show;
         },
-        drugs:function(initDrugsDetail){
-	          this.disposeParam = initDrugsDetail;
-	          console.log(this.disposeParam)
-	          this.disposeParam.show = true;
-	          this.disposeParam.title = '药款转出操作';
-	          this.disposeParam.link = '/money/rollOutHandle';
-	          if(initDrugsDetail.status==0){
-	               this.disposeParam.tips='申请成功，请等待审核';
-	          }else if(initDrugsDetail.status==1){
-	               this.disposeParam.tips='审核通过，请等待转账';
-	          }else if(initDrugsDetail.status==2){
-	               this.disposeParam.tips='转账成功，操作完成';
-	          }else if(initDrugsDetail.status==3){
-	               this.disposeParam.tips='操作已完成，药款已转出';
-	          }
-	    }
+        drugs: function(initDrugsDetail) {
+            this.disposeParam = initDrugsDetail;
+            console.log(this.disposeParam)
+            this.disposeParam.show = true;
+            this.disposeParam.title = '药款转出操作';
+            this.disposeParam.link = '/money/rollOutHandle';
+            if (initDrugsDetail.status == 0) {
+                this.disposeParam.tips = '申请成功，请等待审核';
+            } else if (initDrugsDetail.status == 1) {
+                this.disposeParam.tips = '审核通过，请等待转账';
+            } else if (initDrugsDetail.status == 2) {
+                this.disposeParam.tips = '转账成功，操作完成';
+            } else if (initDrugsDetail.status == 3) {
+                this.disposeParam.tips = '操作已完成，药款已转出';
+            }
+        }
     },
-   created(){
-   	  this.getDrugsDetail(this.param);
-   }
+    created() {
+        this.getDrugsDetail(this.param);
+    }
 }
 </script>
 <style scoped>
@@ -271,7 +271,8 @@ export default {
     background-color: #fff;
     padding: 20px;
 }
-.top-title{
+
+.top-title {
     position: fixed;
     width: 60%;
     right: 0;
@@ -279,9 +280,11 @@ export default {
     margin: auto;
     z-index: 1083
 }
-.modal_con{
+
+.modal_con {
     width: 60%;
 }
+
 .navbar-client {
     margin-bottom: 0;
     padding-top: 10px;
@@ -303,12 +306,13 @@ export default {
 section {
     background-color: #fff;
 }
+
 .client-section {
     padding: 10px 5px 40px 5px;
 }
 
-.contactSet thead{
-  color:#fa6705;
+.contactSet thead {
+    color: #fa6705;
 }
 
 .contact-view {
@@ -317,10 +321,16 @@ section {
     cursor: pointer;
 }
 
-.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
-  text-align: left;
-  width: 10%;
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
+    text-align: left;
+    width: 10%;
 }
+
 .edit-detail {
     border: 1px solid #ddd;
     border-radius: 3px;
@@ -336,10 +346,12 @@ section {
     color: #fff;
     font-size: 18px;
 }
+
 .client-editbtn {
     text-align: right;
     margin-top: 15px;
 }
+
 .client-image {
     display: inline-block;
 }

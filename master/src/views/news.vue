@@ -346,7 +346,6 @@ import {
     initUserList,
     initUserDetail,
     getIsTop
-
 } from '../vuex/getters'
 import {
     getUserList,
