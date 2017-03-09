@@ -347,7 +347,8 @@ import {
     initBreedDetail,
     initCurrencylist,
     initUnitlist,
-    initEmployeeList
+    initEmployeeList,
+    initLogin
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -482,7 +483,8 @@ export default {
             initBreedDetail,
             initCurrencylist,
             initUnitlist,
-            initEmployeeList
+            initEmployeeList,
+            initLogin
         },
         actions: {
             getCountryList,
@@ -897,6 +899,7 @@ export default {
             }
             this.param.tradeTime = year + "-" + month + "-" + day + " 00:00:00";
         }
+        console.log(this.initLogin)
     }
 }
 </script>
