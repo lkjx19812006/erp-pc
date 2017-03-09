@@ -6899,7 +6899,20 @@ export const getTimeOrderCount = ({ dispatch }, param) => { //我的订单统计
 
 /*---部门统计---*/
 export const getOrgCount = ({ dispatch }, param) => { 
-    var OrgUrl = apiUrl.clientList + '/report/order/all';
+    var OrgUrl = apiUrl.clientList + '/report/order/all?';
+    
+    for(var seach in param){
+       if(seach == 'orderType' && param[seach] !== '' ){
+          OrgUrl += '&orderType=' + param.orderType
+       }
+       if(seach == 'startTime' && param[seach] !== '' ){
+          OrgUrl += '&startTime=' + param.startTime
+       }
+       if(seach == 'endTime' && param[seach] !== '' ){
+          OrgUrl += '&endTime=' + param.endTime
+       }
+    }
+
     Vue.http({
         method: 'GET',
         url: OrgUrl,
