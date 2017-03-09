@@ -262,6 +262,7 @@ export default {
     },
    created(){
    	  this.getDrugsDetail(this.param);
+
    }
 }
 </script>

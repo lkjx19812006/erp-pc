@@ -412,7 +412,7 @@ export default {
                 type: 1,
                 sourceType: 0,
                 sample: 0,
-                intl: 0,
+                intl: '',
                 customer: '',
                 currency: '',
                 tradeTime: '',
@@ -558,7 +558,7 @@ export default {
             this.tipsParam.alert = true;
             this.getEmpolyeeOrder(this.loadParam);
         },
-       
+
         orderCheck: function(id, index, validate) {
             this.auditParam.id = id;
             this.auditParam.index = index;

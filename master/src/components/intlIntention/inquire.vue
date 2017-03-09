@@ -39,16 +39,17 @@
                                         <option>Post Office-by Sea</option>
                                         <option>Post Office-by Air</option>
                                         <option>E-Post</option>
+                                        <option>Border Trade</option>
                                         <option>other</option>
                                     </select>
                                 </div>
                                 <!-- 目的港口 -->
-                                <div class="editpage-input" v-if="param.inquireType=='CIF'||param.inquireType=='FCA'||param.inquireType=='FAS'||param.inquireType=='CPT'||param.inquireType=='CFR'||param.inquireType=='CIP'||param.inquireType=='DAT'||param.inquireType=='DAP'||param.inquireType=='DDP'">
+                                <div class="editpage-input" v-if="param.inquireType=='CIF'||param.inquireType=='FCA'||param.inquireType=='FAS'||param.inquireType=='CPT'||param.inquireType=='CFR'||param.inquireType=='CIP'||param.inquireType=='DAT'||param.inquireType=='DAP'||param.inquireType=='DDP'||param.inquireType=='Border Trade'">
                                     <label class="editlabel">{{$t('static.destination')}} <span class="system_danger" v-if="$validation.destination.required">{{$t('static.required')}}</span></label>
                                     <input type="text" v-validate:destination="{required:true}" v-model='param.port' class="form-control edit-input" />
                                 </div>
                                 <!-- 邮编 -->
-                                <div class="editpage-input" v-if="param.inquireType=='FEDEX'||param.inquireType=='DHL'||param.inquireType=='UPS'||param.inquireType=='TNT'||param.inquireType=='EMS'||param.inquireType=='Post Office-by Sea'||param.inquireType=='Post Office-by Air'||param.inquireType=='E-Post'||param.inquireType=='other'">
+                                <div class="editpage-input" v-if="param.inquireType=='FEDEX'||param.inquireType=='DHL'||param.inquireType=='UPS'||param.inquireType=='TNT'||param.inquireType=='EMS'||param.inquireType=='Post Office-by Sea'||param.inquireType=='Post Office-by Air'||param.inquireType=='E-Post'||param.inquireType=='other'||param.inquireType=='Border Trade'">
                                     <label class="editlabel">{{$t('static.postcodes')}} <span class="system_danger" v-if="$validation.postcode.required">{{$t('static.required')}}</span></label>
                                     <input type="text" v-validate:postcode="{required:true}" v-model='param.postcode' class="form-control edit-input" />
                                 </div>
@@ -102,8 +103,7 @@ export default {
     methods: {
         confirm: function() {
             this.param.show = false;
-            this.intlIntentionInquire
-(this.param);
+            this.intlIntentionInquire(this.param);
         },
 
     },
@@ -125,7 +125,7 @@ export default {
 .modal_con {
     z-index: 1086;
     width: 400px;
-    height: 420px;
+    height: 445px;
     top: 0;
 }
 

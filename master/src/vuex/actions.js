@@ -832,8 +832,6 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
         }
     }).then((res) => {
         param.callback(res.json().result);
-        console.log('success');
-
     }, (res) => {
         console.log('fail');
     })

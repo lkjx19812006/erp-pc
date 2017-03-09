@@ -56,6 +56,7 @@
                   <tr>
                     <th>{{$t('static.client_name')}}</th>
                     <th>{{$t('static.account_number')}}</th>
+                    <th>银行账户</th>
                     <th>{{$t('static.normal_amount')}}</th>
                     <th>{{$t('static.freezing_amount')}}</th>
                     <th>{{$t('static.transfer_amount')}}</th>
@@ -76,6 +77,7 @@
                             link:'/money/details/'
                       })">{{item.name}}</a></td>
                   <td>{{item.bank}}</td>
+                  <td>{{item.number}}</td>
                   <td>{{item.normalMoney}}</td>
                   <td>{{item.freezeMoney}}</td>
                   <td v-if="item.rollOutMoney">{{item.rollOutMoney}}</td>
@@ -245,7 +247,7 @@
     background-position: 5px;
   }
    #table_box  table th,#table_box  table td{
-    width: 212px;
-    min-width: 212px;
+    width: 186px;
+    min-width: 186px;
   }
 </style>

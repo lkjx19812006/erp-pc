@@ -52,31 +52,82 @@
         </div>
       
         <!-- 业务 -->
-        <div class="listContent">
+        <div class="listContent" id="listContent">
            <!-- 业务中的一项 -->
            <div class="listItem" v-for = "item in initOrgCount">
               <div class="title">
                  <span>{{item.name}}</span>
               </div>
-              <div class="total" v-for = "item in initOrgCount[$index].statisticsList">
-                 <label>订单金额:</label><span>{{item.totalSum}}</span><br/>
-                 <label>应收/应付:</label><span>{{item.statisticsList[0].unpaidSum}}</span>
+              <div class="total">
+                 <div class="total-lsit" v-for = "key in item.statisticsList">
+	                 <label>订单金额:</label><span>{{key.totalSum}}</span><br/>
+	                 <label>应收/应付:</label><span>{{key.unpaidSum}}</span><br/>
+	                 <label>货币:</label><span>{{key.currency}}</span>
+                 </div>
               </div>
               <!-- 业务员 应收金额 应收 应付 列表 -->
               <div class="table">
-                 <ul class="table-header">
-                 	<li>业务员</li>
-                 	<li>订单金额</li>
-                 	<li>应收/应付</li>
-                 </ul>
-                 <ul class="table-ct table-header" v-for = "itemlist in item.lowerList">
-                 	<li>{{itemlist.}}</li>
-                 	<li>333333</li>
-                 	<li>35353636</li>
-                 </ul>
-
+                <table>
+                	 <tr class="tb-header">
+                		<td>业务员</td>
+                		<td>订单金额</td>
+                		<td>应收/应付</td>
+                		<td>币种</td>
+                	 </tr>
+                	 <tbody v-for="detail in item.lowerList">
+                	 	<tr class="tb-content" >
+						    <td rowspan="10">{{detail.name}}</td>
+						</tr>
+					    <tr class="tb-content" v-for="classified in detail.statisticsList">
+						    <td>{{classified.totalSum}}</td>
+						    <td>{{classified.prepaidSum}}</td>
+						    <td>{{classified.currency}}</td>				    
+					    </tr>
+                	 </tbody>
+					 
+                 </table> 
+               </div>
+             </div>
+               <!-- 业务中的一项 -->
+           <div class="listItem" v-for = "item in initOrgCount">
+              <div class="title">
+                 <span>{{item.name}}</span>
               </div>
+              <div class="total">
+                 <div class="total-lsit" v-for = "key in item.statisticsList">
+	                 <label>订单金额:</label><span>{{key.totalSum}}</span><br/>
+	                 <label>应收/应付:</label><span>{{key.unpaidSum}}</span><br/>
+	                 <label>货币:</label><span>{{key.currency}}</span>
+                 </div>
+              </div>
+              <!-- 业务员 应收金额 应收 应付 列表 -->
+              <div class="table">
+                <table>
+                	 <tr class="tb-header">
+                		<td>业务员</td>
+                		<td>订单金额</td>
+                		<td>应收/应付</td>
+                		<td>币种</td>
+                	 </tr>
+                	 <tbody v-for="detail in item.lowerList">
+                	 	<tr class="tb-content" >
+						    <td rowspan="10">{{detail.name}}</td>
+						</tr>
+					    <tr class="tb-content" v-for="classified in detail.statisticsList">
+						    <td>{{classified.totalSum}}</td>
+						    <td>{{classified.prepaidSum}}</td>
+						    <td>{{classified.currency}}</td>				    
+					    </tr>
+                	 </tbody>
+					 
+                 </table> 
+               </div>
+             </div>
+          
+          
            </div>
+
+
         </div>
 
     </div>
@@ -110,44 +161,104 @@
 	    },
 	   
 	    created() {
-	       this.getOrgCount()
-	    }
+	       this.getOrgCount();
+	       for(var i in this.initOrgCount){
+	       		for(var j in this.initOrgCount[i].lowerList){
+	       			for(var k in this.initOrgCount[i].lowerList[j].statisticsList){
+	       				console.log(this.initOrgCount[i].lowerList[j].statisticsList[k])
+	       				console.log(this.initOrgCount[i].lowerList[j].statisticsList)
+	       			}
+	       		}
+	       }
+	    },
+	    ready(){
+	        window.onresize=function(){  
+			    const tablefrom = document.body.clientHeight-document.getElementById('top').offsetHeight-200;
+			    document.getElementById('listContent').style.height = tablefrom + 'px';     
+			}
+			window.onload=function(){  
+			    const tablefrom = document.body.clientHeight-document.getElementById('top').offsetHeight-200;  
+			    document.getElementById('listContent').style.height = tablefrom + 'px';     
+			}
+    }
 	}
 </script>
 <style scoped>
+.listContent{
+	min-width: 1000px;
+	max-width: 100%;
+	overflow-x:auto; 
+}
 .listItem{ 
-	float: left
+	min-width: 200px;
+	display:inline-block;
 }
 .listContent{
 	clear: both; 
 	width: 100%;
-	border: 1px solid #d5d5d5;
+	border: 1px solid #d9d9d9;
 	border-bottom:none
 }
 .listContent .listItem{ 
-	width: 400px;
-	border-right: 1px solid #d5d5d5
+	width: 600px;
 }
+
 .listContent .title{ 
 	height: 30px;
 	line-height: 30px;
 	text-align: center;
-	border-bottom: 1px solid #d5d5d5;
+	border-right: 1px solid #d9d9d9;
+	border-bottom: 1px solid #d9d9d9;
 }
-
-.listContent .total{
-	border-bottom: 1px solid #d5d5d5;
-	padding:10px 20px; 
+.total{
+	width: 100%;
+	min-height: 30px;
+	overflow: hidden;
+	border-right: 1px solid #d9d9d9;
+}
+.listContent .total-lsit{
+	float: left;
+    padding: 10px 20px
+}
+.total-lsit label{
+	display: inline-block;
+    margin-right:5px
+}
+.total-lsit span{
+	letter-spacing: 1px
 }
 .table-header{
 	display: flex;
 }
-.table-header li{
-	flex: 1;
-	clear: both;
+.table table{
+	width: 100%;
+}
+.tb-header{
+	width: 100%
+}
+.tb-header td{
+	width: 25%;
 	padding-left: 10px;
-	border-left: 1px solid #d5d5d5;
-	border-bottom: 1px solid #d5d5d5
+}
+.tb-header td{
+	border: 1px solid #d9d9d9;
+	border-left:none;
+	height: 34px;
+    line-height: 34px;
+    word-break: break-all;
+}
+.tb-content td{
+	width: 25%;
+	padding-left: 10px;
+    height: 34px;
+    line-height: 34px;
+    word-break: break-all;
+}
+.tb-content td{
+    border: 1px solid #d9d9d9;
+	height: 34px;
+    line-height: 34px;
+    word-break: break-all;
 }
 .click_change span {
     padding: 0 20px;

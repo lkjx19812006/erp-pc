@@ -1025,7 +1025,7 @@ var locales = {
             confirm_income: 'Confirmation of payment',
             signing_contract: 'After signing the contract',
             total_money: 'Total amount',
-            pattern: 'PI',
+            pattern: 'Invoice number',
             adjust_amount: 'Adjusted amount',
             diferencia: 'Diferencia',
             contract_note: 'Secondary contract text',

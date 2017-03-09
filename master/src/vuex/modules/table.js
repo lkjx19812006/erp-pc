@@ -1156,14 +1156,12 @@ const mutations = {
             state.basicBaseList.orderList[data.sub].logistics = data.logistics;
         } else if (data.titles == '售后申请') {
             state.basicBaseList.orderList[data.sub].logistics = data.logistics;
-        }
-        else if (data.link == '/order/transferToEmployee') {
+        } else if (data.link == '/order/transferToEmployee') {
             //state.basicBaseList.orderList.shift(data.id)
-            
-            state.basicBaseList.userOrderList.splice(data.itemSub,1)
-           
-        } 
-        else {
+
+            state.basicBaseList.userOrderList.splice(data.itemSub, 1)
+
+        } else {
             state.basicBaseList.orderList = data;
         }
 
