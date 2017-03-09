@@ -549,6 +549,9 @@ export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列�
     if (param.name && param.name !== '') {
         url += '&name=' + param.name;
     }
+    if (param.userPhone && param.userPhone !== '') {
+        url += '&phone=' + param.userPhone;
+    }
     if (param.startTime && param.startTime !== '') {
         url += '&startTime=' + param.startTime;
     }
@@ -590,6 +593,9 @@ export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列
     }
     if (param.name && param.name !== '') {
         url += '&name=' + param.name;
+    }
+    if (param.userPhone && param.userPhone !== '') {
+        url += '&phone=' + param.userPhone;
     }
     if (param.startTime && param.startTime !== '') {
         url += '&startTime=' + param.startTime;
@@ -6898,7 +6904,7 @@ export const getTimeOrderCount = ({ dispatch }, param) => { //我的订单统计
 
 
 /*---部门统计---*/
-export const getOrgCount = ({ dispatch }, param) => { 
+export const getOrgCount = ({ dispatch }, param) => {
     var OrgUrl = apiUrl.clientList + '/report/order/all';
     Vue.http({
         method: 'GET',

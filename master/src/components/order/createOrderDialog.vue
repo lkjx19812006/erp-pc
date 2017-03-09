@@ -37,8 +37,8 @@
                             <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
                             <input type="text" class="form-control edit-input" readonly="true" v-model="employeeParam.consignerName" v-validate:shipper="{required:true}" @click="selectEmployee(param.consigner,employeeParam.consignerName)" />
                             <!--  <select  class="form-control edit-input" v-model="param.consigner">
-                           <option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
-                       </select> -->
+                               <option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
+                           </select> -->
                         </div>
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.transcation')}}</label>

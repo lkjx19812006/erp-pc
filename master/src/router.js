@@ -2,7 +2,7 @@ export default (router) => router.map({
     '/': {
         name: 'welcome', //应用首页
         component: function(resolve) {
-                require(['./views/welcome'], resolve)
+                require(['./views/home'], resolve)
             } //加载index页面
     },
     '/login': {

@@ -6,8 +6,8 @@
             <!-- 头部搜索 -->
             <div slot="top">
                 <div class="clear" style="margin-top:10px;">
-                    <dl class="clear left transfer">
-                        <dt class="left transfer marg_top" style="letter-spacing:3px">客户名：</dt>
+                    <dl class="clear left">
+                        <dt class="left marg_top" style="letter-spacing:3px">客户名：</dt>
                         <dd class="left">
                             <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                         </dd>
@@ -48,6 +48,7 @@
                     <thead>
                         <tr>
                             <th>{{$t('static.client_name')}}</th>
+                            <th>客户手机</th>
                             <th>{{$t('static.account_number')}}</th>
                             <th>银行账户</th>
                             <th>{{$t('static.normal_amount')}}</th>
@@ -60,15 +61,18 @@
                     </thead>
                     <tbody>
                         <tr v-for="item in initRolloutlist">
-                            <td><a @click.stop="clickOn({
-                            show:true,
-                            id:item.id,
-                            moneyId:item.moneyId,
-                            userId:item.userId,
-                            loading:false,
-                            status:item.status,
-                            link:'/money/details/'
-                      })">{{item.name}}</a></td>
+                            <td>
+                                <a @click.stop="clickOn({
+                                      show:true,
+                                      id:item.id,
+                                      moneyId:item.moneyId,
+                                      userId:item.userId,
+                                      loading:false,
+                                      status:item.status,
+                                      link:'/money/details/'
+                                })">{{item.name}}</a>
+                            </td>
+                            <td>{{item.userPhone}}</td>
                             <td>{{item.bank}}</td>
                             <td>{{item.number}}</td>
                             <td>{{item.normalMoney}}</td>
@@ -136,6 +140,7 @@ export default {
                 name: '',
                 type: '',
                 status: '',
+                userPhone: '',
                 bank: '',
                 startTime: '',
                 endTime: '',
@@ -199,14 +204,6 @@ export default {
     },
     created() {
         changeMenu(this.$store.state.table.isTop, this.getRolloutList, this.loadParam, localStorage.rollOutParam);
-        /*if(!this.$store.state.table.isTop){
-            console.log("刷新数据");
-            this.getRolloutList(this.loadParam);
-        }else{
-            console.log("不刷新数据");
-            this.loadParam = JSON.parse(localStorage.rollOutParam);
-            this.$store.state.table.basicBaseList.orderRolloutList = JSON.parse(localStorage.rollOutList);
-        }*/
     }
 }
 </script>
@@ -246,7 +243,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 186px;
-    min-width: 186px;
+    width: 170px;
+    min-width: 170px;
 }
 </style>
