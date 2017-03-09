@@ -70,7 +70,6 @@
                                                     <th>{{$t('static.link_types')}}</th>
                                                     <th>{{$t('static.order_source')}}</th>
                                                     <th>{{$t('static.out_instatus')}}</th>
-                                                    <th>{{$t('static.status')}}</th>
                                                     <th>{{$t('static.create_time')}}</th>
                                                 </thead>
                                                 <tbody>
@@ -78,7 +77,6 @@
                                                         <td>{{item.linkType | linktype}}</td>
                                                         <td>{{item.desc}}</td>
                                                         <td>{{item.amount.toFixed(2)}}</td>
-                                                        <td>{{item.status | drugsStatus}}</td>
                                                         <td>{{item.createTime}}</td>
                                                     </tr>
                                                 </tbody>
@@ -109,6 +107,7 @@
                                            })"  v-if="(initDrugsDetail.moneyRollIns.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">新建</button> -->
                                     </h4>
                                     </div>
+                                    <!-- 药款转入金额 -->
                                     <div class="panel-collapse" v-if="initDrugsDetail.moneyRollIns.arr.length&&!initDrugsDetail.moneyRollIns.show" v-cloak>
                                         <div class="panel-body panel-set">
                                             <table class="table  contactSet">
@@ -128,7 +127,7 @@
                                                         <td>{{item.freezeMoney.toFixed(2)}}</td>
                                                         <td>{{item.amount.toFixed(2)}}</td>
                                                         <td>{{item.payStatus}}</td>
-                                                        <td>{{item.status | drugsStatus}}</td>
+                                                        <td>{{item.status | transferStatus}}</td>
                                                         <td>{{item.createTime}}</td>
                                                     </tr>
                                                 </tbody>
