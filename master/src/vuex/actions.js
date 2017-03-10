@@ -6754,6 +6754,9 @@ export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交
     if (param.orderType && param.orderType !== '') {
         url += "&orderType=" + param.orderType;
     }
+    if (param.orderType == 0) {
+        url += "&orderType=" + 0;
+    }
     Vue.http({
         method: 'GET',
         url: url,
@@ -6911,12 +6914,16 @@ export const getOrgCount = ({ dispatch }, param) => {
         if (seach == 'orderType' && param[seach] !== '') {
             OrgUrl += '&orderType=' + param.orderType
         }
+
         if (seach == 'startTime' && param[seach] !== '') {
             OrgUrl += '&startTime=' + param.startTime
         }
         if (seach == 'endTime' && param[seach] !== '') {
             OrgUrl += '&endTime=' + param.endTime
         }
+    }
+    if (param.orderType == 0) {
+        OrgUrl += "&orderType=" + 0;
     }
     Vue.http({
         method: 'GET',

@@ -74,12 +74,12 @@
                     <tr v-for="item in initOrderStatics.statisticsList">
                         <td>{{item.currency}}</td>
                         <td>{{item.orderCount}}笔</td>
-                        <td>{{item.amountSum}}</td>
-                        <td>{{item.costSum}}</td>
+                        <td>{{item.amountSum | money}}</td>
+                        <td>{{item.costSum | money}}</td>
                         <td>{{item.incidentalsSum}}</td>
                         <td>{{item.preferentialSum}}</td>
-                        <td>{{item.prepaidSum}}</td>
-                        <td>{{item.totalSum}}</td>
+                        <td>{{item.prepaidSum | money}}</td>
+                        <td>{{item.totalSum | money}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -135,12 +135,12 @@
                     <td v-if="item.type==0">{{$t('static.purchase')}}</td>
                     <td v-if="item.type==1">{{$t('static.sell')}}</td>
                     <td>{{item.currency | Currency}}</td>
-                    <td>{{item.total}}</td>
-                    <td>{{item.cost}}</td>
+                    <td>{{item.total | money}}</td>
+                    <td>{{item.cost | money}}</td>
                     <td>{{item.incidentals}}</td>
                     <td>{{item.preferential}}</td>
-                    <td>{{item.prepaid}}</td>
-                    <td>{{item.total}}</td>
+                    <td>{{item.prepaid |money}}</td>
+                    <td>{{item.total | money}}</td>
                 </tr>
             </table>
             <!-- 人员列表 -->
@@ -163,12 +163,12 @@
                     </tr>
                     <tr v-for="item in initOrgOrderCount[$index].statisticsList">
                         <td>{{item.orderCount}}笔</td>
-                        <td>{{item.amountSum}}{{item.currency}}</td>
-                        <td>{{item.costSum}}</td>
+                        <td>{{item.amountSum | money}}{{item.currency}}</td>
+                        <td>{{item.costSum | money}}</td>
                         <td>{{item.incidentalsSum}}</td>
                         <td>{{item.preferentialSum}}</td>
-                        <td>{{item.prepaidSum}}</td>
-                        <td>{{item.totalSum}}</td>
+                        <td>{{item.prepaidSum | money}}</td>
+                        <td>{{item.totalSum | money}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -192,12 +192,12 @@
                     </tr>
                     <tr v-for="item in initOrgOrderCount[$index].statisticsList">
                         <td>{{item.orderCount}}笔</td>
-                        <td>{{item.amountSum}}{{item.currency}}</td>
-                        <td>{{item.costSum}}</td>
+                        <td>{{item.amountSum | money}}{{item.currency}}</td>
+                        <td>{{item.costSum | money}}</td>
                         <td>{{item.incidentalsSum}}</td>
                         <td>{{item.preferentialSum}}</td>
-                        <td>{{item.prepaidSum}}</td>
-                        <td>{{item.totalSum}}</td>
+                        <td>{{item.prepaidSum |money}}</td>
+                        <td>{{item.totalSum | money}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -228,7 +228,7 @@
                         </td>
                         <td>{{item.total}}笔</td>
                         <td>{{item.totalNumber}}kg</td>
-                        <td>{{item.totalAmount}}元</td>
+                        <td>{{item.totalAmount | money}}元</td>
                     </tr>
                 </tbody>
             </table>
@@ -308,21 +308,37 @@ export default {
                 loading: true,
                 link: "/report/order/type",
                 key: "orgOrderSortCount",
-                groupType: 'customer_type'
+                groupType: 'customer_type',
+                orderType: 1,
+                timeType: '',
+                startTime: '',
+                endTime: '',
             },
             groupType: 'detail',
             currentView: 1,
         }
     },
     methods: {
-        clickChange: function(timeType) {
+        clickChange: function(timeType) { //日周月年的搜索
             this.loadParam.timeType = timeType;
             this.loadParam.startTime = '';
             this.loadParam.endTime = '';
+            this.detailParam.timeType = timeType; //详情
+            this.detailParam.startTime = '';
+            this.detailParam.endTime = '';
+            this.employeeParam.timeType = timeType; //业务员
+            this.employeeParam.startTime = '';
+            this.employeeParam.endTime = '';
+            this.orgParam.timeType = timeType; //部门
+            this.orgParam.startTime = '';
+            this.orgParam.endTime = '';
             this.getOrderCountList(this.loadParam);
             this.getOrgCountList(this.loadParam);
+            this.getOrderCount(this.detailParam);
+            this.getOrgCountList(this.employeeParam);
+            this.getOrgCountList(this.orgParam);
         },
-        changeGroupType: function(groupType) {
+        changeGroupType: function(groupType) { //详情，员工，部门等的切换
             if (groupType == 'detail') {
                 this.groupType = groupType;
                 this.getOrderCount(this.detailParam);
@@ -339,15 +355,29 @@ export default {
             }
 
         },
-        clickType: function(type) {
+        clickType: function(type) { //采购销售的搜索
             this.loadParam.orderType = type;
+            this.employeeParam.orderType = type; //业务员
+            this.orgParam.orderType = type; //部门
+            this.sortParam.orderType = type; //客户类型
+            this.detailParam.orderType = type; //详情
             this.getOrderCountList(this.loadParam);
-            this.getOrgCountList(this.loadParam)
+            this.getOrgCountList(this.loadParam);
+            this.getOrgCountList(this.employeeParam);
+            this.getOrgCountList(this.orgParam);
+            this.getOrderCount(this.detailParam);
+            this.getOrgCountList(this.sortParam); //客户类型，地区，产地。。
         },
         search: function() {
             this.loadParam.timeType = '';
+            this.employeeParam.timeType = '';
+            this.orgParam.timeType = ''; //部门
+            this.sortParam.timeType = '';
             this.getOrderCountList(this.loadParam);
             this.getOrgCountList(this.loadParam);
+            this.getOrgCountList(this.employeeParam);
+            this.getOrgCountList(this.orgParam);
+            this.getOrgCountList(this.sortParam);
         },
         resetCondition: function() {
             this.loadParam.timeType = '';

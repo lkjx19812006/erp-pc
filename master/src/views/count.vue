@@ -19,13 +19,13 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==3">
         <orgorder-count></orgorder-count>
     </div>
-    <!-- 全部订单统计 -->
+    <!-- 订单统计报表-->
     <div class="myOrder" v-if="$route.path.split('=')[1]==5">
-        <allorder-count></allorder-count>
-    </div>
-     <!-- 订单统计样式-->
-    <div class="myOrder" v-if="$route.path.split('=')[1]==6">
         <org-manage></org-manage>
+    </div>
+    <!-- 全部订单统计 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==6">
+        <allorder-count></allorder-count>
     </div>
 </template>
 <script>
