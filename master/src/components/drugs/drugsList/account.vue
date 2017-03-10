@@ -66,8 +66,8 @@
                               status:item.status,
                               link:'/money/details/'
                         })">{{item.userName}}</a></td>
-                        <td>{{item.normalMoney}}</td>
-                        <td>{{item.freezeMoney}}</td>
+                        <td>{{item.normalMoney | money}}</td>
+                        <td>{{item.freezeMoney | money}}</td>
                         <td>{{item.integral}}</td>
                         <td>{{item.credit}}</td>
                         <td>{{item.createTime}}</td>

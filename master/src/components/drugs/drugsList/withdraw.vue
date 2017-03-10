@@ -51,7 +51,7 @@
                             <th>客户手机</th>
                             <th>{{$t('static.account_number')}}</th>
                             <th>银行账户</th>
-                            <th>{{$t('static.normal_amount')}}</th>
+                            <th>{{$t('static.normal_amount') }}</th>
                             <th>{{$t('static.freezing_amount')}}</th>
                             <th>{{$t('static.transfer_amount')}}</th>
                             <th>{{$t('static.application_time')}}</th>
@@ -75,8 +75,8 @@
                             <td>{{item.userPhone}}</td>
                             <td>{{item.bank}}</td>
                             <td>{{item.number}}</td>
-                            <td>{{item.normalMoney}}</td>
-                            <td>{{item.freezeMoney}}</td>
+                            <td>{{item.normalMoney | money}}</td>
+                            <td>{{item.freezeMoney | money}}</td>
                             <td v-if="item.amount">{{item.amount}}</td>
                             <td v-if="!item.amount">0</td>
                             <td>{{item.ctime}}</td>
