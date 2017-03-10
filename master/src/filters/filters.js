@@ -1092,7 +1092,7 @@ Vue.filter('intentionSource', function(val) { //意向来源
 })
 
 Vue.filter('file', function(val) { //文件后缀名获取
-    console.log(val);
+    var val = val;
     var file = val.substring(val.lastIndexOf('.') + 1);
     if (file == 'png' || file == 'jpeg' || file == 'jpg' || file == 'bmp' || file == 'gif') {
         return val;

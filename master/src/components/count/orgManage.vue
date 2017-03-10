@@ -1,7 +1,7 @@
 <template>
 	 <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">部门管理</div>
+            <div class="my_enterprise col-xs-1">业务总览报表</div>
             <div class="btn btn-primary right" @click="refresh()">刷新</div>
         </div>
         <!-- 日期统计 -->
@@ -12,6 +12,24 @@
                 </button>
                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.orderType===0}" @click="clickType(0)">
                     采购
+                </button>
+            </div>
+            <!-- 搜索 日 周 年 -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='day'}" @click="clickChange('day')">
+                    日
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='week'}" @click="clickChange('week')">
+                    周
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='month'}" @click="clickChange('month')">
+                    月
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='quarter'}" @click="clickChange('quarter')">
+                    季
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='year'}" @click="clickChange('year')">
+                    年
                 </button>
             </div>
             <!-- 搜索起止时间 -->
@@ -35,7 +53,7 @@
         </div>
       
         <!-- 业务 -->
-        <div class="listContent" id="listContent">
+        <div class="listContent" id="listContent" >
            <!-- 业务中的一项 -->
            <div class="listItem" v-for = "item in initOrgCount">
               <div class="title">
@@ -43,10 +61,11 @@
               </div>
               <div class="total">
                  <div class="total-lsit" v-for = "key in item.statisticsList">
-	                 <label>订单金额:</label><span>{{key.totalSum}}</span><br/>
-	                 <div v-if="loadParam.orderType==1"><label>应收:</label><span>{{key.unpaidSum}}</span></div>
-	                 <div v-if="loadParam.orderType==0"><label>应付:</label><span>{{key.unpaidSum}}</span></div>
-	                 <label>货币:</label><span>{{key.currency | Currency}}</span>
+	                 <div><label>订单金额:</label><span>{{key.totalSum | money}}</span></div>
+	                 <div v-if="loadParam.orderType==1"><label>应收:</label><span>{{key.unpaidSum | money}}</span></div>
+	                 <div v-if="loadParam.orderType==0"><label>应付:</label><span>{{key.unpaidSum | money}}</span></div>
+	                 <div><label>货币:</label><span>{{key.currency | Currency}}</span></div>
+	                 <div><label>订单数:</label><span>{{key.orderCount}}笔</span></div>
                  </div>
               </div>
               <!-- 业务员 应收金额 应收 应付 列表 -->
@@ -64,24 +83,26 @@
 						    <td rowspan="10">{{detail.name}}</td>
 						</tr>
 					    <tr class="tb-content" v-for="classified in detail.statisticsList">
-						    <td>{{classified.totalSum}}</td>
-						    <td>{{classified.prepaidSum}}</td>
-						    <td>{{classified.currency | Currency}}</td>				    
+						    <td>{{classified.totalSum | money}}</td>
+						    <td>{{classified.prepaidSum | money}}</td>
+						    <td>{{classified.currency | Currency}}</td>							    	    
 					    </tr>
                 	 </tbody>
-					 
+                	
                  </table> 
                </div>
-             </div>
-          
-           </div>
+            </div>
 
-
+        </div>
+        <!--底部分页-->
+        <div id="base_pagination" class="base_pagination">
+           <pagination :combination="loadParam" ></pagination> 
         </div>
 
     </div>
 </template>
 <script>
+    import pagination from '../pagination'
 	import {
 	  initOrgCount
 	} from '../../vuex/getters'
@@ -91,15 +112,19 @@
 	
 	export default {
 		components:{
-		   
+		  pagination
 		},
 		data() {
 	        return {
 	        	loadParam:{
 	        		orderType : 1,
 	        		startTime : '',
-	        		endTime : ''
-	        	}
+	        		endTime : '',
+	        		timeType:'',
+	        		cur:1,
+	        		total:15
+	        	},
+	        	
 	        }    
 	    },
 	    methods:{
@@ -112,13 +137,22 @@
 
 	       },
 	       search:function(){
+	       	  this.loadParam.timeType = '';
               this.getOrgCount(this.loadParam)
 	       },
 	       resetCondition:function(){
 	       	  this.loadParam.startTime = '';
 	       	  this.loadParam.endTime = '';
 	       	  this.loadParam.orderType = 1;
-	       	  this.getOrgCount();	  
+	       	  this.getOrgCount();
+	  
+	       },
+	       // 年月日季度搜索
+	       clickChange:function(type){
+	       	  this.loadParam.startTime = '';
+              this.loadParam.endTime = '';
+	       	  this.loadParam.timeType = type;
+              this.getOrgCount(this.loadParam);
 	       }
 	    },
 	    vuex: {
@@ -161,20 +195,16 @@
 .listContent{
 	min-width: 1000px;
 	max-width: 100%;
+	min-height: 670px;
 	overflow-x:auto; 
-}
-.listItem{ 
-	min-width: 200px;
-	display:inline-block;
-}
-.listContent{
 	clear: both; 
 	width: 100%;
 	border: 1px solid #d9d9d9;
 	border-bottom:none
 }
-.listContent .listItem{ 
-	width: 600px;
+.listItem{ 
+	min-width: 600px;
+	display:inline-block;
 }
 
 .listContent .title{ 

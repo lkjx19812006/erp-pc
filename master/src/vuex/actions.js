@@ -568,7 +568,7 @@ export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列�
         // 如果用户名为空，为它添加匿名
         for (var i = 0; i < drugAccountList.length; i++) {
             if (drugAccountList[i].userName == '') {
-                drugAccountList[i].userName = '匿名'
+                drugAccountList[i].userName = '未填写'
             }
         }
         dispatch(types.DRUG_ACCOUNT_DATA, drugAccountList);
@@ -795,6 +795,7 @@ export const getUserOrder = ({ dispatch }, param) => { //注册客户的订单�
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
+
     }).then((res) => {
         var orderList = res.json().result.list;
         for (var i in orderList) {
@@ -1404,10 +1405,8 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
     }).then((res) => {
         param.creCallback(res.json().msg);
         dispatch(types.ORDER_UPLOAD_DATA, param);
-        param.show = false;
     }, (res) => {
         console.log('fail');
-        param.show = false;
     });
 }
 
@@ -6900,22 +6899,27 @@ export const getTimeOrderCount = ({ dispatch }, param) => { //我的订单统计
 }
 
 
-/*---部门统计---*/
+/*---业务总览报表---*/
 export const getOrgCount = ({ dispatch }, param) => {
     var OrgUrl = apiUrl.clientList + '/report/order/all?';
-
+   
     for (var seach in param) {
         if (seach == 'orderType' && param[seach] !== '') {
             OrgUrl += '&orderType=' + param.orderType
         }
 
         if (seach == 'startTime' && param[seach] !== '') {
-            OrgUrl += '&startTime=' + param.startTime
+            OrgUrl += '&startTime=' + param.startTime;
+           
         }
         if (seach == 'endTime' && param[seach] !== '') {
             OrgUrl += '&endTime=' + param.endTime
         }
+        if (seach == 'timeType' && param[seach] !== '') {
+            OrgUrl += '&timeType=' + param.timeType
+        }
     }
+
     if (param.orderType == 0) {
         OrgUrl += "&orderType=" + 0;
     }
@@ -7640,17 +7644,9 @@ export const sendCancel = ({ dispatch }, param) => { //取消发货
     });
 }
 export const applyContract = ({ dispatch }, param) => { //申请补充合同
-    console.log(param);
-    param.images = '';
-    if (param.image_f) {
-        param.images += param.image_f + ','
-    }
-    if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t }
-    var ss = param.images;
+    var ss = param.files;
     var img = ss.split(","); //字符串转化为数组
     img.toString();
-    console.log(img)
     const body = {
         orderId: param.orderId,
         contractText: param.contractText,
@@ -7806,13 +7802,7 @@ export const getSalesApplyList = ({ dispatch }, param) => { //售后申请列表
 
 export const afterSalesApply = ({ dispatch }, param) => { //售后申请
     console.log(param);
-    param.images = '';
-    if (param.image_f) {
-        param.images += param.image_f + ','
-    }
-    if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t }
-    var ss = param.images;
+    var ss = param.files;
     var img = ss.split(","); //字符串转化为数组
     img.toString();
     const body = {

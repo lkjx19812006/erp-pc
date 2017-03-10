@@ -271,28 +271,29 @@
                             <h5 style="display:inline">{{$t('static.other_info')}}</h5>
                         </div>
                         <div class="editpage-input col-md-6">
-                            <label class="editlabel left">{{$t('static.preferential')}}：</label>
-                            <div class="clearfix left">
-                                <button class="btn btn-default left" style="font-size: 16px" @click="addCompute()">+</button>
-                                <input type="number" class="edit-input" v-model="param.preferential" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" value="{{param.preferential}}" />
-                                <button class="btn btn-default right" style="font-size: 16px" @click="reduce()">-</button>
+                            <label class="editlabel">{{$t('static.sundry_fees')}}：</label>
+                            <div class="clearfix">
+                                <!-- <button class="btn btn-default left" style="font-size: 16px" @click="addIncidentals()">+</button> -->
+                                <input type="number" class="form-control edit-input" v-model="param.incidentals" style="display:inline-block;float:left;" value="{{param.incidentals}}" @keyup="" />
+                                <!-- <button class="btn btn-default right" style="font-size: 16px" @click="subduction()">-</button> -->
                             </div>
                         </div>
+                        <!-- 优惠金额 -->
                         <div class="editpage-input col-md-6">
-                            <label class="editlabel left">{{$t('static.sundry_fees')}}：</label>
-                            <div class="clearfix left">
-                                <button class="btn btn-default left" style="font-size: 16px" @click="addIncidentals()">+</button>
-                                <input type="number" class="edit-input" v-model="param.incidentals" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" value="{{param.incidentals}}" @keyup="" />
-                                <button class="btn btn-default right" style="font-size: 16px" @click="subduction()">-</button>
+                            <label class="editlabel">{{$t('static.preferential')}}：</label>
+                            <div class="clearfix">
+                                <!-- <button class="btn btn-default left" style="font-size: 16px" @click="addCompute()">+</button> -->
+                                <input type="number" class="form-control edit-input" v-model="param.preferential" style="display:inline-block;" value="{{param.preferential}}" />
+                                <!-- <button class="btn btn-default right" style="font-size: 16px" @click="reduce()">-</button> -->
                             </div>
-                        </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">{{$t('static.discount_note')}}</label>
-                            <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" value="{{param.preferentialDesc}}" />
                         </div>
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.fee_explain')}}</label>
                             <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}" />
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">{{$t('static.discount_note')}}</label>
+                            <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" value="{{param.preferentialDesc}}" />
                         </div>
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.total')}}</label>
@@ -757,7 +758,7 @@ export default {
                 this.costmoney = this.costmoney.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/, '$1$2.$3');
             }
             this.param.total = (parseFloat(this.altogether) * 1000 + parseFloat(this.param.incidentals) * 1000 - parseFloat(this.param.preferential) * 1000) / 1000;
-            this.param.cost = (parseFloat(this.costmoney) * 1000 + parseFloat(this.param.incidentals) * 1000 - parseFloat(this.param.preferential) * 1000) / 1000;
+            this.param.cost = (parseFloat(this.costmoney) * 1000) / 1000;
         }
     },
     watch: {

@@ -149,6 +149,7 @@
                                       {{$t('static.pay_evidence')}}（0）
                                       </a>
                                       <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">{{$t('static.quality_satisfied')}}</span>
+                                      <!-- 分期付款 编辑 按钮 -->
                                       <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.edit')}}</button>
                                       <button v-else></button>
                                   </h4>
@@ -493,7 +494,6 @@
                                           route:uploadDocument,
                                           description:'',
                                           bizType:'attach_files',
-                                          files:'',
                                           attachFiles:'',
                                           titles:'上传附件凭证'
                                           })" v-if="initOrderDetail.attachFiles.arr.length!==null&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
@@ -519,9 +519,6 @@
                                                             <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
-                                                        <td>
-                                                            <img v-bind:src="item.image" />
-                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -765,7 +762,7 @@ export default {
             this.applyDetails = item;
         },
         divided_payments: function(id, total, stages) {
-            console.log(stages)
+            console.log(stages.arr)
             console.log(this.initOrderDetail)
             this.divideParam.show = true;
             this.divideParam.id = id;
@@ -786,10 +783,9 @@ export default {
             this.getOrderDetail(this.param);
         },
         createcredence: function(initOrderDetail) {
-            console.log(initOrderDetail)
             this.credenceParam = initOrderDetail;
+            console.log(this.credenceParam.show)
             this.credenceParam.creCallback = this.pictureCallback;
-            console.log(this.credenceParam)
         },
         clickBig: function(img) {
             this.pictureParam.show = true;
