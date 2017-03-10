@@ -200,6 +200,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="base_pagination" v-if="groupType=='detail'">
+            <pagination :combination="loadParam"></pagination>
+        </div>
     </div>
 </template>
 <script>
@@ -234,7 +237,10 @@ export default {
                 startTime: '',
                 orderType: 1,
                 timeType: '',
-                org: this.$store.state.table.login.orgId
+                org: this.$store.state.table.login.orgId,
+                cur: 1,
+                total: 0,
+                all: 0
             },
             employeeParam: { //业务员列表
                 loading: true,
@@ -335,7 +341,10 @@ export default {
         }
     },
     events: {
-
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getOrderCount(this.loadParam);
+        }
     },
     ready() {
         //common('tab','table_box',1);

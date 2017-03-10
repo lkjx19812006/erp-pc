@@ -14,7 +14,6 @@ export const getMenu = (state) => {
     return state.category.left
 };
 export const getList = (state) => {
-    console.log('getter');
     return JSON.parse(JSON.stringify(state.category.list));
 }
 
@@ -449,13 +448,19 @@ export const initAddressList = (state) => { //获取药款账户的数据
 
 /*--邮件列表--*/
 export const initEmailList = (state) => { //获取邮件列表
-        return JSON.parse(JSON.stringify(state.table.basicBaseList.emailList));
-    }
-    /*--邮件统计--*/
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.emailList));
+}
+
+/*--邮件统计--*/
 export const initEmailCount = (state) => { //获取邮件统计
     return JSON.parse(JSON.stringify(state.table.basicBaseList.emailCount));
 }
 
 export const initScopeDetail = (state) => { //获取权限详情
     return JSON.parse(JSON.stringify(state.tablelist.power.detail));
+}
+
+/*--邮件统计--*/
+export const initDictionary = (state) => { //获取邮件统计
+    return JSON.parse(JSON.stringify(state.table.dictionary));
 }

@@ -7,7 +7,6 @@ export const decrement = ({ dispatch }) => dispatch(types.DECREMENT)
 export const menuBar = ({ dispatch }) => dispatch(types.MENU_BAR)
 
 export const login = ({ dispatch }, data) => { //登录
-    console.log(data);
     const body = {
         no: data.no,
         password: data.password
@@ -15,7 +14,6 @@ export const login = ({ dispatch }, data) => { //登录
     if (data.captcha) {
         body.captcha = data.captcha;
     }
-    console.log(body);
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + data.link,
@@ -845,9 +843,6 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
 }
 
 export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(我的订单)列表
-    console.log(param)
-        //console.log(param.link)
-
     param.loading = true;
     const body = {
         employee: param.employee,
@@ -6729,8 +6724,9 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
 }
 
 export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交易统计)
+    console.log(param)
     if (param) param.loading = true;
-    var url = apiUrl.clientList + '/report/order/list' + '?';
+    var url = apiUrl.clientList + '/report/order/list' + '?' + '&page=' + param.cur + '&pageSize=10';
     if (param.endTime && param.endTime !== '') {
         url += "&endTime=" + param.endTime;
     }
@@ -6766,8 +6762,10 @@ export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交
         }
     }).then((res) => {
         param.loading = false;
-        var orderCount = res.json().result;
+        var orderCount = res.json().result.list;
         dispatch(types.MY_ORDER_COUNT, orderCount);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
     }, (res) => {
         param.loading = false;
         console.log('fail');
@@ -6907,7 +6905,7 @@ export const getTimeOrderCount = ({ dispatch }, param) => { //我的订单统计
 /*---业务总览报表---*/
 export const getOrgCount = ({ dispatch }, param) => {
     var OrgUrl = apiUrl.clientList + '/report/order/all?';
-   
+
     for (var seach in param) {
         if (seach == 'orderType' && param[seach] !== '') {
             OrgUrl += '&orderType=' + param.orderType
@@ -6915,7 +6913,7 @@ export const getOrgCount = ({ dispatch }, param) => {
 
         if (seach == 'startTime' && param[seach] !== '') {
             OrgUrl += '&startTime=' + param.startTime;
-           
+
         }
         if (seach == 'endTime' && param[seach] !== '') {
             OrgUrl += '&endTime=' + param.endTime
@@ -8128,5 +8126,62 @@ export const getEmailCount = ({ dispatch }, param) => { //邮件统计
     }, (res) => {
         console.log('fail');
         param.loading = false;
+    })
+}
+
+export const readDictionary = ({ dispatch }, param) => { //字典信息
+    param.loading = true;
+
+    var url = "/crm/api/v1/i18n/readMuDictionary/" + param.lang;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var jsonArr = res.json().result;
+        for (let i = 0; i < jsonArr.length; i++) {
+            let arr = [];
+            for (let key in jsonArr[i].dictionary) {
+                let temp = {
+                    key: key,
+                    value: jsonArr[i].dictionary[key]
+                }
+                arr.push(temp);
+            }
+            jsonArr[i].arr = arr;
+            jsonArr[i].isEdit = false;
+        }
+        console.log(jsonArr[0].arr);
+        dispatch(types.MUlT_DICTIONARY, jsonArr);
+        param.loading = false;
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
+export const saveDictionary = ({ dispatch }, param) => { //保存字典
+    var url = "/crm/api/v1/i18n/saveDictionary";
+    var body = {
+        fileName: param.fileName,
+        dictionary: param.dictionary
+    }
+    Vue.http({
+        method: 'POST',
+        url: url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('success');
+    }, (res) => {
+        console.log('fail');
     })
 }
