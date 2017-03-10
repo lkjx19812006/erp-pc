@@ -139,6 +139,7 @@
 	       resetCondition:function(){
 	       	  this.loadParam.startTime = '';
 	       	  this.loadParam.endTime = '';
+	       	  this.loadParam.timeType = '';
 	       	  this.loadParam.orderType = 1;
 	       	  this.getOrgCount();
 	  
