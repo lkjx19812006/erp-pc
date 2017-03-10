@@ -126,7 +126,9 @@ import {
     CALL_RECORD_VOICE_DATA,
     EMAIL_DATA,
     EMAIL_COUNT,
+    MUlT_DICTIONARY,
     MY_ORG_COUNT
+
 } from '../mutation-types'
 
 
@@ -1129,7 +1131,9 @@ const state = {
     trackingDetail: {},
     employeeDetail: {},
     orgDetail: {},
+    dictionary: [{ fileName: '', dictionary: {}, arr: [], isEdit: false }],
     orgCount: {} //部门统计state
+
 }
 
 const mutations = {
@@ -2376,11 +2380,13 @@ const mutations = {
         state.basicBaseList.emailCount = data;
     },
 
+    [MUlT_DICTIONARY](state, data) {
+        state.dictionary = data;
+    },
+
     // 部门统计
     [MY_ORG_COUNT](state, data) {
-        console.log(state.orgCount)
         state.orgCount = data;
-        // console.log(data)
     }
 
 }

@@ -62,8 +62,6 @@ function getCookie(name) { //获取cookie
     }
 }
 
-
-
 //路由拦截器判断是否登录
 router.beforeEach(function({ to, next }) {
     if (to.name == "login") {

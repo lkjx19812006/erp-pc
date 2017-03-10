@@ -339,8 +339,7 @@ export default {
             this.tipParam.show = true;
             this.tipParam.name = name;
             //审核完成后刷新页面
-            this.getBacklogList(this.
-loadParam);
+            this.getBacklogList(this.loadParam);
         },
         refresh: function() {
             this.getBacklogList(this.loadParam);

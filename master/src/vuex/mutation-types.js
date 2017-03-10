@@ -45,7 +45,7 @@ export const PROVINCE_DATA = 'PROVINCE_DATA' //省市区列表数据
 export const SERVICE_ENTERPRISE = 'SERVICE_ENTERPRISE' //业务企业数据
 export const COMPANY_PRODUCT_DATA = 'COMPANY_PRODUCT_DATA' //企业产品
 export const COMPANY_PRODUCT_DETAIL = 'COMPANY_PRODUCT_DETAIL '
- //企业产品详情
+    //企业产品详情
 export const COMPANY_LICENSE_DATA = 'COMPANY_LICENSE_DATA' //企业证书
 export const RELATIVE_COMPANY_DATA = 'RELATIVE_COMPANY_DATA' //相关企业列表
 export const SERVICE_COMPONENT = 'SERVICE_COMPONENT' //业务成分数据
@@ -175,7 +175,7 @@ export const ORG_FUND_LIST = 'ORG_FUND_LIST' //部门资金记录
 export const FUND_DETAIL_DATA = 'FUND_DETAIL_DATA' //资金记录详情
 export const FINANCE_LIST = 'FINANCE_LIST' //财务资金审核
 export const ITEM_SUPPLIER_LIST = 'ITEM_SUPPLIER_LIST' //产品供应商获取
-export const MY_ORG_COUNT = 'MY_ORG_COUNT'  //我的客户统计
+export const MY_ORG_COUNT = 'MY_ORG_COUNT' //我的客户统计
 
 
 export const BANK_LIST = 'BANK_LIST' //获取银行数据
@@ -188,3 +188,5 @@ export const SALES_DETAIL = 'SALES_DETAIL' //合同、售后详情页面
 
 export const EMAIL_DATA = 'EMAIL_DATA' //邮件列表
 export const EMAIL_COUNT = 'EMAIL_COUNT' //邮件列表
+
+export const MUlT_DICTIONARY = 'MUlT_DICTIONARY' //邮件列表

@@ -3,7 +3,12 @@
  */
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
+import VueResource from 'vue-resource'
+import VueRouter from 'vue-router'
 Vue.use(VueI18n)
+Vue.use(VueResource)
+Vue.use(VueRouter)
+
 Vue.config.lang = 'zh_CN'
 var locales = {
     zh_CN: {
@@ -1067,6 +1072,25 @@ var locales = {
         }
     }
 }
+
+
+
+/*Object.keys(locales).forEach(function(lang) {
+    var url = "/crm/api/v1/i18n/readDictionary/" + lang;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        locales[lang].static = res.json().result;
+    }, (res) => {
+        console.log('fail');
+    })
+})
+*/
 
 
 
