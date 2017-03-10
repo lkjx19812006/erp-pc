@@ -368,7 +368,11 @@ export const initOrderStatics = (state) => {
 export const initAllOrderCount = (state) => {
     return parseJson(state.count.allOrderCount);
 }
+// 部门统计
+export const initOrgCount = (state) => { //部门统计
+    return parseJson(state.table.orgCount);
 
+}
 export const initMyTimeOrderCount = (state) => { //时间维度
     return parseJson(state.count.myTimeOrderCount);
 }

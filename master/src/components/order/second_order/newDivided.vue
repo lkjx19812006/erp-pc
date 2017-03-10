@@ -79,7 +79,7 @@
                                         </div>
                                         <div class="editpage-input col-md-6">
                                             <label class="editlabel">{{$t('static.install_extra')}} <span class="system_danger" v-if="$inner.extral.required">{{$t('static.required')}}</span></label>
-                                            <input type="text" v-model="breedInfo.extra" class="form-control edit-input" v-validate:extral="{required:true}" style="width:95%;float:left" /> <span> 天</span>
+                                            <input type="number" v-model="breedInfo.extra" class="form-control edit-input" v-validate:extral="{required:true}" style="width:47%;float:left" /><span>  /天</span>
                                         </div>
                                         <div class="editpage-input col-md-12">
                                             <label class="editlabel">{{$t('static.install_detail')}}<span class="system_danger" v-if="$inner.description.required">{{$t('static.required')}}</span></label>

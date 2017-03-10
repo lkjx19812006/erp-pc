@@ -136,6 +136,7 @@
                                                         </td>
                                                         <td>
                                                             <div v-if="item.inquireType=='CIF'||item.inquireType=='FCA'||item.inquireType=='FAS'||item.inquireType=='CPT'||item.inquireType=='CFR'||item.inquireType=='CIP'||item.inquireType=='DAT'||item.inquireType=='DAP'||item.inquireType=='DDP'||item.inquireType=='DAP'||item.inquireType=='EXW'||item.inquireType=='FOB'||item.inquireType=='DDP'">{{item.port}}</div>
+                                                            <div v-if="item.inquireType=='Border Trade'">{{item.port}}{{item.postcode}}</div>
                                                             <div v-else>{{item.postcode}}</div>
                                                         </td>
                                                         <td>{{item.ctime}}</td>

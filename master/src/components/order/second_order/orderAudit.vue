@@ -16,9 +16,9 @@
                     <section class="editsection clearfix" v-cloak v-if="param.titles==this.$t('static.review_application')">
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.country')}} <span class="system_danger" v-if="$validation.country.required">{{$t('static.required')}}</span></label>
-                            <input type="text" v-validate:country="{required:true}" v-show="false" v-model="param.country" class="form-control edit-input" />
+                            <input type="text" v-validate:country="{required:true}" v-show="false" v-model="country.cnameEn" class="form-control edit-input" />
                             <div type="text" class="edit-input">
-                                <v-select :debounce="250" :value.sync="country" :on-change="clickCountry" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
+                                <v-select :debounce="250" :value.sync="country" :on-change="selectCountry" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
                                 </v-select>
                             </div>
                         </div>
@@ -118,9 +118,9 @@
                     <section class="editsection clearfix" v-cloak v-if="param.titles=='重新申请审核'||param.titles=='重新申请支付'">
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.country')}} <span class="system_danger" v-if="$validation.country.required">{{$t('static.required')}}</span></label>
-                            <input type="text" v-validate:country="{required:true}" v-show="false" v-model="param.country" class="form-control edit-input" />
+                            <input type="text" v-validate:country="{required:true}" v-show="false" v-model="country.cnameEn" class="form-control edit-input" />
                             <div type="text" class="edit-input">
-                                <v-select :debounce="250" :value.sync="country" :on-change="clickCountry" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
+                                <v-select :debounce="250" :value.sync="country" :on-change="selectCountry" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
                                 </v-select>
                             </div>
                         </div>
@@ -390,9 +390,8 @@ export default {
     },
 
     methods: {
-        clickCountry: function() {
+        selectCountry: function() {
             this.param.country = this.country.id;
-            console.log(this.param.country)
             console.log(this.country.cnameEn)
         },
         branch: function(item) {
@@ -463,11 +462,12 @@ export default {
     created() {
         this.getCurrencyList(this.loadParam);
         this.getCountryList(this.loadParam)
-        console.log(this.param.country)
         this.getBankList(this.payName);
         if (this.param.payName && this.param.titles == '申请分期审核') {
             this.payName.name = this.param.payName;
         }
+        /*if (this.param.country) { this.country.cnameEn = this.param.country; }
+         */
     }
 
 }

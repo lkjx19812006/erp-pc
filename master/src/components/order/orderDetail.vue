@@ -54,13 +54,14 @@
                                         <mg-label :title="$t('static.country')">{{initOrderDetail.country}}</mg-label>
                                         <mg-label :title="$t('static.province')+$t('static.city')+$t('static.area')">{{initOrderDetail.province}} {{initOrderDetail.city}} {{initOrderDetail.district}}</mg-label>
                                         <mg-label :title="$t('static.detailed_address')">{{initOrderDetail.consigneeAddr}}</mg-label>
+                                        <mg-label :title="$t('static.sample_order')">{{initOrderDetail.sample | Sample}}</mg-label>
                                         <mg-label :title="$t('static.transcation_amount')" style="color:red">{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</mg-label>
                                         <mg-label :title="$t('static.sundry_fees')+$t('static.fee_explain')">{{initOrderDetail.incidentals}}<span v-if="initOrderDetail.incidentalsDesc!=''">（{{initOrderDetail.incidentalsDesc}}）</span></mg-label>
                                         <mg-label :title="$t('static.preferential')+$t('static.discount_note')">{{initOrderDetail.preferential}}<span v-if="initOrderDetail.preferentialDesc!=''">（{{initOrderDetail.preferentialDesc}}）</span></mg-label>
                                         <mg-label :title="$t('static.paid')">{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
                                         <mg-label :title="$t('static.wait_payment')">{{initOrderDetail.unpaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
                                         <mg-label :title="$t('static.transcation')">{{initOrderDetail.ctime}}</mg-label>
-                                        <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.description}}</mg-label>
+                                        <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.comments}}</mg-label>
                                     </ul>
                                 </div>
                                 <div class="panel panel-default">
@@ -86,8 +87,8 @@
                                                     <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                                     <th>{{$t('static.quality')}}</th>
                                                     <th>{{$t('static.price')}}</th>
-                                                    <th>{{$t('static.cost_price')}}</th>
-                                                    <th>{{$t('static.cost')}}{{$t('static.total')}}</th>
+                                                    <th v-if="this.initLogin.orgId !=='11'">{{$t('static.cost_price')}}</th>
+                                                    <th v-if="this.initLogin.orgId !=='11'">{{$t('static.cost')}}{{$t('static.total')}}</th>
                                                     <th>{{$t('static.total')}}</th>
                                                 </thead>
                                                 <tbody>
@@ -98,8 +99,8 @@
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.price}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
-                                                        <td>{{item.costPrice}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
-                                                        <td>{{item.cost}}</td>
+                                                        <td v-if="this.initLogin.orgId !=='11'">{{item.costPrice}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
+                                                        <td v-if="this.initLogin.orgId !=='11'">{{item.cost}}</td>
                                                         <td>{{item.amount}} （{{initOrderDetail.currency | Currency}}）</td>
                                                     </tr>
                                                 </tbody>
@@ -133,6 +134,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- 分期付款 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
@@ -609,7 +611,8 @@ import shadowModel from '../mguan/shadow.vue'
 import deleteModel from '../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import {
     initOrderDetail,
-    initMyFundList
+    initMyFundList,
+    initLogin
 } from '../../vuex/getters'
 import {
     getOrderDetail,
@@ -699,7 +702,8 @@ export default {
     vuex: {
         getters: {
             initOrderDetail,
-            initMyFundList
+            initMyFundList,
+            initLogin
         },
         actions: {
             getOrderDetail,

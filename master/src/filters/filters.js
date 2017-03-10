@@ -17,6 +17,16 @@ Vue.filter('telstate', function(val) {
         return '' + val;
     }
 });
+Vue.filter('Sample', function(val) { //是否样品
+    var val = val;
+    if (val == 0) {
+        return this.$t('static.no');
+    } else if (val == 0) {
+        return this.$t('static.yes');
+    } else {
+        return val;
+    }
+});
 
 Vue.filter('payMent', function(val) {
     var val = val;
@@ -811,19 +821,34 @@ Vue.filter('Audit', function(val) { //寄样审核
     }
 })
 
-Vue.filter('drugsStatus', function(val) { //药款状态
+Vue.filter('drugsStatus', function(val) { //药款转出状态
     var val = val;
     if (val == 0) {
-        return '初始状态';
+        return '申请审核';
     }
     if (val == 1) {
-        return '正在审核';
+        return '审核中';
     }
     if (val == 2) {
         return '正在转账';
     }
     if (val == 3) {
         return '转出成功';
+    }
+})
+Vue.filter('transferStatus', function(val) { //药款转入状态
+    var val = val;
+    if (val == 0) {
+        return '待支付';
+    }
+    if (val == 1) {
+        return '取消';
+    }
+    if (val == 2) {
+        return '支付成功';
+    }
+    if (val == 3) {
+        return '支付失败';
     }
 })
 Vue.filter('payType', function(val) { //药款支付状态
@@ -1032,7 +1057,7 @@ Vue.filter('isnull', function(val) {
         return val;
     }
 })
-Vue.filter('money', function(val) {
+Vue.filter('money', function(val) { //金额逗号隔开
     var val = val;
     val = parseFloat((val + "").replace(/[^\d\.-]/g, "")).toFixed(2) + "";
     var l = val.split(".")[0].split("").reverse(),

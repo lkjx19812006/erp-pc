@@ -547,6 +547,9 @@ export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列�
     if (param.name && param.name !== '') {
         url += '&name=' + param.name;
     }
+    if (param.userPhone && param.userPhone !== '') {
+        url += '&phone=' + param.userPhone;
+    }
     if (param.startTime && param.startTime !== '') {
         url += '&startTime=' + param.startTime;
     }
@@ -588,6 +591,9 @@ export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列
     }
     if (param.name && param.name !== '') {
         url += '&name=' + param.name;
+    }
+    if (param.userPhone && param.userPhone !== '') {
+        url += '&phone=' + param.userPhone;
     }
     if (param.startTime && param.startTime !== '') {
         url += '&startTime=' + param.startTime;
@@ -816,7 +822,8 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
         userId: param.user,
         employee: param.employee
     }
-
+    console.log(param)
+    dispatch(types.ORDER_TABLE, param);
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
@@ -829,11 +836,8 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
         }
     }).then((res) => {
         param.callback(res.json().result);
-        console.log('success');
-
     }, (res) => {
         console.log('fail');
-
     })
 }
 
@@ -6744,6 +6748,9 @@ export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交
     if (param.orderType && param.orderType !== '') {
         url += "&orderType=" + param.orderType;
     }
+    if (param.orderType == 0) {
+        url += "&orderType=" + 0;
+    }
     Vue.http({
         method: 'GET',
         url: url,
@@ -6886,6 +6893,44 @@ export const getTimeOrderCount = ({ dispatch }, param) => { //我的订单统计
         var orderCount = res.json().result;
 
         dispatch(types.MY_TIME_ORDER_COUNT, orderCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
+
+/*---部门统计---*/
+export const getOrgCount = ({ dispatch }, param) => {
+    var OrgUrl = apiUrl.clientList + '/report/order/all?';
+
+    for (var seach in param) {
+        if (seach == 'orderType' && param[seach] !== '') {
+            OrgUrl += '&orderType=' + param.orderType
+        }
+
+        if (seach == 'startTime' && param[seach] !== '') {
+            OrgUrl += '&startTime=' + param.startTime
+        }
+        if (seach == 'endTime' && param[seach] !== '') {
+            OrgUrl += '&endTime=' + param.endTime
+        }
+    }
+    if (param.orderType == 0) {
+        OrgUrl += "&orderType=" + 0;
+    }
+    Vue.http({
+        method: 'GET',
+        url: OrgUrl,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var orgCount = res.json().result;
+        dispatch(types.MY_ORG_COUNT, orgCount);
     }, (res) => {
         param.loading = false;
         console.log('fail');
@@ -8117,7 +8162,7 @@ export const readDictionary = ({ dispatch }, param) => { //字典信息
             jsonArr[i].isEdit = false;
         }
         console.log(jsonArr[0].arr);
-        dispatch(types.SINGLE_DICTIONARY, jsonArr);
+        dispatch(types.MUlT_DICTIONARY, jsonArr);
         param.loading = false;
     }, (res) => {
         param.loading = false;
