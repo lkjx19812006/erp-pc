@@ -43,8 +43,7 @@
                         <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
-                    <button type="button" class="btn btn-default" style="margin-left: 15px;" @click="search
-                    ()">搜索</button>
+                    <button type="button" class="btn btn-default" style="margin-left: 15px;" @click="search()">搜索</button>
                     <button type="button" class="btn btn-default" @click="resetCondition()">{{$t("static.clear_all")}}</button>
                 </div>
             </div>
@@ -74,12 +73,12 @@
                     <tr v-for="item in initOrgOrderCount.statisticsList">
                         <td>{{item.currency}}</td>
                         <td>{{item.orderCount}}笔</td>
-                        <td>{{item.amountSum}}</td>
-                        <td>{{item.costSum}}</td>
+                        <td>{{item.amountSum | money}}</td>
+                        <td>{{item.costSum | money}}</td>
                         <td>{{item.incidentalsSum}}</td>
                         <td>{{item.preferentialSum}}</td>
-                        <td>{{item.prepaidSum}}</td>
-                        <td>{{item.totalSum}}</td>
+                        <td>{{item.prepaidSum | money}}</td>
+                        <td>{{item.totalSum | money}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -135,7 +134,7 @@
                         </td>
                         <td>{{item.total}}笔</td>
                         <td>{{item.totalNumber}}kg</td>
-                        <td>{{item.totalAmount}}元</td>
+                        <td>{{item.totalAmount | money}}元</td>
                     </tr>
                 </tbody>
             </table>
@@ -163,12 +162,12 @@
                     <td v-if="item.type==0">{{$t('static.purchase')}}</td>
                     <td v-if="item.type==1">{{$t('static.sell')}}</td>
                     <td>{{item.currency | Currency}}</td>
-                    <td>{{item.total}}</td>
-                    <td>{{item.cost}}</td>
+                    <td>{{item.total |money}}</td>
+                    <td>{{item.cost | money}}</td>
                     <td>{{item.incidentals}}</td>
                     <td>{{item.preferential}}</td>
-                    <td>{{item.prepaid}}</td>
-                    <td>{{item.unpaid}}</td>
+                    <td>{{item.prepaid | money}}</td>
+                    <td>{{item.unpaid |money}}</td>
                 </tr>
             </table>
             <!-- 人员列表 -->
@@ -191,12 +190,12 @@
                     </tr>
                     <tr v-for="item in initOrgCountList[$index].statisticsList">
                         <td>{{item.orderCount}}笔</td>
-                        <td>{{item.amountSum}}{{item.currency}}</td>
-                        <td>{{item.costSum}}</td>
+                        <td>{{item.amountSum | money}}{{item.currency}}</td>
+                        <td>{{item.costSum | money}}</td>
                         <td>{{item.incidentalsSum}}</td>
                         <td>{{item.preferentialSum}}</td>
-                        <td>{{item.prepaidSum}}</td>
-                        <td>{{item.totalSum}}</td>
+                        <td>{{item.prepaidSum | money}}</td>
+                        <td>{{item.totalSum | money}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -272,40 +271,55 @@ export default {
                 this.sortParam.groupType = groupType;
                 this.getOrgCountList(this.sortParam);
             }
-
         },
         clickType: function(type) {
             this.loadParam.orderType = type;
+            this.employeeParam.orderType = type;
             this.getOrgCountList(this.loadParam);
             this.getOrderCount(this.loadParam)
+            this.getOrgCountList(this.employeeParam)
         },
         clickChange: function(type) {
             this.loadParam.timeType = type;
             this.loadParam.endTime = "";
             this.loadParam.startTime = "";
+            this.employeeParam.timeType = type;
+            this.employeeParam.endTime = "";
+            this.employeeParam.startTime = "";
             this.getOrgCountList(this.loadParam);
             this.getOrderCount(this.loadParam);
+            this.getOrgCountList(this.employeeParam);
         },
         search: function() {
             this.loadParam.timeType = '';
+            this.employeeParam.timeType = '';
+            this.employeeParam.startTime = this.loadParam.startTime;
+            this.employeeParam.endTime = this.loadParam.endTime;
             this.getOrgCountList(this.loadParam);
             this.getOrgCountList(this.sortParam);
             this.getOrderCount(this.loadParam);
+            this.getOrgCountList(this.employeeParam);
         },
         resetCondition: function() {
             this.loadParam.timeType = '';
             this.loadParam.startTime = '';
             this.loadParam.endTime = '';
-            this.loadParam.orderType = '';
-            this.groupType = 'customer_type';
+            this.loadParam.orderType = 1;
+            this.groupType = 'detail';
+            this.employeeParam.timeType = '';
+            this.employeeParam.startTime = '';
+            this.employeeParam.endTime = '';
+            this.employeeParam.orderType = 1;
             this.getOrgCountList(this.loadParam);
             this.getOrderCount(this.loadParam);
             this.getOrgCountList(this.sortParam);
+            this.getOrgCountList(this.employeeParam);
         },
         refresh: function() {
             this.getOrgCountList(this.loadParam);
             this.getOrgCountList(this.sortParam);
             this.getOrderCount(this.loadParam);
+            this.getOrgCountList(this.employeeParam);
         }
     },
     vuex: {

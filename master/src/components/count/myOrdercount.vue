@@ -73,12 +73,12 @@
                     <tr v-for="item in initOrderStatics.statisticsList">
                         <td>{{item.currency}}</td>
                         <td>{{item.orderCount}}笔</td>
-                        <td>{{item.amountSum}}</td>
-                        <td>{{item.costSum}}</td>
+                        <td>{{item.amountSum | money}}</td>
+                        <td>{{item.costSum | money}}</td>
                         <td>{{item.incidentalsSum}}</td>
                         <td>{{item.preferentialSum}}</td>
-                        <td>{{item.prepaidSum}}</td>
-                        <td>{{item.totalSum}}</td>
+                        <td>{{item.prepaidSum | money}}</td>
+                        <td>{{item.totalSum | money}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -104,12 +104,12 @@
                     <td v-if="item.type==0">{{$t('static.purchase')}}</td>
                     <td v-if="item.type==1">{{$t('static.sell')}}</td>
                     <td>{{item.currency | Currency}}</td>
-                    <td>{{item.total}}</td>
-                    <td>{{item.cost}}</td>
+                    <td>{{item.total | money}}</td>
+                    <td>{{item.cost | money}}</td>
                     <td v-if="item.mode==1">{{$t('static.together')}}</td>
                     <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
                     <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
-                    <td>{{item.prepaid}}</td>
+                    <td>{{item.prepaid | money}}</td>
                 </tr>
             </table>
         </div>

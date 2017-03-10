@@ -1057,7 +1057,7 @@ Vue.filter('isnull', function(val) {
         return val;
     }
 })
-Vue.filter('money', function(val) {
+Vue.filter('money', function(val) { //金额逗号隔开
     var val = val;
     val = parseFloat((val + "").replace(/[^\d\.-]/g, "")).toFixed(2) + "";
     var l = val.split(".")[0].split("").reverse(),
