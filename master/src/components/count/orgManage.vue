@@ -1,7 +1,7 @@
 <template>
 	 <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">部门管理</div>
+            <div class="my_enterprise col-xs-1">全部订单统计</div>
             <div class="btn btn-primary right" @click="refresh()">刷新</div>
         </div>
         <!-- 日期统计 -->
@@ -12,6 +12,24 @@
                 </button>
                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.orderType===0}" @click="clickType(0)">
                     采购
+                </button>
+            </div>
+            <!-- 搜索 日 周 年 -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='day'}" @click="clickChange('day')">
+                    日
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='week'}" @click="clickChange('week')">
+                    周
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='month'}" @click="clickChange('month')">
+                    月
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='quarter'}" @click="clickChange('quarter')">
+                    季
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.timeType=='year'}" @click="clickChange('year')">
+                    年
                 </button>
             </div>
             <!-- 搜索起止时间 -->
@@ -43,10 +61,11 @@
               </div>
               <div class="total">
                  <div class="total-lsit" v-for = "key in item.statisticsList">
-	                 <label>订单金额:</label><span>{{key.totalSum}}</span><br/>
-	                 <div v-if="loadParam.orderType==1"><label>应收:</label><span>{{key.unpaidSum}}</span></div>
-	                 <div v-if="loadParam.orderType==0"><label>应付:</label><span>{{key.unpaidSum}}</span></div>
-	                 <label>货币:</label><span>{{key.currency | Currency}}</span>
+	                 <div><label>订单金额:</label><span>{{key.totalSum | money}}</span></div>
+	                 <div v-if="loadParam.orderType==1"><label>应收:</label><span>{{key.unpaidSum | money}}</span></div>
+	                 <div v-if="loadParam.orderType==0"><label>应付:</label><span>{{key.unpaidSum | money}}</span></div>
+	                 <div><label>货币:</label><span>{{key.currency | Currency}}</span></div>
+	                 <div><label>订单统计:</label><span>{{key.orderCount}}</span></div>
                  </div>
               </div>
               <!-- 业务员 应收金额 应收 应付 列表 -->
@@ -64,20 +83,19 @@
 						    <td rowspan="10">{{detail.name}}</td>
 						</tr>
 					    <tr class="tb-content" v-for="classified in detail.statisticsList">
-						    <td>{{classified.totalSum}}</td>
-						    <td>{{classified.prepaidSum}}</td>
-						    <td>{{classified.currency | Currency}}</td>				    
+						    <td>{{classified.totalSum | money}}</td>
+						    <td>{{classified.prepaidSum | money}}</td>
+						    <td>{{classified.currency | Currency}}</td>		    
 					    </tr>
                 	 </tbody>
 					 
                  </table> 
                </div>
-             </div>
-          
-           </div>
-
+            </div>
 
         </div>
+       
+
 
     </div>
 </template>
@@ -118,7 +136,8 @@
 	       	  this.loadParam.startTime = '';
 	       	  this.loadParam.endTime = '';
 	       	  this.loadParam.orderType = 1;
-	       	  this.getOrgCount();	  
+	       	  this.getOrgCount();
+	  
 	       }
 	    },
 	    vuex: {
@@ -161,20 +180,16 @@
 .listContent{
 	min-width: 1000px;
 	max-width: 100%;
+	min-height: 670px;
 	overflow-x:auto; 
-}
-.listItem{ 
-	min-width: 200px;
-	display:inline-block;
-}
-.listContent{
 	clear: both; 
 	width: 100%;
 	border: 1px solid #d9d9d9;
 	border-bottom:none
 }
-.listContent .listItem{ 
-	width: 600px;
+.listItem{ 
+	min-width: 600px;
+	display:inline-block;
 }
 
 .listContent .title{ 
