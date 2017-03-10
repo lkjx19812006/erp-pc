@@ -134,6 +134,11 @@ export default (router) => router.map({
                     require(['./views/email'], resolve)
                 }
             },
+            '/dictionary': {
+                component: function(resolve) {
+                    require(['./views/dictionary'], resolve)
+                }
+            }
 
         }
     },

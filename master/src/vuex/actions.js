@@ -7,7 +7,6 @@ export const decrement = ({ dispatch }) => dispatch(types.DECREMENT)
 export const menuBar = ({ dispatch }) => dispatch(types.MENU_BAR)
 
 export const login = ({ dispatch }, data) => { //登录
-    console.log(data);
     const body = {
         no: data.no,
         password: data.password
@@ -15,7 +14,6 @@ export const login = ({ dispatch }, data) => { //登录
     if (data.captcha) {
         body.captcha = data.captcha;
     }
-    console.log(body);
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + data.link,
@@ -1371,7 +1369,6 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
 }
 
 export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各个凭证
-    console.log(param)
     const body = {
         orderId: param.orderId,
         description: param.description,
@@ -8091,5 +8088,62 @@ export const getEmailCount = ({ dispatch }, param) => { //邮件统计
     }, (res) => {
         console.log('fail');
         param.loading = false;
+    })
+}
+
+export const readDictionary = ({ dispatch }, param) => { //字典信息
+    param.loading = true;
+
+    var url = "/crm/api/v1/i18n/readMuDictionary/" + param.lang;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var jsonArr = res.json().result;
+        for (let i = 0; i < jsonArr.length; i++) {
+            let arr = [];
+            for (let key in jsonArr[i].dictionary) {
+                let temp = {
+                    key: key,
+                    value: jsonArr[i].dictionary[key]
+                }
+                arr.push(temp);
+            }
+            jsonArr[i].arr = arr;
+            jsonArr[i].isEdit = false;
+        }
+        console.log(jsonArr[0].arr);
+        dispatch(types.SINGLE_DICTIONARY, jsonArr);
+        param.loading = false;
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
+export const saveDictionary = ({ dispatch }, param) => { //保存字典
+    var url = "/crm/api/v1/i18n/saveDictionary";
+    var body = {
+        fileName: param.fileName,
+        dictionary: param.dictionary
+    }
+    Vue.http({
+        method: 'POST',
+        url: url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('success');
+    }, (res) => {
+        console.log('fail');
     })
 }

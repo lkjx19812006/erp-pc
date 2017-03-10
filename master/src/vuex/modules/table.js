@@ -125,7 +125,8 @@ import {
     CALL_COUNT_DATA,
     CALL_RECORD_VOICE_DATA,
     EMAIL_DATA,
-    EMAIL_COUNT
+    EMAIL_COUNT,
+    SINGLE_DICTIONARY
 
 } from '../mutation-types'
 
@@ -1179,7 +1180,8 @@ const state = {
     identify: {},
     trackingDetail: {},
     employeeDetail: {},
-    orgDetail: {}
+    orgDetail: {},
+    dictionary: [{ fileName: '', dictionary: {}, arr: [], isEdit: false }]
 }
 
 const mutations = {
@@ -2457,6 +2459,9 @@ const mutations = {
     },
     [EMAIL_COUNT](state, data) {
         state.basicBaseList.emailCount = data;
+    },
+    [SINGLE_DICTIONARY](state, data) {
+        state.dictionary = data;
     }
 
 }
