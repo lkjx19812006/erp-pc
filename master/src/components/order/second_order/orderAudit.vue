@@ -381,7 +381,7 @@ export default {
             branchParam: {
                 show: false
             },
-            type: "image/jpeg,image/jpg,image/png",
+            type: "",
             imageParam: {
                 url: '/crm/api/v1/file/',
                 qiniu: false

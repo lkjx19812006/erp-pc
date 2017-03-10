@@ -157,9 +157,9 @@
                                     <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.customerName}}" v-validate:consignee="{minlength:2}" />
                                 </div>
                                 <!-- <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.you.email">请输入正确的邮箱</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.email"  v-validate:you="['email']" />
-                          </div> -->
+                                      <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.you.email">请输入正确的邮箱</span></label>
+                                      <input type="text" class="form-control edit-input" v-model="param.email"  v-validate:you="['email']" />
+                                  </div> -->
                                 <div class="editpage-input">
                                     <label class="editlabel">{{$t('static.country')}}</label>
                                     <div type="text" class="edit-input">
@@ -179,16 +179,16 @@
                                     </select>
                                 </div>
                                 <div class="editpage-input clearfix">
-                                    <label class="editlabel">{{$t('static.preferential')}}</label>
+                                    <label class="editlabel">{{$t('static.sundry_fees')}}</label>
                                     <div class="clearfix left">
-                                        <button class="btn btn-default left" style="font-size: 16px" @click="addCompute()">+</button>
-                                        <input type="number" class="edit-input" v-model="param.preferential" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" />
-                                        <button class="btn btn-default right" style="font-size: 16px" @click="reduce()">-</button>
+                                        <button class="btn btn-default left" style="font-size: 16px" @click="addIncidentals()">+</button>
+                                        <input type="number" class="form-control edit-input" v-model="param.incidentals" style="display:inline-block;float:left;border:none;width: 67%;text-align: center" @keyup="" />
+                                        <button class="btn btn-default right" style="font-size: 16px" @click="subduction()">-</button>
                                     </div>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{$t('static.discount_note')}}</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" />
+                                    <label class="editlabel">{{$t('static.fee_explain')}}</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" />
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">{{$t('static.total')}}</label>
@@ -233,16 +233,16 @@
                                     <input type="text" class="form-control edit-input" v-model="param.consigneeAddr" v-validate:addr="['required']" />
                                 </div>
                                 <div class="editpage-input clearfix">
-                                    <label class="editlabel">{{$t('static.sundry_fees')}}</label>
+                                    <label class="editlabel">{{$t('static.preferential')}}</label>
                                     <div class="clearfix left">
-                                        <button class="btn btn-default left" style="font-size: 16px" @click="addIncidentals()">+</button>
-                                        <input type="number" class="edit-input" v-model="param.incidentals" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" @keyup="" />
-                                        <button class="btn btn-default right" style="font-size: 16px" @click="subduction()">-</button>
+                                        <button class="btn btn-default left" style="font-size: 16px" @click="addCompute()">+</button>
+                                        <input type="number" class="form-control edit-input" v-model="param.preferential" style="display:inline-block;float:left;border:none;width: 67%;text-align: center" @keyup="" />
+                                        <button class="btn btn-default right" style="font-size: 16px" @click="reduce()">-</button>
                                     </div>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{$t('static.fee_explain')}}</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" />
+                                    <label class="editlabel">{{$t('static.discount_note')}}</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" />
                                 </div>
                                 <!-- <div class="editpage-input">
                                     <label class="editlabel">{{$t('static.cost_price')}}</label>
@@ -377,7 +377,7 @@ export default {
             },
             saith: 0, //点击按钮计算
             sum: 0, //点击按钮计算
-            altogether: "", //所有商品的总金额,
+            altogether: '', //所有商品的总金额,
             //costmoney:0, //所有商品成本的总金额
         }
     },
@@ -437,7 +437,6 @@ export default {
             if (this.altogether === "") {
                 this.altogether = this.param.itemsTotal;
             }
-
             var saith = 0;
             if (this.param.preferential && this.param.preferential != '') {
                 saith = parseFloat(this.param.preferential);
@@ -495,17 +494,11 @@ export default {
         },
         searchBreed: function(breedName, breedId) {
             this.breedParam.show = true;
-            /*this.param.breedName = this.breedParam.breedName;
-            this.param.breedId = this.breedParam.breedId;*/
         },
         searchCustomer: function(customerName, customer) {
             this.empNameParam.show = true;
-            /*if("employeeId" in this.param){
-                this.empNameParam.employeeId = this.param.employeeId;
-            }*/
         },
         addBreed: function() {
-
             this.param.goods[this.param.goods.length - 1].breedId = this.breedInfo.breedId;
             this.param.goods[this.param.goods.length - 1].breedName = this.breedInfo.breedName;
             this.param.goods[this.param.goods.length - 1].title = this.breedInfo.breedName;
@@ -517,7 +510,6 @@ export default {
             this.param.goods[this.param.goods.length - 1].price = this.breedInfo.price;
             this.param.goods[this.param.goods.length - 1].costPrice = this.breedInfo.costPrice;
             this.param.goods[this.param.goods.length - 1].sourceType = this.breedInfo.sourceType;
-
             this.breedInfo.status = 0;
             this.addParam.show = false;
             this.altogether += (parseFloat(this.param.goods[this.param.goods.length - 1].price) * parseFloat(this.param.goods[this.param.goods.length - 1].number) * 1000) / 1000;
@@ -751,6 +743,11 @@ export default {
                 day = '0' + day;
             }
             this.param.tradeTime = year + "-" + month + "-" + day + " 00:00:00";
+        }
+        if (this.param.goods.length > 0) {
+            for (var i = 0; i < this.param.goods.length; i++) {
+                this.altogether += parseFloat(this.param.goods[i].number) * parseFloat(this.param.goods[i].price);
+            }
         }
     }
 }

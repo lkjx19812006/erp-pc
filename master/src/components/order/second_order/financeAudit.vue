@@ -55,7 +55,7 @@
                 </div>
                 <div class="edit_footer" v-if="param.titles=='重新申请审核'">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="cancelContract(param)">{{$t('static.cancel')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="cancelContract(param)">{{$t('static.cancel_order')}}</button>
                     <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="referTo(param)">{{$t('static.submit')}}</button>
                     <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.submit')}}</button>
                 </div>
@@ -83,7 +83,7 @@ export default {
     props: ['param'],
     data() {
         return {
-            type: "image/jpeg,image/jpg,image/png",
+            type: "",
             imageParam: {
                 url: '/crm/api/v1/file/',
                 qiniu: false
