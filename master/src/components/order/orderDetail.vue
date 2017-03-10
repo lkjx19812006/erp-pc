@@ -493,7 +493,6 @@
                                           route:uploadDocument,
                                           description:'',
                                           bizType:'attach_files',
-                                          files:'',
                                           attachFiles:'',
                                           titles:'上传附件凭证'
                                           })" v-if="initOrderDetail.attachFiles.arr.length!==null&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
@@ -519,9 +518,6 @@
                                                             <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
-                                                        <td>
-                                                            <img v-bind:src="item.image" />
-                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -786,10 +782,9 @@ export default {
             this.getOrderDetail(this.param);
         },
         createcredence: function(initOrderDetail) {
-            console.log(initOrderDetail)
             this.credenceParam = initOrderDetail;
+            console.log(this.credenceParam.show)
             this.credenceParam.creCallback = this.pictureCallback;
-            console.log(this.credenceParam)
         },
         clickBig: function(img) {
             this.pictureParam.show = true;

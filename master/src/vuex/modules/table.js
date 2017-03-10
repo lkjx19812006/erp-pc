@@ -1373,46 +1373,6 @@ const mutations = {
             console.log(state.orderDetail.stages.arr)
             state.orderDetail.stages.arr = data.stages; //分期付款
         }
-        if (data.payPics) {
-            state.orderDetail.payPics.arr.unshift({
-                "orderId": data.orderId,
-                "path": data.payPics,
-                "description": data.description,
-                "fileType": data.fileType,
-                "bizType": data.bizType,
-                "show": false
-            })
-        }
-        if (data.sendPics) {
-            state.orderDetail.sendPics.arr.unshift({
-                "orderId": data.orderId,
-                "path": data.sendPics,
-                "description": data.description,
-                "fileType": data.fileType,
-                "bizType": data.bizType,
-                "show": false
-            })
-        }
-        if (data.orderContractList) {
-            state.orderDetail.orderContractList.arr.unshift({
-                "orderId": data.orderId,
-                "path": data.orderContractList,
-                "description": data.description,
-                "fileType": data.fileType,
-                "bizType": data.bizType,
-                "show": false
-            })
-        }
-        if (data.bizType == "attach_files") {
-            state.orderDetail.attachFiles.arr.unshift({
-                "orderId": data.orderId,
-                "path": data.attachFiles,
-                "fileType": data.fileType,
-                "bizType": data.bizType,
-                "description": data.description,
-                "show": false
-            })
-        }
     },
     [ORDER_STATUS](state, data) { //订单状态详情
         console.log(data)

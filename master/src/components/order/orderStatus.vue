@@ -275,7 +275,10 @@
                         </div>
                         <div class="logical_color clearfix">
                             <p>{{$t('static.logistics')}}：</p>
-                            <img class="picture" v-for="item in initOrderDetail.sendPics.arr" v-bind:src="item.url" width="150px" @click="clickBig(item.url)" />
+                            <div v-for="item in initOrderDetail.sendPics.arr">
+                                <img v-if="item.url | file" class="picture" v-bind:src="item.url" width="150px" @click="clickBig(item.url)" />
+                                <a v-else style="width: 109px;display: inline-block;white-space: normal;" href="{{item.url}}" download="">文件下载</a>
+                            </div>
                         </div>
                     </div>
                     <div class="order_info clearfix">
@@ -311,27 +314,31 @@
                         </div>
                         <div class="logical_color clearfix">
                             <p>{{$t('static.logistics')}}：</p>
-                            <img class="picture" v-for="item in initOrderDetail.sendPics.arr" v-bind:src="item.url" width="150px" @click="clickBig(item.url)" />
+                            <div v-for="item in initOrderDetail.sendPics.arr">
+                                <img v-if="item.url | file" class="picture" v-bind:src="item.url" width="150px" @click="clickBig(item.url)" />
+                                <a v-else href="{{item.url}}" style="width: 109px;display: inline-block;white-space: normal;" download="">非图片文件显示，请下载查看</a>
+                            </div>
+                            <!-- <img class="picture" v-for="item in initOrderDetail.sendPics.arr" v-bind:src="item.url" width="150px" @click="clickBig(item.url)" /> -->
                         </div>
                     </div>
                     <div class="order_info clearfix">
                         <input type="button" class="btn  btn-confirm right" @click="accept({
-                    id:param.id,
-                    show:true,
-                    orderStatus:'',
-                    link:'/order/receiveConfirm',
-                    key:param.key
-                  },param.show=false)" value="{{$t('static.condirm_receive')}}" />
+                            id:param.id,
+                            show:true,
+                            orderStatus:'',
+                            link:'/order/receiveConfirm',
+                            key:param.key
+                          },param.show=false)" value="{{$t('static.condirm_receive')}}" />
                         <input type="button" class="btn  btn-confirm right margin-10" @click="Viewlogistics({
-                  id:initOrderDetail.logisticses.arr[0].id,
-                  lcompanyId:initOrderDetail.logisticses.arr[0].logistics,
-                  lcompanyCode:initOrderDetail.logisticses.arr[0].code,
-                  number:initOrderDetail.logisticses.arr[0].number,
-                  key:param.key,
-                  show:true,
-                  loading:true,
-                  callback:logisticsInfo
-                  })" value="{{$t('static.view_logistics')}}" />
+                              id:initOrderDetail.logisticses.arr[0].id,
+                              lcompanyId:initOrderDetail.logisticses.arr[0].logistics,
+                              lcompanyCode:initOrderDetail.logisticses.arr[0].code,
+                              number:initOrderDetail.logisticses.arr[0].number,
+                              key:param.key,
+                              show:true,
+                              loading:true,
+                              callback:logisticsInfo
+                              })" value="{{$t('static.view_logistics')}}" />
                     </div>
                 </div>
             </div>
@@ -354,7 +361,10 @@
                         </div>
                         <div class="logical_color clearfix col-md-12">
                             <p>{{$t('static.logistics')}}：</p>
-                            <img class="picture" v-for="item in initOrderDetail.sendPics.arr" v-bind:src="item.url" width="150px" @click="clickBig(item.url)" />
+                            <div v-for="item in initOrderDetail.sendPics.arr">
+                                <img v-if="item.url | file" class="picture" v-bind:src="item.url" width="150px" @click="clickBig(item.url)" />
+                                <a v-else style="width: 109px;display: inline-block;white-space: normal;" href="{{item.url}}" download="">文件下载</a>
+                            </div>
                         </div>
                     </div>
                     <div class="order_info clearfix">
@@ -508,7 +518,7 @@ export default {
                 key: this.param.key
             },
             payName: "去支付/To pay",
-            type: "image/jpeg,image/jpg,image/png",
+            type: "",
             uploadLogistic: {
                 images: '',
                 b: '',

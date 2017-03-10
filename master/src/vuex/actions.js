@@ -1378,7 +1378,6 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
 }
 
 export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各个凭证
-    console.log(param)
     const body = {
         orderId: param.orderId,
         description: param.description,
@@ -1410,10 +1409,8 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
     }).then((res) => {
         param.creCallback(res.json().msg);
         dispatch(types.ORDER_UPLOAD_DATA, param);
-        param.show = false;
     }, (res) => {
         console.log('fail');
-        param.show = false;
     });
 }
 
@@ -7646,17 +7643,9 @@ export const sendCancel = ({ dispatch }, param) => { //取消发货
     });
 }
 export const applyContract = ({ dispatch }, param) => { //申请补充合同
-    console.log(param);
-    param.images = '';
-    if (param.image_f) {
-        param.images += param.image_f + ','
-    }
-    if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t }
-    var ss = param.images;
+    var ss = param.files;
     var img = ss.split(","); //字符串转化为数组
     img.toString();
-    console.log(img)
     const body = {
         orderId: param.orderId,
         contractText: param.contractText,
@@ -7812,13 +7801,7 @@ export const getSalesApplyList = ({ dispatch }, param) => { //售后申请列表
 
 export const afterSalesApply = ({ dispatch }, param) => { //售后申请
     console.log(param);
-    param.images = '';
-    if (param.image_f) {
-        param.images += param.image_f + ','
-    }
-    if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t }
-    var ss = param.images;
+    var ss = param.files;
     var img = ss.split(","); //字符串转化为数组
     img.toString();
     const body = {

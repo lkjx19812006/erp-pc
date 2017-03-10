@@ -159,17 +159,17 @@
                             <div class="editpage-input col-md-6">
                                 <label class="editlabel">{{$t('static.sundry_fees')}}：</label>
                                 <div class="clearfix">
-                                    <button class="btn btn-default left" style="font-size: 16px" @click="addIncidentals()">+</button>
-                                    <input type="number" class="edit-input" v-model="param.incidentals" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" value="{{param.incidentals}}" @keyup="" />
-                                    <button class="btn btn-default left" style="font-size: 16px" @click="subduction()">-</button>
+                                    <!-- <button class="btn btn-default left" style="font-size: 16px" @click="addIncidentals()">+</button> -->
+                                    <input type="number" class="form-control edit-input" v-model="param.incidentals" style="display:inline-block;float:left;" value="{{param.incidentals}}" @keyup="" />
+                                    <!-- <button class="btn btn-default left" style="font-size: 16px" @click="subduction()">-</button> -->
                                 </div>
                             </div>
                             <div class="editpage-input col-md-6">
                                 <label class="editlabel">{{$t('static.preferential')}}：</label>
                                 <div class="clearfix">
-                                    <button class="btn btn-default left" style="font-size: 16px" @click="addCompute()">+</button>
-                                    <input type="number" class="edit-input" v-model="param.preferential" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" value="{{param.preferential}}" />
-                                    <button class="btn btn-default left" style="font-size: 16px" @click="reduce()">-</button>
+                                    <!-- <button class="btn btn-default left" style="font-size: 16px" @click="addCompute()">+</button> -->
+                                    <input type="number" class="form-control edit-input" v-model="param.preferential" style="display:inline-block;float:left;" value="{{param.preferential}}" />
+                                    <!-- <button class="btn btn-default left" style="font-size: 16px" @click="reduce()">-</button> -->
                                 </div>
                             </div>
                             <div class="editpage-input col-md-6">
