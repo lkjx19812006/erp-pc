@@ -88,37 +88,7 @@
 						    <td>{{classified.currency | Currency}}</td>							    	    
 					    </tr>
                 	 </tbody>
-                	 <!--  start-->
-					 <tbody v-for="detail in item.lowerList">
-                	 	<tr class="tb-content" >
-						    <td rowspan="10">{{detail.name}}</td>
-						</tr>
-					    <tr class="tb-content" v-for="classified in detail.statisticsList">
-						    <td>{{classified.totalSum | money}}</td>
-						    <td>{{classified.prepaidSum | money}}</td>
-						    <td>{{classified.currency | Currency}}</td>							    	    
-					    </tr>
-                	 </tbody>
-                	  <tbody v-for="detail in item.lowerList">
-                	 	<tr class="tb-content" >
-						    <td rowspan="10">{{detail.name}}</td>
-						</tr>
-					    <tr class="tb-content" v-for="classified in detail.statisticsList">
-						    <td>{{classified.totalSum | money}}</td>
-						    <td>{{classified.prepaidSum | money}}</td>
-						    <td>{{classified.currency | Currency}}</td>							    	    
-					    </tr>
-                	 </tbody> <tbody v-for="detail in item.lowerList">
-                	 	<tr class="tb-content" >
-						    <td rowspan="10">{{detail.name}}</td>
-						</tr>
-					    <tr class="tb-content" v-for="classified in detail.statisticsList">
-						    <td>{{classified.totalSum | money}}</td>
-						    <td>{{classified.prepaidSum | money}}</td>
-						    <td>{{classified.currency | Currency}}</td>							    	    
-					    </tr>
-                	 </tbody>
-                	 <!--  end-->
+                	
                  </table> 
                </div>
             </div>
