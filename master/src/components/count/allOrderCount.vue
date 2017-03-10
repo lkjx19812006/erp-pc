@@ -233,6 +233,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="base_pagination" v-if="groupType=='detail'">
+            <pagination :combination="detailParam"></pagination>
+        </div>
     </div>
 </template>
 <script>
@@ -302,7 +305,10 @@ export default {
                 key: "allOrderCount",
                 startTime: '',
                 orderType: 1,
-                timeType: ''
+                timeType: '',
+                cur: 1,
+                total: 0,
+                all: 0
             },
             sortParam: {
                 loading: true,
@@ -411,7 +417,10 @@ export default {
         }
     },
     events: {
-
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getOrderCount(this.detailParam);
+        }
     },
     created() {
         this.getOrgCountList(this.loadParam);

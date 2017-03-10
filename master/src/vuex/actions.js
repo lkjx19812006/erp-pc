@@ -6729,8 +6729,9 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
 }
 
 export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交易统计)
+    console.log(param)
     if (param) param.loading = true;
-    var url = apiUrl.clientList + '/report/order/list' + '?';
+    var url = apiUrl.clientList + '/report/order/list' + '?' + '&page=' + param.cur + '&pageSize=10';
     if (param.endTime && param.endTime !== '') {
         url += "&endTime=" + param.endTime;
     }
@@ -6766,8 +6767,10 @@ export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交
         }
     }).then((res) => {
         param.loading = false;
-        var orderCount = res.json().result;
+        var orderCount = res.json().result.list;
         dispatch(types.MY_ORDER_COUNT, orderCount);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
     }, (res) => {
         param.loading = false;
         console.log('fail');
@@ -6907,7 +6910,7 @@ export const getTimeOrderCount = ({ dispatch }, param) => { //我的订单统计
 /*---业务总览报表---*/
 export const getOrgCount = ({ dispatch }, param) => {
     var OrgUrl = apiUrl.clientList + '/report/order/all?';
-   
+
     for (var seach in param) {
         if (seach == 'orderType' && param[seach] !== '') {
             OrgUrl += '&orderType=' + param.orderType
@@ -6915,7 +6918,7 @@ export const getOrgCount = ({ dispatch }, param) => {
 
         if (seach == 'startTime' && param[seach] !== '') {
             OrgUrl += '&startTime=' + param.startTime;
-           
+
         }
         if (seach == 'endTime' && param[seach] !== '') {
             OrgUrl += '&endTime=' + param.endTime

@@ -112,6 +112,9 @@
                     <td>{{item.prepaid | money}}</td>
                 </tr>
             </table>
+            <div class="base_pagination">
+                <pagination :combination="loadParam"></pagination>
+            </div>
         </div>
     </div>
 </template>
@@ -133,7 +136,8 @@ import common from '../../common/common.js'
 export default {
     components: {
         pagination,
-        mzDatepicker
+        mzDatepicker,
+        pagination
     },
     data() {
         return {
@@ -145,7 +149,10 @@ export default {
                 endTime: '',
                 startTime: '',
                 orderType: 1,
-                timeType: ''
+                timeType: '',
+                cur: 1,
+                all: 15,
+                total: 0
             },
             timeParam: {
                 loading: true,
@@ -201,7 +208,10 @@ export default {
         }
     },
     events: {
-
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getOrderCount(this.loadParam);
+        }
     },
     created() {
         this.getOrderCount(this.loadParam);
