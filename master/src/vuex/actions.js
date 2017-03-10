@@ -570,7 +570,7 @@ export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列�
         // 如果用户名为空，为它添加匿名
         for (var i = 0; i < drugAccountList.length; i++) {
             if (drugAccountList[i].userName == '') {
-                drugAccountList[i].userName = '匿名'
+                drugAccountList[i].userName = '未填写'
             }
         }
         dispatch(types.DRUG_ACCOUNT_DATA, drugAccountList);
@@ -797,6 +797,7 @@ export const getUserOrder = ({ dispatch }, param) => { //注册客户的订单�
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
+
     }).then((res) => {
         var orderList = res.json().result.list;
         for (var i in orderList) {
@@ -6906,22 +6907,27 @@ export const getTimeOrderCount = ({ dispatch }, param) => { //我的订单统计
 }
 
 
-/*---部门统计---*/
+/*---业务总览报表---*/
 export const getOrgCount = ({ dispatch }, param) => {
     var OrgUrl = apiUrl.clientList + '/report/order/all?';
-
+   
     for (var seach in param) {
         if (seach == 'orderType' && param[seach] !== '') {
             OrgUrl += '&orderType=' + param.orderType
         }
 
         if (seach == 'startTime' && param[seach] !== '') {
-            OrgUrl += '&startTime=' + param.startTime
+            OrgUrl += '&startTime=' + param.startTime;
+           
         }
         if (seach == 'endTime' && param[seach] !== '') {
             OrgUrl += '&endTime=' + param.endTime
         }
+        if (seach == 'timeType' && param[seach] !== '') {
+            OrgUrl += '&timeType=' + param.timeType
+        }
     }
+
     if (param.orderType == 0) {
         OrgUrl += "&orderType=" + 0;
     }

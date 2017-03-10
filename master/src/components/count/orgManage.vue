@@ -1,7 +1,7 @@
 <template>
 	 <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">全部订单统计</div>
+            <div class="my_enterprise col-xs-1">业务总览报表</div>
             <div class="btn btn-primary right" @click="refresh()">刷新</div>
         </div>
         <!-- 日期统计 -->
@@ -53,7 +53,7 @@
         </div>
       
         <!-- 业务 -->
-        <div class="listContent" id="listContent">
+        <div class="listContent" id="listContent" >
            <!-- 业务中的一项 -->
            <div class="listItem" v-for = "item in initOrgCount">
               <div class="title">
@@ -65,7 +65,7 @@
 	                 <div v-if="loadParam.orderType==1"><label>应收:</label><span>{{key.unpaidSum | money}}</span></div>
 	                 <div v-if="loadParam.orderType==0"><label>应付:</label><span>{{key.unpaidSum | money}}</span></div>
 	                 <div><label>货币:</label><span>{{key.currency | Currency}}</span></div>
-	                 <div><label>订单统计:</label><span>{{key.orderCount}}</span></div>
+	                 <div><label>订单数:</label><span>{{key.orderCount}}笔</span></div>
                  </div>
               </div>
               <!-- 业务员 应收金额 应收 应付 列表 -->
@@ -85,21 +85,54 @@
 					    <tr class="tb-content" v-for="classified in detail.statisticsList">
 						    <td>{{classified.totalSum | money}}</td>
 						    <td>{{classified.prepaidSum | money}}</td>
-						    <td>{{classified.currency | Currency}}</td>		    
+						    <td>{{classified.currency | Currency}}</td>							    	    
 					    </tr>
                 	 </tbody>
-					 
+                	 <!--  start-->
+					 <tbody v-for="detail in item.lowerList">
+                	 	<tr class="tb-content" >
+						    <td rowspan="10">{{detail.name}}</td>
+						</tr>
+					    <tr class="tb-content" v-for="classified in detail.statisticsList">
+						    <td>{{classified.totalSum | money}}</td>
+						    <td>{{classified.prepaidSum | money}}</td>
+						    <td>{{classified.currency | Currency}}</td>							    	    
+					    </tr>
+                	 </tbody>
+                	  <tbody v-for="detail in item.lowerList">
+                	 	<tr class="tb-content" >
+						    <td rowspan="10">{{detail.name}}</td>
+						</tr>
+					    <tr class="tb-content" v-for="classified in detail.statisticsList">
+						    <td>{{classified.totalSum | money}}</td>
+						    <td>{{classified.prepaidSum | money}}</td>
+						    <td>{{classified.currency | Currency}}</td>							    	    
+					    </tr>
+                	 </tbody> <tbody v-for="detail in item.lowerList">
+                	 	<tr class="tb-content" >
+						    <td rowspan="10">{{detail.name}}</td>
+						</tr>
+					    <tr class="tb-content" v-for="classified in detail.statisticsList">
+						    <td>{{classified.totalSum | money}}</td>
+						    <td>{{classified.prepaidSum | money}}</td>
+						    <td>{{classified.currency | Currency}}</td>							    	    
+					    </tr>
+                	 </tbody>
+                	 <!--  end-->
                  </table> 
                </div>
             </div>
 
         </div>
-       
-
+        <!--底部分页-->
+        <div id="base_pagination" class="base_pagination">
+           <pagination :combination="loadParam" ></pagination> 
+        </div>
 
     </div>
 </template>
 <script>
+    import pagination from '../pagination'
 	import {
 	  initOrgCount
 	} from '../../vuex/getters'
@@ -109,15 +142,19 @@
 	
 	export default {
 		components:{
-		   
+		  pagination
 		},
 		data() {
 	        return {
 	        	loadParam:{
 	        		orderType : 1,
 	        		startTime : '',
-	        		endTime : ''
-	        	}
+	        		endTime : '',
+	        		timeType:'',
+	        		cur:1,
+	        		total:15
+	        	},
+	        	
 	        }    
 	    },
 	    methods:{
@@ -130,6 +167,7 @@
 
 	       },
 	       search:function(){
+	       	  this.loadParam.timeType = '';
               this.getOrgCount(this.loadParam)
 	       },
 	       resetCondition:function(){
@@ -138,6 +176,13 @@
 	       	  this.loadParam.orderType = 1;
 	       	  this.getOrgCount();
 	  
+	       },
+	       // 年月日季度搜索
+	       clickChange:function(type){
+	       	  this.loadParam.startTime = '';
+              this.loadParam.endTime = '';
+	       	  this.loadParam.timeType = type;
+              this.getOrgCount(this.loadParam);
 	       }
 	    },
 	    vuex: {

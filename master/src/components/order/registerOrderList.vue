@@ -108,7 +108,16 @@
                             <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
                             <td v-if="item.sample==0">{{$t('static.no')}}</td>
                             <td v-if="item.sample==1">{{$t('static.yes')}}</td>
-                            <td><a @click="clickOn({
+                            <td v-if = "item.customerName == ''"><a @click="clickOn({
+                                        show:true,
+                                        id:item.id,
+                                        loading:true,
+                                        key:'orderDetail',
+                                        orderStatus:item.orderStatus,
+                                        contact:'/order/myList'
+                                })">未填写</a>
+                            </td>
+                            <td v-else><a @click="clickOn({
                                         show:true,
                                         id:item.id,
                                         loading:true,

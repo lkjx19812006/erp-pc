@@ -12,12 +12,12 @@
                 <form novalidate>
                     <div class="edit-model">
                         <div>
-                            <h4 style="text-align: left;font-size: 14px;">{{$t('static.install_detail')}}<span class="system_danger">{{$t('static.install_tips')}}</span></h4>
+                            <h4 style="text-align: left;font-size: 14px;">{{$t('static.install_detail')}}<label class="stageTotal">(总金额：{{param.total}})</label><span class="system_danger">{{$t('static.install_tips')}}</span></h4>
                             <table class="table table-hover table_color table-striped ">
                                 <thead>
                                     <tr>
                                         <th>{{$t('static.install_amount')}}</th>
-                                        <th>{{$t('static.install_ratio')}}</th>
+                                        <!-- <th>{{$t('static.install_ratio')}}</th> -->
                                         <th>{{$t('static.paid_time')}}</th>
                                         <th>{{$t('static.install_extra')}}</th>
                                         <th>{{$t('static.install_reason')}}</th>
@@ -29,7 +29,7 @@
                                 <tbody>
                                     <tr v-for="item in param.stages">
                                         <td>{{item.amount}}</td>
-                                        <td>{{item.ratio}}</td>
+                                       <!--  <td>{{item.ratio}}</td> -->
                                         <td v-if="item.orderStatus==20">{{$t('static.signing_contract')}}</td>
                                         <td v-if="item.orderStatus==60">{{$t('static.confirm_receipt')}}</td>
                                         <td>{{item.extra}}天</td>
@@ -55,7 +55,7 @@
                                                 <option value="60">{{$t('static.confirm_receipt')}}</option>
                                             </select>
                                         </div>
-                                        <div class="editpage-input col-md-6">
+                                       <!--  <div class="editpage-input col-md-6">
                                             <label class="editlabel">{{$t('static.install_ratio')}}<span class="system_danger" v-if="breedInfo.ratio==''">{{$t('static.required')}}</span>
                                                 <span class="system_danger" v-if="((breedInfo.ratio)*10) > (10-scale)">分期比例不能超过100%</span></label>
                                             <select v-model="breedInfo.ratio" class="form-control edit-input" v-validate:ratio="{required:true}" @change="calculate()">
@@ -70,10 +70,10 @@
                                                 <option value="0.8">80%</option>
                                                 <option value="0.9">90%</option>
                                             </select>
-                                        </div>
+                                        </div> -->
                                         <div class="editpage-input col-md-6">
                                             <label class="editlabel">{{$t('static.install_amount')}} <span class="system_danger" v-if="breedInfo.amount==''">{{$t('static.required')}}</span>
-                                                <!-- <span class="system_danger" v-if="breedInfo.amount*100>(param.total*100-sum)">不能超过订单总金额</span></label> -->
+                                                <span class="system_danger" v-if="breedInfo.amount*100>(param.total*100-sum)">不能超过订单总金额</span></label>
                                                 <input type="number" v-if="breedInfo.ratio==1" v-model="breedInfo.amount" value="{{param.total}}" class="form-control edit-input" />
                                                 <input type="number" v-else v-model="breedInfo.amount" value="{{breedInfo.amount}}" class="form-control edit-input" v-validate:amount="{required:true}" />
                                         </div>
@@ -310,13 +310,12 @@ export default {
     },
     created() {
         if (this.param.stages.length > 0) {
-            console.log('www')
             for (var i = 0; i < this.param.stages.length; i++) {
                 this.sum += parseFloat(this.param.stages[i].amount) * 100;
                 this.scale += parseInt(this.param.stages[i].ratio * 10);
             }
         }
-        console.log(this.sum)
+        console.log(this.param.stages)
     }
 }
 </script>
@@ -346,5 +345,12 @@ export default {
 
 .table {
     display: table;
+}
+.stageTotal{
+    display: inline-block;
+    margin-left: 7px;
+    margin-right: 7px;
+    font-size:14px;
+    font-weight: 500
 }
 </style>
