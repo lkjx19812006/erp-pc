@@ -94,15 +94,11 @@
             </div>
 
         </div>
-        <!--底部分页-->
-        <div id="base_pagination" class="base_pagination">
-           <pagination :combination="loadParam" ></pagination> 
-        </div>
+        
 
     </div>
 </template>
 <script>
-    import pagination from '../pagination'
 	import {
 	  initOrgCount
 	} from '../../vuex/getters'
@@ -112,7 +108,7 @@
 	
 	export default {
 		components:{
-		  pagination
+		  
 		},
 		data() {
 	        return {

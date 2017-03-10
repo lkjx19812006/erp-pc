@@ -145,7 +145,7 @@
             </table>
             <!-- 人员列表 -->
             <table class="table table-hover table_color table-bordered table-striped " v-cloak id="tab" v-if="groupType=='employee'" style="margin-top:32px;">
-                <tr style="background:none;color:#000">
+                <tr style="background:none;color:#000;">
                     <th>业务员</th>
                     <th>订单数</th>
                     <th>订单金额</th>
@@ -233,6 +233,7 @@
                 </tbody>
             </table>
         </div>
+      
     </div>
 </template>
 <script>
@@ -257,7 +258,7 @@ import common from '../../common/common.js'
 export default {
     components: {
         pagination,
-        mzDatepicker
+        mzDatepicker,
     },
     data() {
         return {
@@ -270,7 +271,10 @@ export default {
                 key: "allOrderCount",
                 startTime: '',
                 orderType: 1,
-                timeType: ''
+                timeType: '',
+                cur:'1',
+                totla:'10',
+                all: '3'
             },
             employeeParam: { //业务员列表
                 loading: true,
