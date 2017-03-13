@@ -17,6 +17,12 @@
                         <button type="button" class="btn btn-primary" height="24" width="24" @click="resetCondition()">
                             {{$t('static.clear_all')}}
                         </button>
+                        <button v-if="!isEdit" type="button" class="btn btn-primary" height="24" width="24" @click="edit()">
+                            {{$t('static.edit')}}
+                        </button>
+                        <button v-else type="button" class="btn btn-primary" height="24" width="24" @click="save()">
+                            {{$t('static.save')}}
+                        </button>
                         <button type="button" class="btn btn-primary" height="24" width="24" @click="cancel()">
                             {{$t('static.cancel')}}
                         </button>
@@ -30,12 +36,6 @@
                 </div>
                 <div style="display:inline-block;height:400px;margin-right:60px">
                     <!-- <button v-if="isEdit" type="button" class="btn btn-default" height="24" width="24" @click="add()">添加</button> -->
-                    <button v-if="!isEdit" type="button" class="btn btn-primary" height="24" width="24" @click="edit()">
-                        {{$t('static.edit')}}
-                    </button>
-                    <button v-else type="button" class="btn btn-primary" height="24" width="24" @click="save()">
-                        {{$t('static.save')}}
-                    </button>
                     <table class="table table-hover table_color table-striped " style="display:table;width:400px" v-cloak>
                         <thead>
                             <tr>
