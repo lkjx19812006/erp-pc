@@ -51,38 +51,40 @@
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-bordered table-striped " v-cloak>
-                <thead>
-                    <tr style="background:none;color:#000">
-                        <th>全部</th>
-                        <th>币种</th>
-                        <th>订单数</th>
-                        <th>订单金额</th>
-                        <th>成本</th>
-                        <th>杂费</th>
-                        <th>优惠</th>
-                        <th v-if="loadParam.orderType==0">已付</th>
-                        <th v-if="loadParam.orderType==0">未付</th>
-                        <th v-if="loadParam.orderType==1">已收</th>
-                        <th v-if="loadParam.orderType==1">应收</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td rowspan="10">{{initOrderStatics.name}}</td>
-                    </tr>
-                    <tr v-for="item in initOrderStatics.statisticsList">
-                        <td>{{item.currency}}</td>
-                        <td>{{item.orderCount}}笔</td>
-                        <td>{{item.amountSum | money}}</td>
-                        <td>{{item.costSum | money}}</td>
-                        <td>{{item.incidentalsSum}}</td>
-                        <td>{{item.preferentialSum}}</td>
-                        <td>{{item.prepaidSum | money}}</td>
-                        <td>{{item.totalSum | money}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div style="max-height: 200px;overflow: auto;">
+                <table class="table table-hover table_color table-bordered table-striped " v-cloak>
+                    <thead>
+                        <tr style="background:none;color:#000">
+                            <th>全部</th>
+                            <th>币种</th>
+                            <th>订单数</th>
+                            <th>订单金额</th>
+                            <th>成本</th>
+                            <th>杂费</th>
+                            <th>优惠</th>
+                            <th v-if="loadParam.orderType==0">已付</th>
+                            <th v-if="loadParam.orderType==0">未付</th>
+                            <th v-if="loadParam.orderType==1">已收</th>
+                            <th v-if="loadParam.orderType==1">应收</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="10">{{initOrderStatics.name}}</td>
+                        </tr>
+                        <tr v-for="item in initOrderStatics.statisticsList">
+                            <td>{{item.currency}}</td>
+                            <td>{{item.orderCount}}笔</td>
+                            <td>{{item.amountSum | money}}</td>
+                            <td>{{item.costSum | money}}</td>
+                            <td>{{item.incidentalsSum}}</td>
+                            <td>{{item.preferentialSum}}</td>
+                            <td>{{item.prepaidSum | money}}</td>
+                            <td>{{item.totalSum | money}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="order_table" style="max-height:500px;overflow:auto" id="table_box">
             <div class="btn-group" style="position:fixed;height:32px;z-index: 200;">
@@ -233,7 +235,6 @@
                 </tbody>
             </table>
         </div>
-
         <div class="base_pagination" v-if="groupType=='detail'">
             <pagination :combination="detailParam"></pagination>
         </div>
@@ -275,8 +276,8 @@ export default {
                 startTime: '',
                 orderType: 1,
                 timeType: '',
-                cur:'1',
-                totla:'10',
+                cur: '1',
+                totla: '10',
                 all: '3'
             },
             employeeParam: { //业务员列表

@@ -50,38 +50,40 @@
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-bordered table-striped " v-cloak>
-                <thead>
-                    <tr style="background:none;color:#000">
-                        <th>{{$t('static.salesman')}}</th>
-                        <th>{{$t('static.currency')}}</th>
-                        <th>订单数</th>
-                        <th>{{$t('static.total_money')}}</th>
-                        <th>{{$t('static.cost')}}</th>
-                        <th>{{$t('static.sundry_fees')}}</th>
-                        <th>{{$t('static.preferential')}}</th>
-                        <th v-if="loadParam.orderType==0">已付</th>
-                        <th v-if="loadParam.orderType==0">未付</th>
-                        <th v-if="loadParam.orderType==1">已收</th>
-                        <th v-if="loadParam.orderType==1">应收</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td rowspan="10">{{initOrderStatics.name}}</td>
-                    </tr>
-                    <tr v-for="item in initOrderStatics.statisticsList">
-                        <td>{{item.currency}}</td>
-                        <td>{{item.orderCount}}笔</td>
-                        <td>{{item.amountSum | money}}</td>
-                        <td>{{item.costSum | money}}</td>
-                        <td>{{item.incidentalsSum}}</td>
-                        <td>{{item.preferentialSum}}</td>
-                        <td>{{item.prepaidSum | money}}</td>
-                        <td>{{item.totalSum | money}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div style="max-height: 200px;overflow: auto;">
+                <table class="table table-hover table_color table-bordered table-striped " v-cloak>
+                    <thead>
+                        <tr style="background:none;color:#000">
+                            <th>{{$t('static.salesman')}}</th>
+                            <th>{{$t('static.currency')}}</th>
+                            <th>订单数</th>
+                            <th>{{$t('static.total_money')}}</th>
+                            <th>{{$t('static.cost')}}</th>
+                            <th>{{$t('static.sundry_fees')}}</th>
+                            <th>{{$t('static.preferential')}}</th>
+                            <th v-if="loadParam.orderType==0">已付</th>
+                            <th v-if="loadParam.orderType==0">未付</th>
+                            <th v-if="loadParam.orderType==1">已收</th>
+                            <th v-if="loadParam.orderType==1">应收</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="10">{{initOrderStatics.name}}</td>
+                        </tr>
+                        <tr v-for="item in initOrderStatics.statisticsList">
+                            <td>{{item.currency}}</td>
+                            <td>{{item.orderCount}}笔</td>
+                            <td>{{item.amountSum | money}}</td>
+                            <td>{{item.costSum | money}}</td>
+                            <td>{{item.incidentalsSum}}</td>
+                            <td>{{item.preferentialSum}}</td>
+                            <td>{{item.prepaidSum | money}}</td>
+                            <td>{{item.totalSum | money}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="btn-group" style="margin-top:20px;max-height: 500px;overflow: auto;" id="table_box">
             <div style="position:fixed;height:32px;z-index: 200;">
