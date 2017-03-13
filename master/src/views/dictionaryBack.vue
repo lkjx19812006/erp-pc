@@ -28,41 +28,46 @@
                 <div class="cover_loading">
                     <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
                 </div>
-                <div style="display:inline-block;height:400px;margin-right:60px">
-                    <!-- <button v-if="isEdit" type="button" class="btn btn-default" height="24" width="24" @click="add()">添加</button> -->
-                    <button v-if="!isEdit" type="button" class="btn btn-primary" height="24" width="24" @click="edit()">
+                <div style="display:inline-block;height:400px;margin-right:60px" v-for="list in $store.state.table.dictionary">
+                    <button v-if="list.isEdit" type="button" class="btn btn-default" height="24" width="24" @click="addSingle($index)">添加</button>
+                    <button v-if="!list.isEdit" type="button" class="btn btn-primary" height="24" width="24" @click="editSingle($index)">
                         {{$t('static.edit')}}
                     </button>
-                    <button v-else type="button" class="btn btn-primary" height="24" width="24" @click="save()">
+                    <button v-else type="button" class="btn btn-primary" height="24" width="24" @click="saveSingle(list)">
                         {{$t('static.save')}}
                     </button>
                     <table class="table table-hover table_color table-striped " style="display:table;width:400px" v-cloak>
                         <thead>
                             <tr>
+                                <th colspan="3">
+                                    <div v-if="list.fileName=='zh_CN.i18n.json'">中文</div>
+                                    <div v-else>English</div>
+                                </th>
+                            </tr>
+                            <tr>
                                 <th>key</th>
-                                <th>中文</th>
-                                <th>英文</th>
-                                <!-- <th>{{$t('static.handle')}}</th> -->
+                                <th>value</th>
+                                <th>{{$t('static.handle')}}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in $store.state.table.dictionary[0].arr" v-if="item.show">
+                            <tr v-for="item in list.arr" v-if="item.show">
                                 <td>
-                                    <div>{{item.key}}</div>
-                                </td>
-                                <td>
-                                    <div>{{item.zh_CN}}</div>
-                                </td>
-                                <td>
-                                    <div v-if="!isEdit">{{item.en}}</div>
+                                    <div v-if="!list.isEdit">{{item.key}}</div>
                                     <div v-else>
-                                        <input type="text" v-model="item.en">
+                                        <input type="text" v-model="item.key">
                                     </div>
                                 </td>
-                                <!-- <td>
+                                <td>
+                                    <div v-if="!list.isEdit">{{item.value}}</div>
+                                    <div v-else>
+                                        <input type="text" v-model="item.value">
+                                    </div>
+                                </td>
+                                <td>
                                     <a v-if="list.isEdit" @click="deleteSingle(list,$index)">删除</a>
                                     <div v-else>删除</div>
-                                </td> -->
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -98,14 +103,13 @@ export default {
             loadParam: {
                 loading: true,
                 show: false,
-                lang: "zh_CN,en"
+                lang: "en1,zh_CN"
             },
             saveParam: {
                 fileName: "",
                 dictionary: ""
             },
-            condition: "",
-            isEdit: false
+            condition: ""
         }
     },
     vuex: {
@@ -125,31 +129,50 @@ export default {
     },
     methods: {
         //单个语言操作
-        edit: function() {
-            this.isEdit = true;
+        addSingle: function(index) {
+            if ((this.initDictionary[index].arr.length == 0 || this.initDictionary[index].arr[0].key !== "") && this.initDictionary[index].isEdit) {
+                let temp = {
+                    key: "",
+                    value: "",
+                    show: true
+                };
+                this.$store.state.table.dictionary[index].arr.unshift(temp);
+            }
+
         },
-        save: function() {
-            this.isEdit = false;
-            this.saveParam.fileName = "en.i18n.json";
+        editSingle: function(index) {
+            this.$store.state.table.dictionary[index].isEdit = true;
+        },
+        saveSingle: function(list) {
+            list.isEdit = false;
+            this.saveParam.fileName = list.fileName;
             this.saveParam.dictionary = "{";
-            let arr = this.initDictionary[0].arr;
-            for (let i = 0; i < arr.length; i++) {
-                this.saveParam.dictionary += arr[i].key + ":\"" + arr[i].en + "\";";
+            for (let i = 0; i < list.arr.length; i++) {
+                this.saveParam.dictionary += list.arr[i].key + ":\"" + list.arr[i].value + "\";";
             }
             this.saveParam.dictionary += "}";
 
             this.saveDictionary(this.saveParam);
         },
+        deleteSingle: function(list, index) {
+            if (list.isEdit) {
+                list.arr.splice(index, 1);
+            }
+
+        },
+
         cancel: function() {
-            this.isEdit = false;
             this.readDictionary(this.loadParam);
         },
         selectSearch: function() {
-            let arr = this.$store.state.table.dictionary[0].arr;
-            for (let i = 0; i < arr.length; i++) {
-                arr[i].show = true;
-                if (arr[i].key.indexOf(this.condition) == -1 && arr[i].zh_CN.indexOf(this.condition) == -1 && arr[i].en.indexOf(this.condition) == -1) {
-                    arr[i].show = false;
+            let dictionary = this.$store.state.table.dictionary;
+            for (let i = 0; i < dictionary.length; i++) {
+                let arr = dictionary[i].arr;
+                for (let k = 0; k < arr.length; k++) {
+                    arr[k].show = true;
+                    if (arr[k].key.indexOf(this.condition) == -1 && arr[k].value.indexOf(this.condition) == -1) {
+                        arr[k].show = false;
+                    }
                 }
             }
 
