@@ -116,7 +116,7 @@
 	        		orderType : 1,
 	        		startTime : '',
 	        		endTime : '',
-	        		timeType:'',
+	        		timeType:'month',
 	        		cur:1,
 	        		total:15
 	        	},
@@ -162,16 +162,7 @@
 	    },
 	   
 	    created() {
-	       this.getOrgCount(this.loadParam);
-	       for(var i in this.initOrgCount){
-	       		for(var j in this.initOrgCount[i].lowerList){
-	       			for(var k in this.initOrgCount[i].lowerList[j].statisticsList){
-	       				console.log(this.initOrgCount[i].lowerList[j].statisticsList[k])
-	       				console.log(this.initOrgCount[i].lowerList[j].statisticsList)
-	       			}
-	       		}
-	       }
-	      
+	       this.getOrgCount(this.loadParam);      
 	    },
 	    
 	    ready(){
@@ -200,7 +191,7 @@
 	border-bottom:none
 }
 .listItem{ 
-	min-width: 600px;
+	min-width: 400px;
 	display:inline-block;
 }
 
