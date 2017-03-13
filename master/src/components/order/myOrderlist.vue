@@ -252,6 +252,7 @@
                                     <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.logistics==1&&item.taskKey=='order_send_governor_validate'" style="color:#333;">{{$t('static.management_approval')}}</a>
                                     <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 3px;">{{$t('static.reapply_delivery')}}
                                     </button>
+                                    <!-- 发货 -->
                                     <button class="btn btn-warning" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 5px;">{{$t('static.shipped')}}
                                     </button>
                                     <!-- 销售订单发货流程end -->
