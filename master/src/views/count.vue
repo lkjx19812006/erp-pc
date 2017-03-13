@@ -19,7 +19,7 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==3">
         <orgorder-count></orgorder-count>
     </div>
-    <!-- 订单统计报表-->
+    <!-- 业务总览报表-->
     <div class="myOrder" v-if="$route.path.split('=')[1]==5">
         <org-manage></org-manage>
     </div>
