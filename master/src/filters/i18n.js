@@ -334,7 +334,6 @@ var locales = {
             recommend_drugs: '推荐已开通药款账户用户使用',
             recommend_line: '金额较大或企业账户',
             upload_logistcs: '请上传物流单凭证照片',
-            //client
             drag_into_blacklist: '加入黑名单',
             out_of_blacklist: '移出黑名单',
             blacklist: '客户黑名单',
@@ -430,7 +429,6 @@ var locales = {
             transcation: '成交时间',
             transcation_amount: '成交金额',
             wait_payment: '待支付',
-            //client
             installment: '分期付款',
             paid: '已支付',
             start_time: '起始时间',
@@ -708,7 +706,7 @@ var locales = {
             altogether: 'Altogether',
             jump_to: 'Jump to',
             click_jump: 'Click to jump',
-            quoted_price: 'Quoted price', //报价金额
+            quoted_price: 'Quoted price',
             exchange: 'Exchange rate',
             quote: 'Quoted',
             quantity: 'Quantity',

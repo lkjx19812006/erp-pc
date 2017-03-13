@@ -8142,12 +8142,65 @@ export const readDictionary = ({ dispatch }, param) => { //字典信息
         }
     }).then((res) => {
         var jsonArr = res.json().result;
+        if (jsonArr.length > 0) {
+            let arr = [];
+            for (let key in jsonArr[0].dictionary) {
+                let temp = {
+                    key: key,
+                    zh_CN: jsonArr[0].dictionary[key],
+                    en: "",
+                    show: true
+                }
+                arr.push(temp);
+
+            }
+
+            jsonArr[0].arr = arr;
+            jsonArr[0].isEdit = false;
+            if (jsonArr.length > 1) {
+                for (let i = 1; i < jsonArr.length; i++) { //遍历其他语言
+                    for (let key in jsonArr[i].dictionary) { //遍历语言中的每一个键值对
+
+                        for (let j = 0; j < jsonArr[0].arr.length; j++) { //jsonArr[0].arr
+                            if (key === jsonArr[0].arr[j].key) {
+                                jsonArr[0].arr[j].en = jsonArr[i].dictionary[key];
+                                break;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+        dispatch(types.MUlT_DICTIONARY, jsonArr);
+        param.loading = false;
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
+export const readDictionaryBack = ({ dispatch }, param) => { //字典信息
+    param.loading = true;
+
+    var url = "/crm/api/v1/i18n/readMuDictionary/" + param.lang;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var jsonArr = res.json().result;
         for (let i = 0; i < jsonArr.length; i++) {
             let arr = [];
             for (let key in jsonArr[i].dictionary) {
                 let temp = {
                     key: key,
-                    value: jsonArr[i].dictionary[key]
+                    value: jsonArr[i].dictionary[key],
+                    show: true
                 }
                 arr.push(temp);
             }
