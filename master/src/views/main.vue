@@ -9,32 +9,19 @@
         <send-detail :param="sendDetailParam" v-if="sendDetailParam.show"></send-detail>
         <deliver-model :param="deliverParam" v-if="deliverParam.show"></deliver-model>
         <div class="employee clear">
-            <div class="employee_left col-md-8">
-                <!-- <div class="employee_top" @click="freshLinecharts(getLinechart)">
-                    <a class="select_btn clear">
-                        <span class="select_btn_person">个人业绩</span>
-                        <span class="select_btn_img"><img src="/static/images/down_arrow.png" height="13" width="24" /></span>
-                    </a>
-                    <a class="select_btn">
-                        <span class="select_btn_date">2016年7月</span>
-                        <span class="select_btn_img"><img src="/static/images/down_arrow.png" height="13" width="24" /></span>
-                    </a>
-                </div>
-                <div class="employee_line">
-                    <div class="linechart" v-echarts="getLinechart.options" :loading="getLinechart.load"></div>
-                </div> -->
+            <div class="employee_left col-md-7 col-xs-12">
                 <div class="complete_rate">
-                    <span>个人业绩完成率</span>
-                    <a class="select_btn" @click="freshPiecharts(getPiechart)">
-                        <span class="select_btn_date">2016年7月</span>
-                        <span class="select_btn_img"><img src="/static/images/down_arrow.png" height="13" width="24" /></span>
-                    </a>
+                    <!--  <span>个人业绩完成率</span>
+                   <a class="select_btn" @click="freshPiecharts(getPiechart)">
+                       <span class="select_btn_date">2016年7月</span>
+                       <span class="select_btn_img"><img src="/static/images/down_arrow.png" height="13" width="24" /></span>
+                   </a> -->
                 </div>
                 <div class="pie_chart">
                     <div class="Piechart" v-echarts="getPiechart.options" :loading="getPiechart.load"></div>
                 </div>
             </div>
-            <div class="employee_right col-md-4">
+            <div class="employee_right col-md-5 col-xs-12">
                 <p class="employee_right_title clear">
                     <span class="left">{{$t('static.order_message')}}</span>
                     <button class="btn btn-primary right" @click="refresh()">{{$t('static.refresh')}}</button>
@@ -383,9 +370,7 @@ export default {
 
 .employee_right {
     float: left;
-    max-height: 800px;
     overflow-y: auto;
-    /*  width: calc(100% - 1000px); */
 }
 
 .employee_right_title {
@@ -397,6 +382,7 @@ export default {
     padding-top: 20px;
     border-top: 1px solid #ddd;
     white-space: nowrap;
+    max-height: 600px;
 }
 
 .employee_message_view {

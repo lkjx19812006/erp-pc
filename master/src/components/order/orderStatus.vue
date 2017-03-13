@@ -36,7 +36,7 @@
                     <div class="col-xs-8 pull-left clearfix">
                         <div class="col-xs-3 col-md-4 pull-left" style="white-space: normal;" v-for="item in initOrderDetail.goods.arr">
                             <p style="font-weight:700">{{item.breedName}}</p>
-                            <p>{{item.price}}元/{{item.unit}}</p>
+                            <p>{{item.price}}元/{{item.unit | Unit}}</p>
                             <p>{{$t('static.quantity')}}：{{item.number}}</p>
                             <p>{{$t('static.order_time')}}：{{item.ctime}}</p>
                         </div>
@@ -166,8 +166,15 @@
                 <validator name="validation">
                     <div class="message clearfix">
                         <p class="order-message">{{$t('static.logistics_info')}}</p>
+                        <div class="clearfix col-md-6">
+                            <span class="pull-left">{{$t('static.shipped_method')}}：</span>
+                            <select v-model="uploadLogistic.way" class="form-control left">
+                                <option value="0" selected>{{$t('static.thrid_logistics')}}</option>
+                                <option value="1">{{$t('static.driver_self')}}</option>
+                            </select>
+                        </div>
                         <!-- 上传物流 -->
-                        <div class="space_15 clearfix col-md-12">
+                        <div class="space_15 clearfix col-md-12" v-if="uploadLogistic.way==0">
                             <div class="logical_color clearfix col-md-6">
                                 <span class="pull-left">{{$t('static.logistics_company')}} <span class="system_danger" v-if="$validation.logisticname.required">{{$t('static.required')}}</span></span>
                                 <input type="text" v-model="uploadLogistic.b" v-show="false" v-validate:logisticname="{required:true}" />
@@ -186,6 +193,32 @@
                                 <input type="text" class="form-control left" v-show="false" v-model="uploadLogistic.image_f" v-validate:imge="{required:true}" />
                                 <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
                                     <press-image :value.sync="uploadLogistic.image_f" :type="type" :param="imageParam" style="float:left;width:15%"></press-image>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 司机信息 -->
+                        <div class="space_15 clearfix col-md-12" v-if="uploadLogistic.way==1">
+                            <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">{{$t('static.driver_name')}} <span class="system_danger" v-if="$validation.drivername.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="{{$t('static.driver_name')}}" v-model="uploadLogistic.driverName" v-validate:drivername="{required:true}" />
+                            </div>
+                            <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">{{$t('static.ID_number')}} <span class="system_danger" v-if="$validation.drivernumber.IdentityCard">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="{{$t('static.ID_number')}}" v-model="uploadLogistic.driverPid" v-validate:drivernumber="['IdentityCard']" />
+                            </div>
+                            <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">{{$t('static.driver_phone')}} <span class="system_danger" v-if="$validation.drivertel.phone">{{$t('static.required')}}</span></span>
+                                <input type="tel" class="form-control left" placeholder="{{$t('static.driver_phone')}}" v-model="uploadLogistic.driverTel" v-validate:drivertel="['phone']" />
+                            </div>
+                            <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">{{$t('static.license_number')}} <span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="{{$t('static.license_number')}}" v-model="uploadLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                            </div>
+                            <div class="logical_color col-md-12">
+                                <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img1.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" v-show="false" v-model="uploadLogistic.image_f" v-validate:img1="{required:true}" />
+                                <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
+                                    <press-image :value.sync="uploadLogistic.image_f" :type="type" :param="imageParam"></press-image>
                                 </div>
                             </div>
                         </div>
@@ -528,6 +561,11 @@ export default {
                 id: this.param.id,
                 show: true,
                 link: '/order/send',
+                way: 0,
+                driverName: '',
+                driverPid: '',
+                driverTel: '',
+                vehicleNo: '',
                 key: this.param.key,
                 image_f: '',
                 name: ''
@@ -602,8 +640,6 @@ export default {
         satisfied: function(checkout) { //收货
             this.param.show = false;
             checkout.callback = this.param.callback;
-            /*            console.log(this.param)
-                        console.log(checkout)*/
             this.orderReceive(checkout);
         },
         addContract: function(contract) {

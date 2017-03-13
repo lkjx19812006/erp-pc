@@ -89,7 +89,7 @@ export default {
             loadParam: {
                 loading: true,
                 show: false,
-                lang: "en1,zh_CN"
+                lang: "en,zh_CN"
             },
             saveParam: {
                 fileName: "",

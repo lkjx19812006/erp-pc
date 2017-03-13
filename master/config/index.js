@@ -25,7 +25,7 @@ module.exports = {
         proxyTable: {
             '/crm/api/v1/**': {
                 /*target: 'http://192.168.1.248:70',*/
-                target: 'http://192.168.1.103:8080',
+                target: 'http://192.168.1.154:8080',
                 /*target: 'http://192.168.1.133:8080',*/
                 /*target: 'http://192.168.1.200:8080',*/
                 // target: 'http://192.168.1.154:8080',
