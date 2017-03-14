@@ -1637,7 +1637,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     if (param.b && param.link == '/order/send') {
         var strs = param.b.split(",");
         param.lcompanyId = strs[0];
-        body.lcompanyId = param.lcompanyId;
+        body.logistics = param.lcompanyId;
     }
     if (param.b && param.link == '/order/sendflowSend') {
         var strs = param.b.split(",");
@@ -1655,7 +1655,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
         body.code = param.code;
     }
     if (param.lcompanyNo) {
-        body.lcompanyNo = param.lcompanyNo;
+        body.number = param.lcompanyNo;
     }
     if (param.number) {
         body.number = param.number;
@@ -6400,9 +6400,13 @@ export const getAuthInfo = ({ dispatch }, param) => { //查询认证信息
 
 export const baseGetData = ({ dispatch }, param) => { //查询权限
     param.loading = true;
+    var url = apiUrl.base + param.url + '?page=' + param.cur;
+    if (param.sys) {
+        url += '&sys=' + param.sys
+    }
     Vue.http({
         method: 'GET',
-        url: apiUrl.base + param.url + '?page=' + param.cur,
+        url: url,
         emulateHTTP: false,
         emulateJSON: false,
         headers: {
@@ -6427,7 +6431,6 @@ export const baseGetData = ({ dispatch }, param) => { //查询权限
         }
         param.all = json.list.result.pages;
         param.total = res.json().result.total;
-        console.log(json);
         dispatch(types.ABSTRACT_GET_DATA, json);
 
         localStorage.scopeList = JSON.stringify(json);
@@ -6459,6 +6462,7 @@ export const scopedOperate = ({ dispatch }, param) => { //查询权限功能
 }
 
 export const baseAddData = ({ dispatch }, param) => { //新增权限
+    console.log(param.sys)
     const data = {}
     if (param.link == '/sys/role/' && param.body) {
         data.cname = param.body.cname;
@@ -6473,6 +6477,9 @@ export const baseAddData = ({ dispatch }, param) => { //新增权限
     }
     if (param.link == '/sys/menu/' && param.pid) {
         data.pid = param.pid;
+    }
+    if (param.link == '/sys/menu/' && param.sys) {
+        data.sys = param.sys;
     }
     if (param.link == '/sys/menu/' && param.type !== '') {
         data.type = param.type;
@@ -6499,7 +6506,7 @@ export const baseAddData = ({ dispatch }, param) => { //新增权限
         }
     }).then((res) => {
         console.log(res.json());
-        if (param.pid) {
+        if (param.pid || res.json().code == 200) {
             param.callback(res.json().msg)
             dispatch(types.ABSTRACT_UPDATE_DATA, param);
         } else {
@@ -6544,6 +6551,9 @@ export const baseUpdateData = ({ dispatch }, param) => { //修改权限
     }
     if (param.link == '/sys/menu/' && param.type !== '') {
         data.type = param.type;
+    }
+    if (param.link == '/sys/menu/' && param.sys) {
+        data.sys = param.sys;
     }
     if (param.link == '/sys/menu/' && param.remark) {
         data.remark = param.remark;

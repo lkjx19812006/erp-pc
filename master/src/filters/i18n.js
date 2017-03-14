@@ -1073,7 +1073,7 @@ var locales = {
 
 
 
-/*Object.keys(locales).forEach(function(lang) {
+Object.keys(locales).forEach(function(lang) {
     var url = "/crm/api/v1/i18n/readDictionary/" + lang;
     Vue.http({
         method: 'GET',
@@ -1083,12 +1083,12 @@ var locales = {
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
-        locales[lang].static = res.json().result;
+        locales[lang].static = res.json().result.dictionary[0];
     }, (res) => {
         console.log('fail');
     })
 })
-*/
+
 
 
 

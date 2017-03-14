@@ -36,7 +36,7 @@
                     <div class="col-xs-8 pull-left clearfix">
                         <div class="col-xs-3 col-md-4 pull-left" style="white-space: normal;" v-for="item in initOrderDetail.goods.arr">
                             <p style="font-weight:700">{{item.breedName}}</p>
-                            <p>{{item.price}}元/{{item.unit}}</p>
+                            <p>{{item.price}}元/{{item.unit | Unit}}</p>
                             <p>{{$t('static.quantity')}}：{{item.number}}</p>
                             <p>{{$t('static.order_time')}}：{{item.ctime}}</p>
                         </div>
@@ -166,8 +166,15 @@
                 <validator name="validation">
                     <div class="message clearfix">
                         <p class="order-message">{{$t('static.logistics_info')}}</p>
+                        <div class="clearfix col-md-6">
+                            <span class="pull-left">{{$t('static.shipped_method')}}：</span>
+                            <select v-model="uploadLogistic.way" class="form-control left">
+                                <option value="0" selected>{{$t('static.thrid_logistics')}}</option>
+                                <option value="1">{{$t('static.driver_self')}}</option>
+                            </select>
+                        </div>
                         <!-- 上传物流 -->
-                        <div class="space_15 clearfix col-md-12">
+                        <div class="space_15 clearfix col-md-12" v-if="uploadLogistic.way==0">
                             <div class="logical_color clearfix col-md-6">
                                 <span class="pull-left">{{$t('static.logistics_company')}} <span class="system_danger" v-if="$validation.logisticname.required">{{$t('static.required')}}</span></span>
                                 <input type="text" v-model="uploadLogistic.b" v-show="false" v-validate:logisticname="{required:true}" />
@@ -189,6 +196,32 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 司机信息 -->
+                        <div class="space_15 clearfix col-md-12" v-if="uploadLogistic.way==1">
+                            <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">{{$t('static.driver_name')}} <span class="system_danger" v-if="$validation.drivername.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="{{$t('static.driver_name')}}" v-model="uploadLogistic.driverName" v-validate:drivername="{required:true}" />
+                            </div>
+                            <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">{{$t('static.ID_number')}} <span class="system_danger" v-if="$validation.drivernumber.IdentityCard">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="{{$t('static.ID_number')}}" v-model="uploadLogistic.driverPid" v-validate:drivernumber="['IdentityCard']" />
+                            </div>
+                            <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">{{$t('static.driver_phone')}} <span class="system_danger" v-if="$validation.drivertel.phone">{{$t('static.required')}}</span></span>
+                                <input type="tel" class="form-control left" placeholder="{{$t('static.driver_phone')}}" v-model="uploadLogistic.driverTel" v-validate:drivertel="['phone']" />
+                            </div>
+                            <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">{{$t('static.license_number')}} <span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="{{$t('static.license_number')}}" v-model="uploadLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                            </div>
+                            <div class="logical_color col-md-12">
+                                <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img1.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" v-show="false" v-model="uploadLogistic.image_f" v-validate:img1="{required:true}" />
+                                <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
+                                    <press-image :value.sync="uploadLogistic.image_f" :type="type" :param="imageParam"></press-image>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="clearfix logical_color">
                         <input type="button" class="btn  btn-confirm right" @click="accept(uploadLogistic,param.show=false)" v-if="$validation.valid" value="{{$t('static.confirmation_delivery')}}" />
@@ -206,6 +239,7 @@
                             <select v-model="salesLogistic.way" class="form-control left">
                                 <option value="0" selected>{{$t('static.thrid_logistics')}}</option>
                                 <option value="1">{{$t('static.driver_self')}}</option>
+                                <option value="2">国际物流</option>
                             </select>
                         </div>
                         <!-- 上传物流 -->
@@ -253,6 +287,59 @@
                                 <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
                                     <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam"></press-image>
                                 </div>
+                            </div>
+                        </div>
+                        <!-- 国际物流 -->
+                        <div class="space_15 clearfix col-md-12" v-if="salesLogistic.way==2">
+                            <div class="logical_color clearfix col-md-7">
+                                <span class="pull-left">国际物流 <span class="system_danger" v-if="$validation.logisticname.required">{{$t('static.required')}}</span></span>
+                               
+                                <select v-model="salesLogistic.method" class="form-control left">
+                                    <option value="1">FEDEX</option>
+                                    <option value="1">DHL</option>
+                                    <option value="1">TNT</option>
+                                    <option value="1">UPS</option>
+                                    <option value="1">EMS</option>
+                                    <option value="2">空运</option>
+                                    <option value="3">海运</option>
+                                </select>
+                            </div>
+                            <!-- 国际快递 -->
+                            <div class="fedex" v-if="salesLogistic.method==1">
+                                <div class="logical_color clearfix col-md-6">
+                                    <span class="pull-left">快递单号 <span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                               </div>
+
+                                <div class="logical_color col-md-12">
+                                    <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img1.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f" v-validate:img1="{required:true}" />
+                                    <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
+                                        <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam"></press-image>
+                                    </div>
+                                 </div>
+                            </div>
+                            <!-- 空运 -->
+                            <div class="ocean" v-if="salesLogistic.method==2">
+                              <div class="logical_color clearfix col-md-6">
+                                    <span class="pull-left">空运运单<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                               </div>
+                            </div>
+                            <!-- 海运 -->
+                            <div class="fly"  v-if="salesLogistic.method==3">
+                              <div class="logical_color clearfix col-md-6">
+                                    <span class="pull-left">海运提单号<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                               </div>
+                                <div class="logical_color clearfix col-md-6">
+                                    <span class="pull-left">船名<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                               </div>
+                                <div class="logical_color clearfix col-md-6">
+                                    <span class="pull-left">船次<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                               </div>
                             </div>
                         </div>
                     </div>
@@ -479,7 +566,8 @@ export default {
                 key: 'myOrderList',
                 employee: this.initLogin.id,
                 org: this.initLogin.orgId,
-                total: 0
+                total: 0,
+                method:0
             },
             cancleReason: {
                 show: false,
@@ -528,6 +616,11 @@ export default {
                 id: this.param.id,
                 show: true,
                 link: '/order/send',
+                way: 0,
+                driverName: '',
+                driverPid: '',
+                driverTel: '',
+                vehicleNo: '',
                 key: this.param.key,
                 image_f: '',
                 name: ''
@@ -602,8 +695,6 @@ export default {
         satisfied: function(checkout) { //收货
             this.param.show = false;
             checkout.callback = this.param.callback;
-            /*            console.log(this.param)
-                        console.log(checkout)*/
             this.orderReceive(checkout);
         },
         addContract: function(contract) {

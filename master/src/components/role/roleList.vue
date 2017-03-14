@@ -3,6 +3,10 @@
         <editscope-model :param="editMenuParam" v-if="editMenuParam.show"></editscope-model>
         <delete-model :param="deleteParam" v-if="deleteParam.show"></delete-model>
         <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
+        <div class="service-nav">
+            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.sys=='erp'}" @click="clickChange('erp')">ERP系统</button>
+            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.sys=='wms'}" @click="clickChange('wms')">WMS系统</button>
+        </div>
         <!-- 右侧功能 -->
         <mglist-model style="width:75%;float:right">
             <!-- 头部搜索 -->
@@ -40,6 +44,7 @@
                                     show:true,
                                     cname:item.cname,
                                     ename:item.ename,
+                                    sys:item.sys,
                                     pid:item.pid,
                                     remark:item.remark,
                                     link:'/sys/menu/',
@@ -49,6 +54,7 @@
                                     title:'功能',
                                     sub:$index,
                                     id:item.id,
+                                    sys:item.sys,
                                     show:true,
                                     cname:item.cname,
                                     ename:item.ename,
@@ -136,7 +142,8 @@ export default {
                 size: '15px',
                 url: '/sys/menu/',
                 cur: 1,
-                keyName: 'menu'
+                keyName: 'menu',
+                sys: 'erp'
             },
             tipsParam: {
                 show: false,
@@ -156,10 +163,15 @@ export default {
                 type: '',
                 remark: '',
                 url: '',
-            }
+            },
         }
     },
     methods: {
+        clickChange: function(system) {
+            this.loadParam.sys = system;
+            this.baseGetData(this.loadParam);
+        },
+
         selectShow: function(item) {
             /*--循环所有的层级的show置为false,最后自己本身为true(如果是关联显示应该判断父级和子级的显示)--*/
             for (var i in this.list.result) {
@@ -186,6 +198,7 @@ export default {
             this.editMenuParam.pid = '';
             this.editMenuParam.remark = '';
             this.editMenuParam.type = 0; // 0/1 页面/功能 
+            this.editMenuParam.sys = this.loadParam.sys;
             this.editMenuParam.url = '';
             this.editMenuParam.callback = this.callback;
         },
@@ -202,6 +215,7 @@ export default {
                 this.editMenuParam.icon = '';
                 this.editMenuParam.pid = '';
                 this.editMenuParam.remark = '';
+                this.editMenuParam.sys = this.loadParam.sys;
                 this.editMenuParam.type = 1; // 0/1 页面/功能 
                 this.editMenuParam.url = '';
                 this.editMenuParam.callback = this.functionCallback;
@@ -223,6 +237,7 @@ export default {
                 this.editMenuParam.type = this.initScopeDetail.type; // 0/1 页面/功能 
                 this.editMenuParam.url = this.initScopeDetail.url;
                 this.editMenuParam.id = this.initScopeDetail.id;
+                this.editMenuParam.sys = this.loadParam.sys;
                 this.editMenuParam.callback = this.callback;
             }
         },
@@ -249,19 +264,25 @@ export default {
         },
         resetConditional: function() {
             this.baseGetData(this.loadParam);
-            this.scopedOperate(this.initScopeDetail);
+            if (this.initScopeDetail.id) {
+                this.scopedOperate(this.initScopeDetail);
+            }
         },
         callback: function(title) {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
-            this.baseGetData(this.loadParam);
+            if (title == 'success') {
+                this.baseGetData(this.loadParam);
+            }
         },
         functionCallback: function(name) {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
             this.tipsParam.alert = true;
-            this.scopedOperate(this.initScopeDetail);
+            if (name == 'success') {
+                this.scopedOperate(this.initScopeDetail);
+            }
         }
     },
     vuex: {
