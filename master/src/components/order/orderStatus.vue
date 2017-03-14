@@ -296,12 +296,12 @@
                             <div class="logical_color clearfix col-md-6">
                                 <span class="pull-left">国际物流 <span class="system_danger" v-if="$validation.logisticname.required">{{$t('static.required')}}</span></span>
                                
-                                <select class="form-control left">
-                                    <option>FEDEX</option>
-                                    <option>DHL</option>
-                                    <option>TNT</option>
-                                    <option>UPS</option>
-                                    <option>EMS</option>
+                                <select class="form-control left" v-model = "salesLogistic.express">
+                                    <option value="0">FEDEX</option>
+                                    <option value="1">DHL</option>
+                                    <option value="2">TNT</option>
+                                    <option value="3">UPS</option>
+                                    <option value="4">EMS</option>
                                     
                                 </select>
                             </div>
@@ -309,7 +309,7 @@
                             <div class="fedex" >
                                 <div class="logical_color clearfix col-md-6">
                                     <span class="pull-left">快递单号 <span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
-                                    <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                                    <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.expressNo" v-validate:driverno="{required:true}" />
                                </div>
 
                                 <div class="logical_color col-md-12">
@@ -326,22 +326,22 @@
                         <div class="ocean space_15 clearfix col-md-12" v-if="salesLogistic.way==3">
                           <div class="logical_color clearfix col-md-6">
                                 <span class="pull-left">空运运单<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
-                                <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                                <input type="text" class="form-control left" placeholder="空运单号" v-model="salesLogistic.airNo" v-validate:driverno="{required:true}" />
                            </div>
                         </div>
                         <!-- 海运 -->
                         <div class="fly space_15 clearfix col-md-12"  v-if="salesLogistic.way==4">
                             <div class="logical_color clearfix col-md-6">
                                 <span class="pull-left">海运提单号<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
-                                <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                                <input type="text" class="form-control left" placeholder="海运提单号" v-model="salesLogistic.oceanNo" v-validate:driverno="{required:true}" />
                             </div>
                             <div class="logical_color clearfix col-md-6">
                                 <span class="pull-left">船名<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
-                                <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                                <input type="text" class="form-control left" placeholder="船名" v-model="salesLogistic.shipName" v-validate:driverno="{required:true}" />
                            </div>
                             <div class="logical_color clearfix col-md-6">
                                 <span class="pull-left">船次<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
-                                <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                                <input type="text" class="form-control left" placeholder="船次" v-model="salesLogistic.shipTime" v-validate:driverno="{required:true}" />
                            </div>
                         </div>
 
@@ -645,7 +645,13 @@ export default {
                 link: '/order/sendflowSend',
                 key: this.param.key,
                 image_f: '',
-                name: ''
+                name: '',
+                express:0,  //快递名称
+                expressNo : '', //快递单号
+                airNo:'', //空运提单号 
+                oceanNo:'', //海运提单号 
+                shipName:'', //船名
+                shipTime:'' //船次
             },
             tipParam: {
                 show: false,

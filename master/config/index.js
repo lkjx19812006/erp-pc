@@ -18,15 +18,15 @@ module.exports = {
     },
     dev: {
         env: require('./dev.env'),
-        port: 80,
+        port: 8080,
         autoOpenBrowser: true,
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
             '/crm/api/v1/**': {
                 /*target: 'http://192.168.1.248:70',*/
-                target: 'http://192.168.1.154:8080',
-                /*target: 'http://192.168.1.103:8080',*/
+                // target: 'http://192.168.1.154:8080',
+                target: 'http://192.168.1.103:8080',
                 changeOrigin: true
             }
         },

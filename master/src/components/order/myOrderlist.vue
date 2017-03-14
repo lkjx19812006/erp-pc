@@ -309,6 +309,7 @@
                                 <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-2">
                                     <img src="/static/images/{{$t('static.deadline')}}.png" title="订单已过期" alt="订单已过期" />
                                 </a>
+                                <!-- 申请审核 -->
                                 <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)">{{$t('static.review_application')}}</button>
                                 <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2&&(item.orderStatus==0||item.orderStatus==70)">{{$t('static.reapply')}}</button>
                             </td>
