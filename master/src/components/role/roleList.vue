@@ -38,30 +38,30 @@
                             <td>{{item.ctime}}</td>
                             <td>
                                 <button @click="modify({
-	                                title:'修改功能',
-	                                sub:$index,
-	                                id:item.id,
-	                                show:true,
-	                                cname:item.cname,
-	                                ename:item.ename,
-	                                sys:item.sys,
-	                                pid:item.pid,
-	                                remark:item.remark,
-	                                link:'/sys/menu/',
-	                                type:item.type
-	                               })" class="btn btn-primary btn-edit">编辑</button>
+                                    title:'修改功能',
+                                    sub:$index,
+                                    id:item.id,
+                                    show:true,
+                                    cname:item.cname,
+                                    ename:item.ename,
+                                    sys:item.sys,
+                                    pid:item.pid,
+                                    remark:item.remark,
+                                    link:'/sys/menu/',
+                                    type:item.type
+                                   })" class="btn btn-primary btn-edit">编辑</button>
                                 <button @click="delete_contain({
-	                                title:'功能',
-	                                sub:$index,
-	                                id:item.id,
-	                                sys:item.sys,
-	                                show:true,
-	                                cname:item.cname,
-	                                ename:item.ename,
-	                                link:specDel,
-	                                url:'/sys/menu/',
-	                                type:item.type
-	                               })" class="btn btn-primary btn-apply">删除</button>
+                                    title:'功能',
+                                    sub:$index,
+                                    id:item.id,
+                                    sys:item.sys,
+                                    show:true,
+                                    cname:item.cname,
+                                    ename:item.ename,
+                                    link:specDel,
+                                    url:'/sys/menu/',
+                                    type:item.type
+                                   })" class="btn btn-primary btn-apply">删除</button>
                             </td>
                         </tr>
                     </tbody>
@@ -77,13 +77,13 @@
                 <button class="btn btn-default pull-left" @click="addMenu()">添加菜单</button>
                 <button class="btn btn-primary pull-right transfer" @click="resetConditional()">刷新</button>
                 <button class="btn btn-default pull-right transfer" @click="deleteMenu({
-	              id:'',
-	              show:false,
-	              link:specDel,
-	              type:'',
-	              title:'',
-	              url:'/sys/menu/'
-	              })">删除菜单</button>
+                  id:'',
+                  show:false,
+                  link:specDel,
+                  type:'',
+                  title:'',
+                  url:'/sys/menu/'
+                  })">删除菜单</button>
                 <button class="btn btn-default pull-right" @click="editMenu()">编辑菜单</button>
             </div>
             <div class="trans_parten clear">
@@ -171,6 +171,7 @@ export default {
             this.loadParam.sys = system;
             this.baseGetData(this.loadParam);
         },
+
         selectShow: function(item) {
             /*--循环所有的层级的show置为false,最后自己本身为true(如果是关联显示应该判断父级和子级的显示)--*/
             for (var i in this.list.result) {
@@ -268,7 +269,6 @@ export default {
             if (this.initScopeDetail.id) {
                 this.scopedOperate(this.initScopeDetail);
             }
-
         },
         callback: function(title) {
             this.tipsParam.show = true;
@@ -285,7 +285,6 @@ export default {
             if (name == 'success') {
                 this.scopedOperate(this.initScopeDetail);
             }
-
         }
     },
     vuex: {

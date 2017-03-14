@@ -619,7 +619,7 @@ export default {
 }
 
 .edit-model {
-  padding: 10px 30px 80px 30px;
+  padding: 10px 30px 30px 30px;
 }
 
 .top-title{

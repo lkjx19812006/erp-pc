@@ -239,6 +239,9 @@
                             <select v-model="salesLogistic.way" class="form-control left">
                                 <option value="0" selected>{{$t('static.thrid_logistics')}}</option>
                                 <option value="1">{{$t('static.driver_self')}}</option>
+                                <option value="2">国际物流</option>
+                                <option value="3">空运</option>
+                                <option value="4">海运</option>
                             </select>
                         </div>
                         <!-- 上传物流 -->
@@ -288,6 +291,60 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 国际物流 -->
+                        <div class="space_15 clearfix col-md-12" v-if="salesLogistic.way==2">
+                            <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">国际物流 <span class="system_danger" v-if="$validation.logisticname.required">{{$t('static.required')}}</span></span>
+                               
+                                <select class="form-control left" v-model = "salesLogistic.express">
+                                    <option value="0">FEDEX</option>
+                                    <option value="1">DHL</option>
+                                    <option value="2">TNT</option>
+                                    <option value="3">UPS</option>
+                                    <option value="4">EMS</option>
+                                    
+                                </select>
+                            </div>
+                            <!-- 国际快递 -->
+                            <div class="fedex" >
+                                <div class="logical_color clearfix col-md-6">
+                                    <span class="pull-left">快递单号 <span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.expressNo" v-validate:driverno="{required:true}" />
+                               </div>
+
+                                <div class="logical_color col-md-12">
+                                    <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img1.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f" v-validate:img1="{required:true}" />
+                                    <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
+                                        <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam"></press-image>
+                                    </div>
+                                 </div>
+                            </div>
+                           
+                        </div>
+                        <!-- 空运 -->
+                        <div class="ocean space_15 clearfix col-md-12" v-if="salesLogistic.way==3">
+                          <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">空运运单<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="空运单号" v-model="salesLogistic.airNo" v-validate:driverno="{required:true}" />
+                           </div>
+                        </div>
+                        <!-- 海运 -->
+                        <div class="fly space_15 clearfix col-md-12"  v-if="salesLogistic.way==4">
+                            <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">海运提单号<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="海运提单号" v-model="salesLogistic.oceanNo" v-validate:driverno="{required:true}" />
+                            </div>
+                            <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">船名<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="船名" v-model="salesLogistic.shipName" v-validate:driverno="{required:true}" />
+                           </div>
+                            <div class="logical_color clearfix col-md-6">
+                                <span class="pull-left">船次<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="船次" v-model="salesLogistic.shipTime" v-validate:driverno="{required:true}" />
+                           </div>
+                        </div>
+
                     </div>
                     <div class="clearfix logical_color">
                         <input type="button" class="btn  btn-confirm right" @click="accept(salesLogistic,param.show=false)" v-if="$validation.valid" value="{{$t('static.confirmation_delivery')}}" />
@@ -512,7 +569,8 @@ export default {
                 key: 'myOrderList',
                 employee: this.initLogin.id,
                 org: this.initLogin.orgId,
-                total: 0
+                total: 0,
+                method:0
             },
             cancleReason: {
                 show: false,
@@ -588,7 +646,13 @@ export default {
                 link: '/order/sendflowSend',
                 key: this.param.key,
                 image_f: '',
-                name: ''
+                name: '',
+                express:0,  //快递名称
+                expressNo : '', //快递单号
+                airNo:'', //空运提单号 
+                oceanNo:'', //海运提单号 
+                shipName:'', //船名
+                shipTime:'' //船次
             },
             tipParam: {
                 show: false,

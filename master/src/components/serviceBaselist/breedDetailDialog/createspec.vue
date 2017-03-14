@@ -19,15 +19,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="editpage" v-cloak v-if="param.judge=='locals'">
-                            <div class="editpageleft">
-                                <div class="editpage-input">
+                        <div class="" v-cloak v-if="param.judge=='locals'">
+                            <div class="editpage-input">
                                 <label class="editlabel">{{param.namelist}} <span class="system_danger" v-if="$validation.name.required">请输入{{param.namelist}}</span></label>
-                                <select class="form-control edit-input" v-model="param.name" v-validate:name="['required']">
+                              <!--   <select class="form-control edit-input" v-model="param.name" v-validate:name="['required']">
                                     <option v-for="item in initProvince">{{item.cname}}</option>
-                                </select>
-                                    <!-- <input type="text" class="form-control edit-input" v-model="param.name" v-validate:name="['required']" /> -->
-                                </div>
+                                </select> -->
+                                 <v-select
+                                     :debounce="250"
+                                     :value.sync="province"
+                                     :on-change="selectProvince"
+                                     :options="initProvince"
+                                     placeholder="省"
+                                     label="cname"
+                                    >
+                                   </v-select>
                             </div>
                         </div>
                         <div class="editpage" v-cloak v-if="param.judge=='alias'">
@@ -58,6 +64,7 @@
     </div>
 </template>
 <script>
+import vSelect from '../../tools/vueSelect/components/Select'
 import {
     initProvince
 } from '../../../vuex/getters'
@@ -66,7 +73,7 @@ import {
 } from '../../../vuex/actions'
 export default {
     components: {
-
+       vSelect
     },
     props: ['param'],
     data() {
@@ -122,7 +129,7 @@ export default {
 
 .edit-model {
     overflow: hidden;
-    overflow-y: auto;
+   z-index: 999;
     padding: 10px 30px 30px 30px;
 }
 .editsection {
@@ -159,6 +166,9 @@ export default {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
+}
+.dropdown-menu {
+    z-index: 999
 }
 .edit-input:focus {
     border-color: #fa6705;
