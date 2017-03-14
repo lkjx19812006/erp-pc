@@ -378,7 +378,7 @@
                                               orderContractList:'',
                                               titles:'上传合同'
                                               })" 
-                                              v-if="initOrderDetail.contractList.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
+                                              v-if="initOrderDetail.contractList.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&(initOrderDetail.orderStatus<20||initOrderDetail.orderStatus==70)&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
                                       <button v-else></button>
                                   </h4>
                                     </div>
