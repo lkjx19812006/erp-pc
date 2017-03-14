@@ -220,6 +220,7 @@ export default {
                 this.editMenuParam.url = '';
                 this.editMenuParam.callback = this.functionCallback;
             }
+            this.initScopeDetail.id = '';
         },
         editMenu: function() {
             if (!this.initScopeDetail.id) {
@@ -240,6 +241,7 @@ export default {
                 this.editMenuParam.sys = this.loadParam.sys;
                 this.editMenuParam.callback = this.callback;
             }
+            this.initScopeDetail.id = '';
         },
         modify: function(item) {
             this.editMenuParam = item;

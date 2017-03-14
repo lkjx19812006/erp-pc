@@ -179,7 +179,7 @@
                                 <span class="pull-left">{{$t('static.logistics_company')}} <span class="system_danger" v-if="$validation.logisticname.required">{{$t('static.required')}}</span></span>
                                 <input type="text" v-model="uploadLogistic.b" v-show="false" v-validate:logisticname="{required:true}" />
                                 <select v-model="uploadLogistic.b" class="form-control left">
-                                    <option v-for="item in initExpresslist" value="{{item.id + ',' + item.name}}">{{item.name}}{{item.code}}</option>
+                                    <option v-for="item in initExpresslist" value="{{item.id + ',' + item.name+','+item.code}}">{{item.name}}{{item.code}}</option>
                                 </select>
                             </div>
                             <div class="logical_color clearfix col-md-6">
@@ -643,6 +643,7 @@ export default {
                 vehicleNo: '',
                 key: this.param.key,
                 image_f: '',
+                code: '',
                 name: ''
             },
             salesLogistic: {
