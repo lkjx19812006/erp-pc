@@ -237,6 +237,7 @@
                                     <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==0">
                                         <img src="/static/images/{{$t('static.img_paid')}}.png" title="待客户收款" alt="待客户收款" />
                                     </a>
+                                    <!-- 申请收款按钮 -->
                                     <button class="btn btn-warning" @click="clickOn({
                                             show:true,
                                             id:item.id,

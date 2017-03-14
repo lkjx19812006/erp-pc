@@ -83,7 +83,11 @@ export default {
     margin: auto;
     z-index: 1083
 }
-
+.txt{
+    display: inline-block;
+    width: 300px;
+    white-space: normal;
+}
 .modal_con {
     width: 550px;
     min-height: 400px;

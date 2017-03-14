@@ -1055,10 +1055,11 @@ export const orgOrderAudit = ({ dispatch }, param) => { //订单申请审核（�
         data.index = param.index;
         data.key = param.key;
         data.validate = 1;
+        console.log('当前状态'+data.validate )
         if (res.json().code == 200) {
             dispatch(types.ORG_ORDER_AUDIT, data);
         }
-
+        console.log('测试'+data)
     }, (res) => {
         console.log('fail');
     })
@@ -1649,6 +1650,9 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
         param.name = strs[1];
         body.name = param.name;
     }
+    if (param.name) {
+        body.name = param.name;
+    }
     if (param.b) {
         var strs = param.b.split(",");
         param.code = strs[2];
@@ -1674,6 +1678,9 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     }
     if (param.way) {
         body.way = param.way;
+    }
+    if(param.vesselNo){   //船次
+        body.vesselNo = param.vesselNo;
     }
     Vue.http({
         method: 'POST',

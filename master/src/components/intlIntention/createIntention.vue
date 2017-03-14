@@ -623,7 +623,7 @@ export default {
 }
 
 .top-title{
-    right:0;
+    right:0; 
     width: 800px;
     left: 0;
 }

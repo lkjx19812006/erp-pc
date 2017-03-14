@@ -218,7 +218,7 @@
                                                         <td>{{item.comment}}</td>
                                                         <td>{{item.ctime}}</td>
                                                         <td v-if="param.contact=='/order/myList'">
-                                                            <!-- 申请收款 -->
+                                                            <!-- 申请审核 -->
                                                             <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==1&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                                   show:true,
                                                                   sub:$index,
