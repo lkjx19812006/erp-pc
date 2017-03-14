@@ -42,7 +42,7 @@
                                 <th>key</th>
                                 <th>中文</th>
                                 <th>英文</th>
-                                <!-- <th>{{$t('static.handle')}}</th> -->
+                                <!-- <th rowspan="1000">{{$t('static.handle')}}</th> -->
                             </tr>
                         </thead>
                         <tbody>

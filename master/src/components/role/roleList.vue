@@ -202,7 +202,6 @@ export default {
             this.editMenuParam.callback = this.callback;
         },
         newData: function() {
-            console.log(this.initScopeDetail.id)
             if (!this.initScopeDetail.id) {
                 this.tipsParam.show = true;
                 this.tipsParam.name = '请选择菜单'
@@ -220,6 +219,7 @@ export default {
                 this.editMenuParam.url = '';
                 this.editMenuParam.callback = this.functionCallback;
             }
+            this.initScopeDetail.id = '';
         },
         editMenu: function() {
             if (!this.initScopeDetail.id) {
@@ -240,6 +240,7 @@ export default {
                 this.editMenuParam.sys = this.loadParam.sys;
                 this.editMenuParam.callback = this.callback;
             }
+            this.initScopeDetail.id = '';
         },
         modify: function(item) {
             this.editMenuParam = item;
@@ -276,7 +277,6 @@ export default {
             if (title == 'success') {
                 this.baseGetData(this.loadParam);
             }
-
         },
         functionCallback: function(name) {
             this.tipsParam.show = true;
