@@ -313,8 +313,8 @@
                                </div>
                                 <!-- 上传图片 -->
                                 <div class="logical_color col-md-12">
-                                    <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img1.required">{{$t('static.required')}}</span></span>
-                                    <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f" v-validate:img1="{required:true}" />
+                                    <span class="editlabel">{{$t('static.upload_logistcs')}} </span>
+                                    <input type="text" class="form-control left" v-show="false"  />
                                     <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
                                         <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam"></press-image>
                                     </div>
@@ -330,8 +330,8 @@
                            </div>
                            <!-- 上传图片 -->
                            <div class="logical_color col-md-12">
-                                <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img1.required">{{$t('static.required')}}</span></span>
-                                <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f" v-validate:img1="{required:true}" />
+                                <span class="editlabel">{{$t('static.upload_logistcs')}} </span>
+                                <input type="text" class="form-control left" v-show="false" />
                                 <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
                                     <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam"></press-image>
                                 </div>
@@ -346,15 +346,15 @@
                             <div class="logical_color clearfix col-md-6">
                                 <span class="pull-left">船名<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
                                 <input type="text" class="form-control left" placeholder="船名" v-model="salesLogistic.name" v-validate:driverno="{required:true}" />
-                           </div>
+                            </div>
                             <div class="logical_color clearfix col-md-6">
                                 <span class="pull-left">航次</span>
                                 <input type="text" class="form-control left" placeholder="船次" v-model="salesLogistic.vesselNo" />
                            </div>
                            <!-- 上传图片 -->
                            <div class="logical_color col-md-12">
-                                <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img1.required">{{$t('static.required')}}</span></span>
-                                <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f" v-validate:img1="{required:true}" />
+                                <span class="editlabel">{{$t('static.upload_logistcs')}}</span>
+                                <input type="text" class="form-control left" v-show="false" />
                                 <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
                                     <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam"></press-image>
                                 </div>
