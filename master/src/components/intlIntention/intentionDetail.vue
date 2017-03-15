@@ -107,12 +107,13 @@
                                             link:initIntlIntentionDetail.inquires,
                                             crete:'inquires'
                                             })">
-                                              <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26"  />
-                                              <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                               {{$t('static.inquiry_record')}}（{{initIntlIntentionDetail.inquires.arr.length}}）
-                                              </a>
-                                              <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
-                                        </h4>
+                                     <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26" />
+<a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" class="panel-title-set">
+                                       {{$t('static.inquiry_record')}}（{{initIntlIntentionDetail.inquires.arr.length}}）
+                                      </a>
+<!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+</h4>
+
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
                                         <div class="panel-body panel-set">

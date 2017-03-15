@@ -723,7 +723,6 @@ const state = {
             "utime": "2016-11-08 14:48",
             "creater": null,
             "ctime": "2016-11-07 17:03",
-
             "items": { "arr": [], show: false },
             "inquires": { arr: [], show: false },
             "files": { arr: [], show: false },
@@ -1168,7 +1167,7 @@ const mutations = {
         } else {
             state.basicBaseList.orderList = data;
         }
-       
+
     },
     [ORDER_STATISTIC](state, data) {
         if (data.key == "orgOrderList") {

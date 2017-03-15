@@ -238,7 +238,7 @@ export default {
                 endTime: '',
                 startTime: '',
                 orderType: 1,
-                timeType: '',
+                timeType: 'month',
                 org: this.$store.state.table.login.orgId,
                 cur: 1,
                 total: 0,
@@ -253,7 +253,7 @@ export default {
                 endTime: '',
                 startTime: '',
                 orderType: 1,
-                timeType: '',
+                timeType: 'month',
                 org: this.$store.state.table.login.orgId
             },
             sortParam: {

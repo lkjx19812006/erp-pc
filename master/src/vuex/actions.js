@@ -5050,7 +5050,6 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
             intent.items.arr = items;
             intent.items.show = false;
 
-
             dispatch(types.INTLINTENTION_DETAIL_DATA, intent);
         }
         if (param.key == 'orderList') { //意向详情生成订单

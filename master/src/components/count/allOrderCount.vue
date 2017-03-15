@@ -275,7 +275,7 @@ export default {
                 key: "allOrderCount",
                 startTime: '',
                 orderType: 1,
-                timeType: '',
+                timeType: 'month',
                 cur: '1',
                 totla: '10',
                 all: '3'
@@ -289,7 +289,7 @@ export default {
                 endTime: '',
                 startTime: '',
                 orderType: 1,
-                timeType: '',
+                timeType: 'month',
             },
             orgParam: { //部门列表
                 loading: true,
@@ -300,7 +300,7 @@ export default {
                 endTime: '',
                 startTime: '',
                 orderType: 1,
-                timeType: '',
+                timeType: 'month',
             },
             detailParam: {
                 loading: true,
@@ -310,7 +310,7 @@ export default {
                 key: "allOrderCount",
                 startTime: '',
                 orderType: 1,
-                timeType: '',
+                timeType: 'month',
                 cur: 1,
                 total: 0,
                 all: 0
@@ -321,7 +321,7 @@ export default {
                 key: "orgOrderSortCount",
                 groupType: 'customer_type',
                 orderType: 1,
-                timeType: '',
+                timeType: 'month',
                 startTime: '',
                 endTime: '',
             },

@@ -151,7 +151,7 @@ export default {
                 endTime: '',
                 startTime: '',
                 orderType: 1,
-                timeType: '',
+                timeType: 'month',
                 cur: 1,
                 all: 15,
                 total: 0
