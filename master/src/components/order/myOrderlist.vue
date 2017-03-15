@@ -166,8 +166,17 @@
                             <td>{{item.consignee}}</td>
                             <td>{{item.consigneePhone}}</td>
                             <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
-                            <td v-if="this.language=='zh_CN'">{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</td>
-                            <td v-if="this.language=='en'">{{item.orderStatus | Enassess item.type item.logistics item.verifierName item.taskKey}}</td>
+                            <td v-if="this.language=='zh_CN'">
+                                <div>{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</div>
+                                <div v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</div>
+                                <div v-if="item.orderStatus==0" style="background:#fa6705;color:#fff">{{$t('static.create_order')}}</div>
+                            </td>
+                            <!-- <td v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</td> -->
+                            <td v-if="this.language=='en'">
+                                <div>{{item.orderStatus | Enassess item.type item.logistics item.verifierName item.taskKey}}</div>
+                                <div v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</div>
+                                <div v-if="item.orderStatus==0" style="background:#fa6705;color:#fff;">{{$t('static.create_order')}}</div>
+                            </td>
                             <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
                             <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
                             <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>

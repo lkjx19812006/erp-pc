@@ -93,10 +93,6 @@ Vue.filter('assess', function(val, type, logistic, name, taskKey) { //订单状�
         return '已完成订单（补充合同申请）'
     } else if (val == 60 && logistic == 60) {
         return '已完成订单（售后处理中）'
-    } else if (val == 70) {
-        return '已完成订单'
-    } else if (val == 0) {
-        return '新的订单'
     } else if (val == 10) {
         return '订单处理中'
     } else if (val == 20) {
@@ -140,10 +136,6 @@ Vue.filter('Enassess', function(val, type, logistic, name, taskKey) { //订单�
         return 'Awaiting comment（Secondary contract）'
     } else if (val == 60 && logistic == 60) {
         return 'Awaiting comment（Aftersales changes）'
-    } else if (val == 70) {
-        return 'Lost communication'
-    } else if (val == 0) {
-        return 'New Order'
     } else if (val == 10) {
         return 'Order review'
     } else if (val == 20) {
