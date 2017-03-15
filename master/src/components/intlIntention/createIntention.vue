@@ -65,14 +65,16 @@
                  <div style="padding-left:25%">
                      <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed()">{{$t('static.add_material_information')}}</div>   
                  </div>   
-                  
+                  <!-- 添加药材信息 -->
                  <validator name="inner">   
                      <div v-if="addParam.show||updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
                            <div class="editpageleft">
+                              <!-- 提取物名称 -->
                               <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}"  @click="searchBreed()" readonly="true" />
                               </div>
+
                               <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
                                    <input type="text"  v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}"  v-show="false"/>
@@ -80,11 +82,18 @@
                                         <option v-for="item in initUnitlist" value="{{item.id}}">{{item.ename}}</option>
                                    </select>
                               </div>
-                              <div class="editpage-input">
+                            <!--   <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.quality')}}</label>
                                    <input type="text" v-model="breedInfo.quality" class="form-control edit-input"  />
-                              </div>
+                              </div> -->
+                           </div>
                        
+                           <div class="editpageright">
+                              <div class="editpage-input">
+                                   <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
+                                   <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                              </div>
+                              <!-- 规格 -->
                               <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.specification')}}</label>
                                    <input type="text" v-show="!breedParam.id" v-model="breedInfo.spec" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种"/>
@@ -99,23 +108,24 @@
                                        </input-select>
                                    </div>
                               </div>
-                           </div>
-                       
-                           <div class="editpageright">
+                              <!-- 备注 -->
                               <div class="editpage-input">
-                                   <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-                                   <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                   <label class="editlabel">备注</label>
+                                   <textarea class="form-control edit-input">
+                                     
+                                   </textarea>
+                                   
                               </div>
-                              <div class="editpage-input">
+                              <!-- <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.certificate')}}</label>
                                    <select v-model="breedInfo.qualification" class="form-control edit-input">
                                         <option>NONE</option>
                                         <option>GMP</option>
                                         <option>GSP</option>
                                    </select>
-                              </div>
+                              </div> -->
                        
-                              <div class="editpage-input">
+                           <!--    <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.origin')}}</label>
                                    <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种"/>
                                    <div type="text" class="edit-input" v-if="breedParam.id">
@@ -130,8 +140,8 @@
                                        </input-select>
                                    </div>
 
-                              </div>
-                              <div class="editpage-input">
+                              </div> -->
+                             <!--  <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.packaging')}}</label>
                                    <input type="text" v-show="false" v-model="breedInfo.pack" class="form-control edit-input"  />
                                    <div type="text" class="edit-input" >
@@ -143,7 +153,7 @@
                                        >
                                        </input-select>
                                    </div>
-                              </div>
+                              </div> -->
 
                               <div style="margin-top:10px;text-align:right">
                                   <button type="button" class="btn btn-confirm">
