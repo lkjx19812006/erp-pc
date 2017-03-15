@@ -3,7 +3,12 @@
  */
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
+import VueResource from 'vue-resource'
+import VueRouter from 'vue-router'
 Vue.use(VueI18n)
+Vue.use(VueResource)
+Vue.use(VueRouter)
+
 Vue.config.lang = 'zh_CN'
 var locales = {
     zh_CN: {
@@ -83,7 +88,7 @@ var locales = {
             create_order: '新的订单',
             order_procing: '订单处理中',
             waiting_order: '等待支付',
-            immediately_pay: '元立即支付',
+            immediately_pay: '立即支付',
             awaiting_review: '等待审核',
             wait_ship: '等待发货',
             wait_receipt: '等待收货',
@@ -136,7 +141,7 @@ var locales = {
             website: '网站',
             create_time: '创建时间',
             inquire_time: '询价时间',
-            recent_contact: '最近成交记录',
+            recent_contact: '最近成交时间',
             transaction_num: '成交次数',
             phone_origin: '手机归属地',
             client_origin: '客户归属地',
@@ -329,7 +334,6 @@ var locales = {
             recommend_drugs: '推荐已开通药款账户用户使用',
             recommend_line: '金额较大或企业账户',
             upload_logistcs: '请上传物流单凭证照片',
-            //client
             drag_into_blacklist: '加入黑名单',
             out_of_blacklist: '移出黑名单',
             blacklist: '客户黑名单',
@@ -425,14 +429,12 @@ var locales = {
             transcation: '成交时间',
             transcation_amount: '成交金额',
             wait_payment: '待支付',
-            //client
             installment: '分期付款',
             paid: '已支付',
             start_time: '起始时间',
             end_time: '结束时间',
             destination: '目的港口',
             date: '日期',
-
             apply_income: '申请收款',
             apply_payment: '申请付款',
             apply_send: '申请发货',
@@ -497,6 +499,7 @@ var locales = {
             confirm_income: '确定收款',
             signing_contract: '合同签订后',
             total_money: '总金额',
+            pattern: '形式发票',
             adjust_amount: '调整后金额',
             diferencia: '差额',
             contract_note: '补充合同文本',
@@ -680,7 +683,7 @@ var locales = {
             website: 'Website',
             create_time: 'Published time',
             inquire_time: 'Inquire time',
-            recent_contact: 'Recent contact',
+            recent_contact: 'Recent record',
             transaction_num: 'Number of transactions',
             phone_origin: 'Phone origin （Code）',
             client_origin: 'Customer origin',
@@ -703,7 +706,7 @@ var locales = {
             altogether: 'Altogether',
             jump_to: 'Jump to',
             click_jump: 'Click to jump',
-            quoted_price: 'Quoted price', //报价金额
+            quoted_price: 'Quoted price',
             exchange: 'Exchange rate',
             quote: 'Quoted',
             quantity: 'Quantity',
@@ -1025,6 +1028,7 @@ var locales = {
             confirm_income: 'Confirmation of payment',
             signing_contract: 'After signing the contract',
             total_money: 'Total amount',
+            pattern: 'Invoice number',
             adjust_amount: 'Adjusted amount',
             diferencia: 'Diferencia',
             contract_note: 'Secondary contract text',
@@ -1066,6 +1070,25 @@ var locales = {
         }
     }
 }
+
+
+/*
+Object.keys(locales).forEach(function(lang) {
+    var url = "/crm/api/v1/i18n/readDictionary/" + lang;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        locales[lang].static = res.json().result.dictionary[0];
+    }, (res) => {
+        console.log('fail');
+    })
+})*/
+
 
 
 

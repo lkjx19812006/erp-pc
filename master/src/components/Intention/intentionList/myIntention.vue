@@ -146,6 +146,7 @@
                          city:'',
                          district:'',
                          address:'',
+                         description:'',
                          key:'myIntentionList',
                          link:createIntentionInfo,
                          inType:3,
@@ -300,7 +301,8 @@
                                                image_f_show:'',
                                                image_s_show:'',
                                                image_t_show:'',
-                                               duedate:item.duedate
+                                               duedate:item.duedate,
+                                               description: item.description
                                                })"><img src="/static/images/edit.png" height="18" width="28" alt="编辑"/>
                                </a>
                               <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" @click.stop="specDelete({

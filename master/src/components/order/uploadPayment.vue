@@ -1,19 +1,19 @@
 <template>
-    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div class="model-header">
             <h4>{{$t('static.upload_voucher')}}</h4>
             <p class="orange">
-               {{$t('static.line_description')}}   
+                {{$t('static.line_description')}}
             </p>
             <div class="editpage-input">
                 <label class="editlabel">{{$t('static.upload_voucher')}}</label>
                 <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-               <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-               <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+                <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+                <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
             </div>
             <div class="edit_footer">
-                <button type="button" class="btn btn-close"   @click="param.show = false">{{$t('static.cancel')}}</button>
+                <button type="button" class="btn btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
                 <button type="button" class="btn btn-orange" @click="param.callback(param),param.callback = param.callback,param.show=false">{{$t('static.confirm_payment')}}</button>
             </div>
         </div>
@@ -28,14 +28,14 @@ export default {
     props: ['param'],
     data() {
         return {
-            imageParam:{
-                url:'/crm/api/v1/file/',
-                qiniu:false
+            imageParam: {
+                url: '/crm/api/v1/file/',
+                qiniu: false
             },
-            type:"image/jpeg,image/jpg,image/png",
+            type: "",
         }
     },
-    methods:{
+    methods: {
 
     },
     events: {
@@ -44,7 +44,7 @@ export default {
             console.log(imageData);
             console.log(this.param)
             var images = new Array();
-            this.param.image=imageData.result.image;
+            this.param.image = imageData.result.image;
         }
     }
 }
@@ -56,12 +56,15 @@ export default {
     display: block;
     z-index: 1115;
 }
-.modal_con{
+
+.modal_con {
     z-index: 1116;
 }
+
 .big-font {
     font-size: 36px;
 }
+
 .top-title {
     position: absolute;
     right: 0;
@@ -69,27 +72,32 @@ export default {
     margin-top: -28px;
     margin-right: -22px;
 }
-.orange{
+
+.orange {
     color: #fa6705;
     font-size: 15px;
     padding: 10px 15px 30px;
     border-bottom: 1px solid #ddd;
     white-space: normal;
 }
-.model-tips input{
+
+.model-tips input {
     border: 1px solid #ddd;
     width: 80%;
     border-radius: 5px;
     font-size: 18px;
     text-align: center;
 }
+
 .top-title span {
     font-size: 30px;
     color: #fff;
 }
+
 .editpage-input {
     margin-top: 15px;
 }
+
 .editlabel {
     color: #333;
     font-size: 14px;
