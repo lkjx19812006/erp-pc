@@ -254,7 +254,7 @@ export default {
             isA: true,
             isB: false,
             isC: false,
-            currentView: 1
+            currentView: 3
         }
     },
     methods: {
