@@ -198,59 +198,52 @@ export default {
                 }
             }
         },
+
         //选择子节点
         selectChildNode: function(item) {
-            if (item.pid !== 0) {
-                for (let j = 0; j < this.list.result.length; j++) {
-                    if (this.list.result[j].subcategory.length > 0 && this.list.result[j].id == item.pid) {
-
-                        if (item.show) {
-                            this.list.result[j].show = true;
-                            break;
-                        } else {
-                            if (item.type == 1) { //如果二级节点是功能节点
-                                this.list.result[j].show = true;
+            if (item.pid != 0) { //先要找到父节点 
+                var parent = this.searchParentByChild(item, this.list.result);
+                if (parent !== "") {
+                    if (item.type == 1) {
+                        parent.show = true;
+                    } else {
+                        parent.show = false;
+                        for (let k = 0; k < parent.subcategory.length; k++) {
+                            if (parent.subcategory[k].show) {
+                                parent.show = true;
                                 break;
-                            } else {
-                                this.list.result[j].show = false;
-                                for (let k = 0; k < this.list.result[j].subcategory.length; k++) {
-                                    if (this.list.result[j].subcategory[k].show) {
-                                        this.list.result[j].show = true;
-                                        break;
-                                    }
-                                }
                             }
-
                         }
                     }
+
+                    this.selectChildNode(parent);
                 }
             }
+
         },
-        //选择子节点
-        /*selectChildNode: function(item) {
-            if (item.pid != 0) { //先要找到父节点 
-                var parenetNode = this.searchParentByChild(item, this.list.result);
-                console.log(parenetNode);
-            }
-        },*/
 
         //在指定数组内，根据子节点寻找父节点
-        /*searchParentByChild: function(item, result) {
+        searchParentByChild: function(item, result) {
+            var parent = "";
             if (result.length > 0) {
                 for (let i = 0; i < result.length; i++) {
-                    if (result[i].subcategory.length > 0 && result[i].id == item.pid) {
-                        console.log("pppppppppppppppp");
-                        console.log(result[i]);
-                        return result[i];
+                    console.log(result[i].cname);
+                    if (result[i].id == item.pid) {
+                        parent = result[i];
                     } else {
-                        console.log("hahahha");
-                        this.searchParentByChild(item, result[i].subcategory);
+                        if (result[i].subcategory.length > 0) {
+                            parent = this.searchParentByChild(item, result[i].subcategory);
+                        }
                     }
-                }
-                return "";
-            }
+                    if (parent !== "") { //如果下面的parent!==""就会跳出循环，从而返回最终结果
+                        return parent;
+                    }
 
-        },*/
+                }
+
+            }
+            return parent; //给上面的parent做判断用(返回值也会先存于此)，如果最后的结果为""，这个parent为最终返回值
+        },
         save: function() {
             function CurentTime() {
                 var now = new Date();
