@@ -82,6 +82,7 @@ export default {
                 name: '',
                 type: '',
                 sys: ''
+
             }
         }
     },
@@ -97,7 +98,6 @@ export default {
             this.param.image = imageData.result.image;
         },
         selectPage: function(page) {
-            console.log(page)
             this.parentParam.pid = page.pid;
             this.parentParam.name = page.name;
             this.param.pid = page.pid;
@@ -122,7 +122,6 @@ export default {
         if (this.param.pid) {
             this.parentParam.name = this.param.pid;
         }
-        console.log(this.param)
     }
 }
 </script>

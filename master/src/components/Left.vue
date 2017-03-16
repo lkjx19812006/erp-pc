@@ -8,17 +8,17 @@
             <li v-for="item in getList" transition="item">
                 <div v-link="item.url" class="menu_div" @click="init_data(item.id,item)">
                     <div class="bleft">
-                        <img v-bind:src="item.icon" height="21" width="21" >
+                        <img v-bind:src="item.icon" height="21" width="21">
                     </div>
                     <a v-if="lang=='en'" title="{{item.ename}}">{{item.ename}}</a>
                     <a v-if="lang=='zh_CN'" title="{{item.cname}}">{{item.cname}}</a>
                 </div>
                 <div class="bshow" v-if="$route.path.split('?')[0]==item.url.split('?')[0]" transition="expand_trans">
                     <dl class="bshow_dl" clear>
-                        <dd class="clear" v-for="sub in item.subcategory" v-link="sub.url" transition="item" @click="init_data(sub.id,sub)">
+                        <dd class="clear" v-if="sub.type===0" v-for="sub in item.subcategory" v-link="sub.url" transition="item" @click="init_data(sub.id,sub)">
                             <i class="fold_line"></i>
-                            <div class="fold_content" >
-                                <div class="bleft" >
+                            <div class="fold_content">
+                                <div class="bleft">
                                     <img v-bind:src="sub.icon" height="15" width="15">
                                 </div>
                                 <a v-if="lang=='en'" style="cursor:pointer;" class="{{$route.path==sub.url?'active_font':''}}" title="{{sub.ename}}">{{sub.ename}}</a>
@@ -36,58 +36,58 @@ import Vue from 'vue'
 import {
     getList,
     getMenu,
-    
+
 } from '../vuex/getters'
 import {
     initList,
     menuBar
 } from '../vuex/actions'
 export default {
-        data() {
+    data() {
             return {
-               lang: ''
-                
+                lang: ''
+
             }
-        }, 
-        vuex: {   
+        },
+        vuex: {
             getters: {
                 getList,
                 getMenu,
-                
+
             },
             actions: {
                 initList,
                 menuBar
             },
-            
+
         },
         created() {
             this.lang = Vue.config.lang;
         },
-        
-      events:{
-         changeLang:function(val){
-            console.log('接收广播：'+val);
-            this.lang = val;
-         }
-      },
-    methods: {
 
-        init_data: function(id,menu) {
-            this.$store.state.table.isTop = false;
-            var tab = '';
-            if(menu.subcategory.length>0){
-                tab = menu.subcategory[0];
-            }else{
-                tab = menu;  
+        events: {
+            changeLang: function(val) {
+                console.log('接收广播：' + val);
+                this.lang = val;
             }
-            
-            this.$dispatch("tab",tab);
         },
-        menu: function() {
-            this.menuBar();
-        },
-    }
+        methods: {
+
+            init_data: function(id, menu) {
+                this.$store.state.table.isTop = false;
+                var tab = '';
+                if (menu.subcategory.length > 0) {
+                    tab = menu.subcategory[0];
+                } else {
+                    tab = menu;
+                }
+
+                this.$dispatch("tab", tab);
+            },
+            menu: function() {
+                this.menuBar();
+            },
+        }
 }
 </script>
 <style scoped>
@@ -129,7 +129,7 @@ export default {
     height: 100%;
     position: fixed;
     width: 200px;
-   /*  overflow-x: hidden !important;
+    /*  overflow-x: hidden !important;
    overflow-y: auto !important; */
     white-space: nowrap;
     z-index: 999;
@@ -163,7 +163,7 @@ export default {
 .left_menu li {
     margin-bottom: 10px;
     position: relative;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .menu_div {
@@ -178,7 +178,7 @@ export default {
 .left_menu li a {
     color: #fff;
     font-size: 12px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .menu_div .bleft {
@@ -202,7 +202,6 @@ export default {
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
 }
-
 
 .active_font {
     color: #fa6705 !important;
@@ -231,8 +230,8 @@ export default {
 
 .bshow_dl .fold_line {
     height: 32px;
-    display: inline-block;、
-    overflow:hidden;
+    display: inline-block;
+    、 overflow: hidden;
     color: #fff;
     position: absolute;
     margin-top: -12px;
@@ -267,6 +266,7 @@ export default {
     transition: all;
     overflow: inherit;
 }
+
 .expand_trans-enter,
 .expand_trans-leave {
     opacity: 0;

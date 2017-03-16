@@ -94,16 +94,17 @@ export const login = ({ dispatch }, data) => { //登录
             document.cookie = "name=" + compile(res.json().result.name) + ";expires=" + expire;
             document.cookie = "time=" + lastTime + ";expires=" + expire;
             document.cookie = "privilege=" + res.json().result.privilege + ";expires=" + expire;
+            document.cookie = "menuStr=" + res.json().result.menuStr + ";expires=" + expire;
             var result = res.json().result;
             result.time = lastTime;
-
             var loginInfo = {
                 id: result.id,
                 name: result.name,
                 no: result.no,
                 orgId: result.orgid,
                 time: result.time,
-                privilege: result.privilege
+                privilege: result.privilege,
+                menuStr: result.menuStr
             }
 
             dispatch(types.LOGIN_DATA, loginInfo);

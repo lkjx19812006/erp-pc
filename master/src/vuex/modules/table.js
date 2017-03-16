@@ -224,7 +224,8 @@ const state = {
         "no": uncompile(getCookie('no')),
         "orgId": uncompile(getCookie('orgId')),
         "time": getCookie('time'),
-        "privilege": getCookie('privilege')
+        "privilege": getCookie('privilege'),
+        "menuStr": getCookie('menuStr')
     },
     systemBaseList: {
         enumlist: [

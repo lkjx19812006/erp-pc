@@ -62,6 +62,7 @@ export default {
                 total: 0,
                 all: 0,
                 sys: this.param.sys
+
             }
         }
     },
