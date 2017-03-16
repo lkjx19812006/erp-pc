@@ -12,10 +12,16 @@ import VueI18n from './filters/i18n'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 /*import alert from 'vue-strap/src/alert'*/
+import $ from 'jquery'
+import './assets/js/jquery.fixedheadertable.js'
+import './assets/demo.js'
 
 
 
 require('./assets/css/style.css')
+require('./assets/css/960.css')
+require('./assets/css/defaultTheme.css')
+require('./assets/css/myTheme.css')
 require('./components/calendar/vue.datepicker.css')
 require('./components/tools/util.js')
 

@@ -673,6 +673,7 @@ export default {
         common('tab', 'table_box', 1);
     },
     filter: (filter, {})
+
 }
 </script>
 <style scoped>
@@ -723,7 +724,7 @@ export default {
 #table_box table th,
 #table_box table td {
     width: 113px;
-    min-width: 96px;
+    min-width: 6px;
 }
 
 .service-nav {
@@ -732,5 +733,11 @@ export default {
 
 dl {
     margin-bottom: 5px;
+}
+
+#table_height {
+    height: 530px;
+    overflow-y: auto;
+    position: relative;
 }
 </style>

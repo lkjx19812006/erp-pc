@@ -401,6 +401,7 @@ export default {
                 alert: true,
                 name: "请选择会员"
             },
+
             alterParam: {
                 show: false,
                 loading: true,
@@ -414,6 +415,7 @@ export default {
                 auditComment: '',
                 audit: ''
             },
+
             transferParam: {
                 show: false,
                 id: '',
@@ -495,6 +497,7 @@ export default {
             this.checked = false;
         }
     },
+
     methods: {
         selectSearch: function() {
             if (!this.loadParam.trackingDay.match(/^([0-9]|[1-9][0-9]{1,2})$/) && this.loadParam.trackingDay !== '') {
@@ -554,6 +557,7 @@ export default {
                 if (item.audit != 2) item.checked = checked;
             })
 
+
         },
         audit: function() {
             var _this = this;
@@ -573,7 +577,6 @@ export default {
                 this.tipsParam.name = "请选择会员";
                 this.tipsParam.alert = true;
             }
-
 
         },
 
@@ -672,7 +675,6 @@ export default {
         changeMenu(this.$store.state.table.isTop, this.getUserList, this.loadParam, localStorage.userParam);
     }
 
-
 }
 </script>
 <style scoped>
@@ -698,5 +700,16 @@ export default {
 
 dl {
     margin-bottom: 5px;
+}
+
+.base_pagination {
+    text-align: center;
+    position: fixed;
+    height: 64px;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    z-index: 10;
 }
 </style>
