@@ -116,11 +116,11 @@
                                     <ul v-for="item in list.result">
                                         <li>
                                             <div class="clear">
-                                                <label class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!list.result[$index].show,'checkbox_select_base':list.result[$index].show}" @click="selectShow(list.result[$index])">
+                                                <label class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!item.show,'checkbox_select_base':item.show}" @click="selectShow(item)">
                                                 </label>
-                                                <p class="line_text">{{list.result[$index].cname}}</p>
+                                                <p class="line_text">{{item.cname}}</p>
                                                 <!-- 二级目录 -->
-                                                <div v-for="subItem in list.result[$index].subcategory" class="sub_second clear">
+                                                <div v-for="subItem in item.subcategory" class="sub_second clear">
                                                     <label class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!subItem.show,'checkbox_select_base':subItem.show}" @click="selectShow(subItem)">
                                                     </label>
                                                     <p class="line_text">{{subItem.cname}}</p>
@@ -203,11 +203,12 @@ export default {
             if (item.pid !== 0) {
                 for (let j = 0; j < this.list.result.length; j++) {
                     if (this.list.result[j].subcategory.length > 0 && this.list.result[j].id == item.pid) {
+
                         if (item.show) {
                             this.list.result[j].show = true;
                             break;
                         } else {
-                            if (item.type == 1) {
+                            if (item.type == 1) { //如果二级节点是功能节点
                                 this.list.result[j].show = true;
                                 break;
                             } else {
@@ -224,6 +225,31 @@ export default {
                     }
                 }
             }
+        },
+        //选择子节点
+        selectChildNode: function(item) {
+            if (item.pid != 0) { //先要找到父节点 
+                var parenetNode = this.searchParentByChild(item, this.list.result);
+                console.log(parenetNode);
+            }
+        },
+
+        //在指定数组内，根据子节点寻找父节点
+        searchParentByChild: function(item, result) {
+            if (result.length > 0) {
+                for (let i = 0; i < result.length; i++) {
+                    if (result[i].subcategory.length > 0 && result[i].id == item.pid) {
+                        console.log("pppppppppppppppp");
+                        console.log(result[i]);
+                        return result[i];
+                    } else {
+                        console.log("hahahha");
+                        this.searchParentByChild(item, result[i].subcategory);
+                    }
+                }
+                return "";
+            }
+
         },
         save: function() {
             function CurentTime() {
@@ -260,7 +286,6 @@ export default {
                         if (this.list.result[i].subcategory[m].subcategory[k].show) {
                             idArr.push(this.list.result[i].subcategory[m].subcategory[k].id);
                         }
-                        console.log(idArr)
                     }
                 }
             }
@@ -312,7 +337,6 @@ export default {
         this.param.url = '/sys/menu/';
         this.param.cur = 1;
         this.param.getDataInit = this.getDataInit;
-        console.log(this.param);
         this.baseGetData(this.param);
     }
 }
