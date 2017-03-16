@@ -227,15 +227,15 @@ export default {
             }
         },
         //选择子节点
-        selectChildNode: function(item) {
+        /*selectChildNode: function(item) {
             if (item.pid != 0) { //先要找到父节点 
                 var parenetNode = this.searchParentByChild(item, this.list.result);
                 console.log(parenetNode);
             }
-        },
+        },*/
 
         //在指定数组内，根据子节点寻找父节点
-        searchParentByChild: function(item, result) {
+        /*searchParentByChild: function(item, result) {
             if (result.length > 0) {
                 for (let i = 0; i < result.length; i++) {
                     if (result[i].subcategory.length > 0 && result[i].id == item.pid) {
@@ -250,7 +250,7 @@ export default {
                 return "";
             }
 
-        },
+        },*/
         save: function() {
             function CurentTime() {
                 var now = new Date();
