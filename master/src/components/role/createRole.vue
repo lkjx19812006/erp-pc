@@ -227,7 +227,6 @@ export default {
             var parent = "";
             if (result.length > 0) {
                 for (let i = 0; i < result.length; i++) {
-                    console.log(result[i].cname);
                     if (result[i].id == item.pid) {
                         parent = result[i];
                     } else {
