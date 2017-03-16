@@ -1055,11 +1055,11 @@ export const orgOrderAudit = ({ dispatch }, param) => { //订单申请审核（�
         data.index = param.index;
         data.key = param.key;
         data.validate = 1;
-        console.log('当前状态'+data.validate )
+        console.log('当前状态' + data.validate)
         if (res.json().code == 200) {
             dispatch(types.ORG_ORDER_AUDIT, data);
         }
-        console.log('测试'+data)
+        console.log('测试' + data)
     }, (res) => {
         console.log('fail');
     })
@@ -1679,7 +1679,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     if (param.way) {
         body.way = param.way;
     }
-    if(param.vesselNo){   //船次
+    if (param.vesselNo) { //船次
         body.vesselNo = param.vesselNo;
     }
     Vue.http({
@@ -5062,11 +5062,9 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
             intent.items = {};
             intent.items.arr = itemsArr;
             intent.items.show = false;
-
             intent.extractive = {};
             intent.extractive.arr = extractiveArr;
             intent.extractive.show = false;
-
             dispatch(types.INTLINTENTION_DETAIL_DATA, intent);
         }
         if (param.key == 'orderList') { //意向详情生成订单
@@ -6485,7 +6483,6 @@ export const scopedOperate = ({ dispatch }, param) => { //查询权限功能
 }
 
 export const baseAddData = ({ dispatch }, param) => { //新增权限
-    console.log(param.sys)
     const data = {}
     if (param.link == '/sys/role/' && param.body) {
         data.cname = param.body.cname;
@@ -6544,7 +6541,7 @@ export const baseAddData = ({ dispatch }, param) => { //新增权限
             param.show = false;
             dispatch(types.ABSTRACT_ADD_DATA, json);
         }
-
+        param.loading = false;
     }, (res) => {
         param.loading = false;
         console.log('fail');

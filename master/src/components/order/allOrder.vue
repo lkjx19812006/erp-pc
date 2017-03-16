@@ -9,6 +9,7 @@
         <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
         <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
+        <language-model v-show="false"></language-model>
         <mglist-model>
             <!-- 头部搜索 -->
             <div slot="top">
@@ -176,7 +177,16 @@
                             <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                             <td v-if="item.payWay==4">WeChat</td>
                             <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td>
-                            <td>{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</td>
+                            <td v-if="this.language=='zh_CN'">
+                                <div>{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</div>
+                                <div v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</div>
+                                <div v-if="item.orderStatus==0" style="background:#fa6705;color:#fff">{{$t('static.create_order')}}</div>
+                            </td>
+                            <td v-if="this.language=='en'">
+                                <div>{{item.orderStatus | Enassess item.type item.logistics item.verifierName item.taskKey}}</div>
+                                <div v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</div>
+                                <div v-if="item.orderStatus==0" style="background:#fa6705;color:#fff">{{$t('static.create_order')}}</div>
+                            </td>
                             <!--<td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
                     <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                     <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
@@ -204,45 +214,6 @@
                             </td>
                             <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                             <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
-                            <!-- <td><a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
-                       <img src="/static/images/orgcheck.png"  title="审核" alt="审核" />
-                                     </a></td> -->
-                            <!-- 
-                          <td><a @click="clickOn({
-                                  show:true,
-                                  id:item.id,
-                                  loading:false,
-                                  orderStatus:item.orderStatus
-                          })">{{item.no}}</a></td>
-                          <td v-if="item.type==1">销售</td>
-                          <td v-if="item.type==0">采购</td>
-                          <td v-if="item.sourceType==0">交易员新建</td>
-                          <td v-if="item.sourceType==1">意向</td>
-                          <td v-if="item.sourceType==2">报价</td>
-                          <td>{{item.consignee}}</td>
-                          <td>{{item.consigneePhone}}</td>
-                          <td>{{item.consigneeAddr}}</td>
-                          <td>{{item.country}}</td>
-                          <td>{{item.province}}</td>
-                          <td>{{item.city}}</td>
-                          <td>{{item.employeeName}}</td>
-                          <td>{{item.comments}}</td>
-                          <td v-if="item.clients==0" style="background:red;color:#fff">PC</td>
-                          <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
-                          <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
-                          <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
-                          <td v-if="item.clients!=0&&item.clients!=1&&item.clients!=2&&item.clients!=3"  style="background:#000;color:#fff">未说明</td>
-                          <td>{{item.orderStatus | orderstatus}}</td>
-                          <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Auditing}}</td>
-                          <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
-                          <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
-                          <td>{{item.currency | Currency}}</td>
-                          <td v-if="item.payWay===0">线下打款</td>
-                          <td v-if="item.payWay==1">支付宝</td>
-                          <td v-if="item.payWay==2">平安支付</td>
-                          <td v-if="item.payWay==3">药款支付</td>
-                          <td v-if="item.payWay==null">未支付</td> 
-                  -->
                         </tr>
                     </tbody>
                 </table>
@@ -279,6 +250,7 @@ import filter from '../../filters/filters'
 import common from '../../common/common'
 import changeMenu from '../../components/tools/tabs/tabs.js'
 import mglistModel from '../mguan/mgListComponent.vue'
+import languageModel from '../tools/language.vue'
 import {
     getList,
     initAllOrderlist,
@@ -297,6 +269,7 @@ export default {
     components: {
         editorderModel,
         filter,
+        languageModel,
         pagination,
         detailModel,
         searchModel,
@@ -370,6 +343,7 @@ export default {
             updateorderParam: {
                 show: false
             },
+            language: '',
             disposeParam: { //订单处理各个状态
                 show: false,
                 sales: false,
@@ -576,6 +550,7 @@ export default {
     created() {
         changeMenu(this.$store.state.table.isTop, this.getOrderList, this.loadParam, localStorage.allOrderParam);
         changeMenu(this.$store.state.table.isTop, this.getOrderStatistical, this.loadParam, localStorage.allOrderParam);
+        this.language = localStorage.lang;
     }
 }
 </script>

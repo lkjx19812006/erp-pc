@@ -332,7 +332,9 @@ export default {
                 pack: '',
                 items: [
 
-                ]
+                ],
+                item:[]
+
             },
             modifyParam: {
                 show: false,
