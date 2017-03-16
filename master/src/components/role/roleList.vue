@@ -203,23 +203,18 @@ export default {
             this.editMenuParam.callback = this.callback;
         },
         newData: function() {
-            if (!this.initScopeDetail.id) {
-                this.tipsParam.show = true;
-                this.tipsParam.name = '请选择菜单'
-            } else {
-                this.editMenuParam.show = true;
-                this.editMenuParam.title = '添加功能';
-                this.editMenuParam.link = '/sys/menu/';
-                this.editMenuParam.cname = '';
-                this.editMenuParam.ename = '';
-                this.editMenuParam.icon = '';
-                this.editMenuParam.pid = '';
-                this.editMenuParam.remark = '';
-                this.editMenuParam.sys = this.loadParam.sys;
-                this.editMenuParam.type = 1; // 0/1 页面/功能 
-                this.editMenuParam.url = '';
-                this.editMenuParam.callback = this.functionCallback;
-            }
+            this.editMenuParam.show = true;
+            this.editMenuParam.title = '添加功能';
+            this.editMenuParam.link = '/sys/menu/';
+            this.editMenuParam.cname = '';
+            this.editMenuParam.ename = '';
+            this.editMenuParam.icon = '';
+            this.editMenuParam.pid = '';
+            this.editMenuParam.remark = '';
+            this.editMenuParam.sys = this.loadParam.sys;
+            this.editMenuParam.type = 1; // 0/1 页面/功能 
+            this.editMenuParam.url = '';
+            this.editMenuParam.callback = this.functionCallback;
         },
         editMenu: function() {
             if (!this.initScopeDetail.id) {
@@ -240,6 +235,7 @@ export default {
                 this.editMenuParam.sys = this.loadParam.sys;
                 this.editMenuParam.callback = this.callback;
             }
+            this.initScopeDetail.id = '';
         },
         modify: function(item) {
             this.editMenuParam = item;

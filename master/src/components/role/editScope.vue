@@ -24,11 +24,11 @@
                                 </div>
                                 <div class="client-detailInfo  col-md-6 col-xs-12" v-if="param.type==0">
                                     <label>父级页面 </label>
-                                    <input type="text" class="form-control edit-input" @click="clickParent(parentParam.pid,parentParam.name,param.type)" v-model="parentParam.name" />
+                                    <input type="text" class="form-control edit-input" @click="clickParent(parentParam.pid,parentParam.name,param.type,param.sys)" v-model="parentParam.name" />
                                 </div>
                                 <div class="client-detailInfo  col-md-6 col-xs-12" v-if="param.type==1">
                                     <label>父级页面 <span class="system_danger" v-if="$validation.parent.required">必填项</span></label>
-                                    <input type="text" class="form-control edit-input" v-validate:parent="{required:true}" @click="clickParent(parentParam.pid,parentParam.name,param.type)" v-model="parentParam.name" />
+                                    <input type="text" class="form-control edit-input" v-validate:parent="{required:true}" @click="clickParent(parentParam.pid,parentParam.name,param.type,param.sys)" v-model="parentParam.name" />
                                 </div>
                                 <div class="client-detailInfo  col-md-6 col-xs-12" v-if="param.type==0">
                                     <label>路由地址 <span class="system_danger" v-if="$validation.url.required">必填项</span></label>
@@ -80,7 +80,9 @@ export default {
                 pid: '',
                 show: false,
                 name: '',
-                type: ''
+                type: '',
+                sys: ''
+
             }
         }
     },
@@ -110,9 +112,10 @@ export default {
                 this.baseAddData(this.param)
             }
         },
-        clickParent: function(id, name, type) {
+        clickParent: function(id, name, type, sys) {
             this.parentParam.show = true;
             this.parentParam.type = type;
+            this.parentParam.sys = sys;
         }
     },
     created() {

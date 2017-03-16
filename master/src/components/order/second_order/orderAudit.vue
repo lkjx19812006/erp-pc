@@ -80,6 +80,7 @@
                                 <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
                                     <option value="2">{{$t('static.pingan')}}</option>
                                     <option value="5">PayPal</option>
+                                    <option value="1">{{$t('static.alipay')}}</option>
                                 </select>
                             </div>
                             <div class="editpage-input col-md-6" v-show="false">
@@ -178,6 +179,7 @@
                                 <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
                                     <option value="2">{{$t('static.pingan')}}</option>
                                     <option value="5">PayPal</option>
+                                    <option value="1">{{$t('static.alipay')}}</option>
                                 </select>
                             </div>
                             <div class="editpage-input col-md-6" v-show="false">
@@ -466,6 +468,7 @@ export default {
         if (this.param.payName && this.param.titles == '申请分期审核') {
             this.payName.name = this.param.payName;
         }
+
         /*if (this.param.country) { this.country.cnameEn = this.param.country; }
          */
     }

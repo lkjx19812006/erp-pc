@@ -218,7 +218,7 @@
                                                         <td>{{item.comment}}</td>
                                                         <td>{{item.ctime}}</td>
                                                         <td v-if="param.contact=='/order/myList'">
-                                                            <!-- 申请收款 -->
+                                                            <!-- 申请审核 -->
                                                             <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==1&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                                   show:true,
                                                                   sub:$index,
@@ -378,7 +378,7 @@
                                               orderContractList:'',
                                               titles:'上传合同'
                                               })" 
-                                              v-if="initOrderDetail.contractList.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
+                                              v-if="initOrderDetail.contractList.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&(initOrderDetail.orderStatus<20||initOrderDetail.orderStatus==70)&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
                                       <button v-else></button>
                                   </h4>
                                     </div>

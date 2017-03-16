@@ -1072,8 +1072,8 @@ var locales = {
 }
 
 
-
 /*Object.keys(locales).forEach(function(lang) {
+
     var url = "/crm/api/v1/i18n/readDictionary/" + lang;
     Vue.http({
         method: 'GET',
@@ -1087,8 +1087,10 @@ var locales = {
     }, (res) => {
         console.log('fail');
     })
+
 })
 */
+
 
 
 

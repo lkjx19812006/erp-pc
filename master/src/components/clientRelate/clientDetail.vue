@@ -75,9 +75,14 @@
                                         <mg-label :title="$t('static.whether_supplier')" v-if="initClientDetail.supplier==0">{{$t('static.no')}}</mg-label>
                                         <mg-label :title="$t('static.whether_supplier')" v-if="initClientDetail.supplier==1">{{$t('static.yes')}}</mg-label>
                                         <mg-label :title="$t('static.classification')">{{initClientDetail.classify | classify}}</mg-label>
-                                        <mg-label :title="$t('static.telephone')">{{initClientDetail.mainPhone}}<span v-if="initClientDetail.phoneProvince!=''||nitClientDetail.phoneCity!=''">（{{initClientDetail.phoneProvince}}{{initClientDetail.phoneCity}}）</span></mg-label>
+                                        <mg-label :title="$t('static.cellphone')">{{initClientDetail.mainPhone}}<span v-if="initClientDetail.phoneProvince!=''||nitClientDetail.phoneCity!=''">（{{initClientDetail.phoneProvince}}{{initClientDetail.phoneCity}}）</span></mg-label>
+                                        <mg-label :title="$t('static.telephone')">{{initClientDetail.tel}}</mg-label>
                                         <mg-label :title="$t('static.client_email')">{{initClientDetail.email}}</mg-label>
-                                        <mg-label :title="$t('static.country')">{{initClientDetail.country}}</mg-label>
+                                        <mg-label :title="$t('static.postcodes')">{{initClientDetail.number}}</mg-label>
+                                        <mg-label :title="$t('static.principals')">{{initClientDetail.principal}}</mg-label>
+                                        <mg-label :title="$t('static.legal')">{{initClientDetail.legalPerson}}</mg-label>
+                                        <mg-label :title="$t('static.website')">{{initClientDetail.website}}</mg-label>
+                                        <mg-label :title="$t('static.country')">{{initClientDetail.countryName}}</mg-label>
                                         <mg-label :title="$t('static.province')+$t('static.city')">{{initClientDetail.provinceName}} {{initClientDetail.cityName}}</mg-label>
                                         <mg-label :title="$t('static.detailed_address')">{{initClientDetail.address}}</mg-label>
                                         <mg-label :title="$t('static.transaction_num')">{{initClientDetail.orderTotal}}{{initClientDetail.lastOrderTime}}</mg-label>

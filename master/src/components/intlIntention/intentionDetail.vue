@@ -107,12 +107,12 @@
                                             link:initIntlIntentionDetail.inquires,
                                             crete:'inquires'
                                             })">
-                                      <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26"  />
-                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                     <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26" />
+<a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" class="panel-title-set">
                                        {{$t('static.inquiry_record')}}（{{initIntlIntentionDetail.inquires.arr.length}}）
                                       </a>
-                                      <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
-                                </h4>
+<!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+</h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
                                         <div class="panel-body panel-set">
@@ -162,17 +162,18 @@
                                             link:initIntlIntentionDetail.items,
                                             crete:'items'
                                             })">
-                                      <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
-                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                        {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
-                                      </a>
-                                      <!--询价完成或再次询价才显示价格-->
-                                      <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
-                                          <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
-                                          <!-- {{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
-                                      </span>
-                                      <button type="button" class="btn btn-base pull-right" @click.stop="">确认报价</button> 
-                                </h4>
+
+                                              <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
+                                              <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                                {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
+                                              </a>
+                                              <!--询价完成或再次询价才显示价格-->
+                                              <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
+                                                  <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
+                                                  <!-- {{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
+                                              </span>
+                                              <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                        </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.items.show&&initIntlIntentionDetail.items.arr.length>0">
                                         <div class="panel-body panel-set">

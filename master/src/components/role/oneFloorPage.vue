@@ -59,6 +59,10 @@ export default {
                 keyName: 'menu',
                 url: '/sys/menu/',
                 cur: 1,
+                total: 0,
+                all: 0,
+                sys: this.param.sys
+
             }
         }
     },
@@ -95,6 +99,7 @@ export default {
     created() {
         this.param.getDataInit = this.getDataInit;
         this.baseGetData(this.loadParam);
+        console.log(this.loadParam)
     }
 }
 </script>

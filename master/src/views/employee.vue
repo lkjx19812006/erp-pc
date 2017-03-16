@@ -149,15 +149,15 @@
                                 key:'employeeList'
                                })">{{item.name}}</td>
                             <td>{{item.ename}}</td>
-                            <td>{{item.no}}</td>
+                            <td @dblclick.stop="">{{item.no}}</td>
                             <td>{{item.orgName}}</td>
                             <td>{{item.position}}</td>
                             <td>
                                 <div v-if="item.ismanager==0">否</div>
                                 <div v-if="item.ismanager==1">是</div>
                             </td>
-                            <td>{{item.mobile}}</td>
-                            <td>{{item.extno}}</td>
+                            <td @dblclick.stop="">{{item.mobile}}</td>
+                            <td @dblclick.stop="">{{item.extno}}</td>
                             <td>{{item.entrydate | date}}</td>
                             <td>{{item.leavedate | date}}</td>
                             <td>{{item.level | levelstate}}</td>
