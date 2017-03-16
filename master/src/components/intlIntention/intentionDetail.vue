@@ -171,7 +171,7 @@
                                           <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                           <!-- {{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
                                       </span>
-                                      <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                      <button type="button" class="btn btn-base pull-right" @click.stop="">确认报价</button> 
                                 </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.items.show&&initIntlIntentionDetail.items.arr.length>0">
