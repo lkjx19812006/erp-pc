@@ -1,4 +1,5 @@
 <template>
+<div>
     <orgsearch-model :param="orgNameParam" v-if="orgNameParam.show"></orgsearch-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
@@ -53,25 +54,39 @@
                             </div>
                         </div>
                         <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <div class="client-detailInfo  col-md-6 col-xs-12">
                                 <label>{{param.nolist}}</label>
                                 <input type="text" class="form-control" v-model="param.extno" />
                             </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>{{param.entry}}</label>
-                                <div class="search_input">
-                                    <mz-datepicker :time.sync="param.entrydate" format="yyyy-MM-dd">
-                                    </mz-datepicker>
-                                </div>
+                            <div class="client-detailInfo  col-md-6 col-xs-12">
+                                <label>QQ <span class="system_danger" v-if="$validation.chat.qq">请输入正确的QQ号</span></label>
+                                <input type="text" class="form-control" v-validate:chat="['qq']" v-model="param.qq" />
                             </div>
                         </div>
                         <div class="clearfix">
-                            <div class="client-detailInfo   col-md-6 col-xs-12" v-if="param.title=='编辑员工'">
+                            <div class="client-detailInfo  col-md-6 col-xs-12">
+                                <label>{{$t('static.wechat')}} <span class="system_danger" v-if="$validation.wechart.wechart">{{$t('static.validate_wechat')}}</span></label>
+                                <input type="text" class="form-control" v-validate:wechart="['wechart']" v-model="param.wechat" />
+                            </div>
+                            <div class="client-detailInfo  col-md-6 col-xs-12">
+                                <label>{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.email.email">{{$t('static.enter_email')}}</span></label>
+                                <input type="text" class="form-control" v-validate:email="['email']" v-model="param.email" />
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="client-detailInfo  col-md-6 col-xs-12" v-if="param.title=='编辑员工'">
                                 <label>是否在职</label>
                                 <select class="form-control" v-model="param.leave" value="{{param.leave}}">
                                     <option value="1">在职</option>
                                     <option value="0">离职</option>
                                 </select>
+                            </div>
+                            <div class="client-detailInfo col-md-6 col-xs-12">
+                                <label>{{param.entry}}</label>
+                                <div class="search_input">
+                                    <mz-datepicker :time.sync="param.entrydate" format="yyyy-MM-dd">
+                                    </mz-datepicker>
+                                </div>
                             </div>
                             <div class="client-detailInfo  col-md-6 col-xs-12">
                                 <label>离职日期</label>
@@ -104,6 +119,7 @@
             </form>
         </validator>
     </div>
+</div>
 </template>
 <script>
 import calendar from '../calendar/vue.datepicker'

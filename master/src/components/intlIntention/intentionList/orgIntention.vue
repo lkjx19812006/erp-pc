@@ -6,11 +6,11 @@
      <modify-model :param.sync="modifyParam" v-if="modifyParam.show"></modify-model>
      <inquire-model :param="inquireParam" v-if="inquireParam.show"></inquire-model>
      <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
-     <div>
-        <div class="service-nav clearfix">
-            <div class="clear left" >
-                  <dl class="clear left transfer">
-                     <dt class="left transfer marg_top">{{$t('static.breed')}}：</dt>
+     <mglist-model>
+         <div slot="top">
+            <div class="clear" >
+                  <dl class="clear left">
+                     <dt class="left marg_top">{{$t('static.breed')}}：</dt>
                      <dd class="left">
                            <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
                      </dd>
@@ -33,21 +33,23 @@
                            <input type="text" class="form-control" v-model="loadParam.customerEmail" @keyup.enter="intentionSearch()"/>
                      </dd>
                   </dl>
-                  <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
-                  <button class="new_btn transfer" @click="intentionSearch()">{{$t('static.search')}}</button>        
+                         
             </div>
-        </div>
-        <div class="clearfix" style="padding-right:10px">
-            <div class="btn-group pull-left">
-                <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inquire===''}" @click="clickday('')">{{$t('static.please_select')}}</button>
-                <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inquire===0}" @click="clickday(0)">{{$t('static.not_inquiry')}}</button>
-                <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===1}" @click="clickday(1)">{{$t('static.inquiry')}}</button>
-                <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===2}" @click="clickday(2)">{{$t('static.quotation')}}</button>
-                <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===3}" @click="clickday(3)">{{$t('static.quo_complete')}}</button>
+            <div class="clearfix" style="padding-right:10px">
+                <div class="btn-group pull-left">
+                    <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inquire===''}" @click="clickday('')">{{$t('static.please_select')}}</button>
+                    <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inquire===0}" @click="clickday(0)">{{$t('static.not_inquiry')}}</button>
+                    <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===1}" @click="clickday(1)">{{$t('static.inquiry')}}</button>
+                    <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===2}" @click="clickday(2)">{{$t('static.quotation')}}</button>
+                    <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===3}" @click="clickday(3)">{{$t('static.quo_complete')}}</button>
+
+                    <button class="new_btn transfer pull-left" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                    <button class="new_btn transfer pull-left" @click="intentionSearch()">{{$t('static.search')}}</button> 
+                </div>
+                 <button class="btn btn-primary pull-right transfer" @click="intentionSearch()">{{$t('static.refresh')}}</button> 
             </div>
-             <button class="btn btn-primary pull-right transfer" @click="intentionSearch()">{{$t('static.refresh')}}</button> 
-        </div>
-        <div class="order_table" id="table_box">
+         </div>
+         <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -90,21 +92,18 @@
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime}}</td>
                         <td>{{item.description}}</td>
-                        <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
-                        <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
-                        <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
-                        <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
+                        <td v-if="item.inquire==0"><div style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</div></td>
+                        <td v-if="item.inquire==1"><div style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</div></td>
+                        <td v-if="item.inquire==2"><div style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</div></td>
+                        <td v-if="item.inquire==3"><div style="background:green;color:#fff">{{$t('static.quo_complete')}}</div></td>
                         <td>{{item.inquireType}}</td>
                         <td>{{item.source}}</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-        
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+         </div>
+         <pagination :combination="loadParam"  slot="page"></pagination>
+     </mglist-model>
 </template>
 <script>
 import pagination from '../../pagination'
@@ -117,9 +116,9 @@ import inquireModel from '../inquire'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import breedsearchModel from '../breedsearch'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
     initOrgIntlIntentionList
-  
 } from '../../../vuex/getters'
 import {
     getIntlIntentionList,
@@ -136,7 +135,8 @@ export default {
         createModel,
         modifyModel,
         inquireModel,
-        breedsearchModel 
+        breedsearchModel,
+        mglistModel
     },
     vuex: {
         getters: {
@@ -360,6 +360,7 @@ export default {
             this.loadParam.customerName='';
             this.loadParam.breedId='';
             this.loadParam.breedName='';
+            this.loadParam.inquire='';
             this.loadParam.customerEmail='';
             this.getIntlIntentionList(this.loadParam);
         },

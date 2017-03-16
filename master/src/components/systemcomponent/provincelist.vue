@@ -1,14 +1,17 @@
 <template>
-	<div class="cover_loading">
-            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-        </div>
-        <div class="order_search">
+	  <mglist-model>
+        <!-- 头部搜索 -->
+        <div slot="top">
             <div class="clear">
                 <div class="my_order col-xs-2">省市区</div>
             </div>
         </div>
-        <div class="order_table"  id="table_box">
-              <table class="table table-hover table_color  table-striped" id="tab">
+        <!-- 中间列表 -->
+        <div slot="form">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_color  table-striped" id="tab">
                 <thead>
                       <tr>
                           <th>编号</th>
@@ -27,16 +30,18 @@
                           <td>{{item.iso | isostate}}</td>
                       </tr>
                   </tbody>
-              </table>
+            </table>
         </div>
-         <div class="order_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
+         <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
+        
 </template>
 <script>
 import pagination from '../pagination'
 import filter from '../../filters/filters'
 import common from '../../common/common'
+import mglistModel from '../mguan/mgListComponent.vue'
 import {
     initProvincelist
 } from '../../vuex/getters'
@@ -47,7 +52,8 @@ import {
 export default {
     components: {
         pagination,
-        filter
+        filter,
+        mglistModel
     },
     data() {
         return {
@@ -133,12 +139,6 @@ export default {
     -ms-border-radius: 3px;
     background: #fff;
 }
-
-.order_table {
-    margin-top: 20px;
-    position: relative;
-}
-
 .order_table .table {
     background: #fff;
     position: relative;
@@ -167,10 +167,6 @@ export default {
 
 .order_table .table_hover > ul:hover {
     background: #f5f5f5;
-}
-.order_pagination{
-    margin:auto;
-    text-align: center;
 }
 .order_table .table > ul >li img {
     margin: auto;

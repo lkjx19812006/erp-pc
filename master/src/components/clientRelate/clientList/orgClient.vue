@@ -8,8 +8,11 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-    <div>
-        <div class="service-nav">
+    <language-model v-show="false"></language-model>
+
+    <mglist-model>
+        <!-- 头部搜索-->
+        <div slot="top">
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t("static.client_name")}}：</dt>
@@ -22,7 +25,7 @@
                    <dt class="left transfer marg_top">{{$t("static.province_of_phone")}}：</dt>
                    <dd class="left">
                         <select v-model="loadParam.phoneProvinceName"  class="form-control" @change="selectSearch()" >
-                            <option value="">全部</option>
+                            <option value="">{{$t('static.please_select')}}</option>
                             <option v-for="item in initProvince">{{item.cname}}</option>
                         </select>
                    </dd>
@@ -37,9 +40,9 @@
 
                 <!-- 单个业务员搜索 -->
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
+                   <dt class="left transfer marg_top">{{$t('static.salesman')}}：</dt>
                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName"  @click="selectEmployee()">
                    </dd>
                 </dl>
                 
@@ -78,10 +81,10 @@
                    </dd>
                 </dl>
                 
-                <dl class="clear left transfer">
+                <dl class="clear left transfer" style="width:330px">
                    <dt class="left transfer marg_top">{{$t("static.client_type")}}：</dt>
-                   <dd class="left">
-                       <select v-model="loadParam.type" style="width:50%"  class="form-control" @change="selectSearch()">
+                   <dd class="left" style="width:50%">
+                       <select v-model="loadParam.type"   class="form-control" @change="selectSearch()">
                           <option value="">{{$t("static.please_select")}}</option>
                           <option value="0">Others 其它</option>
                           <option value="1">Cooperatives 合作社</option>
@@ -107,13 +110,11 @@
                           <option value="21">Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商</option>
                           <option value="22">Pharmaceutical producer of Western Medicine 西药生产商</option>
                           <option value="23">Pieces Factory 饮片厂</option>
+                          <option value="24">Herb tea company  茶类公司</option>
                       </select>
 
                    </dd>
                 </dl>
-
-                
-                
                 <!-- <dl class="clear left transfer" style="margin-left:-33px;">
                     <div class="client-detailInfo col-xs-6">
                         <dt class="left transfer marg_top">{{$t("static.registration_end_time")}}：</dt>
@@ -127,7 +128,6 @@
                 <dd class="left">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">{{$t("static.clear_all")}}</button>
                 </dd>
-                 
                 
                 <dd class="pull-right" style="margin-right:20px">
                   <button type="button" class="btn btn-default" @click="clientTransfer({
@@ -138,14 +138,12 @@
                   <button type="button" class="btn btn-default" @click="clientTransferBlack()">{{$t("static.drag_into_blacklist")}}</button>
                   <button type="button" class="btn btn-default" @click="clientTransferSupplier()">{{$t("static.make_them_become_supplier")}}</button>
                   <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-                 
                 </dd>
-
             </div>
-
-
         </div>
-        <div class="order_table" id="table_box">
+
+        <!--中间列表-->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -164,33 +162,14 @@
                         <th>{{$t('static.client_type')}}</th>
                         <th>{{$t('static.contact')}}</th>
                         <th>{{$t('static.position')}}</th>
+                        <th>{{$t('static.telephone')}}</th>
                         <th>{{$t('static.cellphone')}}</th>
                         <th>{{$t('static.phone_origin')}}</th>
                         <th>{{$t('static.client_origin')}}</th>
                         <th>{{$t('static.detailed_address')}}</th>
                         <th>{{$t('static.main_product')}}</th> 
-
-                        <!-- <th>{{$t("static.type")}}</th>
-                        <th>{{$t("static.classification")}}</th>
-                        <th>{{$t("static.customer_source")}}</th>
-                        <th>{{$t("static.credit_rating")}}</th>
-                        <th>{{$t("static.client_name")}}</th>
-                        <th>{{$t("static.classification_code")}}</th>
-                        <th>所属分类</th>
-                        <th>{{$t("static.salesman")}}</th>
-                        <th>{{$t("static.principals")}}</th>
-                        <th style="min-width:120px;">{{$t("static.business_scope")}}</th>
-                        <th>{{$t("static.client_phone")}}</th>
-                        <th>{{$t("static.province_of_phone")}}</th>
-                        <th>{{$t("static.city_of_phone")}}</th>
-                        <th>{{$t("static.client_email")}}</th>
-                        <th>{{$t("static.country")}}</th>
-                        <th>{{$t("static.province")}}</th>
-                        <th>{{$t("static.city")}}</th>
-                        <th>{{$t("static.registered_address")}}</th>
-                        <th>{{$t("static.create_time")}}</th>
-                        <th>{{$t("static.whether_supplier")}}</th>
-                        <th style="min-width:200px">{{$t("static.comment")}}</th> -->
+                        <th v-if="this.initLogin.orgId==29">跟进状态</th> 
+                        <th v-if="this.initLogin.orgId==29">跟进说明</th>
                         <th>{{$t("static.operation")}}</th>
                     </tr>
                 </thead>
@@ -217,15 +196,18 @@
                                 key:'orgCustomerList'
                                 })">{{item.name}}</td>
                         <td>{{item.orderTotal}}</td>
-                        <td>{{item.type | customerType}}</td>
+                        <td v-if="this.language=='zh_CN'">{{item.typeDesc}}</td>
+                        <td v-if="this.language=='en'">{{item.type | customerTypeEn}}</td>
                         <td>{{item.mainContact}}</td>
-                        <td></td>
+                        <td>{{item.mainPosition}}</td>
+                        <td>{{item.tel}}</td>
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.bizScope}}</td>
-
+                        <td v-if="this.initLogin.orgId==29">{{item.audit | tracking}}</td> 
+                        <td v-if="this.initLogin.orgId==29">{{item.auditComment}}</td> 
                     <!-- <td>{{item.typeDesc}}</td>
                         <td>{{item.classifyDesc | classify}}</td>
                         <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
@@ -306,10 +288,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+
+        <!--底部分页-->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+
+    </mglist-model>
+    
 </template>
 <script>
 import filter from '../../../filters/filters'
@@ -327,6 +311,8 @@ import employeeModel  from  '../searchEmpInfo'
 import auditDialog from '../../../components/tips/auditDialog'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import languageModel from '../../tools/language.vue'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
     initOrgCustomerlist,
     initProvince,
@@ -353,7 +339,9 @@ export default {
         employeeModel,
         tipsdialogModel,
         searchModel,
-        auditDialog
+        auditDialog,
+        languageModel,
+        mglistModel
     },
     vuex: {
         getters: {
@@ -402,8 +390,8 @@ export default {
                 ctimeEnd:'',
                 audit:'',
                 total:0
-
             },
+            language:'',
             provinceParam:{
               loading:true,
               show:false,
@@ -671,6 +659,7 @@ export default {
     created() {
         this.getProvinceList(this.provinceParam);
         changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.orgClientParam);
+        this.language = localStorage.lang;
     },
     ready(){
       common('tab','table_box',1);
@@ -715,8 +704,8 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 115px;
-    min-width: 115px;
+    width: 108px;
+    min-width: 102px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;

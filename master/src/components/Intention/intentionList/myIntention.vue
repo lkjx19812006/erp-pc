@@ -1,157 +1,171 @@
 <template>
-     <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
-     <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
-     <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
-     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
-     <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
-     <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
-     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
-     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
-     <audit-dialog :param.sync="auditParam" v-if="auditParam.show"></audit-dialog>
-     <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
-     <sendapply-model :param="sampleOrderParam" v-if="sampleOrderParam.send"></sendapply-model>
-     
-	 <div>
-        <div class="service-nav">
+    <chancedetail-model :param="chanceParam" v-if="chanceParam.show"></chancedetail-model>
+    <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
+    <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+    <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
+    <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
+    <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
+    <search-model :param="loadParam" v-if="loadParam.show"></search-model>
+    <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
+    <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+    <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
+    <sendapply-model :param="sampleOrderParam" v-if="sampleOrderParam.send"></sendapply-model>
 
-          <div class="clear" style="margin-top:3px;">
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top" style="letter-spacing:3px">客户名：</dt>
-                 <dd class="left">
-                      <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                 </dd>
-              </dl>
+    <mglist-model>
+        <!-- 头部搜索-->
+        <div slot="top">
+            <div class="clear" style="margin-top:3px;">
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">客户名：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
 
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top" style="letter-spacing:3px" >客户手机：</dt>
-                 <dd class="left">
-                      <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                 </dd>
-              </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">客户手机：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
 
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top" style="letter-spacing:3px" >品种：</dt>
-                 <dd class="left">
-                      <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" placeholder="选择品种" @click="breedSearch()" >
-                 </dd>
-              </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >品种：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" placeholder="选择品种" @click="breedSearch()" >
+                   </dd>
+                </dl>
 
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top" style="letter-spacing:3px" >产地：</dt>
-                 <dd class="left">
-                      <input type="text" class="form-control" v-model="loadParam.location" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                 </dd>
-              </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >产地：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.location" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >标签：</dt>
+                   <dd class="left">
+                        <input-select
+                           :value.sync="loadParam.label"
+                           :prevalue="loadParam.label"
+                           :options="labels"
+                           placeholder="标签"
+                         >
+                        </input-select>
+                   </dd>
+                </dl>
+                
+                <dl class="clear left transfer">
+                   <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
+                </dl>
               
-              <dl class="clear left transfer">
-                 <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
-              </dl>
-            
-          </div>
-
-          <div class="clear" style="margin-top:3px;">
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">意向类型：</dt>
-                 <div class="btn-group">
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===''&&this.loadParam.especial===''}" @click="selectType('','')">
-                        全部
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0&&this.loadParam.especial===0}" @click="selectType(0,0)">
-                        普通求购
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0&&this.loadParam.especial===1}" @click="selectType(0,1)">
-                        紧急求购
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===1&&this.loadParam.especial===0}" @click="selectType(1,0)">
-                        普通供应
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===1&&this.loadParam.especial===1}" @click="selectType(1,1)">
-                        低价资源
-                     </button>
-                 </div>
-              </dl>
-
-              <dl class="clear left transfer" style="margin-left:50px">
-                 <dt class="left transfer marg_top">审核状态：</dt>
-                 <div class="btn-group">
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===''}" @click="selectValidate('')">
-                        全部
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===0}" @click="selectValidate(0)">
-                        待审核
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===1}" @click="selectValidate(1)">
-                        审核通过
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===-1}" @click="selectValidate(-1)">
-                        审核不通过
-                     </button>
-                 </div>
-              </dl>
-
-              <dl class="clear left transfer" style="margin-left:50px">
-                 
-                 <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
-              </dl>
-
-              <dd class="pull-right" style="margin-right:10px">
-                  <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="createIntention({
-                       show:true,
-                       selectCustomer:true,
-                       flag:0,
-                       employeeId:'100014',
-                       title:'新建',
-                       customerName:'',
-                       customerId:'',
-                       customerPhone:'',
-                       breedName:'',
-                       breedId:'',
-                       type:0,
-                       especial:1,
-                       validate:0,
-                       qualification:'',
-                       quality:'',
-                       spec:'',
-                       number:'',
-                       unit:'',
-                       price:'',
-                       address:'',
-                       location:'',
-                       advance:0,
-                       invoic:0,
-                       visit:'',
-                       pack:'',
-                       intl:0,
-                       visit:0,
-                       sampling:0,
-                       sampleNumber:0,
-                       sampleUnit:'',
-                       sampleAmount:0,
-                       country:'中国',
-                       province:'',
-                       city:'',
-                       district:'',
-                       address:'',
-                       key:'myIntentionList',
-                       link:createIntentionInfo,
-                       inType:3,
-                       url:'/intention/',
-                       image_f:'',
-                       image_s:'',
-                       image_t:'',
-                       images:'',
-                       audit:0,
-                       onSell:0,
-                       ctime:''
-                       })">新建</button>
-                  <button type="button" class="btn btn-primary"  @click="selectSearch()">刷新</button>
-              </dd>
             </div>
 
+            <div class="clear" style="margin-top:3px;">
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">意向类型：</dt>
+                   <div class="btn-group">
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===''&&this.loadParam.especial===''}" @click="selectType('','')">
+                          全部
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0&&this.loadParam.especial===0}" @click="selectType(0,0)">
+                          普通求购
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0&&this.loadParam.especial===1}" @click="selectType(0,1)">
+                          紧急求购
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===1&&this.loadParam.especial===0}" @click="selectType(1,0)">
+                          普通供应
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===1&&this.loadParam.especial===1}" @click="selectType(1,1)">
+                          低价资源
+                       </button>
+                   </div>
+                </dl>
 
+                <dl class="clear left transfer" style="margin-left:50px">
+                   <dt class="left transfer marg_top">审核状态：</dt>
+                   <div class="btn-group">
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===''}" @click="selectValidate('')">
+                          全部
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===0}" @click="selectValidate(0)">
+                          待审核
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===1}" @click="selectValidate(1)">
+                          审核通过
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===-1}" @click="selectValidate(-1)">
+                          审核不通过
+                       </button>
+                   </div>
+                </dl>
+
+                <dl class="clear left transfer" style="margin-left:50px">
+                   
+                   <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+                </dl>
+
+                <dd class="pull-right" style="margin-right:10px">
+                    <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="createIntention({
+                         show:true,
+                         selectCustomer:true,
+                         flag:0,
+                         employeeId:'100014',
+                         title:'新建',
+                         customerName:'',
+                         customerId:'',
+                         customerPhone:'',
+                         breedName:'',
+                         breedId:'',
+                         type:0,
+                         especial:1,
+                         validate:0,
+                         qualification:'',
+                         quality:'',
+                         spec:'',
+                         number:'',
+                         unit:'',
+                         price:'',
+                         address:'',
+                         location:'',
+                         advance:0,
+                         invoic:0,
+                         visit:'',
+                         pack:'',
+                         intl:0,
+                         visit:0,
+                         sampling:0,
+                         sampleNumber:0,
+                         sampleUnit:'',
+                         sampleAmount:0,
+                         country:'中国',
+                         province:'',
+                         city:'',
+                         district:'',
+                         address:'',
+                         description:'',
+                         key:'myIntentionList',
+                         link:createIntentionInfo,
+                         inType:3,
+                         url:'/intention/',
+                         image_f:'',
+                         image_s:'',
+                         image_t:'',
+                         images:'',
+                         audit:0,
+                         onSell:0,
+                         ctime:''
+                         })">新建</button>
+                    <button type="button" class="btn btn-primary"  @click="selectSearch()">刷新</button>
+                </dd>
+              </div>
         </div>
-        <div class="order_table" id="table_box">
+
+        <!--中间列表-->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -173,36 +187,7 @@
                         <th>客户备注</th>
                         <th>录入类型</th>
                         <th>上架状态</th>
-                        <th style="min-width:220px;text-align: left;">操作</th>
-                    <!-- 
-                        <th>客户名称</th>
-                        <th>客户手机号</th>
-                        <th>品种名称</th>
-                        <th>资格资质</th>
-                        <th>规格</th>
-                        <th>单位</th>
-                        <th>单价</th>
-                        <th>产地</th>
-                        <th>数量</th>
-                        <th>国家</th>
-                        <th>所在省</th>
-                        <th>所在市</th>
-                        <th>所在区</th>
-                        <th>交收地址</th>
-                        <th>预付比例</th>
-                        <th>发票</th>
-                        <th>上门看货</th>
-                        <th>包装</th>
-                        <th>是否国际</th>
-                        <th>提供样品</th>
-                        <th>样品数量</th>
-                        <th>样品单位</th>
-                        <th>样品价格</th>
-                        <th>报价人数</th>
-                        <th>发布时间</th>
-                        <th>审核状态</th>
-                        <th>上下架</th> -->
-                        
+                        <th style="min-width:200px;text-align: left;">操作</th>        
                     </tr>
                 </thead>
                 <tbody>
@@ -213,7 +198,7 @@
                             <span v-if="item.especial==1&&item.type==0">紧急求购</span>
                             <span v-if="item.especial==1&&item.type==1">低价资源</span>
                         </td>
-                        <td>{{item.ctime | date}}</td>
+                        <td>{{item.ctime}}</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
@@ -309,13 +294,15 @@
                                                link:editintentInfo,
                                                url:'/intention/',
                                                key:'myIntentionList',
+                                               images:item.pics,
                                                image_f:'',
                                                image_s:'',
                                                image_t:'',
                                                image_f_show:'',
                                                image_s_show:'',
                                                image_t_show:'',
-                                               duedate:item.duedate
+                                               duedate:item.duedate,
+                                               description: item.description
                                                })"><img src="/static/images/edit.png" height="18" width="28" alt="编辑"/>
                                </a>
                               <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" @click.stop="specDelete({
@@ -329,16 +316,8 @@
                                                key:'myIntentionList'
                                                })"><img src="/static/images/del.png" height="18" width="28" alt="删除"/>
                                </a>
-                               <!-- <a class="operate" v-if="(item.onSell===0||item.onSell==-2||item.onSell==4)&&item.especial==1" @click="up($index,item.id,1)" >申请上架
-                               </a> -->
-                               <a v-if="(item.onSell===0||item.onSell==-2||item.onSell==4)&&item.especial==1"><button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;margin-top:-22px;color:#fa6705" @click="up($index,item.id,1)">申请上架</button></a> 
-                              <!-- <a class="operate" v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)"><img src="/static/images/grounding.png" height="18" width="28" alt="上架"/>
-                              </a> -->
-                              <!-- <a class="operate"  v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2&&item.especial==1" @click="applyAudit($index,item.id)"><img src="/static/images/apply.png" height="18" width="47" alt="申请审核"/>
-                               </a> -->
-                              <!-- <a class="operate" v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click="up($index,item.id,4)"><img src="/static/images/undercarriage.png" height="18" width="28"  alt="下架"/>
-                               </a> -->
-                              <a class="operate" v-if="item.onSell==2&&item.especial==1" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架"/>
+                               <a v-if="item.onSell===0||item.onSell==-2||item.onSell==4"><button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;margin-top:-22px;color:#fa6705" @click="up($index,item.id,1)">申请上架</button></a> 
+                              <a class="operate" v-if="item.onSell==2" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架"/>
                               </a>
                               <a class="operate" v-if="item.type==1"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" alt="生成订单"/>
                                </a>
@@ -351,10 +330,12 @@
                 </tbody> 
             </table>
         </div>
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+
+        <!--底部分页-->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+
+    </mglist-model> 
+
 </template>
 <script>
 import pagination from '../../pagination'
@@ -372,8 +353,12 @@ import breedsearchModel from '../breedsearch'
 import auditDialog from '../../tips/auditDialog'
 import createorderModel  from  '../createOrder'
 import sendapplyModel from '../sendSampleapply'
+//import inputSelect from '../../tools/vueSelect/components/inputselect'
+import inputSelect from '../../tools/vueSelect/components/multiSelect'
+import commonArray from '../../tools/commonArray'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
 	initMyIntentionList,
   initSupplyDemandList,
@@ -403,7 +388,9 @@ export default {
         breedsearchModel,
         auditDialog,
         createorderModel,
-        sendapplyModel
+        sendapplyModel,
+        inputSelect,
+        mglistModel
     },
     vuex: {
         getters: {
@@ -447,8 +434,10 @@ export default {
                 breedName:'',
                 customerName:'',
                 customerPhone:'',
-                location:''
+                location:'',
+                label:''
             },
+            labels:[],
             supdemParam:{
                 show:false,
                 id:'',
@@ -487,6 +476,7 @@ export default {
                 key:'intentionDetail',
                 type:'',
                 customer:'',
+                customerName:'',
                 sample:0,
                 intl:0,
                 employee:this.initLogin.id,   //业务员ID
@@ -498,6 +488,7 @@ export default {
                 currency:1,     //货币品种
                 consignee:'',    //收货人姓名
                 consigneePhone:'',
+                consigner:'',
                 zipCode:'',     //邮编
                 country:'',
                 province:'',
@@ -506,6 +497,7 @@ export default {
                 consigneeAddr:'',
                 comments:'',
                 total:0,
+                cost:0,
                 currency:1,
                 sourceType:1,    //来源类型(意向)
                 orderStatus:0,   //订单状态
@@ -519,6 +511,7 @@ export default {
                   location:'',
                   spec:'',
                   price:0,
+                  costPrice:0,
                   unit:'',
                   number:0
               }]
@@ -721,6 +714,8 @@ export default {
            this.createOrderParam.sub = sub;
            console.log(item)
            this.createOrderParam.customer = item.customerId;
+           this.createOrderParam.tradeTime = item.tradeTime;
+           this.createOrderParam.customerName = item.customerName;
            this.createOrderParam.type = item.type;
            this.createOrderParam.goods[0].sourceId= item.id;
            this.createOrderParam.goods[0].breedName= item.breedName;
@@ -775,6 +770,7 @@ export default {
             this.loadParam.breedName='';
             this.loadParam.customerPhone='';
             this.loadParam.location='';
+            this.loadParam.label='';
             this.getIntentionList(this.loadParam);
         },
         specDelete:function(param){
@@ -785,6 +781,7 @@ export default {
             this.createParam.callback = this.modifyback;
         },
         modifyback:function(title){
+            this.getIntentionList(this.loadParam);
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
@@ -794,6 +791,7 @@ export default {
             this.createParam.callback = this.createback;
         },
         createback:function(title){
+            this.getIntentionList(this.loadParam);
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
@@ -812,7 +810,7 @@ export default {
           this.batchUserIntentionAudit(this.auditParam);
         },
         selectSearch:function(){
-          this.getIntentionList(this.loadParam)
+          this.getIntentionList(this.loadParam);
         },
         sengSample:function(item,sub){
            this.sampleOrderParam.send = true;
@@ -838,9 +836,11 @@ export default {
             this.loadParam.breedName=breed.breedName;
             this.selectSearch();
             
-        }
+        },
+
     },
     created() {
+      this.labels = commonArray.intentionLabels;
       changeMenu(this.$store.state.table.isTop,this.getIntentionList,this.loadParam,localStorage.myIntentionParam);
       
     },

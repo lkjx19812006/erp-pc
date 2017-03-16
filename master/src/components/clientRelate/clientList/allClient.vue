@@ -7,15 +7,10 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-    <div>
-        <div class="service-nav">
-            <div class="clearfix">
-                <!-- <div class="my_enterprise col-xs-1">所有客户</div> -->
-                <div class="right">
-                  
-                </div>
-            </div>
 
+    <mglist-model>
+        <!-- 头部搜索-->
+        <div slot="top">
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">客户名称：</dt>
@@ -34,10 +29,10 @@
                    </dd>
                 </dl>
 
-                <dl class="clear left transfer">
+                <dl class="clear left transfer" style="width:192px">
                    <dt class="left transfer marg_top">客户类型：</dt>
-                   <dd class="left">
-                       <select v-model="loadParam.type" style="width:50%"  class="form-control" @change="selectSearch()">
+                   <dd class="left" style="width:64%">
+                       <select v-model="loadParam.type"   class="form-control" @change="selectSearch()">
                           <option value="">{{$t("static.please_select")}}</option>
                           <option value="0">Others 其它</option>
                           <option value="1">Cooperatives 合作社</option>
@@ -63,12 +58,10 @@
                           <option value="21">Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商</option>
                           <option value="22">Pharmaceutical producer of Western Medicine 西药生产商</option>
                           <option value="23">Pieces Factory 饮片厂</option>
+                          <option value="24">Herb tea company  茶类公司</option>
                       </select>
                    </dd>
                 </dl>
-                
-                
-
                 <dl class="clear left transfer">
                     <div class="client-detailInfo col-xs-6">
                         <dt class="left transfer marg_top">注册起始时间：</dt>
@@ -144,7 +137,9 @@
                 </dd>
             </div>
         </div>
-        <div class="order_table" id="table_box">
+
+        <!--中间列表-->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -164,6 +159,7 @@
                         <th>联系人</th>
                         <th>联系人职位</th>
                         <th>联系人电话</th>
+                        <th>联系人手机</th>
                         <th>手机归属地</th>
                         <th>客户归属地</th>
                         <th>详细地址</th>
@@ -196,7 +192,8 @@
                         <td>{{item.orderTotal}}</td>
                         <td>{{item.type | customerType}}</td>
                         <td>{{item.mainContact}}</td>
-                        <td></td>
+                        <td>{{item.mainPosition}}</td>
+                        <td>{{item.tel}}</td>
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
@@ -239,10 +236,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+
+        <!--底部分页-->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+
+    </mglist-model>
+
 </template>
 <script>
 
@@ -257,6 +256,7 @@ import searchModel  from  '../../../components/clientRelate/searchModel'
 import auditDialog from '../../../components/tips/auditDialog'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
     initAllCustomerlist,
     initProvince
@@ -281,7 +281,8 @@ export default {
         transferModel,
         tipsdialogModel,
         searchModel,
-        auditDialog
+        auditDialog,
+        mglistModel
     },
     vuex: {
         getters: {
@@ -624,8 +625,8 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 115px;
-    min-width: 115px;
+    width: 107px;
+    min-width: 106px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;

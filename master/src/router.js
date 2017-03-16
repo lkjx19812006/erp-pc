@@ -14,15 +14,15 @@ export default (router) => router.map({
     '/home': {
         name: 'home',
         component: function(resolve) {
-                require(['./views/home'], resolve)
+            require(['./views/home'], resolve)
         },
         auth: true,
         subRoutes: {
-          '/': {
-            component: function(resolve) { //登录之后显示的
-              require(['./views/message'], resolve)
-            }
-          },
+            '/': {
+                component: function(resolve) { //登录之后显示的
+                    require(['./views/main'], resolve)
+                }
+            },
             '/*any': {
                 component: function(resolve) {
                     require(['./views/message'], resolve)
@@ -50,9 +50,9 @@ export default (router) => router.map({
                 }
             },
             '/supply': {
-            component: function(resolve) {
-              require(['./views/supply'], resolve)
-            }
+                component: function(resolve) {
+                    require(['./views/supply'], resolve)
+                }
             },
             '/order_intent': {
                 component: function(resolve) {
@@ -65,7 +65,7 @@ export default (router) => router.map({
                 }
             },
             '/order': {
-                name:'order',
+                name: 'order',
                 component: function(resolve) {
                     require(['./views/order'], resolve)
                 }
@@ -76,13 +76,13 @@ export default (router) => router.map({
                 }
             },
             '/person': {
-                name:'person',
+                name: 'person',
                 component: function(resolve) {
                     require(['./views/employee'], resolve)
                 }
             },
             '/achive': {
-                name:'achive',
+                name: 'achive',
                 component: function(resolve) {
                     require(['./views/achivement'], resolve)
                 }
@@ -93,13 +93,13 @@ export default (router) => router.map({
                 }
             },
             '/base': {
-                name:'base',
+                name: 'base',
                 component: function(resolve) {
                     require(['./views/systemData'], resolve)
                 }
             },
             '/baseData': {
-                name:'baseData',
+                name: 'baseData',
                 component: function(resolve) {
                     require(['./views/baseData'], resolve)
                 }
@@ -129,6 +129,16 @@ export default (router) => router.map({
                     require(['./views/drugMoney'], resolve)
                 }
             },
+            '/email': {
+                component: function(resolve) {
+                    require(['./views/email'], resolve)
+                }
+            },
+            '/dictionary': {
+                component: function(resolve) {
+                    require(['./views/dictionary'], resolve)
+                }
+            }
 
         }
     },

@@ -10,13 +10,13 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 	    <div class="model-header">
-            <h4>业务员</h4>
+            <h4>{{$t('static.salesman')}}</h4>
 	    	<div class="con_list">
     			<div class="trans_service clearfix" >
                     <div style="margin:10px 10px 15px 10px" class="clearfix">
                         <div class="input-group col-xs-4 pull-left" @click="treeParam.show=true">
                             <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
-                            <input type="text" class="form-control"  placeholder="点击选择部门"   value="{{treeParam.orgName}}">
+                            <input type="text" class="form-control"  placeholder="{{$t('static.department')}}"   value="{{treeParam.orgName}}">
                             <!--<input type="button" class="form-control" value="根据部门查找" @click="treeParam.show=true"/>-->
                         </div> 
                         <div class="col-xs-1 pull-left"></div>
@@ -35,9 +35,9 @@
 		                <thead>
 		                    <tr>
 		                        <th></th>
-		                        <th>姓名</th>
-		                        <th>部门</th>
-		                        <th>手机</th>
+		                        <th>{{$t('static.name')}}</th>
+		                        <th>{{$t('static.department')}}</th>
+		                        <th>{{$t('static.cellphone')}}</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
@@ -56,8 +56,8 @@
                         <pagination :combination="loadParam"></pagination>
                     </div>
                     <div class="edit_footer">
-                        <button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
-                        <button type="button" class="btn btn-orange" @click="confirmEmp()">确定</button>
+                        <button type="button" class="btn btn-close"  @click="param.show = fasle">{{$t('static.cancel')}}</button>
+                        <button type="button" class="btn btn-orange" @click="confirmEmp()">{{$t('static.confirm')}}</button>
                     </div>
     			</div>
 
@@ -258,6 +258,9 @@ export default{
     right: 0;
     left: 0;
     margin:auto;
+}
+.base_pagination{
+    position: relative;
 }
 .edit_footer{
 	width:900px;

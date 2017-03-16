@@ -33,7 +33,7 @@
         <div class="margin"></div>
         <div class="nodes">
           <treeview :id="id" :value.sync="value" :labelname="labelname" :valuename="valuename" :codename="codename" :children="children"
-                    :model="node[children]" :parent.once="index" class="inner"></treeview>
+                    :model="node[children]" :parent.once="index"  class="inner"></treeview>
         </div>
       </div>
     </div>
@@ -43,7 +43,6 @@
 <script>
 
   export default{
-
     data(){
       return {
         msg: 'hello vue'
@@ -143,6 +142,8 @@
        */
       select: function (index, value) {
         // Unselect from current level, children and parents
+        console.log(index)
+        console.log(value)
         this.toggleOpen(index);
         this.$set('value', value);
         // Call to event.
@@ -291,11 +292,13 @@
   .treeview {
     border: 1px solid #A9A9A9; }
   .treeview .node:hover {
-    background-color: #1E90FF;
-    color: #FFF; }
+    background-color: #fff;
+    color: #1E90FF; 
+    text-decoration: underline;
+  }
   .treeview .node.active {
-    background-color: #1E90FF;
-    color: #FFF; }
+    background-color: #fff;
+    color: #1E90FF; }
 
   .treeview {
     position: relative;

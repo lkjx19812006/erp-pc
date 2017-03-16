@@ -2,15 +2,26 @@
  * @Author: huili.sun
  * @Date:   2016-11-28 15:12:11
  * @Last Modified by:   huili.sun
- * @Last Modified time: 2016-11-28 15:57:32
+ * @Last Modified time: 2017-01-20 17:14:47
  */
 
 'use strict';
 
 
-
+/*window.onload=function(){  
+     fixedTable();  
+}  
+//当浏览器窗口大小改变时，设置显示内容的高度  
+window.onresize=function(){  
+     fixedTable();  
+     setTimeout(onresize,100);
+}  */
 function fixedTable(viewid, scrollid, size) {    //viewid为表的ID,scrollid为父div的ID，
+
+    var top = document.getElementById('top').offsetHeight;
+    var bottom = document.getElementById('base_pagination').offsetHeight;
     var scroll = document.getElementById(scrollid);     //获取父元素
+    scroll.style.height = document.body.clientHeight-top-bottom-115+'px'; //获取表格高度
     var tb2 = document.getElementById(viewid).cloneNode(true);    //复制id为viewid的表元素
     var len = tb2.rows.length;               //获取表的行数
     for (var i = tb2.rows.length; i > size; i--) {       //保留复制表的表头

@@ -1,11 +1,12 @@
 <template>
     <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
-    <div>
-        <div class="service-nav clearfix">
+    <mglist-model>
+        <!-- 头部搜索 -->
+        <div slot="top">
             <div class="right">
                  <button class="btn btn-primary transfer"  @click="multiSearch()">刷新</button>
             </div>
-            <div class="left my_order_search">
+            <div class="left my_order_search"  style="margin-bottom: 10px;">
                 <div class="name_search clearfix transfer">
                     <img src="/static/images/search.png" height="24" width="24">
                     <input type="text" class="search_input" placeholder="按药品名称搜索" v-model="loadParam.name" @keyup.enter="multiSearch()">
@@ -14,7 +15,8 @@
                  <button class="new_btn transfer"  @click="multiSearch()">搜索</button>
             </div>
         </div>
-        <div class="order_table" id="table_box">
+        <!-- 中间列表 -->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -50,16 +52,30 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+         <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
+    <!-- <div>
+        <div class="service-nav clearfix" id="top">
+            
+        </div>
+        <div class="order_table" id="table_box">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            
+        </div>
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
-    </div>
+    </div> -->
 </template>
 <script type="text/javascript">
 import pagination from '../../components/pagination'
 import filter from '../../filters/filters'
 import detailModel from '../serviceBaselist/recipeDetail'
 import common from '../../common/common'
+import mglistModel from '../mguan/mgListComponent.vue'
 import {
     initConponentlist
 } from '../../vuex/getters'
@@ -70,6 +86,7 @@ export default {
     components: {
         pagination,
         filter,
+        mglistModel,
         detailModel
     },
     vuex: {

@@ -1,326 +1,378 @@
 <template>
-    <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
-    <inquireinfo-model :param="inquireInfoParam" v-if="inquireInfoParam.show"></inquireinfo-model>
-    <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
-    <itemhistory-model :param="itemHistoryParam" v-if="itemHistoryParam.show"></itemhistory-model>
-    <uploadfiles-model :param="uploadFilesParam" v-if="uploadFilesParam.show"></uploadfiles-model>
-    <otheroffer-model :param="otherOfferParam" v-if="otherOfferParam.show"></otheroffer-model>
-    <inquireagain-model :param="inquireAgainParam" v-if="inquireAgainParam.show"></inquireagain-model>
-    <delfile-model :param="delFileParam" v-if="delFileParam.show"></delfile-model>
-    <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
-        <div class="top-title">
-            <span class="glyphicon glyphicon-remove-circle"  @click="param.show=false" ></span>
-        </div>
-        <div class="cover_loading">
-            <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
-        </div>
-        <div class="client_nav">
-            <nav class="navbar navbar-client" role="navigation">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <span class="navbar-brand navbar-name">{{initIntlIntentionDetail.customerName}}</span>
-                    </div>
-                    <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
-                         <li>
-                            <!-- <button type="button" class="btn btn-base"  @click="createOffer()">新建报价</button> -->
-                        </li>
-
-                    </ul>
-                </div>
-            </nav>
-        </div>
-        <section>
-            <div class="client-section clearfix" @click.stop="">
-                <div class="col-md-12">
-                    <h4 class="section_title">{{$t('static.detailed_information')}}</h4>
-                    <article>
-                        <div class="edit-detail">
-                            <div class="clearfix">
-                                <div class="client-detailInfo col-md-4">
-                                    <label class="editlabel">{{$t('static.client_name')}}：</label>
-                                    <span>{{initIntlIntentionDetail.customerName}}</span>
-                                </div>
-                                <div class="client-detailInfo col-md-4">
-                                    <label class="editlabel">{{$t('static.client_phone')}}：</label>
-                                    <span>{{initIntlIntentionDetail.customerPhone}}</span>
-                                </div>
-                                <div class="client-detailInfo col-md-4" >
-                                    <label class="editlabel">{{$t('static.client_email')}}：</label>
-                                    <span>{{initIntlIntentionDetail.customerEmail}}</span>
-                                </div>
-                                <div class="client-detailInfo col-md-4">
-                                    <label class="editlabel">{{$t('static.country')}}：</label>
-                                    <span>{{initIntlIntentionDetail.country}}</span>
-                                </div>
-                                <div class="client-detailInfo col-md-4">
-                                    <label class="editlabel">{{$t('static.city')}}：</label>   
-                                    <span>{{initIntlIntentionDetail.city}}</span>
-                                </div>
-                                <div class="client-detailInfo col-md-4">
-                                    <label class="editlabel">{{$t('static.address')}}：</label>
-                                    <span>{{initIntlIntentionDetail.address}}</span>
-                                </div>
-                                
-                            </div>
-
+    <div>
+        <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
+        <inquireinfo-model :param="inquireInfoParam" v-if="inquireInfoParam.show"></inquireinfo-model>
+        <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
+        <itemhistory-model :param="itemHistoryParam" v-if="itemHistoryParam.show"></itemhistory-model>
+        <uploadfiles-model :param="uploadFilesParam" v-if="uploadFilesParam.show"></uploadfiles-model>
+        <otheroffer-model :param="otherOfferParam" v-if="otherOfferParam.show"></otheroffer-model>
+        <inquireagain-model :param="inquireAgainParam" v-if="inquireAgainParam.show"></inquireagain-model>
+        <delfile-model :param="delFileParam" v-if="delFileParam.show"></delfile-model>
+        <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
+        <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
+        <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
+            <div class="top-title">
+                <span class="glyphicon glyphicon-remove-circle" @click="param.show=false"></span>
+            </div>
+            <div class="cover_loading">
+                <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <div class="client_nav">
+                <nav class="navbar navbar-client" role="navigation">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
+                            <span class="navbar-brand navbar-name">{{initIntlIntentionDetail.customerName}}</span>
                         </div>
-                    </article>
-                </div>
-
-                <div class="col-md-11 client-detail">
-                    <h4 class="section_title">{{$t('static.related_information')}}</h4>
-                    <article>
-                        <div class="panel-group">
-                            
-                          <div class="panel panel-default" >
-                              <div class="panel-heading" v-cloak>
-                                <h4 class="panel-title clearfix" @click="enfoldment({
+                        <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
+                            <li>
+                                <!-- <button type="button" class="btn btn-base"  @click="createOffer()">新建报价</button> -->
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <section>
+                <div class="client-section clearfix" @click.stop="">
+                    <div class="col-md-12">
+                        <h4 class="section_title">{{$t('static.detailed_information')}}</h4>
+                        <article>
+                            <div class="edit-detail">
+                                <div class="clearfix">
+                                    <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                        <label class="editlabel">{{$t('static.type')}}：</label>
+                                        <span v-if="initIntlIntentionDetail.especial==0&&initIntlIntentionDetail.type==0">{{$t('static.common_purchase')}}</span>
+                                        <span v-if="initIntlIntentionDetail.especial==0&&initIntlIntentionDetail.type==1">{{$t('static.common_supply')}}</span>
+                                        <span v-if="initIntlIntentionDetail.especial==1&&initIntlIntentionDetail.type==0">{{$t('static.emergency')}}</span>
+                                        <span v-if="initIntlIntentionDetail.especial==1&&initIntlIntentionDetail.type==1">{{$t('static.low_cost')}}</span>
+                                    </div>
+                                    <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                        <label class="editlabel">{{$t('static.client_name')}}：</label>
+                                        <span>{{initIntlIntentionDetail.customerName}}</span>
+                                    </div>
+                                    <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                        <label class="editlabel">{{$t('static.client_phone')}}：</label>
+                                        <span>{{initIntlIntentionDetail.customerPhone}}</span>
+                                    </div>
+                                    <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                        <label class="editlabel">{{$t('static.client_email')}}：</label>
+                                        <span>{{initIntlIntentionDetail.customerEmail}}</span>
+                                    </div>
+                                    <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                        <label class="editlabel">{{$t('static.country')}}：</label>
+                                        <span>{{initIntlIntentionDetail.country}}</span>
+                                    </div>
+                                    <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                        <label class="editlabel">{{$t('static.city')}}：</label>
+                                        <span>{{initIntlIntentionDetail.city}}</span>
+                                    </div>
+                                    <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                        <label class="editlabel">{{$t('static.address')}}：</label>
+                                        <span>{{initIntlIntentionDetail.address}}</span>
+                                    </div>
+                                    <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                        <label class="editlabel">{{$t('static.intention_source')}}：</label>
+                                        <span>{{initIntlIntentionDetail.source}}</span>
+                                    </div>
+                                    <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                        <label class="editlabel">{{$t('static.inquiry_state')}}：</label>
+                                        <span v-if="initIntlIntentionDetail.inquire==0">{{$t('static.initial')}}</span>
+                                        <span v-if="initIntlIntentionDetail.inquire==1">{{$t('static.inquiry')}}</span>
+                                        <span v-if="initIntlIntentionDetail.inquire==2">{{$t('static.quotation')}}</span>
+                                        <span v-if="initIntlIntentionDetail.inquire==3">{{$t('static.quo_complete')}}</span>
+                                    </div>
+                                    <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                        <label class="editlabel">{{$t('static.issued_time')}}：</label>
+                                        <span>{{initIntlIntentionDetail.ctime}}</span>
+                                    </div>
+                                    <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6">
+                                        <label class="editlabel">{{$t('static.packaging')}}：</label>
+                                        <span>{{initIntlIntentionDetail.pack}}</span>
+                                    </div>
+                                    <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6">
+                                        <label class="editlabel">{{$t('static.destination')}}：</label>
+                                        <span>{{initIntlIntentionDetail.port}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-md-12 client-detail">
+                        <h4 class="section_title">{{$t('static.related_information')}}</h4>
+                        <article>
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" v-cloak>
+                                        <h4 class="panel-title clearfix" @click="enfoldment({
                                             link:initIntlIntentionDetail.inquires,
                                             crete:'inquires'
                                             })">
-                                      <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26"  />
-                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                     <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26" />
+<a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" class="panel-title-set">
                                        {{$t('static.inquiry_record')}}（{{initIntlIntentionDetail.inquires.arr.length}}）
                                       </a>
-                                      <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
-                                </h4>
-                              </div>
-                              <div  class="panel-collapse" v-show="!initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
-                                 <div class="panel-body panel-set">
-                                      <table class="table contactSet">
-                                        <thead>
-                                          <th>{{$t('static.inquire_type')}}</th>
-                                          <th>{{$t('static.inquire_time')}}</th>
-                                          <th>{{$t('static.inquiry_state')}}</th>
-                                          <th>{{$t('static.product_price')}}</th>
-                                          <th>{{$t('static.other_cost')}}</th>
-                                          <th>{{$t('static.total_cost')}}</th>
-                                          <th>{{$t('static.comment')}}</th>
-                                        </thead>
-                                        <tbody>
-                                             <tr v-for="item in initIntlIntentionDetail.inquires.arr">
-                                                <!-- <td><img :src="item.path" /></td> -->
-                                                <td><a class="underline" @click="getInquireInfo(item.id)">{{item.inquireType}}</a></td>
-                                                <td>{{item.ctime}}</td>
-                                                <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
-                                                <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.inquiry')}}</td>
-                                                <td v-if="item.inquire==2" style="color:#EE82EE">{{$t('static.quotation')}}</td>
-                                                <td v-if="item.inquire==3" style="color:#2E8B57">{{$t('static.quo_complete')}}</td>
-                                                <td>{{item.productTotal}}</td>
-                                                <td>{{item.otherTotal}}</td>
-                                                <td>{{item.total}}</td>
-                                                <td>{{item.comment}}</td>
-                                                <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
+<!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+</h4>
+                                    </div>
+                                    <div class="panel-collapse" v-show="!initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
+                                        <div class="panel-body panel-set">
+                                            <table class="table contactSet">
+                                                <thead>
+                                                    <th>{{$t('static.inquire_type')}}</th>
+                                                    <th>{{$t('static.destination')}}/{{$t('static.postcodes')}}</th>
+                                                    <th>{{$t('static.inquire_time')}}</th>
+                                                    <th>{{$t('static.inquiry_state')}}</th>
+                                                    <th>{{$t('static.product_price')}}</th>
+                                                    <th>{{$t('static.other_cost')}}</th>
+                                                    <th>{{$t('static.total_cost')}}</th>
+                                                    <th>{{$t('static.comment')}}</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in initIntlIntentionDetail.inquires.arr">
+                                                        <!-- <td><img :src="item.path" /></td> -->
+                                                        <td>
+                                                            <a class="underline" v-if="item.inquire==3" @click="getInquireInfo(item.id)">{{item.inquireType}}</a>
+                                                            <span v-else>{{item.inquireType}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <div v-if="item.inquireType=='CIF'||item.inquireType=='FCA'||item.inquireType=='FAS'||item.inquireType=='CPT'||item.inquireType=='CFR'||item.inquireType=='CIP'||item.inquireType=='DAT'||item.inquireType=='DAP'||item.inquireType=='DDP'||item.inquireType=='DAP'||item.inquireType=='EXW'||item.inquireType=='FOB'||item.inquireType=='DDP'">{{item.port}}</div>
+                                                            <div v-if="item.inquireType=='Border Trade'">{{item.port}}{{item.postcode}}</div>
+                                                            <div v-else>{{item.postcode}}</div>
+                                                        </td>
+                                                        <td>{{item.ctime}}</td>
+                                                        <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
+                                                        <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.inquiry')}}</td>
+                                                        <td v-if="item.inquire==2" style="color:#EE82EE">{{$t('static.quotation')}}</td>
+                                                        <td v-if="item.inquire==3" style="color:#2E8B57">{{$t('static.quo_complete')}}</td>
+                                                        <td>{{item.productTotal}}</td>
+                                                        <td>{{item.otherTotal}}</td>
+                                                        <td>{{item.total}}</td>
+                                                        <td>{{item.comment}}</td>
+                                                        <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
                                                 <td @click="otherOffer()" style="cursor:pointer">其他报价</td> -->
-                                                  
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                  </div>
-                              </div>
-                          </div>      
-
-                          <div class="panel panel-default">
-                              <div class="panel-heading" v-cloak>
-                                <h4 class="panel-title clearfix" @click="enfoldment({
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" v-cloak>
+                                        <h4 class="panel-title clearfix" @click="enfoldment({
                                             link:initIntlIntentionDetail.items,
                                             crete:'items'
                                             })">
-                                      <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
-                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                        {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
-                                      </a>
-                                      <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：{{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}}</span>
-                                      <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
-                                </h4>
-                              </div>
-                              <div  class="panel-collapse" v-show="!initIntlIntentionDetail.items.show&&initIntlIntentionDetail.items.arr.length>0">
-                                 <div class="panel-body panel-set">
-                                      <table class="table contactSet">
-                                        <thead>
-                                          <th>{{$t('static.breed')}}</th>
-                                          <th>{{$t('static.origin')}}</th>
-                                          <th>{{$t('static.specification')}}</th>
-                                          <th>{{$t('static.quality')}}</th>
-                                          <th>{{$t('static.quoted_price')}}</th>
-                                          <th>{{$t('static.exchange')}}</th>
-                                          <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
-                                          <th>{{$t('static.quatation_name')}}</th>
-                                          <th>{{$t('static.comment')}}</th>
-                                          <th>{{$t('static.inquiry_again')}}</th>
-                                          <th>{{$t('static.quote_again')}}</th>
-                                          <th>{{$t('static.quatiton_time')}}</th>
-                                          <!-- <th></th> -->
-                                          <th></th> 
-                                        </thead>
-                                        <tbody>
-                                             <tr v-for="item in initIntlIntentionDetail.items.arr">
-                                                <td><a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a></td>
-                                                <td>{{item.location}}</td>
-                                                <td>{{item.spec}}</td>
-                                                <td>{{item.quality}}</td>
-                                                <td>{{item.offerPrice}}（{{item.offerEUnit}}）</td>
-                                                <td>{{item.exchangeRate}}</td>
-                                                <td>{{item.number}}（{{item.unit | Unit}}）</td>
-                                                <td>{{item.offererName}}</td>
-                                                <td>{{item.offerComment}}</td>
-                                                <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
-                                                <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
-                                                <td v-if="item.offerAgain==0">{{$t('static.not_quote')}}</td>
-                                                <td v-if="item.offerAgain==null">{{$t('static.not_quote')}}</td>
-                                                <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
-                                                <td>{{item.utime}}</td>
-                                                <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> --> 
-                                                <td></td>
-                                            </tr>
-                                    </table>
-                                  </div>
-                              </div>
-                          </div> 
 
-                          <div class="panel panel-default">
-                              <div class="panel-heading" v-cloak>
-                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                              <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
+                                              <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                                {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
+                                              </a>
+                                              <!--询价完成或再次询价才显示价格-->
+                                              <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
+                                                  <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
+                                                  <!-- {{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
+                                              </span>
+                                              <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse" v-show="!initIntlIntentionDetail.items.show&&initIntlIntentionDetail.items.arr.length>0">
+                                        <div class="panel-body panel-set">
+                                            <table class="table contactSet">
+                                                <thead>
+                                                    <th>{{$t('static.breed')}}</th>
+                                                    <th>{{$t('static.origin')}}</th>
+                                                    <th>{{$t('static.specification')}}</th>
+                                                    <th>{{$t('static.quality')}}</th>
+                                                    <th>{{$t('static.quoted_price')}}</th>
+                                                    <th>{{$t('static.exchange')}}</th>
+                                                    <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
+                                                    <th>{{$t('static.quatation_name')}}</th>
+                                                    <th>{{$t('static.comment')}}</th>
+                                                    <th>{{$t('static.inquiry_again')}}</th>
+                                                    <th>{{$t('static.quote_again')}}</th>
+                                                    <th>{{$t('static.quatiton_time')}}</th>
+                                                    <!-- <th></th> -->
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in initIntlIntentionDetail.items.arr">
+                                                        <td>
+                                                            <a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a>
+                                                        </td>
+                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.spec}}</td>
+                                                        <td>{{item.quality}}</td>
+                                                        <td>{{item.price}}<span v-if="item.offerEUnit!=''&&item.offerEUnit!==null">（{{item.offerEUnit}}）</span></td>
+                                                        <td>{{item.exchangeRate}}</td>
+                                                        <td>{{item.number}}（{{item.unit | Unit}}）</td>
+                                                        <td>{{item.offererName}}</td>
+                                                        <td>{{item.offerComment}}</td>
+                                                        <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
+                                                        <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
+                                                        <td v-if="item.offerAgain==0">{{$t('static.not_quote')}}</td>
+                                                        <td v-if="item.offerAgain==null">{{$t('static.not_quote')}}</td>
+                                                        <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
+                                                        <td>{{item.utime}}</td>
+                                                        <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> -->
+                                                        <td></td>
+                                                    </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" v-cloak>
+                                        <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:initIntlIntentionDetail.offers,
                                               crete:'offers'
                                               })">
                                         <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initIntlIntentionDetail.offers.arr.length">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initIntlIntentionDetail.offers.arr.length&&(initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1)">
                                           {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                           {{$t('static.other_quotations')}}（0）
                                         </a>
-                                         <span class="pull-right" style="color:#fa6705">{{$t('static.quotation_total')}}：{{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}}</span>
+                                         <span class="pull-right" style="color:#fa6705">{{$t('static.quotation_total')}}：
+                                             <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.offersTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
+                                             <!-- {{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
+                                         </span>
                                         <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                   </h4>
-                              </div>
-
-                              <div  class="panel-collapse" v-show="initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0">
-                                 <div class="panel-body panel-set">
-                                      <table class="table contactSet">
-                                        <thead>
-                                          <th>{{$t('static.currency')}}</th>
-                                          <th>{{$t('static.expense')}}</th>
-                                          <th>{{$t('static.expense_explanation')}}</th>
-                                          <th>{{$t('static.all_in_cost')}}</th>
-                                          <th>{{$t('static.comment')}}</th>
-                                         
-                                        </thead>
-                                        <tbody>
-                                             <tr v-for="item in initIntlIntentionDetail.offers.arr">
-                                                <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.currency | Currency}}</td>
-                                                <td>{{item.cost}}</td>
-                                                <td>{{item.costDesc}}</td>
-                                                <td>{{item.total}}</td>
-                                                <td>{{item.comment}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                  </div>
-                              </div>
-                          </div>
-
-                          <div class="panel panel-default">
-                              <div class="panel-heading" v-cloak>
-                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                    </div>
+                                    <div class="panel-collapse" v-show="initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0&&(initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1)">
+                                        <div class="panel-body panel-set">
+                                            <table class="table contactSet">
+                                                <thead>
+                                                    <th>{{$t('static.expense_explanation')}}</th>
+                                                    <th>{{$t('static.expense')}}</th>
+                                                    <th>{{$t('static.currency')}}</th>
+                                                    <th>{{$t('static.all_in_cost')}}</th>
+                                                    <th>{{$t('static.comment')}}</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in initIntlIntentionDetail.offers.arr">
+                                                        <!-- <td><img :src="item.path" /></td> -->
+                                                        <td>{{item.costDesc}}</td>
+                                                        <td>{{item.cost}}</td>
+                                                        <td>{{item.currency | Currency}}</td>
+                                                        <td>{{item.total}}</td>
+                                                        <td>{{item.comment}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 原文件 -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" v-cloak>
+                                        <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:initIntlIntentionDetail.files,
                                               crete:'files'
                                               })">
-                                        <img class="pull-left" src="/static/images/originalfile_icon.png" height="29" width="26"  />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          {{$t('static.original_file')}}（{{initIntlIntentionDetail.files.arr.length}}）
-                                        </a>
-                                        <button type="button" class="btn btn-base pull-right" @click.stop="uploadOriginalFiles()">{{$t('static.upload')}}</button>                                  
-                                  </h4>
-                              </div>
-                              <div  class="panel-collapse" v-show="initIntlIntentionDetail.files.show&&initIntlIntentionDetail.files.arr.length>0">
-                                 <div class="panel-body panel-set">
-                                      <table class="table contactSet">
-                                        <thead>
-                                          <!-- <th>{{$t('static.file_path')}}</th> -->
-                                          <th>{{$t('static.file_type')}}</th>
-                                          <th>{{$t('static.description')}}</th>
-                                          <th>{{$t('static.create_time')}}</th>
-                                          <th>{{$t('static.file_path')}}</th>
-                                          <th></th>
-                                          <th></th>
-                                          
-                                        </thead>
-                                        <tbody>
-                                             <tr v-for="item in initIntlIntentionDetail.files.arr">
-                                                <!-- <td><img :src="item.path" /></td> -->
-                                               <!--  <td v-if="item.fileType=='image'"><img :src="item.url"/></td>
-                                               <td v-else></td> -->
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.description}}</td>
-                                                <td>{{item.ctime}}</td>
-                                                <td><img :src="item.url" style="max-width: 150px;"  @click="clickBig(item.url)"/></td>
-                                                <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
-                                                <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
-                                                
-                                               
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                  </div>
-                              </div>
-                          </div>
-
-                          <div class="panel panel-default">
-                              <div class="panel-heading" v-cloak>
-                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                              <img class="pull-left" src="/static/images/originalfile_icon.png" height="29" width="26"  />
+                                              <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                                {{$t('static.original_file')}}（{{initIntlIntentionDetail.files.arr.length}}）
+                                              </a>
+                                              <button type="button" class="btn btn-base pull-right" @click.stop="uploadOriginalFiles()">{{$t('static.upload')}}</button>                                  
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse" v-show="initIntlIntentionDetail.files.show&&initIntlIntentionDetail.files.arr.length>0">
+                                        <div class="panel-body panel-set">
+                                            <table class="table contactSet">
+                                                <thead>
+                                                    <!-- <th>{{$t('static.file_path')}}</th> -->
+                                                    <th>{{$t('static.file_type')}}</th>
+                                                    <th>{{$t('static.description')}}</th>
+                                                    <th>{{$t('static.create_time')}}</th>
+                                                    <th>{{$t('static.file_path')}}</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in initIntlIntentionDetail.files.arr">
+                                                        <td>{{item.fileType}}</td>
+                                                        <td>{{item.description}}</td>
+                                                        <td>{{item.ctime}}</td>
+                                                        <td>
+                                                            <img :src="item.url" v-if="item.fileType=='image'" style="max-width: 150px;" @click="clickBig(item.url)" />
+                                                            <img src="/static/images/pdf.png" v-if="item.fileType=='pdf'">
+                                                            <img src="/static/images/word.png" v-if="item.fileType=='word'">
+                                                            <img src="/static/images/excel.png" v-if="item.fileType=='excel'">
+                                                            <img src="/static/images/breedinfo.png" v-if="item.fileType=='other'">
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a>
+                                                        </td>
+                                                        <td>
+                                                            <a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 报价文件 -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" v-cloak>
+                                        <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:initIntlIntentionDetail.offerFiles,
                                               crete:'offerFiles'
                                               })">
-                                        <img class="pull-left" src="/static/images/offerfile_icon.png" height="29" width="26"  />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          {{$t('static.quotation_file')}}（{{initIntlIntentionDetail.offerFiles.arr.length}}）
-                                        </a>
-                                        <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
-                                  </h4>
-                              </div>
-                              <div  class="panel-collapse" v-show="initIntlIntentionDetail.offerFiles.show&&initIntlIntentionDetail.offerFiles.arr.length>0">
-                                 <div class="panel-body panel-set">
-                                      <table class="table contactSet">
-                                        <thead>
-                                          <!-- <th>{{$t('static.file_path')}}</th> -->
-                                          <th>{{$t('static.file_type')}}</th>
-                                          <th>{{$t('static.description')}}</th>
-                                          <th>{{$t('static.create_time')}}</th>
-                                          <th>{{$t('static.file_path')}}</th>
-                                          <th></th>
-                                          <th></th>
-                                        </thead>
-                                        <tbody>
-                                             <tr v-for="item in initIntlIntentionDetail.offerFiles.arr">
-                                                <!-- <td><img :src="item.path" /></td> -->
-                                                <!-- <td v-if="item.fileType=='image'"><img :src="item.url"/></td>
+                                              <img class="pull-left" src="/static/images/offerfile_icon.png" height="29" width="26"  />
+                                              <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                                {{$t('static.quotation_file')}}（{{initIntlIntentionDetail.offerFiles.arr.length}}）
+                                              </a>
+                                              <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse" v-show="initIntlIntentionDetail.offerFiles.show&&initIntlIntentionDetail.offerFiles.arr.length>0">
+                                        <div class="panel-body panel-set">
+                                            <table class="table contactSet">
+                                                <thead>
+                                                    <!-- <th>{{$t('static.file_path')}}</th> -->
+                                                    <th>{{$t('static.file_type')}}</th>
+                                                    <th>{{$t('static.description')}}</th>
+                                                    <th>{{$t('static.create_time')}}</th>
+                                                    <th>{{$t('static.file_path')}}</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in initIntlIntentionDetail.offerFiles.arr">
+                                                        <!-- <td><img :src="item.path" /></td> -->
+                                                        <!-- <td v-if="item.fileType=='image'"><img :src="item.url"/></td>
                                                 <td v-else>{{item.url}}</td> -->
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.description}}</td>
-                                                <td>{{item.ctime}}</td>
-                                                <td><img :src="item.url" style="max-width: 150px;" @click="clickBig(item.url)"/></td>
-                                                <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
-                                                <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
-                                               
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                  </div>
-                              </div>
-                          </div>
-
-                        </div>
-                    </article>
+                                                        <td>{{item.fileType}}</td>
+                                                        <td>{{item.description}}</td>
+                                                        <td>{{item.ctime}}</td>
+                                                        <td>
+                                                            <img :src="item.url" v-if="item.fileType=='image'" style="max-width: 150px;" @click="clickBig(item.url)" />
+                                                            <img src="/static/images/pdf.png" v-if="item.fileType=='pdf'">
+                                                            <img src="/static/images/word.png" v-if="item.fileType=='word'">
+                                                            <img src="/static/images/excel.png" v-if="item.fileType=='excel'">
+                                                            <img src="/static/images/breedinfo.png" v-if="item.fileType=='other'">
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a>
+                                                        </td>
+                                                        <td>
+                                                            <a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
                 </div>
-
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 </template>
 <script>
@@ -334,7 +386,7 @@ import inquireagainModel from './inquireAgain'
 import uploadfilesModel from './uploadFiles'
 import delfileModel from '../tips/tipDialog'
 import tipsModel from '../tips/tipDialog'
-import{
+import {
     initIntlIntentionDetail,
     initLogin
 } from '../../vuex/getters'
@@ -354,7 +406,7 @@ export default {
         uploadfilesModel,
         delfileModel,
         pictureModel,
-        tipsModel 
+        tipsModel
     },
     data() {
         return {
@@ -364,172 +416,171 @@ export default {
                 color: '#5dc596',
                 size: '15px'
             },
-            inquireInfoParam:{
-                show:false,
-                showCost:false,             //是否显示成本价,true显示,false不显示
-                link:'/intlIntention/inquire/',
-                id:''
+            inquireInfoParam: {
+                show: false,
+                showCost: false, //是否显示成本价,true显示,false不显示
+                link: '/intlIntention/inquire/',
+                id: ''
             },
-            itemHistoryParam:{
-                show:false,
-                showCost:false,             //是否显示成本价,true显示,false不显示
-                link:'/intlIntention/itemHistory',
-                id:''                               //意向明细ID
+            itemHistoryParam: {
+                show: false,
+                showCost: false, //是否显示成本价,true显示,false不显示
+                link: '/intlIntention/itemHistory',
+                id: '' //意向明细ID
 
             },
-            pictureParam:{
-              show:false,
-              img:''
+            pictureParam: {
+                show: false,
+                img: ''
             },
-            inquireAgainParam:{
-              show:false,
-              link:'/intlIntention/itemInquire',
-              itemId:'',
-              index:'',
-              description:'',
+            inquireAgainParam: {
+                show: false,
+                link: '/intlIntention/itemInquire',
+                itemId: '',
+                index: '',
+                description: '',
 
             },
-            tipsParam:{
-                alert:true,
-                show:false,
-                name:''
+            tipsParam: {
+                alert: true,
+                show: false,
+                name: ''
             },
-            offerParam:{
-                show:false,
-                link:'/intlIntention/itemOffer',
-                id:9,
-                intentionId:'58228a6688e87dc057d5e969',
-                inquireId:7,
-                type:0,
-                currency:1,
-                itemId:8,
-                itemName:'一枝黄花',
-                origPrice:1,
-                price:3,
-                number:3,
-                unit:'kg',
-                total:9,
-                comment:'来来来'
+            offerParam: {
+                show: false,
+                link: '/intlIntention/itemOffer',
+                id: 9,
+                intentionId: '58228a6688e87dc057d5e969',
+                inquireId: 7,
+                type: 0,
+                currency: 1,
+                itemId: 8,
+                itemName: '一枝黄花',
+                origPrice: 1,
+                price: 3,
+                number: 3,
+                unit: 'kg',
+                total: 9,
+                comment: '来来来'
             },
-            otherOfferParam:{
-                show:false,
-                link:'/intlIntention/otherOffer',
-                id:9,
-                intentionId:'58228a6688e87dc057d5e969',
-                inquireId:7,
-                type:1,
-                currency:1,
-                cost:2,
-                costDesc:'运费+小费',
-                total:2,
-                comment:'啦啦啦'
+            otherOfferParam: {
+                show: false,
+                link: '/intlIntention/otherOffer',
+                id: 9,
+                intentionId: '58228a6688e87dc057d5e969',
+                inquireId: 7,
+                type: 1,
+                currency: 1,
+                cost: 2,
+                costDesc: '运费+小费',
+                total: 2,
+                comment: '啦啦啦'
 
             },
-            uploadFilesParam:{
-                link:'/intlIntention/files',
-                show:false,
-                bizId:'',   //意向ID
-                category:'',   //上传类型 0/1 原文件/报价附件
-                path:'',
-                description:'',
-                fileType:'', 
-                image_f_show:''
+            uploadFilesParam: {
+                link: '/intlIntention/files',
+                show: false,
+                bizId: '', //意向ID
+                category: '', //上传类型 0/1 原文件/报价附件
+                path: '',
+                description: '',
+                fileType: '',
+                image_f_show: ''
             },
-             delFileParam:{
-                show:false,
-                link:'/intlIntention/files',
-                name:'确认删除文件?',
-                callback:this.delFileConfirm,
-                confirm:true,
-                id:'',
-                category:'',
-                index:'', 
-            } 
+            delFileParam: {
+                show: false,
+                link: '/intlIntention/files',
+                name: '确认删除文件?',
+                callback: this.delFileConfirm,
+                confirm: true,
+                id: '',
+                category: '',
+                index: '',
+            }
         }
     },
-    props:['param'],
+    props: ['param'],
     vuex: {
-        getters:{
+        getters: {
             initIntlIntentionDetail,
             initLogin
         },
-        actions:{
+        actions: {
             editintentInfo,
             getIntlIntentionDetail,
             delIntlIntentionFiles
         }
     },
     methods: {
-      clickBig:function(img){
-          this.pictureParam.show=true;
-          this.pictureParam.img = img;
-      },
-      enfoldment:function(param){
-          if(this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length==0){
-                  this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show=true;
-          }
-          this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show;
-      },
-      //获取询价详情
-     getInquireInfo:function(id){
-        console.log(id);
-        this.inquireInfoParam.id = id;
-        this.inquireInfoParam.show = true;
+        clickBig: function(img) {
+            this.pictureParam.show = true;
+            this.pictureParam.img = img;
+        },
+        enfoldment: function(param) {
+            if (this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length == 0) {
+                this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = true;
+            }
+            this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show;
+        },
+        //获取询价详情
+        getInquireInfo: function(id) {
+            console.log(id);
+            this.inquireInfoParam.id = id;
+            this.inquireInfoParam.show = true;
 
-     },
-     getItemHistory:function(id){
-        this.itemHistoryParam.id = id;
-        this.itemHistoryParam.show = true;
-     },
-      delFileConfirm:function(){
-                this.delIntlIntentionFiles(this.delFileParam);
-             },
-     inquireAgain:function(item,index){
-        console.log(item);
-        this.inquireAgainParam.itemId = item.id;
-        this.inquireAgainParam.index = index;
-        this.inquireAgainParam.show = true;
-        this.inquireAgainParam.callback = this.inquireCallback;
-     },
-      delFile:function(item,index){
-        this.delFileParam.id = item.id;
-        this.delFileParam.category = item.category;
-        this.delFileParam.index = index;
-        this.delFileParam.show = true;
-     },
-     offer:function(){
-        this.offerParam.show = true;
-     },
-     otherOffer:function(){
-        this.otherOfferParam.show = true;
-     },    
-     uploadOriginalFiles:function(){
-        this.uploadFilesParam.bizId = this.param.id;  
-        this.uploadFilesParam.category = 0;
-        this.uploadFilesParam.path = '';
-        this.uploadFilesParam.description='';
-        this.uploadFilesParam.fileType='';
-        this.uploadFilesParam.image_f_show='';
-        this.uploadFilesParam.show = true;
-        this.uploadFilesParam.callback = this.inquireCallback;
-        console.log(this.uploadFilesParam);
-        
-     },
-     inquireCallback:function(title){
-        this.tipsParam.alert=true;
-        this.tipsParam.show=true;
-        this.tipsParam.name=title;
-     }
-      
+        },
+        getItemHistory: function(id) {
+            this.itemHistoryParam.id = id;
+            this.itemHistoryParam.show = true;
+        },
+        delFileConfirm: function() {
+            this.delIntlIntentionFiles(this.delFileParam);
+        },
+        inquireAgain: function(item, index) {
+            console.log(item);
+            this.inquireAgainParam.itemId = item.id;
+            this.inquireAgainParam.index = index;
+            this.inquireAgainParam.show = true;
+            this.inquireAgainParam.callback = this.inquireCallback;
+        },
+        delFile: function(item, index) {
+            this.delFileParam.id = item.id;
+            this.delFileParam.category = item.category;
+            this.delFileParam.index = index;
+            this.delFileParam.show = true;
+        },
+        offer: function() {
+            this.offerParam.show = true;
+        },
+        otherOffer: function() {
+            this.otherOfferParam.show = true;
+        },
+        uploadOriginalFiles: function() {
+            this.uploadFilesParam.bizId = this.param.id;
+            this.uploadFilesParam.category = 0;
+            this.uploadFilesParam.path = '';
+            this.uploadFilesParam.description = '';
+            this.uploadFilesParam.fileType = '';
+            this.uploadFilesParam.image_f_show = '';
+            this.uploadFilesParam.show = true;
+            this.uploadFilesParam.callback = this.inquireCallback;
+            console.log(this.uploadFilesParam);
+
+        },
+        inquireCallback: function(title) {
+            this.tipsParam.alert = true;
+            this.tipsParam.show = true;
+            this.tipsParam.name = title;
+        }
+
     },
-    created(){
-       this.getIntlIntentionDetail(this.param);
+    created() {
+        this.getIntlIntentionDetail(this.param);
     },
     filter: (filter, {})
 }
 </script>
 <style scoped>
-
 .navbar-client {
     margin-bottom: 0;
     padding-top: 10px;
@@ -551,63 +602,77 @@ export default {
 section {
     background-color: #fff;
 }
-.breed_action{
-  top: 20px;
-  right: 40px;
+
+.breed_action {
+    top: 20px;
+    right: 40px;
 }
-.files_action{
-  position: absolute;
-  top: 18px;
-  right: 40px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  background: #fff;
-  z-index: 1000;
-  min-width: 80px;
-  height: 30px;
-  padding: 5px 8px;
-  cursor: pointer;
+
+.files_action {
+    position: absolute;
+    top: 18px;
+    right: 40px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    z-index: 1000;
+    min-width: 80px;
+    height: 30px;
+    padding: 5px 8px;
+    cursor: pointer;
 }
-.files_action:hover{
-  color: #fa6705;
+
+.files_action:hover {
+    color: #fa6705;
 }
-.breed_action dl dt{
+
+.breed_action dl dt {
     display: block;
     padding: 3px;
     font-size: 14px;
     cursor: pointer;
 }
+
 section article {
     margin-top: 30px;
 }
-.top-title{
-  z-index: 100;
-  width: 70%;
-  right: 0;
-  top: 91px;
-  position: fixed;
-  margin: auto;
-  left: 0;
+
+.top-title {
+    z-index: 100;
+    width: 60%;
+    right: 0;
+    top: 91px;
+    margin: auto;
+    left: 0;
 }
 
 .client-section {
     padding: 10px 5px 40px 5px;
 }
 
-.contactSet thead{
-  color:#fa6705;
+.contactSet thead {
+    color: #fa6705;
 }
+
 .contact-view {
     color: #fa6705;
     margin-bottom: 0;
     cursor: pointer;
 }
-.table{
-  display: table;
+
+.table {
+    display: table;
 }
-.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
-  text-align: left;
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
+    text-align: left;
 }
+
 .edit-detail {
     border: 0px solid #ddd;
     border-radius: 3px;
@@ -619,20 +684,22 @@ section article {
 }
 
 .client-detail {
-  border-right: 0px solid #ddd;
+    border-right: 0px solid #ddd;
 }
 
 .client-detailInfo {
-    padding: 0 15px 14px 15px;
+    padding: 0 15px 0px 15px;
 }
-.client-detailInfo label{
-  display: inline-block;
+
+.client-detailInfo label {
+    display: inline-block;
 }
-.client-detailInfo span{
-  white-space: normal;
+
+.client-detailInfo span {
+    white-space: normal;
 }
+
 .client-detailInfo img {
     margin-right: 8px;
 }
-
 </style>

@@ -1,101 +1,106 @@
 <template>
+<div>
   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
   <createfiles-model :param="cfilesParam" v-if="cfilesParam.show"></createfiles-model>
   <updatelabel-model :param="updlabelParam" v-if="updlabelParam.show"></updatelabel-model>
   <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
-  <div>
-    <div class="service-nav clearfix">
-      <!-- <div class="my_enterprise col-xs-1">客户文件列表</div> -->
-      <div class="my_order_search  col-xs-8">
-        <div class="filter_search clearfix">
-          <dl class="clearfix">
-            <dt>客户名称：</dt>
-            <dd>
-              <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.name" @keyup.enter="searchProduct()"/>
-            </dd>
-          </dl>
-          <dl class="clearfix">
-            <dt>描述：</dt>
-            <dd>
-              <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.description"  @keyup.enter="searchProduct()"/>
-            </dd>
-          </dl>
-          <dl class="clearfix">
-            <button class="btn btn-default transfer"  @click="searchProduct()">搜索</button>
-            <button class="btn btn-default"  @click="reset()">清空条件</button>
-          </dl>
+
+  <mglist-model>
+      <!-- 头部搜索-->
+      <div slot="top">
+        <div class="my_order_search  col-xs-8">
+          <div class="filter_search clearfix">
+            <dl class="clearfix">
+              <dt>客户名称：</dt>
+              <dd>
+                <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.name" @keyup.enter="searchProduct()"/>
+              </dd>
+            </dl>
+            <dl class="clearfix">
+              <dt>描述：</dt>
+              <dd>
+                <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.description"  @keyup.enter="searchProduct()"/>
+              </dd>
+            </dl>
+            <dl class="clearfix">
+              <button class="btn btn-default transfer"  @click="searchProduct()">搜索</button>
+              <button class="btn btn-default"  @click="reset()">清空条件</button>
+            </dl>
+          </div>
+        </div>
+        <div class="right col-xs-3">
+          <button class="btn btn-primary pull-right"  @click="searchProduct()">刷新</button>
         </div>
       </div>
-      <div class="right col-xs-3">
-        <button class="btn btn-primary pull-right"  @click="searchProduct()">刷新</button>
-      </div>
-    </div>
-    </div>
-    <div class="order_table" id="table_box">
-      <div class="cover_loading">
-        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-      </div>
-      <table class="table table-hover table_color table-striped " v-cloak id="tab">
-        <thead>
-            <tr>
-              <th>文件名称</th>
-              <th>客户名称</th>
-              <th>文件类型</th>
-              <th>所属文件</th>
-              <th>文件图片</th>
-              <th>描述</th>
-              <th colspan="3">操作</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="item in initFileslist">
-              <td>{{item.name}}</td>
-              <td>{{item.cname}}</td>
-              <td>{{item.fileType}}</td>
-              <td>{{item.bizType}}</td>
-              <td>
+
+      <!--中间列表-->
+      <div slot="form">
+          <div class="cover_loading">
+            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+          </div>
+          <table class="table table-hover table_color table-striped " v-cloak id="tab">
+            <thead>
+              <tr>
+                <th>文件名称</th>
+                <th>客户名称</th>
+                <th>文件类型</th>
+                <th>所属文件</th>
+                <th>文件图片</th>
+                <th>描述</th>
+                <th colspan="3">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in initFileslist">
+                  <td>{{item.name}}</td>
+                  <td>{{item.cname}}</td>
+                  <td>{{item.fileType}}</td>
+                  <td>{{item.bizType}}</td>
+                  <td>
                     <img  :src="item.url" v-if="item.fileType=='image'" style="max-width: 150px" @click="clickBig(item.url)"/>
                     <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf'">
                     <img  src="/static/images/word.png" v-if="item.fileType=='word'">
                     <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
-              </td>
-              <td>{{item.description}}</td>
-              <td  >
-                 <a class="operate" @click="updatelabel({
-                         sub:$index,
-                         id:item.id,
-                         show:true,
-                         title:'备注',
-                         labelist:'备注',
-                         statuslist:'状态',
-                         description:item.description,
-                         link:alterRemark,
-                         url:'/customer/updateFile',
-                         key:'filesList'
-                         })"><img src="/static/images/edit.png" height="18" width="30"  />
-                 </a>
-                <a  class="operate" href="{{item.url}}" download=""><img src="/static/images/upload.png" height="18" width="28"  /></a>
-                <a class="operate"  @click="specDelete({
-                      id:item.id,
-                      sub:$index,
-                      show:true,
-                      name:'资质证书',
-                      title:'资质证书',
-                      link:deleteInfo,
-                      url:'/customer/file/',
-                      key:'filesList'
-                    })">
-                 <img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
-               </a>
-              </td>
-            </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="base_pagination">
-      <pagination :combination="loadParam"></pagination>
-    </div>
-  </div>
+                    <img  src="/static/images/breedinfo.png" v-if="item.fileType=='other'">
+                  </td>
+                  <td>{{item.description}}</td>
+                  <td>
+                    <a class="operate" @click="updatelabel({
+                             sub:$index,
+                             id:item.id,
+                             show:true,
+                             title:'备注',
+                             labelist:'备注',
+                             statuslist:'状态',
+                             description:item.description,
+                             link:alterRemark,
+                             url:'/customer/updateFile',
+                             key:'filesList'
+                             })"><img src="/static/images/edit.png" height="18" width="30"  />
+                     </a>
+                    <a  class="operate" href="{{item.url}}" download=""><img src="/static/images/upload.png" height="18" width="28"  /></a>
+                    <a class="operate"  @click="specDelete({
+                          id:item.id,
+                          sub:$index,
+                          show:true,
+                          name:'资质证书',
+                          title:'资质证书',
+                          link:deleteInfo,
+                          url:'/customer/file/',
+                          key:'filesList'
+                        })">
+                     <img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
+                   </a>
+                  </td>
+                </tr>
+            </tbody>
+          </table>
+      </div>
+      <!--底部分页-->
+      <pagination :combination="loadParam"  slot="page"></pagination>
+
+  </mglist-model>
+</div>
 </template>
 <script>
   import pagination from '../pagination'
@@ -105,6 +110,7 @@
   import pictureModel  from '../tips/pictureDialog'
   import common from '../../common/common'
   import changeMenu from '../../components/tools/tabs/tabs.js'
+  import mglistModel from '../mguan/mgListComponent.vue'
   import {
     initFileslist
   } from '../../vuex/getters'
@@ -121,7 +127,8 @@
       deletebreedModel,
       createfilesModel,
       updatelabelModel,
-      pictureModel
+      pictureModel,
+      mglistModel
     },
     vuex: {
       getters: {
@@ -177,7 +184,7 @@
           this.$store.state.table.basicBaseList.filesList[id].show=true;
         }
       },
-     specDelete:function(initFileslist){
+      specDelete:function(initFileslist){
           this.deleteParam = initFileslist;
       },
       createfiles:function(initFileslist){

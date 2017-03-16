@@ -4,20 +4,55 @@
      <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
      <affirmoffer-model :param="affirmOfferParam" v-if="affirmOfferParam.show"></affirmoffer-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-     <div>
-        <div class="service-nav clearfix">
-            
-        </div>
-        <div class="btn-group pull-left">
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === ''}" @click="selectInquire('')">{{$t('static.please_select')}}</button>
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 0}" @click="selectInquire(0)">{{$t('static.not_inquiry')}}</button>
-            <button  class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 1}" @click="selectInquire(1)">{{$t('static.inquiry')}}</button>
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 2}" @click="selectInquire(2)">{{$t('static.quotation')}}</button>
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 3}" @click="selectInquire(3)">{{$t('static.quo_complete')}}</button>
-        </div>
-         <button class="btn btn-primary pull-right" style="margin-right:20px" @click="intentionSearch()">{{$t('static.refresh')}}</button> 
-        <div class="order_table" id="table_box">
-            <div class="cover_loading">
+     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
+     <mglist-model>
+         <div slot="top">
+            <div class="clear">
+                  <dl class="clear left">
+                     <dt class="left  marg_top">{{$t('static.breed')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
+                     </dd>
+                  </dl>
+                  <dl class="clear left transfer">
+                     <dt class="left  marg_top">{{$t('static.client_name')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.customerName" @keyup.enter="intentionSearch()"/>
+                     </dd>
+                  </dl>
+                  <dl class="clear left transfer">
+                     <dt class="left  marg_top">{{$t('static.salesman')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.employeeName" @keyup.enter="intentionSearch()"/>
+                     </dd>
+                  </dl>
+                  <dl class="clear left transfer">
+                     <dt class="left  marg_top">国家：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.country" @keyup.enter="intentionSearch()"/>
+                     </dd>
+                  </dl>
+                  <dl class="clear left transfer">
+                     <dt class="left  marg_top">{{$t('static.client_email')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.customerEmail" @keyup.enter="intentionSearch()"/>
+                     </dd>
+                  </dl>
+                       
+            </div>
+            <div class="btn-group pull-left">
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === ''}" @click="selectInquire('')">{{$t('static.please_select')}}</button>
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 0}" @click="selectInquire(0)">{{$t('static.not_inquiry')}}</button>
+                <button  class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 1}" @click="selectInquire(1)">{{$t('static.inquiry')}}</button>
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 2}" @click="selectInquire(2)">{{$t('static.quotation')}}</button>
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 3}" @click="selectInquire(3)">{{$t('static.quo_complete')}}</button> 
+                <button class="new_btn left transfer pull-left" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                  <button class="new_btn left transfer pull-left" @click="intentionSearch()">{{$t('static.search')}}</button>  
+            </div>
+            <button class="btn btn-primary pull-right" style="margin-right:20px" @click="intentionSearch()">{{$t('static.refresh')}}</button> 
+         </div>
+         <div slot="form">
+             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
@@ -47,22 +82,24 @@
                         <td>{{item.city}}</td>
                         <td>{{item.source}}</td>
                         <td>{{item.ctime}}</td>
-                        <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
+                        <td v-if="item.inquire==0"><div style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</div></td>
+                        <td v-if="item.inquire==1"><div style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</div></td>
+                        <td v-if="item.inquire==2"><div style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</div></td>
+                        <td v-if="item.inquire==3"><div style="background:green;color:#fff">{{$t('static.quo_complete')}}</div></td>
+                        <!-- <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
                         <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
-                        <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
+                        <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td> -->
                         <td>
                             <div v-if="item.inquire==2&&privilege==true" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-        
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+         </div>
+        <pagination :combination="loadParam"  slot="page"></pagination>
+     </mglist-model>
+     
 </template>
 <script>
 import pagination from '../../pagination'
@@ -74,6 +111,8 @@ import common from '../../../common/common'
 import inquireModel from '../inquire'
 import tipsModel  from '../../../components/tips/tipDialog'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import breedsearchModel from '../breedsearch'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
     initIntlIntentionInquireList,
     initLogin
@@ -90,7 +129,9 @@ export default {
         offerModel,
         detailModel,
         affirmofferModel,
-        tipsModel
+        tipsModel,
+        breedsearchModel,
+        mglistModel
     },
     vuex: {
         getters: {
@@ -116,9 +157,11 @@ export default {
                 employee:'',
                 breedId:'',
                 breedName:'',
+                employeeName:'',
                 customerName:'',
                 customerEmail:'',
-                inquire:''
+                inquire:'',
+                country:''
             },
             affirmOfferParam:{
                 show:false,
@@ -137,7 +180,9 @@ export default {
                 inquireId:'',
                 inquire:''
             },
-           
+            breedSearchParam:{
+                show:false    
+            },
             inquireParam:{
                 show:false,
                 times:0,    //询价的次数
@@ -193,6 +238,9 @@ export default {
             this.loadParam.inquire = inquire;
             this.getIntlIntentionInquireList(this.loadParam);
         },
+        breedSearch:function(){
+            this.breedSearchParam.show = true;
+        },
         clickOn:function(item,index){  
             this.detailParam.id = item.intentionId;
             this.detailParam.index = index;
@@ -219,15 +267,17 @@ export default {
 
         },
         searchIntention:function(){
-            this.getIntlIntentionList(this.loadParam);
+            this.getIntlIntentionInquireList(this.loadParam);
         },
         resetCondition:function(){
             this.loadParam.employee='';
             this.loadParam.customerName='';
+            this.loadParam.employeeName='';
             this.loadParam.breedId='';
             this.loadParam.breedName='';
+            this.loadParam.inquire='';
             this.loadParam.customerEmail='';
-            this.getIntlIntentionList(this.loadParam);
+            this.getIntlIntentionInquireList(this.loadParam);
         },
         offerCallback:function(name){
             this.tipsParam.show = true;
@@ -239,6 +289,14 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getIntlIntentionInquireList(this.loadParam);
+        },
+        breed:function(breed){
+            this.loadParam.breedId=breed.breedId;
+            this.loadParam.breedName=breed.breedName;
+            if(!!breed.eName){
+                this.loadParam.breedName=breed.eName;
+            }
+           this.getIntlIntentionInquireList(this.loadParam);
         }
     },
     created() {
@@ -251,6 +309,9 @@ export default {
 }
 </script>
 <style scoped>
+.service-nav{
+    padding: 25px 0 0 0;
+}
 .click_change{
     text-align: left;
     border: 1px solid #ddd;

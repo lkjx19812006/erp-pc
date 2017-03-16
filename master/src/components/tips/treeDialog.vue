@@ -1,4 +1,5 @@
 <template>
+<div>
   <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
   <div class="container del_modal_con">
     <!--<div @click="param.show = false" class="top-title">-->
@@ -19,6 +20,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 <script>
   import {

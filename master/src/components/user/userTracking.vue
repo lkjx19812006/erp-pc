@@ -1,4 +1,5 @@
 <template>
+<div>
   <biz-model :param="bizParam" v-if="bizParam.show"></biz-model>
   <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
   <div class="container modal_con" v-show="param.show">
@@ -17,11 +18,8 @@
             <div class="editpage">
               <div class="editpageleft">
                 <div v-if="param.flag==0" class="editpage-input">
-
                 </div>
-
-
-                <div v-if="param.flag==0&&!param.customer&&!param.bizType" class="editpage-input">
+                <div v-if="param.flag==0&&!param.customer" class="editpage-input">
                   <label class="editlabel">业务类型</label>
                   <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType">
                     <option value="">请选择业务类型</option>
@@ -29,7 +27,7 @@
                   </select>
                 </div>
 
-                <div v-if="param.flag==0&&param.customer&&!param.bizType" class="editpage-input">
+                <div v-if="param.flag==0&&param.customer" class="editpage-input">
                   <label class="editlabel">业务类型</label>
                   <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType">
                     <option value="">请选择业务类型</option>
@@ -37,14 +35,14 @@
                     <option value="2">订单</option>
                   </select>
                 </div>
-                <div v-if="param.bizType" class="editpage-input">
+                <!-- <div v-if="param.bizType" class="editpage-input">
                   <label class="editlabel">业务类型</label>
                   <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType" disabled=true>
                     <option value="">请选择业务类型</option>
                     <option value="1">意向</option>
                     <option value="2">订单</option>
                   </select>
-                </div>
+                </div> -->
 
                 <div class="editpage-input">
                   <label class="editlabel">联系账号
@@ -64,7 +62,7 @@
                  </div> -->
                 <div class="editpage-input">
                   <label class="editlabel">跟进方式</label>
-                  <select type="text" class="form-control edit-input" v-model='param.trackingWay'>
+                  <select  class="form-control edit-input" v-model='param.trackingWay'>
                     <option value="">请选择跟进方式</option>
                     <option value="手机">手机</option>
                     <option value="固话">固话</option>
@@ -73,94 +71,82 @@
                     <option value="邮件">邮件</option>
                     <option value="其它">其它</option>
                   </select>
-
                 </div>
               </div>
             </div>
 
             <div class="editpage">
-
               <div class="editpage-input" style="width:100%">
                 <label class="editlabel">备注</label>
                 <textarea type="text" v-model='param.comments' class="form-control edit-input"
                           style="height:100px;line-height:20px;width:95%" value="{{param.coments}}"></textarea>
               </div>
               </div>
-
+              <!-- 跟进类型是意向 -->
               <div class="editpage" v-if="intention.breedName">
-              <div class="editpageleft">
+                <div class="editpageleft">
+                  <div  class="editpage-input">
+                    <label class="editlabel">品种名</label>
+                    <input  class="form-control edit-input" value="{{intention.breedName}}" readonly="true" />
+                  </div>
 
-                <div  class="editpage-input">
-                  <label class="editlabel">品种名</label>
-                  <div  class="form-control edit-input" >{{intention.breedName}}</div>
+                  <div class="editpage-input">
+                    <label class="editlabel">规格</label>
+                    <input readonly="true"  class="form-control edit-input" value="{{intention.spec}}" />
+                  </div>
+
+                  <div class="editpage-input">
+                    <label class="editlabel">产地</label>
+                    <input readonly="true"  class="form-control edit-input" value="{{intention.location}}" />
+                  </div>
+                </div>
+                <div class="editpageright">
+
+                  <div class="editpage-input">
+                    <label class="editlabel">数量</label>
+                    <input readonly="true"  class="form-control edit-input" value=
+                    "{{intention.number}}" />
+                  </div>
+
+                  <div class="editpage-input">
+                    <label class="editlabel">单位</label>
+                    <input readonly="true"  class="form-control edit-input" value="{{intention.unit}}" />
+                  </div>
+
+                  <div class="editpage-input">
+                    <label class="editlabel">价格</label>
+                    <input readonly="true"  class="form-control edit-input" value="{{intention.price}}" />
+                  </div>
                 </div>
 
-                <div class="editpage-input">
-                  <label class="editlabel">规格</label>
-                  <div  class="form-control edit-input" >{{intention.spec}}</div>
-                </div>
-
-                <div class="editpage-input">
-                  <label class="editlabel">产地</label>
-                  <div  class="form-control edit-input" >{{intention.location}}</div>
-                </div>
               </div>
-
-
-              <div class="editpageright">
-
-                <div class="editpage-input">
-                  <label class="editlabel">数量</label>
-                  <div  class="form-control edit-input" >{{intention.number}}</div>
-                </div>
-
-                <div class="editpage-input">
-                  <label class="editlabel">单位</label>
-                  <div  class="form-control edit-input" >{{intention.unit}}</div>
-                </div>
-
-                <div class="editpage-input">
-                  <label class="editlabel">价格</label>
-                  <div  class="form-control edit-input" >{{intention.price}}</div>
-                </div>
-
-              </div>
-
-            </div>
-
+            <!-- 跟进类型是订单 -->
             <div class="editpage" v-if="intention.no">
               <div class="editpageleft">
 
                 <div  class="editpage-input">
                   <label class="editlabel">订单流水号</label>
-                  <div  class="form-control edit-input" >{{intention.no}}</div>
+                  <input readonly="true" class="form-control edit-input" value="{{intention.no}}" />
                 </div>
 
                 <div class="editpage-input">
                   <label class="editlabel">订单金额</label>
-                  <div  class="form-control edit-input" >{{intention.amount}}</div>
+                  <input readonly="true"  class="form-control edit-input" value="{{intention.amount}}" />
                 </div>
-
               </div>
-
-
               <div class="editpageright">
 
                 <div class="editpage-input">
                   <label class="editlabel">商品</label>
-                  <div  class="form-control edit-input" >{{intention.goods[0].brredName}}</div>
+                  <input readonly="true"  class="form-control edit-input" value="{{intention.goods[0].brredName}}" />
                 </div>
 
                 <div class="editpage-input">
                   <label class="editlabel">创建时间</label>
-                  <div  class="form-control edit-input" >{{intention.ctime}}</div>
+                  <input readonly="true"  class="form-control edit-input" value="{{intention.ctime}}" />
                 </div>
-
-
               </div>
-
             </div>
-
           </section>
         </div>
         <div class="edit_footer">
@@ -175,6 +161,7 @@
         </div>
     </validator>
   </div>
+</div>
 </template>
 <script>
   import bizModel from './selectBizId'
@@ -238,6 +225,9 @@
           this.bizParam.show = true;
           this.bizParam.bizType = this.param.bizType;
           this.bizParam.userId=this.param.objId;
+        }else{
+          this.intention.no = '';
+          this.intention.breedName = '';
         }
 
       }

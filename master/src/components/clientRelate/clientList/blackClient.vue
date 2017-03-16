@@ -3,139 +3,83 @@
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
   <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-  <div>
-    <div class="service-nav clearfix">
-      <div class="my_enterprise col-xs-1">{{$t('static.blacklist')}}</div>
-      <button class="new_btn transfer" @click="clientTransferWhite()">{{$t('static.out_of_blacklist')}}</button>
-    </div>
-    <div class="order_table" id="table_box">
-      <div class="cover_loading">
-        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+  
+  <mglist-model>
+      <!-- 头部搜索-->
+      <div slot="top">
+          <div class="my_enterprise col-xs-1">{{$t('static.blacklist')}}</div>
+          <button class="new_btn transfer" @click="clientTransferWhite()">{{$t('static.out_of_blacklist')}}</button>
       </div>
-      <table class="table table-hover table_color table-striped " v-cloak id="tab">
-        <thead>
-        <tr>
-          <th>
-            <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
-          </th>
 
-          <th>{{$t('static.salesman')}}</th>
-          <th>{{$t('static.create_time')}}</th>
-          <th>{{$t('static.recent_contact')}}</th>
-          <th>{{$t('static.client_name')}}</th>
-          <th>{{$t('static.transaction_num')}}</th>
-          <th>{{$t('static.client_type')}}</th>
-          <th>{{$t('static.contact')}}</th>
-          <th>{{$t('static.position')}}</th>
-          <th>{{$t('static.cellphone')}}</th>
-          <th>{{$t('static.phone_origin')}}</th>
-          <th>{{$t('static.client_origin')}}</th>
-          <th>{{$t('static.detailed_address')}}</th>
-          <th>{{$t('static.main_product')}}</th> 
+      <!--中间列表-->
+      <div slot="form">
+          <div class="cover_loading">
+            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+          </div>
+          <table class="table table-hover table_color table-striped " v-cloak id="tab">
+            <thead>
+            <tr>
+              <th>
+                <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
+              </th>
+              <th>{{$t('static.salesman')}}</th>
+              <th>{{$t('static.create_time')}}</th>
+              <th>{{$t('static.recent_contact')}}</th>
+              <th>{{$t('static.client_name')}}</th>
+              <th>{{$t('static.transaction_num')}}</th>
+              <th>{{$t('static.client_type')}}</th>
+              <th>{{$t('static.contact')}}</th>
+              <th>{{$t('static.position')}}</th>
+              <th>{{$t('static.cellphone')}}</th>
+              <th>{{$t('static.phone_origin')}}</th>
+              <th>{{$t('static.client_origin')}}</th>
+              <th>{{$t('static.detailed_address')}}</th>
+              <th>{{$t('static.main_product')}}</th> 
+            </tr>
+            </thead>
+            <tbody>
+              <tr>
 
-        <!-- <th>类型</th>
-          <th>分类</th>
-          <th>客户来源</th>
-          <th>客户信用等级</th>
-          <th>客户名称</th>
-          <th>分类码</th>
-          <th>所属分类</th>
-          <th>所属业务员</th>
-          <th>负责人</th>
-          <th style="min-width:120px">经营范围</th>
-          <th>手机</th>
-          <th>手机省</th>
-          <th>手机市</th>
-          <th>邮箱</th>
-          <th>国家</th>
-          <th>所在省</th>
-          <th>所在市</th>
-          <th>注册地址</th>
-          <th>创建时间</th>
-          <th style="min-width:200px">备注</th>
-         -->
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
+              </tr>
+              <tr v-for="item in initBlackCustomerlist">
+                <td  @click.stop="">
+                  <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
+                </td>
 
-        </tr>
-        <tr v-for="item in initBlackCustomerlist">
-          <td  @click.stop="">
-            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
-          </td>
+                <td>{{item.employeeName}}</td>
+                <td>{{item.ctime}}</td>
+                <td>{{item.lastOrderTime}}</td>
+                <td class="underline"  @click="clickOn({
+                      id:item.id,
+                      sub:$index,
+                      show:true,
+                      loading:true,
+                      creditLevel:item.creditLevel,
+                      name:item.name,
+                      link:alterInfo,
+                      url:'/customer/',
+                      key:'blackCustomerList'
+                      })">{{item.name}}
+                </td>
+                <td>{{item.orderTotal}}</td>
+                <td>{{item.type | customerType}}</td>
+                <td>{{item.mainContact}}</td>
+                <td>{{iem.mainPosition}}</td>
+                <td>{{item.mainPhone}}</td>
+                <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
+                <td>{{item.provinceName}}{{item.cityName}}</td>
+                <td>{{item.address}}</td>
+                <td>{{item.bizScope}}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
 
-          <td>{{item.employeeName}}</td>
-          <td>{{item.ctime}}</td>
-          <td>{{item.lastOrderTime}}</td>
-          <td class="underline"  @click="clickOn({
-                id:item.id,
-                sub:$index,
-                show:true,
-                loading:true,
-                creditLevel:item.creditLevel,
-                name:item.name,
-                link:alterInfo,
-                url:'/customer/',
-                key:'blackCustomerList'
-                })">{{item.name}}
-          </td>
-          <td>{{item.orderTotal}}</td>
-          <td>{{item.type | customerType}}</td>
-          <td>{{item.mainContact}}</td>
-          <td></td>
-          <td>{{item.mainPhone}}</td>
-          <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
-          <td>{{item.provinceName}}{{item.cityName}}</td>
-          <td>{{item.address}}</td>
-          <td>{{item.bizScope}}</td>
+      <!--底部分页-->
+      <pagination :combination="loadParam"  slot="page"></pagination>
 
-          <!-- <td>{{item.typeDesc}}</td>
-          <td>{{item.classifyDesc | classify}}</td>
-          <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.sourceType=='android'" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.sourceType=='ios'" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.sourceType!='pc'&&item.sourceType!='weixin'&&item.sourceType!='android'&&item.sourceType!='ios'" style="background:#fa6705;color:#fff">{{item.sourceType}}</td> 
-          <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
-          <td v-if="item.creditLevel==1">一星客户</td>
-          <td v-if="item.creditLevel==2">二星客户</td>
-          <td v-if="item.creditLevel==3">三星客户</td>
-          <td class="underline"  @click="clickOn({
-                                id:item.id,
-                                sub:$index,
-                                show:true,
-                                loading:true,
-                                creditLevel:item.creditLevel,
-                                name:item.name,
-                                link:alterInfo,
-                                url:'/customer/',
-                                key:'customerList'
-                                })">{{item.name}}</td>
-          上面这个img显示新客户图标
-          <td>{{item.category}}</td>
-          <td>{{item.classify | classify}}</td>
-          <td>{{item.employeeName}}</td>
-          <td>{{item.principal}}</td>
-          <td>{{item.bizScope}}</td>
-          <td>{{item.mainPhone}}</td>
-          <td>{{item.phoneProvince}}</td>
-          <td>{{item.phoneCity}}</td>
-          <td>{{item.email}}</td>
-          <td>{{item.countryName | country}}</td>
-          <td>{{item.provinceName}}</td>
-          <td>{{item.cityName}}</td>
-          <td>{{item.address}}</td>
-          <td>{{item.ctime}}</td>
-          <td >{{item.blackComments}}</td> -->
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="base_pagination">
-      <pagination :combination="loadParam"></pagination>
-    </div>
-  </div>
+  </mglist-model>
+
 </template>
 <script>
 
@@ -146,6 +90,7 @@
   import auditDialog from '../../../components/tips/auditDialog'
   import common from '../../../common/common'
   import changeMenu from '../../../components/tools/tabs/tabs.js'
+  import mglistModel from '../../mguan/mgListComponent.vue'
   import {
     initBlackCustomerlist
   } from '../../../vuex/getters'
@@ -161,7 +106,8 @@
       detailModel,
       tipsdialogModel,
       searchModel,
-      auditDialog
+      auditDialog,
+      mglistModel
     },
     vuex: {
       getters: {

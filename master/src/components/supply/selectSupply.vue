@@ -10,16 +10,14 @@
     			<div class="cover_loading">
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 	            </div>
-	            <div class="col-xs-4">
-		            <div class="name_search clearfix" style="border:none">
+	            <div class="left"  style="margin-left: 14px">
+		            <div class="left clearfix" style="border:none">
 	                   <select  class="form-control" v-model="loadParam.type" @change="employNameSearch()">
                             <option value="">{{$t('static.please_select')}}</option>
                             <option v-for="item in initUserType" value="{{item.id}}" >{{item.name}}</option>
 	                  </select> 
 	                </div>
-	            </div>
-				<div class="col-xs-8">
-	                <div class="name_search clearfix">
+	                <div class="name_search clearfix" style="margin-left: 14px">
 	                    <img src="/static/images/search.png" height="24" width="24">
 	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入供应商名字" @keyup.enter="employNameSearch()">
 	                </div>
@@ -51,7 +49,7 @@
 	                </tbody>
 	            </table>
 			</div>
-			<div class="base_pagination">
+			<div class="order_pagination">
 	            <pagination :combination="loadParam"></pagination>
 	        </div>
 	    </div>
@@ -199,9 +197,6 @@ export default{
 }
 .trans_service{
 	margin-top: 20px;
-}
-.trans_service .col-xs-8{
-	margin-bottom: 20px;
 }
 .table{
 	margin-bottom: 5px;

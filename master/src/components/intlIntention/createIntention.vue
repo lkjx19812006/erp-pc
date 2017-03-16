@@ -99,8 +99,6 @@
                                        </input-select>
                                    </div>
                               </div>
-                              
-                              
                            </div>
                        
                            <div class="editpageright">
@@ -187,9 +185,15 @@
                            </v-select>
                          </div>
                        </div>
+
                        <div class="editpage-input">
-                         <label class="editlabel">{{$t('static.detailed_address')}}</label>
-                         <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
+                         <label class="editlabel">{{$t('static.destination')}}</label>
+                         <input type="text" v-model='param.port' class="form-control edit-input" />
+                       </div>
+                    
+                       <div class="editpage-input">
+                         <label class="editlabel">{{$t('static.client_email')}}<span v-if="$validation.email.email" class="system_danger">{{$t('static.enter_email')}}</span></label>
+                         <input type="text" v-model='param.customerEmail' v-validate:email="['email']" class="form-control edit-input"  />
                        </div>
 
                        <div class="editpage-input">
@@ -206,12 +210,6 @@
                          </div>
                        </div>
 
-                       <div class="editpage-input">
-                         <label class="editlabel">{{$t('static.deadline')}}</label>
-                         <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">
-                         </mz-datepicker>
-                         <button type="button" class="btn btn-default" height="24" width="24" @click="reset()">{{$t('static.clear_all')}}</button>
-                       </div>
                      </div>
 
                      <div class="editpageright">
@@ -220,42 +218,11 @@
                          <input type="text"  class="form-control edit-input"  placeholder="{{$t('static.choose_city')}}" v-model="param.city" />
                        </div>
 
-                      <!-- <div class="editpage-input">
-                           <label class="editlabel">{{$t('static.province')}}<span class="system_danger" v-if="$validation.province.required">{{$t('static.choose_province')}}</span></label>
-                           <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.choose_country')}}" />
-                           <input type="text" v-show="false" v-model="province.cname" v-validate:province="['required']">
-                           <div v-if="country.cname" type="text" class="edit-input">
-                              <v-select
-                                :debounce="250"
-                                :value.sync="province"
-                                :on-change="selectCity"
-                                :options="initProvince"
-                                placeholder="省"
-                                label="cname">
-                       
-                              </v-select>
-                           </div>
-                         </div>
-                         
-                         <div class="editpage-input">
-                           <label class="editlabel">{{$t('static.area')}}</label>
-                           <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.choose_city')}}" />
-                           <div v-if="city.cname" type="text" class="edit-input">
-                               <v-select
-                                    :debounce="250"
-                                    :value.sync="district"
-                                    :options="initDistrictlist"
-                                    placeholder="区"
-                                    label="cname"
-                               >
-                               </v-select>
-                           </div>
-                         </div> 
-                      -->
-                      <div class="editpage-input">
-                         <label class="editlabel">{{$t('static.client_email')}}<span v-if="$validation.email.email" class="system_danger">{{$t('static.enter_email')}}</span></label>
-                         <input type="text" v-model='param.customerEmail' v-validate:email="['email']" class="form-control edit-input"  />
+                       <div class="editpage-input">
+                         <label class="editlabel">{{$t('static.detailed_address')}}</label>
+                         <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
                        </div>
+                      
                        <div class="editpage-input">
                          <label class="editlabel">{{$t('static.packaging')}}</label>
                          <input type="text" v-show="false" v-model='param.pack'  class="form-control edit-input"  />
@@ -268,6 +235,13 @@
                            >
                            </input-select>
                          </div>
+                       </div>
+
+                       <div class="editpage-input">
+                         <label class="editlabel">{{$t('static.deadline')}}</label>
+                         <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">
+                         </mz-datepicker>
+                         <button type="button" class="btn btn-default" height="24" width="24" @click="reset()">{{$t('static.clear_all')}}</button>
                        </div>
 
                      </div>
@@ -446,8 +420,8 @@ export default {
         }
     },
     methods: {
-      searchBreed:function(breedName,breedId){
-            this.breedParam.show=true;
+      searchBreed:function(breedName,breedId,eName){
+          this.breedParam.show=true;
       },
       searchCustomer:function(){
             this.empNameParam.show=true;
@@ -511,7 +485,7 @@ export default {
           this.breedInfo.number=this.param.items[index].number,
           this.breedInfo.unit=this.param.items[index].unit,
           this.breedInfo.pack=this.param.items[index].pack,
-        
+          this.breedParam.id = this.breedInfo.breedId;
           this.updateParam.show = true;
       },
       modifyBreed:function(){
@@ -587,7 +561,7 @@ export default {
     },
     events:{
         breed:function(breed){
-          if(breed.eName==null){
+          if(breed.eName==null||breed.eName==""){
              this.breedInfo.breedName = breed.breedName;
              this.breedParam.breedName = breed.breedName;
           }else{
@@ -645,11 +619,11 @@ export default {
 }
 
 .edit-model {
-  padding: 10px 30px 80px 30px;
+  padding: 10px 30px 30px 30px;
 }
 
 .top-title{
-    right:0;
+    right:0; 
     width: 800px;
     left: 0;
 }

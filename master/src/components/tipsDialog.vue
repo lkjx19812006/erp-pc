@@ -29,9 +29,10 @@ export default {
     opacity: 0.5;
     background-color: #000;
     display: block;
+    z-index: 1102;
 }
-.big-font {
-    font-size: 36px;
+.del_modal_con{
+    z-index: 1102;
 }
 .top-title {
     position: absolute;

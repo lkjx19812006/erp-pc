@@ -23,7 +23,7 @@
                                :prevalue="param.label"
                                :options="labels"
                                placeholder="标签"
-                               label="name"
+                               
                              >
                              </input-select>
                            </div>
@@ -47,7 +47,7 @@ export default {
     props: ['param'],
     data() {
         return {
-          labels:[],
+          labels:['下次再联系','优质客户'],
         }
     },
     route: {

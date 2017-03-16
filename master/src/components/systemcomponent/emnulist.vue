@@ -3,8 +3,10 @@
     <modify-model :param="modifyParam" v-if="modifyParam.show"></modify-model>
     <system-model :param="dialogParam" v-if="dialogParam.show"></system-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-	<div class="order_search">
-        <div class="clear">
+    <mglist-model>
+        <!-- 头部搜索 -->
+        <div slot="top">
+            <div class="clear">
             <div class="my_order_search left">
                 <div class="name_search">
                     <select class="form-control"  v-model="loadParam.sel" @change="searchname(
@@ -38,54 +40,56 @@
                 <button class="btn btn-primary" @click="searchname()" type="button">刷新</button>
             </div>
         </div>
-    </div>
-    <div class="order_table" id="table_box">
-      <div class="cover_loading">
-          <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-      </div>
-       <table class="table table-hover table_color table-striped"  v-cloak id="tab">
-          <thead>
-              <tr>
-                 <th>编码</th>
-                 <th>名称</th>
-                 <th>类型</th>
-                 <th>描述</th>
-                 <th>操作</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in initSystemlist">
-                <td>{{item.code }}</td>
-                <td>{{item.name}}</td>
-                <td>{{item.type | enumlist }}</td>
-                <td>{{item.desc }}</td>
-                <td ><a class="operate"  @click="modify(item,$index)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
-                  <!-- <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
-                   <div class="component_action" v-show='item.show' transition="expand">
-                      <ul>
-                          <li @click="modify($index)">编辑</li>
-                          <li @click="del({
+        </div>
+        <!-- 中间列表 -->
+        <div slot="form">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_color table-striped"  v-cloak id="tab">
+                <thead>
+                  <tr>
+                     <th>编码</th>
+                     <th>名称</th>
+                     <th>类型</th>
+                     <th>描述</th>
+                     <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in initSystemlist">
+                    <td>{{item.code }}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.type | enumlist }}</td>
+                    <td>{{item.desc }}</td>
+                    <td ><a class="operate"  @click="modify(item,$index)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                      <!-- <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
+                       <div class="component_action" v-show='item.show' transition="expand">
+                          <ul>
+                              <li @click="modify($index)">编辑</li>
+                              <li @click="del({
+                                    sub:$index,
+                                    id:item.id,
+                                    show:true
+                                    })">删除</li>
+                          </ul>
+                        </div> -->
+                    <!-- </td>
+                     <td > -->
+                        <a class="operate" @click="del({
                                 sub:$index,
                                 id:item.id,
                                 show:true
-                                })">删除</li>
-                      </ul>
-                    </div> -->
-                <!-- </td>
-                 <td > -->
-                    <a class="operate" @click="del({
-                            sub:$index,
-                            id:item.id,
-                            show:true
-                            })"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
-                 </td>
-              </tr>
-            </tbody>
-          </table>
-    </div>
-     <div class="order_pagination">
-        <pagination :combination="loadParam"></pagination>
-    </div>
+                                })"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
+                     </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+         <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
+	
 </template>
 <script>
 import pagination from '../pagination'
@@ -95,6 +99,7 @@ import deleteModel from '../systemcomponent/systemDelInfo'
 import filter from '../../filters/filters'
 import common from '../../common/common'
 import tipsModel from '../tips/tipDialog'
+import mglistModel from '../mguan/mgListComponent.vue'
 import {
     initSystemlist,
     initSearchlist
@@ -112,7 +117,8 @@ export default {
         modifyModel,
         deleteModel,
         filter,
-        tipsModel
+        tipsModel,
+        mglistModel
     },
     data() {
         return {
@@ -265,11 +271,6 @@ export default {
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     background: #fff;
-}
-
-.order_table {
-    margin-top: 10px;
-    position: relative;
 }
 
 .order_table .table {

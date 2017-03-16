@@ -197,10 +197,10 @@
 							@blur="open = false"
 							@focus="open = true"
 							type="search"
-              value="{{prevalue}}"
+              				value="{{prevalue}}"
 							class="form-control"
 							:placeholder="searchPlaceholder"
-							:style="{ width: isValueEmpty ? '100%' : '50px' }"
+							:style="{ width: isValueEmpty ? '100%' : 'auto' }"
 			>
 
 			<i v-el:open-indicator role="presentation" class="open-indicator"></i>
