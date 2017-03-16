@@ -25,7 +25,6 @@ export const login = ({ dispatch }, data) => { //登录
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('登录成功');
         //对用户名和密码加密
         var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
@@ -234,7 +233,6 @@ export const freshPiecharts = ({ dispatch }, getPiechart) => {
 
 //获取待办事项
 export const getBacklogList = ({ dispatch }, param) => {
-    console.log(param)
     param.loading = true;
     var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
 
