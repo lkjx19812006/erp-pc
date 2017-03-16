@@ -29,7 +29,7 @@
                                 <th></th>
                                 <th>{{$t('static.breed')}}</th>
                                 <th>English name</th>
-                                <th>{{$t('static.type')}}</th>
+                                <th>Latin</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,7 +39,7 @@
                                 </td>
                                 <td>{{item.name}}</td>
                                 <td>{{item.eName}}</td>
-                                <td>{{item.categoryName}}</td>
+                                <td>{{item.lName}}</td>
                             </tr>
                         </tbody>
                     </table>
