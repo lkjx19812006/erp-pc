@@ -641,7 +641,6 @@ export default {
             this.reapplyParam.callback = this.orderBack;
         },
         updateOrder: function(param, goods) {
-            console.log(param)
             this.dialogParam = param;
             var _this = this;
             if (goods == null) {

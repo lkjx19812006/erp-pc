@@ -62,7 +62,8 @@
               <div class="total">
                  <div class="total-lsit" v-for = "key in item.statisticsList">
 	                 <div><label>订单金额:</label><span>{{key.totalSum | money}}</span></div>
-	                 <div v-if="loadParam.orderType==1"><label>应收:</label><span>{{key.unpaidSum | money}}</span></div>
+	                 <div v-if="loadParam.orderType==1"><label>应收
+未收:</label><span>{{key.unpaidSum | money}}</span></div>
 	                 <div v-if="loadParam.orderType==0"><label>应付:</label><span>{{key.unpaidSum | money}}</span></div>
 	                 <div><label>货币:</label><span>{{key.currency | Currency}}</span></div>
 	                 <div><label>订单数:</label><span>{{key.orderCount}}笔</span></div>
@@ -74,7 +75,7 @@
                 	 <tr class="tb-header">
                 		<td>业务员</td>
                 		<td>订单金额</td>
-                		<td v-if="loadParam.orderType==1">应收</td>
+                		<td v-if="loadParam.orderType==1">应收未收</td>
                 		<td v-if="loadParam.orderType==0">应付</td>
                 		<td>币种</td>
                 	 </tr>

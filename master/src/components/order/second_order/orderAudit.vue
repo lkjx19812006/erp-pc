@@ -28,14 +28,13 @@
                                 <label class="editlabel">{{$t('static.payment_method')}} <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
                                 <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
                                 <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
-                                    <option value="2">{{$t('static.pingan')}}</option>
-                                    <option value="0">{{$t('static.offline')}}</option>
+                                    <option value="0">{{$t('static.pingan')}}</option>
                                     <option value="1">{{$t('static.alipay')}}</option>
                                     <option value="4">WeChat</option>
                                     <option value="3">{{$t('static.yaokuan')}}</option>
                                 </select>
                             </div>
-                            <div class="editpage-input col-md-6" v-if="param.payWay!=2">
+                            <div class="editpage-input col-md-6" v-if="param.payWay!=0">
                                 <label class="editlabel">{{$t('static.name')}} <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
                                 <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
                                 <select class="form-control edit-input" v-model="param.payName">
@@ -45,7 +44,7 @@
                                     <option>{{$t('static.yaokuan')}}</option>
                                 </select>
                             </div>
-                            <div class="editpage-input col-md-6" v-if="param.payWay==2">
+                            <div class="editpage-input col-md-6" v-if="param.payWay==0">
                                 <label class="editlabel">{{$t('static.bank_name')}} <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
                                 <input type="text" v-validate:payname="{required:true}" v-show="false" v-model="payName.name" class="form-control edit-input" />
                                 <div class="form-control edit-input" style="padding:0;border:none">
@@ -56,7 +55,7 @@
                                     <option v-for="item in initBankList">{{item.name}}</option>
                                </select> -->
                             </div>
-                            <div class="editpage-input col-md-6" v-if="param.payWay==2">
+                            <div class="editpage-input col-md-6" v-if="param.payWay==0">
                                 <label class="editlabel">{{$t('static.paid_branch')}}</label>
                                 <input type="text" v-model="param.paySubName" v-if="payName.name==''" disabled="true" class="form-control edit-input" placeholder="请先选择一个银行" />
                                 <input type="text" v-model="param.paySubName" v-if="payName.name!==''" class="form-control edit-input" @click="branch({
@@ -78,7 +77,7 @@
                                 <label class="editlabel">{{$t('static.payment_method')}} <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
                                 <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
                                 <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
-                                    <option value="2">{{$t('static.pingan')}}</option>
+                                    <option value="0">{{$t('static.pingan')}}</option>
                                     <option value="5">PayPal</option>
                                     <option value="1">{{$t('static.alipay')}}</option>
                                 </select>
@@ -131,14 +130,13 @@
                                 <label class="editlabel">{{$t('static.payment_method')}} <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
                                 <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
                                 <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
-                                    <option value="2">{{$t('static.pingan')}}</option>
-                                    <option value="0">{{$t('static.offline')}}</option>
+                                    <option value="0">{{$t('static.pingan')}}</option>
                                     <option value="1">{{$t('static.alipay')}}</option>
                                     <option value="4">WeChat</option>
                                     <option value="3">{{$t('static.yaokuan')}}</option>
                                 </select>
                             </div>
-                            <div class="editpage-input col-md-6" v-if="param.payWay!=2">
+                            <div class="editpage-input col-md-6" v-if="param.payWay!=0">
                                 <label class="editlabel">{{$t('static.name')}} <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
                                 <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
                                 <select class="form-control edit-input" v-model="param.payName">
@@ -148,14 +146,14 @@
                                     <option>{{$t('static.yaokuan')}}</option>
                                 </select>
                             </div>
-                            <div class="editpage-input col-md-6" v-if="param.payWay==2">
+                            <div class="editpage-input col-md-6" v-if="param.payWay==0">
                                 <label class="editlabel">{{$t('static.bank_name')}} <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
                                 <input type="text" v-validate:payname="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
                                 <select class="form-control edit-input" v-model="param.payName">
                                     <option v-for="item in initBankList">{{item.name}}</option>
                                 </select>
                             </div>
-                            <div class="editpage-input col-md-6" v-if="param.payWay==2">
+                            <div class="editpage-input col-md-6" v-if="param.payWay==0">
                                 <label class="editlabel">{{$t('static.paid_branch')}}</label>
                                 <!-- <select class="form-control edit-input" v-model="initMyFundList[initMyFundList.length-1].paySubName"> -->
                                 <input type="text" v-model="param.paySubName" class="form-control edit-input" @click="branch({
@@ -177,7 +175,7 @@
                                 <label class="editlabel">{{$t('static.payment_method')}} <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
                                 <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
                                 <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
-                                    <option value="2">{{$t('static.pingan')}}</option>
+                                    <option value="0">{{$t('static.pingan')}}</option>
                                     <option value="5">PayPal</option>
                                     <option value="1">{{$t('static.alipay')}}</option>
                                 </select>
@@ -228,14 +226,13 @@
                             <label class="editlabel">{{$t('static.payment_method')}} <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
                             <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
                             <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
-                                <option value="2">{{$t('static.pingan')}}</option>
-                                <option value="0">{{$t('static.offline')}}</option>
+                                <option value="0">{{$t('static.pingan')}}</option>
                                 <option value="1">{{$t('static.alipay')}}</option>
                                 <option value="4">WeChat</option>
                                 <option value="3">{{$t('static.yaokuan')}}</option>
                             </select>
                         </div>
-                        <div class="editpage-input col-md-6" v-if="param.payWay!=2">
+                        <div class="editpage-input col-md-6" v-if="param.payWay!=0">
                             <label class="editlabel">{{$t('static.name')}} <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
                             <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
                             <select class="form-control edit-input" v-model="param.payName">
@@ -245,7 +242,7 @@
                                 <option>{{$t('static.yaokuan')}}</option>
                             </select>
                         </div>
-                        <div class="editpage-input col-md-6" v-if="param.payWay==2">
+                        <div class="editpage-input col-md-6" v-if="param.payWay==0">
                             <label class="editlabel">{{$t('static.bank_name')}} <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
                             <input type="text" v-validate:payname="{required:true}" v-show="false" v-model="payName.name" class="form-control edit-input" />
                             <div class="form-control edit-input" style="padding:0;border:none">
@@ -253,7 +250,7 @@
                                 </v-select>
                             </div>
                         </div>
-                        <div class="editpage-input col-md-6" v-if="param.payWay==2">
+                        <div class="editpage-input col-md-6" v-if="param.payWay==0">
                             <label class="editlabel">{{$t('static.paid_branch')}}</label>
                             <input type="text" v-model="param.paySubName" class="form-control edit-input" @click="branch({
                                 show:true,
@@ -403,7 +400,7 @@ export default {
         },
         selectname: function() {
             if (this.param.payWay == 0) {
-                this.param.payName = this.$t('static.offline');
+                this.param.payName = this.$t('static.pingan');
                 this.param.paySubName = "";
             } else if (this.param.payWay == 1) {
                 this.param.payName = this.$t('static.alipay');
@@ -418,7 +415,7 @@ export default {
                 this.param.payName = 'PayPal';
                 this.param.paySubName = "";
             } else if (this.param.payWay == 2 && this.param.country !== 7) {
-                this.param.payName = this.$t('static.pingan');
+                this.param.payName = this.$t('static.offline');
                 this.param.paySubName = "";
             }
         },
