@@ -71,6 +71,7 @@
                         <th>{{$t('static.inquiry_state')}}</th>
                         <th>{{$t('static.inquiry_type')}}</th>
                         <th>{{$t('static.intention_source')}}</th>
+                        <th>审核</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -98,6 +99,8 @@
                         <td v-if="item.inquire==3"><div style="background:green;color:#fff">{{$t('static.quo_complete')}}</div></td>
                         <td>{{item.inquireType}}</td>
                         <td>{{item.source}}</td>
+                        <!-- 再次询价 申请审核 -->
+                        <td><button class="btn btn-default btn-apply" v-if="item.inquire==3&&item.validate==1" @click="applicationAudit()">申请审核</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -394,6 +397,10 @@ export default {
         auditCallback:function(){
           this.auditParam.description=this.auditParam.auditComment;
           this.batchUserIntentionAudit(this.auditParam);
+        },
+        // 再次询价的 申请审核
+        applicationAudit:function(){
+
         }
     },
     events: {
