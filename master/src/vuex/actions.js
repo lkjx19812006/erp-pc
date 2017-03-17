@@ -4978,7 +4978,9 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
         var intent = res.json().result;
         var itemsTotal = [];
         var offersTotal = [];
+        
 
+       
         for (var key in intent.itemsTotal) {
             let temp = {
                 currency: key,
@@ -5010,7 +5012,9 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
                     number: item.number,
                     unit: item.unit,
                     pack: item.pack,
-                    status: item.status
+                    status: item.status,
+                    type: item.type,
+                    description: item.description
                 }
                 param.items.push(temp);
                 param.itemsBack.push(temp);
@@ -5044,11 +5048,24 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
             intent.offerFiles.arr = offerFiles;
             intent.offerFiles.show = false;
 
-            var items = intent.items;
-            intent.items = {};
-            intent.items.arr = items;
-            intent.items.show = false;
 
+            var extractiveArr = [];
+            var itemsArr = [];
+
+            for (var i = 0; i < intent.items.length; i++) {
+                if (intent.items[i].type == 0) {
+                    itemsArr.push(intent.items[i]);
+                } else if (intent.items[i].type == 1) {
+                    extractiveArr.push(intent.items[i]);
+                }
+            }
+
+            intent.items = {};
+            intent.items.arr = itemsArr;
+            intent.items.show = false;
+            intent.extractive = {};
+            intent.extractive.arr = extractiveArr;
+            intent.extractive.show = false;
             dispatch(types.INTLINTENTION_DETAIL_DATA, intent);
         }
         if (param.key == 'orderList') { //意向详情生成订单

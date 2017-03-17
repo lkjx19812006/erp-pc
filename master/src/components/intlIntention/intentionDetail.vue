@@ -101,18 +101,21 @@
                         <h4 class="section_title">{{$t('static.related_information')}}</h4>
                         <article>
                             <div class="panel-group">
+                                <!-- 询价记录 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
+
                                             link:initIntlIntentionDetail.inquires,
                                             crete:'inquires'
                                             })">
                                      <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26" />
-<a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" class="panel-title-set">
+                                      <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" class="panel-title-set">
                                        {{$t('static.inquiry_record')}}（{{initIntlIntentionDetail.inquires.arr.length}}）
                                       </a>
-<!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
-</h4>
+                                        <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                        </h4>
+
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
                                         <div class="panel-body panel-set">
@@ -156,6 +159,8 @@
                                         </div>
                                     </div>
                                 </div>
+                               
+                                <!-- 产品报价 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
@@ -220,25 +225,90 @@
                                         </div>
                                     </div>
                                 </div>
+                                 <!-- 提取物列表 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:initIntlIntentionDetail.offers,
-                                              crete:'offers'
-                                              })">
-                                        <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initIntlIntentionDetail.offers.arr.length&&(initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1)">
-                                          {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
-                                        </a>
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                          {{$t('static.other_quotations')}}（0）
-                                        </a>
-                                         <span class="pull-right" style="color:#fa6705">{{$t('static.quotation_total')}}：
-                                             <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.offersTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
-                                             <!-- {{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
-                                         </span>
-                                        <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
-                                  </h4>
+                                                    link:initIntlIntentionDetail.extractive,
+                                                    crete:'extractive'
+                                                    })">
+                                              <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
+                                              <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                                提取物列表（{{initIntlIntentionDetail.extractive.arr.length}}）
+                                              </a>
+                                              <!--询价完成或再次询价才显示价格-->
+                                              <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
+                                                  <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
+                                                  <!-- {{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
+                                              </span>
+                                              <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse" v-show="!initIntlIntentionDetail.extractive.show&&initIntlIntentionDetail.extractive.arr.length>0">
+                                        <div class="panel-body panel-set">
+                                            <table class="table contactSet">
+                                                <thead>
+                                                    <th>{{$t('static.breed')}}</th>
+                                                    <th>{{$t('static.origin')}}</th>
+                                                    <th>{{$t('static.specification')}}</th>
+                                                    <th>{{$t('static.quality')}}</th>
+                                                    <th>{{$t('static.quoted_price')}}</th>
+                                                    <th>{{$t('static.exchange')}}</th>
+                                                    <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
+                                                    <th>{{$t('static.quatation_name')}}</th>
+                                                    <th>{{$t('static.comment')}}</th>
+                                                    <th>{{$t('static.inquiry_again')}}</th>
+                                                    <th>{{$t('static.quote_again')}}</th>
+                                                    <th>{{$t('static.quatiton_time')}}</th>
+                                                    <!-- <th></th> -->
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in initIntlIntentionDetail.extractive.arr">
+                                                        <td>
+                                                            <a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a>
+                                                        </td>
+                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.spec}}</td>
+                                                        <td>{{item.quality}}</td>
+                                                        <td>{{item.price}}<span v-if="item.offerEUnit!=''&&item.offerEUnit!==null">（{{item.offerEUnit}}）</span></td>
+                                                        <td>{{item.exchangeRate}}</td>
+                                                        <td>{{item.number}}（{{item.unit | Unit}}）</td>
+                                                        <td>{{item.offererName}}</td>
+                                                        <td>{{item.offerComment}}</td>
+                                                        <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
+                                                        <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
+                                                        <td v-if="item.offerAgain==0">{{$t('static.not_quote')}}</td>
+                                                        <td v-if="item.offerAgain==null">{{$t('static.not_quote')}}</td>
+                                                        <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
+                                                        <td>{{item.utime}}</td>
+                                                        <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> -->
+                                                        <td></td>
+                                                    </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 运费及其他费用 -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" v-cloak>
+                                        <h4 class="panel-title clearfix" @click="enfoldment({
+                                                  link:initIntlIntentionDetail.offers,
+                                                  crete:'offers'
+                                                  })">
+                                            <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initIntlIntentionDetail.offers.arr.length&&(initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1)">
+                                              {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
+                                            </a>
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                              {{$t('static.other_quotations')}}（0）
+                                            </a>
+                                             <span class="pull-right" style="color:#fa6705">{{$t('static.quotation_total')}}：
+                                                 <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.offersTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
+                                                 <!-- {{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
+                                             </span>
+                                            <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0&&(initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1)">
                                         <div class="panel-body panel-set">
@@ -517,6 +587,7 @@ export default {
             this.pictureParam.img = img;
         },
         enfoldment: function(param) {
+            console.log(this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr);
             if (this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length == 0) {
                 this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = true;
             }

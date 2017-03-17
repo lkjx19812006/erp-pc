@@ -333,6 +333,8 @@ export default {
                 items: [
 
                 ]
+
+
             },
             modifyParam: {
                 show: false,
@@ -470,7 +472,6 @@ export default {
             this.deleteParam = param;
         },
         modifyIntention: function(id, index) {
-            console.log(this.modifyParam)
             this.modifyParam.show = true;
             this.modifyParam.id = id;
             this.modifyParam.index = index;
