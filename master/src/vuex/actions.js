@@ -5013,7 +5013,9 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
                     number: item.number,
                     unit: item.unit,
                     pack: item.pack,
-                    status: item.status
+                    status: item.status,
+                    type: item.type,
+                    description: item.description
                 }
                 param.items.push(temp);
                 param.itemsBack.push(temp);

@@ -12,9 +12,7 @@
         </div>
         <validator name="validation">
           <div class="edit-model">
-            <!--<div class="cover_loading">-->
-              <!--<pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>-->
-            <!--</div>-->
+         
             <div class="cover_loading">
               <pulse-loader :loading="breedParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -25,12 +23,12 @@
                     <label class="editlabel">{{$t('static.client_name')}}<span class="system_danger" v-if="$validation.name.required">{{$t('static.choose_client')}}</label>
                     <input type="text" v-model='param.customerName' v-validate:name="['required']" class="form-control edit-input" style="width:95%" readonly="readonly" @click="searchCustomer()"/>
                  </div>
-                 <!-- 药材信息头部 -->
+                <!--药材信息-->
                 <div style="margin-top:25px">
                     <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
                     <h4 style="display:inline">{{$t('static.medicinal_material_information')}}</h4>
                  </div>
-                 <!-- 药材信息列表 -->
+                 <!-- 药材表格 -->
                  <table class="table table-hover table_color table-striped ">
                      <thead>
                          <tr>
@@ -47,7 +45,7 @@
                          </tr>
                      </thead>
                      <tbody>
-                         <tr v-for="item in param.items">
+                         <tr v-for="item in param.items" v-if="item.type==0">
                              <td>{{item.breedName}}</td>
                              <td>{{item.quality}}</td>
                              <td>{{item.qualification}}</td>
@@ -65,11 +63,11 @@
                  </table>
                  <!-- 添加药材信息 -->
                  <div style="padding-left:25%">
-                     <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed()">{{$t('static.add_material_information')}}</div> 
+                     <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed(0)">{{$t('static.add_material_information')}}</div>   
                  </div>   
-                  <!-- 添加药材信息展开内容 -->
+                 <!-- 添加药材信息内容 -->
                  <validator name="inner">   
-                     <div v-if="addParam.show||updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
+                     <div v-if="(addParam.show||updateParam.show)&&breedInfo.type==0" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
                            <div class="editpageleft">
                               <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
@@ -127,7 +125,6 @@
                                          :options="initBreedDetail.locals.arr"
                                          placeholder="产地/Origin"
                                          label="name"
-
                                        >
                                        </input-select>
                                    </div>
@@ -165,50 +162,44 @@
                            </div>
                      </div>  
 
-                <!-- 提取物信息头部 -->
-                <div style="margin-top:25px">
-                    <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
-                    <h4 style="display:inline">提取物信息</h4>
-                 </div>
-                 <!-- 提取物信息列表 -->
-                 <table class="table table-hover table_color table-striped ">
-                     <thead>
-                         <tr>
-                           <th>{{$t('static.breed')}}</th> 
-                           <th>{{$t('static.quality')}}</th>
-                           <th>{{$t('static.certificate')}}</th>
-                           <th>{{$t('static.origin')}}</th>
-                           <th>{{$t('static.specification')}}</th>
-                           <th>{{$t('static.quantity')}}</th> 
-                           <th>{{$t('static.unit')}}</th> 
-                           <th>{{$t('static.packaging')}}</th> 
-                           <th></th> 
-                           <th></th>
-                         </tr>
-                     </thead>
-                     <tbody>
-                         <tr v-for="item in param.items">
-                             <td>{{item.breedName}}</td>
-                             <td>{{item.quality}}</td>
-                             <td>{{item.qualification}}</td>
-                             <td>{{item.location}}</td>
-                             <td>{{item.spec}}</td>
-                             <td>{{item.number}}</td>
-                             <td>{{item.unit | Unit}}</td>
-                             <td>{{item.pack}}</td>
-                             <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
-                             <td v-else>{{$t('static.edit')}}</td>
-                             <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
-                             <td v-else>{{$t('static.del')}}</td>
-                         </tr>
-                     </tbody>
-                 </table>
-                  <!-- 添加提取物信息 -->
-                 <div style="padding-left:25%">
-                     <div v-if="addParam.show||updateParam.show" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddExtractive()">添加提取物信息</div> 
-                 </div> 
-                 <!-- 添加提取物信息展开内容 -->
-                   <div v-if="breedInfo.status==0" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
+                    <!--提取物信息-->
+                    <div style="margin-top:25px">
+                        <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
+                        <h4 style="display:inline">提取物信息</h4>
+                     </div>
+                     <!-- 提取物表格 -->
+                     <table class="table table-hover table_color table-striped ">
+                         <thead>
+                             <tr>
+                               <th>{{$t('static.breed')}}</th> 
+                               <th>{{$t('static.specification')}}</th>
+                               <th>{{$t('static.quantity')}}</th> 
+                               <th>{{$t('static.unit')}}</th> 
+                               <th>备注</th> 
+                               <th></th> 
+                               <th></th> 
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr v-for="item in param.items" v-if="item.type==1">
+                                 <td>{{item.breedName}}</td>
+                                 <td>{{item.spec}}</td>
+                                 <td>{{item.number}}</td>
+                                 <td>{{item.unit | Unit}}</td>
+                                 <td>{{item.description}}</td>
+                                 <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
+                                 <td v-else>{{$t('static.edit')}}</td>
+                                 <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
+                                 <td v-else>{{$t('static.del')}}</td>
+                             </tr>
+                         </tbody>
+                     </table>
+                     <!-- 添加提取物信息 -->
+                     <div style="padding-left:25%">
+                         <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed(1)">添加提取物信息</div>   
+                     </div>
+                     <!-- 添加提取物内容 -->
+                     <div v-if="(addParam.show||updateParam.show)&&breedInfo.type==1" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
                            <div class="editpageleft">
                               <!-- 提取物名称 -->
                               <div class="editpage-input">
@@ -223,27 +214,28 @@
                                         <option v-for="item in initUnitlist" value="{{item.id}}">{{item.ename}}</option>
                                    </select>
                               </div>
-                               <!-- 备注 -->
+                              <!-- 备注 -->
                               <div class="editpage-input">
                                    <label class="editlabel">备注</label>
-                                   <textarea class="form-control" rows="3" v-model="breedInfo.description">
-                                     
-                                   </textarea>   
+                                   <textarea class="form-control" rows="3" v-model="breedInfo.description">        
+                                   </textarea> 
                               </div>
                            </div>
+                       
                            <div class="editpageright">
                               <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-                                   <input type="number" v-model="extractiveInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                   <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
                               </div>
                               <!-- 规格 -->
                               <div class="editpage-input">
-                                   <label class="editlabel" >{{$t('static.specification')}}<!-- <span class="system_danger" v-if="$inner.spec.required">{{$t('static.required')}}</span> --></label>
-                                   <input type="text"  v-model="breedInfo.spec" class="form-control edit-input" />    
+                                   <label class="editlabel" >{{$t('static.specification')}}<span class="system_danger" v-if="$inner.spec.required">{{$t('static.required')}}</span></label>
+                                   <input type="text"  v-model="breedInfo.spec" class="form-control edit-input" v-validate:spec="{required:true}"/>    
                               </div>
-                       
+                             
+                            
                               <!-- 保存 取消按钮 -->
-                              <div style="margin-top:10px;text-align:right">
+                              <div style="margin:130px 30px 20px; text-align:right">
                                   <button type="button" class="btn btn-confirm">
                                       <div v-if="breedInfo.status==1" @click="cancelAddBreed()">{{$t('static.cancel')}}</div>
                                       <div v-if="breedInfo.status==2" @click="cancelModifyBreed()">{{$t('static.cancel')}}</div>
@@ -256,13 +248,13 @@
                                       <div v-if="breedInfo.status==2" @click="modifyBreed()">{{$t('static.save')}}</div>
                                   </button>
                                   <button type="button" class="btn btn-confirm" v-else disabled="disabled">{{$t('static.save')}}</button>
-                                  
+                                   
                               </div>  
-                             </div>
-                          </div>
+                           </div>
                         
                      </div>  
                  </validator> 
+   
                  <!-- 交收信息 -->
                  <div style="margin-top:25px">
                     <img src="/static/images/receiverinfo@2x.png" style="display:inline"/>
@@ -411,14 +403,17 @@ export default {
           },
           addParam:{
             show:false,
+            eShow:false,
             length:0
           },
           updateParam:{
+            eShow:false,
             show:false,
             index:0
-          },     
+          },
           breedInfo:{ 
               status:0,   //自定义状态，表示编辑框的状态，0表示收起(起始)状态，1表示add，2表示update，add或update结束后将status置为0
+              type:0,//自定义状态，0表示药材，1表示提取物
               breedId:'',
               breedName:'',
               qualification:'',
@@ -427,9 +422,10 @@ export default {
               spec:'',
               number:'',
               unit:'',
-              pack:''
+              pack:'' ,
+              description:''
           },
-        
+         
           empNameParam:{
             show:false,
             customerId:'',
@@ -491,7 +487,6 @@ export default {
               all: 7,
               city:''
             },
-          showExtractive: false, //显示提取物
           imageParam:{
             url:'/crm/api/v1/file/',
             qiniu:false
@@ -528,10 +523,10 @@ export default {
       searchCustomer:function(){
             this.empNameParam.show=true;
       },
-      showAddBreed:function(){
-         
+      showAddBreed:function(type){
           if(this.param.items.length == 0||this.param.items[this.param.items.length-1].breedId != ''){
-              this.breedInfo.status = 1;    
+              this.breedInfo.status = 1; 
+              this.breedInfo.type = type;  
               this.breedInfo.breedId='';
               this.breedInfo.breedName='';
               this.breedInfo.qualification='';
@@ -550,14 +545,16 @@ export default {
                   spec:'',
                   number:'',
                   unit:'',
-                  pack:''
+                  pack:'',
+                  description:'',
+                  type:type
               });
+
               this.addParam.show = true;
           }  
       },
-    
+
       addBreed:function(){
-       
           this.param.items[this.param.items.length-1].breedId = this.breedInfo.breedId;
           this.param.items[this.param.items.length-1].breedName = this.breedInfo.breedName;
           this.param.items[this.param.items.length-1].qualification = this.breedInfo.qualification;
@@ -567,36 +564,39 @@ export default {
           this.param.items[this.param.items.length-1].number = this.breedInfo.number;
           this.param.items[this.param.items.length-1].unit = this.breedInfo.unit;
           this.param.items[this.param.items.length-1].pack = this.breedInfo.pack;
-         
+          this.param.items[this.param.items.length-1].description = this.breedInfo.description;
           this.breedInfo.status = 0;
-          this.addParam.show = false; 
-
+          this.addParam.show = false;
       },
+    
       showModifyBreed:function(index){
           this.breedInfo.status = 2;
           this.updateParam.index = index;
-          this.breedInfo.breedId=this.param.items[index].breedId,
-          this.breedInfo.breedName=this.param.items[index].breedName,
-          this.breedInfo.qualification=this.param.items[index].qualification,
-          this.breedInfo.quality=this.param.items[index].quality,
-          this.breedInfo.location=this.param.items[index].location,
-          this.breedInfo.spec=this.param.items[index].spec,
-          this.breedInfo.number=this.param.items[index].number,
-          this.breedInfo.unit=this.param.items[index].unit,
-          this.breedInfo.pack=this.param.items[index].pack,
+          this.breedInfo.type = this.param.items[index].type;
+          this.breedInfo.breedId=this.param.items[index].breedId;
+          this.breedInfo.breedName=this.param.items[index].breedName;
+          this.breedInfo.qualification=this.param.items[index].qualification;
+          this.breedInfo.quality=this.param.items[index].quality;
+          this.breedInfo.location=this.param.items[index].location;
+          this.breedInfo.spec=this.param.items[index].spec;
+          this.breedInfo.number=this.param.items[index].number;
+          this.breedInfo.unit=this.param.items[index].unit;
+          this.breedInfo.pack=this.param.items[index].pack;
           this.breedParam.id = this.breedInfo.breedId;
+          console.log(this.param.items[index])
           this.updateParam.show = true;
       },
       modifyBreed:function(){
-          this.param.items[this.updateParam.index].breedId=this.breedInfo.breedId,
-          this.param.items[this.updateParam.index].breedName=this.breedInfo.breedName,
-          this.param.items[this.updateParam.index].qualification=this.breedInfo.qualification,
-          this.param.items[this.updateParam.index].quality=this.breedInfo.quality,
-          this.param.items[this.updateParam.index].location=this.breedInfo.location,
-          this.param.items[this.updateParam.index].spec=this.breedInfo.spec,
-          this.param.items[this.updateParam.index].number=this.breedInfo.number,
-          this.param.items[this.updateParam.index].unit=this.breedInfo.unit,
-          this.param.items[this.updateParam.index].pack=this.breedInfo.pack,
+          this.param.items[this.updateParam.index].breedId=this.breedInfo.breedId;
+          this.param.items[this.updateParam.index].breedName=this.breedInfo.breedName;
+          this.param.items[this.updateParam.index].qualification=this.breedInfo.qualification;
+          this.param.items[this.updateParam.index].quality=this.breedInfo.quality;
+          this.param.items[this.updateParam.index].location=this.breedInfo.location;
+          this.param.items[this.updateParam.index].spec=this.breedInfo.spec;
+          this.param.items[this.updateParam.index].number=this.breedInfo.number;
+          this.param.items[this.updateParam.index].unit=this.breedInfo.unit;
+          this.param.items[this.updateParam.index].pack=this.breedInfo.pack;
+          this.param.items[this.updateParam.index].description=this.breedInfo.description;
           this.breedInfo.status = 0;
           this.updateParam.show = false;
       },
@@ -609,78 +609,17 @@ export default {
           this.breedInfo.status = 0;
           this.addParam.show = false; 
       },
+     
       cancelModifyBreed:function(){
           this.breedInfo.status = 0;
           this.updateParam.show = false; 
       },
-    
-      addBreed:function(){
-       
-          this.param.items[this.param.items.length-1].breedId = this.breedInfo.breedId;
-          this.param.items[this.param.items.length-1].breedName = this.breedInfo.breedName;
-          this.param.items[this.param.items.length-1].qualification = this.breedInfo.qualification;
-          this.param.items[this.param.items.length-1].quality = this.breedInfo.quality;
-          this.param.items[this.param.items.length-1].location = this.breedInfo.location;
-          this.param.items[this.param.items.length-1].spec = this.breedInfo.spec;
-          this.param.items[this.param.items.length-1].number = this.breedInfo.number;
-          this.param.items[this.param.items.length-1].unit = this.breedInfo.unit;
-          this.param.items[this.param.items.length-1].pack = this.breedInfo.pack;
-         
-          this.breedInfo.status = 0;
-          this.addParam.show = false; 
-
-      },
-      showModifyBreed:function(index){
-          this.breedInfo.status = 2;
-          this.updateParam.index = index;
-          this.breedInfo.breedId=this.param.items[index].breedId,
-          this.breedInfo.breedName=this.param.items[index].breedName,
-          this.breedInfo.qualification=this.param.items[index].qualification,
-          this.breedInfo.quality=this.param.items[index].quality,
-          this.breedInfo.location=this.param.items[index].location,
-          this.breedInfo.spec=this.param.items[index].spec,
-          this.breedInfo.number=this.param.items[index].number,
-          this.breedInfo.unit=this.param.items[index].unit,
-          this.breedInfo.pack=this.param.items[index].pack,
-          this.breedParam.id = this.breedInfo.breedId;
-          this.updateParam.show = true;
-      },
-      modifyBreed:function(){
-          this.param.items[this.updateParam.index].breedId=this.breedInfo.breedId,
-          this.param.items[this.updateParam.index].breedName=this.breedInfo.breedName,
-          this.param.items[this.updateParam.index].qualification=this.breedInfo.qualification,
-          this.param.items[this.updateParam.index].quality=this.breedInfo.quality,
-          this.param.items[this.updateParam.index].location=this.breedInfo.location,
-          this.param.items[this.updateParam.index].spec=this.breedInfo.spec,
-          this.param.items[this.updateParam.index].number=this.breedInfo.number,
-          this.param.items[this.updateParam.index].unit=this.breedInfo.unit,
-          this.param.items[this.updateParam.index].pack=this.breedInfo.pack,
-          this.breedInfo.status = 0;
-          this.updateParam.show = false;
-      },
-      deleteBreed:function(index){
-         this.param.items.splice(index,1);
-      },
-
-      cancelAddBreed:function(){
-          this.param.items.pop();
-          this.breedInfo.status = 0;
-          this.addParam.show = false; 
-      },
-      cancelModifyBreed:function(){
-          this.breedInfo.status = 0;
-          this.updateParam.show = false; 
-      },
-
       callback:function(){
           this.param.show=false;
           this.tipParam.show=false;
       },
       createOrUpdateIntlIntention:function(){
         this.param.country = this.country.cnameEn;
-       /* this.param.province = this.province.cname;
-        this.param.city = this.city.cname;
-        this.param.district = this.district.cname;*/
         this.param.show = false;
         this.createIntlIntention(this.param);
         console.log(this.param);
