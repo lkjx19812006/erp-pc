@@ -4978,9 +4978,9 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
         var intent = res.json().result;
         var itemsTotal = [];
         var offersTotal = [];
-        
+        var extractiveTotal = [];
 
-       
+
         for (var key in intent.itemsTotal) {
             let temp = {
                 currency: key,
@@ -4989,6 +4989,15 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
             itemsTotal.unshift(temp);
         }
         intent.itemsTotal = itemsTotal;
+
+        for (var key in intent.extractiveTotal) {
+            let temp = {
+                currency: key,
+                total: intent.extractiveTotal[key]
+            }
+            extractiveTotal.unshift(temp);
+        }
+        intent.extractiveTotal = extractiveTotal;
 
         for (var key in intent.offersTotal) {
             let temp = {

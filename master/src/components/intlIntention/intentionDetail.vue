@@ -115,7 +115,6 @@
                                       </a>
                                         <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                         </h4>
-
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
                                         <div class="panel-body panel-set">
@@ -159,7 +158,6 @@
                                         </div>
                                     </div>
                                 </div>
-                               
                                 <!-- 产品报价 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
@@ -196,6 +194,7 @@
                                                     <th>{{$t('static.inquiry_again')}}</th>
                                                     <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
+                                                    <th>询价状态</th>
                                                     <!-- <th></th> -->
                                                     <th></th>
                                                 </thead>
@@ -218,6 +217,20 @@
                                                         <td v-if="item.offerAgain==null">{{$t('static.not_quote')}}</td>
                                                         <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
                                                         <td>{{item.utime}}</td>
+                                                        <td>
+                                                            <div v-if="item.inquire===0">
+                                                                初始
+                                                            </div>
+                                                            <div v-if="item.inquire===1">
+                                                                询价中
+                                                            </div>
+                                                            <div v-if="item.inquire===2">
+                                                                报价中
+                                                            </div>
+                                                            <div v-if="item.inquire===3">
+                                                                报价完成
+                                                            </div>
+                                                        </td>
                                                         <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> -->
                                                         <td></td>
                                                     </tr>
@@ -225,7 +238,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <!-- 提取物列表 -->
+                                <!-- 提取物列表 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
@@ -260,6 +273,7 @@
                                                     <th>{{$t('static.inquiry_again')}}</th>
                                                     <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
+                                                    <th>询价状态</th>
                                                     <!-- <th></th> -->
                                                     <th></th>
                                                 </thead>
@@ -283,6 +297,20 @@
                                                         <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
                                                         <td>{{item.utime}}</td>
                                                         <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> -->
+                                                        <td>
+                                                            <div v-if="item.inquire===0">
+                                                                初始
+                                                            </div>
+                                                            <div v-if="item.inquire===1">
+                                                                询价中
+                                                            </div>
+                                                            <div v-if="item.inquire===2">
+                                                                报价中
+                                                            </div>
+                                                            <div v-if="item.inquire===3">
+                                                                报价完成
+                                                            </div>
+                                                        </td>
                                                         <td></td>
                                                     </tr>
                                             </table>
