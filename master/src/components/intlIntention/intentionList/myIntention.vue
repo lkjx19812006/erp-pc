@@ -108,7 +108,7 @@
                         </td>
                         <td>{{item.inquireType}}</td>
                         <td>{{item.source}}</td>
-                        <td>
+                        <td class="btnList">
                             <div v-if="item.inquire===0||item.inquire===3" style="display:inline-block;margin-right:7px" @click="deleteIntention({
                                 id:item.id,
                                 sub:$index,
@@ -120,13 +120,14 @@
                                 key:'myIntlIntentionList'
                                 })"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" />
                             </div>
-                            <!-- <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div> -->
                             <div style="display:inline-block;margin-right:7px" v-if="item.offerTime >= 1" @click.stop="newOrder(item,$index)"><img src="/static/images/{{$t('static.img_adopt')}}.png" alt="生成订单" />
                             </div>
                             <div v-if="item.inquire===0||item.inquire===3" style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑" /></div>
                             <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_inquire')}}.png" alt="询价" /></div>
-                            <div v-if="item.inquire===3" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
+                            <div v-if="item.inquire===3&&item.validate===2" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
                             <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item,$index)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
+                            <!-- 再次询价申请 -->
+                            <div v-if="item.inquire===3&&(item.validate===-2||item.validate===0)" style="display:inline-block;margin-right:7px" @click="againInquire(item.id)"><button class="requestBtn btn btn-success">再次询价申请</button></div>
                         </td>
                     </tr>
                 </tbody>
@@ -161,7 +162,8 @@ import {
     deleteInfo,
     intlIntentionAffirmOffer,
     cancelIntlIntentionInquire,
-    createOrder
+    createOrder,
+    againIntentionInquire
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -189,7 +191,8 @@ export default {
             deleteInfo,
             intlIntentionAffirmOffer,
             cancelIntlIntentionInquire,
-            createOrder
+            createOrder,
+            againIntentionInquire
         }
     },
     data() {
@@ -364,6 +367,11 @@ export default {
                 confirm: true,
                 callback: '',
                 show: false
+            },
+            againInquireParam:{   //再次申请审核参数
+                id:0,
+                link : '/intlIntention/inquireApply',
+                callback : this.againInquireCallback
             }
         }
     },
@@ -511,7 +519,17 @@ export default {
             this.tipsParam.name = name;
             this.tipsParam.alert = true;
         },
-
+        // 再次询价申请
+        againInquire:function(id){
+           this.againInquireParam.id = id;
+           this.againIntentionInquire(this.againInquireParam)
+        },
+        //再次询价申请弹窗
+        againInquireCallback:function(name){
+           this.tipsParam.show = true;
+           this.tipsParam.name = name;
+           this.tipsParam.alert = true;
+        }
     },
     events: {
         fresh: function(input) {
@@ -543,7 +561,15 @@ export default {
 .transfer {
     margin-left: 18px;
 }
-
+.btnList img{
+    display: inline-block;
+}
+.requestBtn{
+    min-width: 50px;
+    font-size: 7px;
+    padding:0 3px;
+    outline:none
+}
 .service-nav {
     padding-left: 0;
     padding-bottom: 0px;

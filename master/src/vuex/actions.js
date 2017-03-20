@@ -5019,9 +5019,8 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
                 param.items.push(temp);
                 param.itemsBack.push(temp);
             })
-            param.pack = intent.pack,
-                param.duedate = intent.duedate,
-                console.log(intent.items);
+            param.pack = intent.pack;
+            param.duedate = intent.duedate;
             dispatch(types.INTLINTENTION_DETAIL_DATA, intent);
         }
 
@@ -5110,6 +5109,77 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
         console.log('fail');
         param.loading = false;
     })
+}
+
+export const IntlIntentionConfirmOffer = ({dispatch},param)=>{  //确认报价放在意向详情中的各个分项中
+     var url = apiUrl.clientList + param.link;
+     var data = {
+        'id' : param.id,
+        'offerType' :param.offerType
+     };
+     Vue.http({
+        method: "POST",
+        url: url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+         param.callback(res.json().msg);
+
+    }, (res) => {
+        console.log('fail');
+    })
+}
+ 
+export const IntlIntentionSaveLast = ({dispatch},param)=>{   //保留上次报价
+    var url = apiUrl.clientList + param.link;
+    var data = {
+        'id' : param.id,
+     };
+     Vue.http({
+        method: "POST",
+        url: url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+         param.callback(res.json().msg);
+
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const againIntentionInquire = ({dispatch},param)=>{  //再次询价申请
+   const data = {
+     id : param.id
+   };
+   var url = apiUrl.clientList + param.link;
+   Vue.http({
+        method: "POST",
+        url: url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+       param.callback(res.json().msg)
+
+    }, (res) => {
+        console.log('fail');
+    })
+
 }
 
 export const createIntlIntention = ({ dispatch }, param) => { //新增国际意向
