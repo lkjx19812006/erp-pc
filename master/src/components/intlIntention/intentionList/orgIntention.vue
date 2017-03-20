@@ -6,7 +6,8 @@
      <modify-model :param.sync="modifyParam" v-if="modifyParam.show"></modify-model>
      <inquire-model :param="inquireParam" v-if="inquireParam.show"></inquire-model>
      <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
-     <inquireAuditDigalog :param.sync="" v-if=""></inquireAuditDigalog>
+     <inquiry-audit-dialog :param.sync="againParam" v-if="againParam.show">></inquiry-audit-dialog>
+     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
      <mglist-model>
          <div slot="top">
             <div class="clear" >
@@ -101,7 +102,7 @@
                         <td>{{item.inquireType}}</td>
                         <td>{{item.source}}</td>
                         <!-- 再次询价 申请审核 -->
-                        <td><button class="btn btn-default btn-apply" v-if="item.inquire==3&&item.validate==1" @click="applicationAudit()">申请审核</button></td>
+                        <td><button class="btn btn-default btn-apply" v-if="item.inquire==3&&item.validate==1" @click="applicationAudit(item.id)">申请审核</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -110,6 +111,7 @@
      </mglist-model>
 </template>
 <script>
+import tipsModel from '../../tips/tipDialog'
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import searchModel from '../intlIntentionSearch'
@@ -121,7 +123,7 @@ import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import breedsearchModel from '../breedsearch'
 import mglistModel from '../../mguan/mgListComponent.vue'
-import inquireAuditDigalog from './inquireAuditDigalog.vue'
+import inquiryAuditDialog from '../inquiryAuditDialog.vue'
 import {
     initOrgIntlIntentionList
 } from '../../../vuex/getters'
@@ -142,7 +144,8 @@ export default {
         inquireModel,
         breedsearchModel,
         mglistModel,
-        inquireAuditDigalog
+        inquiryAuditDialog,
+        tipsModel
     },
     vuex: {
         getters: {
@@ -217,9 +220,7 @@ export default {
             tipsParam:{
                 show:false,
                 name:'',
-                ids:[],
-                index:[],
-                onSell:0
+                alert:true
             },
             deleteParam:{
                 show:false,
@@ -271,6 +272,13 @@ export default {
               confirm:true,
               callback:'',
               show:false
+            },
+            againParam:{  //再次询价
+              show:false,
+              description:'',
+              link:'/intlIntention/inquireValidate',
+              id:0,
+              callback:""
             }
         }
     },
@@ -402,8 +410,16 @@ export default {
           this.batchUserIntentionAudit(this.auditParam);
         },
         // 再次询价的 申请审核
-        applicationAudit:function(){
-          
+        applicationAudit:function(id){
+          this.againParam.id = id;
+          this.againParam.show = true;
+          this.againParam.callback = this.applyCallback;
+        },
+        applyCallback:function(name){
+           this.tipsParam.name = name;
+           this.tipsParam.alert = true;
+           this.tipsParam.show = true;
+           this.getIntlIntentionList(this.loadParam);
         }
     },
     events: {

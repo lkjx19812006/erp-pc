@@ -162,7 +162,7 @@
                                               {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
                                             </a>
                                             <span class="pull-right" style="color:#fa6705;margin-top: 5px">{{$t('static.total')}}：
-                                                <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
+                                                <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                             </span> 
                                             <!-- 确认报价 -->
                                             <button class="btn btn-base pull-right" @click="confirmOffer(0,initIntlIntentionDetail.id)">确认报价</button>
@@ -440,8 +440,8 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
-                                                  link:initIntlIntentionDetail.offerFiles,
-                                                  crete:'offerFiles'
+                                                  link:initIntlIntntionDetail.offerFiles,
+                                                  crete:'offerFiles
                                                   })">
                                           <img class="pull-left" src="/static/images/offerfile_icon.png" height="29" width="26"  />
                                           <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">

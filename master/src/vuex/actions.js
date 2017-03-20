@@ -5191,6 +5191,32 @@ export const againIntentionInquire = ({dispatch},param)=>{  //再次询价申请
 
 }
 
+
+export const intInquiryPass = ({dispatch},param)=>{  //国际询价中的部门询价 再次询价申请审核是否通过
+   const data = {
+     id:param.id,
+     validate : param.validate,
+     description: param.description
+   };
+   var url = apiUrl.clientList + param.link;
+   Vue.http({
+        method: "POST",
+        url: url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+       param.callback(res.json().msg);
+    }, (res) => {
+        console.log('fail');
+    })
+
+}
+
 export const createIntlIntention = ({ dispatch }, param) => { //新增国际意向
     const data = {
         customerId: param.customerId,
