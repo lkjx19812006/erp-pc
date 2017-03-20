@@ -165,7 +165,7 @@
                                                 <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
                                             </span> 
                                             <!-- 确认报价 -->
-                                            <button class="btn btn-base pull-right" @click="confirmOffer(0,initIntlIntentionDetail.id)">确认报价</button>
+                                            <button class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">确认报价</button>
                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.items.show&&initIntlIntentionDetail.items.arr.length>0">
@@ -185,7 +185,7 @@
                                                     <th>{{$t('static.comment')}}</th>
                                                     <th>{{$t('static.inquiry_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
-                                                    <th>报价状态</th>
+                                                    <th>{{$t('static.inquiry_state')}}</th>
                                                     <!-- <th>{{$t('static.quote_again')}}</th> -->
                                                     <th></th>
                                                     <th></th>
@@ -259,12 +259,11 @@
                                               </a>
                                               <!--询价完成或再次询价才显示价格-->
 
-                                              <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
+                                              <span class="pull-right" style="color:#fa6705;margin-top: 5px">{{$t('static.total')}}：
                                                   <p class="pull-right" v-for="item in initIntlIntentionDetail.extractiveTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
-                                                  <!-- {{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
                                               </span>
                                               <!-- 确认报价 -->
-                                              <button class="btn btn-base pull-right" @click="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
+                                              <button class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.extractive.show&&initIntlIntentionDetail.extractive.arr.length>0">
@@ -283,7 +282,7 @@
                                                     <th>{{$t('static.inquiry_again')}}</th>
                                                     <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
-                                                    <th>询价状态</th>
+                                                    <th>{{$t('static.inquiry_state')}}</th>
                                                     <!-- <th></th> -->
                                                     <th></th>
                                                 </thead>
@@ -306,10 +305,6 @@
                                                         <td v-if="item.offerAgain==null">{{$t('static.not_quote')}}</td>
                                                         <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
                                                         <td>{{item.utime}}</td>
-                                                        <!-- 保留上次报价 -->
-                                                        <td>
-                                                            <button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.offerId)">保留上次报价</button>
-                                                        </td>
                                                         <td>
                                                             <div v-if="item.inquire===0">
                                                                 初始
@@ -328,6 +323,10 @@
                                                         <td>
                                                             <a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
                                                             </a>
+                                                        </td>
+                                                        <!-- 保留上次报价 -->
+                                                        <td>
+                                                            <button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.offerId)">保留上次报价</button>
                                                         </td>
                                                     </tr>
                                             </table>
@@ -350,7 +349,7 @@
                                             </span>
                                             <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                              <!-- 确认报价 -->
-                                            <button class="btn btn-base pull-right" @click="confirmOffer(1,initIntlIntentionDetail.id)">确认报价</button>
+                                            <button class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)">确认报价</button>
                                          </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0">
@@ -524,8 +523,8 @@ import {
     delIntlIntentionOtherOffer,
     delIntlIntentionFiles,
     getCurrencyList,
-    IntlIntentionConfirmOffer,
-    IntlIntentionSaveLast
+    intlIntentionConfirmOffer,
+    intlIntentionSaveLast
 } from '../../vuex/actions'
 export default {
     components: {
@@ -692,8 +691,8 @@ export default {
             delIntlIntentionOtherOffer,
             delIntlIntentionFiles,
             getCurrencyList,
-            IntlIntentionConfirmOffer,
-            IntlIntentionSaveLast
+            intlIntentionConfirmOffer,
+            intlIntentionSaveLast
         }
     },
     methods: {
@@ -850,24 +849,26 @@ export default {
         confirmOffer: function(offerType, id) {
             this.conformParam.id = id;
             this.conformParam.offerType = offerType;
-            this.IntlIntentionConfirmOffer(this.conformParam)
+            this.intlIntentionConfirmOffer(this.conformParam)
         },
         // 点击确认报价 弹出确定 取消层
         offerConfirmDialog: function(title) {
             this.tipsParam.name = title;
             this.tipsParam.show = true;
             this.tipsParam.alert = true;
+            this.getIntlIntentionDetail(this.param);
         },
         //保留上次报价
         saveLast: function(id) {
             this.saveLastParam.id = id; //offer id 或者 id
-            this.IntlIntentionSaveLast(this.saveLastParam)
+            this.intlIntentionSaveLast(this.saveLastParam)
         },
         // 点击确认保留上次报价 弹出确定 取消层
         saveLastDialog: function(title) {
             this.tipsParam.name = title;
             this.tipsParam.show = true;
             this.tipsParam.alert = true;
+            this.getIntlIntentionDetail(this.param);
         },
 
     },

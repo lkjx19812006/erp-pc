@@ -127,7 +127,9 @@
                             <div v-if="item.inquire===3&&item.validate===2" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
                             <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item,$index)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
                             <!-- 再次询价申请 -->
-                            <div v-if="item.inquire===3&&(item.validate===-2||item.validate===0)" style="display:inline-block;margin-right:7px" @click="againInquire(item.id)"><button class="requestBtn btn btn-success">再次询价申请</button></div>
+                            <div v-if="item.inquire===3&&(item.validate===-2||item.validate===0)" style="display:inline-block;margin-right:7px" @click="againInquire(item.id)">
+                                <button class="requestBtn btn btn-success">再次询价申请</button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -368,10 +370,10 @@ export default {
                 callback: '',
                 show: false
             },
-            againInquireParam:{   //再次申请审核参数
-                id:0,
-                link : '/intlIntention/inquireApply',
-                callback : this.againInquireCallback
+            againInquireParam: { //再次申请审核参数
+                id: 0,
+                link: '/intlIntention/inquireApply',
+                callback: this.againInquireCallback
             }
         }
     },
@@ -520,15 +522,16 @@ export default {
             this.tipsParam.alert = true;
         },
         // 再次询价申请
-        againInquire:function(id){
-           this.againInquireParam.id = id;
-           this.againIntentionInquire(this.againInquireParam)
+        againInquire: function(id) {
+            this.againInquireParam.id = id;
+            this.againIntentionInquire(this.againInquireParam)
         },
         //再次询价申请弹窗
-        againInquireCallback:function(name){
-           this.tipsParam.show = true;
-           this.tipsParam.name = name;
-           this.tipsParam.alert = true;
+        againInquireCallback: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.tipsParam.alert = true;
+            this.getIntlIntentionList(this.loadParam);
         }
     },
     events: {
@@ -561,15 +564,18 @@ export default {
 .transfer {
     margin-left: 18px;
 }
-.btnList img{
+
+.btnList img {
     display: inline-block;
 }
-.requestBtn{
+
+.requestBtn {
     min-width: 50px;
     font-size: 7px;
-    padding:0 3px;
-    outline:none
+    padding: 0 3px;
+    outline: none
 }
+
 .service-nav {
     padding-left: 0;
     padding-bottom: 0px;
