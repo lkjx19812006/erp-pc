@@ -617,6 +617,7 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
+            this.getEmpolyeeOrder(this.loadParam);
         },
         createSearch: function() {
             this.loadParam.show = true;
@@ -658,6 +659,7 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
+            this.getEmpolyeeOrder(this.loadParam);
         },
         pendingOrder: function(item, sub) {
             item.show = !item.show;
