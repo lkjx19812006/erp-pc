@@ -6,6 +6,7 @@
      <modify-model :param.sync="modifyParam" v-if="modifyParam.show"></modify-model>
      <inquire-model :param="inquireParam" v-if="inquireParam.show"></inquire-model>
      <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
+     <inquireAuditDigalog :param.sync="" v-if=""></inquireAuditDigalog>
      <mglist-model>
          <div slot="top">
             <div class="clear" >
@@ -120,6 +121,7 @@ import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import breedsearchModel from '../breedsearch'
 import mglistModel from '../../mguan/mgListComponent.vue'
+import inquireAuditDigalog from './inquireAuditDigalog.vue'
 import {
     initOrgIntlIntentionList
 } from '../../../vuex/getters'
@@ -139,7 +141,8 @@ export default {
         modifyModel,
         inquireModel,
         breedsearchModel,
-        mglistModel
+        mglistModel,
+        inquireAuditDigalog
     },
     vuex: {
         getters: {
@@ -400,7 +403,7 @@ export default {
         },
         // 再次询价的 申请审核
         applicationAudit:function(){
-
+          
         }
     },
     events: {
