@@ -602,7 +602,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 100px;
-    min-width: 100px;
+    width: 98px;
+    min-width: 98px;
 }
 </style>
