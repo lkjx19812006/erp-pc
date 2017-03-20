@@ -152,7 +152,7 @@
                             <!--提取物信息-->
                             <div style="margin-top:25px">
                                 <img src="/static/images/sellerinfo@2x.png" style="display:inline" />
-                                <h4 style="display:inline">提取物信息</h4>
+                                <h4 style="display:inline">{{$t('static.extractive_information')}}</h4>
                             </div>
                             <!-- 提取物表格 -->
                             <table class="table table-hover table_color table-striped ">
@@ -162,7 +162,7 @@
                                         <th>{{$t('static.specification')}}</th>
                                         <th>{{$t('static.quantity')}}</th>
                                         <th>{{$t('static.unit')}}</th>
-                                        <th>备注</th>
+                                        <th>{{$t('static.comment')}}</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -183,7 +183,7 @@
                             </table>
                             <!-- 添加提取物信息 -->
                             <div style="padding-left:25%">
-                                <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed(1)">添加提取物信息</div>
+                                <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed(1)">{{$t('static.add_extractive_information')}}</div>
                             </div>
                             <!-- 添加提取物内容 -->
                             <div v-if="(addParam.show||updateParam.show)&&breedInfo.type==1" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
@@ -203,7 +203,7 @@
                                     </div>
                                     <!-- 备注 -->
                                     <div class="editpage-input">
-                                        <label class="editlabel">备注</label>
+                                        <label class="editlabel">{{$t('static.comment')}}</label>
                                         <textarea class="form-control" rows="3" v-model="breedInfo.description">
                                         </textarea>
                                     </div>

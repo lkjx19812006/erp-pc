@@ -274,13 +274,14 @@
                                                     <th>{{$t('static.origin')}}</th>
                                                     <th>{{$t('static.specification')}}</th>
                                                     <th>{{$t('static.quality')}}</th>
+                                                    <th>{{$t('static.cost')}}</th>
                                                     <th>{{$t('static.quoted_price')}}</th>
                                                     <th>{{$t('static.exchange')}}</th>
                                                     <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
+                                                    <th>{{$t('static.supplier')}}</th>
                                                     <th>{{$t('static.quatation_name')}}</th>
                                                     <th>{{$t('static.comment')}}</th>
                                                     <th>{{$t('static.inquiry_again')}}</th>
-                                                    <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
                                                     <th>{{$t('static.inquiry_state')}}</th>
                                                     <!-- <th></th> -->
@@ -294,16 +295,34 @@
                                                         <td>{{item.location}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.quality}}</td>
-                                                        <td>{{item.price}}<span v-if="item.offerEUnit!=''&&item.offerEUnit!==null">（{{item.offerEUnit}}）</span></td>
+                                                        <td>
+                                                            <div v-if="item.offerOrigPrice!=null">{{item.offerOrigPrice}}（{{item.origCurrency | Currency}}）</div>
+                                                        </td>
+                                                        <td>
+                                                            <div v-if="item.offerPrice!=null">
+                                                                {{item.offerPrice}}（{{item.offerUnit}}）
+                                                            </div>
+                                                        </td>
                                                         <td>{{item.exchangeRate}}</td>
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
-                                                        <td>{{item.offererName}}</td>
+                                                        <td>
+                                                            <a style="cursor:pointer" @click="clickOn({
+                                                                  id:item.supplier,
+                                                                  sub:$index,
+                                                                  show:true,
+                                                                  name:item.supplierName,
+                                                                  link:alterInfo,
+                                                                  inquiry:'询价',
+                                                                  loading:true,
+                                                                  url:'/customer/',
+                                                                  key:'myCustomerList'
+                                                                })">{{item.supplierName}}
+                                                            </a>
+                                                        </td>
+                                                        <td>{{item.offererNameInOffer}}</td>
                                                         <td>{{item.offerComment}}</td>
                                                         <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
                                                         <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
-                                                        <td v-if="item.offerAgain==0">{{$t('static.not_quote')}}</td>
-                                                        <td v-if="item.offerAgain==null">{{$t('static.not_quote')}}</td>
-                                                        <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
                                                         <td>{{item.utime}}</td>
                                                         <td>
                                                             <div v-if="item.inquire===0">

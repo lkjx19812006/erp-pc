@@ -397,7 +397,6 @@ export default {
             this.inquireParam.show = true;
         },
         inquireAgain: function(id, index, time) {
-            console.log('再次询价');
             this.inquireParam.link = '/intlIntention/itemInquire';
             this.inquireParam.index = index;
             this.inquireParam.inquireTime = time;
@@ -414,7 +413,6 @@ export default {
             this.breedSearchParam.show = true;
         },
         cancelInquire: function(item, index) {
-            console.log('取消询价');
             this.cancelInquireParam.id = item.id;
             this.cancelInquireParam.index = index;
             this.cancelInquireParam.inquireTime = item.inquireTime;
