@@ -257,9 +257,9 @@
                                                 提取物列表（{{initIntlIntentionDetail.extractive.arr.length}}）
                                               </a>
                                               <!--询价完成或再次询价才显示价格-->
-                                              <span class="pull-right" style="color:#fa6705;margin-top: 5px">{{$t('static.total')}}：
-                                                  <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
-
+                                              <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
+                                                  <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.extractiveTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
+                                                  <!-- {{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
                                               </span>
                                               <!-- 确认报价 -->
                                               <button class="btn btn-base pull-right" @click="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
@@ -279,7 +279,7 @@
                                                     <th>{{$t('static.quatation_name')}}</th>
                                                     <th>{{$t('static.comment')}}</th>
                                                     <th>{{$t('static.inquiry_again')}}</th>
-                                                    <th>{{$t('static.quote_again')}}</th>
+                                                    <th>{{$t('static.quote_again')}}</th> 
                                                     <th>{{$t('static.quatiton_time')}}</th>
                                                     <th>询价状态</th>
                                                     <!-- <th></th> -->
@@ -306,6 +306,7 @@
                                                         <td>{{item.utime}}</td>
                                                          <!-- 保留上次报价 -->
                                                         <td><button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.offerId)">保留上次报价</button>
+                                                        </td>
                                                         <td>
                                                             <div v-if="item.inquire===0">
                                                                 初始
