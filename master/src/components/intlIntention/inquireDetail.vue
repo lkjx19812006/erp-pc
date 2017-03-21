@@ -808,7 +808,7 @@ export default {
             this.uploadFilesParam.image_f_show = '';
             this.uploadFilesParam.show = true;
             this.uploadFilesParam.callback = this.offerCallback;
-            console.log(this.uploadFilesParam);
+
 
         },
         //上传报价文件
@@ -821,7 +821,7 @@ export default {
             this.uploadFilesParam.image_f_show = '';
             this.uploadFilesParam.show = true;
             this.uploadFilesParam.callback = this.offerCallback;
-            console.log(this.uploadFilesParam);
+
         },
         delFile: function(item, index) {
             this.delFileParam.id = item.id;
@@ -899,7 +899,6 @@ export default {
         },
         //保留上次报价
         saveLast: function(id) {
-            console.log("dadasdasd");
             this.saveLastParam.id = id; //offer id 或者 id
             this.intlIntentionSaveLast(this.saveLastParam)
         },

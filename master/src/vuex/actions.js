@@ -5120,7 +5120,7 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
     })
 }
 
-export const IntlIntentionConfirmOffer = ({ dispatch }, param) => { //确认报价放在意向详情中的各个分项中
+export const intlIntentionConfirmOffer = ({ dispatch }, param) => { //确认报价放在意向详情中的各个分项中
     var url = apiUrl.clientList + param.link;
     var data = {
         'id': param.id,
@@ -5144,7 +5144,7 @@ export const IntlIntentionConfirmOffer = ({ dispatch }, param) => { //确认报�
     })
 }
 
-export const IntlIntentionSaveLast = ({ dispatch }, param) => { //保留上次报价
+export const intlIntentionSaveLast = ({ dispatch }, param) => { //保留上次报价
     var url = apiUrl.clientList + param.link;
     var data = {
         'id': param.id,
