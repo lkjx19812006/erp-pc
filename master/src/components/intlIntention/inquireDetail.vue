@@ -98,17 +98,18 @@
                         <h4 class="section_title">{{$t('static.related_information')}}</h4>
                         <article>
                             <div class="panel-group">
+                                <!-- 询价记录 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
-                                link:initIntlIntentionDetail.inquires,
-                                crete:'inquires'
-                                })">
-                                <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26"  />
-                                <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                  {{$t('static.inquiry_record')}}（{{initIntlIntentionDetail.inquires.arr.length}}）
-                                </a>
-                              </h4>
+                                            link:initIntlIntentionDetail.inquires,
+                                            crete:'inquires'
+                                            })">
+                                            <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26"  />
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                              {{$t('static.inquiry_record')}}（{{initIntlIntentionDetail.inquires.arr.length}}）
+                                            </a>
+                                        </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
                                         <div class="panel-body panel-set">
@@ -149,20 +150,25 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- 产品报价 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
-                                          link:initIntlIntentionDetail.items,
-                                          crete:'items'
-                                          })">
-                                    <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
-                                    <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                      {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
-                                    </a>
-                                    <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
-                                        <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
-                                    </span> 
-                                </h4>
+                                                  link:initIntlIntentionDetail.items,
+                                                  crete:'items'
+                                                  })">
+                                            <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                              {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
+                                            </a>
+                                            <span class="pull-right" style="color:#fa6705;margin-top: 5px">{{$t('static.total')}}：
+                                                <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
+                                            </span> 
+                                            <!-- 确认报价 -->
+                                            <button v-if="initLogin.menuStr.indexOf(',120,')>-1" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
+                                                确认报价
+                                            </button>
+                                        </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.items.show&&initIntlIntentionDetail.items.arr.length>0">
                                         <div class="panel-body panel-set">
@@ -172,7 +178,6 @@
                                                     <th>{{$t('static.origin')}}</th>
                                                     <th>{{$t('static.specification')}}</th>
                                                     <th>{{$t('static.quality')}}</th>
-                                                    <!-- <th>{{$t('static.currency')}}</th> -->
                                                     <th>{{$t('static.cost')}}</th>
                                                     <th>{{$t('static.quoted_price')}}</th>
                                                     <th>{{$t('static.exchange')}}</th>
@@ -181,7 +186,9 @@
                                                     <th>{{$t('static.quatation_name')}}</th>
                                                     <th>{{$t('static.comment')}}</th>
                                                     <th>{{$t('static.inquiry_again')}}</th>
+                                                    <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
+                                                    <th>{{$t('static.inquiry_state')}}</th>
                                                     <!-- <th>{{$t('static.quote_again')}}</th> -->
                                                     <th></th>
                                                     <th></th>
@@ -198,48 +205,190 @@
                                                         <td v-if="item.offerPrice==null"></td>
                                                         <td>{{item.exchangeRate}}</td>
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
-                                                        <td><a style="cursor:pointer" @click="clickOn({
-                                                  id:item.supplier,
-                                                  sub:$index,
-                                                  show:true,
-                                                  name:item.supplierName,
-                                                  link:alterInfo,
-                                                  inquiry:'询价',
-                                                  loading:true,
-                                                  url:'/customer/',
-                                                  key:'myCustomerList'
-                                                })">{{item.supplierName}}</a></td>
+                                                        <td>
+                                                            <a style="cursor:pointer" @click="clickOn({
+                                                                  id:item.supplier,
+                                                                  sub:$index,
+                                                                  show:true,
+                                                                  name:item.supplierName,
+                                                                  link:alterInfo,
+                                                                  inquiry:'询价',
+                                                                  loading:true,
+                                                                  url:'/customer/',
+                                                                  key:'myCustomerList'
+                                                                })">{{item.supplierName}}
+                                                            </a>
+                                                        </td>
                                                         <td>{{item.offererNameInOffer}}</td>
                                                         <td>{{item.offerComment}}</td>
-                                                        <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
-                                                        <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
+                                                        <td>
+                                                            <div v-if="item.again==1" style="color:red">
+                                                                {{$t('static.hasbeen_quote')}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div v-if="item.offerAgain==1">{{$t('static.quoted')}}</div>
+                                                        </td>
                                                         <td>{{item.utime}}</td>
+                                                        <td>
+                                                            <div v-if="item.inquire===0">
+                                                                初始
+                                                            </div>
+                                                            <div v-if="item.inquire===1">
+                                                                询价中
+                                                            </div>
+                                                            <div v-if="item.inquire===2">
+                                                                报价中
+                                                            </div>
+                                                            <div v-if="item.inquire===3">
+                                                                报价完成
+                                                            </div>
+                                                        </td>
                                                         <td>
                                                             <a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
                                                             </a>
                                                         </td>
-                                                        <td></td>
+                                                        <!-- 保留上次报价 -->
+                                                        <td>
+                                                            <button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.offerId)">保留上次报价</button>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- 提取物列表 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:initIntlIntentionDetail.offers,
-                                              crete:'offers'
-                                              })">
-                                        <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
-                                        </a>
-                                        <span class="pull-right" style="color:#fa6705;line-height:27px;">{{$t('static.quotation_total')}}：
-                                            <p class="pull-right" v-for="item in initIntlIntentionDetail.offersTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
-                                        </span>
-                                        <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
-                                  </h4>
+                                                    link:initIntlIntentionDetail.extractive,
+                                                    crete:'extractive'
+                                                    })">
+                                              <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
+                                              <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                                提取物列表（{{initIntlIntentionDetail.extractive.arr.length}}）
+                                              </a>
+                                              <!--询价完成或再次询价才显示价格-->
+
+                                              <span class="pull-right" style="color:#fa6705;margin-top: 5px">{{$t('static.total')}}：
+                                                  <p class="pull-right" v-for="item in initIntlIntentionDetail.extractiveTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
+                                              </span>
+                                              <!-- 确认报价 -->
+                                              <button v-if="initLogin.menuStr.indexOf(',121,')>-1" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse" v-show="!initIntlIntentionDetail.extractive.show&&initIntlIntentionDetail.extractive.arr.length>0">
+                                        <div class="panel-body panel-set">
+                                            <table class="table contactSet">
+                                                <thead>
+                                                    <th>{{$t('static.breed')}}</th>
+                                                    <th>{{$t('static.origin')}}</th>
+                                                    <th>{{$t('static.specification')}}</th>
+                                                    <th>{{$t('static.quality')}}</th>
+                                                    <th>{{$t('static.cost')}}</th>
+                                                    <th>{{$t('static.quoted_price')}}</th>
+                                                    <th>{{$t('static.exchange')}}</th>
+                                                    <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
+                                                    <th>{{$t('static.supplier')}}</th>
+                                                    <th>{{$t('static.quatation_name')}}</th>
+                                                    <th>{{$t('static.comment')}}</th>
+                                                    <th>{{$t('static.inquiry_again')}}</th>
+                                                    <th>{{$t('static.quote_again')}}</th>
+                                                    <th>{{$t('static.quatiton_time')}}</th>
+                                                    <th>{{$t('static.inquiry_state')}}</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in initIntlIntentionDetail.extractive.arr">
+                                                        <td>
+                                                            <a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a>
+                                                        </td>
+                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.spec}}</td>
+                                                        <td>{{item.quality}}</td>
+                                                        <td>
+                                                            <div v-if="item.offerOrigPrice!=null">{{item.offerOrigPrice}}（{{item.origCurrency | Currency}}）</div>
+                                                        </td>
+                                                        <td>
+                                                            <div v-if="item.offerPrice!=null">
+                                                                {{item.offerPrice}}（{{item.offerUnit}}）
+                                                            </div>
+                                                        </td>
+                                                        <td>{{item.exchangeRate}}</td>
+                                                        <td>{{item.number}}（{{item.unit | Unit}}）</td>
+                                                        <td>
+                                                            <a style="cursor:pointer" @click="clickOn({
+                                                                  id:item.supplier,
+                                                                  sub:$index,
+                                                                  show:true,
+                                                                  name:item.supplierName,
+                                                                  link:alterInfo,
+                                                                  inquiry:'询价',
+                                                                  loading:true,
+                                                                  url:'/customer/',
+                                                                  key:'myCustomerList'
+                                                                })">{{item.supplierName}}
+                                                            </a>
+                                                        </td>
+                                                        <td>{{item.offererNameInOffer}}</td>
+                                                        <td>{{item.offerComment}}</td>
+                                                        <td>
+                                                            <div v-if="item.again==1" style="color:red">
+                                                                {{$t('static.hasbeen_quote')}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div v-if="item.offerAgain==1">{{$t('static.quoted')}}</div>
+                                                        </td>
+                                                        <td>{{item.utime}}</td>
+                                                        <td>
+                                                            <div v-if="item.inquire===0">
+                                                                初始
+                                                            </div>
+                                                            <div v-if="item.inquire===1">
+                                                                询价中
+                                                            </div>
+                                                            <div v-if="item.inquire===2">
+                                                                报价中
+                                                            </div>
+                                                            <div v-if="item.inquire===3">
+                                                                报价完成
+                                                            </div>
+                                                        </td>
+                                                        <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> -->
+                                                        <td>
+                                                            <a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
+                                                            </a>
+                                                        </td>
+                                                        <!-- 保留上次报价 -->
+                                                        <td>
+                                                            <button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.offerId)">保留上次报价</button>
+                                                        </td>
+                                                    </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 运费及其他费用 -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" v-cloak>
+                                        <h4 class="panel-title clearfix" @click="enfoldment({
+                                                  link:initIntlIntentionDetail.offers,
+                                                  crete:'offers'
+                                                  })">
+                                            <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                              {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
+                                            </a>
+                                            <span class="pull-right" style="color:#fa6705;line-height:27px;">{{$t('static.quotation_total')}}：
+                                                <p class="pull-right" v-for="item in initIntlIntentionDetail.offersTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
+                                            </span>
+                                            <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
+                                             <!-- 确认报价, -->
+                                            <button v-if="initLogin.menuStr.indexOf(',122,')>-1" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)">确认报价</button>
+                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0">
                                         <div class="panel-body panel-set">
@@ -268,12 +417,17 @@
                                                                 <img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" />
                                                             </a>
                                                         </td>
+                                                        <!-- 保留上次报价 -->
+                                                        <td>
+                                                            <button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.id)">保留上次报价</button>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- 原材料文件 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
@@ -327,15 +481,15 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
-                                          link:initIntlIntentionDetail.offerFiles,
-                                          crete:'offerFiles'
-                                          })">
-                                  <img class="pull-left" src="/static/images/offerfile_icon.png" height="29" width="26"  />
-                                  <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                    {{$t('static.quotation_documents')}}（{{initIntlIntentionDetail.offerFiles.arr.length}}）
-                                  </a>
-                                  <button type="button" class="btn btn-base pull-right" @click.stop="uploadOfferFiles()">{{$t('static.upload')}}</button> 
-                              </h4>
+                                                  link:initIntlIntntionDetail.offerFiles,
+                                                  crete:'offerFiles'
+                                                  })">
+                                          <img class="pull-left" src="/static/images/offerfile_icon.png" height="29" width="26"  />
+                                          <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                            {{$t('static.quotation_documents')}}（{{initIntlIntentionDetail.offerFiles.arr.length}}）
+                                          </a>
+                                          <button type="button" class="btn btn-base pull-right" @click.stop="uploadOfferFiles()">{{$t('static.upload')}}</button> 
+                                      </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="initIntlIntentionDetail.offerFiles.show&&initIntlIntentionDetail.offerFiles.arr.length>0">
                                         <div class="panel-body panel-set">
@@ -406,7 +560,9 @@ import {
     getIntlIntentionDetail,
     delIntlIntentionOtherOffer,
     delIntlIntentionFiles,
-    getCurrencyList
+    getCurrencyList,
+    intlIntentionConfirmOffer,
+    intlIntentionSaveLast
 } from '../../vuex/actions'
 export default {
     components: {
@@ -544,7 +700,20 @@ export default {
             },
             supplyParam: {
                 show: false
+            },
+
+            conformParam: { //确认报价参数
+                id: 0,
+                offerType: 0,
+                link: '/intlIntention/offerConfirm',
+                callback: this.offerConfirmDialog
+            },
+            saveLastParam: { //保留上次报价参数
+                id: 0,
+                link: "/intlIntention/keepLastOffer",
+                callback: this.saveLastDialog
             }
+
         }
     },
     props: ['param'],
@@ -559,7 +728,9 @@ export default {
             getIntlIntentionDetail,
             delIntlIntentionOtherOffer,
             delIntlIntentionFiles,
-            getCurrencyList
+            getCurrencyList,
+            intlIntentionConfirmOffer,
+            intlIntentionSaveLast
         }
     },
     methods: {
@@ -601,7 +772,12 @@ export default {
             this.editOfferParam.breedId = item.breedId;
             this.editOfferParam.itemId = item.id;
             this.editOfferParam.itemName = item.breedName;
-            this.editOfferParam.type = 0; //0表示原材料报价
+            if (item.type == 1) { //0,表示原材料，1表示提取物（这两个type的意义不一样）
+                this.editOfferParam.type = 2; //2表示提取物
+            } else {
+                this.editOfferParam.type = 0; //0表示原材料报价
+            }
+
             this.editOfferParam.currency = item.offerCurrency;
             this.editOfferParam.origPrice = item.offerOrigPrice;
             this.editOfferParam.price = item.offerPrice;
@@ -632,7 +808,7 @@ export default {
             this.uploadFilesParam.image_f_show = '';
             this.uploadFilesParam.show = true;
             this.uploadFilesParam.callback = this.offerCallback;
-            console.log(this.uploadFilesParam);
+
 
         },
         //上传报价文件
@@ -645,7 +821,7 @@ export default {
             this.uploadFilesParam.image_f_show = '';
             this.uploadFilesParam.show = true;
             this.uploadFilesParam.callback = this.offerCallback;
-            console.log(this.uploadFilesParam);
+
         },
         delFile: function(item, index) {
             this.delFileParam.id = item.id;
@@ -706,12 +882,36 @@ export default {
             this.tipsParam.name = title;
             this.tipsParam.show = true;
             this.tipsParam.alert = true;
-        }
-
+        },
+        // 确认报价
+        confirmOffer: function(offerType, id) {
+            this.conformParam.id = id;
+            this.conformParam.offerType = offerType;
+            this.intlIntentionConfirmOffer(this.conformParam)
+        },
+        // 点击确认报价 弹出确定 取消层
+        offerConfirmDialog: function(title) {
+            this.tipsParam.name = title;
+            this.tipsParam.show = true;
+            this.tipsParam.alert = true;
+            this.getIntlIntentionDetail(this.param);
+            this.param.callback();
+        },
+        //保留上次报价
+        saveLast: function(id) {
+            this.saveLastParam.id = id; //offer id 或者 id
+            this.intlIntentionSaveLast(this.saveLastParam)
+        },
+        // 点击确认保留上次报价 弹出确定 取消层
+        saveLastDialog: function(title) {
+            this.tipsParam.name = title;
+            this.tipsParam.show = true;
+            this.tipsParam.alert = true;
+            this.getIntlIntentionDetail(this.param);
+        },
 
     },
     created() {
-        console.log(this.param);
         this.getIntlIntentionDetail(this.param);
         this.getCurrencyList();
     },

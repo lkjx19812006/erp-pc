@@ -724,6 +724,7 @@ const state = {
             "utime": "2016-11-08 14:48",
             "creater": null,
             "ctime": "2016-11-07 17:03",
+            "extractive" :{"arr": [], show: false },
             "items": { "arr": [], show: false },
             "inquires": { arr: [], show: false },
             "files": { arr: [], show: false },

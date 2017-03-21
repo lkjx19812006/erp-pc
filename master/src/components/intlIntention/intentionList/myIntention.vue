@@ -71,6 +71,7 @@
                         <th>{{$t('static.issued_time')}}</th>
                         <th>{{$t('static.description')}}</th>
                         <th>{{$t('static.inquiry_state')}}</th>
+                        <th>{{$t('static.review_status')}}</th>
                         <th>{{$t('static.inquiry_type')}}</th>
                         <th>{{$t('static.intention_source')}}</th>
                         <th style="min-width: 250px;">{{$t('static.handle')}}</th>
@@ -94,21 +95,21 @@
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime}}</td>
                         <td>{{item.description}}</td>
-                        <td v-if="item.inquire==0">
-                            <div style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</div>
+                        <td>
+                            <div v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</div>
+                            <div v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</div>
+                            <div v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</div>
+                            <div v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</div>
                         </td>
-                        <td v-if="item.inquire==1">
-                            <div style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</div>
-                        </td>
-                        <td v-if="item.inquire==2">
-                            <div style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</div>
-                        </td>
-                        <td v-if="item.inquire==3">
-                            <div style="background:green;color:#fff">{{$t('static.quo_complete')}}</div>
+                        <td>
+                            <div v-if="item.validate==0">{{$t('static.initial')}}</div>
+                            <div v-if="item.validate==1">Tania {{$t('static.approving')}}</div>
+                            <div v-if="item.validate==2">{{$t('static.approved')}}</div>
+                            <div v-if="item.validate==-2">{{$t('static.unapproved')}}</div>
                         </td>
                         <td>{{item.inquireType}}</td>
                         <td>{{item.source}}</td>
-                        <td>
+                        <td class="btnList">
                             <div v-if="item.inquire===0||item.inquire===3" style="display:inline-block;margin-right:7px" @click="deleteIntention({
                                 id:item.id,
                                 sub:$index,
@@ -120,13 +121,16 @@
                                 key:'myIntlIntentionList'
                                 })"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" />
                             </div>
-                            <!-- <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div> -->
                             <div style="display:inline-block;margin-right:7px" v-if="item.offerTime >= 1" @click.stop="newOrder(item,$index)"><img src="/static/images/{{$t('static.img_adopt')}}.png" alt="生成订单" />
                             </div>
                             <div v-if="item.inquire===0||item.inquire===3" style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑" /></div>
                             <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_inquire')}}.png" alt="询价" /></div>
-                            <div v-if="item.inquire===3" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
+                            <div v-if="item.inquire===3&&item.validate===2" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
                             <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item,$index)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
+                            <!-- 再次询价申请 -->
+                            <div v-if="item.inquire===3&&(item.validate===-2||item.validate===0)" style="display:inline-block;margin-right:7px" @click="againInquire(item.id)">
+                                <button class="requestBtn btn btn-success">再次询价申请</button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -161,7 +165,8 @@ import {
     deleteInfo,
     intlIntentionAffirmOffer,
     cancelIntlIntentionInquire,
-    createOrder
+    createOrder,
+    againIntentionInquire
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -189,7 +194,8 @@ export default {
             deleteInfo,
             intlIntentionAffirmOffer,
             cancelIntlIntentionInquire,
-            createOrder
+            createOrder,
+            againIntentionInquire
         }
     },
     data() {
@@ -333,6 +339,8 @@ export default {
                 items: [
 
                 ]
+
+
             },
             modifyParam: {
                 show: false,
@@ -362,6 +370,11 @@ export default {
                 confirm: true,
                 callback: '',
                 show: false
+            },
+            againInquireParam: { //再次申请审核参数
+                id: 0,
+                link: '/intlIntention/inquireApply',
+                callback: this.againInquireCallback
             }
         }
     },
@@ -385,7 +398,6 @@ export default {
             this.inquireParam.show = true;
         },
         inquireAgain: function(id, index, time) {
-            console.log('再次询价');
             this.inquireParam.link = '/intlIntention/itemInquire';
             this.inquireParam.index = index;
             this.inquireParam.inquireTime = time;
@@ -402,7 +414,6 @@ export default {
             this.breedSearchParam.show = true;
         },
         cancelInquire: function(item, index) {
-            console.log('取消询价');
             this.cancelInquireParam.id = item.id;
             this.cancelInquireParam.index = index;
             this.cancelInquireParam.inquireTime = item.inquireTime;
@@ -470,7 +481,6 @@ export default {
             this.deleteParam = param;
         },
         modifyIntention: function(id, index) {
-            console.log(this.modifyParam)
             this.modifyParam.show = true;
             this.modifyParam.id = id;
             this.modifyParam.index = index;
@@ -510,7 +520,18 @@ export default {
             this.tipsParam.name = name;
             this.tipsParam.alert = true;
         },
-
+        // 再次询价申请
+        againInquire: function(id) {
+            this.againInquireParam.id = id;
+            this.againIntentionInquire(this.againInquireParam)
+        },
+        //再次询价申请弹窗
+        againInquireCallback: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.tipsParam.alert = true;
+            this.getIntlIntentionList(this.loadParam);
+        }
     },
     events: {
         fresh: function(input) {
@@ -543,6 +564,17 @@ export default {
     margin-left: 18px;
 }
 
+.btnList img {
+    display: inline-block;
+}
+
+.requestBtn {
+    min-width: 50px;
+    font-size: 7px;
+    padding: 0 3px;
+    outline: none
+}
+
 .service-nav {
     padding-left: 0;
     padding-bottom: 0px;
@@ -571,7 +603,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 100px;
-    min-width: 100px;
+    width: 98px;
+    min-width: 98px;
 }
 </style>

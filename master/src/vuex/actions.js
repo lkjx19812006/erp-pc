@@ -4978,6 +4978,8 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
         var intent = res.json().result;
         var itemsTotal = [];
         var offersTotal = [];
+        var extractiveTotal = [];
+
 
         for (var key in intent.itemsTotal) {
             let temp = {
@@ -4987,6 +4989,15 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
             itemsTotal.unshift(temp);
         }
         intent.itemsTotal = itemsTotal;
+
+        for (var key in intent.extractiveTotal) {
+            let temp = {
+                currency: key,
+                total: intent.extractiveTotal[key]
+            }
+            extractiveTotal.unshift(temp);
+        }
+        intent.extractiveTotal = extractiveTotal;
 
         for (var key in intent.offersTotal) {
             let temp = {
@@ -5010,14 +5021,15 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
                     number: item.number,
                     unit: item.unit,
                     pack: item.pack,
-                    status: item.status
+                    status: item.status,
+                    type: item.type,
+                    description: item.description
                 }
                 param.items.push(temp);
                 param.itemsBack.push(temp);
             })
-            param.pack = intent.pack,
-                param.duedate = intent.duedate,
-                console.log(intent.items);
+            param.pack = intent.pack;
+            param.duedate = intent.duedate;
             dispatch(types.INTLINTENTION_DETAIL_DATA, intent);
         }
 
@@ -5044,11 +5056,24 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
             intent.offerFiles.arr = offerFiles;
             intent.offerFiles.show = false;
 
-            var items = intent.items;
-            intent.items = {};
-            intent.items.arr = items;
-            intent.items.show = false;
 
+            var extractiveArr = [];
+            var itemsArr = [];
+
+            for (var i = 0; i < intent.items.length; i++) {
+                if (intent.items[i].type == 0) {
+                    itemsArr.push(intent.items[i]);
+                } else if (intent.items[i].type == 1) {
+                    extractiveArr.push(intent.items[i]);
+                }
+            }
+
+            intent.items = {};
+            intent.items.arr = itemsArr;
+            intent.items.show = false;
+            intent.extractive = {};
+            intent.extractive.arr = extractiveArr;
+            intent.extractive.show = false;
             dispatch(types.INTLINTENTION_DETAIL_DATA, intent);
         }
         if (param.key == 'orderList') { //意向详情生成订单
@@ -5093,6 +5118,103 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
         console.log('fail');
         param.loading = false;
     })
+}
+
+export const intlIntentionConfirmOffer = ({ dispatch }, param) => { //确认报价放在意向详情中的各个分项中
+    var url = apiUrl.clientList + param.link;
+    var data = {
+        'id': param.id,
+        'offerType': param.offerType
+    };
+    Vue.http({
+        method: "POST",
+        url: url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const intlIntentionSaveLast = ({ dispatch }, param) => { //保留上次报价
+    var url = apiUrl.clientList + param.link;
+    var data = {
+        'id': param.id,
+    };
+    Vue.http({
+        method: "POST",
+        url: url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const againIntentionInquire = ({ dispatch }, param) => { //再次询价申请
+    const data = {
+        id: param.id
+    };
+    var url = apiUrl.clientList + param.link;
+    Vue.http({
+        method: "POST",
+        url: url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg)
+
+    }, (res) => {
+        console.log('fail');
+    })
+
+}
+
+
+export const intInquiryPass = ({ dispatch }, param) => { //国际询价中的部门询价 再次询价申请审核是否通过
+    const data = {
+        id: param.id,
+        validate: param.validate,
+        description: param.description
+    };
+    var url = apiUrl.clientList + param.link;
+    Vue.http({
+        method: "POST",
+        url: url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+    }, (res) => {
+        console.log('fail');
+    })
+
 }
 
 export const createIntlIntention = ({ dispatch }, param) => { //新增国际意向
@@ -6669,7 +6791,6 @@ export const getUnitList = ({ dispatch }, param) => { //常用单位接口
     })
 }
 export const getCurrencyList = ({ dispatch }, param) => { //常用货币接口
-    console.log(param)
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/sys/enum/currency',
