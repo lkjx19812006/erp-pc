@@ -267,7 +267,7 @@
                                                     })">
                                               <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
                                               <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                                提取物列表（{{initIntlIntentionDetail.extractive.arr.length}}）
+                                                {{$t('static.extractive')}}（{{initIntlIntentionDetail.extractive.arr.length}}）
                                               </a>
                                               <!--询价完成或再次询价才显示价格-->
 
