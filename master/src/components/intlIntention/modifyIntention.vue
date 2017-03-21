@@ -65,7 +65,7 @@
                                     <td>{{item.number}}</td>
                                     <td>{{item.unit | Unit}}</td>
                                     <td>{{item.pack}}</td>
-                                    <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
+                                    <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index,0)"><a>{{$t('static.edit')}}</a></td>
                                     <td v-else>{{$t('static.edit')}}</td>
                                     <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
                                     <td v-else>{{$t('static.del')}}</td>
@@ -174,7 +174,7 @@
                                         <td>{{item.number}}</td>
                                         <td>{{item.unit | Unit}}</td>
                                         <td>{{item.description}}</td>
-                                        <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
+                                        <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index,1)"><a>{{$t('static.edit')}}</a></td>
                                         <td v-else>{{$t('static.edit')}}</td>
                                         <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
                                         <td v-else>{{$t('static.del')}}</td>
@@ -436,6 +436,7 @@ export default {
                     unit: '',
                     pack: '',
                     status: '',
+                    description:'',
                     type: type
 
                 });
@@ -454,6 +455,7 @@ export default {
             this.param.items[this.param.items.length - 1].number = this.breedInfo.number;
             this.param.items[this.param.items.length - 1].unit = this.breedInfo.unit;
             this.param.items[this.param.items.length - 1].pack = this.breedInfo.pack;
+            this.param.items[this.param.items.length - 1].description = this.breedInfo.description;
             this.param.items[this.param.items.length - 1].status = 1;
 
             console.log(this.param.items[this.param.items.length - 1]);
@@ -461,20 +463,23 @@ export default {
             this.addParam.show = false;
 
         },
-        showModifyBreed: function(index) {
+        showModifyBreed: function(index,type) {
             this.breedInfo.status = 2;
             this.updateParam.index = index;
             this.breedInfo.breedId = this.param.items[index].breedId;
             this.breedInfo.breedName = this.param.items[index].breedName,
-                this.breedInfo.qualification = this.param.items[index].qualification,
-                this.breedInfo.quality = this.param.items[index].quality,
-                this.breedInfo.location = this.param.items[index].location,
-                this.breedInfo.spec = this.param.items[index].spec,
-                this.breedInfo.number = this.param.items[index].number,
-                this.breedInfo.unit = this.param.items[index].unit,
-                this.breedInfo.pack = this.param.items[index].pack,
-                this.breedParam.id = this.breedInfo.breedId;
+            this.breedInfo.qualification = this.param.items[index].qualification,
+            this.breedInfo.quality = this.param.items[index].quality,
+            this.breedInfo.location = this.param.items[index].location,
+            this.breedInfo.spec = this.param.items[index].spec,
+            this.breedInfo.number = this.param.items[index].number,
+            this.breedInfo.unit = this.param.items[index].unit,
+            this.breedInfo.pack = this.param.items[index].pack,
+            this.breedInfo.description = this.param.items[index].description,
+            this.breedParam.id = this.breedInfo.breedId;
             this.updateParam.show = true;
+            this.breedInfo.type = type;
+            console.log(this.breedInfo.type)
         },
         modifyBreed: function() {
             this.param.items[this.updateParam.index].breedId = this.breedInfo.breedId,
@@ -486,6 +491,7 @@ export default {
                 this.param.items[this.updateParam.index].number = this.breedInfo.number,
                 this.param.items[this.updateParam.index].unit = this.breedInfo.unit,
                 this.param.items[this.updateParam.index].pack = this.breedInfo.pack,
+                this.param.items[this.updateParam.index].description = this.breedInfo.description,
                 this.breedInfo.status = 0;
             this.updateParam.show = false;
         },

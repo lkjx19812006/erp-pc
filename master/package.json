@@ -51,4 +51,5 @@
         "webpack-hot-middleware": "^2.6.0",
         "webpack-merge": "^0.8.3"
     }
+
 }

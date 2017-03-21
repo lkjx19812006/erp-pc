@@ -108,7 +108,7 @@
                         <td>{{item.source}}</td>
                         <!-- 再次询价 申请审核 -->
                         <td>
-                            <button class="btn btn-default btn-apply" v-if="item.inquire==3&&item.validate==1" @click="applicationAudit(item.id)">申请审核</button>
+                            <button class="btn btn-default btn-apply" v-if="item.inquire==3&&item.validate==1" @click="applicationAudit(item.id)">审核</button>
                         </td>
                     </tr>
                 </tbody>
