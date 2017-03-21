@@ -165,7 +165,7 @@
                                                 <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                             </span> 
                                             <!-- 确认报价 -->
-                                            <button v-if="initLogin.menuStr.indexOf(',120,')>-1" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
+                                            <button v-if="itemOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
                                                 确认报价
                                             </button>
                                         </h4>
@@ -275,7 +275,7 @@
                                                   <p class="pull-right" v-for="item in initIntlIntentionDetail.extractiveTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                               </span>
                                               <!-- 确认报价 -->
-                                              <button v-if="initLogin.menuStr.indexOf(',121,')>-1" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
+                                              <button v-if="extractiveOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.extractive.show&&initIntlIntentionDetail.extractive.arr.length>0">
@@ -387,7 +387,7 @@
                                             </span>
                                             <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                              <!-- 确认报价, -->
-                                            <button v-if="initLogin.menuStr.indexOf(',122,')>-1" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)">确认报价</button>
+                                            <button v-if="otherOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)">确认报价</button>
                                          </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0">
@@ -712,7 +712,10 @@ export default {
                 id: 0,
                 link: "/intlIntention/keepLastOffer",
                 callback: this.saveLastDialog
-            }
+            },
+            itemOfferConfirm: false, //原材料报价确认标记
+            otherOfferConfirm: false, //其他报价确认标记
+            extractiveOfferConfirm: false //提取物报价确认标记
 
         }
     },
@@ -734,6 +737,29 @@ export default {
         }
     },
     methods: {
+        getOperation: function(menus, path) {
+            for (let i = 0; i < menus.length; i++) {
+                if (menus[i].url == path) {
+                    for (let j = 0; j < menus[i].subcategory.length; j++) {
+                        if (menus[i].subcategory[j].id == 120) {
+                            this.itemOfferConfirm = true;
+                            continue;
+                        }
+                        if (menus[i].subcategory[j].id == 121) {
+                            this.extractiveOfferConfirm = true;
+                            continue;
+                        }
+                        if (menus[i].subcategory[j].id == 122) {
+                            this.otherOfferConfirm = true;
+                            continue;
+                        }
+
+                    }
+                } else {
+                    this.getOperation(menus[i].subcategory, path);
+                }
+            }
+        },
         clickBig: function(img) {
             this.pictureParam.show = true;
             this.pictureParam.img = img;
@@ -912,6 +938,7 @@ export default {
 
     },
     created() {
+        this.getOperation(JSON.parse(localStorage.menus), this.$route.path);
         this.getIntlIntentionDetail(this.param);
         this.getCurrencyList();
     },
