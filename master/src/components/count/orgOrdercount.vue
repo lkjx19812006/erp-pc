@@ -80,7 +80,7 @@
                             <td>{{item.incidentalsSum}}</td>
                             <td>{{item.preferentialSum}}</td>
                             <td>{{item.prepaidSum | money}}</td>
-                            <td>{{item.totalSum | money}}</td>
+                            <td>{{item.unpaidSum | money}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -198,7 +198,7 @@
                         <td>{{item.incidentalsSum}}</td>
                         <td>{{item.preferentialSum}}</td>
                         <td>{{item.prepaidSum | money}}</td>
-                        <td>{{item.totalSum | money}}</td>
+                        <td>{{item.unpaidSum | money}}</td>
                     </tr>
                 </tbody>
             </table>
