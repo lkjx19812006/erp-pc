@@ -62,8 +62,7 @@
               <div class="total">
                  <div class="total-lsit" v-for = "key in item.statisticsList">
 	                 <div><label>订单金额:</label><span>{{key.totalSum | money}}</span></div>
-	                 <div v-if="loadParam.orderType==1"><label>应收
-未收:</label><span>{{key.unpaidSum | money}}</span></div>
+	                 <div v-if="loadParam.orderType==1"><label>应收未收:</label><span>{{key.unpaidSum | money}}</span></div>
 	                 <div v-if="loadParam.orderType==0"><label>应付:</label><span>{{key.unpaidSum | money}}</span></div>
 	                 <div><label>货币:</label><span>{{key.currency | Currency}}</span></div>
 	                 <div><label>订单数:</label><span>{{key.orderCount}}笔</span></div>
@@ -75,6 +74,7 @@
                 	 <tr class="tb-header">
                 		<td>业务员</td>
                 		<td>订单金额</td>
+                		<td>已收金额</td>
                 		<td v-if="loadParam.orderType==1">应收未收</td>
                 		<td v-if="loadParam.orderType==0">应付</td>
                 		<td>币种</td>
@@ -86,7 +86,8 @@
 					    <tr class="tb-content" v-for="classified in detail.statisticsList">
 						    <td>{{classified.totalSum | money}}</td>
 						    <td>{{classified.prepaidSum | money}}</td>
-						    <td>{{classified.currency | Currency}}</td>							    	    
+						    <td>{{classified.unpaidSum | money}}</td>
+						    <td>{{classified.currency | Currency}}</td>							        
 					    </tr>
                 	 </tbody>
                 	
@@ -192,7 +193,7 @@
 	border-bottom:none
 }
 .listItem{ 
-	min-width: 400px;
+	min-width: 440px;
 	display:inline-block;
 }
 
@@ -231,7 +232,7 @@
 }
 .tb-header td{
 	width: 25%;
-	padding-left: 10px;
+	padding:0 10px;
 }
 .tb-header td{
 	border: 1px solid #d9d9d9;
@@ -242,7 +243,7 @@
 }
 .tb-content td{
 	width: 25%;
-	padding-left: 10px;
+	padding:0 10px;
     height: 34px;
     line-height: 34px;
     word-break: break-all;
