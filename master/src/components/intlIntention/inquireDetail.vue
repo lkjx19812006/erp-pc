@@ -386,7 +386,7 @@
                                                 <p class="pull-right" v-for="item in initIntlIntentionDetail.offersTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
                                             </span>
                                             <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
-                                             <!-- 确认报价 -->
+                                             <!-- 确认报价, -->
                                             <button v-if="initLogin.menuStr.indexOf(',122,')>-1" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)">确认报价</button>
                                          </h4>
                                     </div>
@@ -895,6 +895,7 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.alert = true;
             this.getIntlIntentionDetail(this.param);
+            this.param.callback();
         },
         //保留上次报价
         saveLast: function(id) {

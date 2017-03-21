@@ -180,7 +180,8 @@ export default {
                 index: '', //询价列表的索引
                 id: '',
                 inquireId: '',
-                inquire: ''
+                inquire: '',
+                callback: this.detailCallback
             },
             breedSearchParam: {
                 show: false
@@ -285,6 +286,10 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
             this.tipsParam.alert = true;
+        },
+        //在详情界面需要刷新列表页面时，调用此函数
+        detailCallback: function() {
+            this.getIntlIntentionInquireList(this.loadParam);
         }
     },
     events: {

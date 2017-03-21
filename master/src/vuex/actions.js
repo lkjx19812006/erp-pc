@@ -5193,14 +5193,14 @@ export const againIntentionInquire = ({ dispatch }, param) => { //再次询价�
 }
 
 
-export const intInquiryPass = ({dispatch},param)=>{  //国际询价中的部门询价 再次询价申请审核是否通过
-   const data = {
-     id:param.id,
-     validate : param.validate,
-     description: param.description
-   };
-   var url = apiUrl.clientList + param.link;
-   Vue.http({
+export const intInquiryPass = ({ dispatch }, param) => { //国际询价中的部门询价 再次询价申请审核是否通过
+    const data = {
+        id: param.id,
+        validate: param.validate,
+        description: param.description
+    };
+    var url = apiUrl.clientList + param.link;
+    Vue.http({
         method: "POST",
         url: url,
         emulateHTTP: true,
@@ -5211,7 +5211,7 @@ export const intInquiryPass = ({dispatch},param)=>{  //国际询价中的部门�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-       param.callback(res.json().msg);
+        param.callback(res.json().msg);
     }, (res) => {
         console.log('fail');
     })
@@ -6792,7 +6792,6 @@ export const getUnitList = ({ dispatch }, param) => { //常用单位接口
     })
 }
 export const getCurrencyList = ({ dispatch }, param) => { //常用货币接口
-    console.log(param)
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/sys/enum/currency',
