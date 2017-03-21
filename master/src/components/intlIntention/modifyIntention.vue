@@ -327,7 +327,7 @@ export default {
                 customerId: '',
                 customerName: '',
                 customerPhone: '',
-                employeeId: '' =
+                employeeId: ''
             },
             tag: ['真空包装/Vacuum packaging', '瓦楞纸箱/Box', '编织袋/Woven bag', '积压包/Pallets', '其它/Other'],
             country: {
