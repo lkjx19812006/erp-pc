@@ -191,12 +191,13 @@
                                                     <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                                     <th>{{$t('static.quatation_name')}}</th>
                                                     <th>{{$t('static.comment')}}</th>
+                                                    <!-- 再次询价 -->
                                                     <th>{{$t('static.inquiry_again')}}</th>
+                                                    <!-- 再次报价 -->
                                                     <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
                                                     <th>询价状态</th>
-                                                    <!-- <th></th> -->
-                                                    <th></th>
+                                                    <th>{{$t('static.handle')}}</th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initIntlIntentionDetail.items.arr">
@@ -208,14 +209,17 @@
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.price}}<span v-if="item.offerEUnit!=''&&item.offerEUnit!==null">（{{item.offerEUnit}}）</span></td>
                                                         <td>{{item.exchangeRate}}</td>
-                                                        <td>{{item.number}}（{{item.unit | Unit}}）</td>
+                                                        <td>{{item.number}}（{{item. | Unit}}）</td>
                                                         <td>{{item.offererName}}</td>
                                                         <td>{{item.offerComment}}</td>
-                                                        <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
-                                                        <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
-                                                        <td v-if="item.offerAgain==0">{{$t('static.not_quote')}}</td>
-                                                        <td v-if="item.offerAgain==null">{{$t('static.not_quote')}}</td>
-                                                        <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
+                                                        <td>
+                                                            <div v-if="item.again==1">已再次询价</div>
+                                                        </td>
+                                                        <td>
+                                                            <div v-if="item.offerAgain==1" style="color:red">
+                                                                {{$t('static.quoted')}}
+                                                            </div>
+                                                        </td>
                                                         <td>{{item.utime}}</td>
                                                         <td>
                                                             <div v-if="item.inquire===0">
@@ -231,8 +235,10 @@
                                                                 报价完成
                                                             </div>
                                                         </td>
-                                                        <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> -->
-                                                        <td></td>
+                                                        <td>
+                                                            <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                             </table>
                                         </div>
@@ -275,7 +281,7 @@
                                                     <th>{{$t('static.quatiton_time')}}</th>
                                                     <th>询价状态</th>
                                                     <!-- <th></th> -->
-                                                    <th></th>
+                                                    <th>{{$t('static.handle')}}</th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initIntlIntentionDetail.extractive.arr">
@@ -290,11 +296,14 @@
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.offererName}}</td>
                                                         <td>{{item.offerComment}}</td>
-                                                        <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
-                                                        <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
-                                                        <td v-if="item.offerAgain==0">{{$t('static.not_quote')}}</td>
-                                                        <td v-if="item.offerAgain==null">{{$t('static.not_quote')}}</td>
-                                                        <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
+                                                        <td>
+                                                            <div v-if="item.again==1">已再次询价</div>
+                                                        </td>
+                                                        <td>
+                                                            <div v-if="item.offerAgain==1" style="color:red">
+                                                                {{$t('static.quoted')}}
+                                                            </div>
+                                                        </td>
                                                         <td>{{item.utime}}</td>
                                                         <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> -->
                                                         <td>
@@ -311,7 +320,10 @@
                                                                 报价完成
                                                             </div>
                                                         </td>
-                                                        <td></td>
+                                                        <td>
+                                                            <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                             </table>
                                         </div>
@@ -537,6 +549,7 @@ export default {
                 itemId: '',
                 index: '',
                 description: '',
+                callback: ''
 
             },
             tipsParam: {
@@ -636,7 +649,6 @@ export default {
             this.delIntlIntentionFiles(this.delFileParam);
         },
         inquireAgain: function(item, index) {
-            console.log(item);
             this.inquireAgainParam.itemId = item.id;
             this.inquireAgainParam.index = index;
             this.inquireAgainParam.show = true;
@@ -663,13 +675,12 @@ export default {
             this.uploadFilesParam.image_f_show = '';
             this.uploadFilesParam.show = true;
             this.uploadFilesParam.callback = this.inquireCallback;
-            console.log(this.uploadFilesParam);
-
         },
         inquireCallback: function(title) {
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
             this.tipsParam.name = title;
+            this.getIntlIntentionDetail(this.param);
         }
 
     },

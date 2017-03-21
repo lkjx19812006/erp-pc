@@ -426,7 +426,7 @@ var locales = {
             low_cost: '低价资源',
             please_quote: '请报价',
             not_quote: '未报价',
-            quoted: '已经报过价',
+            quoted: '已再次报价',
             hasbeen_quote: '需要再次报价',
             transcation: '成交时间',
             transcation_amount: '成交金额',
