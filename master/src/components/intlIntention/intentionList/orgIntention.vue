@@ -68,6 +68,7 @@
                         <th>{{$t('static.issued_time')}}</th>
                         <th>{{$t('static.description')}}</th>
                         <th>{{$t('static.inquiry_state')}}</th>
+                        <th>{{$t('static.review_status')}}</th>
                         <th>{{$t('static.inquiry_type')}}</th>
                         <th>{{$t('static.intention_source')}}</th>
                         <th>审核</th>
@@ -92,17 +93,17 @@
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime}}</td>
                         <td>{{item.description}}</td>
-                        <td v-if="item.inquire==0">
-                            <div style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</div>
+                        <td>
+                            <div v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</div>
+                            <div v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</div>
+                            <div v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</div>
+                            <div v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</div>
                         </td>
-                        <td v-if="item.inquire==1">
-                            <div style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</div>
-                        </td>
-                        <td v-if="item.inquire==2">
-                            <div style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</div>
-                        </td>
-                        <td v-if="item.inquire==3">
-                            <div style="background:green;color:#fff">{{$t('static.quo_complete')}}</div>
+                        <td>
+                            <div v-if="item.validate==0">{{$t('static.initial')}}</div>
+                            <div v-if="item.validate==1">Tania {{$t('static.approving')}}</div>
+                            <div v-if="item.validate==2">{{$t('static.approved')}}</div>
+                            <div v-if="item.validate==-2">{{$t('static.unapproved')}}</div>
                         </td>
                         <td>{{item.inquireType}}</td>
                         <td>{{item.source}}</td>

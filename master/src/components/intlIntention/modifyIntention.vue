@@ -191,7 +191,7 @@
                                     <!-- 提取物名称 -->
                                     <div class="editpage-input">
                                         <label class="editlabel">{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
-                                        <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" @click="searchBreed()" readonly="true" />
+                                        <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" @click="searchExtractive()" readonly="true" />
                                     </div>
                                     <!-- 单位 -->
                                     <div class="editpage-input">
@@ -409,6 +409,10 @@ export default {
         searchBreed: function(breedName, breedId) {
             this.breedParam.show = true;
         },
+        searchExtractive: function() {
+            this.breedParam.categoryId = 900;
+            this.breedParam.show = true;
+        },
         searchCustomer: function() {
             this.empNameParam.show = true;
         },
@@ -436,7 +440,7 @@ export default {
                     unit: '',
                     pack: '',
                     status: '',
-                    description:'',
+                    description: '',
                     type: type
 
                 });
@@ -463,20 +467,20 @@ export default {
             this.addParam.show = false;
 
         },
-        showModifyBreed: function(index,type) {
+        showModifyBreed: function(index, type) {
             this.breedInfo.status = 2;
             this.updateParam.index = index;
             this.breedInfo.breedId = this.param.items[index].breedId;
             this.breedInfo.breedName = this.param.items[index].breedName,
-            this.breedInfo.qualification = this.param.items[index].qualification,
-            this.breedInfo.quality = this.param.items[index].quality,
-            this.breedInfo.location = this.param.items[index].location,
-            this.breedInfo.spec = this.param.items[index].spec,
-            this.breedInfo.number = this.param.items[index].number,
-            this.breedInfo.unit = this.param.items[index].unit,
-            this.breedInfo.pack = this.param.items[index].pack,
-            this.breedInfo.description = this.param.items[index].description,
-            this.breedParam.id = this.breedInfo.breedId;
+                this.breedInfo.qualification = this.param.items[index].qualification,
+                this.breedInfo.quality = this.param.items[index].quality,
+                this.breedInfo.location = this.param.items[index].location,
+                this.breedInfo.spec = this.param.items[index].spec,
+                this.breedInfo.number = this.param.items[index].number,
+                this.breedInfo.unit = this.param.items[index].unit,
+                this.breedInfo.pack = this.param.items[index].pack,
+                this.breedInfo.description = this.param.items[index].description,
+                this.breedParam.id = this.breedInfo.breedId;
             this.updateParam.show = true;
             this.breedInfo.type = type;
             console.log(this.breedInfo.type)
