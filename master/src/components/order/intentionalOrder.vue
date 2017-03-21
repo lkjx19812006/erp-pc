@@ -116,6 +116,7 @@
                             <th>{{$t('static.wait_payment')}}</th>
                             <th>{{$t('static.paid')}}</th>
                             <!-- <th>{{$t('static.supplier_name')}}</th> -->
+                            <th>{{$t('static.salesman')}}</th>
                             <th>{{$t('static.consignee_name')}}</th>
                             <th>{{$t('static.consignee_phone')}}</th>
                             <th>{{$t('static.consignee_address')}}</th>
@@ -152,6 +153,7 @@
                             <td>{{item.cost}}</td>
                             <td>{{item.unpaid}}</td>
                             <td>{{item.prepaid}}</td>
+                            <td>{{item.employeeName}}</td>
                             <td>{{item.consignee}}</td>
                             <td>{{item.consigneePhone}}</td>
                             <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>

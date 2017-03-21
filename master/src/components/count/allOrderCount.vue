@@ -65,7 +65,7 @@
                             <th v-if="loadParam.orderType==0">已付</th>
                             <th v-if="loadParam.orderType==0">未付</th>
                             <th v-if="loadParam.orderType==1">已收</th>
-                            <th v-if="loadParam.orderType==1">应收</th>
+                            <th v-if="loadParam.orderType==1">应收未收</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,7 +80,7 @@
                             <td>{{item.incidentalsSum}}</td>
                             <td>{{item.preferentialSum}}</td>
                             <td>{{item.prepaidSum | money}}</td>
-                            <td>{{item.totalSum | money}}</td>
+                            <td>{{item.unpaidSum | money}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -128,7 +128,7 @@
                     <th v-if="loadParam.orderType==0">已付</th>
                     <th v-if="loadParam.orderType==0">未付</th>
                     <th v-if="loadParam.orderType==1">已收</th>
-                    <th v-if="loadParam.orderType==1">应收/未收</th>
+                   <!--  <th v-if="loadParam.orderType==1">应收未收</th> -->
                 </tr>
                 <tr v-for="item in initMyOrderCount">
                     <td>{{item.employeeName}}</td>
@@ -142,7 +142,7 @@
                     <td>{{item.incidentals}}</td>
                     <td>{{item.preferential}}</td>
                     <td>{{item.prepaid |money}}</td>
-                    <td>{{item.total - item.prepaid | money}}</td>
+                    <!-- <td>{{item.unpaidSum | money}}</td> -->
                 </tr>
             </table>
             <!-- 人员列表 -->
@@ -157,7 +157,7 @@
                     <th v-if="loadParam.orderType==0">已付</th>
                     <th v-if="loadParam.orderType==0">未付</th>
                     <th v-if="loadParam.orderType==1">已收</th>
-                    <th v-if="loadParam.orderType==1">应收/未收</th>
+                    <th v-if="loadParam.orderType==1">应收未收</th>
                 </tr>
                 <tbody v-for="item in initOrgOrderCount">
                     <tr>
@@ -170,7 +170,7 @@
                         <td>{{item.incidentalsSum}}</td>
                         <td>{{item.preferentialSum}}</td>
                         <td>{{item.prepaidSum | money}}</td>
-                        <td>{{item.totalSum - item.prepaidSum | money}}</td>
+                        <td>{{item.unpaidSum | money}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -186,7 +186,8 @@
                     <th v-if="loadParam.orderType==0">已付</th>
                     <th v-if="loadParam.orderType==0">未付</th>
                     <th v-if="loadParam.orderType==1">已收</th>
-                    <th v-if="loadParam.orderType==1">应收/未收</th>
+                    <th v-if="loadParam.orderType==1">应收
+未收</th>
                 </tr>
                 <tbody v-for="item in initOrgOrderCount">
                     <tr>
@@ -199,7 +200,7 @@
                         <td>{{item.incidentalsSum}}</td>
                         <td>{{item.preferentialSum}}</td>
                         <td>{{item.prepaidSum |money}}</td>
-                        <td>{{item.totalSum - item.prepaidSum | money}}</td>
+                        <td>{{item.unpaidSum | money}}</td>
                     </tr>
                 </tbody>
             </table>
