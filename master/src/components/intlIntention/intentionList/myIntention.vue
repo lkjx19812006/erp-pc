@@ -71,6 +71,7 @@
                         <th>{{$t('static.issued_time')}}</th>
                         <th>{{$t('static.description')}}</th>
                         <th>{{$t('static.inquiry_state')}}</th>
+                        <th>审核状态</th>
                         <th>{{$t('static.inquiry_type')}}</th>
                         <th>{{$t('static.intention_source')}}</th>
                         <th style="min-width: 250px;">{{$t('static.handle')}}</th>

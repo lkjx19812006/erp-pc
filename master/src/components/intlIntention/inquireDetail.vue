@@ -899,6 +899,7 @@ export default {
         },
         //保留上次报价
         saveLast: function(id) {
+            console.log("dadasdasd");
             this.saveLastParam.id = id; //offer id 或者 id
             this.intlIntentionSaveLast(this.saveLastParam)
         },
