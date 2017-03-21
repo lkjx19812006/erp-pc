@@ -902,7 +902,6 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
             orderList[i].checked = false;
             orderList[i].show = false;
         }
-        console.log('订单查询成功')
         orderList.key = param.key;
         dispatch(types.ORDER_TABLE, orderList);
         param.all = res.json().result.pages;
@@ -4645,8 +4644,6 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
-        console.log('意向搜索成功');
-        console.log();
         var intent = res.json().result.list;
         for (var i in intent) {
             intent[i].checked = false;
@@ -5120,7 +5117,7 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
     })
 }
 
-export const IntlIntentionConfirmOffer = ({dispatch},param)=>{  //确认报价放在意向详情中的各个分项中
+export const intlIntentionConfirmOffer = ({dispatch},param)=>{  //确认报价放在意向详情中的各个分项中
      var url = apiUrl.clientList + param.link;
      var data = {
         'id' : param.id,
@@ -5144,7 +5141,7 @@ export const IntlIntentionConfirmOffer = ({dispatch},param)=>{  //确认报价�
     })
 }
  
-export const IntlIntentionSaveLast = ({dispatch},param)=>{   //保留上次报价
+export const intlIntentionSaveLast = ({dispatch},param)=>{   //保留上次报价
     var url = apiUrl.clientList + param.link;
     var data = {
         'id' : param.id,

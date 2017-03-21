@@ -545,25 +545,7 @@ export default {
                 this.$store.state.table.basicBaseList.myOrderList[sub].show = true;
             }
         },
-        /*orgCheck:function(){   //批量审核，停用
-            var _this = this;
-            _this.auditParam.ids = [];
-            _this.auditParam.indexs = [];
-           _this.checked=false;
-            for(var i=0;i<this.initMyOrderlist.length;i++){
-                if(this.$store.state.table.basicBaseList.myOrderList[i].checked){
-                    _this.auditParam.ids.push(this.$store.state.table.basicBaseList.myOrderList[i].id);
-                    _this.auditParam.indexs.push(i);
-                    _this.auditParam.validate = this.$store.state.table.basicBaseList.myOrderList[i].validate;
-                }
-            }
-            if(this.auditParam.ids.length>0){
-                this.auditParam.show = true;
-            }else{
-                this.tipsParam.show = true;
-            }
-            _this.auditParam.callback = _this.applyBack;
-        },*/
+      
         applyBack: function(title) {
             this.tipsParam.show = true;
             this.tipsParam.name = title;

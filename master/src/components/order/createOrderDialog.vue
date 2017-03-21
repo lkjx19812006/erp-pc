@@ -17,6 +17,7 @@
             <validator name="validation">
                 <div class="edit-model">
                     <div class="clearfix">
+                        <!--订单类型  -->
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
                             <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly" />
@@ -36,9 +37,6 @@
                         <div class="editpage-input col-md-6" v-if="param.type==1">
                             <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
                             <input type="text" class="form-control edit-input" readonly="true" v-model="employeeParam.consignerName" v-validate:shipper="{required:true}" @click="selectEmployee(param.consigner,employeeParam.consignerName)" />
-                            <!--  <select  class="form-control edit-input" v-model="param.consigner">
-                               <option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
-                           </select> -->
                         </div>
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.transcation')}}</label>
@@ -91,8 +89,7 @@
                                 <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.customerName}}" />
                             </div>
                             <div class="editpage-input col-md-4">
-                                <label class="editlabel" v-if="param.type==1">{{$t('static.consignee_phone')}}
-                                    <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
+                                <label class="editlabel" v-if="param.type==1">{{$t('static.consignee_phone')}}</label>
                                 <label class="editlabel" v-if="param.type==0">{{$t('static.send_person')}} {{$t('static.cellphone')}}</label>
                                 <input type="text" class="form-control edit-input" v-model="param.consigneePhone" value="{{param.consigneePhone}}" />
                             </div>
@@ -205,7 +202,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="editpage-input col-md-6">
+                                    <!-- 价格 在采购的时候隐藏 -->
+                                    <div class="editpage-input col-md-6" v-if="param.type==1">
                                         <label class="editlabel">{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
@@ -231,14 +229,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- 单位 -->
-                                    <!-- <div class="editpage-input">
-                                        <label class="editlabel">{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
-                                        <input type="text" v-show="false" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" />
-                                        <select class="form-control edit-input" v-model="breedInfo.unit">
-                                            <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}({{item.ename}})</option>
-                                        </select>
-                                    </div> -->
+                                 
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.quality')}}</label>
                                         <input type="text" v-model="breedInfo.quality" class="form-control edit-input" />
@@ -259,12 +250,9 @@
                                             </input-select>
                                         </div>
                                     </div>
-                                    <!-- </div>
-                                <div class="editpageright"> -->
+                                 
                                     <div class="col-md-12" style="margin-top:10px;text-align:right">
-                                        <button type="button" class="btn btn-confirm" v-if="breedInfo.status==1" @click="cancelAddBreed()">{{$t('static.cancel')}}
-                                            <!-- <div v-if="breedInfo.status==1" @click="cancelAddBreed()"></div> -->
-                                            <!-- <div v-if="breedInfo.status==2" @click="cancelModifyBreed()">{{$t('static.cancel')}}</div> -->
+                                        <button type="button" class="btn btn-confirm" v-if="breedInfo.status==1" @click="cancelAddBreed()">{{$t('static.cancel')}}                                         
                                         </button>
                                         <button type="button" class="btn btn-confirm" v-if="breedInfo.status==2" @click="cancelModifyBreed()">{{$t('static.cancel')}}</button>
                                         <button type="button" class="btn btn-confirm" v-show='false' @click="addBreed()">{{$t('static.save')}}</button>
@@ -424,7 +412,7 @@ export default {
                 number: '',
                 unit: '',
                 unitName: '',
-                price: ''
+                price: 0
             },
             addParam: {
                 show: false,
@@ -656,6 +644,8 @@ export default {
             this.addParam.show = false;
             this.altogether += (parseFloat(this.param.goods[this.param.goods.length - 1].price) * parseFloat(this.param.goods[this.param.goods.length - 1].number) * 100) / 100;
             this.costmoney += (parseFloat(this.param.goods[this.param.goods.length - 1].costPrice) * parseFloat(this.param.goods[this.param.goods.length - 1].number) * 100) / 100;
+            
+
         },
         showModifyBreed: function(index) {
             this.breedInfo.status = 2;
@@ -688,7 +678,7 @@ export default {
                 this.breedInfo.spec = '';
                 this.breedInfo.number = '';
                 this.breedInfo.unit = '';
-                this.breedInfo.price = '';
+                this.breedInfo.price = 0;
                 this.breedInfo.costPrice = '';
                 this.breedInfo.sourceType = 0;
                 this.param.goods.push({
@@ -742,8 +732,7 @@ export default {
             this.updateParam.show = false;
             this.altogether += (parseFloat(this.param.goods[this.updateParam.index].number) * parseFloat(this.param.goods[this.updateParam.index].price) * 100) / 100;
             this.costmoney += (parseFloat(this.param.goods[this.updateParam.index].number) * parseFloat(this.param.goods[this.updateParam.index].costPrice) * 100) / 100;
-            console.log(this.altogether)
-            console.log(this.costmoney)
+           
         },
         cancelModifyBreed: function() {
             this.breedInfo.status = 0;
@@ -769,6 +758,7 @@ export default {
             //如果this.param.addressId = 0,则新增客户地址
             this.param.callback = this.param.callback;
             this.createOrder(this.param);
+           
         },
         changeTotal: function() {
             var patt = new RegExp(/\.\d{3,}/);
@@ -792,7 +782,7 @@ export default {
                 this.costmoney = this.costmoney + '';
                 this.costmoney = this.costmoney.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/, '$1$2.$3');
             }
-            console.log(this.param.incidentals);
+           
             //this.param.incidentals.replace(/^(\-)*(\d+)\.(\d\d)*$/,'$1$2.$3');
             this.param.total = (parseFloat(this.altogether) * 1000 + parseFloat(this.param.incidentals) * 1000 - parseFloat(this.param.preferential) * 1000) / 1000;
             this.param.cost = (parseFloat(this.costmoney) * 1000) / 1000;

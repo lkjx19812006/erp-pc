@@ -479,7 +479,7 @@ export default {
         deleteIntention: function(param) {
             this.deleteParam = param;
         },
-        modifyIntention: function(id, index) {
+        modifyIntention: function(id, index) {  //编辑按钮
             this.modifyParam.show = true;
             this.modifyParam.id = id;
             this.modifyParam.index = index;

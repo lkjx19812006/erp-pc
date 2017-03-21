@@ -540,6 +540,7 @@ var locales = {
             extra_total: '杂费总金额',
             bank_name: '银行名称',
             delivery_record: '订单分期记录'
+
         }
     },
     en: {
