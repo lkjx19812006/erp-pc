@@ -65,7 +65,7 @@
                                     <td>{{item.number}}</td>
                                     <td>{{item.unit | Unit}}</td>
                                     <td>{{item.pack}}</td>
-                                    <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
+                                    <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index,0)"><a>{{$t('static.edit')}}</a></td>
                                     <td v-else>{{$t('static.edit')}}</td>
                                     <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
                                     <td v-else>{{$t('static.del')}}</td>
@@ -88,7 +88,7 @@
                                         <label class="editlabel">{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
                                         <input type="text" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" v-show="false" />
                                         <select v-model="breedInfo.unit" class="form-control edit-input">
-                                            <option v-for="item in initUnitlist" value="{{item.id}}">{{item.ename}}</option>
+                                            <option v-for="item in initUnitlist" value="{{item.id}}">{{item.ename+'-'+item.name}}</option>
                                         </select>
                                     </div>
                                     <div class="editpage-input">
@@ -152,7 +152,7 @@
                             <!--提取物信息-->
                             <div style="margin-top:25px">
                                 <img src="/static/images/sellerinfo@2x.png" style="display:inline" />
-                                <h4 style="display:inline">提取物信息</h4>
+                                <h4 style="display:inline">{{$t('static.extractive_information')}}</h4>
                             </div>
                             <!-- 提取物表格 -->
                             <table class="table table-hover table_color table-striped ">
@@ -162,7 +162,7 @@
                                         <th>{{$t('static.specification')}}</th>
                                         <th>{{$t('static.quantity')}}</th>
                                         <th>{{$t('static.unit')}}</th>
-                                        <th>备注</th>
+                                        <th>{{$t('static.comment')}}</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -174,7 +174,7 @@
                                         <td>{{item.number}}</td>
                                         <td>{{item.unit | Unit}}</td>
                                         <td>{{item.description}}</td>
-                                        <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
+                                        <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index,1)"><a>{{$t('static.edit')}}</a></td>
                                         <td v-else>{{$t('static.edit')}}</td>
                                         <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
                                         <td v-else>{{$t('static.del')}}</td>
@@ -183,7 +183,7 @@
                             </table>
                             <!-- 添加提取物信息 -->
                             <div style="padding-left:25%">
-                                <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed(1)">添加提取物信息</div>
+                                <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed(1)">{{$t('static.add_extractive_information')}}</div>
                             </div>
                             <!-- 添加提取物内容 -->
                             <div v-if="(addParam.show||updateParam.show)&&breedInfo.type==1" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
@@ -191,7 +191,7 @@
                                     <!-- 提取物名称 -->
                                     <div class="editpage-input">
                                         <label class="editlabel">{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
-                                        <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" @click="searchBreed()" readonly="true" />
+                                        <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" @click="searchExtractive()" readonly="true" />
                                     </div>
                                     <!-- 单位 -->
                                     <div class="editpage-input">
@@ -203,7 +203,7 @@
                                     </div>
                                     <!-- 备注 -->
                                     <div class="editpage-input">
-                                        <label class="editlabel">备注</label>
+                                        <label class="editlabel">{{$t('static.comment')}}</label>
                                         <textarea class="form-control" rows="3" v-model="breedInfo.description">
                                         </textarea>
                                     </div>
@@ -320,6 +320,7 @@ export default {
                 unit: '',
                 pack: '',
                 description: ''
+
             },
             empNameParam: {
                 show: false,
@@ -359,6 +360,7 @@ export default {
                 country: ''
             },
             cityParam: {
+
                 loading: true,
                 show: false,
                 color: '#5dc596',
@@ -376,6 +378,7 @@ export default {
                 all: 7,
                 city: ''
             },
+
             imageParam: {
                 url: '/crm/api/v1/file/',
                 qiniu: false
@@ -409,6 +412,11 @@ export default {
         searchBreed: function(breedName, breedId) {
             this.breedParam.show = true;
         },
+
+        searchExtractive: function() {
+            this.breedParam.categoryId = 900;
+            this.breedParam.show = true;
+        },
         searchCustomer: function() {
             this.empNameParam.show = true;
         },
@@ -436,6 +444,7 @@ export default {
                     unit: '',
                     pack: '',
                     status: '',
+                    description: '',
                     type: type
 
                 });
@@ -454,6 +463,7 @@ export default {
             this.param.items[this.param.items.length - 1].number = this.breedInfo.number;
             this.param.items[this.param.items.length - 1].unit = this.breedInfo.unit;
             this.param.items[this.param.items.length - 1].pack = this.breedInfo.pack;
+            this.param.items[this.param.items.length - 1].description = this.breedInfo.description;
             this.param.items[this.param.items.length - 1].status = 1;
 
             console.log(this.param.items[this.param.items.length - 1]);
@@ -461,7 +471,8 @@ export default {
             this.addParam.show = false;
 
         },
-        showModifyBreed: function(index) {
+
+        showModifyBreed: function(index, type) {
             this.breedInfo.status = 2;
             this.updateParam.index = index;
             this.breedInfo.breedId = this.param.items[index].breedId;
@@ -473,8 +484,11 @@ export default {
                 this.breedInfo.number = this.param.items[index].number,
                 this.breedInfo.unit = this.param.items[index].unit,
                 this.breedInfo.pack = this.param.items[index].pack,
+                this.breedInfo.description = this.param.items[index].description,
                 this.breedParam.id = this.breedInfo.breedId;
             this.updateParam.show = true;
+            this.breedInfo.type = type;
+
         },
         modifyBreed: function() {
             this.param.items[this.updateParam.index].breedId = this.breedInfo.breedId,
@@ -486,6 +500,7 @@ export default {
                 this.param.items[this.updateParam.index].number = this.breedInfo.number,
                 this.param.items[this.updateParam.index].unit = this.breedInfo.unit,
                 this.param.items[this.updateParam.index].pack = this.breedInfo.pack,
+                this.param.items[this.updateParam.index].description = this.breedInfo.description,
                 this.breedInfo.status = 0;
             this.updateParam.show = false;
         },

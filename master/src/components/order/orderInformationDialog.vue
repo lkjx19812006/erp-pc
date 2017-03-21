@@ -469,7 +469,6 @@ export default {
     },
     methods: {
         selectProvince: function() {
-            console.log('selectProvince');
             this.province = '';
             this.city = '';
             this.district = '';

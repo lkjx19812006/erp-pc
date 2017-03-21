@@ -33,6 +33,14 @@
                                 <option value="70">{{$t('static.order_over')}}</option>
                             </select>
                         </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">是否样品单：</label>
+                            <select class="form-control edit-input" v-model="param.sample">
+                                <option value="1">是</option>
+                                <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
+                                <option value="0">否</option>
+                            </select>
+                        </div>
                         <div class="editpage-input col-md-6" v-if="param.type==1">
                             <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
                             <input type="text" class="form-control edit-input" readonly="true" v-model="employeeParam.consignerName" v-validate:shipper="{required:true}" @click="selectEmployee(param.consigner,employeeParam.consignerName)" />
@@ -702,7 +710,9 @@ export default {
                     unit: '',
                     price: '',
                     costPrice: '',
-                    sourceType: 0
+                    sourceType: 0,
+                    status: 1
+
                 });
                 this.addParam.show = true;
             }
