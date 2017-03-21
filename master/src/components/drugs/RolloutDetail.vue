@@ -107,12 +107,13 @@
                                            })"  v-if="(initDrugsDetail.moneyRollIns.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">新建</button> -->
                                     </h4>
                                     </div>
-                                    <!-- 药款转入金额 -->
+                                    <!-- 药款转入记录 -->
                                     <div class="panel-collapse" v-if="initDrugsDetail.moneyRollIns.arr.length&&!initDrugsDetail.moneyRollIns.show" v-cloak>
                                         <div class="panel-body panel-set">
                                             <table class="table  contactSet">
                                                 <thead>
                                                     <th>{{$t('static.payment_method')}}</th>
+                                                    <th>充值订单号</th>
                                                     <th>{{$t('static.normal_amount')}}</th>
                                                     <th>{{$t('static.freezing_amount')}}</th>
                                                     <th>{{$t('static.roll_in')}}</th>
@@ -123,6 +124,7 @@
                                                 <tbody>
                                                     <tr v-for="item in initDrugsDetail.moneyRollIns.arr">
                                                         <td>{{item.payType | payType}}</td>
+                                                        <th>{{item.number}}</th>
                                                         <td>{{item.normalMoney.toFixed(2)}}</td>
                                                         <td>{{item.freezeMoney.toFixed(2)}}</td>
                                                         <td>{{item.amount.toFixed(2)}}</td>
