@@ -72,6 +72,7 @@ export default {
                 all: 7,
                 name: '',
                 eName: '',
+                categoryId: "",
                 total: 0
             },
             checked: false,
@@ -121,11 +122,14 @@ export default {
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getBreedData(this.loadParam);
+            this.getBreedNameSearch(this.loadParam);
         }
     },
     created() {
-        this.getBreedData(this.loadParam);
+        if (this.param.categoryId != "") {
+            this.loadParam.categoryId = this.param.categoryId;
+        }
+        this.getBreedNameSearch(this.loadParam);
     }
 }
 </script>

@@ -165,7 +165,9 @@
                                                 <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                             </span> 
                                             <!-- 确认报价 -->
-                                            <button class="btn btn-base pull-right" @click="confirmOffer(0,initIntlIntentionDetail.id)">确认报价</button>
+                                            <button v-if="itemOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
+                                                确认报价
+                                            </button>
                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.items.show&&initIntlIntentionDetail.items.arr.length>0">
@@ -184,8 +186,9 @@
                                                     <th>{{$t('static.quatation_name')}}</th>
                                                     <th>{{$t('static.comment')}}</th>
                                                     <th>{{$t('static.inquiry_again')}}</th>
+                                                    <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
-                                                    <th>报价状态</th>
+                                                    <th>{{$t('static.inquiry_state')}}</th>
                                                     <!-- <th>{{$t('static.quote_again')}}</th> -->
                                                     <th></th>
                                                     <th></th>
@@ -202,21 +205,30 @@
                                                         <td v-if="item.offerPrice==null"></td>
                                                         <td>{{item.exchangeRate}}</td>
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
-                                                        <td><a style="cursor:pointer" @click="clickOn({
-                                                  id:item.supplier,
-                                                  sub:$index,
-                                                  show:true,
-                                                  name:item.supplierName,
-                                                  link:alterInfo,
-                                                  inquiry:'询价',
-                                                  loading:true,
-                                                  url:'/customer/',
-                                                  key:'myCustomerList'
-                                                })">{{item.supplierName}}</a></td>
+                                                        <td>
+                                                            <a style="cursor:pointer" @click="clickOn({
+                                                                  id:item.supplier,
+                                                                  sub:$index,
+                                                                  show:true,
+                                                                  name:item.supplierName,
+                                                                  link:alterInfo,
+                                                                  inquiry:'询价',
+                                                                  loading:true,
+                                                                  url:'/customer/',
+                                                                  key:'myCustomerList'
+                                                                })">{{item.supplierName}}
+                                                            </a>
+                                                        </td>
                                                         <td>{{item.offererNameInOffer}}</td>
                                                         <td>{{item.offerComment}}</td>
-                                                        <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
-                                                        <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
+                                                        <td>
+                                                            <div v-if="item.again==1" style="color:red">
+                                                                {{$t('static.hasbeen_quote')}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div v-if="item.offerAgain==1">{{$t('static.quoted')}}</div>
+                                                        </td>
                                                         <td>{{item.utime}}</td>
                                                         <td>
                                                             <div v-if="item.inquire===0">
@@ -237,9 +249,10 @@
                                                             </a>
                                                         </td>
                                                         <!-- 保留上次报价 -->
-                                                        <td><button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.offerId)">保留上次报价</button></td>
+                                                        <td>
+                                                            <button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.offerId)">保留上次报价</button>
+                                                        </td>
                                                     </tr>
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -257,12 +270,12 @@
                                                 提取物列表（{{initIntlIntentionDetail.extractive.arr.length}}）
                                               </a>
                                               <!--询价完成或再次询价才显示价格-->
-                                              <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
-                                                  <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.extractiveTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
-                                                  <!-- {{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
+
+                                              <span class="pull-right" style="color:#fa6705;margin-top: 5px">{{$t('static.total')}}：
+                                                  <p class="pull-right" v-for="item in initIntlIntentionDetail.extractiveTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                               </span>
                                               <!-- 确认报价 -->
-                                              <button class="btn btn-base pull-right" @click="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
+                                              <button v-if="extractiveOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.extractive.show&&initIntlIntentionDetail.extractive.arr.length>0">
@@ -273,16 +286,18 @@
                                                     <th>{{$t('static.origin')}}</th>
                                                     <th>{{$t('static.specification')}}</th>
                                                     <th>{{$t('static.quality')}}</th>
+                                                    <th>{{$t('static.cost')}}</th>
                                                     <th>{{$t('static.quoted_price')}}</th>
                                                     <th>{{$t('static.exchange')}}</th>
                                                     <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
+                                                    <th>{{$t('static.supplier')}}</th>
                                                     <th>{{$t('static.quatation_name')}}</th>
                                                     <th>{{$t('static.comment')}}</th>
                                                     <th>{{$t('static.inquiry_again')}}</th>
-                                                    <th>{{$t('static.quote_again')}}</th> 
+                                                    <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
-                                                    <th>询价状态</th>
-                                                    <!-- <th></th> -->
+                                                    <th>{{$t('static.inquiry_state')}}</th>
+                                                    <th></th>
                                                     <th></th>
                                                 </thead>
                                                 <tbody>
@@ -293,20 +308,41 @@
                                                         <td>{{item.location}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.quality}}</td>
-                                                        <td>{{item.price}}<span v-if="item.offerEUnit!=''&&item.offerEUnit!==null">（{{item.offerEUnit}}）</span></td>
+                                                        <td>
+                                                            <div v-if="item.offerOrigPrice!=null">{{item.offerOrigPrice}}（{{item.origCurrency | Currency}}）</div>
+                                                        </td>
+                                                        <td>
+                                                            <div v-if="item.offerPrice!=null">
+                                                                {{item.offerPrice}}（{{item.offerUnit}}）
+                                                            </div>
+                                                        </td>
                                                         <td>{{item.exchangeRate}}</td>
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
-                                                        <td>{{item.offererName}}</td>
-                                                        <td>{{item.offerComment}}</td>
-                                                        <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
-                                                        <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
-                                                        <td v-if="item.offerAgain==0">{{$t('static.not_quote')}}</td>
-                                                        <td v-if="item.offerAgain==null">{{$t('static.not_quote')}}</td>
-                                                        <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
-                                                        <td>{{item.utime}}</td>
-                                                         <!-- 保留上次报价 -->
-                                                        <td><button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.offerId)">保留上次报价</button>
+                                                        <td>
+                                                            <a style="cursor:pointer" @click="clickOn({
+                                                                  id:item.supplier,
+                                                                  sub:$index,
+                                                                  show:true,
+                                                                  name:item.supplierName,
+                                                                  link:alterInfo,
+                                                                  inquiry:'询价',
+                                                                  loading:true,
+                                                                  url:'/customer/',
+                                                                  key:'myCustomerList'
+                                                                })">{{item.supplierName}}
+                                                            </a>
                                                         </td>
+                                                        <td>{{item.offererNameInOffer}}</td>
+                                                        <td>{{item.offerComment}}</td>
+                                                        <td>
+                                                            <div v-if="item.again==1" style="color:red">
+                                                                {{$t('static.hasbeen_quote')}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div v-if="item.offerAgain==1">{{$t('static.quoted')}}</div>
+                                                        </td>
+                                                        <td>{{item.utime}}</td>
                                                         <td>
                                                             <div v-if="item.inquire===0">
                                                                 初始
@@ -325,6 +361,10 @@
                                                         <td>
                                                             <a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
                                                             </a>
+                                                        </td>
+                                                        <!-- 保留上次报价 -->
+                                                        <td>
+                                                            <button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.offerId)">保留上次报价</button>
                                                         </td>
                                                     </tr>
                                             </table>
@@ -346,8 +386,8 @@
                                                 <p class="pull-right" v-for="item in initIntlIntentionDetail.offersTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
                                             </span>
                                             <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
-                                             <!-- 确认报价 -->
-                                            <button class="btn btn-base pull-right" @click="confirmOffer(1,initIntlIntentionDetail.id)">确认报价</button>
+                                             <!-- 确认报价, -->
+                                            <button v-if="otherOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)">确认报价</button>
                                          </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0">
@@ -378,7 +418,8 @@
                                                             </a>
                                                         </td>
                                                         <!-- 保留上次报价 -->
-                                                        <td><button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.id)">保留上次报价</button>
+                                                        <td>
+                                                            <button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.id)">保留上次报价</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -441,7 +482,7 @@
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
                                                   link:initIntlIntntionDetail.offerFiles,
-                                                  crete:'offerFiles
+                                                  crete:'offerFiles'
                                                   })">
                                           <img class="pull-left" src="/static/images/offerfile_icon.png" height="29" width="26"  />
                                           <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
@@ -520,8 +561,8 @@ import {
     delIntlIntentionOtherOffer,
     delIntlIntentionFiles,
     getCurrencyList,
-    IntlIntentionConfirmOffer,
-    IntlIntentionSaveLast
+    intlIntentionConfirmOffer,
+    intlIntentionSaveLast
 } from '../../vuex/actions'
 export default {
     components: {
@@ -661,18 +702,21 @@ export default {
                 show: false
             },
 
-            conformParam:{  //确认报价参数
-                id:0,
-                offerType:0,
-                link:'/intlIntention/offerConfirm',
-                callback:this.offerConfirmDialog
+            conformParam: { //确认报价参数
+                id: 0,
+                offerType: 0,
+                link: '/intlIntention/offerConfirm',
+                callback: this.offerConfirmDialog
             },
-            saveLastParam:{  //保留上次报价参数
-               id : 0,
-               link : "/intlIntention/keepLastOffer",
-               callback:this.saveLastDialog
-            }
-            
+            saveLastParam: { //保留上次报价参数
+                id: 0,
+                link: "/intlIntention/keepLastOffer",
+                callback: this.saveLastDialog
+            },
+            itemOfferConfirm: false, //原材料报价确认标记
+            otherOfferConfirm: false, //其他报价确认标记
+            extractiveOfferConfirm: false //提取物报价确认标记
+
         }
     },
     props: ['param'],
@@ -688,11 +732,34 @@ export default {
             delIntlIntentionOtherOffer,
             delIntlIntentionFiles,
             getCurrencyList,
-            IntlIntentionConfirmOffer,
-            IntlIntentionSaveLast
+            intlIntentionConfirmOffer,
+            intlIntentionSaveLast
         }
     },
     methods: {
+        getOperation: function(menus, path) {
+            for (let i = 0; i < menus.length; i++) {
+                if (menus[i].url == path) {
+                    for (let j = 0; j < menus[i].subcategory.length; j++) {
+                        if (menus[i].subcategory[j].id == 120) {
+                            this.itemOfferConfirm = true;
+                            continue;
+                        }
+                        if (menus[i].subcategory[j].id == 121) {
+                            this.extractiveOfferConfirm = true;
+                            continue;
+                        }
+                        if (menus[i].subcategory[j].id == 122) {
+                            this.otherOfferConfirm = true;
+                            continue;
+                        }
+
+                    }
+                } else {
+                    this.getOperation(menus[i].subcategory, path);
+                }
+            }
+        },
         clickBig: function(img) {
             this.pictureParam.show = true;
             this.pictureParam.img = img;
@@ -767,7 +834,7 @@ export default {
             this.uploadFilesParam.image_f_show = '';
             this.uploadFilesParam.show = true;
             this.uploadFilesParam.callback = this.offerCallback;
-            console.log(this.uploadFilesParam);
+
 
         },
         //上传报价文件
@@ -780,7 +847,7 @@ export default {
             this.uploadFilesParam.image_f_show = '';
             this.uploadFilesParam.show = true;
             this.uploadFilesParam.callback = this.offerCallback;
-            console.log(this.uploadFilesParam);
+
         },
         delFile: function(item, index) {
             this.delFileParam.id = item.id;
@@ -843,32 +910,35 @@ export default {
             this.tipsParam.alert = true;
         },
         // 确认报价
-        confirmOffer:function(offerType,id){
-           this.conformParam.id = id;
-           this.conformParam.offerType = offerType;
-           this.IntlIntentionConfirmOffer(this.conformParam)
+        confirmOffer: function(offerType, id) {
+            this.conformParam.id = id;
+            this.conformParam.offerType = offerType;
+            this.intlIntentionConfirmOffer(this.conformParam)
         },
         // 点击确认报价 弹出确定 取消层
-        offerConfirmDialog:function(title){
+        offerConfirmDialog: function(title) {
             this.tipsParam.name = title;
             this.tipsParam.show = true;
             this.tipsParam.alert = true;
+            this.getIntlIntentionDetail(this.param);
+            this.param.callback();
         },
         //保留上次报价
-        saveLast:function(id){  
-           this.saveLastParam.id = id; //offer id 或者 id
-           this.IntlIntentionSaveLast(this.saveLastParam)
+        saveLast: function(id) {
+            this.saveLastParam.id = id; //offer id 或者 id
+            this.intlIntentionSaveLast(this.saveLastParam)
         },
         // 点击确认保留上次报价 弹出确定 取消层
-        saveLastDialog:function(title){
+        saveLastDialog: function(title) {
             this.tipsParam.name = title;
             this.tipsParam.show = true;
             this.tipsParam.alert = true;
+            this.getIntlIntentionDetail(this.param);
         },
 
     },
     created() {
-        console.log(this.param);
+        this.getOperation(JSON.parse(localStorage.menus), this.$route.path);
         this.getIntlIntentionDetail(this.param);
         this.getCurrencyList();
     },
