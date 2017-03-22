@@ -1742,7 +1742,10 @@ export const orderReceive = ({ dispatch }, param) => { //订单收货流程
     })
 }
 
-export const orderCancle = ({ dispatch }, param, data) => { //订单取消状态
+/*订单取消状态,在orderStatus.vue界面取消时要传两个参数,（param是需要传入后台的，data是要隐藏orderStatus的）
+ *如果在部门订单列表页取消，就只需要一个参数
+ */
+export const orderCancle = ({ dispatch }, param, data) => {
     console.log(param)
     const body = {
         orderId: param.id,
@@ -1761,8 +1764,13 @@ export const orderCancle = ({ dispatch }, param, data) => { //订单取消状态
     }).then((res) => {
         console.log('订单取消成功')
         param.show = false;
-        data.show = false;
+        if (data) {
+            data.show = false;
+        }
         var status = res.json().result;
+        if (param.cancelBack) {
+            param.cancelBack(res.json().msg);
+        }
         status.key = param.key;
         dispatch(types.ORDER_STATUS, status);
     }, (res) => {
