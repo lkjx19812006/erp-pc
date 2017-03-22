@@ -65,3 +65,12 @@ Vue.validator('pwd', function(val) { //密码
     /* return (/^[0-9A-Za-z]{6,}$/.test(val));*/
     return (/^[\w]{6,12}$/.test(val));
 });
+
+Vue.validator('isnull', function(val) { //密码
+    if (val === "" || val === null || val === undefined) {
+        return false;
+    } else {
+        return true;
+    }
+
+});
