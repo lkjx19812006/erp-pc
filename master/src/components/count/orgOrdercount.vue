@@ -64,8 +64,7 @@
                             <th v-if="loadParam.orderType==0">已付</th>
                             <th v-if="loadParam.orderType==0">未付</th>
                             <th v-if="loadParam.orderType==1">已收</th>
-                            <th v-if="loadParam.orderType==1">应收
-未收</th>
+                            <th v-if="loadParam.orderType==1">应收未收</th>
                         </tr>
                     </thead>
                     <tbody>

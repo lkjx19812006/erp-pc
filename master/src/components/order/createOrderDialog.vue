@@ -34,12 +34,16 @@
                                 <option value="70">{{$t('static.order_over')}}</option>
                             </select>
                         </div>
+                        <!-- 是否样品单： -->
                         <div class="editpage-input col-md-6">
-                            <label class="editlabel">是否样品单：</label>
+                            <label class="editlabel">是否样品单：<span class="system_danger" v-if="$validation.sample.required">{{$t('static.required')}}</span>
+                            </label>
+                             <input type="text" class="form-control edit-input" v-model="param.sample" v-validate:sample="{required:true}" v-show="false" />
                             <select class="form-control edit-input" v-model="param.sample">
-                                <option value="1">是</option>
+                                <option selected="selected" disabled="disabled"  style='display: none' value=''></option>  
+                                <option value="1">{{$t('static.yes')}}</option>
                                 <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
-                                <option value="0">否</option>
+                                <option value="0">{{$t('static.no')}}</option>
                             </select>
                         </div>
                         <div class="editpage-input col-md-6" v-if="param.type==1">
@@ -211,8 +215,8 @@
                                         </div>
                                     </div>
                                     <!-- 价格 在采购的时候隐藏 -->
-                                    <div class="editpage-input col-md-6" v-if="param.type==1">
-                                        <label class="editlabel">{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
+                                    <div class="editpage-input col-md-6" >
+                                        <label class="editlabel"><span v-if="param.type==0">{{$t('static.purchase')}}</span>{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
                                                 <input type="number" v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
@@ -224,7 +228,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="editpage-input col-md-6" v-if="this.initLogin.orgId!=='11'">
+                                    <!-- 成本价格 -->
+                                    <div class="editpage-input col-md-6" v-if="this.initLogin.orgId!=='11'&&param.type==1">
                                         <label class="editlabel">{{$t('static.cost_price')}}<span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span></label>
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
@@ -420,7 +425,7 @@ export default {
                 number: '',
                 unit: '',
                 unitName: '',
-                price: 0
+                price: ''
             },
             addParam: {
                 show: false,
@@ -658,20 +663,20 @@ export default {
         showModifyBreed: function(index) {
             this.breedInfo.status = 2;
             this.updateParam.price = this.param.goods[index].price,
-                this.updateParam.number = this.param.goods[index].number,
-                this.updateParam.index = index;
+            this.updateParam.number = this.param.goods[index].number,
+            this.updateParam.index = index;
             this.breedInfo.breedId = this.param.goods[index].breedId,
-                this.breedInfo.breedName = this.param.goods[index].breedName,
-                this.breedInfo.title = this.param.goods[index].title,
-                this.breedInfo.quality = this.param.goods[index].quality,
-                this.breedInfo.location = this.param.goods[index].location,
-                this.breedInfo.spec = this.param.goods[index].spec,
-                this.breedInfo.number = this.param.goods[index].number,
-                this.breedInfo.unit = this.param.goods[index].unit,
-                this.breedInfo.price = this.param.goods[index].price,
-                this.breedInfo.costPrice = this.param.goods[index].costPrice,
-                this.breedInfo.sourceType = this.param.goods[index].sourceType,
-                this.updateParam.show = true;
+            this.breedInfo.breedName = this.param.goods[index].breedName,
+            this.breedInfo.title = this.param.goods[index].title,
+            this.breedInfo.quality = this.param.goods[index].quality,
+            this.breedInfo.location = this.param.goods[index].location,
+            this.breedInfo.spec = this.param.goods[index].spec,
+            this.breedInfo.number = this.param.goods[index].number,
+            this.breedInfo.unit = this.param.goods[index].unit,
+            this.breedInfo.price = this.param.goods[index].price,
+            this.breedInfo.costPrice = this.param.goods[index].costPrice,
+            this.breedInfo.sourceType = this.param.goods[index].sourceType,
+            this.updateParam.show = true;
             this.altogether -= parseFloat(this.breedInfo.number) * parseFloat(this.breedInfo.price);
             this.costmoney -= parseFloat(this.breedInfo.number) * parseFloat(this.breedInfo.costPrice);
         },
@@ -686,7 +691,7 @@ export default {
                 this.breedInfo.spec = '';
                 this.breedInfo.number = '';
                 this.breedInfo.unit = '';
-                this.breedInfo.price = 0;
+                this.breedInfo.price = '';
                 this.breedInfo.costPrice = '';
                 this.breedInfo.sourceType = 0;
                 this.param.goods.push({
