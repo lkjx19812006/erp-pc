@@ -61,7 +61,10 @@
                                         <mg-label :title="$t('static.paid')">{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
                                         <mg-label :title="$t('static.wait_payment')">{{initOrderDetail.unpaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
                                         <mg-label :title="$t('static.transcation')">{{initOrderDetail.ctime}}</mg-label>
+                                         <!-- 新增 订单状态 -->
+                                        <mg-label :title="$t('static.order_status')" style="color:red">{{initOrderDetail.orderStatus | orderstatus}}</mg-label>
                                         <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.comments}}</mg-label>
+
                                     </ul>
                                 </div>
                                 <div class="panel panel-default">
