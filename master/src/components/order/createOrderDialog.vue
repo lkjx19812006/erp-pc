@@ -214,7 +214,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- 价格 在采购的时候隐藏 -->
+                                    <!-- 采购价格 -->
                                     <div class="editpage-input col-md-6" >
                                         <label class="editlabel"><span v-if="param.type==0">{{$t('static.purchase')}}</span>{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
                                         <div style="clear:both;height:36px;">
@@ -230,7 +230,7 @@
                                     </div>
                                     <!-- 成本价格 -->
                                     <div class="editpage-input col-md-6" v-if="this.initLogin.orgId!=='11'&&param.type==1">
-                                        <label class="editlabel">{{$t('static.cost_price')}}<span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span></label>
+                                        <label class="editlabel" >{{$t('static.cost_price')}}<span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span></label>
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
                                                 <input type="text" v-model="breedInfo.costPrice" class="form-control edit-input" v-validate:cost="{required:true}" />
@@ -241,8 +241,8 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
-                                 
+                                    </div>                                
+
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.quality')}}</label>
                                         <input type="text" v-model="breedInfo.quality" class="form-control edit-input" />
@@ -657,7 +657,7 @@ export default {
             this.addParam.show = false;
             this.altogether += (parseFloat(this.param.goods[this.param.goods.length - 1].price) * parseFloat(this.param.goods[this.param.goods.length - 1].number) * 100) / 100;
             this.costmoney += (parseFloat(this.param.goods[this.param.goods.length - 1].costPrice) * parseFloat(this.param.goods[this.param.goods.length - 1].number) * 100) / 100;
-            
+            console.log(this.param.goods)
 
         },
         showModifyBreed: function(index) {
