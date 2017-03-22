@@ -228,12 +228,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- 成本价格 -->
-                                    <div class="editpage-input col-md-6" v-if="this.initLogin.orgId!=='11'&&param.type==1">
-                                        <label class="editlabel" >{{$t('static.cost_price')}}<span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span></label>
+                                    <!-- 销售成本价格  param.type == 1 || param.type == 0 -->
+                                    <div class="editpage-input col-md-6" v-if="initLogin.orgId!=='11'">
+                                        <label class="editlabel" >{{$t('static.cost_price')}}
+                                            <span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span>
+                                        </label>
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
-                                                <input type="text" v-model="breedInfo.costPrice" class="form-control edit-input" v-validate:cost="{required:true}" />
+                                                <input type="number" v-model="breedInfo.costPrice" class="form-control edit-input" 
+                                                v-validate:cost="{required:true}" />
                                             </div>
                                             <div class="left" style="width:45%;">
                                                 <select class="form-control edit-input" v-model="breedInfo.unit" disabled="true">
@@ -241,7 +244,8 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>                                
+                                    </div>  
+
 
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.quality')}}</label>
@@ -421,7 +425,7 @@ export default {
                 quality: '',
                 location: '',
                 spec: '',
-                costPrice: '',
+                costPrice: 0,
                 number: '',
                 unit: '',
                 unitName: '',
@@ -693,6 +697,9 @@ export default {
                 this.breedInfo.unit = '';
                 this.breedInfo.price = '';
                 this.breedInfo.costPrice = '';
+                // if(param.type == 0){
+                //     this.breedInfo.costPrice = 0;
+                // }
                 this.breedInfo.sourceType = 0;
                 this.param.goods.push({
                     breedId: '',
