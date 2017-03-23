@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from 'vue';
 import * as types from './mutation-types'
 import apiUrl from './api/api'
 
@@ -2825,6 +2825,9 @@ export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
     if (param.eName) {
         breedUrl += '&eName=' + param.eName;
     }
+    if (param.lName) {
+        breedUrl += '&lName=' + param.lName;
+    }
     Vue.http({
         method: 'GET',
         url: breedUrl,
@@ -2838,6 +2841,7 @@ export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
             breed[i].show = false;
             breed[i].checked = false;
         }
+        console.log(breed)
         dispatch(types.BREED_DATA, breed);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;

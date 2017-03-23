@@ -74,6 +74,7 @@
                                 <label class="editlabel">{{$t('static.supplier_name')}} <span class="system_danger" v-if="$validation.supplier.required">{{$t('static.required')}}</span></label>
                                 <input type="text" class="form-control edit-input" v-model="supplierParam.supplierName" v-validate:supplier="['required']" readonly="true" @click="selectSupplier()" />
                             </div>
+                            <!-- 是否国际 -->
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.international')}} <span class="system_danger" v-if="$validation.intl.required">{{$t('static.required')}}</span>
                                 </label>
@@ -191,6 +192,7 @@
                         <validator name="inner">
                             <div v-if="addParam.show||updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
                                 <div class="col-md-12 clearfix">
+                                    <!-- 品种 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
                                         <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" @click="searchBreed()" readonly="true" />

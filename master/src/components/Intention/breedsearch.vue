@@ -12,10 +12,18 @@
                         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
                     </div>
                     <div class="clear">
+                        <!-- 品种 -->
                         <dl class="clear left transfer">
                             <dt class="left marg_top">{{$t('static.breed')}}：</dt>
                             <dd class="left">
                                 <input type="text" class="form-control" v-model="loadParam.name" @keyUp.enter="employNameSearch()" placeholder="{{$t('static.breed')}}" />
+                            </dd>
+                        </dl>
+                        <!-- 拉丁文 -->
+                        <dl class="clear left transfer">
+                            <dt class="left marg_top">拉丁文：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.lName" @keyUp.enter="employNameSearch()" placeholder="拉丁文" />
                             </dd>
                         </dl>
                         <div class="name_search clearfix transfer" style="border:none">
@@ -73,7 +81,8 @@ export default {
                 name: '',
                 eName: '',
                 categoryId: "",
-                total: 0
+                total: 0,
+                lName:''
             },
             checked: false,
             show: true

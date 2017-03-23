@@ -89,10 +89,11 @@
                                                     <th>{{$t('static.specification')}}</th>
                                                     <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                                     <th>{{$t('static.quality')}}</th>
-                                                    <th>{{$t('static.price')}}</th>
-                                                    <th v-if="this.initLogin.orgId !=='11'">{{$t('static.cost_price')}}</th>
-                                                    <th v-if="this.initLogin.orgId !=='11'">{{$t('static.cost')}}{{$t('static.total')}}</th>
-                                                    <th>{{$t('static.total')}}</th>
+                                                    <th v-if="initOrderDetail.type == 1">销售价格</th>
+                                                    <th v-if="initOrderDetail.type == 0">采购价格</th>
+                                                    <th v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==0">{{$t('static.cost_price')}}</th>
+                                                    <!-- <th v-if="this.initLogin.orgId !=='11'">{{$t('static.cost')}}{{$t('static.total')}}</th>
+                                                    <th>{{$t('static.total')}}</th> -->
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.goods.arr">
@@ -102,9 +103,11 @@
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.price}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
-                                                        <td v-if="this.initLogin.orgId !=='11'">{{item.costPrice}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
-                                                        <td v-if="this.initLogin.orgId !=='11'">{{item.cost}}</td>
-                                                        <td>{{item.amount}} （{{initOrderDetail.currency | Currency}}）</td>
+                                                        <!-- <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==0"></td> -->
+                                                        <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==0">{{item.costPrice}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
+                                                        <!-- <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==1"></td> -->
+                                                        <!-- <td v-if="this.initLogin.orgId !=='11'">{{item.cost}}</td>
+                                                        <td>{{item.amount}} （{{initOrderDetail.currency | Currency}}）</td> -->
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -795,8 +798,6 @@ export default {
             this.pictureParam.img = img;
         },
         pendingOrder: function(initOrderDetail) {
-            console.log(initOrderDetail)
-            console.log(this.disposeParam)
             this.disposeParam = initOrderDetail;
             /*this.disposeParam = this.param;*/
             this.disposeParam.show = true;
@@ -817,6 +818,7 @@ export default {
     filter: (filter, {}),
     created() {
         this.getOrderDetail(this.param);
+        console.log(this.initOrderDetail)
     }
 }
 </script>
