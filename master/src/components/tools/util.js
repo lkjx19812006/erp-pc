@@ -11,7 +11,7 @@ var util = {
     add: accAdd,
     sbu: subtr,
     mul: accMul,
-    div: accDiv,
+    div: accDiv
 }
 
 //加法 

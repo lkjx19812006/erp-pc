@@ -3838,6 +3838,7 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
 }
 
 export const importCustomer = ({ dispatch }, param) => { //excel导入客户
+    param.loading = true;
     let data = new FormData();
     data.append("country", param.country);
     data.append("type", param.type);
@@ -3850,6 +3851,8 @@ export const importCustomer = ({ dispatch }, param) => { //excel导入客户
         body: data
     }).then((res) => {
         console.log("success");
+        param.show = false;
+        param.loading = false;
         if (param.callback) {
             param.callback(res.json().msg);
         }

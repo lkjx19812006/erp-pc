@@ -386,6 +386,7 @@ export default {
             language: '',
             excelImportParam: {
                 show: false,
+                loading: false,
                 link: this.importCustomer,
                 callback: this.excelImportCallback,
                 country: "", //客户所属国家

@@ -351,7 +351,6 @@ import mglistModel from '../mguan/mgListComponent.vue'
 import languageModel from '../tools/language.vue'
 import contractModel from '../order/second_order/contractItems'
 import saleapplyModel from '../order/second_order/afterSalesApply'
-import util from '../tools/util'
 import {
     getList,
     initMyOrderlist,
@@ -780,7 +779,6 @@ export default {
         common('tab', 'table_box', 1);
     },
     created() {
-        console.log(util.mul(8704.8, 100));
         changeMenu(this.$store.state.table.isTop, this.getEmpolyeeOrder, this.loadParam, localStorage.myOrderParam);
         this.language = localStorage.lang;
     }

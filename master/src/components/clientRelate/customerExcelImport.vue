@@ -10,6 +10,9 @@
                 <h3>新建文件</h3>
             </div>
             <div class="edit-model">
+                <div class="cover_loading">
+                    <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+                </div>
                 <section class="editsection">
                     <div class="editpage-input" style="width:110%">
                         <label class="editlabel">{{$t('static.country')}}</label>
@@ -51,8 +54,9 @@
                     </div>
                     <div class="editpage-input clearfix">
                         <label class="editlabel">{{$t('static.file')}}</label>
-                        <input type="file" id="file" accept="application/vnd.ms-excel*" />
+                        <input type="file" id="file" />
                     </div>
+                    <h4 v-show="param.loading" style="margin-top:50px;text-align:center;color:red">Please wait a minute!!</h4>
                 </section>
             </div>
             <div class="edit_footer">
@@ -128,8 +132,8 @@ export default {
             if (!this.param.mFile || (fileType != "xls" && fileType != "xlsx")) {
                 this.tipParam.show = true;
             } else {
+                this.param.loading = true;
                 this.param.link(this.param);
-                this.param.show = false;
             }
 
         }
