@@ -29,7 +29,7 @@
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.order_status')}}</label>
                             <select class="form-control edit-input" v-model="param.orderStatus">
-                                <option value="0">{{$t('static.create_order')}}</option>
+                                <option value="0" selected>{{$t('static.create_order')}}</option>
                                 <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
                                 <option value="70">{{$t('static.order_over')}}</option>
                             </select>
@@ -38,17 +38,17 @@
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">是否样品单：<span class="system_danger" v-if="$validation.sample.required">{{$t('static.required')}}</span>
                             </label>
-                            <input type="text" class="form-control edit-input" v-model="param.sample" v-validate:sample="{required:true}" v-show="false" />
+                             <input type="text" class="form-control edit-input" v-model="param.sample" v-validate:sample="{required:true}" v-show="false" />
                             <select class="form-control edit-input" v-model="param.sample">
-                                <option selected="selected" disabled="disabled" style='display: none' value=''></option>
+                                <option selected="selected" disabled="disabled"  style='display: none' value=''></option>  
                                 <option value="1">{{$t('static.yes')}}</option>
                                 <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
                                 <option value="0">{{$t('static.no')}}</option>
                             </select>
                         </div>
                         <div class="editpage-input col-md-6" v-show="param.type==1">
-                            <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="">{{$t('static.required')}}</span></label>
-                            <input type="text" class="form-control edit-input" readonly="true" v-model="employeeParam.consignerName" @click="selectEmployee(param.consigner,employeeParam.consignerName)" />
+                            <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
+                            <input type="text" class="form-control edit-input" readonly="true" v-model="employeeParam.consignerName" v-validate:shipper="{required:true}" @click="selectEmployee(param.consigner,employeeParam.consignerName)" />
                         </div>
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.transcation')}}</label>
@@ -211,8 +211,9 @@
                                         </div>
                                     </div>
                                     <!-- 采购价格 -->
-                                    <div class="editpage-input col-md-6">
+                                    <div class="editpage-input col-md-6" >
                                         <label class="editlabel"><span v-if="param.type==0">{{$t('static.purchase')}}</span>{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
+
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
                                                 <input type="number" v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
@@ -224,11 +225,13 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="editpage-input col-md-6" v-if="this.initLogin.orgId!=='11'&&param.type==1">
                                         <label class="editlabel">{{$t('static.cost_price')}}<span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span></label>
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
-                                                <input type="number" v-model="breedInfo.costPrice" class="form-control edit-input" v-validate:cost="{required:true}" />
+                                                <input type="number" v-model="breedInfo.costPrice" class="form-control edit-input" 
+                                                v-validate:cost="{required:true}" />
                                             </div>
                                             <div class="left" style="width:45%;">
                                                 <select class="form-control edit-input" v-model="breedInfo.unit" disabled="true">
@@ -236,7 +239,9 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>  
+
+
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.quality')}}</label>
                                         <input type="text" v-model="breedInfo.quality" class="form-control edit-input" />
@@ -495,7 +500,31 @@ export default {
         }
     },
     methods: {
+        initData: function() { //初始化数据
+            //为采购和销售有差异的变量设置初始值（为了保证能通过验证）,当前如果是采购订单，则为销售添加，反之亦然
+            if (this.param.type == 1) {
+                this.supplierParam.supplierName = "init";
+                this.employeeParam.consignerName = "";
+                this.param.customerName = "";
+            } else {
+                this.supplierParam.supplierName = "";
+                this.employeeParam.consignerName = "init";
+                this.param.customerName = "init";
+            }
+        },
+        resetData: function() { //还原数据
+            if (this.supplierParam.supplierName == "init") {
+                this.supplierParam.supplierName = ""
+            }
+            if (this.employeeParam.consignerName == "init") {
+                this.employeeParam.consignerName = ""
+            }
+            if (this.param.customerName == "init") {
+                this.param.customerName = ""
+            }
+        },
         selectProvince: function() {
+            console.log('selectProvince');
             this.province = {
                 id: '',
                 cname: ''
@@ -603,12 +632,14 @@ export default {
         },
         selectSupplier: function() {
             this.supplierParam.show = true;
+            console.log(this.supplierParam)
         },
         exChange: function() {
             this.param.consignee = "";
             this.param.customer = "";
             this.param.consigneeName = "";
             this.supplierParam.supplierName = "";
+            this.initData();
             this.param.customerName = "";
         },
         createConsignee: function() {
@@ -651,20 +682,20 @@ export default {
         showModifyBreed: function(index) {
             this.breedInfo.status = 2;
             this.updateParam.price = this.param.goods[index].price,
-                this.updateParam.number = this.param.goods[index].number,
-                this.updateParam.index = index;
+            this.updateParam.number = this.param.goods[index].number,
+            this.updateParam.index = index;
             this.breedInfo.breedId = this.param.goods[index].breedId,
-                this.breedInfo.breedName = this.param.goods[index].breedName,
-                this.breedInfo.title = this.param.goods[index].title,
-                this.breedInfo.quality = this.param.goods[index].quality,
-                this.breedInfo.location = this.param.goods[index].location,
-                this.breedInfo.spec = this.param.goods[index].spec,
-                this.breedInfo.number = this.param.goods[index].number,
-                this.breedInfo.unit = this.param.goods[index].unit,
-                this.breedInfo.price = this.param.goods[index].price,
-                this.breedInfo.costPrice = this.param.goods[index].costPrice,
-                this.breedInfo.sourceType = this.param.goods[index].sourceType,
-                this.updateParam.show = true;
+            this.breedInfo.breedName = this.param.goods[index].breedName,
+            this.breedInfo.title = this.param.goods[index].title,
+            this.breedInfo.quality = this.param.goods[index].quality,
+            this.breedInfo.location = this.param.goods[index].location,
+            this.breedInfo.spec = this.param.goods[index].spec,
+            this.breedInfo.number = this.param.goods[index].number,
+            this.breedInfo.unit = this.param.goods[index].unit,
+            this.breedInfo.price = this.param.goods[index].price,
+            this.breedInfo.costPrice = this.param.goods[index].costPrice,
+            this.breedInfo.sourceType = this.param.goods[index].sourceType,
+            this.updateParam.show = true;
             this.altogether -= parseFloat(this.breedInfo.number) * parseFloat(this.breedInfo.price);
             this.costmoney -= parseFloat(this.breedInfo.number) * parseFloat(this.breedInfo.costPrice);
         },
@@ -755,6 +786,7 @@ export default {
             if (this.param.intl == 1) {}
         },
         confirm: function(param) {
+            this.resetData();
             this.param.country = this.country.cnameEn;
             this.param.province = this.province.cname;
             this.param.city = this.city.cname;
@@ -897,6 +929,7 @@ export default {
             }
             this.param.tradeTime = year + "-" + month + "-" + day + " 00:00:00";
         }
+        this.initData();
 
     }
 }

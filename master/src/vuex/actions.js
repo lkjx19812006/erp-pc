@@ -3836,6 +3836,28 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         console.log('fail');
     })
 }
+
+export const importCustomer = ({ dispatch }, param) => { //excel导入客户
+    let data = new FormData();
+    data.append("country", param.country);
+    data.append("type", param.type);
+    data.append("mFile", param.mFile);
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + '/customer/importByExcel',
+        emulateJSON: false,
+        emulateHTTP: false,
+        body: data
+    }).then((res) => {
+        console.log("success");
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 export const deleteInfo = ({ dispatch }, param) => { //删除客户、药材信息
     console.log(param)
     Vue.http({

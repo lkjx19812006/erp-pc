@@ -1,5 +1,6 @@
 <template>
     <div>
+        <import-customer-model :param="excelImportParam" v-if="excelImportParam.show"></import-customer-model>
         <create-model :param="createParam" v-if="createParam.show"></create-model>
         <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
         <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
@@ -154,6 +155,8 @@
                                             link:saveCreate,
                                             key:'myCustomerList'
                                             })">{{$t("static.new")}}</button>
+                        <!-- EXCEL导入客户 -->
+                        <button type="button" class="btn btn-primary" @click="excelImport()">excel导入客户</button>
                         <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                     </dd>
                 </div>
@@ -281,6 +284,7 @@
 <script>
 import filter from '../../../filters/filters'
 import pagination from '../../../components/pagination'
+import importCustomerModel from '../customerExcelImport.vue'
 import detailModel from '../../../components/clientRelate/clientDetail'
 import createModel from '../../../components/user/userTransfer'
 import deletebreedModel from '../../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
@@ -308,13 +312,15 @@ import {
     saveCreate,
     transferInfo,
     customerTransferBlacklist,
-    customerAudit
+    customerAudit,
+    importCustomer
 } from '../../../vuex/actions'
 
 export default {
     components: {
         pagination,
         detailModel,
+        importCustomerModel,
         createModel,
         deletebreedModel,
         alterinfoModel,
@@ -341,7 +347,8 @@ export default {
             saveCreate,
             transferInfo,
             customerTransferBlacklist,
-            customerAudit
+            customerAudit,
+            importCustomer
         }
     },
     data() {
@@ -377,6 +384,15 @@ export default {
                 total: 0
             },
             language: '',
+            excelImportParam: {
+                show: false,
+                link: this.importCustomer,
+                callback: this.excelImportCallback,
+                country: "", //客户所属国家
+                type: "", //客户类型
+                mFile: "" //excel文件
+
+            },
             provinceParam: {
                 loading: true,
                 show: false,
@@ -450,6 +466,9 @@ export default {
     methods: {
         selectSearch: function() {
             this.getClientList(this.loadParam);
+        },
+        excelImport: function() {
+            this.excelImportParam.show = true;
         },
         clickOn: function(param) {
             this.changeParam = param;
@@ -615,6 +634,12 @@ export default {
             this.tipsParam.alert = true;
         },
         trackCallback: function(title) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.getClientList(this.loadParam);
+        },
+        excelImportCallback: function(title) {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
