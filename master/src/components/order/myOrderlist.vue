@@ -450,7 +450,7 @@ export default {
                 payWay: '',
                 total: '',
                 cost: '',
-                orderStatus: '',
+                orderStatus: 0,
                 goods: [ //多个商品
 
                 ],
@@ -545,7 +545,7 @@ export default {
                 this.$store.state.table.basicBaseList.myOrderList[sub].show = true;
             }
         },
-      
+
         applyBack: function(title) {
             this.tipsParam.show = true;
             this.tipsParam.name = title;

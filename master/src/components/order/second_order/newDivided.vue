@@ -29,7 +29,7 @@
                                 <tbody>
                                     <tr v-for="item in param.stages">
                                         <td>{{item.amount}}</td>
-                                       <!--  <td>{{item.ratio}}</td> -->
+                                        <!--  <td>{{item.ratio}}</td> -->
                                         <td v-if="item.orderStatus==20">{{$t('static.signing_contract')}}</td>
                                         <td v-if="item.orderStatus==60">{{$t('static.confirm_receipt')}}</td>
                                         <td>{{item.extra}}天</td>
@@ -55,7 +55,7 @@
                                                 <option value="60">{{$t('static.confirm_receipt')}}</option>
                                             </select>
                                         </div>
-                                       <!--  <div class="editpage-input col-md-6">
+                                        <!--  <div class="editpage-input col-md-6">
                                             <label class="editlabel">{{$t('static.install_ratio')}}<span class="system_danger" v-if="breedInfo.ratio==''">{{$t('static.required')}}</span>
                                                 <span class="system_danger" v-if="((breedInfo.ratio)*10) > (10-scale)">分期比例不能超过100%</span></label>
                                             <select v-model="breedInfo.ratio" class="form-control edit-input" v-validate:ratio="{required:true}" @change="calculate()">
@@ -74,8 +74,8 @@
                                         <div class="editpage-input col-md-6">
                                             <label class="editlabel">{{$t('static.install_amount')}} <span class="system_danger" v-if="breedInfo.amount==''">{{$t('static.required')}}</span>
                                                 <span class="system_danger" v-if="breedInfo.amount*1000/10>(param.total*1000/10-sum)">不能超过订单总金额</span></label>
-                                                <input type="number" v-if="breedInfo.ratio==1" v-model="breedInfo.amount" value="{{param.total}}" class="form-control edit-input" />
-                                                <input type="number" v-else v-model="breedInfo.amount" value="{{breedInfo.amount}}" class="form-control edit-input" v-validate:amount="{required:true}" />
+                                            <input type="number" v-if="breedInfo.ratio==1" v-model="breedInfo.amount" value="{{param.total}}" class="form-control edit-input" />
+                                            <input type="number" v-else v-model="breedInfo.amount" value="{{breedInfo.amount}}" class="form-control edit-input" v-validate:amount="{required:true}" />
                                         </div>
                                         <div class="editpage-input col-md-6">
                                             <label class="editlabel">{{$t('static.install_extra')}} <span class="system_danger" v-if="$inner.extral.required">{{$t('static.required')}}</span></label>
@@ -268,9 +268,9 @@ export default {
             console.log(this.param.stages)
             this.sum += parseFloat(this.breedInfo.amount) * 100;
             this.scale += parseInt(this.breedInfo.ratio * 10);
-           
-            console.log(this.param.total*1000/10)  //870479.9999999999
-            // breedInfo.amount*100>(param.total*100-sum)
+
+            console.log(this.param.total * 1000 / 10) //870479.9999999999
+                // breedInfo.amount*100>(param.total*100-sum)
 
         },
         showAddBreed: function() {
@@ -346,11 +346,12 @@ export default {
 .table {
     display: table;
 }
-.stageTotal{
+
+.stageTotal {
     display: inline-block;
     margin-left: 7px;
     margin-right: 7px;
-    font-size:14px;
+    font-size: 14px;
     font-weight: 500
 }
 </style>

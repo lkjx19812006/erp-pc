@@ -110,6 +110,7 @@ export default {
                         _self.imageShow = false;
                         _self.close = false;
                         let param = new FormData();
+                        console.log(file);
                         param.append("qiniu", _self.param.qiniu);
                         param.append("mFile", file);
                         _self.upload(param, '');
