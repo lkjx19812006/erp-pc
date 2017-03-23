@@ -73,7 +73,7 @@
                                         </div> -->
                                         <div class="editpage-input col-md-6">
                                             <label class="editlabel">{{$t('static.install_amount')}} <span class="system_danger" v-if="breedInfo.amount==''">{{$t('static.required')}}</span>
-                                                <span class="system_danger" v-if="breedInfo.amount*100>(param.total*100-sum)">不能超过订单总金额</span></label>
+                                                <span class="system_danger" v-if="breedInfo.amount*1000/10>(param.total*1000/10-sum)">不能超过订单总金额</span></label>
                                                 <input type="number" v-if="breedInfo.ratio==1" v-model="breedInfo.amount" value="{{param.total}}" class="form-control edit-input" />
                                                 <input type="number" v-else v-model="breedInfo.amount" value="{{breedInfo.amount}}" class="form-control edit-input" v-validate:amount="{required:true}" />
                                         </div>
@@ -99,7 +99,7 @@
                                                 <div v-if="breedInfo.status==1" @click="cancelAddBreed()">{{$t('static.cancel')}}</div>
                                                 <div v-if="breedInfo.status==2" @click="cancelModifyBreed()">{{$t('static.cancel')}}</div>
                                             </button>
-                                            <button type="button" class="btn btn-confirm" v-if="$inner.valid&&(param.total*100-sum-breedInfo.amount*100)>=0">
+                                            <button type="button" class="btn btn-confirm" v-if="$inner.valid&&(param.total*1000/10-sum-breedInfo.amount*1000/10)>=0">
                                                 <div v-if="breedInfo.status==1" @click="addBreed()">{{$t('static.save')}}</div>
                                                 <!-- <div v-if="(breedInfo.status==1||breedInfo.status==2)&&this.sum > this.param.total" @click="addBreed()">{{$t('static.save')}}</div> -->
                                                 <div v-if="breedInfo.status==2" @click="modifyBreed()">{{$t('static.save')}}</div>
@@ -113,7 +113,7 @@
                     </div>
                     <div class="edit_footer">
                         <button type="button" class="btn btn-default btn-close" @click="closeInfo()">{{$t('static.cancel')}}</button>
-                        <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.stages.length>0&&sum == param.total*100" @click="confirm()">{{$t('static.confirm')}}</button>
+                        <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.stages.length>0&&sum == param.total*1000/10" @click="confirm()">{{$t('static.confirm')}}</button>
                         <!-- <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.stages.length>0&&this.sum!=this.param.total"  disabled="true">总金额不对</button> -->
                         <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.confirm')}}</button>
                     </div>
@@ -200,7 +200,6 @@ export default {
             console.log(this.scale);
         },
         calculate: function() {
-            console.log(this.scale)
             this.breedInfo.amount = (this.breedInfo.ratio * 100) * this.param.total / 100;
             console.log(((this.breedInfo.ratio) * 10) >= (10 - this.scale))
             console.log((this.breedInfo.ratio) * 10)
@@ -269,8 +268,9 @@ export default {
             console.log(this.param.stages)
             this.sum += parseFloat(this.breedInfo.amount) * 100;
             this.scale += parseInt(this.breedInfo.ratio * 10);
-            console.log(this.sum);
-            console.log(this.scale);
+           
+            console.log(this.param.total*1000/10)  //870479.9999999999
+            // breedInfo.amount*100>(param.total*100-sum)
 
         },
         showAddBreed: function() {

@@ -239,9 +239,9 @@
                             <select v-model="salesLogistic.way" class="form-control left">
                                 <option value="0" selected>{{$t('static.thrid_logistics')}}</option>
                                 <option value="1">{{$t('static.driver_self')}}</option>
-                                <option value="2">国际物流</option>
-                                <option value="4">空运</option>
-                                <option value="3">海运</option>
+                                <option value="2">{{$t('static.international_logistics')}}</option>
+                                <option value="4">{{$t('static.air_transport')}}</option>
+                                <option value="3">{{$t('static.Ocean_Shipping')}}</option>
                             </select>
                         </div>
                         <!-- 上传物流 -->
@@ -294,7 +294,7 @@
                         <!-- 国际物流 -->
                         <div class="space_15 clearfix col-md-12" v-if="salesLogistic.way==2">
                             <div class="logical_color clearfix col-md-6">
-                                <span class="pull-left">国际物流 <span class="system_danger" v-if="$validation.international.required">{{$t('static.required')}}</span></span>
+                                <span class="pull-left">{{$t('static.international_logistics')}}<span class="system_danger" v-if="$validation.international.required">{{$t('static.required')}}</span></span>
                                
                                 <select class="form-control left" v-model = "salesLogistic.name" v-validate:international="{required:true}">
                                     <option>FEDEX</option>
@@ -308,8 +308,8 @@
                             <!-- 国际快递 -->
                             <div class="fedex" >
                                 <div class="logical_color clearfix col-md-6">
-                                    <span class="pull-left">快递单号 <span class="system_danger" v-if="$validation.express.required">{{$t('static.required')}}</span></span>
-                                    <input type="text" class="form-control left" placeholder="快递单号" v-model="salesLogistic.number" v-validate:express="{required:true}" />
+                                    <span class="pull-left">{{$t('static.Tracking_numbers')}}<span class="system_danger" v-if="$validation.express.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" placeholder="{{$t('static.Tracking_numbers')}}" v-model="salesLogistic.number" v-validate:express="{required:true}" />
                                </div>
                                 <!-- 上传图片 -->
                                 <div class="logical_color col-md-12">
@@ -325,8 +325,8 @@
                         <!-- 空运 -->
                         <div class="ocean space_15 clearfix col-md-12" v-if="salesLogistic.way==4">
                           <div class="logical_color clearfix col-md-6">
-                                <span class="pull-left">空运运单<span class="system_danger" v-if="$validation.fly.required">{{$t('static.required')}}</span></span>
-                                <input type="text" class="form-control left" placeholder="空运单号" v-model="salesLogistic.number" v-validate:fly="{required:true}" />
+                                <span class="pull-left">{{$t('static.Air_freightWaybill')}}<span class="system_danger" v-if="$validation.fly.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="{{$t('static.Air_freightWaybill')}}" v-model="salesLogistic.number" v-validate:fly="{required:true}" />
                            </div>
                            <!-- 上传图片 -->
                            <div class="logical_color col-md-12">
@@ -340,16 +340,16 @@
                         <!-- 海运 -->
                         <div class="fly space_15 clearfix col-md-12"  v-if="salesLogistic.way==3">
                             <div class="logical_color clearfix col-md-6">
-                                <span class="pull-left">海运提单号<span class="system_danger" v-if="$validation.oceanno.required">{{$t('static.required')}}</span></span>
-                                <input type="text" class="form-control left" placeholder="海运提单号" v-model="salesLogistic.number" v-validate:oceanno="{required:true}" />
+                                <span class="pull-left">{{$t('static.Ocean_bill')}}<span class="system_danger" v-if="$validation.oceanno.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="{{$t('static.Ocean_bill')}}" v-model="salesLogistic.number" v-validate:oceanno="{required:true}" />
                             </div>
                             <div class="logical_color clearfix col-md-6">
-                                <span class="pull-left">船名<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
-                                <input type="text" class="form-control left" placeholder="船名" v-model="salesLogistic.name" v-validate:driverno="{required:true}" />
+                                <span class="pull-left">{{$t('static.Name_essel')}}<span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                                <input type="text" class="form-control left" placeholder="{{$t('static.Name_essel')}}" v-model="salesLogistic.name" v-validate:driverno="{required:true}" />
                             </div>
                             <div class="logical_color clearfix col-md-6">
-                                <span class="pull-left">航次</span>
-                                <input type="text" class="form-control left" placeholder="船次" v-model="salesLogistic.vesselNo" />
+                                <span class="pull-left">{{$t('static.Ship_number')}}</span>
+                                <input type="text" class="form-control left" placeholder="{{$t('static.Ship_number')}}" v-model="salesLogistic.vesselNo" />
                            </div>
                            <!-- 上传图片 -->
                            <div class="logical_color col-md-12">
@@ -384,7 +384,7 @@
                             <p>{{$t('static.logistics')}}：</p>
                             <div v-for="item in initOrderDetail.sendPics.arr">
                                 <img v-if="item.url | file" class="picture" v-bind:src="item.url" width="150px" @click="clickBig(item.url)" />
-                                <a v-else style="width: 109px;display: inline-block;white-space: normal;" href="{{item.url}}" download="">文件下载</a>
+                                <a v-else style="width: 109px;display: inline-block;white-space: normal;" href="{{item.url}}" download="">{{$t('static.file_down')}}</a>
                             </div>
                         </div>
                     </div>
@@ -423,7 +423,7 @@
                             <p>{{$t('static.logistics')}}：</p>
                             <div v-for="item in initOrderDetail.sendPics.arr">
                                 <img v-if="item.url | file" class="picture" v-bind:src="item.url" width="150px" @click="clickBig(item.url)" />
-                                <a v-else href="{{item.url}}" style="width: 109px;display: inline-block;white-space: normal;" download="">非图片文件显示，请下载查看</a>
+                                <a v-else href="{{item.url}}" style="width: 109px;display: inline-block;white-space: normal;" download="">{{$t('static.non_image')}}</a>
                             </div>
                             <!-- <img class="picture" v-for="item in initOrderDetail.sendPics.arr" v-bind:src="item.url" width="150px" @click="clickBig(item.url)" /> -->
                         </div>
@@ -455,22 +455,22 @@
                     <p class="order-message">{{$t('static.logistics_info')}}</p>
                     <div class="space_15 clearfix">
                         <div class="logical_color col-md-6">
-                            <span>司机姓名：{{initOrderDetail.logisticses.arr[0].driverName}}</span>
+                            <span>{{$t('static.driver_name')}}：{{initOrderDetail.logisticses.arr[0].driverName}}</span>
                         </div>
                         <div class="logical_color col-md-6">
-                            <span>司机身份证号：{{initOrderDetail.logisticses.arr[0].driverPid}}</span>
+                            <span>{{$t('static.ID_number')}}：{{initOrderDetail.logisticses.arr[0].driverPid}}</span>
                         </div>
                         <div class="logical_color col-md-6">
-                            <span>司机联系方式：{{initOrderDetail.logisticses.arr[0].driverTel}}</span>
+                            <span>{{$t('static.driver_phone')}}：{{initOrderDetail.logisticses.arr[0].driverTel}}</span>
                         </div>
                         <div class="logical_color col-md-6">
-                            <span>车牌号：{{initOrderDetail.logisticses.arr[0].vehicleNo}}</span>
+                            <span>{{$t('static.license_number')}}：{{initOrderDetail.logisticses.arr[0].vehicleNo}}</span>
                         </div>
                         <div class="logical_color clearfix col-md-12">
                             <p>{{$t('static.logistics')}}：</p>
                             <div v-for="item in initOrderDetail.sendPics.arr">
                                 <img v-if="item.url | file" class="picture" v-bind:src="item.url" width="150px" @click="clickBig(item.url)" />
-                                <a v-else style="width: 109px;display: inline-block;white-space: normal;" href="{{item.url}}" download="">文件下载</a>
+                                <a v-else style="width: 109px;display: inline-block;white-space: normal;" href="{{item.url}}" download="">{{$t('static.file_down')}}</a>
                             </div>
                         </div>
                     </div>

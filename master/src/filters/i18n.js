@@ -540,8 +540,17 @@ var locales = {
             discount: '特惠总金额',
             extra_total: '杂费总金额',
             bank_name: '银行名称',
-            delivery_record: '订单分期记录'
-
+            delivery_record: '订单分期记录',
+            international_logistics:'国际物流',
+            Tracking_numbers:'快递单号',
+            Air_freightWaybill:'空运运单',
+            air_transport:'空运',
+            Ocean_Shipping:'海运',
+            Ocean_bill:'海运提单号 ',
+            Name_essel:'船名',
+            Ship_number:'航次',
+            file_down:'文件下载',
+            non_image:'非图片文件显示，请下载查看'
         }
     },
     en: {
@@ -1073,7 +1082,17 @@ var locales = {
             discount: 'Discount',
             extra_total: 'Extra fees total',
             bank_name: 'Bank name',
-            delivery_record: 'Delivery record'
+            delivery_record: 'Delivery record',
+            international_logistics:'international logistics',
+            Tracking_numbers:'Tracking numbers',
+            Air_freightWaybill:'Air freight waybill',
+            air_transport:'air transport',
+            Ocean_Shipping:'Ocean Shipping',
+            Ocean_bill:'Ocean bill of lading',
+            Name_essel:'Name of vessel',
+            Ship_number:'Ship number',
+            file_down:'file downloading',
+            non_image:'non-image file, please download it'
         }
     }
 }
