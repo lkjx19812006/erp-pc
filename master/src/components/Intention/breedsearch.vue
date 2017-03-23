@@ -125,6 +125,7 @@ export default {
         resetTime: function() {
             this.loadParam.name = '';
             this.loadParam.eName = '';
+            this.loadParam.lName = '';
             this.getBreedNameSearch(this.loadParam);
         }
     },
