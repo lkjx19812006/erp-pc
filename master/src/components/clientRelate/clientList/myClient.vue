@@ -470,6 +470,7 @@ export default {
             this.getClientList(this.loadParam);
         },
         excelImport: function() {
+            this.excelImportParam.success = false;
             this.excelImportParam.show = true;
         },
         clickOn: function(param) {
