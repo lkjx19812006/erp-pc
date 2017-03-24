@@ -386,9 +386,10 @@ export default {
             language: '',
             excelImportParam: {
                 show: false,
-                loading: false,
+                loading: false, //上传时显示载入样式
+                success: false, //是否上传成功
+                result: "", // 导入成功后的返回信息
                 link: this.importCustomer,
-                callback: this.excelImportCallback,
                 country: "", //客户所属国家
                 type: "", //客户类型
                 mFile: "" //excel文件
@@ -635,12 +636,6 @@ export default {
             this.tipsParam.alert = true;
         },
         trackCallback: function(title) {
-            this.tipsParam.show = true;
-            this.tipsParam.name = title;
-            this.tipsParam.alert = true;
-            this.getClientList(this.loadParam);
-        },
-        excelImportCallback: function(title) {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;

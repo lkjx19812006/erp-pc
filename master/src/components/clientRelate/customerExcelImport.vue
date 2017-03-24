@@ -54,14 +54,22 @@
                     </div>
                     <div class="editpage-input clearfix">
                         <label class="editlabel">{{$t('static.file')}}</label>
-                        <input type="file" id="file" />
+                        <input type="file" id="file" class="left" />
+                        <button type="button" class="btn btn-confirm right" @click="save()">{{$t('static.upload')}}</button>
+                        <div v-if="param.success" class="right" style="color:red">{{$t('static.upload')}}{{$t('static.success')}}</div>
                     </div>
-                    <h4 v-show="param.loading" style="margin-top:50px;text-align:center;color:red">Please wait a minute!!</h4>
+                    <h4 v-show="param.loading" style="margin-top:50px;text-align:center;color:red">Please wait a moment!!</h4>
+                    <!-- 如果上传完成后显示上传后返回信息 -->
+                    <div v-if="param.success" class="editpage-input clearfix">
+                        <div>您共上传了{{param.result.total}}条客户记录 </div>
+                        <div>成功了{{param.result.success}}条</div>
+                        <div>失败了{{param.result.failure}}条 </div>
+                        <div>文件下载地址:<a href="{{param.result.path}}">{{param.result.path}}</a></div>
+                    </div>
                 </section>
             </div>
             <div class="edit_footer">
-                <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-                <button type="button" class="btn btn-confirm" @click="save()">{{$t('static.save')}}</button>
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.back')}}</button>
             </div>
         </div>
     </div>
@@ -85,10 +93,6 @@ export default {
     props: ['param'],
     data() {
         return {
-            imageParam: {
-                url: '/crm/api/v1/file/',
-                qiniu: false
-            },
             tipParam: {
                 show: false,
                 alert: true,

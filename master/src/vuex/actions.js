@@ -3855,11 +3855,11 @@ export const importCustomer = ({ dispatch }, param) => { //excel导入客户
         body: data
     }).then((res) => {
         console.log("success");
-        param.show = false;
-        param.loading = false;
-        if (param.callback) {
-            param.callback(res.json().msg);
+        if (res.json().code == 200) {
+            param.success = true;
+            param.result = res.json().result;
         }
+        param.loading = false;
     }, (res) => {
         console.log('fail');
     })
