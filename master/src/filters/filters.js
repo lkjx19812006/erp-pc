@@ -692,7 +692,7 @@ Vue.filter('payfee', function(val) { //将金额保留小数点后两位
 Vue.filter('orderstatus', function(val) { //订单状态
     var val = val;
     if (val == 0) {
-        return '订单生成';
+        return '新建订单';
     }
     if (val == 10) {
         return '订单处理中';
@@ -710,7 +710,7 @@ Vue.filter('orderstatus', function(val) { //订单状态
         return '等待收货';
     }
     if (val == 60) {
-        return '订单已完成';
+        return '已收货';
     }
     if (val == 70) {
         return '订单已完成';

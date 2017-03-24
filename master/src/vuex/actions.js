@@ -1618,13 +1618,6 @@ export const editPayment = ({ dispatch }, param) => { //编辑我的收付款
     });
 };
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
-    console.log(param)
-        /* param.images = '';
-         if (param.image_f) {
-             param.images += param.image_f + ','
-         }
-         if (param.image_s) { param.images += param.image_s + ',' }
-         if (param.image_t) { param.images += param.image_t };*/
     const body = {
         orderId: param.id
     }
@@ -1705,6 +1698,30 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
         console.log('fail');
     })
 }
+export const orderDeliverGoods = ({ dispatch }, param) => { //订单发货
+    const body = {
+        id: param.id,
+        logisticses:param.logisticses
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateJSON: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+       param.callback(res.json().msg);
+     
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 export const orderReceive = ({ dispatch }, param) => { //订单收货流程
     console.log(param)
     param.images = '';
