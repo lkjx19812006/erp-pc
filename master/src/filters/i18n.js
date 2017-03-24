@@ -550,7 +550,8 @@ var locales = {
             Name_essel:'船名',
             Ship_number:'航次',
             file_down:'文件下载',
-            non_image:'非图片文件显示，请下载查看'
+            non_image:'非图片文件显示，请下载查看',
+            Latin:'拉丁文'
         }
     },
     en: {
@@ -1092,7 +1093,8 @@ var locales = {
             Name_essel:'Name of vessel',
             Ship_number:'Ship number',
             file_down:'file downloading',
-            non_image:'non-image file, please download it'
+            non_image:'non-image file, please download it',
+            Latin:'Latin'
         }
     }
 }

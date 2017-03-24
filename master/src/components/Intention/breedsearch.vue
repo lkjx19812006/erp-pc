@@ -21,9 +21,9 @@
                         </dl>
                         <!-- 拉丁文 -->
                         <dl class="clear left transfer">
-                            <dt class="left marg_top">拉丁文：</dt>
+                            <dt class="left marg_top">{{$t('static.Latin')}}：</dt>
                             <dd class="left">
-                                <input type="text" class="form-control" v-model="loadParam.lName" @keyUp.enter="employNameSearch()" placeholder="拉丁文" />
+                                <input type="text" class="form-control" v-model="loadParam.lName" @keyUp.enter="employNameSearch()" placeholder="{{$t('static.Latin')}}" />
                             </dd>
                         </dl>
                         <div class="name_search clearfix transfer" style="border:none">
