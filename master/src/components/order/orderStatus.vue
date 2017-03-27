@@ -242,7 +242,8 @@
                                 <span class="pull-left">{{$t('static.shipped_method')}}：</span>
                                 <select v-model="salesLogistic.way" class="form-control left">
                                     <option value="0" selected>{{$t('static.thrid_logistics')}}</option>
-                                    <option value="1">{{$t('static.driver_self')}}</option>                                   
+                                    <option value="1">{{$t('static.driver_self')}}</option>
+                                    <option value="5">国内自提</option>                                     
                                 </select>
                             </div>
                             <!--第三方物流 -->
@@ -261,7 +262,7 @@
                                 <div class="logical_color col-md-12">
                                     <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img.required">{{$t('static.required')}}</span></span>
                                     <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f" v-validate:img="{required:true}" />
-                                    <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
+                                    <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;" @click="selectImg(0)">
                                         <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam"></press-image>
                                     </div>
                                 </div>
@@ -280,6 +281,7 @@
                                     <span class="pull-left">{{$t('static.driver_phone')}} <span class="system_danger" v-if="$validation.drivertel.phone">{{$t('static.required')}}</span></span>
                                     <input type="tel" class="form-control left" placeholder="{{$t('static.driver_phone')}}" v-model="salesLogistic.driverTel" v-validate:drivertel="['phone']" />
                                 </div>
+
                                 <div class="logical_color clearfix col-md-6">
                                     <span class="pull-left">{{$t('static.license_number')}} <span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
                                     <input type="text" class="form-control left" placeholder="{{$t('static.license_number')}}" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
@@ -287,12 +289,34 @@
                                 <div class="logical_color col-md-12">
                                     <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img1.required">{{$t('static.required')}}</span></span>
                                     <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f" v-validate:img1="{required:true}" />
-                                    <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
+                                    <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;" @click="selectImg(0)">
                                         <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam"></press-image>
                                     </div>
                                 </div>
                             </div>
-                           
+                            <!-- 国内自提 -->
+                            <div class=" clearfix col-md-12 intl" v-if="salesLogistic.way==5">
+                                <div class="logical_color clearfix col-md-6">
+                                    <span class="pull-left">{{$t('static.name')}} <span class="system_danger" v-if="$validation.sinecename.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" placeholder="{{$t('static.name')}}" v-model="salesLogistic.driverName" v-validate:sinecename="{required:true}" />
+                                </div>
+                                <div class="logical_color clearfix col-md-6">
+                                    <span class="pull-left">联系方式 <span class="system_danger" v-if="$validation.sinecetel.required">{{$t('static.required')}}</span></span>
+                                    <input type="tel" class="form-control left" placeholder="联系方式" v-model="salesLogistic.driverTel" v-validate:sinecetel="{required:true}" />
+                                </div>
+                                <div class="logical_color clearfix col-md-6">
+                                    <span class="pull-left">{{$t('static.ID_number')}} </span>
+                                    <input type="text" class="form-control left" placeholder="{{$t('static.ID_number')}}" v-model="salesLogistic.driverPid"  />
+                                </div>
+                                
+                                <!-- 自提备注 -->
+                                <div class="logical_color clearfix col-md-6">
+                                   <span class="pull-left">{{$t('static.comment')}} </span>
+                                   <!--  <input type="tel" class="form-control left" placeholder="{{$t('static.comment')}}" v-model="salesLogistic.description"  /> -->
+                                   <textarea class="form-control left" v-model="salesLogistic.description"></textarea>
+                                </div>
+                                
+                            </div>
                         </div>
                         <!-- 国际物流的发货方式-->
                         <div v-if="initOrderDetail.intl == 1" style="clear:both">
@@ -301,17 +325,17 @@
                             <div class="clearfix col-md-6 intl">
                                 <span class="pull-left">{{$t('static.shipped_method')}}：</span>
                                 <select v-model="intlLogistic.way" class="form-control left">
-                                    <option value="2" selected>国际快递</option>
-                                    <option value="3">{{$t('static.air_transport')}}</option>
-                                    <option value="4">{{$t('static.Ocean_Shipping')}}</option>
+                                    <option value="2">国际快递</option>
+                                    <option value="4">{{$t('static.air_transport')}}</option>
+                                    <option value="3">{{$t('static.Ocean_Shipping')}}</option>
                                 </select>
                             </div>
                            
                             <!-- 国际快递 -->
                             <div class=" clearfix col-md-12 intl" v-if="intlLogistic.way==2">
                                 <div class="logical_color clearfix col-md-6">
-                                    <span class="pull-left">国际快递</span>
-                                   
+                                    <span class="pull-left">国际快递<span class="system_danger" v-if="$validation.intlexpress.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" v-model="intlLogistic.name" v-show="false" v-validate:intlexpress="{required:true}" />
                                     <select class="form-control left" v-model = "intlLogistic.name">
                                         <option>FEDEX</option>
                                         <option>DHL</option>
@@ -324,14 +348,14 @@
                                 <!-- 国际快递 -->
                                 <div class="fedex" >
                                     <div class="logical_color clearfix col-md-6">
-                                        <span class="pull-left">{{$t('static.Tracking_numbers')}}</span>
-                                        <input type="text" class="form-control left" placeholder="{{$t('static.Tracking_numbers')}}" v-model="intlLogistic.number" />
+                                        <span class="pull-left">{{$t('static.Tracking_numbers')}}<span class="system_danger" v-if="$validation.expressnumber.required">{{$t('static.required')}}</span></span>
+                                        <input type="text" class="form-control left" placeholder="{{$t('static.Tracking_numbers')}}" v-model="intlLogistic.number" v-validate:expressnumber="{required:true}" />
                                    </div>
                                     <!-- 上传图片 -->
                                     <div class="logical_color col-md-12">
                                         <span class="editlabel">{{$t('static.upload_logistcs')}} </span>
                                         <input type="text" class="form-control left" v-show="false"  />
-                                        <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
+                                        <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;" @click="selectImg(1)">
                                             <press-image :value.sync="intlLogistic.image_f" :type="type" :param="imageParam"></press-image>
                                         </div>
                                      </div>
@@ -339,29 +363,29 @@
                                
                             </div>
                             <!-- 空运 -->
-                            <div class="ocean clearfix col-md-12 intl" v-if="intlLogistic.way==3">
+                            <div class="ocean clearfix col-md-12 intl" v-if="intlLogistic.way==4">
                               <div class="logical_color clearfix col-md-6">
-                                    <span class="pull-left">{{$t('static.Air_freightWaybill')}}</span>
-                                    <input type="text" class="form-control left" placeholder="{{$t('static.Air_freightWaybill')}}" v-model="intlLogistic.number" />
+                                    <span class="pull-left">{{$t('static.Air_freightWaybill')}}<span class="system_danger" v-if="$validation.airfreight.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" placeholder="{{$t('static.Air_freightWaybill')}}" v-model="intlLogistic.number" v-validate:airfreight="{required:true}" />
                                </div>
                                <!-- 上传图片 -->
                                <div class="logical_color col-md-12">
                                     <span class="editlabel">{{$t('static.upload_logistcs')}} </span>
                                     <input type="text" class="form-control left" v-show="false" />
-                                    <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
+                                    <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;" @click="selectImg(1)">
                                         <press-image :value.sync="intlLogistic.image_f" :type="type" :param="imageParam"></press-image>
                                     </div>
                                 </div>
                             </div>
                             <!-- 海运 -->
-                            <div class="fly clearfix col-md-12 intl"  v-if="intlLogistic.way==4">
+                            <div class="fly clearfix col-md-12 intl"  v-if="intlLogistic.way==3">
                                 <div class="logical_color clearfix col-md-6">
-                                    <span class="pull-left">{{$t('static.Ocean_bill')}}</span>
-                                    <input type="text" class="form-control left" placeholder="{{$t('static.Ocean_bill')}}" v-model="intlLogistic.number" />
+                                    <span class="pull-left">{{$t('static.Ocean_bill')}}<span class="system_danger" v-if="$validation.billnumber.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" placeholder="{{$t('static.Ocean_bill')}}" v-model="intlLogistic.number" v-validate:billnumber="{required:true}"/>
                                 </div>
                                 <div class="logical_color clearfix col-md-6">
-                                    <span class="pull-left">{{$t('static.Name_essel')}}</span>
-                                    <input type="text" class="form-control left" placeholder="{{$t('static.Name_essel')}}" v-model="intlLogistic.name"  />
+                                    <span class="pull-left">{{$t('static.Name_essel')}}<span class="system_danger" v-if="$validation.oceanname.required">{{$t('static.required')}}</span></span>
+                                    <input type="text" class="form-control left" placeholder="{{$t('static.Name_essel')}}" v-model="intlLogistic.name"  v-validate:oceanname="{required:true}"/>
                                 </div>
                                 <div class="logical_color clearfix col-md-6">
                                     <span class="pull-left">{{$t('static.Ship_number')}}</span>
@@ -371,7 +395,7 @@
                                <div class="logical_color col-md-12">
                                     <span class="editlabel">{{$t('static.upload_logistcs')}}</span>
                                     <input type="text" class="form-control left" v-show="false" />
-                                    <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
+                                    <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;" @click="selectImg(1)">
                                         <press-image :value.sync="intlLogistic.image_f" :type="type" :param="imageParam"></press-image>
                                     </div>
                                 </div>
@@ -592,7 +616,7 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 key: 'orderDetail',
-                id: this.param.id,
+                id: this.param.id
             },
             myOrderParam: {
                 loading: true,
@@ -672,26 +696,30 @@ export default {
                   orderId: this.param.id,
                   number:'',
                   image_f:'',
+                  images:'',
                   driverName: '',
                   driverPid: '',
                   driverTel: '',
                   vehicleNo: '',
                   name:'',
-                  logistics:''
-                 
+                  logistics:'',
+                  description:''
             },
             intlLogistic:{         //国际物流
                   way:'', 
                   number:'',
                   name:'',
                   image_f:'',
-                  vesselNo:''
+                  vesselNo:'',
+                  images:''
             },
+            imgType:null,
             deliverParam:{
                 id:'',
                 logisticses:[],
                 link:'/order/sendflowSend',
-                callback:this.deliverCallback
+                callback:this.deliverCallback,
+                key:this.param.key
             },
             tipParam: {
                 show: false,
@@ -769,10 +797,11 @@ export default {
                     
             }
 
-            if(this.salesLogistic.image_f){
-                  salesLogistic.image_f = this.salesLogistic.image_f;  
+            if(this.salesLogistic.images){
+                  salesLogistic.images = this.salesLogistic.images;  
             }
             
+
             if(this.salesLogistic.orderId){
                   salesLogistic.orderId = this.salesLogistic.orderId;
             }
@@ -788,6 +817,7 @@ export default {
                 if(this.salesLogistic.number){
                   salesLogistic.number = this.salesLogistic.number;  
                 }
+                salesLogistic.way = this.salesLogistic.way;  
             }
             
             if(this.salesLogistic.way == 1){    //包车自运
@@ -804,8 +834,27 @@ export default {
                 if(this.salesLogistic.driverName){
                   salesLogistic.driverName = this.salesLogistic.driverName;  
                 }
+                salesLogistic.way = this.salesLogistic.way;  
             }
-  
+             
+            if(this.salesLogistic.way == 5){    //国内自提
+               if(this.salesLogistic.driverName){
+                  salesLogistic.driverName = this.salesLogistic.driverName;  
+                }
+
+                if(this.salesLogistic.driverTel){
+                  salesLogistic.driverTel = this.salesLogistic.driverTel;  
+                }
+                if(this.salesLogistic.driverPid){
+                  salesLogistic.driverPid = this.salesLogistic.driverPid;  
+                }
+                if(this.salesLogistic.description){
+                  salesLogistic.description = this.salesLogistic.description;  
+                }
+                salesLogistic.way = this.salesLogistic.way;  
+            }
+            
+
             if(this.intlLogistic.way){
               intlLogistic.way = this.intlLogistic.way;  
             }
@@ -815,20 +864,36 @@ export default {
             if(this.intlLogistic.name){
               intlLogistic.name = this.intlLogistic.name;  
             }
-            if(this.intlLogistic.image_f){
-              intlLogistic.image_f = this.intlLogistic.image_f;  
+            if(this.intlLogistic.images){
+              intlLogistic.images = this.intlLogistic.images;  
             }
             if(this.intlLogistic.vesselNo){
               intlLogistic.vesselNo = this.intlLogistic.vesselNo;  
             }
-           
+            
+            if(this.intlLogistic){
+
+                  intlLogistic.images = this.intlLogistic.images;  
+            }
             this.deliverParam.id = this.salesLogistic.orderId;
-            this.deliverParam.logisticses = [
-                salesLogistic,
-                intlLogistic
-            ];
+
+            if(this.intlLogistic.way == ''){
+               this.deliverParam.logisticses =[
+                 salesLogistic
+               ]
+            }else{
+                this.deliverParam.logisticses = [
+                    salesLogistic,
+                    intlLogistic
+                ];
+            }
+
             this.orderDeliverGoods(this.deliverParam);
 
+        },
+        selectImg:function(param){   //将上传的图片分别付给不同的变量
+            this.imgType = param;
+            console.log(this.imgType)
         },
         deliverCallback:function(title){   
             this.tipParam.show = true;
@@ -867,9 +932,7 @@ export default {
                 this.$broadcast('getImageData');
             } else if (payorder.payWay == 3) { //药款支付
                 payorder.callback = this.param.callback;
-                this.yankuanPayorder(this.param, payorder);
-                console.log(payorder)
-                    //this.param.show=false;
+                this.yankuanPayorder(this.param, payorder); 
             } else {
                 this.tipParam.show = true;
                 this.tipParam.name = '请选择支付方式/Select order status';
@@ -898,19 +961,33 @@ export default {
             this.param.path = imageData.result.path;
         },
         getFiles: function(files) {
-            console.log(files);
-            this.salesLogistic.images = '';
-            this.uploadLogistic.images = '';
+            // this.salesLogistic.images = ''
+            // this.intlLogistic.images = ''
+            // this.uploadLogistic.images = ''
+            console.log(this.salesLogistic.image_f);
             for (let i = 0; i < files.length; i++) {
+                if (i == 0&&this.imgType==0) {
+                    this.salesLogistic.images = files[0].path;                 
+                } 
                 if (i == 0) {
-                    this.salesLogistic.images = files[0].path;
-
-                    this.uploadLogistic.images = files[0].path;
-                } else {
-                    this.salesLogistic.images = this.salesLogistic.images + "," + files[i].path;
-                    this.uploadLogistic.images = this.uploadLogistic.images + "," + files[i].path;
+                    this.uploadLogistic.images = files[0].path;    
+                } 
+                if (i !== 0) {
+                    this.uploadLogistic.images =this.uploadLogistic.images + "," + files[i].path;
+                } 
+                if(i == 0&&this.imgType==1){
+                    this.intlLogistic.images = files[0].path;                   
                 }
+                if(i !== 0&&this.imgType==0){
+                    this.salesLogistic.images = this.salesLogistic.images + "," + files[i].path;
+                   
+                }
+                if(i !== 0&&this.imgType==1){
+                    this.intlLogistic.images = this.intlLogistic.images + "," + files[i].path;
+                }
+              
             }
+           
         }
     },
     created() {

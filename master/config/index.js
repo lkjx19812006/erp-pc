@@ -24,9 +24,9 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/crm/api/v1/**': {
-                target: 'http://192.168.1.103:8080',
+                // target: 'http://192.168.1.103:8080',
                 // target: 'http://127.0.0.1:8080',
-                // target: 'http://192.168.25.13:8080',
+                target: 'http://192.168.25.13:8080',
                 changeOrigin: true
             }
         },
