@@ -174,7 +174,6 @@ export default {
             console.log(data);
             this.loadParam.loading = true;
             var _self=this;
-            console.log(this);
                this.$http({
                     method: 'POST',
                     url: '/crm/api/v1/file/'+url,
@@ -199,13 +198,23 @@ export default {
                         temp.imageShow = false;
                     }
                     _self.files.push(temp);
+
+                    for (let i = 0; i < _self.files.length; i++) {
+                        if (i == 0) {
+                            _self.value = _self.files[0].path;                 
+                        } else {
+                            
+                            _self.value =_self.value + "," + _self.files[i].path;
+                        }
+                    }
+
                     _self.$dispatch("getImageData", res.json());
                     _self.$dispatch("getFiles", _self.files);
-                    _self.value=res.json().result.path;
+                    
+                    //_self.value=res.json().result.path;
                     _self.showurl=res.json().result.url;
 
                     this.loadParam.loading = false;
-                    console.log(res.json());
                     }, (res) => {
                       console.log('fail');
                       this.loadParam.loading = false;

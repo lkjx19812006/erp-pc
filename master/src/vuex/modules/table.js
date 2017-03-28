@@ -307,7 +307,7 @@ const state = {
             "goods": null,
             "payPics": null,
             "sendPics": null,
-            term: 0
+             term: 0
         }],
         allOrderList: [{
             "id": "5726ea3bf22125bcdcff7820",

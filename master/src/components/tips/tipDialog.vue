@@ -13,7 +13,7 @@
                     <div class="tips_name" v-if="param.name!='确定取消询价?'&&param.name!='确认删除?'&&!param.apply">{{param.name}}</div>
                 </div>
                 <div class="model-footer" v-if="param.alert">
-                    <input type="button" class="btn btn-close" @click="param.show = false" value="{{$t('static.confirm')}}" />
+                    <input type="button" class="btn btn-close" @click="hidden" value="{{$t('static.confirm')}}" />
                 </div>
                 <div class="model-footer" v-if="param.remain">
                     <input type="button" class="btn btn-close" @click="param.callback()" value="{{$t('static.confirm')}}" />
@@ -32,7 +32,13 @@
 </template>
 <script>
 export default {
-    props: ['param']
+    props: ['param'],
+    methods:{
+        hidden:function(){
+            this.param.show = false;
+            this.$parent.param.show =false
+        }
+    }
 }
 </script>
 <style scoped>
