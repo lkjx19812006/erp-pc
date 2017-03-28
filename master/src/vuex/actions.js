@@ -1698,17 +1698,11 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
         console.log('fail');
     })
 }
-export const orderDeliverGoods = ({ dispatch }, param) => { //订单发货
+export const orderDeliverGoods = ({ dispatch }, param) => { //销售订单发货，采购订单发货在上面
     const body = {
         id: param.id,
-        logisticses:param.logisticses
+        logisticses: param.logisticses
     }
-    var status = param;
-    status.orderStatus = 50;
-    
-    dispatch(types.ORDER_STATUS, status);
-
-    return;
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
@@ -1720,7 +1714,7 @@ export const orderDeliverGoods = ({ dispatch }, param) => { //订单发货
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-       if (res.json().result == null) {
+        if (res.json().result == null) {
             var status = param;
         } else {
             var status = res.json().result;

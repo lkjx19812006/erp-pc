@@ -1379,7 +1379,6 @@ const mutations = {
         }
     },
     [ORDER_STATUS](state, data) { //订单状态详情
-        console.log(data)
         for (var i in state.basicBaseList[data.key]) {
             if (state.basicBaseList[data.key][i].id == data.id) {
                 state.basicBaseList[data.key][i].orderStatus = data.orderStatus;
