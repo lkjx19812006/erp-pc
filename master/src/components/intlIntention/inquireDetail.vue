@@ -481,7 +481,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
-                                                  link:initIntlIntntionDetail.offerFiles,
+                                                  link:initIntlIntentionDetail.offerFiles,
                                                   crete:'offerFiles'
                                                   })">
                                           <img class="pull-left" src="/static/images/offerfile_icon.png" height="29" width="26"  />
@@ -765,9 +765,11 @@ export default {
             this.pictureParam.img = img;
         },
         enfoldment: function(param) {
+            console.log("14315151")
             if (this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length == 0) {
                 this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = true;
             }
+
             this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show;
         },
         clickOn: function(item) {

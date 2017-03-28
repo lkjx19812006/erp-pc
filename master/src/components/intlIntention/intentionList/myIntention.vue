@@ -129,7 +129,7 @@
                             <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item,$index)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
                             <!-- 再次询价申请 -->
                             <div v-if="item.inquire===3&&(item.validate===-2||item.validate===0)" style="display:inline-block;margin-right:7px" @click="againInquire(item.id)">
-                                <button class="requestBtn btn btn-success">再次询价申请</button>
+                                <button class="requestBtn btn btn-success">{{$t('static.Inquiry_apply')}}</button>
                             </div>
                         </td>
                     </tr>
