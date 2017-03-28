@@ -223,16 +223,16 @@
                                                         <td>{{item.utime}}</td>
                                                         <td>
                                                             <div v-if="item.inquire===0">
-                                                                初始
+                                                                {{$t('static.initial')}}
                                                             </div>
                                                             <div v-if="item.inquire===1">
-                                                                询价中
+                                                                {{$t('static.inquiry')}}
                                                             </div>
                                                             <div v-if="item.inquire===2">
-                                                                报价中
+                                                                {{$t('static.quotation')}}
                                                             </div>
                                                             <div v-if="item.inquire===3">
-                                                                报价完成
+                                                                {{$t('static.quo_complete')}}
                                                             </div>
                                                         </td>
                                                         <td>
@@ -308,16 +308,16 @@
                                                         <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> -->
                                                         <td>
                                                             <div v-if="item.inquire===0">
-                                                                初始
+                                                                {{$t('static.initial')}}
                                                             </div>
                                                             <div v-if="item.inquire===1">
-                                                                询价中
+                                                                {{$t('static.inquiry')}}
                                                             </div>
                                                             <div v-if="item.inquire===2">
-                                                                报价中
+                                                                {{$t('static.quotation')}}
                                                             </div>
                                                             <div v-if="item.inquire===3">
-                                                                报价完成
+                                                                {{$t('static.quo_complete')}}
                                                             </div>
                                                         </td>
                                                         <td>

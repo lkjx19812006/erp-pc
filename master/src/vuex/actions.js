@@ -2208,6 +2208,9 @@ export const getCityList = ({ dispatch }, param) => { //获取市的列表
     if (!param.cur) {
         param.cur = '';
     }
+    if (!param.id) {
+        return "";
+    }
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/sys/location/city/?page=' + param.cur + '&pageSize=15&province=' + param.id,

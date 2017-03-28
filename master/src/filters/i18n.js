@@ -329,7 +329,7 @@ var locales = {
             img_uncheck: 'uncheck',
             img_rerequire: 'rerequire',
             img_confirm: 'confirmOffer',
-            quo_complete: '报价完成',
+            quo_complete: '已报价',
             quotation: '报价中',
             inquiry: '询价中',
             not_inquiry: '未询价',
