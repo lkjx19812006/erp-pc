@@ -31,10 +31,12 @@
                                 <option value="70">{{$t('static.order_over')}}</option>
                             </select>
                         </div>
-                        <div class="editpage-input col-md-6" v-if="param.type==1">
+                        <!-- 销售订单时的发货人，为公司员工 -->
+                        <div class="editpage-input col-md-6" v-show="param.type==1">
                             <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
-                            <input type="text" class="form-control edit-input" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)" />
+                            <input type="text" class="form-control edit-input" v-model="param.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee()" />
                         </div>
+                        <!-- 成交时间 -->
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.transcation')}}</label>
                             <mz-datepicker :time.sync="param.tradeTime" format="yyyy/MM/dd HH:mm:ss">
@@ -476,10 +478,8 @@ export default {
                 this.getProvinceList(this.country);
             }
         },
-        selectEmployee: function(id, name) {
+        selectEmployee: function() {
             this.employeeParam.show = true;
-            this.employeeParam.consigner = id;
-            this.employeeParam.consignerName = name;
         },
         addCompute: function() { //优惠增加
             var saith = 0;
@@ -802,9 +802,8 @@ export default {
 
         },
         selectEmpOrOrg: function(employee) {
-            this.employeeParam.consigner = employee.employeeId;
-            this.employeeParam.consignerName = employee.employeeName;
-            this.param.consigner = this.employeeParam.consigner;
+            this.param.consigner = employee.employeeId;
+            this.param.consignerName = employee.employeeName;
 
         }
     },
@@ -840,7 +839,7 @@ export default {
             }
         }
         if (this.param.consigner) {
-            this.employeeParam.consignerName = this.param.consigner;
+            this.param.consignerName = this.param.consigner;
         }
     }
 }

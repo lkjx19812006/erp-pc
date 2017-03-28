@@ -1698,10 +1698,10 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
         console.log('fail');
     })
 }
-export const orderDeliverGoods = ({ dispatch }, param) => { //订单发货
+export const orderDeliverGoods = ({ dispatch }, param) => { //销售订单发货，采购订单发货在上面
     const body = {
         id: param.id,
-        logisticses:param.logisticses
+        logisticses: param.logisticses
     }
     Vue.http({
         method: 'POST',
@@ -1714,7 +1714,7 @@ export const orderDeliverGoods = ({ dispatch }, param) => { //订单发货
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-       if (res.json().result == null) {
+        if (res.json().result == null) {
             var status = param;
         } else {
             var status = res.json().result;
@@ -2233,6 +2233,9 @@ export const getCityList = ({ dispatch }, param) => { //获取市的列表
     if (param.loading) param.loading = true;
     if (!param.cur) {
         param.cur = '';
+    }
+    if (!param.id) {
+        return "";
     }
     Vue.http({
         method: 'GET',
@@ -3881,11 +3884,11 @@ export const importCustomer = ({ dispatch }, param) => { //excel导入客户
         body: data
     }).then((res) => {
         console.log("success");
-        param.show = false;
-        param.loading = false;
-        if (param.callback) {
-            param.callback(res.json().msg);
+        if (res.json().code == 200) {
+            param.success = true;
+            param.result = res.json().result;
         }
+        param.loading = false;
     }, (res) => {
         console.log('fail');
     })
