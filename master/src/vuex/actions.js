@@ -1703,12 +1703,6 @@ export const orderDeliverGoods = ({ dispatch }, param) => { //订单发货
         id: param.id,
         logisticses:param.logisticses
     }
-    var status = param;
-    status.orderStatus = 50;
-    
-    dispatch(types.ORDER_STATUS, status);
-
-    return;
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,

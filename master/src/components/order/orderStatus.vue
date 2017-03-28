@@ -834,6 +834,9 @@ export default {
                 if(this.salesLogistic.driverName){
                   salesLogistic.driverName = this.salesLogistic.driverName;  
                 }
+                 if(this.salesLogistic.driverTel){
+                  salesLogistic.driverTel = this.salesLogistic.driverTel;  
+                }
                 salesLogistic.way = this.salesLogistic.way;  
             }
              
