@@ -71,7 +71,7 @@
                         <th>{{$t('static.review_status')}}</th>
                         <th>{{$t('static.inquiry_type')}}</th>
                         <th>{{$t('static.intention_source')}}</th>
-                        <th>审核</th>
+                        <th>{{$t('static.review')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,7 +109,7 @@
                         <td>{{item.source}}</td>
                         <!-- 再次询价 申请审核 -->
                         <td>
-                            <button class="btn btn-default btn-apply" v-if="item.inquire==3&&item.validate==1" @click="applicationAudit(item.id)">审核</button>
+                            <button class="btn btn-default btn-apply" v-if="item.inquire==3&&item.validate==1" @click="applicationAudit(item.id)">{{$t('static.Request_again')}}</button>
                         </td>
                     </tr>
                 </tbody>

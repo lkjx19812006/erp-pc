@@ -765,9 +765,11 @@ export default {
             this.pictureParam.img = img;
         },
         enfoldment: function(param) {
+            console.log("14315151")
             if (this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length == 0) {
                 this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = true;
             }
+
             this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show;
         },
         clickOn: function(item) {

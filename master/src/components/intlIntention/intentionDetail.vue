@@ -196,7 +196,7 @@
                                                     <!-- 再次报价 -->
                                                     <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
-                                                    <th>询价状态</th>
+                                                    <th>{{$t('static.inquiry_state')}}</th>
                                                     <th>{{$t('static.handle')}}</th>
                                                 </thead>
                                                 <tbody>

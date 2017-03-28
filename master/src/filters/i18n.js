@@ -552,7 +552,8 @@ var locales = {
             Ship_number: '航次',
             file_down: '文件下载',
             non_image: '非图片文件显示，请下载查看',
-            Latin: '拉丁文'
+            Latin: '拉丁文',
+            Request_again:'再次询价申请'
         }
     },
     en: {
@@ -1096,7 +1097,8 @@ var locales = {
             Ship_number: 'Ship number',
             file_down: 'file downloading',
             non_image: 'non-image file, please download it',
-            Latin: 'Latin'
+            Latin: 'Latin',
+            Request_again:'Request again'
         }
     }
 }
