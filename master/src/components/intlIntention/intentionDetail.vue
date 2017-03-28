@@ -168,7 +168,7 @@
 
                                               <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
                                               <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                                {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
+                                                {{$t('static.medicinal_material_information')}}（{{initIntlIntentionDetail.items.arr.length}}）
                                               </a>
                                               <!--询价完成或再次询价才显示价格-->
                                               <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
@@ -253,7 +253,7 @@
                                                     })">
                                               <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
                                               <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                                {{$t('static.extractive')}}（{{initIntlIntentionDetail.extractive.arr.length}}）
+                                                {{$t('static.extractive_information')}}（{{initIntlIntentionDetail.extractive.arr.length}}）
                                               </a>
                                               <!--询价完成或再次询价才显示价格-->
                                               <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
