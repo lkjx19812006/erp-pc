@@ -1703,6 +1703,8 @@ export const orderDeliverGoods = ({ dispatch }, param) => { //销售订单发货
         id: param.id,
         logisticses: param.logisticses
     }
+    console.log(param.logisticses);
+    return;
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
