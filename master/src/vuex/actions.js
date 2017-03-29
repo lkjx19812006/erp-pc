@@ -1051,11 +1051,11 @@ export const orgOrderAudit = ({ dispatch }, param) => { //订单申请审核（�
         data.index = param.index;
         data.key = param.key;
         data.validate = 1;
-        
+
         if (res.json().code == 200) {
             dispatch(types.ORG_ORDER_AUDIT, data);
         }
-       
+
     }, (res) => {
         console.log('fail');
     })
@@ -1703,8 +1703,6 @@ export const orderDeliverGoods = ({ dispatch }, param) => { //销售订单发货
         id: param.id,
         logisticses: param.logisticses
     }
-    console.log(param.logisticses);
-    return;
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
