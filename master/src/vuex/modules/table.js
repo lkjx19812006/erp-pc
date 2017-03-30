@@ -3,6 +3,7 @@ import {
     PASSWORD_DATA,
     BACKLOG_TABLE,
     FLOW_RECORD_TABLE,
+    NOTICE_TABLE,
     ORDER_TABLE,
     ORDER_ADD_DATA,
     ORDER_DETAIL_DATA,
@@ -255,6 +256,8 @@ const state = {
         backlogList: [],
         //流程记录
         flowRecord: [],
+        //通知列表
+        noticeList: [],
         //订单列表
         userOrderList: [],
         myOrderList: [],
@@ -307,7 +310,7 @@ const state = {
             "goods": null,
             "payPics": null,
             "sendPics": null,
-             term: 0
+            term: 0
         }],
         allOrderList: [{
             "id": "5726ea3bf22125bcdcff7820",
@@ -1145,6 +1148,9 @@ const mutations = {
     },
     [FLOW_RECORD_TABLE](state, data) {
         state.basicBaseList.flowRecord = data;
+    },
+    [NOTICE_TABLE](state, data) {
+        state.basicBaseList.noticeList = data;
     },
 
     [USER_TYPE](state, data) {

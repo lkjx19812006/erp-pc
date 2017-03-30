@@ -9,7 +9,7 @@
         <send-detail :param="sendDetailParam" v-if="sendDetailParam.show"></send-detail>
         <deliver-model :param="deliverParam" v-if="deliverParam.show"></deliver-model>
         <div class="employee clear">
-            <div class="employee_left col-md-7 col-xs-12">
+            <div class="employee_left col-md-3 col-xs-12">
                 <div class="complete_rate">
                     <!--  <span>个人业绩完成率</span>
                    <a class="select_btn" @click="freshPiecharts(getPiechart)">
@@ -19,6 +19,44 @@
                 </div>
                 <div class="pie_chart">
                     <div class="Piechart" v-echarts="getPiechart.options" :loading="getPiechart.load"></div>
+                </div>
+            </div>
+            <div class="employee_right col-md-4 col-xs-12">
+                <p class="employee_right_title clear">
+                    <span class="left">消息通知</span>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': noticeParam.type===0}" @click="selectType(0)">
+                            今日通知
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': noticeParam.type===1}" @click="selectType(1)">
+                            三日内通知
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': noticeParam.type===2}" @click="selectType(2)">
+                            已读通知
+                        </button>
+                    </div>
+                    <button class="btn btn-primary right" @click="refreshNotice()">{{$t('static.refresh')}}</button>
+                </p>
+                <div class="employee_right_message">
+                    <div class="cover_loading">
+                        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+                    </div>
+                    <div class="notice_message_view" v-bind:class="{ 'level-five': item.urgent>80, 'level-four': item.urgent<=80 }" v-for="item in initNoticeList">
+                        <div class="message_view_left">
+                            <span>标题：{{item.title}}</span>
+                            <p>内容：{{item.shortMessage}}</p>
+                            <time>{{item.mtime}}</time>
+                            <div class="message_view_right">
+                                <Poptip placement="left" trigger="hover" width="400">
+                                    <a>详情</a>
+                                    <div class="api" slot="content" style="font-size:16px;background-color:#FFFF77;overflow-x:hidden;word-wrap:break-word;height:300px">
+                                        {{item.message}}
+                                    </div>
+                                </Poptip>
+                                <a>已读</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="employee_right col-md-5 col-xs-12">
@@ -82,17 +120,20 @@ import sendDetail from '../components/order/second_order/orderSendDetail'
 import deliverModel from '../components/order/orderStatus'
 import receivedetailModel from '../components/order/second_order/orderReceiveDetail'
 import resendModel from '../components/order/second_order/afterResendPage'
+import util from '../components/tools/util.js'
 import {
     getList,
     getLinechart,
     getPiechart,
-    initBacklogList
+    initBacklogList,
+    initNoticeList
 } from '../vuex/getters'
 import {
     freshLinecharts,
     freshPiecharts,
     getBacklogList,
-    finishFlow
+    finishFlow,
+    getNoticeList
 } from '../vuex/actions'
 export default {
     components: {
@@ -103,7 +144,8 @@ export default {
         sendDetail,
         receivedetailModel,
         deliverModel,
-        resendModel
+        resendModel,
+        util
     },
     data() {
         return {
@@ -115,7 +157,21 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                total: 0,
+                mTimeStart: "",
+                mTimeEnd: "",
+                read: "",
+            },
+            noticeParam: {
+                loading: true,
+                link: '/notification/queryToday',
+                type: 0, //0/1/2,今日/三天/已读通知
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7,
                 total: 0
+
             },
             orderDetailParam: {
                 loading: true,
@@ -199,7 +255,8 @@ export default {
                 wareName: '', //仓库名
                 warehouse: '',
                 way: '', //0/1 第三方/自运
-            }
+            },
+
         }
     },
     vuex: {
@@ -207,13 +264,15 @@ export default {
             getList,
             getLinechart,
             getPiechart,
-            initBacklogList
+            initBacklogList,
+            initNoticeList
         },
         actions: {
             freshLinecharts,
             freshPiecharts,
             getBacklogList,
-            finishFlow
+            finishFlow,
+            getNoticeList
         },
     },
     methods: {
@@ -330,6 +389,32 @@ export default {
         },
         refresh: function() {
             this.getBacklogList(this.loadParam);
+        },
+        selectType: function(type) {
+            this.noticeParam.type = type;
+            if (type == 0) { //当天
+                this.noticeParam.mTimeStart = "";
+                this.noticeParam.mTimeEnd = "";
+                this.noticeParam.read = "";
+                this.noticeParam.link = "/notification/queryToday";
+            }
+            if (type == 1) { //三日内
+                this.noticeParam.mTimeStart = util.getDate(-2);
+                this.noticeParam.mTimeEnd = util.getDate(1);
+                this.noticeParam.read = "";
+                this.noticeParam.link = "/notification/query";
+            }
+            if (type == 2) { //已读
+                this.noticeParam.mTimeStart = "";
+                this.noticeParam.mTimeEnd = "";
+                this.noticeParam.read = "1";
+                this.noticeParam.link = "/notification/query";
+            }
+            this.getNoticeList(this.noticeParam);
+
+        },
+        refreshNotice: function() {
+            this.getNoticeList(this.noticeParam);
         }
 
     },
@@ -341,6 +426,8 @@ export default {
         }
         //获取待办事项
         this.getBacklogList(this.loadParam);
+        //获取消息通知
+        this.getNoticeList(this.noticeParam);
     },
     route: {
         activate: function(transition) {
@@ -432,6 +519,23 @@ export default {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
+}
+
+.notice_message_view {
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 10px 8px;
+    border-radius: 0 8px 8px 0;
+    -webkit-border-radius: 0 8px 8px 0;
+    margin-bottom: 10px;
+}
+
+.level-five {
+    border-left: 8px solid red;
+}
+
+.level-four {
+    border-left: 8px solid green;
 }
 
 .linechart {

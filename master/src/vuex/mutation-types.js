@@ -7,6 +7,7 @@ export const CHANGE_LINECHARTS = 'CHANGE_LINECHARTS' //折线图表
 export const CHANGE_PIECHARTS = 'CHANGE_PIECHARTS' //饼状图
 export const BACKLOG_TABLE = 'BACKLOG_TABLE' //待办事项
 export const FLOW_RECORD_TABLE = 'FLOW_RECORD_TABLE' //待办事项
+export const NOTICE_TABLE = 'NOTICE_TABLE' //通知
 
 
 export const LOGIN_DATA = 'LOGIN_DATA' //登录成功后返回信息
