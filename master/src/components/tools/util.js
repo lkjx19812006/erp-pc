@@ -11,7 +11,8 @@ var util = {
     add: accAdd,
     sbu: subtr,
     mul: accMul,
-    div: accDiv
+    div: accDiv,
+    getDate: getDate
 }
 
 //加法 
@@ -86,6 +87,29 @@ function accDiv(arg1, arg2) {
     return accMul((r1 / r2), pow(10, t2 - t1));
 
 }
+//获取今日(距离今天days天)时间
+function getDate(days) {
+    let now = new Date();
+    let today = now.toLocaleDateString();
+    let realDate = new Date(Date.parse(today) + days * 86400000);
 
+    let year = realDate.getFullYear();
+    let month = realDate.getMonth() + 1;
+    let day = realDate.getDate();
+    let hour = realDate.getHours();
+    let minute = realDate.getMinutes();
+    let second = realDate.getSeconds();
+
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+
+    let realDateStr = year + "-" + month + "-" + day + " 00:00:00";
+
+    return realDateStr;
+}
 
 module.exports = util;

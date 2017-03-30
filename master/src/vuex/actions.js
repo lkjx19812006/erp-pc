@@ -255,6 +255,56 @@ export const getBacklogList = ({ dispatch }, param) => {
     })
 }
 
+//获取通知列表
+export const getNoticeList = ({ dispatch }, param) => {
+    param.loading = true;
+    let body = {
+        page: param.cur,
+        pageSize: 200
+    }
+    if (param.mTimeStart) {
+        body.mTimeStart = param.mTimeStart;
+    }
+    if (param.mTimeEnd) {
+        body.mTimeEnd = param.mTimeEnd;
+    }
+    if (param.read) {
+        body.read = param.read;
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var noticeList = res.json().result.list;
+
+        for (let i = 0; i < noticeList.length; i++) {
+            noticeList[i].shortMessage = "";
+            if (noticeList[i].message.length > 28) {
+                noticeList[i].shortMessage = noticeList[i].message.substring(0, 28) + "...";
+            } else {
+                noticeList[i].shortMessage = noticeList[i].message.substring(0, 28);
+            }
+        }
+        dispatch(types.NOTICE_TABLE, noticeList);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+        //localStorage.BacklogParam = JSON.stringify(param);
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 //获取流程记录
 export const getFlowRecord = ({ dispatch }, param) => {
     param.loading = true;
