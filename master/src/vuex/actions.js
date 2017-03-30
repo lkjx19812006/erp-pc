@@ -260,7 +260,7 @@ export const getNoticeList = ({ dispatch }, param) => {
     param.loading = true;
     let body = {
         page: param.cur,
-        pageSize: 200
+        pageSize: 15
     }
     if (param.mTimeStart) {
         body.mTimeStart = param.mTimeStart;
@@ -268,6 +268,7 @@ export const getNoticeList = ({ dispatch }, param) => {
     if (param.mTimeEnd) {
         body.mTimeEnd = param.mTimeEnd;
     }
+    console.log(param.read);
     if (param.read) {
         body.read = param.read;
     }
@@ -285,6 +286,10 @@ export const getNoticeList = ({ dispatch }, param) => {
     }).then((res) => {
         var noticeList = res.json().result.list;
 
+         for (var i in noticeList) {
+             noticeList[i].checked = false;
+             noticeList[i].show = false;
+         }
         for (let i = 0; i < noticeList.length; i++) {
             noticeList[i].shortMessage = "";
             if (noticeList[i].message.length > 28) {
@@ -293,6 +298,7 @@ export const getNoticeList = ({ dispatch }, param) => {
                 noticeList[i].shortMessage = noticeList[i].message.substring(0, 28);
             }
         }
+        
         dispatch(types.NOTICE_TABLE, noticeList);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
@@ -304,7 +310,30 @@ export const getNoticeList = ({ dispatch }, param) => {
         param.loading = false;
     })
 }
+//已读接口 
+export const readNotice = ({ dispatch }, param) => {
+    var body={
+       ids:param.ids
+    };
 
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+       param.callback(res.json().msg)
+       
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
 //获取流程记录
 export const getFlowRecord = ({ dispatch }, param) => {
     param.loading = true;

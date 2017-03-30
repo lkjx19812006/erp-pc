@@ -1151,6 +1151,7 @@ const mutations = {
     },
     [NOTICE_TABLE](state, data) {
         state.basicBaseList.noticeList = data;
+        console.log(state.basicBaseList.noticeList)
     },
 
     [USER_TYPE](state, data) {

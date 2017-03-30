@@ -36,7 +36,7 @@ export default {
     methods:{
         hidden:function(){
             this.param.show = false;
-            this.$parent.param.show =false
+            // this.$parent.param.show =false
         }
     }
 }
