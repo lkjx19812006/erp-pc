@@ -10,7 +10,7 @@
             </div>
             <validator name="validation">
                 <form novalidate>
-                    <div class="edit-model">
+                    <div class="edit-model">  
                         <div>
                             <h4 style="text-align: left;font-size: 14px;">{{$t('static.install_detail')}}<label class="stageTotal">(总金额：{{param.total}})</label><span class="system_danger">{{$t('static.install_tips')}}</span></h4>
                             <table class="table table-hover table_color table-striped ">
