@@ -1459,25 +1459,39 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
 
 export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分期
     const stages = [];
+    console.log(param)
     for (var i = 0; i < param.stages.length; i++) {
         var temp = {};
-        temp = {
-            id: param.stages[i].id,
-            amount: param.stages[i].amount,
-            comment: param.stages[i].comment,
-            creater: param.stages[i].creater,
-            description: param.stages[i].description,
-            orderId: param.stages[i].orderId,
-            orderStatus: param.stages[i].orderStatus,
-            ratio: param.stages[i].ratio,
-            extra: param.stages[i].extra,
-            status: param.stages[i].status,
-            type: param.stages[i].type,
-            validate: param.stages[i].validate
-        };
+        // temp = {
+        //     id: param.stages[i].id,
+        //     amount: param.stages[i].amount,
+        //     comment: param.stages[i].comment,
+        //     creater: param.stages[i].creater,
+        //     description: param.stages[i].description,
+        //     orderId: param.stages[i].orderId,
+        //     orderStatus: param.stages[i].orderStatus,
+        //     ratio: param.stages[i].ratio,
+        //     extra: param.stages[i].extra,
+        //     status: param.stages[i].status,
+        //     type: param.stages[i].type,
+        //     validate: param.stages[i].validate
+        // };
+        temp.id = param.stages[i].id;
+        temp.amount =param.stages[i].amount,
+        temp.comment =param.stages[i].comment,
+        // temp.creater =param.stages[i].creater,
+        temp.description =param.stages[i].description,
+        temp.orderId =param.stages[i].orderId,
+        temp.orderStatus =param.stages[i].orderStatus,
+        // temp.ratio =param.stages[i].ratio,
+        temp.extra =param.stages[i].extra,
+        // temp.status =param.stages[i].status,
+        temp.type =param.stages[i].type,
+        // temp.validate =param.stages[i].validate
         stages.push(temp);
 
     }
+
     const body = {
         id: param.id,
         stages: stages
