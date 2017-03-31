@@ -233,14 +233,37 @@ export const initOrgDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.orgDetail));
 }
 export const initRoleList = (state) => {
-        return JSON.parse(JSON.stringify(state.table.basicBaseList.roleList));
-    }
-    /*--意向信息--*/
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.roleList));
+}
+
+/*--采购单信息--*/
+export const initMyPurchaseList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.myPurchaseList));
+}
+export const initOrgPurchaseList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.orgPurchaseList));
+}
+export const initAllPurchaseList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.allPurchaseList));
+}
+export const initPurchaseDetail = (state) => {
+    return JSON.parse(JSON.stringify(state.table.purchaseDetail));
+}
+
+/*--采购报价信息--*/
+export const initPurchaseOfferList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.purchaseOfferList));
+}
+export const initPurchaseOrderDetail = (state) => {
+    return JSON.parse(JSON.stringify(state.table.purchaseOrderDetail));
+}
+
+
+/*--意向信息--*/
 export const initUserIntentionList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.userIntentionList));
 }
 export const initMyIntentionList = (state) => {
-    console.log("hehehe ");
     return JSON.parse(JSON.stringify(state.table.basicBaseList.myIntentionList));
 }
 export const initOrgIntentionList = (state) => {
@@ -287,21 +310,25 @@ export const initOfferList = (state) => {
 
 /*--留言信息--*/
 export const initMsgList = (state) => {
-        return JSON.parse(JSON.stringify(state.table.basicBaseList.msgList));
-    }
-    /*--意向详情--*/
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.msgList));
+}
+
+/*--意向详情--*/
 export const initIntentionDetail = (state) => {
-        return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionDetail));
-    }
-    /*--国际意向详情--*/
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionDetail));
+}
+
+/*--国际意向详情--*/
 export const initIntlIntentionDetail = (state) => {
-        return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionDetail));
-    }
-    /*--国际意向询价详情--*/
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionDetail));
+}
+
+/*--国际意向询价详情--*/
 export const initIntlIntentionInquireDetail = (state) => {
-        return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionInquireDetail));
-    }
-    /*--国际意向条目历史报价记录--*/
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionInquireDetail));
+}
+
+/*--国际意向条目历史报价记录--*/
 export const initItemHistory = (state) => {
     console.log('getters');
     return JSON.parse(JSON.stringify(state.table.basicBaseList.itemHistory));
@@ -366,9 +393,9 @@ export const initOrderStatics = (state) => {
     }
     // 全部订单统计
 export const initAllOrderCount = (state) => {
-    return parseJson(state.count.allOrderCount);
-}
-// 部门统计
+        return parseJson(state.count.allOrderCount);
+    }
+    // 部门统计
 export const initOrgCount = (state) => { //部门统计
     return parseJson(state.table.orgCount);
 

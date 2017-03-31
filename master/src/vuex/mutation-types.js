@@ -100,6 +100,10 @@ export const CALL_RECORD_DATA = 'CALL_RECORD_DATA' //客户通话记录
 export const CALL_COUNT_DATA = 'CALL_COUNT_DATA' //客户通话记录统计
 export const CALL_RECORD_VOICE_DATA = 'CALL_RECORD_VOICE_DATA' //客户通话记录录音
 
+export const PURCHASE_LIST_DATA = 'PURCHASE_LIST_DATA' //采购单列表
+export const DELETE_PURCHASE = 'DELETE_PURCHASE' //删除采购单
+export const INQUIRE_PURCHASE_STATUS = 'INQUIRE_PURCHASE_STATUS' //（单个/批量）采购单询价
+export const PURCHASE_DETAIL = 'PURCHASE_DETAIL' //采购单详情
 export const INTENTION_LIST_DATA = 'INTENTION_LIST_DATA' //意向数据列表
 export const SUPPLY_DEMAND_DATA = 'SUPPLY_DEMAND_DATA' //意向数据列表
 export const INTENTION_DETAIL_DATA = 'INTENTION_DETAIL_DATA' //意向详情

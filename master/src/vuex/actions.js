@@ -4579,9 +4579,151 @@ export const transferManager = ({ dispatch }, param) => { //员工划转为主�
     });
 }
 
+export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表以及搜索
+    param.loading = true;
+    var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
+
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        let purchaseOrder = res.json().result.list;
+
+        for (let i = 0; i < purchaseOrder.length; i++) {
+            purchaseOrder[i].checked = false;
+        }
+        if (param.key) {
+            purchaseOrder.key = param.key;
+        }
+        dispatch(types.PURCHASE_LIST_DATA, purchaseOrder);
+
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详情
+    param.loading = true;
+    var url = apiUrl.clientList + param.link + "?id=" + param.id;
+
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        let detail = res.json().result;
+
+        let intentionList = detail.intentionList;
+        detail.intentionList = {};
+        detail.intentionList.arr = intentionList;
+        detail.intentionList.show = false;
+
+        dispatch(types.PURCHASE_DETAIL, detail);
+        param.loading = false;
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
+
+    const body = {
+        customerId: param.customerId,
+        customerName: param.customerName,
+        customerPhone: param.customerPhone,
+        buyDesc: param.buyDesc,
+        province: param.province,
+        city: param.city,
+        district: param.district,
+        address: param.address,
+        intentionList: param.intentionList
+    }
+
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('新增成功')
+            /*dispatch(types.CUSTOMER_TRANSFER, param);*/
+        param.callback(res.json().msg);
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const deletePurchaseOrder = ({ dispatch }, param) => { //删除采购单
+    const body = {
+        id: param.id
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.clientList + "/indent/delete",
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        if (res.json().code == 200) {
+            dispatch(types.DELETE_PURCHASE, param);
+        }
+        param.callback(res.json().msg);
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const inquirePurchaseOrder = ({ dispatch }, param) => { //采购单询价或采购单取消询价(终止询价)
+    const body = {
+        ids: param.ids
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        if (res.json().code == 200) {
+            dispatch(types.INQUIRE_PURCHASE_STATUS, param);
+        }
+
+        param.callback(res.json().msg);
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
 export const getIntentionList = ({ dispatch }, param) => { //意向信息列表以及搜索
     param.loading = true;
-    console.log(param);
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     for (var search in param) {
         if (search == 'userName' && param[search] !== '') {
@@ -4695,7 +4837,7 @@ export const getSupplyDemandList = ({ dispatch }, param) => { //匹配供求信�
     })
 }
 
-export const getIntentionDetail = ({ dispatch }, param) => { //意向详情
+export const getIntentionDetail = ({ dispatch }, param, id, index) => { //意向详情
     param.loading = true;
     var url = apiUrl.clientList + '/intention/' + param.id;
     Vue.http({
@@ -4743,6 +4885,9 @@ export const getIntentionDetail = ({ dispatch }, param) => { //意向详情
         if (res.json().result.pics[2]) {
             param.image_t = res.json().result.pics[2].path;
             param.image_t_show = res.json().result.pics[2].url;
+        }
+        if (param.getOffers) {
+            param.getOffers(id, index, result);
         }
 
         param.loading = false;
