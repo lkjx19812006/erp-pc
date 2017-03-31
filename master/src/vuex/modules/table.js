@@ -70,6 +70,10 @@ import {
     IDENTIFY_DATA,
     UPDATE_TRACKING_DATA,
     ADD_TRACKING_DATA,
+    PURCHASE_LIST_DATA,
+    DELETE_PURCHASE,
+    INQUIRE_PURCHASE_STATUS,
+    PURCHASE_DETAIL,
     INTENTION_LIST_DATA,
     SUPPLY_DEMAND_DATA,
     INTENTION_DETAIL_DATA,
@@ -578,6 +582,12 @@ const state = {
         ],
         //产品文件列表
         productList: [{ bizId: "2", bizType: "product_license", breedId: 812, category: 0, cid: 27578, cname: null, coa: 0, comments: null, creater: "100014", ctime: "2016-12-05 14:43", description: "", fileType: "image", id: 10492, location: "山西", name: "测试", path: "/local/validate/58450c98f0682b631a31d502.png", pname: "22", quality: "", spec: "10:1（%）", status: 1, type: "提取物", updater: null, url: "http://192.168.1.248:70/img/local/validate/58450c98f0682b631a31d502.png", utime: null }],
+        //采购单列表
+        myPurchaseList: [{ checked: false }, { checked: false }],
+        orgPurchaseList: [{ checked: false }, { checked: false }, { checked: false }],
+        allPurchaseList: [{ checked: false }, { checked: false }, { checked: false }, { checked: false }],
+        //采购单报价列表
+        purchaseOfferList: [{}],
         //意向列表
         userIntentionList: [
             { "id": "1201608221917540470", "customerId": "29565", "customerName": "段飞", "customerPhone": "15871287716", "type": 1, "especial": 1, "breedId": 1174, "breedName": "艾叶", "location": "湖北", "spec": "全叶", "unit": "63", "province": "湖北", "city": "孝感", "district": "大悟县", "address": "城区", "invoic": 0, "visit": 0, "pack": "机压包", "intl": 0, "country": "中国", "offerTotal": 0, "status": 1, "show": true }
@@ -902,6 +912,8 @@ const state = {
         "stages": { arr: [], show: false },
         "contractList": { arr: [], show: false }
     },
+    purchaseDetail: { "intentionList": { arr: [], show: false } },
+    purchaseOfferDetail: {},
     locationList: {
         provinceList: [
             { "id": 248, "pid": 7, "path": ",1,7,248,", "level": 3, "cname": "天津", "nameEn": "Tianjin", "namePy": null, "code": "12", "twoNumber": null, "number": null, "iso": null, "sortnum": 248, "show": true }
@@ -1874,6 +1886,23 @@ const mutations = {
     },
     [EMPLOYEE_DATA](state, data) { //员工业务员列表
         state.basicBaseList.employeeList = data;
+    },
+    [PURCHASE_LIST_DATA](state, data) { //采购单列表
+        if (data.key) {
+            state.basicBaseList[data.key] = data;
+        }
+    },
+    [PURCHASE_DETAIL](state, data) { //采购单详情
+        state.purchaseDetail = data;
+    },
+    [DELETE_PURCHASE](state, data) { //删除采购单
+        state.basicBaseList[data.key].splice(data.index, 1);
+    },
+    [INQUIRE_PURCHASE_STATUS](state, data) { //（单个/批量）采购单询价
+        for (let i = 0; i < data.indexs.length; i++) {
+            let index = data.indexs[i];
+            state.basicBaseList[data.key][index].inquire = data.inquire;
+        }
     },
     [INTENTION_LIST_DATA](state, data) { //意向列表
         if (data.key) {

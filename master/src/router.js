@@ -138,6 +138,11 @@ export default (router) => router.map({
                 component: function(resolve) {
                     require(['./views/dictionary'], resolve)
                 }
+            },
+            '/purchase': {
+                component: function(resolve) {
+                    require(['./views/purchaseOrder'], resolve)
+                }
             }
 
         }
