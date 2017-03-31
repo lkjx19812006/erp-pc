@@ -18,7 +18,7 @@
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top">{{$t("static.client_name")}}：</dt>
                         <dd class="left">
-                            <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                            <input type="text" class="form-control" v-model="loadParam.name" placeholder={{$t("static.Enter_search")}} @keyup.enter="selectSearch()">
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
@@ -80,7 +80,7 @@
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top" style="letter-spacing:3px">{{$t("static.cellphone")}}：</dt>
                         <dd class="left">
-                            <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                            <input type="text" class="form-control" v-model="loadParam.phone" placeholder={{$t("static.Enter_search")}} @keyup.enter="selectSearch()">
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
@@ -98,7 +98,7 @@
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top">{{$t("static.business_scope")}}：</dt>
                         <dd class="left">
-                            <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                            <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder={{$t("static.Enter_search")}} @keyup.enter="selectSearch()">
                         </dd>
                     </dl>
                     <dd class="left transfer">
@@ -156,7 +156,7 @@
                                             key:'myCustomerList'
                                             })">{{$t("static.new")}}</button>
                         <!-- EXCEL导入客户 -->
-                        <button type="button" class="btn btn-primary" @click="excelImport()">excel导入客户</button>
+                        <button type="button" class="btn btn-primary" @click="excelImport()">{{$t('static.upload_clients')}}</button>
                         <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                     </dd>
                 </div>

@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-4 col-xs-12 employee_right_wrap">
                 <p class="employee_right_title clear">
-                    <span class="left" style="margin-bottom:5px">{{$t('static.Notifications')}}</span>
+                    <span class="left">{{$t('static.Notifications')}}</span>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': noticeParam.type===0}" @click="selectType(0)">
                             {{$t('static.Notifications_today')}}
@@ -38,21 +38,21 @@
                     <button class="btn btn-primary right" @click="refreshNotice()">{{$t('static.refresh')}}</button>
                 </p>
                 <!-- 全选 -->
-                <div class="checkall" v-if="(noticeParam.type==0||noticeParam.type==1)&&this.initNoticeList.length!==0">
+                <div class="checkall" v-if="noticeParam.type==0&&this.initNoticeList.length!==0">
                       <span>{{$t('static.Select_all')}} : </span>
                       <label class="selectAll" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()" style="position:relative; bottom:-1px; float:right">
                       </label>
                 </div>
                 <!-- 标记为已读 -->
-                <div class="btn btn-info btn-xs" style="float:right; margin-left:30px; margin-top:11px" @click="signRead" v-if="(noticeParam.type==0||noticeParam.type==1)&&this.initNoticeList.length!==0">{{$t('static.Mark_read')}}</div>
-                <div class="employee_right_message" style="border-top:none;padding-top:10px;max-height:600px;overflow-y:auto">
+                <div class="btn btn-info btn-xs" style="float:right; margin-left:30px; margin-top:11px" @click="signRead" v-if="noticeParam.type==0&&this.initNoticeList.length!==0">{{$t('static.Mark_read')}}</div>
+                <div class="employee_right_message">
                     <div class="cover_loading">
                         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
                     </div>
                     <div class="notice_message_view" v-for="item in initNoticeList" v-bind:class="{'level-five':item.urgent>80&&noticeParam.type !== 2,'level-four':item.urgent<=80&&item.urgent>60&&noticeParam.type !== 2,'level-three':item.urgent<=60&&item.urgent>40&&noticeParam.type !== 2,'level-two':item.urgent<=40&&item.urgent>20&&noticeParam.type !== 2,'level-one':item.urgent<=20&&noticeParam.type !== 2,'level-default': noticeParam.type===2}" >
                         <div class="message_view_left">
                             <span>标题：{{item.title}}
-                                <label v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)" style="position:relative; bottom:-3px; float:right" v-if="noticeParam.type==0||noticeParam.type==1">
+                                <label v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)" style="position:relative; bottom:-3px; float:right" v-if="noticeParam.type==0">
                                 </label>
                             </span>
                             <p>内容：{{item.shortMessage}}</p>
@@ -64,7 +64,7 @@
                                         {{item.message}}
                                     </div>
                                 </Poptip>
-                                <a @click="read(item.id)" v-if="noticeParam.type==0||noticeParam.type==1">{{$t('static.Read')}}</a>
+                                <a @click="read(item.id)" v-if="noticeParam.type==0">{{$t('static.Read')}}</a>
                             </div>
                         </div>
                     </div>
@@ -78,8 +78,8 @@
             <div class="employee_right col-md-5 col-xs-12">
                 <p class="employee_right_title clear">
                     <span class="left">{{$t('static.order_message')}}</span>
-                    <button class="btn btn-primary right" @click="refresh()">{{$t('static.refresh')}}</button>
                 </p>
+                <div class="refreshBtn"><button class="btn btn-primary right" @click="refresh()">{{$t('static.refresh')}}</button></div>
                 <div class="employee_right_message">
                     <div class="cover_loading">
                         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -526,6 +526,9 @@ export default {
 }
 </script>
 <style scoped>
+.left{
+    margin-bottom: 10px;
+}
 .checkbox_select {
     background-image: url(/static/images/selected.png);
     display: inline-block;
@@ -551,7 +554,7 @@ export default {
 
 .checkall{ 
     float:right;
-    margin: 10px 26px 0 15px;
+    margin: 10px 11px 0 15px;
 }
 
 .checkall span{
@@ -602,11 +605,11 @@ export default {
 
 .employee_right_message {
     clear: both;
-    padding-top: 20px;
-    border-top: 1px solid #ddd;
-    white-space: nowrap;
-    max-height: 600px;
-
+    white-space: nowrap; 
+    border-top:none;
+    padding-top:5px;
+    max-height:600px;
+    overflow-y:auto;
 }
 
 .employee_message_view {
