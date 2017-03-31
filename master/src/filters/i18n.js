@@ -553,7 +553,15 @@ var locales = {
             file_down: '文件下载',
             non_image: '非图片文件显示，请下载查看',
             Latin: '拉丁文',
-            Request_again:'再次询价申请'
+            Request_again:'再次询价申请',
+            Notifications:'消息通知',
+            Notifications_today:'今日通知',
+            Notifications_three:'三天内通知',
+            Read_notifications:'已读通知 ',
+            Mark_read:'标记为已读',
+            Select_all:'全选',
+            Read:'已读'
+
         }
     },
     en: {
@@ -1098,7 +1106,14 @@ var locales = {
             file_down: 'file downloading',
             non_image: 'non-image file, please download it',
             Latin: 'Latin',
-            Request_again:'Request again'
+            Request_again:'Request again',
+            Notifications:'Notifications',
+            Notifications_today:'Today',
+            Notifications_three:'Three Days',
+            Read_notifications:'Read Notifications',
+            Mark_read:'Mark as Read Notifications',
+            Select_all:'Select All',
+            Read:'Read'
         }
     }
 }

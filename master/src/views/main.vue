@@ -21,56 +21,56 @@
                     <div class="Piechart" v-echarts="getPiechart.options" :loading="getPiechart.load"></div>
                 </div>
             </div>
-            <div class="employee_right col-md-4 col-xs-12 employee_right_wrap">
+            <div class="col-md-4 col-xs-12 employee_right_wrap">
                 <p class="employee_right_title clear">
-                    <span class="left">消息通知</span>
+                    <span class="left" style="margin-bottom:5px">{{$t('static.Notifications')}}</span>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': noticeParam.type===0}" @click="selectType(0)">
-                            今日通知
+                            {{$t('static.Notifications_today')}}
                         </button>
                         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': noticeParam.type===1}" @click="selectType(1)">
-                            三日内通知
+                            {{$t('static.Notifications_three')}}
                         </button>
                         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': noticeParam.type===2}" @click="selectType(2)">
-                            已读通知
+                            {{$t('static.Read_notifications')}}
                         </button>
                     </div>
                     <button class="btn btn-primary right" @click="refreshNotice()">{{$t('static.refresh')}}</button>
                 </p>
                 <!-- 全选 -->
-                <div class="checkall" v-if="noticeParam.type==0||noticeParam.type==1">
-                      <span>全选 : </span>
+                <div class="checkall" v-if="(noticeParam.type==0||noticeParam.type==1)&&this.initNoticeList.length!==0">
+                      <span>{{$t('static.Select_all')}} : </span>
                       <label class="selectAll" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()" style="position:relative; bottom:-1px; float:right">
                       </label>
                 </div>
                 <!-- 标记为已读 -->
-                <div class="btn btn-info btn-xs" style="float:right; margin-left:30px; margin-top:11px" @click="signRead" v-if="noticeParam.type==0||noticeParam.type==1">标记为已读</div>
-                <div class="employee_right_message" style="border-top: none; padding-top:10px">
+                <div class="btn btn-info btn-xs" style="float:right; margin-left:30px; margin-top:11px" @click="signRead" v-if="(noticeParam.type==0||noticeParam.type==1)&&this.initNoticeList.length!==0">{{$t('static.Mark_read')}}</div>
+                <div class="employee_right_message" style="border-top:none;padding-top:10px;max-height:600px;overflow-y:auto">
                     <div class="cover_loading">
                         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
                     </div>
                     <div class="notice_message_view" v-for="item in initNoticeList" v-bind:class="{'level-five':item.urgent>80&&noticeParam.type !== 2,'level-four':item.urgent<=80&&item.urgent>60&&noticeParam.type !== 2,'level-three':item.urgent<=60&&item.urgent>40&&noticeParam.type !== 2,'level-two':item.urgent<=40&&item.urgent>20&&noticeParam.type !== 2,'level-one':item.urgent<=20&&noticeParam.type !== 2,'level-default': noticeParam.type===2}" >
                         <div class="message_view_left">
                             <span>标题：{{item.title}}
-                                <label v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)" style="position:relative; bottom:-3px; float:right">
+                                <label v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)" style="position:relative; bottom:-3px; float:right" v-if="noticeParam.type==0||noticeParam.type==1">
                                 </label>
                             </span>
                             <p>内容：{{item.shortMessage}}</p>
                             <time>{{item.mtime}}</time>
                             <div class="message_view_right">
                                 <Poptip placement="left" trigger="hover">
-                                    <a>详情</a>
+                                    <a>{{$t('static.details')}}</a>
                                     <div class="api order-detail" slot="content" >
                                         {{item.message}}
                                     </div>
                                 </Poptip>
-                                <a @click="read(item.id)">已读</a>
+                                <a @click="read(item.id)" v-if="noticeParam.type==0||noticeParam.type==1">{{$t('static.Read')}}</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- 底部分页 -->
-                <div class="page">
+                <div class="page" v-if="this.initNoticeList.length!==0">
                    <pagination :combination="noticeParam" slot="page"></pagination>
                 </div>
             </div>
@@ -551,7 +551,7 @@ export default {
 
 .checkall{ 
     float:right;
-    margin: 10px 10px 0 20px;
+    margin: 10px 26px 0 15px;
 }
 
 .checkall span{
@@ -565,8 +565,9 @@ export default {
    vertical-align: middle;
    cursor: pointer;
 }
+
 .page{
-    position: fixed;
+    position:fixed;
 }
 .order-detail{
    font-size:15px;
@@ -605,6 +606,7 @@ export default {
     border-top: 1px solid #ddd;
     white-space: nowrap;
     max-height: 600px;
+
 }
 
 .employee_message_view {
