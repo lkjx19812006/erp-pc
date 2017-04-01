@@ -4646,7 +4646,6 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
 }
 
 export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
-
     const body = {
         customerId: param.customerId,
         customerName: param.customerName,
@@ -4673,7 +4672,43 @@ export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
     }).then((res) => {
         console.log('新增成功')
             /*dispatch(types.CUSTOMER_TRANSFER, param);*/
-        param.callback(res.json().msg);
+
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const modifyPurchaseOrder = ({ dispatch }, param) => { //修改采购单
+    const body = {
+        id: param.id,
+        customerId: param.customerId,
+        customerName: param.customerName,
+        customerPhone: param.customerPhone,
+        buyDesc: param.buyDesc,
+        intentionList: param.intentionList
+    }
+
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+            /*dispatch(types.CUSTOMER_TRANSFER, param);*/
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
+
     }, (res) => {
         console.log('fail');
     });

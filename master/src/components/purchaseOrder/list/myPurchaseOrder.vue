@@ -61,7 +61,7 @@
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
                         </td>
                         <td>
-                            <a class="underline" @click.stop="detailClick(item.id)">{{item.customerName}}</a>
+                            <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.employee}}</td>
@@ -70,10 +70,10 @@
                         <td>{{item.district}}</td>
                         <td>{{item.pubdate}}</td>
                         <td>{{item.duedate}}</td>
-                        <td>{{item.source}}</td>
+                        <td>{{item.source | indentSource}}</td>
                         <td>{{item.buyDesc}}</td>
                         <td>{{item.comment}}</td>
-                        <td>{{item.inquire}}</td>
+                        <td>{{item.inquire | inquire}}</td>
                         <td style="text-align: left">
                             <a class="operate" @click.stop="editPurchase(item,$index)"><img src="/static/images/edit.png" height="18" width="28" alt="编辑" />
                             </a>
@@ -148,6 +148,7 @@ export default {
             createParam: {
                 show: false,
                 link: "/indent/add",
+                callback: this.callback,
                 customerId: "",
                 customerName: "",
                 customerPhone: "",
@@ -160,12 +161,26 @@ export default {
             },
             editParam: {
                 show: false,
+                link: "/indent/update",
+                callback: this.callback,
+                id: "",
+                customerId: "",
+                customerName: "",
+                customerPhone: "",
+                province: "",
+                city: "",
+                district: "",
+                address: "",
+                buyDesc: "",
+                intentionList: [], //意向信息
+                intentionListBack: [] //意向信息副本
             },
             detailParam: {
                 show: false,
                 loading: false,
                 link: "/indent/queryById",
-                id: ""
+                id: "",
+                customerId: ""
             },
             deleteParam: {
                 show: false,
@@ -228,11 +243,37 @@ export default {
             this.createParam.show = true;
         },
         editPurchase: function(item, index) {
-            this.editParam = item;
+
+            this.editParam.id = item.id;
+            this.editParam.customerName = item.customerName;
+            this.editParam.customerId = item.customerId;
+            this.editParam.customerPhone = item.customerPhone;
+            this.editParam.province = item.province;
+            this.editParam.city = item.city;
+            this.editParam.district = item.district;
+            this.editParam.address = item.address;
+            this.editParam.buyDesc = item.buyDesc;
+            for (let i = 0; i < item.intentionList.length; i++) {
+                let temp = {
+                    id: item.intentionList[i].id,
+                    breedId: item.intentionList[i].breedId,
+                    breedName: item.intentionList[i].breedName,
+                    location: item.intentionList[i].location,
+                    spec: item.intentionList[i].spec,
+                    number: item.intentionList[i].number,
+                    unit: item.intentionList[i].unit,
+                    price: item.intentionList[i].price,
+                    status: 1
+                };
+                this.editParam.intentionList.push(temp);
+                this.editParam.intentionListBack.push(temp);
+            }
+
             this.editParam.show = true;
         },
-        detailClick: function(id) {
+        detailClick: function(id, customerId) {
             this.detailParam.id = id;
+            this.detailParam.customerId = customerId;
             this.detailParam.show = true;
         },
         deletePurchase: function(id, index) {
@@ -284,6 +325,7 @@ export default {
         callback: function(name) { //如无特殊情况，统一使用这个函数作为回调函数
             this.tipsParam.name = name;
             this.tipsParam.show = true;
+            this.getPurchaseOrderList(this.loadParam);
         }
 
     },

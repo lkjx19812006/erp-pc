@@ -25,12 +25,22 @@
                         <h4 class="section_title">基本信息</h4>
                         <div class="panel panel-default" style="border:none">
                             <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                <label class="col-md-3 col-sm-4 col-xs-6">姓名：{{initPurchaseDetail.customerName}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">手机号：{{initPurchaseDetail.customerPhone}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">省：{{initPurchaseDetail.province}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">市：{{initPurchaseDetail.city}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">详细地址：{{initPurchaseDetail.address}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">经营范围</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">姓名：{{initClientDetail.name}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">类型：{{initClientDetail.type |customerType}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">是否供应商：
+                                    <span v-if="initClientDetail.supplier==0">否</span>
+                                    <span v-if="initClientDetail.supplier==1">是</span>
+                                </label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">分类：{{initClientDetail.classify | classify}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">手机号：{{initClientDetail.mainPhone}}
+                                    <span v-if="initClientDetail.phoneProvince!=''||initClientDetail.phoneCity!=''">
+                                        （{{initClientDetail.phoneProvince}}{{initClientDetail.phoneCity}}）
+                                    </span>
+                                </label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">电话：{{initClientDetail.tel}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">邮箱：{{initClientDetail.email}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">邮编：{{initClientDetail.number}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">省市：{{initClientDetail.provinceName}}{{initClientDetail.cityName}}</label>
                             </ul>
                         </div>
                         <!-- 其他信息 -->
@@ -152,10 +162,13 @@ import pressImage from '../../components/imagePress'
 import filter from '../../filters/filters.js'
 import {
     initPurchaseDetail,
+    initClientDetail,
     initIntentionDetail
+
 } from '../../vuex/getters'
 import {
     getPurchaseOrderDetail,
+    getClientDetail,
     getIntentionDetail
 } from '../../vuex/actions'
 export default {
@@ -177,10 +190,12 @@ export default {
     vuex: {
         getters: {
             initPurchaseDetail,
+            initClientDetail,
             initIntentionDetail
         },
         actions: {
             getPurchaseOrderDetail,
+            getClientDetail,
             getIntentionDetail
         }
     },
@@ -242,6 +257,10 @@ export default {
     },
     filter: (filter, {}),
     created() {
+        let clientParam = {
+            id: this.param.customerId
+        }
+        this.getClientDetail(clientParam);
         this.getPurchaseOrderDetail(this.param);
     }
 }

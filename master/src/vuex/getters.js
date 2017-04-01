@@ -193,28 +193,33 @@ export const initSupplyCustomerlist = (state) => {
     return parseJson(state.table.basicBaseList.supplyCustomerList);
 }
 export const initCustomerlist = (state) => {
-        return parseJson(state.table.basicBaseList.customerList);
-    }
-    /*---客户通话记录---*/
+    return parseJson(state.table.basicBaseList.customerList);
+}
+
+/*---客户通话记录---*/
 export const initCallRecordList = (state) => {
-        return parseJson(state.table.basicBaseList.callRecordList);
-    }
-    /*---客户通话记录统计---*/
+    return parseJson(state.table.basicBaseList.callRecordList);
+}
+
+/*---客户通话记录统计---*/
 export const initCallCountList = (state) => {
-        return parseJson(state.table.basicBaseList.callCountList);
-    }
-    /*供应商产品列表以及详情*/
+    return parseJson(state.table.basicBaseList.callCountList);
+}
+
+/*供应商产品列表以及详情*/
 export const initProductlist = (state) => {
     return parseJson(state.table.basicBaseList.productList);
 }
 export const initProductDetail = (state) => {
-        return JSON.parse(JSON.stringify(state.table.productDetail));
-    }
-    /*供应商文件*/
+    return JSON.parse(JSON.stringify(state.table.productDetail));
+}
+
+/*供应商文件*/
 export const initFileslist = (state) => {
-        return parseJson(state.table.basicBaseList.filesList);
-    }
-    /*---end---*/
+    return parseJson(state.table.basicBaseList.filesList);
+}
+
+/*---end---*/
 export const initClientDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.clientDetail));
 }
