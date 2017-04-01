@@ -194,8 +194,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 143px;
-    min-width: 143px;
+    width: 190px;
+    min-width: 190px;
 }
 
 .service-nav {

@@ -138,6 +138,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                total: "",
                 link: '/indent/queryOrgList',
                 key: 'orgPurchaseList',
                 source: '',
@@ -204,7 +205,7 @@ export default {
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            //this.getIntentionList(this.loadParam);
+            this.getPurchaseOrderList(this.loadParam);
         },
         a: function(employee) {
             this.loadParam.employee = employee.employeeId;
@@ -265,8 +266,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 131px;
-    min-width: 110px;
+    width: 160px;
+    min-width: 160px;
 }
 
 .service-nav {

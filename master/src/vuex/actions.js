@@ -3693,9 +3693,9 @@ export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及�
         if (seach == 'orgCode' && param[seach] !== '') {
             apiurl += '&orgCode=' + param.orgCode
         }
-        /*if (seach == 'orgId' && param[seach] !== '') {
+        if (seach == 'orgId' && param[seach] !== '') {
             apiurl += '&org=' + param.orgId
-        }*/
+        }
         if (seach == 'leave' && param[seach] !== '') {
             apiurl += '&leave=' + param.leave
         }
