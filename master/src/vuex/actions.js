@@ -4757,6 +4757,36 @@ export const inquirePurchaseOrder = ({ dispatch }, param) => { //采购单询价
     });
 }
 
+export const offerPurchaseOrder = ({ dispatch }, param) => { //采购单意向报价
+    const body = {
+        intentionId: param.intentionId,
+        customerId: param.customerId,
+        number: param.number,
+        unit: param.unit,
+        price: param.price
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log("success");
+        param.show = false;
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
+
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
 export const getIntentionList = ({ dispatch }, param) => { //意向信息列表以及搜索
     param.loading = true;
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';

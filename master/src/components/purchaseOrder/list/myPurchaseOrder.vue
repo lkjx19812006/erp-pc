@@ -20,6 +20,7 @@
                 <dd class="pull-right" style="margin-right:10px">
                     <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="batchInquire()">批量询价</button>
                     <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="createPurchase()">新建</button>
+                    <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="">EXCEL导入采购单</button>
                     <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                 </dd>
             </div>
