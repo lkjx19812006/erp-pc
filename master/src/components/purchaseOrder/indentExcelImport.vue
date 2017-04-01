@@ -18,15 +18,18 @@
                         <label class="editlabel">{{$t('static.file')}}</label>
                         <input type="file" id="file" class="left" />
                         <button type="button" class="btn btn-confirm right" @click="save()">上传</button>
-                        <div v-if="param.success&&!param.result" class="right" style="margin-right:10px;color:green">上传成功</div>
-                        <div v-if="param.success&&param.result" class="right" style="margin-right:10px;color:red">上传失败</div>
+                        <div v-if="param.success==1" class="right" style="margin-right:10px;color:green">上传成功</div>
+                        <div v-if="param.success==2||param.success==3" class="right" style="margin-right:10px;color:red">上传失败</div>
                     </div>
                     <h4 v-show="param.loading" style="margin-top:50px;text-align:center;color:red">正在上传，请稍后！！</h4>
                     <!-- 如果上传完成后显示上传后返回信息 -->
-                    <div v-if="param.success&&param.result" class="editpage-input clearfix">
+                    <div v-if="param.success==2" class="editpage-input clearfix">
                         <ul v-for="(key, value) in param.result">
                             <li>{{key}}、{{value}}</li>
                         </ul>
+                    </div>
+                    <div v-if="param.success==3" class="editpage-input clearfix">
+                        <div style="color:red">{{param.result}}</div>
                     </div>
                 </section>
             </div>

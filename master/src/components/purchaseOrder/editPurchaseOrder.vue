@@ -214,6 +214,7 @@ import {
     getUnitList,
     getCurrencyList,
     getEmployeeList,
+    getPurchaseOrderDetail,
     modifyPurchaseOrder
 } from '../../vuex/actions'
 export default {
@@ -305,7 +306,9 @@ export default {
             getUnitList,
             getEmployeeList,
             getCurrencyList,
-            modifyPurchaseOrder
+            getPurchaseOrderDetail,
+            modifyPurchaseOrder,
+
         }
     },
     methods: {
@@ -435,6 +438,7 @@ export default {
         },
         //确认提交
         confirm: function() {
+            this.param.link = "/indent/update"
             let temp = [];
             //确认时需要知道原先存在于数据库中的数据是否被删除
             for (let i = 0; i < this.param.intentionListBack.length; i++) {
@@ -484,6 +488,7 @@ export default {
         this.getProvinceList(this.countryParam);
         //获取单位列表
         this.getUnitList();
+        this.getPurchaseOrderDetail(this.param);
 
     }
 }

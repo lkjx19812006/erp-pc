@@ -4803,6 +4803,25 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
         detail.intentionList.arr = intentionList;
         detail.intentionList.show = false;
 
+        if (param.intentionList && param.intentionListBack) {
+            let arr = detail.intentionList.arr;
+            for (let i = 0; i < arr.length; i++) {
+                let temp = {
+                    id: arr[i].id,
+                    breedId: arr[i].breedId,
+                    breedName: arr[i].breedName,
+                    location: arr[i].location,
+                    spec: arr[i].spec,
+                    number: arr[i].number,
+                    unit: arr[i].unit,
+                    price: arr[i].price,
+                    status: 1
+                };
+                param.intentionList.push(temp);
+                param.intentionListBack.push(temp);
+            }
+        }
+
         dispatch(types.PURCHASE_DETAIL, detail);
         param.loading = false;
 
@@ -4859,11 +4878,16 @@ export const importPurchase = ({ dispatch }, param) => { //excel导入采购单
         emulateHTTP: false,
         body: data
     }).then((res) => {
-        param.success = true;
+
         if (res.json().code == 1000) {
+            param.success = 2;
             param.result = res.json().result;
-        } else {
+        } else if (res.json().code == 200) {
+            param.success = 1;
             param.result = "";
+        } else {
+            param.success = 3;
+            param.result = res.json().msg;
         }
 
         if (param.callback) {

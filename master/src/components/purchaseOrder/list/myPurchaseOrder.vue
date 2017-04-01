@@ -20,22 +20,22 @@
                     </dd>
                     <dt class="left transfer marg_top">询价状态：</dt>
                     <dd class="left margin_right">
-                         <select class="form-control" v-model="loadParam.inquire" @change="selectSearch()">
+                        <select class="form-control" v-model="loadParam.inquire" @change="selectSearch()">
                             <option value="0">初始</option>
                             <option value="1">询价中</option>
                             <option value="2">报价中</option>
                             <option value="3">报价完成</option>
-                         </select>
+                        </select>
                     </dd>
                     <dt class="left transfer marg_top">采购单来源：</dt>
                     <dd class="left margin_right">
-                         <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
+                        <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
                             <option value="0">业务员导入</option>
                             <option value="1">web</option>
                             <option value="2">android</option>
                             <option value="3">weixin</option>
                             <option value="4">ios</option>
-                         </select>
+                        </select>
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:50px">
@@ -173,10 +173,10 @@ export default {
                 total: "",
                 link: '/indent/queryEmployeeList',
                 key: 'myPurchaseList',
-                source:'',
-                inquire:'',
-                customerName:'',
-                customerPhone:''
+                source: '',
+                inquire: '',
+                customerName: '',
+                customerPhone: ''
             },
             createParam: {
                 show: false,
@@ -197,13 +197,13 @@ export default {
                 show: false,
                 link: this.importPurchase,
                 callback: this.selectSearch,
-                success: false, //是否上传成功
+                success: 0, //上传后，返回码的解析，0/1/2/3，初始/成功/错误（1000）/其他错误
                 mFile: "", //excel文件
                 result: "" // 导入成功后的返回信息
             },
             editParam: {
                 show: false,
-                link: "/indent/update",
+                link: "", //编辑时是获取详情，确认时是更新数据
                 callback: this.callback,
                 id: "",
                 customerId: "",
@@ -251,14 +251,14 @@ export default {
         }
     },
     methods: {
-        selectSearch: function() {  //搜索
+        selectSearch: function() { //搜索
             this.getPurchaseOrderList(this.loadParam);
         },
-        resetCondition:function(){  //清除搜索条件
-            this.loadParam.source='';
-            this.loadParam.inquire='';
-            this.loadParam.customerName='';
-            this.loadParam.customerPhone='';
+        resetCondition: function() { //清除搜索条件
+            this.loadParam.source = '';
+            this.loadParam.inquire = '';
+            this.loadParam.customerName = '';
+            this.loadParam.customerPhone = '';
             this.getPurchaseOrderList(this.loadParam);
         },
         checkedAll: function() { //全选
@@ -296,6 +296,7 @@ export default {
         },
         editPurchase: function(item, index) {
 
+            this.editParam.link = "/indent/queryById";
             this.editParam.id = item.id;
             this.editParam.customerName = item.customerName;
             this.editParam.customerId = item.customerId;
@@ -305,21 +306,8 @@ export default {
             this.editParam.district = item.district;
             this.editParam.address = item.address;
             this.editParam.buyDesc = item.buyDesc;
-            for (let i = 0; i < item.intentionList.length; i++) {
-                let temp = {
-                    id: item.intentionList[i].id,
-                    breedId: item.intentionList[i].breedId,
-                    breedName: item.intentionList[i].breedName,
-                    location: item.intentionList[i].location,
-                    spec: item.intentionList[i].spec,
-                    number: item.intentionList[i].number,
-                    unit: item.intentionList[i].unit,
-                    price: item.intentionList[i].price,
-                    status: 1
-                };
-                this.editParam.intentionList.push(temp);
-                this.editParam.intentionListBack.push(temp);
-            }
+            this.editParam.intentionList = [];
+            this.editParam.intentionListBack = [];
 
             this.editParam.show = true;
         },
@@ -411,9 +399,11 @@ export default {
 .transfer {
     margin-right: 8px;
 }
-.margin_right{
+
+.margin_right {
     margin-right: 15px
 }
+
 .checkbox_unselect {
     background-image: url(/static/images/unselect.png);
     display: inline-block;
