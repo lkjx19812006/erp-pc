@@ -24,7 +24,8 @@
                         <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;font-size: 13px;" rows="3"></textarea>
                     </div>
                     <div class="editpage-input col-md-12">
-                        <label class="editlabel">{{$t('static.payment')}}</label>
+                        <label class="editlabel">{{$t('static.payment')}}<span class="system_danger" v-if="$validation.img.required">{{$t('static.required')}}</span></label>
+                        <input type="text" class="form-control left" v-show="false"  v-validate:img="{required:true}" v-model="param.image_f"/>
                         <press-image :value.sync="param.image_f" :type="type" :param="imageParam"></press-image>
                     </div>
                 </section>

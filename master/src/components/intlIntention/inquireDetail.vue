@@ -159,13 +159,13 @@
                                                   })">
                                             <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
                                             <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                              {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
+                                              {{$t('static.medicinal_material_information')}}（{{initIntlIntentionDetail.items.arr.length}}）
                                             </a>
                                             <span class="pull-right" style="color:#fa6705;margin-top: 5px">{{$t('static.total')}}：
                                                 <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                             </span> 
                                             <!-- 确认报价 -->
-                                            <button v-if="initLogin.menuStr.indexOf(',120,')>-1" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
+                                            <button v-if="itemOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
                                                 确认报价
                                             </button>
                                         </h4>
@@ -232,16 +232,16 @@
                                                         <td>{{item.utime}}</td>
                                                         <td>
                                                             <div v-if="item.inquire===0">
-                                                                初始
+                                                                {{$t('static.initial')}}
                                                             </div>
                                                             <div v-if="item.inquire===1">
-                                                                询价中
+                                                                {{$t('static.inquiry')}}
                                                             </div>
                                                             <div v-if="item.inquire===2">
-                                                                报价中
+                                                                {{$t('static.quotation')}}
                                                             </div>
                                                             <div v-if="item.inquire===3">
-                                                                报价完成
+                                                                {{$t('static.quo_complete')}}
                                                             </div>
                                                         </td>
                                                         <td>
@@ -267,7 +267,7 @@
                                                     })">
                                               <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
                                               <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                                提取物列表（{{initIntlIntentionDetail.extractive.arr.length}}）
+                                                {{$t('static.extractive_information')}}（{{initIntlIntentionDetail.extractive.arr.length}}）
                                               </a>
                                               <!--询价完成或再次询价才显示价格-->
 
@@ -275,7 +275,7 @@
                                                   <p class="pull-right" v-for="item in initIntlIntentionDetail.extractiveTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                               </span>
                                               <!-- 确认报价 -->
-                                              <button v-if="initLogin.menuStr.indexOf(',121,')>-1" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
+                                              <button v-if="extractiveOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.extractive.show&&initIntlIntentionDetail.extractive.arr.length>0">
@@ -345,16 +345,16 @@
                                                         <td>{{item.utime}}</td>
                                                         <td>
                                                             <div v-if="item.inquire===0">
-                                                                初始
+                                                                {{$t('static.initial')}}
                                                             </div>
                                                             <div v-if="item.inquire===1">
-                                                                询价中
+                                                                {{$t('static.inquiry')}}
                                                             </div>
                                                             <div v-if="item.inquire===2">
-                                                                报价中
+                                                                {{$t('static.quotation')}}
                                                             </div>
                                                             <div v-if="item.inquire===3">
-                                                                报价完成
+                                                                {{$t('static.quo_complete')}}
                                                             </div>
                                                         </td>
                                                         <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> -->
@@ -387,7 +387,7 @@
                                             </span>
                                             <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                              <!-- 确认报价, -->
-                                            <button v-if="initLogin.menuStr.indexOf(',122,')>-1" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)">确认报价</button>
+                                            <button v-if="otherOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)">确认报价</button>
                                          </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0">
@@ -481,7 +481,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click="enfoldment({
-                                                  link:initIntlIntntionDetail.offerFiles,
+                                                  link:initIntlIntentionDetail.offerFiles,
                                                   crete:'offerFiles'
                                                   })">
                                           <img class="pull-left" src="/static/images/offerfile_icon.png" height="29" width="26"  />
@@ -712,7 +712,10 @@ export default {
                 id: 0,
                 link: "/intlIntention/keepLastOffer",
                 callback: this.saveLastDialog
-            }
+            },
+            itemOfferConfirm: false, //原材料报价确认标记
+            otherOfferConfirm: false, //其他报价确认标记
+            extractiveOfferConfirm: false //提取物报价确认标记
 
         }
     },
@@ -734,14 +737,39 @@ export default {
         }
     },
     methods: {
+        getOperation: function(menus, path) {
+            for (let i = 0; i < menus.length; i++) {
+                if (menus[i].url == path) {
+                    for (let j = 0; j < menus[i].subcategory.length; j++) {
+                        if (menus[i].subcategory[j].id == 120) {
+                            this.itemOfferConfirm = true;
+                            continue;
+                        }
+                        if (menus[i].subcategory[j].id == 121) {
+                            this.extractiveOfferConfirm = true;
+                            continue;
+                        }
+                        if (menus[i].subcategory[j].id == 122) {
+                            this.otherOfferConfirm = true;
+                            continue;
+                        }
+
+                    }
+                } else {
+                    this.getOperation(menus[i].subcategory, path);
+                }
+            }
+        },
         clickBig: function(img) {
             this.pictureParam.show = true;
             this.pictureParam.img = img;
         },
         enfoldment: function(param) {
+            
             if (this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length == 0) {
                 this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = true;
             }
+
             this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show;
         },
         clickOn: function(item) {
@@ -912,6 +940,7 @@ export default {
 
     },
     created() {
+        this.getOperation(JSON.parse(localStorage.menus), this.$route.path);
         this.getIntlIntentionDetail(this.param);
         this.getCurrencyList();
     },

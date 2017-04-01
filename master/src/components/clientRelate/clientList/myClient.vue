@@ -1,5 +1,6 @@
 <template>
     <div>
+        <import-customer-model :param="excelImportParam" v-if="excelImportParam.show"></import-customer-model>
         <create-model :param="createParam" v-if="createParam.show"></create-model>
         <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
         <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
@@ -17,7 +18,7 @@
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top">{{$t("static.client_name")}}：</dt>
                         <dd class="left">
-                            <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                            <input type="text" class="form-control" v-model="loadParam.name" placeholder={{$t("static.Enter_search")}} @keyup.enter="selectSearch()">
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
@@ -79,7 +80,7 @@
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top" style="letter-spacing:3px">{{$t("static.cellphone")}}：</dt>
                         <dd class="left">
-                            <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                            <input type="text" class="form-control" v-model="loadParam.phone" placeholder={{$t("static.Enter_search")}} @keyup.enter="selectSearch()">
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
@@ -97,7 +98,7 @@
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top">{{$t("static.business_scope")}}：</dt>
                         <dd class="left">
-                            <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                            <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder={{$t("static.Enter_search")}} @keyup.enter="selectSearch()">
                         </dd>
                     </dl>
                     <dd class="left transfer">
@@ -154,6 +155,8 @@
                                             link:saveCreate,
                                             key:'myCustomerList'
                                             })">{{$t("static.new")}}</button>
+                        <!-- EXCEL导入客户 -->
+                        <button type="button" class="btn btn-primary" @click="excelImport()">{{$t('static.upload_clients')}}</button>
                         <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                     </dd>
                 </div>
@@ -281,6 +284,7 @@
 <script>
 import filter from '../../../filters/filters'
 import pagination from '../../../components/pagination'
+import importCustomerModel from '../customerExcelImport.vue'
 import detailModel from '../../../components/clientRelate/clientDetail'
 import createModel from '../../../components/user/userTransfer'
 import deletebreedModel from '../../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
@@ -308,13 +312,15 @@ import {
     saveCreate,
     transferInfo,
     customerTransferBlacklist,
-    customerAudit
+    customerAudit,
+    importCustomer
 } from '../../../vuex/actions'
 
 export default {
     components: {
         pagination,
         detailModel,
+        importCustomerModel,
         createModel,
         deletebreedModel,
         alterinfoModel,
@@ -341,7 +347,8 @@ export default {
             saveCreate,
             transferInfo,
             customerTransferBlacklist,
-            customerAudit
+            customerAudit,
+            importCustomer
         }
     },
     data() {
@@ -377,6 +384,17 @@ export default {
                 total: 0
             },
             language: '',
+            excelImportParam: {
+                show: false,
+                loading: false, //上传时显示载入样式
+                success: false, //是否上传成功
+                result: "", // 导入成功后的返回信息
+                link: this.importCustomer,
+                country: "", //客户所属国家
+                type: "", //客户类型
+                mFile: "" //excel文件
+
+            },
             provinceParam: {
                 loading: true,
                 show: false,
@@ -450,6 +468,10 @@ export default {
     methods: {
         selectSearch: function() {
             this.getClientList(this.loadParam);
+        },
+        excelImport: function() {
+            this.excelImportParam.success = false;
+            this.excelImportParam.show = true;
         },
         clickOn: function(param) {
             this.changeParam = param;

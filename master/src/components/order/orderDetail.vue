@@ -61,7 +61,12 @@
                                         <mg-label :title="$t('static.paid')">{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
                                         <mg-label :title="$t('static.wait_payment')">{{initOrderDetail.unpaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
                                         <mg-label :title="$t('static.transcation')">{{initOrderDetail.ctime}}</mg-label>
+                                        <!-- 新增 订单性质 -->
+                                        <mg-label :title="$t('static.trading_patterns')" style="color:red" v-if="initOrderDetail.orderStatus ==0||initOrderDetail.orderStatus ==70">{{initOrderDetail.orderStatus | orderstatus}}</mg-label>
+                                        <!-- 新增 订单状态 -->
+                                        <mg-label :title="$t('static.order_status')">{{initOrderDetail.orderStatus | orderstatus}}</mg-label>
                                         <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.comments}}</mg-label>
+
                                     </ul>
                                 </div>
                                 <div class="panel panel-default">
@@ -86,10 +91,11 @@
                                                     <th>{{$t('static.specification')}}</th>
                                                     <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                                     <th>{{$t('static.quality')}}</th>
-                                                    <th>{{$t('static.price')}}</th>
-                                                    <th v-if="this.initLogin.orgId !=='11'">{{$t('static.cost_price')}}</th>
-                                                    <th v-if="this.initLogin.orgId !=='11'">{{$t('static.cost')}}{{$t('static.total')}}</th>
-                                                    <th>{{$t('static.total')}}</th>
+                                                    <th v-if="initOrderDetail.type == 1">销售价格</th>
+                                                    <th v-if="initOrderDetail.type == 0">采购价格</th>
+                                                    <th v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==0">{{$t('static.cost_price')}}</th>
+                                                    <!-- <th v-if="this.initLogin.orgId !=='11'">{{$t('static.cost')}}{{$t('static.total')}}</th>
+                                                    <th>{{$t('static.total')}}</th> -->
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.goods.arr">
@@ -99,9 +105,11 @@
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.price}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
-                                                        <td v-if="this.initLogin.orgId !=='11'">{{item.costPrice}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
-                                                        <td v-if="this.initLogin.orgId !=='11'">{{item.cost}}</td>
-                                                        <td>{{item.amount}} （{{initOrderDetail.currency | Currency}}）</td>
+                                                        <!-- <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==0"></td> -->
+                                                        <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==0">{{item.costPrice}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
+                                                        <!-- <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==1"></td> -->
+                                                        <!-- <td v-if="this.initLogin.orgId !=='11'">{{item.cost}}</td>
+                                                        <td>{{item.amount}} （{{initOrderDetail.currency | Currency}}）</td> -->
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -172,8 +180,8 @@
                                                     <tr v-for="item in initOrderDetail.stages.arr">
                                                         <td v-if="item.type==0">{{$t('static.paid')}}</td>
                                                         <td v-if="item.type==1">{{$t('static.income')}}</td>
-                                                        <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}}（{{$t('static.order_amount')}} {{item.ratio | advanced}}）</td>
-                                                        <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}} {{$t('static.ins')}} {{item.extra}} {{$t('static.day')}}（{{$t('static.order_amount')}} {{item.ratio | advanced}}）</td>
+                                                        <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}}<!-- （{{$t('static.order_amount')}} {{item.ratio | advanced}}） --></td>
+                                                        <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}} {{$t('static.ins')}} {{item.extra}} {{$t('static.day')}}<!-- （{{$t('static.order_amount')}} {{item.ratio | advanced}}） --></td>
                                                         <td>{{item.comment}}</td>
                                                         <td v-if="item.validate==0" style="color:#91a0ff;cursor:pointer" @click="apply_Record({
                                                               sub:$index,
@@ -792,8 +800,6 @@ export default {
             this.pictureParam.img = img;
         },
         pendingOrder: function(initOrderDetail) {
-            console.log(initOrderDetail)
-            console.log(this.disposeParam)
             this.disposeParam = initOrderDetail;
             /*this.disposeParam = this.param;*/
             this.disposeParam.show = true;
@@ -814,6 +820,7 @@ export default {
     filter: (filter, {}),
     created() {
         this.getOrderDetail(this.param);
+        console.log(this.initOrderDetail)
     }
 }
 </script>

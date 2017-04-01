@@ -196,6 +196,7 @@
                                         index:$index,
                                         type:item.type,
                                         consigner:item.consigner,
+                                        consignerName:'',
                                         sourceType:0,
                                         sample:item.sample,
                                         intl:item.intl,
@@ -431,7 +432,8 @@ export default {
                 addressId: '', //地址ID，如果为空，表示是新增的收货地址,否则是已存在的收货地址
                 consignee: '',
                 consigneePhone: '',
-                consigner: '', //发货人
+                consigner: '', //发货人,(销售订单时，是业务员ID，采购订单时，是""，不填)
+                consignerName: '', //发货人名
                 zipCode: '',
                 country: '中国',
                 province: '',
@@ -450,7 +452,7 @@ export default {
                 payWay: '',
                 total: '',
                 cost: '',
-                orderStatus: '',
+                orderStatus: 0,
                 goods: [ //多个商品
 
                 ],
@@ -545,7 +547,7 @@ export default {
                 this.$store.state.table.basicBaseList.myOrderList[sub].show = true;
             }
         },
-      
+
         applyBack: function(title) {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
@@ -584,7 +586,6 @@ export default {
             }
         },
         select: function() {
-            console.log(this.checked)
             this.checked = !this.checked;
             const checked = this.checked;
             this.$store.state.table.basicBaseList.myOrderList.forEach(function(item) {
@@ -592,6 +593,13 @@ export default {
             })
         },
         newOrder: function() {
+            //新建订单时将一些之前填入的信息请空
+            this.createParam.goods = [];
+            this.createParam.total = "";
+            this.createParam.cost = "";
+            this.createParam.incidentals = 0;
+            this.createParam.preferential = 0;
+
             this.createParam.show = true;
             this.createParam.callback = this.newBack;
         },
@@ -599,6 +607,7 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
+            this.getEmpolyeeOrder(this.loadParam);
         },
         createSearch: function() {
             this.loadParam.show = true;
@@ -623,7 +632,6 @@ export default {
             this.reapplyParam.callback = this.orderBack;
         },
         updateOrder: function(param, goods) {
-            console.log(param)
             this.dialogParam = param;
             var _this = this;
             if (goods == null) {
@@ -641,6 +649,7 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
+            this.getEmpolyeeOrder(this.loadParam);
         },
         pendingOrder: function(item, sub) {
             item.show = !item.show;

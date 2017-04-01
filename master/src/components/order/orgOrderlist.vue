@@ -5,6 +5,7 @@
         <search-model :param="loadParam" v-if="loadParam.show"></search-model>
         <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
         <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
+        <cancel-model :param="cancelParam" v-if="cancelParam.show"></cancel-model>
         <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
@@ -289,9 +290,15 @@
                         </div>
                    </td> -->
                             <td>
+                                <!-- 取消订单,在订单状态为20和70时可以取消，并说明原因 -->
+                                <button class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70" @click="cancelOrder(item.id,$index)">
+                                    取消订单
+                                </button>
+                                <!-- 审核 -->
                                 <button class="btn btn-warning btn-apply" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
                                     {{$t('static.verified')}}
                                 </button>
+                                <!-- 审核发货 -->
                                 <button class="btn btn-warning" v-if="item.validate==2&&(item.verifier == $store.state.table.login.id)&&item.logistics==1&&(item.taskKey=='order_send_governor_validate'||item.taskKey=='financial_validate')" @click="orderSend(item.id,$index)" style="background:#fff;color:#eea236;padding:1px 3px;">{{$t('static.verified')}}{{$t('static.shipped')}}</button>
                             </td>
                         </tr>
@@ -322,6 +329,7 @@ import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDe
 import disposeModel from '../order/orderStatus'
 import tipsdialogModel from '../tips/tipDialog'
 import auditModel from '../../components/tips/auditDialog'
+import cancelModel from './cancleMsg'
 //单个业务员搜索
 import employeeModel from '../clientRelate/searchEmpInfo'
 import breedsearchModel from '../intention/breedsearch'
@@ -343,7 +351,8 @@ import {
     createOrder,
     orderStatu,
     getOrderDetail,
-    orderOrgAudit
+    orderOrgAudit,
+    orderCancle
 } from '../../vuex/actions'
 
 export default {
@@ -360,7 +369,8 @@ export default {
         deletebreedModel,
         disposeModel,
         tipsdialogModel,
-        auditModel
+        auditModel,
+        cancelModel
     },
     data() {
         return {
@@ -454,6 +464,16 @@ export default {
                 show: false,
                 alert: true,
                 name: "请选择要审核的订单"
+            },
+            cancelParam: {
+                show: false,
+                index: '',
+                id: '',
+                cancleCauses: '',
+                link: '/order/cancle',
+                key: 'orgOrderList',
+                callback: this.orderCancle, //cancelMsg.vue中会执行此方法
+                cancelBack: this.cancelBack //取消成功后会调用此方法(action中执行)
             }
         }
     },
@@ -507,13 +527,9 @@ export default {
             createOrder,
             orderStatu,
             getOrderDetail,
-            orderOrgAudit
+            orderOrgAudit,
+            orderCancle
         }
-    },
-    created() {
-        changeMenu(this.$store.state.table.isTop, this.getOrgOrder, this.loadParam, localStorage.orgOrderParam);
-        changeMenu(this.$store.state.table.isTop, this.getOrderStatistical, this.loadParam, localStorage.orgOrderParam);
-        this.language = localStorage.lang;
     },
     methods: {
         selectSearch: function() {
@@ -554,25 +570,7 @@ export default {
             this.loadParam.endTime = "";
             this.selectSearch();
         },
-        /*orgCheck:function(){
-            var _this = this;
-            _this.auditParam.ids = [];
-            _this.auditParam.indexs = [];
-           _this.checked=false;
-            for(var i=0;i<this.initOrgOrderlist.length;i++){
-                if(this.$store.state.table.basicBaseList.orgOrderList[i].checked){
-                    _this.auditParam.ids.push(this.$store.state.table.basicBaseList.orgOrderList[i].id);
-                    _this.auditParam.indexs.push(i);
-                    _this.auditParam.validate = this.$store.state.table.basicBaseList.orgOrderList[i].validate;
-                }
-            }
-            if(this.auditParam.ids.length>0){
-                this.auditParam.show = true;
-            }else{
-                this.tipsParam.show = true;
-            }
-             _this.auditParam.callback = _this.applyBack;
-        },*/
+
         applyBack: function(title) {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
@@ -637,6 +635,17 @@ export default {
         },
         updateOrder: function(param) {
             this.dialogParam = param;
+        },
+        cancelOrder: function(id, index) {
+            this.cancelParam.id = id;
+            this.cancelParam.index = index;
+            this.cancelParam.show = true;
+        },
+        cancelBack: function(title) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.selectSearch();
         }
     },
     filter: (filter, {}),
@@ -658,7 +667,12 @@ export default {
             this.loadParam.employeeName = employee.employeeName;
             this.selectSearch();
         },
-    }
+    },
+    created() {
+        changeMenu(this.$store.state.table.isTop, this.getOrgOrder, this.loadParam, localStorage.orgOrderParam);
+        changeMenu(this.$store.state.table.isTop, this.getOrderStatistical, this.loadParam, localStorage.orgOrderParam);
+        this.language = localStorage.lang;
+    },
 }
 </script>
 <style scoped>

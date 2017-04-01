@@ -88,7 +88,7 @@
                                         <label class="editlabel">{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
                                         <input type="text" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" v-show="false" />
                                         <select v-model="breedInfo.unit" class="form-control edit-input">
-                                            <option v-for="item in initUnitlist" value="{{item.id}}">{{item.ename}}</option>
+                                            <option v-for="item in initUnitlist" value="{{item.id}}">{{item.ename+'-'+item.name}}</option>
                                         </select>
                                     </div>
                                     <div class="editpage-input">
@@ -320,6 +320,7 @@ export default {
                 unit: '',
                 pack: '',
                 description: ''
+
             },
             empNameParam: {
                 show: false,
@@ -359,6 +360,7 @@ export default {
                 country: ''
             },
             cityParam: {
+
                 loading: true,
                 show: false,
                 color: '#5dc596',
@@ -376,6 +378,7 @@ export default {
                 all: 7,
                 city: ''
             },
+
             imageParam: {
                 url: '/crm/api/v1/file/',
                 qiniu: false
@@ -409,6 +412,7 @@ export default {
         searchBreed: function(breedName, breedId) {
             this.breedParam.show = true;
         },
+
         searchExtractive: function() {
             this.breedParam.categoryId = 900;
             this.breedParam.show = true;
@@ -467,6 +471,7 @@ export default {
             this.addParam.show = false;
 
         },
+
         showModifyBreed: function(index, type) {
             this.breedInfo.status = 2;
             this.updateParam.index = index;
@@ -483,7 +488,7 @@ export default {
                 this.breedParam.id = this.breedInfo.breedId;
             this.updateParam.show = true;
             this.breedInfo.type = type;
-            console.log(this.breedInfo.type)
+
         },
         modifyBreed: function() {
             this.param.items[this.updateParam.index].breedId = this.breedInfo.breedId,

@@ -168,7 +168,7 @@
 
                                               <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
                                               <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                                {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
+                                                {{$t('static.medicinal_material_information')}}（{{initIntlIntentionDetail.items.arr.length}}）
                                               </a>
                                               <!--询价完成或再次询价才显示价格-->
                                               <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
@@ -196,7 +196,7 @@
                                                     <!-- 再次报价 -->
                                                     <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
-                                                    <th>询价状态</th>
+                                                    <th>{{$t('static.inquiry_state')}}</th>
                                                     <th>{{$t('static.handle')}}</th>
                                                 </thead>
                                                 <tbody>
@@ -223,16 +223,16 @@
                                                         <td>{{item.utime}}</td>
                                                         <td>
                                                             <div v-if="item.inquire===0">
-                                                                初始
+                                                                {{$t('static.initial')}}
                                                             </div>
                                                             <div v-if="item.inquire===1">
-                                                                询价中
+                                                                {{$t('static.inquiry')}}
                                                             </div>
                                                             <div v-if="item.inquire===2">
-                                                                报价中
+                                                                {{$t('static.quotation')}}
                                                             </div>
                                                             <div v-if="item.inquire===3">
-                                                                报价完成
+                                                                {{$t('static.quo_complete')}}
                                                             </div>
                                                         </td>
                                                         <td>
@@ -253,7 +253,7 @@
                                                     })">
                                               <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
                                               <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                                提取物列表（{{initIntlIntentionDetail.extractive.arr.length}}）
+                                                {{$t('static.extractive_information')}}（{{initIntlIntentionDetail.extractive.arr.length}}）
                                               </a>
                                               <!--询价完成或再次询价才显示价格-->
                                               <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
@@ -308,16 +308,16 @@
                                                         <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> -->
                                                         <td>
                                                             <div v-if="item.inquire===0">
-                                                                初始
+                                                                {{$t('static.initial')}}
                                                             </div>
                                                             <div v-if="item.inquire===1">
-                                                                询价中
+                                                                {{$t('static.inquiry')}}
                                                             </div>
                                                             <div v-if="item.inquire===2">
-                                                                报价中
+                                                                {{$t('static.quotation')}}
                                                             </div>
                                                             <div v-if="item.inquire===3">
-                                                                报价完成
+                                                                {{$t('static.quo_complete')}}
                                                             </div>
                                                         </td>
                                                         <td>

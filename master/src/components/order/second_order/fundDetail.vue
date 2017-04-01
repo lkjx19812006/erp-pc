@@ -23,8 +23,12 @@
                         <label>{{initFundDetail.bizType | bizType initFundDetail.bizType initFundDetail.type }}</li>
                     <li class="col-md-4" v-if="this.language=='en'">{{$t('static.payment_type')}}：
                         <label>{{initFundDetail.bizType | enbizType initFundDetail.bizType initFundDetail.type }}</li>
-                    <li class="col-md-4">{{$t('static.payment_name')}}：
-                        <label>{{initFundDetail.payName}}</label>
+                    <li class="col-md-8">{{$t('static.payment_name')}}：
+                        <label>
+                            {{initFundDetail.payName}}
+                            <span v-if="initFundDetail.paySubName==''&&initFundDetail.payWay===0">(未选择支行)</span>
+                            <span v-if="initFundDetail.paySubName!=''&&initFundDetail.payWay===0">({{initFundDetail.paySubName}})</span>
+                        </label>
                     </li>
                     <li class="col-md-4">{{$t('static.userName')}}：
                         <label>{{initFundDetail.payUserName}}</label>
@@ -32,9 +36,9 @@
                     <li class="col-md-4">{{$t('static.account')}}：
                         <label>{{initFundDetail.payNumber}}</label>
                     </li>
-                    <li class="col-md-4" v-show="initFundDetail.payWay==2">{{$t('static.paid_branch')}}：
+                    <!-- <li class="col-md-4" v-show="initFundDetail.payWay==2">{{$t('static.paid_branch')}}：
                         <label>{{initFundDetail.payName}}</label>
-                    </li>
+                    </li> -->
                     <li class="col-md-4">{{$t('static.order_amount')}}：
                         <label>{{initFundDetail.amount}}</label>
                     </li>

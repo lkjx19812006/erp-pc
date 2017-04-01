@@ -53,8 +53,12 @@ export const initBacklogList = (state) => {
 
 /*---流程记录---*/
 export const initFlowRecord = (state) => {
-    console.log("流程记录");
     return JSON.parse(JSON.stringify(state.table.basicBaseList.flowRecord));
+}
+
+/*---通知列表---*/
+export const initNoticeList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.noticeList));
 }
 
 export const initUserType = (state) => {

@@ -14,19 +14,57 @@
                     <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
                 </div>
                 <section class="editsection">
+                    <div class="editpage-input" style="width:110%">
+                        <label class="editlabel">{{$t('static.country')}}</label>
+                        <div type="text" class="edit-input">
+                            <v-select :debounce="250" :value.sync="country" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
+                            </v-select>
+                        </div>
+                    </div>
+                    <div class="editpage-input">
+                        <label class="editlabel">企业类型</label>
+                        <select class="form-control" v-model="param.type">
+                            <option value=""></option>
+                            <option value="0">Others 其它</option>
+                            <option value="1">Cooperatives 合作社</option>
+                            <option value="2">Drug Makers 药商</option>
+                            <option value="3">Factory 药厂</option>
+                            <option value="4">Private Use 个体户</option>
+                            <option value="5">Pharmacy 药店</option>
+                            <option value="6">Hospital 医院</option>
+                            <option value="7">Trading Company 贸易公司</option>
+                            <option value="8">Retail 零售商行</option>
+                            <option value="9">药农</option>
+                            <option value="10">介绍人</option>
+                            <option value="11">药贩子</option>
+                            <option value="12">产地药商</option>
+                            <option value="13">销地药商</option>
+                            <option value="14">Acupuncture Clinic 养生诊所</option>
+                            <option value="15">Chemical Company 化工厂</option>
+                            <option value="16">Cosmetics Company 化妆品厂</option>
+                            <option value="17">Extract Company 提取物厂</option>
+                            <option value="18">Food Company 食品厂</option>
+                            <option value="19">Laboratory for trial 实验室</option>
+                            <option value="20">Online Company 网上电商</option>
+                            <option value="21">Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商</option>
+                            <option value="22">Pharmaceutical producer of Western Medicine 西药生产商</option>
+                            <option value="23">Pieces Factory 饮片厂</option>
+                            <option value="24">Herb tea company 茶类公司</option>
+                        </select>
+                    </div>
                     <div class="editpage-input clearfix">
                         <label class="editlabel">{{$t('static.file')}}</label>
                         <input type="file" id="file" class="left" />
-                        <button type="button" class="btn btn-confirm right" @click="save()">上传</button>
-                        <div v-if="param.success&&!param.result" class="right" style="margin-right:10px;color:green">上传成功</div>
-                        <div v-if="param.success&&param.result" class="right" style="margin-right:10px;color:red">上传失败</div>
+                        <button type="button" class="btn btn-confirm right" @click="save()">{{$t('static.upload')}}</button>
+                        <div v-if="param.success" class="right" style="margin-right:10px;color:red">{{$t('static.upload')}} {{$t('static.success')}}</div>
                     </div>
-                    <h4 v-show="param.loading" style="margin-top:50px;text-align:center;color:red">正在上传，请稍后！！</h4>
+                    <h4 v-show="param.loading" style="margin-top:50px;text-align:center;color:red">Please wait a moment!!</h4>
                     <!-- 如果上传完成后显示上传后返回信息 -->
-                    <div v-if="param.success&&param.result" class="editpage-input clearfix">
-                        <ul v-for="(key, value) in param.result">
-                            <li>{{key}}、{{value}}</li>
-                        </ul>
+                    <div v-if="param.success" class="editpage-input clearfix">
+                        <div>您共上传了{{param.result.total}}条客户记录 </div>
+                        <div>成功了{{param.result.success}}条</div>
+                        <div>失败了{{param.result.failure}}条 </div>
+                        <div><a href="{{param.result.path}}">{{$t('static.file_down')}}</a></div>
                     </div>
                 </section>
             </div>
@@ -86,6 +124,7 @@ export default {
     },
     methods: {
         save: function() {
+            this.param.country = this.country.id;
             let file = document.getElementById("file").files[0];
             let fileName = "";
             if (file) {
@@ -122,7 +161,7 @@ export default {
 .modal_con {
     z-index: 1084;
     width: 600px;
-    height: 400px;
+    height: 650px;
 }
 
 .top-title {

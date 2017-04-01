@@ -9,7 +9,7 @@
         <send-detail :param="sendDetailParam" v-if="sendDetailParam.show"></send-detail>
         <deliver-model :param="deliverParam" v-if="deliverParam.show"></deliver-model>
         <div class="employee clear">
-            <div class="employee_left col-md-7 col-xs-12">
+            <div class="employee_left col-md-3 col-xs-12">
                 <div class="complete_rate">
                     <!--  <span>个人业绩完成率</span>
                    <a class="select_btn" @click="freshPiecharts(getPiechart)">
@@ -21,11 +21,65 @@
                     <div class="Piechart" v-echarts="getPiechart.options" :loading="getPiechart.load"></div>
                 </div>
             </div>
+            <div class="col-md-4 col-xs-12 employee_right_wrap">
+                <p class="employee_right_title clear">
+                    <span class="left">{{$t('static.Notifications')}}</span>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': noticeParam.type===0}" @click="selectType(0)">
+                            {{$t('static.Notifications_today')}}
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': noticeParam.type===1}" @click="selectType(1)">
+                            {{$t('static.Notifications_three')}}
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': noticeParam.type===2}" @click="selectType(2)">
+                            {{$t('static.Read_notifications')}}
+                        </button>
+                    </div>
+                    <button class="btn btn-primary right" @click="refreshNotice()">{{$t('static.refresh')}}</button>
+                </p>
+                <!-- 全选 -->
+                <div class="checkall" v-if="noticeParam.type==0&&this.initNoticeList.length!==0">
+                      <span>{{$t('static.Select_all')}} : </span>
+                      <label class="selectAll" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()" style="position:relative; bottom:-1px; float:right">
+                      </label>
+                </div>
+                <!-- 标记为已读 -->
+                <div class="btn btn-info btn-xs" style="float:right; margin-left:30px; margin-top:11px" @click="signRead" v-if="noticeParam.type==0&&this.initNoticeList.length!==0">{{$t('static.Mark_read')}}</div>
+                <div class="employee_right_message">
+                    <div class="cover_loading">
+                        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+                    </div>
+                    <div class="notice_message_view" v-for="item in initNoticeList" v-bind:class="{'level-five':item.urgent>80&&noticeParam.type !== 2,'level-four':item.urgent<=80&&item.urgent>60&&noticeParam.type !== 2,'level-three':item.urgent<=60&&item.urgent>40&&noticeParam.type !== 2,'level-two':item.urgent<=40&&item.urgent>20&&noticeParam.type !== 2,'level-one':item.urgent<=20&&noticeParam.type !== 2,'level-default': noticeParam.type===2}" >
+                        <div class="message_view_left">
+                            <span>标题：{{item.title}}
+                                <label v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)" style="position:relative; bottom:-3px; float:right" v-if="noticeParam.type==0">
+                                </label>
+                            </span>
+                            <p>内容：{{item.shortMessage}}</p>
+                            <time>{{item.mtime}}</time>
+                            <div class="message_view_right">
+                                <Poptip placement="left" trigger="hover">
+                                    <a>{{$t('static.details')}}</a>
+                                    <div class="api order-detail" slot="content" >
+                                        {{item.message}}
+                                    </div>
+                                </Poptip>
+                                <a @click="read(item.id)" v-if="noticeParam.type==0">{{$t('static.Read')}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 底部分页 -->
+                <div class="page" v-if="this.initNoticeList.length!==0">
+                   <pagination :combination="noticeParam" slot="page"></pagination>
+                </div>
+            </div>
+            
             <div class="employee_right col-md-5 col-xs-12">
                 <p class="employee_right_title clear">
                     <span class="left">{{$t('static.order_message')}}</span>
-                    <button class="btn btn-primary right" @click="refresh()">{{$t('static.refresh')}}</button>
                 </p>
+                <div class="refreshBtn"><button class="btn btn-primary right" @click="refresh()">{{$t('static.refresh')}}</button></div>
                 <div class="employee_right_message">
                     <div class="cover_loading">
                         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -74,6 +128,7 @@
     </div>
 </template>
 <script>
+import pagination from '../components/pagination'
 import detailModel from '../components/order/orderDetail'
 import recordModel from '../components/record/record'
 import auditModel from '../components/tips/auditDialog'
@@ -82,17 +137,21 @@ import sendDetail from '../components/order/second_order/orderSendDetail'
 import deliverModel from '../components/order/orderStatus'
 import receivedetailModel from '../components/order/second_order/orderReceiveDetail'
 import resendModel from '../components/order/second_order/afterResendPage'
+import util from '../components/tools/util.js'
 import {
     getList,
     getLinechart,
     getPiechart,
-    initBacklogList
+    initBacklogList,
+    initNoticeList
 } from '../vuex/getters'
 import {
     freshLinecharts,
     freshPiecharts,
     getBacklogList,
-    finishFlow
+    finishFlow,
+    getNoticeList,
+    readNotice
 } from '../vuex/actions'
 export default {
     components: {
@@ -103,7 +162,9 @@ export default {
         sendDetail,
         receivedetailModel,
         deliverModel,
-        resendModel
+        resendModel,
+        util,
+        pagination
     },
     data() {
         return {
@@ -115,7 +176,28 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                total: 0
+                total: 0,
+                
+            },
+            noticeParam: {
+                loading: true,
+                link: '/notification/queryToday',
+                type: 0, //0/1/2,今日/三天/已读通知
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7,
+                total: 0,
+                id:null,
+                mTimeStart: "",
+                mTimeEnd: "",
+                read: "0",
+
+            },
+            notificationParam:{
+                link:'',
+                ids:[],
+                callback:''
             },
             orderDetailParam: {
                 loading: true,
@@ -199,7 +281,8 @@ export default {
                 wareName: '', //仓库名
                 warehouse: '',
                 way: '', //0/1 第三方/自运
-            }
+            },
+            checked: false
         }
     },
     vuex: {
@@ -207,13 +290,16 @@ export default {
             getList,
             getLinechart,
             getPiechart,
-            initBacklogList
+            initBacklogList,
+            initNoticeList
         },
         actions: {
             freshLinecharts,
             freshPiecharts,
             getBacklogList,
-            finishFlow
+            finishFlow,
+            getNoticeList,
+            readNotice
         },
     },
     methods: {
@@ -330,6 +416,83 @@ export default {
         },
         refresh: function() {
             this.getBacklogList(this.loadParam);
+        },
+        selectType: function(type) {
+            this.noticeParam.type = type;
+            if (type == 0) { //当天
+                this.noticeParam.mTimeStart = "";
+                this.noticeParam.mTimeEnd = "";
+                this.noticeParam.read = "0";
+                this.noticeParam.link = "/notification/queryToday";
+            }
+            if (type == 1) { //三日内
+                this.noticeParam.mTimeStart = util.getDate(-2);
+                this.noticeParam.mTimeEnd = util.getDate(1);
+                this.noticeParam.read = "0";
+                this.noticeParam.link = "/notification/query";
+            }
+            if (type == 2) { //已读
+                this.noticeParam.mTimeStart = "";
+                this.noticeParam.mTimeEnd = "";
+                this.noticeParam.read = "1";
+                this.noticeParam.link = "/notification/query";
+            }
+            this.getNoticeList(this.noticeParam);
+
+
+        },
+        checkedAll: function() {
+            this.checked = !this.checked;
+            if (this.checked) {
+                this.$store.state.table.basicBaseList.noticeList.forEach(function(item) {
+                    item.checked = true;
+                })
+            } else {
+                this.$store.state.table.basicBaseList.noticeList.forEach(function(item) {
+                    item.checked = false;
+                })
+            }
+        },
+        onlyselected: function(sub) {
+            const _this = this;
+            this.$store.state.table.basicBaseList.noticeList[sub].checked = !this.$store.state.table.basicBaseList.noticeList[sub].checked;
+            if (!this.$store.state.table.basicBaseList.noticeList[sub].checked) {
+                _this.checked = false;
+            } else {
+                _this.checked = true;
+                this.$store.state.table.basicBaseList.noticeList.forEach(function(item) {
+                    if (!item.checked) {
+                        _this.checked = false;
+                    }
+                })
+            }
+        },
+        refreshNotice: function() {
+            this.getNoticeList(this.noticeParam);
+        },
+        read:function(param){
+            this.notificationParam.ids=[];
+            this.notificationParam.ids.push(param);
+            this.notificationParam.link = '/notification/read'; 
+            this.notificationParam.callback = this.notificationCallback;          
+            this.readNotice(this.notificationParam);
+
+        },
+        signRead:function(){
+            this.notificationParam.ids=[];
+            for(var i=0; i<this.initNoticeList.length;i++){
+                if(this.initNoticeList[i].checked == true){
+                    this.notificationParam.ids.push(this.initNoticeList[i].id)
+                }
+            }
+            this.notificationParam.link = '/notification/read'; 
+            this.notificationParam.callback = this.notificationCallback;          
+            this.readNotice(this.notificationParam); 
+        },
+        notificationCallback:function(title){
+            this.tipParam.show=true;
+            this.tipParam.name = title;
+            this.getNoticeList(this.noticeParam);
         }
 
     },
@@ -341,6 +504,14 @@ export default {
         }
         //获取待办事项
         this.getBacklogList(this.loadParam);
+        //获取消息通知
+        this.getNoticeList(this.noticeParam);
+    },
+    events: {
+        fresh: function(input) {
+            this.noticeParam.cur = input;
+            this.getNoticeList(this.noticeParam);
+        }
     },
     route: {
         activate: function(transition) {
@@ -355,6 +526,62 @@ export default {
 }
 </script>
 <style scoped>
+.left{
+    margin-bottom: 10px;
+}
+.checkbox_select {
+    background-image: url(/static/images/selected.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+}
+.checkbox_unselect {
+    background-image: url(/static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+}
+
+.checkall{ 
+    float:right;
+    margin: 10px 11px 0 15px;
+}
+
+.checkall span{
+    font-size:14px; 
+    vertical-align: middle;
+} 
+.checkall input{
+   margin-top: 0;
+   width: 17px;
+   height:17px;
+   vertical-align: middle;
+   cursor: pointer;
+}
+
+.page{
+    position:fixed;
+}
+.order-detail{
+   font-size:15px;
+   color: #D9534F;
+   overflow-x:hidden;
+   word-wrap:break-word;
+   width: 350px;
+   min-height:50px;
+   white-space: normal;
+   padding: 10px 5px;
+}
 .employee {
     position: relative;
     padding: 25px 30px 0 40px;
@@ -377,10 +604,12 @@ export default {
 }
 
 .employee_right_message {
-    padding-top: 20px;
-    border-top: 1px solid #ddd;
-    white-space: nowrap;
-    max-height: 600px;
+    clear: both;
+    white-space: nowrap; 
+    border-top:none;
+    padding-top:5px;
+    max-height:600px;
+    overflow-y:auto;
 }
 
 .employee_message_view {
@@ -434,6 +663,34 @@ export default {
     -ms-border-radius: 5px;
 }
 
+.notice_message_view {
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 10px 8px;
+    border-radius: 0 8px 8px 0;
+    -webkit-border-radius: 0 8px 8px 0;
+    margin-bottom: 10px;
+}
+
+.level-five {
+    border-left: 4px solid #D9534F;
+}
+
+.level-four {
+    border-left: 4px solid #F0AD4E;
+}
+.level-three {
+    border-left: 4px solid #5BC0DE;
+}
+.level-two {
+    border-left: 4px solid #CCCCCC;
+}
+.level-one {
+    border-left: 4px solid #5CB85C;
+}
+.level-default{
+    border-left: 4px solid #CCCCCC;
+}
 .linechart {
     width: 100%;
     height: 420px;

@@ -112,7 +112,8 @@ import {
 import {
     getPurchaseOrderList,
     inquirePurchaseOrder,
-    deletePurchaseOrder
+    deletePurchaseOrder,
+    importPurchase
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -132,7 +133,8 @@ export default {
         actions: {
             getPurchaseOrderList,
             inquirePurchaseOrder,
-            deletePurchaseOrder
+            deletePurchaseOrder,
+            importPurchase
         }
     },
     data() {
@@ -166,9 +168,11 @@ export default {
             importParam: {
                 loading: false,
                 show: false,
-                color: '#5dc596',
-                size: '15px',
-
+                link: this.importPurchase,
+                callback: this.selectSearch,
+                success: false, //是否上传成功
+                mFile: "", //excel文件
+                result: "" // 导入成功后的返回信息
             },
             editParam: {
                 show: false,
