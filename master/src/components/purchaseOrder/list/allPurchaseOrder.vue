@@ -1,6 +1,7 @@
 <template>
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
+    <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
@@ -18,6 +19,11 @@
                     <dt class="left transfer marg_top">部门：</dt>
                     <dd class="left margin_right">
                         <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="请选择部门" readonly="true" @click="selectOrg()" />
+                    </dd>
+                    <!-- 单个业务员搜索 -->
+                    <dt class="left transfer marg_top">业务员：</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="{{$t('static.select_salesman')}}" @click="selectEmployee()">
                     </dd>
                     <dt class="left transfer marg_top">询价状态：</dt>
                     <dd class="left margin_right">
@@ -104,8 +110,10 @@ import changeMenu from '../../../components/tools/tabs/tabs.js'
 import common from '../../../common/common'
 import mglistModel from '../../mguan/mgListComponent.vue'
 import selectorgModel from '../../tips/treeDialog'
+import employeeModel from '../../clientRelate/searchEmpInfo'
 import {
-    initAllPurchaseList
+    initAllPurchaseList,
+    initLogin
 } from '../../../vuex/getters'
 import {
    getPurchaseOrderList,
@@ -115,11 +123,13 @@ export default {
         detailModel,
         pagination,
         mglistModel,
-        selectorgModel
+        selectorgModel,
+        employeeModel
     },
     vuex: {
         getters: {
-            initAllPurchaseList
+            initAllPurchaseList,
+            initLogin
         },
         actions: {
            getPurchaseOrderList,
@@ -134,6 +144,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                total: "",
                 link:'/indent/queryList',
                 key: 'allPurchaseList',
                 source:'',
@@ -157,6 +168,14 @@ export default {
                 orgId: '',
                 orgName: '',
                 callback: this.callback
+            },
+            employeeParam: {
+                show: false,
+                org: true,
+                orgId: "",
+                //单个业务员搜索
+                employeeId: '',
+                employeeName: ''
             }
         }
     },
@@ -169,23 +188,33 @@ export default {
         selectSearch: function() {
             this.getPurchaseOrderList(this.loadParam);
         },
+        selectEmployee: function() {  
+            this.employeeParam.show = true;
+        },
         resetCondition:function(){  //清除搜索条件
             this.loadParam.source='';
             this.loadParam.inquire='';
             this.loadParam.customerName='';
             this.loadParam.customerPhone='';
+            this.loadParam.employee='';
+            this.loadParam.employeeName='';
             this.loadParam.org='';
             this.loadParam.orgName='';
             this.getPurchaseOrderList(this.loadParam);
+            console.log(this.loadParam)
         },
         selectOrg:function(){
          this.selectOrgParam.show = true;
         },
        callback:function() {
             if (this.selectOrgParam.orgId) {
+                if(this.loadParam.employeeName){
+                    this.loadParam.employee='';
+                    this.loadParam.employeeName='';
+                }
                 this.loadParam.org = this.selectOrgParam.orgId;
                 this.loadParam.orgName = this.selectOrgParam.orgName;
-                // this.employeeParam.orgId = this.selectOrgParam.orgId;
+                this.employeeParam.orgId = this.selectOrgParam.orgId;
                 this.selectSearch(this.loadParam);
             }
         }
@@ -193,7 +222,12 @@ export default {
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            //this.getIntentionList(this.loadParam);
+            this.getPurchaseOrderList(this.loadParam);
+        },
+        a: function(employee) {
+            this.loadParam.employee = employee.employeeId;
+            this.loadParam.employeeName = employee.employeeName;
+            this.selectSearch(this.loadParam);
         }
     },
     created() {

@@ -144,7 +144,6 @@ export default{
 			this.param.employeeId = id;
 			this.param.employeeName = name;
 			this.param.show=false;
-            console.log(this.param);
 			this.$dispatch('a',this.param);
 		},
         selectOrg:function(){

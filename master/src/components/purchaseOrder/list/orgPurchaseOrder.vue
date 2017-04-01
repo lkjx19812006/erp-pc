@@ -15,7 +15,7 @@
                     <dd class="left margin_right">
                         <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
-                     <!-- 单个业务员搜索 -->
+                    <!-- 单个业务员搜索 -->
                     <dt class="left transfer marg_top">业务员：</dt>
                     <dd class="left margin_right">
                         <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="{{$t('static.select_salesman')}}" @click="selectEmployee()">
@@ -144,6 +144,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                total: "",
                 link:'/indent/queryOrgList',
                 key: 'orgPurchaseList',
                 source:'',
@@ -210,7 +211,7 @@ export default {
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            //this.getIntentionList(this.loadParam);
+            this.getPurchaseOrderList(this.loadParam);
         },
         a: function(employee) {
             this.loadParam.employee = employee.employeeId;
