@@ -30,6 +30,10 @@
                             <span v-if="initFundDetail.paySubName!=''&&initFundDetail.payWay===0">({{initFundDetail.paySubName}})</span>
                         </label>
                     </li>
+                    <!-- 支行信息 -->
+                    <li class="col-md-4" v-if="initFundDetail.paySubName!=''&&initFundDetail.payWay===0">支行名称：
+                        <label>{{initFundDetail.paySubName}}</label>
+                    </li>
                     <li class="col-md-4">{{$t('static.userName')}}：
                         <label>{{initFundDetail.payUserName}}</label>
                     </li>

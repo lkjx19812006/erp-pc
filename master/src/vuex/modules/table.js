@@ -1525,12 +1525,13 @@ const mutations = {
     },
     [DELETE_BREED_DATA](state, data) { //删除客户/订单信息
         state.basicBaseList[data.key].splice(data.sub, 1);
+       
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
 
         /*if(data.key=='labels'||data.key=='locals'||data.key=='specs'||data.key=='alias'||data.key=='units'){*/
-        state[data.headline][data.key].arr.splice(data.sub, 1);
-
+        state[data.headline][data.key].arr.splice(data.sub,1);
+        
     },
     [DELETE_SHOW_STATUE](state, data) { //删除枚举
         state.systemBaseList.enumlist.splice(data.sub, 1);
