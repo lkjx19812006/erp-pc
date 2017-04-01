@@ -39,7 +39,6 @@
                         <th>采购内容描述</th>
                         <th>备注</th>
                         <th>询价状态</th>
-                        <th style="min-width:200px;text-align: left;">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,8 +57,6 @@
                         <td>{{item.buyDesc}}</td>
                         <td>{{item.comment}}</td>
                         <td>{{item.inquire | inquire}}</td>
-                        <td style="text-align: left">
-                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -203,8 +200,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 121px;
-    min-width: 110px;
+    width: 143px;
+    min-width: 143px;
 }
 
 .service-nav {
