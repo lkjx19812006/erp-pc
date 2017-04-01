@@ -406,7 +406,7 @@
                                   <button type="button" class="btn btn-base pull-right" @click.stop="newOrder({
                                       show:true,
                                       title1:'新建订单',
-                                      type:'',
+                                      type:1,
                                       customer:initClientDetail.id,
                                       sample:0,
                                       intl:0,
@@ -415,7 +415,10 @@
                                       preferential:'',
                                       preferentialDesc:'',
                                       currency:'人民币',
+                                      consigner:'',
+                                      consignerName:'',
                                       consignee:'',
+                                      consigneeName:'',
                                       consigneePhone:'',
                                       zipCode:'',
                                       country:'',
@@ -430,19 +433,7 @@
                                       consigneeAddr:'',
                                       comments:'',
                                       sourceType:0,
-                                      goods:[{
-                                          sourceType:0,
-                                          sourceId:'',
-                                          title:'',
-                                          breedId:'',
-                                          breedName:'',
-                                          quality:'',
-                                          location:'',
-                                          spec:'',
-                                          price:'',
-                                          unit:'',
-                                          number:''
-                                        }],
+                                      goods:[],
                                       key:'orders',
                                       link:createOrder
                                     })">{{$t('static.new')}}</button>
@@ -1200,7 +1191,6 @@ export default {
             this.auditParam.show = true;
         },
         newOrder: function(order) {
-            console.log(order)
             this.orderParam = order;
         },
         labelCallback: function(title) {

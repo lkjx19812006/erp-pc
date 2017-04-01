@@ -1,5 +1,6 @@
 <template>
     <create-model :param="createParam" v-if="createParam.show"></create-model>
+    <import-model :param="importParam" v-if="importParam.show"></import-model>
     <edit-model :param="editParam" v-if="editParam.show"></edit-model>
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <delete-model :param="deleteParam" v-if="deleteParam.show"></delete-model>
@@ -44,6 +45,7 @@
                 <dd class="pull-right" style="margin-right:10px">
                     <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="batchInquire()">批量询价</button>
                     <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="createPurchase()">新建</button>
+                    <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="excelImport()">EXCEL导入采购单</button>
                     <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                 </dd>
             </div>
@@ -118,6 +120,7 @@
 </template>
 <script>
 import createModel from '../createPurchaseOrder.vue'
+import importModel from '../indentExcelImport.vue'
 import editModel from '../editPurchaseOrder.vue'
 import detailModel from '../purchaseOrderDetail.vue'
 import deleteModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
@@ -133,11 +136,13 @@ import {
 import {
     getPurchaseOrderList,
     inquirePurchaseOrder,
-    deletePurchaseOrder
+    deletePurchaseOrder,
+    importPurchase
 } from '../../../vuex/actions'
 export default {
     components: {
         createModel,
+        importModel,
         editModel,
         detailModel,
         deleteModel,
@@ -152,7 +157,8 @@ export default {
         actions: {
             getPurchaseOrderList,
             inquirePurchaseOrder,
-            deletePurchaseOrder
+            deletePurchaseOrder,
+            importPurchase
         }
     },
     data() {
@@ -185,6 +191,15 @@ export default {
                 district: "",
                 address: "",
                 intentionList: [] //意向信息
+            },
+            importParam: {
+                loading: false,
+                show: false,
+                link: this.importPurchase,
+                callback: this.selectSearch,
+                success: false, //是否上传成功
+                mFile: "", //excel文件
+                result: "" // 导入成功后的返回信息
             },
             editParam: {
                 show: false,
@@ -275,6 +290,9 @@ export default {
         },
         createPurchase: function() {
             this.createParam.show = true;
+        },
+        excelImport: function() {
+            this.importParam.show = true;
         },
         editPurchase: function(item, index) {
 

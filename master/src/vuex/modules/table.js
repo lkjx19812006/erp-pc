@@ -3,6 +3,7 @@ import {
     PASSWORD_DATA,
     BACKLOG_TABLE,
     FLOW_RECORD_TABLE,
+    NOTICE_TABLE,
     ORDER_TABLE,
     ORDER_ADD_DATA,
     ORDER_DETAIL_DATA,
@@ -259,6 +260,8 @@ const state = {
         backlogList: [],
         //流程记录
         flowRecord: [],
+        //通知列表
+        noticeList: [],
         //订单列表
         userOrderList: [],
         myOrderList: [],
@@ -1158,6 +1161,10 @@ const mutations = {
     [FLOW_RECORD_TABLE](state, data) {
         state.basicBaseList.flowRecord = data;
     },
+    [NOTICE_TABLE](state, data) {
+        state.basicBaseList.noticeList = data;
+        console.log(state.basicBaseList.noticeList)
+    },
 
     [USER_TYPE](state, data) {
         state.basicBaseList.userTypeList = data;
@@ -1201,6 +1208,7 @@ const mutations = {
     },
     [ORG_ORDER_AUDIT](state, data) { //审核部门订单(个人)
         state.basicBaseList[data.key][data.index].validate = data.validate;
+        console.log(state.basicBaseList[data.key][data.index].validate)
         state.basicBaseList[data.key][data.index].logistics = data.logistics;
     },
     [BATCH_ORG_ORDER](state, data) { // 批量审核部门订单
@@ -1391,7 +1399,6 @@ const mutations = {
         }
     },
     [ORDER_STATUS](state, data) { //订单状态详情
-        console.log(data)
         for (var i in state.basicBaseList[data.key]) {
             if (state.basicBaseList[data.key][i].id == data.id) {
                 state.basicBaseList[data.key][i].orderStatus = data.orderStatus;

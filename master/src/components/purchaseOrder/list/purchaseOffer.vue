@@ -1,6 +1,6 @@
 <template>
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
-    <delete-model :param="deleteParam" v-if="deleteParam.show"></delete-model>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
@@ -27,42 +27,38 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>客户名称</th>
+                        <th>客户手机</th>
+                        <th>业务员</th>
+                        <th>省</th>
+                        <th>市</th>
+                        <th>区</th>
+                        <th>发布日期</th>
+                        <th>过期时间</th>
+                        <th>采购单来源</th>
+                        <th>采购内容描述</th>
+                        <th>备注</th>
+                        <th>询价状态</th>
                         <th style="min-width:200px;text-align: left;">操作</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initOrgPurchaseList">
-                        <td></td>
+                    <tr v-for="item in initPurchaseOfferList">
                         <td>
-                            <a class="underline" @click.stop="detailClick()">详情</a>
+                            <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{item.customerPhone}}</td>
+                        <td>{{item.employee}}</td>
+                        <td>{{item.province}}</td>
+                        <td>{{item.city}}</td>
+                        <td>{{item.district}}</td>
+                        <td>{{item.pubdate}}</td>
+                        <td>{{item.duedate}}</td>
+                        <td>{{item.source | indentSource}}</td>
+                        <td>{{item.buyDesc}}</td>
+                        <td>{{item.comment}}</td>
+                        <td>{{item.inquire | inquire}}</td>
                         <td style="text-align: left">
-                            <a class="operate" @click.stop="deletePurchase()"><img src="/static/images/del.png" height="18" width="28" alt="删除" />
-                            </a>
                         </td>
                     </tr>
                 </tbody>
@@ -73,32 +69,32 @@
     </mglist-model>
 </template>
 <script>
-import detailModel from '../purchaseOrderDetail.vue'
-import deleteModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
+import detailModel from '../purchaseOfferDetail.vue'
+import tipsdialogModel from '../../tips/tipDialog'
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import common from '../../../common/common'
 import mglistModel from '../../mguan/mgListComponent.vue'
 import {
-    initOrgPurchaseList
+    initPurchaseOfferList
 } from '../../../vuex/getters'
 import {
-
+    getPurchaseOrderList
 } from '../../../vuex/actions'
 export default {
     components: {
         detailModel,
-        deleteModel,
+        tipsdialogModel,
         pagination,
         mglistModel
     },
     vuex: {
         getters: {
-            initOrgPurchaseList
+            initPurchaseOfferList
         },
         actions: {
-
+            getPurchaseOrderList
         }
     },
     data() {
@@ -110,39 +106,54 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                link: '/intention/employee/list',
-                key: 'myIntentionList'
+                total: "",
+                link: '/indent/queryOfferList',
+                key: 'purchaseOfferList'
 
             },
+
+
             detailParam: {
                 show: false,
-                loading: false
+                loading: false,
+                link: "/indent/queryById",
+                id: "",
+                customerId: ""
             },
-            deleteParam: {
+
+            tipsParam: {
                 show: false,
-                link: '', //删除的接口地址
+                name: '',
+                alert: true
+            },
 
-
-            }
+            checked: false
         }
     },
     methods: {
-
-        detailClick: function() {
+        selectSearch: function() {
+            this.getPurchaseOrderList(this.loadParam);
+        },
+        detailClick: function(id, customerId) {
+            this.detailParam.id = id;
+            this.detailParam.customerId = customerId;
             this.detailParam.show = true;
         },
-        deletePurchase: function() {
-            this.deleteParam.show = true;
+        callback: function(name) { //如无特殊情况，统一使用这个函数作为回调函数
+            this.tipsParam.name = name;
+            this.tipsParam.show = true;
+            this.getPurchaseOrderList(this.loadParam);
         }
 
     },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            //this.getIntentionList(this.loadParam);
+            this.getPurchaseOrderList(this.loadParam);
         }
     },
     created() {
+        this.getPurchaseOrderList(this.loadParam);
         //changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.myIntentionParam);
 
     },
