@@ -30,9 +30,6 @@
                         <th>客户名称</th>
                         <th>客户手机</th>
                         <th>业务员</th>
-                        <th>省</th>
-                        <th>市</th>
-                        <th>区</th>
                         <th>发布日期</th>
                         <th>过期时间</th>
                         <th>采购单来源</th>
@@ -47,10 +44,7 @@
                             <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
                         <td>{{item.customerPhone}}</td>
-                        <td>{{item.employee}}</td>
-                        <td>{{item.province}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.district}}</td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.pubdate}}</td>
                         <td>{{item.duedate}}</td>
                         <td>{{item.source | indentSource}}</td>
