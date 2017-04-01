@@ -8,7 +8,7 @@
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
             <div class="edit-content">
-                <h3>新建采购单</h3>
+                <h3>编辑采购单</h3>
             </div>
             <validator name="validation">
                 <div class="edit-model">
@@ -29,31 +29,31 @@
                                 <input type="text" class="form-control edit-input" v-model="param.customerPhone" value="{{param.customerPhone}}" v-validate:phone="['required']" />
                             </div>
                             <!-- 省 -->
-                            <div class="editpage-input col-md-4">
+                            <!-- <div class="editpage-input col-md-4">
                                 <label class="editlabel">省</label>
                                 <div type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
                                     </v-select>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- 市 -->
-                            <div class="editpage-input col-md-4">
+                            <!-- <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.city')}}</label>
                                 <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_province_first')}}" />
                                 <div v-if="province.cname" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="city" :on-change="selectDistrict" :options="initCitylist" placeholder="市/City" label="cname">
                                     </v-select>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- 区 -->
-                            <div class="editpage-input col-md-4">
+                            <!-- <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.area')}}</label>
                                 <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
                                 <div v-if="city.cname" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="district" :options="initDistrictlist" placeholder="区" label="cname">
                                     </v-select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="editpage-input col-md-8">
                                 <label class="editlabel">详细地址 </label>
                                 <input type="text" class="form-control edit-input" style="width:95%" v-model="param.address" />
@@ -214,7 +214,7 @@ import {
     getUnitList,
     getCurrencyList,
     getEmployeeList,
-    createPurchaseOrder
+    modifyPurchaseOrder
 } from '../../vuex/actions'
 export default {
     components: {
@@ -305,7 +305,7 @@ export default {
             getUnitList,
             getEmployeeList,
             getCurrencyList,
-            createPurchaseOrder
+            modifyPurchaseOrder
         }
     },
     methods: {
@@ -430,17 +430,33 @@ export default {
             this.updateParam.show = false;
         },
         //删除意向
-        deleteIntention: function() {
+        deleteIntention: function(index) {
             this.param.intentionList.splice(index, 1);
         },
         //确认提交
         confirm: function() {
-            this.param.province = this.province.id;
-            this.param.city = this.city.id;
-            this.param.district = this.district.id;
-            this.param.show = false;
+            let temp = [];
+            //确认时需要知道原先存在于数据库中的数据是否被删除
+            for (let i = 0; i < this.param.intentionListBack.length; i++) {
+                console.log("i=" + i);
+                let j = 0;
+                for (let k = 0; k < this.param.intentionList.length; k++) {
+                    if (this.param.intentionListBack[i].id != this.param.intentionList[k].id) {
+                        j++;
+                    }
+                    console.log("k=" + k);
+                    if (j == this.param.intentionList.length) {
 
-            this.createPurchaseOrder(this.param);
+                        this.param.intentionListBack[i].status = 0;
+                        temp.push(this.param.intentionListBack[i]);
+                    }
+                }
+
+            }
+            //将原先存在于数据库中的数据加到尾部
+            this.param.intentionList = this.param.intentionList.concat(temp);
+            this.param.show = false;
+            this.modifyPurchaseOrder(this.param);
         },
 
     },

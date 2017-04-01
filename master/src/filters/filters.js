@@ -1083,6 +1083,23 @@ Vue.filter('intentionSource', function(val) { //意向来源
     }
 })
 
+Vue.filter('indentSource', function(val) { //采购单来源
+    var val = val;
+    if (val === 0) {
+        return "业务员导入";
+    } else if (val == 1) {
+        return "web";
+    } else if (val == 2) {
+        return "android";
+    } else if (val == 3) {
+        return "weixin";
+    } else if (val == 4) {
+        return "ios";
+    } else {
+        return "其他";
+    }
+})
+
 Vue.filter('file', function(val) { //文件后缀名获取
     var val = val;
     var file = val.substring(val.lastIndexOf('.') + 1);

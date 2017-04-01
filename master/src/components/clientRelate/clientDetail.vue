@@ -75,7 +75,7 @@
                                         <mg-label :title="$t('static.whether_supplier')" v-if="initClientDetail.supplier==0">{{$t('static.no')}}</mg-label>
                                         <mg-label :title="$t('static.whether_supplier')" v-if="initClientDetail.supplier==1">{{$t('static.yes')}}</mg-label>
                                         <mg-label :title="$t('static.classification')">{{initClientDetail.classify | classify}}</mg-label>
-                                        <mg-label :title="$t('static.cellphone')">{{initClientDetail.mainPhone}}<span v-if="initClientDetail.phoneProvince!=''||nitClientDetail.phoneCity!=''">（{{initClientDetail.phoneProvince}}{{initClientDetail.phoneCity}}）</span></mg-label>
+                                        <mg-label :title="$t('static.cellphone')">{{initClientDetail.mainPhone}}<span v-if="initClientDetail.phoneProvince!=''||initClientDetail.phoneCity!=''">（{{initClientDetail.phoneProvince}}{{initClientDetail.phoneCity}}）</span></mg-label>
                                         <mg-label :title="$t('static.telephone')">{{initClientDetail.tel}}</mg-label>
                                         <mg-label :title="$t('static.client_email')">{{initClientDetail.email}}</mg-label>
                                         <mg-label :title="$t('static.postcodes')">{{initClientDetail.number}}</mg-label>
