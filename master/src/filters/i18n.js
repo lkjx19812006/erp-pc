@@ -630,7 +630,7 @@ var locales = {
             issued_time: 'Published time',
             review_status: 'Approval Status',
             approved: 'Approved',
-            unapproved: 'Audit not passed',
+            unapproved: 'disapproved',
             approving: 'Under review',
             approve_comment: 'Audit description',
             applied: 'Under review',

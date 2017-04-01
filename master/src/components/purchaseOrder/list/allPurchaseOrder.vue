@@ -1,16 +1,46 @@
 <template>
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
+    <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户名：</dt>
-                    <dd class="left">
+                    <dt class="left transfer marg_top">客户名称：</dt>
+                    <dd class="left margin_right">
                         <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
+                    <dt class="left transfer marg_top">客户电话：</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
+                    <!-- 部门搜索 -->
+                    <dt class="left transfer marg_top">部门：</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="请选择部门" readonly="true" @click="selectOrg()" />
+                    </dd>
+                    <dt class="left transfer marg_top">询价状态：</dt>
+                    <dd class="left margin_right">
+                         <select class="form-control" v-model="loadParam.inquire" @change="selectSearch()">
+                            <option value="0">初始</option>
+                            <option value="1">询价中</option>
+                            <option value="2">报价中</option>
+                            <option value="3">报价完成</option>
+                         </select>
+                    </dd>
+                    <dt class="left transfer marg_top">采购单来源：</dt>
+                    <dd class="left margin_right">
+                         <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
+                            <option value="0">业务员导入</option>
+                            <option value="1">web</option>
+                            <option value="2">android</option>
+                            <option value="3">weixin</option>
+                            <option value="4">ios</option>
+                         </select>
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:50px">
+                    <button type="button" class="btn btn-default margin_right" height="24" width="24" @click="selectSearch()">搜索</button>
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
                 </dl>
                 <dd class="pull-right" style="margin-right:10px">
@@ -25,42 +55,39 @@
             </div>
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th style="min-width:200px;text-align: left;">操作</th>
+                     <tr>
+                        <th>客户名称</th>
+                        <th>客户手机</th>
+                        <th>业务员</th>
+                        <th>省</th>
+                        <th>市</th>
+                        <th>区</th>
+                        <th>发布日期</th>
+                        <th>过期时间</th>
+                        <th>采购单来源</th>
+                        <th>采购内容描述</th>
+                        <th>备注</th>
+                        <th>询价状态</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in initAllPurchaseList">
-                        <td></td>
                         <td>
-                            <a class="underline" @click.stop="detailClick()">详情</a>
+                            <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td style="text-align: left">
-                        </td>
+                        <td>{{item.customerPhone}}</td>
+                        <td>{{item.employee}}</td>
+                        <td>{{item.province}}</td>
+                        <td>{{item.city}}</td>
+                        <td>{{item.district}}</td>
+                        <td>{{item.pubdate}}</td>
+                        <td>{{item.duedate}}</td>
+                        <td>{{item.source | indentSource}}</td>
+                        <td>{{item.buyDesc}}</td>
+                        <td>{{item.comment}}</td>
+                        <td>{{item.inquire | inquire}}</td>
+                        
                     </tr>
                 </tbody>
             </table>
@@ -76,24 +103,26 @@ import filter from '../../../filters/filters'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import common from '../../../common/common'
 import mglistModel from '../../mguan/mgListComponent.vue'
+import selectorgModel from '../../tips/treeDialog'
 import {
     initAllPurchaseList
 } from '../../../vuex/getters'
 import {
-
+   getPurchaseOrderList,
 } from '../../../vuex/actions'
 export default {
     components: {
         detailModel,
         pagination,
-        mglistModel
+        mglistModel,
+        selectorgModel
     },
     vuex: {
         getters: {
             initAllPurchaseList
         },
         actions: {
-
+           getPurchaseOrderList,
         }
     },
     data() {
@@ -105,22 +134,61 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                link: '/intention/employee/list',
-                key: 'myIntentionList'
-
+                link:'/indent/queryList',
+                key: 'allPurchaseList',
+                source:'',
+                inquire:'',
+                customerName:'',
+                customerPhone:'',
+                employee:'',
+                employeeName:'',
+                org:'',
+                orgName:''
             },
             detailParam: {
                 show: false,
-                loading: false
+                loading: false,
+                link: "/indent/queryById",
+                id: "",
+                customerId: ""
             },
+            selectOrgParam: {
+                show: false,
+                orgId: '',
+                orgName: '',
+                callback: this.callback
+            }
         }
     },
     methods: {
-
-        detailClick: function() {
+        detailClick: function(id, customerId) {
+            this.detailParam.id = id;
+            this.detailParam.customerId = customerId;
             this.detailParam.show = true;
         },
-
+        selectSearch: function() {
+            this.getPurchaseOrderList(this.loadParam);
+        },
+        resetCondition:function(){  //清除搜索条件
+            this.loadParam.source='';
+            this.loadParam.inquire='';
+            this.loadParam.customerName='';
+            this.loadParam.customerPhone='';
+            this.loadParam.org='';
+            this.loadParam.orgName='';
+            this.getPurchaseOrderList(this.loadParam);
+        },
+        selectOrg:function(){
+         this.selectOrgParam.show = true;
+        },
+       callback:function() {
+            if (this.selectOrgParam.orgId) {
+                this.loadParam.org = this.selectOrgParam.orgId;
+                this.loadParam.orgName = this.selectOrgParam.orgName;
+                // this.employeeParam.orgId = this.selectOrgParam.orgId;
+                this.selectSearch(this.loadParam);
+            }
+        }
     },
     events: {
         fresh: function(input) {
@@ -129,8 +197,7 @@ export default {
         }
     },
     created() {
-        //changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.myIntentionParam);
-
+        this.getPurchaseOrderList(this.loadParam);        
     },
     ready() {
         common('tab', 'table_box', 1);
@@ -147,7 +214,9 @@ export default {
     top: 33px;
     right: 106px;
 }
-
+.margin_right{
+    margin-right: 15px
+}
 .transfer {
     margin-right: 8px;
 }
@@ -178,8 +247,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 121px;
-    min-width: 110px;
+    min-width: 144px;
 }
 
 .service-nav {

@@ -9,12 +9,36 @@
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户名：</dt>
-                    <dd class="left">
+                    <dt class="left transfer marg_top">客户名称：</dt>
+                    <dd class="left margin_right">
                         <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
+                    <dt class="left transfer marg_top">客户电话：</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
+                    <dt class="left transfer marg_top">询价状态：</dt>
+                    <dd class="left margin_right">
+                         <select class="form-control" v-model="loadParam.inquire" @change="selectSearch()">
+                            <option value="0">初始</option>
+                            <option value="1">询价中</option>
+                            <option value="2">报价中</option>
+                            <option value="3">报价完成</option>
+                         </select>
+                    </dd>
+                    <dt class="left transfer marg_top">采购单来源：</dt>
+                    <dd class="left margin_right">
+                         <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
+                            <option value="0">业务员导入</option>
+                            <option value="1">web</option>
+                            <option value="2">android</option>
+                            <option value="3">weixin</option>
+                            <option value="4">ios</option>
+                         </select>
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:50px">
+                    <button type="button" class="btn btn-default margin_right" height="24" width="24" @click="selectSearch()">搜索</button>
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
                 </dl>
                 <dd class="pull-right" style="margin-right:10px">
@@ -142,8 +166,11 @@ export default {
                 all: 7,
                 total: "",
                 link: '/indent/queryEmployeeList',
-                key: 'myPurchaseList'
-
+                key: 'myPurchaseList',
+                source:'',
+                inquire:'',
+                customerName:'',
+                customerPhone:''
             },
             createParam: {
                 show: false,
@@ -209,7 +236,14 @@ export default {
         }
     },
     methods: {
-        selectSearch: function() {
+        selectSearch: function() {  //搜索
+            this.getPurchaseOrderList(this.loadParam);
+        },
+        resetCondition:function(){  //清除搜索条件
+            this.loadParam.source='';
+            this.loadParam.inquire='';
+            this.loadParam.customerName='';
+            this.loadParam.customerPhone='';
             this.getPurchaseOrderList(this.loadParam);
         },
         checkedAll: function() { //全选
@@ -359,7 +393,9 @@ export default {
 .transfer {
     margin-right: 8px;
 }
-
+.margin_right{
+    margin-right: 15px
+}
 .checkbox_unselect {
     background-image: url(/static/images/unselect.png);
     display: inline-block;

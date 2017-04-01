@@ -4587,8 +4587,25 @@ export const transferManager = ({ dispatch }, param) => { //员工划转为主�
 
 export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表以及搜索
     param.loading = true;
-    var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
-
+     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
+    if(param.customerName){
+         url += '&customerName=' + param.customerName;
+    }
+    if(param.customerPhone){
+         url += '&customerPhone='+ param.customerPhone;
+    }
+    if(param.inquire){
+         url += '&inquire='+ param.inquire;
+    }
+    if(param.source){
+         url += '&source='+ param.source;
+    }
+    if(param.employee){
+         url += '&employee='+ param.employee;
+    }
+    if(param.org){
+         url += '&org='+ param.org;
+    }
     Vue.http({
         method: 'GET',
         url: url,
@@ -4598,7 +4615,7 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
         }
     }).then((res) => {
         let purchaseOrder = res.json().result.list;
-
+        
         for (let i = 0; i < purchaseOrder.length; i++) {
             purchaseOrder[i].checked = false;
         }
@@ -4620,7 +4637,6 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
 export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详情
     param.loading = true;
     var url = apiUrl.clientList + param.link + "?id=" + param.id;
-
     Vue.http({
         method: 'GET',
         url: url,
