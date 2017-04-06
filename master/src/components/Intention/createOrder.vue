@@ -536,8 +536,6 @@ export default {
     created() {
         this.getCountryList(this.countryParam);
         this.getUnitList();
-        console.log(this.param);
-        console.log(this.param.total);
         this.param.total = (parseFloat(this.param.goods[0].price * this.param.goods[0].number) * 100 + parseFloat(this.param.incidentals) * 100 - parseFloat(this.param.preferential) * 100) / 100;
         this.param.cost = (parseFloat(this.param.goods[0].costPrice * this.param.goods[0].number) * 100) / 100;
         if (this.param.customerName) {

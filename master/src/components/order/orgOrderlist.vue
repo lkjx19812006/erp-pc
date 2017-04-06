@@ -290,8 +290,8 @@
                         </div>
                    </td> -->
                             <td>
-                                <!-- 取消订单,在订单状态为20和70时可以取消，并说明原因 -->
-                                <button class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70" @click="cancelOrder(item.id,$index)">
+                                <!-- 取消订单,在订单状态为20和70或者新建的订单还未申请审核可以取消，并说明原因 -->
+                                <button class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70||(item.orderStatus==0&&item.validate==0)" @click="cancelOrder(item.id,$index)">
                                     取消订单
                                 </button>
                                 <!-- 审核 -->

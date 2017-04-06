@@ -165,7 +165,7 @@
                                                 <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                             </span> 
                                             <!-- 确认报价 -->
-                                            <button v-if="itemOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
+                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.items.arr[0].inquire!=3" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
                                                 确认报价
                                             </button>
                                         </h4>
@@ -275,7 +275,7 @@
                                                   <p class="pull-right" v-for="item in initIntlIntentionDetail.extractiveTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                               </span>
                                               <!-- 确认报价 -->
-                                              <button v-if="extractiveOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
+                                              <button v-if="extractiveOfferConfirm&&initIntlIntentionDetail.extractive.arr.length>0&&initIntlIntentionDetail.extractive.arr[0].inquire!=3" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.extractive.show&&initIntlIntentionDetail.extractive.arr.length>0">
@@ -739,9 +739,13 @@ export default {
     methods: {
         getOperation: function(menus, path) {
             for (let i = 0; i < menus.length; i++) {
+
                 if (menus[i].url == path) {
+                    console.log(menus[i]);
                     for (let j = 0; j < menus[i].subcategory.length; j++) {
+
                         if (menus[i].subcategory[j].id == 120) {
+                            console.log("120");
                             this.itemOfferConfirm = true;
                             continue;
                         }
@@ -765,7 +769,7 @@ export default {
             this.pictureParam.img = img;
         },
         enfoldment: function(param) {
-            
+
             if (this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length == 0) {
                 this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = true;
             }

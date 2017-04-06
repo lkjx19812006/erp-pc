@@ -27,8 +27,6 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th>客户名称</th>
-                        <th>客户手机</th>
                         <th>业务员</th>
                         <th>发布日期</th>
                         <th>过期时间</th>
@@ -36,14 +34,11 @@
                         <th>采购内容描述</th>
                         <th>备注</th>
                         <th>询价状态</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in initPurchaseOfferList">
-                        <td>
-                            <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
-                        </td>
-                        <td>{{item.customerPhone}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.pubdate}}</td>
                         <td>{{item.duedate}}</td>
@@ -51,6 +46,9 @@
                         <td>{{item.buyDesc}}</td>
                         <td>{{item.comment}}</td>
                         <td>{{item.inquire | inquire}}</td>
+                        <td>
+                            <button class="btn btn-primary btn-apply" @click.stop="detailClick(item.id,item.customerId)">报价</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -194,8 +192,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 190px;
-    min-width: 190px;
+    width: 213px;
+    min-width: 213px;
 }
 
 .service-nav {

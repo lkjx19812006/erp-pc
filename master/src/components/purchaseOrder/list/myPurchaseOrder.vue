@@ -95,14 +95,10 @@
                         <td>{{item.comment}}</td>
                         <td>{{item.inquire | inquire}}</td>
                         <td style="text-align: left">
-                            <a class="operate" @click.stop="editPurchase(item,$index)"><img src="/static/images/edit.png" height="18" width="28" alt="编辑" />
-                            </a>
-                            <a class="operate" @click.stop="deletePurchase(item.id,$index)"><img src="/static/images/del.png" height="18" width="28" alt="删除" />
-                            </a>
-                            <a v-if="item.inquire==0" class="operate" @click.stop="singleInquire(item.id,$index)"><img src="/static/images/inquire.png" height="18" width="28" alt="询价" />
-                            </a>
-                            <a v-if="item.inquire==1||item.inquire==2" class="operate" @click.stop="cancelInquire(item.id,$index)"><img src="/static/images/cancelInquire_icon.png" height="18" width="42" alt="取消询价" />
-                            </a>
+                            <button v-if="item.inquire==0" class="btn btn-primary btn-edit" @click.stop="editPurchase(item,$index)">编辑</button>
+                            <button v-if="item.inquire==0" class="btn btn-primary btn-apply" @click.stop="deletePurchase(item.id,$index)">删除</button>
+                            <button v-if="item.inquire==0" class="btn btn-primary btn-edit" @click.stop="singleInquire(item.id,$index)">询价</button>
+                            <button v-if="item.inquire==1||item.inquire==2" class="btn btn-primary btn-edit" @click.stop="cancelInquire(item.id,$index)">终止询价</button>
                         </td>
                     </tr>
                 </tbody>

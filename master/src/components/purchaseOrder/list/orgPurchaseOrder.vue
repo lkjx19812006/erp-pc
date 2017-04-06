@@ -83,8 +83,7 @@
                         <td>{{item.comment}}</td>
                         <td>{{item.inquire | inquire}}</td>
                         <td style="text-align: left">
-                            <a class="operate" @click.stop="deletePurchase(item.id,$index)"><img src="/static/images/del.png" height="18" width="28" alt="删除" />
-                            </a>
+                            <button v-if="item.inquire==0" class="btn btn-primary btn-apply" @click.stop="deletePurchase(item.id,$index)">删除</button>
                         </td>
                     </tr>
                 </tbody>
@@ -266,8 +265,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 160px;
-    min-width: 160px;
+    width: 168px;
+    min-width: 168px;
 }
 
 .service-nav {
