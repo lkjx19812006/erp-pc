@@ -177,47 +177,48 @@
                                                         <td>{{item.qq}}</td>
                                                         <td>{{item.wechart}}</td>
                                                         <td @click.stop="updateSpec({
-                                                 sub:$index,
-                                                 id:item.id,
-                                                 show:true,
-                                                 title:'联系人',
-                                                 namelist:'联系人姓名',
-                                                 job:'联系人职位',
-                                                 parten:'联系人部门',
-                                                 phonelist:'手机',
-                                                 tellist:'电话',
-                                                 emaillist:'邮箱',
-                                                 QQ:'qq',
-                                                 webchart:'微信',
-                                                 name:item.name,
-                                                 position:item.position,
-                                                 department:item.department,
-                                                 phone:item.phone,
-                                                 tel:item.tel,
-                                                 email:item.email,
-                                                 qq:item.qq,
-                                                 wechart:item.wechart,
-                                                 main:item.main,
-                                                 link:updateContact,
-                                                 list:initClientDetail.contacts.arr,
-                                                 url:'/customer/contact',
-                                                 key:'contacts',
-                                                 headline:'clientDetail'
-                                                 })">
+                                                             sub:$index,
+                                                             id:item.id,
+                                                             show:true,
+                                                             title:'联系人',
+                                                             namelist:'联系人姓名',
+                                                             job:'联系人职位',
+                                                             parten:'联系人部门',
+                                                             phonelist:'手机',
+                                                             tellist:'电话',
+                                                             emaillist:'邮箱',
+                                                             QQ:'qq',
+                                                             webchart:'微信',
+                                                             name:item.name,
+                                                             position:item.position,
+                                                             department:item.department,
+                                                             phone:item.phone,
+                                                             tel:item.tel,
+                                                             email:item.email,
+                                                             qq:item.qq,
+                                                             wechart:item.wechart,
+                                                             main:item.main,
+                                                             link:updateContact,
+                                                             list:initClientDetail.contacts.arr,
+                                                             url:'/customer/contact',
+                                                             key:'contacts',
+                                                             headline:'clientDetail'
+                                                             })">
                                                             <a class="operate"><img src="/static/images/edit.png" height="18" width="30" alt="编辑" title="编辑" />
                                                             </a>
                                                         </td>
+                                                        <!-- 删除联系人 -->
                                                         <td @click.stop="specDelete({
-                                                 id:item.id,
-                                                 sub:$index,
-                                                 show:true,
-                                                 name:item.name,
-                                                 title:'联系人',
-                                                 link:specDel,
-                                                 url:'/customer/contact/',
-                                                 key:'contacts',
-                                                 headline:'clientDetail'
-                                                 },item.show=false)">
+                                                                 id:item.id,
+                                                                 sub:$index,
+                                                                 show:true,
+                                                                 name:item.name,
+                                                                 title:'联系人',
+                                                                 link:specDel,
+                                                                 url:'/customer/contact/',
+                                                                 key:'contacts',
+                                                                 headline:'clientDetail'
+                                                                 },item.show=false)">
                                                             <a class="operate"><img src="/static/images/del.png" height="18" width="30" alt="删除" title="删除" />
                                                             </a>
                                                         </td>
@@ -1045,7 +1046,7 @@ export default {
             this.labelParam.callback = this.labelCallback;
         },
         specDelete: function(initBreedDetail) {
-            console.log(initBreedDetail.key)
+            console.log(initBreedDetail)
             var _self = this;
             if (initBreedDetail.key == 'customerList') {
                 initBreedDetail.callback = function() {

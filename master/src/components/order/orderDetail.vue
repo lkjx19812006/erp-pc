@@ -396,6 +396,7 @@
                                                 <thead>
                                                     <th>{{$t('static.file_type')}}</th>
                                                     <th>{{$t('static.file_origin')}}</th>
+                                                    <th>文件名称</th>
                                                     <th>{{$t('static.file_path')}}</th>
                                                     <th>{{$t('static.description')}}</th>
                                                     <th>{{$t('static.create_time')}}</th>
@@ -403,9 +404,9 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.contractList.arr">
-                                                        <td v-if="item.url | file">{{item.fileType}}</td>
-                                                        <td v-else>others</td>
+                                                        <td>{{item.url | file}}</td>
                                                         <td>{{item.bizType}}</td>
+                                                        <th>{{item.name}}</th>
                                                         <td>
                                                             <img :src="item.url |file" v-if="item.url | file" @click="clickBig(item.url)" style="margin:auto" />
                                                             <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
