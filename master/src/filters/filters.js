@@ -1103,8 +1103,8 @@ Vue.filter('indentSource', function(val) { //采购单来源
 Vue.filter('file', function(val) { //文件后缀名获取
     var val = val;
     var file = val.substring(val.lastIndexOf('.') + 1);
-    if (file == 'png' || file == 'jpeg' || file == 'jpg' || file == 'bmp' || file == 'gif') {
-        return val;
+    if (file == 'word' || file == 'excle' || file == 'ppt' || file == 'txt' || file == 'jpg') {
+        return file;
     } else {
         return '';
     }

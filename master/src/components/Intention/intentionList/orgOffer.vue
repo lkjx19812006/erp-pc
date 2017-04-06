@@ -51,9 +51,9 @@
                         <th>报价时间</th>
                         <th>所属交易员</th>
                         <th>报价客户</th>
-                        
                         <th>联系方式</th>
                         <th>品种名</th>
+                        <td>图片</td>
                         <th>报价价格</th>
                         <th>库存</th>
                         <th>报价备注</th>
@@ -64,10 +64,14 @@
                          
                         <td>{{item.ctime}}</td>
                         <td>{{item.employeeName}}</td>
-                        <td>{{item.customerName}}</td>
-                        
+                        <td>{{item.customerName}}</td>   
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.breedName}}</td>
+                        <td>
+                          <span v-for="val in item.pics">
+                            <img :src="val.path" style="float: left; width:40px; height:40px; margin-right:10px">
+                          </span>
+                        </td>
                         <td>{{item.price}}</td>
                         <td>{{item.number}}{{item.unit}}</td>
                         <td>{{item.description}}</td>
