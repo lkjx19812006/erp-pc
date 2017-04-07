@@ -108,7 +108,7 @@
                             <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
                             <td v-if="item.sample==0">{{$t('static.no')}}</td>
                             <td v-if="item.sample==1">{{$t('static.yes')}}</td>
-                            <td v-if = "item.customerName == ''"><a @click="clickOn({
+                            <td v-if="item.customerName == ''"><a @click="clickOn({
                                         show:true,
                                         id:item.id,
                                         loading:true,
@@ -280,14 +280,14 @@ export default {
         },
 
         //订单划转到业务员
-        transferToEmployee: function(item,itemSub) {
+        transferToEmployee: function(item, itemSub) {
             this.transferParam.id = item.id;
             this.transferParam.user = item.user;
             this.transferParam.employee = "";
             this.transferParam.callback = this.transferCallback;
             this.transferParam.show = true;
             this.transferParam.itemSub = itemSub;
-            
+
         },
         transferCallback: function(name) {
             this.tipsParam.show = true;

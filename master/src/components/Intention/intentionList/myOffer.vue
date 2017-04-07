@@ -2,6 +2,7 @@
     <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
     <search-model :param="loadParam" v-if="loadParam.show"></search-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
+    <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
@@ -65,7 +66,7 @@
                         <td>{{item.breedName}}</td>
                         <td>
                             <span v-for="val in item.pics">
-                            <img :src="val.path" style="float: left; width:40px; height:40px; margin-right:10px">
+                            <img :src="val.path" style="float: left; width:40px; height:40px; margin-right:10px" @click="clickBig(val.url)">
                           </span>
                         </td>
                         <td>{{item.price}}</td>
@@ -110,6 +111,7 @@ import createorderModel from '../createOrder'
 import searchModel from '../offerSearch'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import pictureModel from '../../tips/pictureDialog'
 import tipsModel from '../../tips/tipDialog'
 import mglistModel from '../../mguan/mgListComponent.vue'
 import {
@@ -124,6 +126,7 @@ export default {
         pagination,
         createorderModel,
         searchModel,
+        pictureModel,
         tipsModel,
         mglistModel
     },
@@ -159,6 +162,10 @@ export default {
                 name: '',
                 show: false,
                 alert: true
+            },
+            pictureParam: {
+                show: false,
+                img: ''
             },
             offerParam: {
                 show: false,
@@ -232,6 +239,10 @@ export default {
         },
         clickShow: function(index) {
             this.$store.state.table.basicBaseList.myOfferList[index].show = !this.$store.state.table.basicBaseList.myOfferList[index].show;
+        },
+        clickBig: function(img) {
+            this.pictureParam.show = true;
+            this.pictureParam.img = img;
         },
         onlyselected: function(index) {
             var _this = this;

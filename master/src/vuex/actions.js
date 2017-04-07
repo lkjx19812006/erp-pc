@@ -262,13 +262,6 @@ export const getNoticeList = ({ dispatch }, param) => {
             page: param.cur,
             pageSize: 15
         }
-        if (param.mTimeStart) {
-            body.mTimeStart = param.mTimeStart;
-        }
-        if (param.mTimeEnd) {
-            body.mTimeEnd = param.mTimeEnd;
-        }
-        console.log(param.read);
         if (param.read) {
             body.read = param.read;
         }

@@ -191,7 +191,6 @@ export default {
         },
         selectSupplier: function() {
             this.supplierParam.show = true;
-            console.log(this.supplierParam)
         },
         selectleft: function(item) {
             console.log(this.initCurrencylist[item - 1].rate)
@@ -211,7 +210,7 @@ export default {
     },
     events: {
         supplier: function(item) {
-            console.log(item)
+            console.log(item);
             this.supplierParam.supplierName = item.supplierName;
             this.supplierParam.origPrice = item.origPrice;
             this.supplierParam.supplier = item.supplier;
@@ -226,15 +225,13 @@ export default {
         this.getUnitList(this.loadParam);
         this.getCurrencyList();
 
-        console.log(this.param);
         if (this.param.origCurrency && this.param.origCurrency != '' && this.initCurrencylist[this.param.origCurrency - 1] != undefined) {
             this.countleft = this.initCurrencylist[this.param.origCurrency - 1].rate;
         }
         if (this.param.currency && this.param.currency != '' && this.initCurrencylist[this.param.origCurrency - 1] != undefined) {
             this.countright = this.initCurrencylist[this.param.currency - 1].rate;
         }
-        console.log(this.countleft)
-        console.log(this.countright)
+
     }
 }
 </script>

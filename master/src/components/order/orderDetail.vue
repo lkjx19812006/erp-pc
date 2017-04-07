@@ -66,7 +66,6 @@
                                         <!-- 新增 订单状态 -->
                                         <mg-label :title="$t('static.order_status')">{{initOrderDetail.orderStatus | orderstatus}}</mg-label>
                                         <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.comments}}</mg-label>
-
                                     </ul>
                                 </div>
                                 <div class="panel panel-default">
@@ -180,8 +179,12 @@
                                                     <tr v-for="item in initOrderDetail.stages.arr">
                                                         <td v-if="item.type==0">{{$t('static.paid')}}</td>
                                                         <td v-if="item.type==1">{{$t('static.income')}}</td>
-                                                        <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}}<!-- （{{$t('static.order_amount')}} {{item.ratio | advanced}}） --></td>
-                                                        <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}} {{$t('static.ins')}} {{item.extra}} {{$t('static.day')}}<!-- （{{$t('static.order_amount')}} {{item.ratio | advanced}}） --></td>
+                                                        <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}}
+                                                            <!-- （{{$t('static.order_amount')}} {{item.ratio | advanced}}） -->
+                                                        </td>
+                                                        <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}} {{$t('static.ins')}} {{item.extra}} {{$t('static.day')}}
+                                                            <!-- （{{$t('static.order_amount')}} {{item.ratio | advanced}}） -->
+                                                        </td>
                                                         <td>{{item.comment}}</td>
                                                         <td v-if="item.validate==0" style="color:#91a0ff;cursor:pointer" @click="apply_Record({
                                                               sub:$index,
@@ -408,7 +411,7 @@
                                                         <td>{{item.bizType}}</td>
                                                         <th>{{item.name}}</th>
                                                         <td>
-                                                            <img :src="item.url |file" v-if="item.url | file" @click="clickBig(item.url)" style="margin:auto" />
+                                                            <img :src="item.url" v-if="item.url | isImage" @click="clickBig(item.url)" style="margin:auto" />
                                                             <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
@@ -471,11 +474,10 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.payPics.arr">
-                                                        <td v-if="item.url | file">{{item.fileType}}</td>
-                                                        <td v-else>others</td>
+                                                        <td>{{item.url | file}}</td>
                                                         <td>{{item.bizType}}</td>
                                                         <td>
-                                                            <img :src="item.url | file" v-if="item.url | file" @click="clickBig(item.url)" style="margin:auto" />
+                                                            <img :src="item.url" v-if="item.url | isImage" @click="clickBig(item.url)" style="margin:auto" />
                                                             <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
@@ -520,11 +522,10 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.attachFiles.arr">
-                                                        <td v-if="item.url | file">{{item.fileType}}</td>
-                                                        <td v-else>others</td>
+                                                        <td>{{item.url | file}}</td>
                                                         <td>{{item.bizType}}</td>
                                                         <td>
-                                                            <img :src="item.url | file" v-if="item.url | file" @click="clickBig(item.url)" style="margin:auto" />
+                                                            <img :src="item.url" v-if="item.url | isImage" @click="clickBig(item.url)" style="margin:auto" />
                                                             <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
@@ -573,11 +574,10 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.sendPics.arr">
-                                                        <td v-if="item.url | file">{{item.fileType}}</td>
-                                                        <td v-else>others</td>
+                                                        <td>{{item.url | file}}</td>
                                                         <td>{{item.bizType}}</td>
                                                         <td>
-                                                            <img :src="item.url |file" v-if="item.url | file" @click="clickBig(item.url)" style="margin:auto" />
+                                                            <img :src="item.url" v-if="item.url | isImage" @click="clickBig(item.url)" style="margin:auto" />
                                                             <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>

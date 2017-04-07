@@ -1103,10 +1103,27 @@ Vue.filter('indentSource', function(val) { //采购单来源
 Vue.filter('file', function(val) { //文件后缀名获取
     var val = val;
     var file = val.substring(val.lastIndexOf('.') + 1);
-    if (file == 'word' || file == 'excle' || file == 'ppt' || file == 'txt' || file == 'jpg') {
+    if (file == "doc" || file == "docx") {
+        return "word";
+    } else if (file == "xls" || file == "xlsx") {
+        return "excel";
+    } else if (file == "jpg" || file == "jpeg" || file == "png") {
+        return "image";
+    } else if (file != "") {
         return file;
     } else {
-        return '';
+        return "other"
+    }
+
+});
+
+Vue.filter('isImage', function(val) { //判断是否图片
+    var val = val;
+    var file = val.substring(val.lastIndexOf('.') + 1);
+    if (file == "jpg" || file == "jpeg" || file == "png") {
+        return true;
+    } else {
+        return false;
     }
 
 });

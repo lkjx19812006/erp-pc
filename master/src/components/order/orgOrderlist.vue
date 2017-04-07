@@ -8,6 +8,7 @@
         <cancel-model :param="cancelParam" v-if="cancelParam.show"></cancel-model>
         <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
+        <employee-model :param="transferParam" v-if="transferParam.show"></employee-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <language-model v-show="false"></language-model>
         <mglist-model :param="mgListParam">
@@ -294,6 +295,10 @@
                                 <button class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70||(item.orderStatus==0&&item.validate==0)" @click="cancelOrder(item.id,$index)">
                                     取消订单
                                 </button>
+                                <!-- 订单划转到任意一个业务员 -->
+                                <button class="btn btn-warning btn-apply" v-if="(item.orderStatus==0||item.orderStatus==10)&&item.validate==0" @click="transferToEmployee(item,$index)">
+                                    划转
+                                </button>
                                 <!-- 审核 -->
                                 <button class="btn btn-warning btn-apply" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
                                     {{$t('static.verified')}}
@@ -330,7 +335,7 @@ import disposeModel from '../order/orderStatus'
 import tipsdialogModel from '../tips/tipDialog'
 import auditModel from '../../components/tips/auditDialog'
 import cancelModel from './cancleMsg'
-//单个业务员搜索
+//单个业务员搜索，有两个地方引用到这个模块
 import employeeModel from '../clientRelate/searchEmpInfo'
 import breedsearchModel from '../intention/breedsearch'
 import filter from '../../filters/filters'
@@ -352,7 +357,8 @@ import {
     orderStatu,
     getOrderDetail,
     orderOrgAudit,
-    orderCancle
+    orderCancle,
+    transferOrder
 } from '../../vuex/actions'
 
 export default {
@@ -420,6 +426,15 @@ export default {
                 employeeName: '',
 
             },
+            transferParam: { //划转订单
+                show: false,
+                link: '/order/transferToEmployee',
+                callback: '',
+                employee: '',
+                id: '',
+                user: '' //在这里无效，主要是为了配合注册客户订单的划转
+            },
+            employeeStatus: 0, //表示是哪个地方用到了选择业务员的模块,初始为0,1表示搜索，2表示划转订单
             dialogParam: {
                 show: false
             },
@@ -528,7 +543,8 @@ export default {
             orderStatu,
             getOrderDetail,
             orderOrgAudit,
-            orderCancle
+            orderCancle,
+            transferOrder
         }
     },
     methods: {
@@ -547,6 +563,7 @@ export default {
             this.breedSearchParam.show = true;
         },
         selectEmployee: function() {
+            this.employeeStatus = 1;
             this.employeeParam.show = true;
         },
         resetTime: function() {
@@ -646,6 +663,23 @@ export default {
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.selectSearch();
+        },
+        //订单划转到业务员
+        transferToEmployee: function(item, itemSub) {
+            //将employeeStatus置为2,表示是划转业务员
+            this.employeeStatus = 2;
+            this.transferParam.id = item.id;
+            this.transferParam.employee = "";
+            this.transferParam.callback = this.transferCallback;
+            this.transferParam.show = true;
+            this.transferParam.itemSub = itemSub;
+
+        },
+        transferCallback: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.tipsParam.alert = true;
+            this.selectSearch();
         }
     },
     filter: (filter, {}),
@@ -663,9 +697,16 @@ export default {
             this.selectSearch();
         },
         a: function(employee) {
-            this.loadParam.employeeId = employee.employeeId;
-            this.loadParam.employeeName = employee.employeeName;
-            this.selectSearch();
+            if (this.employeeStatus == 1) {
+                this.loadParam.employeeId = employee.employeeId;
+                this.loadParam.employeeName = employee.employeeName;
+                this.selectSearch();
+            }
+            if (this.employeeStatus == 2) {
+                this.transferParam.employee = employee.employeeId;
+                this.transferOrder(this.transferParam);
+            }
+
         },
     },
     created() {
