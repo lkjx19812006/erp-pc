@@ -146,8 +146,8 @@
                                     <!-- 规格 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.specification')}}</label>
-                                        <input type="text" v-show="!breedParam.id" v-model="intentionInfo.spec" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                                        <div type="text" class="edit-input" v-if="breedParam.id">
+                                        <input type="text" v-show="!intentionInfo.breedId" v-model="intentionInfo.spec" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                                        <div type="text" class="edit-input" v-if="intentionInfo.breedId">
                                             <input-select :value.sync="intentionInfo.spec" :prevalue="intentionInfo.spec" :options="initBreedDetail.specs.arr" placeholder="规格/Specification" label="name">
                                             </input-select>
                                         </div>
@@ -155,8 +155,8 @@
                                     <!-- 产地 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.origin')}}</label>
-                                        <input type="text" v-show="!breedParam.id" v-model="intentionInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                                        <div type="text" class="edit-input" v-if="breedParam.id">
+                                        <input type="text" v-show="!intentionInfo.breedId" v-model="intentionInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                                        <div type="text" class="edit-input" v-if="intentionInfo.breedId">
                                             <input-select :prevalue="intentionInfo.location" :value.sync="intentionInfo.location" :options="initBreedDetail.locals.arr" placeholder="产地/Origin" label="name">
                                             </input-select>
                                         </div>
@@ -179,7 +179,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.intentionList.length>0&&param.intentionList[param.intentionList.length-1].breedId!=''" @click="confirm()">{{$t('static.confirm')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&intentionInfo.status==0&&param.intentionList.length>0&&param.intentionList[param.intentionList.length-1].breedId!=''" @click="confirm()">{{$t('static.confirm')}}</button>
                     <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.confirm')}}</button>
                 </div>
             </validator>

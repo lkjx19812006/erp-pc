@@ -11,88 +11,65 @@
         <validator name="validation">
             <form novalidate>
                 <div class="edit-model">
-                    <section class="editsection"  v-cloak>
-                        <div class="clearfix">
+                    <section class="editsection" v-cloak>
+                        <!-- <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">产品名称 <span class="system_danger" v-if="$validation.username.required">请输入名称</span></label>
+                                <label class="editlabel">产品名称<span class="system_danger" v-if="$validation.username.required">请输入名称</span></label>
                                 <input type="text" id="username" class="form-control" v-model="param.name" v-validate:username="['required']" value="{{param.name}}" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">产品类型</label>
-                                 <select  value="{{param.type}}" v-model="param.type" class="form-control">
+                                <select value="{{param.type}}" v-model="param.type" class="form-control">
                                     <option>药材</option>
                                     <option>提取物</option>
                                     <option>饮片</option>
                                 </select>
-                                <!-- <input type="text" id="usertype" class="form-control" v-model="param.type" v-validate:usertype="['required']" value="{{param.type}}"/> -->
                             </div>
-                        </div>
+                        </div> -->
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种名称 <span class="system_danger" v-if="$validation.breed.required">请选择品种</span></label>
-                                <input type="text" class="form-control" v-model="param.breedName"  v-validate:breed="['required']" value="{{param.breedName}}"  @click="searchBreed(param.breedName,param.breedId)"/>
-                                    
-                            </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">产品质量</label>
-                                <input type="text" class="form-control" v-model="param.quality" value="{{param.quality}}"/>
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">产地 <span class="system_danger" v-if="$validation.location.required">产地不能为空</span></label>
-                              <input type="text"  class="form-control"  v-model="param.location" v-show="!breedParam.id"  v-validate:location="['required']" disabled="disabled" placeholder="请先选择一个品种" />
-                                <div type="text"  v-if="breedParam.id">
-                                     <input-select
-                                       :prevalue="param.location"
-                                       :value.sync="param.location"
-                                       :options="initBreedDetail.locals.arr"
-                                       placeholder="产地"
-                                       label="name">
-                                     </input-select>
-                                </div>
-                                 <!-- <select  value="{{param.location}}" v-model="param.location" class="form-control"  >
-                                    <option v-for="item in initProvince">{{item.cname}}</option>
-                                                                 </select> -->
+                                <input type="text" class="form-control" v-model="param.breedName" v-validate:breed="['required']" value="{{param.breedName}}" @click="searchBreed(param.breedName,param.breedId)" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">规格 <span class="system_danger" v-if="$validation.spec.required">规格不能为空</span></label>
-                                <input type="text" class="form-control"  v-show="!breedParam.id"v-model="param.spec"  v-validate:spec="['required']" value="{{param.spec}}"/>
-                                <div type="text"   v-if="breedParam.id">
-                                    <input-select
-                                       :value.sync="param.spec"
-                                       :prevalue="param.spec"
-                                       :options="initBreedDetail.specs.arr"
-                                       placeholder="规格"
-                                       label="name"
-                                    >
+                                <input type="text" class="form-control" v-show="!breedParam.id" v-model="param.spec" v-validate:spec="['required']" value="{{param.spec}}" />
+                                <div type="text" v-if="breedParam.id">
+                                    <input-select :value.sync="param.spec" :prevalue="param.spec" :options="initBreedDetail.specs.arr" placeholder="规格" label="name">
                                     </input-select>
                                 </div>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">产地 <span class="system_danger" v-if="$validation.location.required">产地不能为空</span></label>
+                                <input type="text" class="form-control" v-model="param.location" v-show="!breedParam.id" v-validate:location="['required']" disabled="disabled" placeholder="请先选择一个品种" />
+                                <div type="text" v-if="breedParam.id">
+                                    <input-select :prevalue="param.location" :value.sync="param.location" :options="initBreedDetail.locals.arr" placeholder="产地" label="name">
+                                    </input-select>
+                                </div>
+                            </div>
+                            <!-- <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                <label class="editlabel">产品质量</label>
+                                <input type="text" class="form-control" v-model="param.quality" value="{{param.quality}}" />
+                            </div> -->
+                        </div>
+                        <!-- <div class="clearfix">
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">数量（库存） <span class="system_danger" v-if="$validation.number.quantity">请输入数量</span></label>
                                 <input type="text" class="form-control" v-model="param.number" id="number" v-validate:number="['quantity']" value="{{param.number}}" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">价格 <span class="system_danger" v-if="$validation.price.money">请输入不超过小数点两位的数字</span></label>
-                                <input type="text" class="form-control" v-model="param.price"  id="price" v-validate:price="['money']" value="{{param.price}}"/>
+                                <input type="text" class="form-control" v-model="param.price" id="price" v-validate:price="['money']" value="{{param.price}}" />
                             </div>
-                        </div>
-                        <div class="clearfix">
+                        </div> -->
+                        <!-- <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">单位 <span class="system_danger" v-if="$validation.unit.required">单位不能为空</span></label>
-                                <!-- <input type="text" class="form-control" v-model="param.unit" id="unit" v-validate:unit="['required']" value="{{param.unit}}"/> -->
-                                <input type="text" v-show="!breedParam.id"  v-model="param.unit" v-validate:unit="{required:true}" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                                <input type="text" v-show="!breedParam.id" v-model="param.unit" v-validate:unit="{required:true}" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
                                 <div type="text" v-if="breedParam.id">
-                                    <input-select
-                                       :value.sync="param.unit"
-                                       :prevalue="param.unit"
-                                       :options="initBreedDetail.units.arr"
-                                       placeholder="单位"
-                                       label="name"
-                                    >
+                                    <input-select :value.sync="param.unit" :prevalue="param.unit" :options="initBreedDetail.units.arr" placeholder="单位" label="name">
                                     </input-select>
                                 </div>
                             </div>
@@ -100,22 +77,21 @@
                                 <label class="editlabel">价格过期时间</label>
                                 <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss"></mz-datepicker>
                             </div>
-                        </div>
-                        <div class="clearfix">
+                        </div> -->
+                        <!-- <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">检测报告</label>
-                                <select  value="{{param.coa}}" v-model="param.coa" class="form-control">
+                                <select value="{{param.coa}}" v-model="param.coa" class="form-control">
                                     <option value="1">有</option>
                                     <option value="0">无</option>
                                 </select>
-                                <!-- <input type="text" class="form-control" v-model="param.coa" value="{{param.coa}}"/> -->
                             </div>
-                        </div>
+                        </div> -->
                     </section>
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)" >保存</button>
+                    <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">保存</button>
                     <button type="button" class="btn btn-confirm" v-else disabled="true">保存</button>
                 </div>
             </form>
@@ -124,7 +100,7 @@
 </template>
 <script>
 import calendar from '../../calendar/vue.datepicker'
-import searchbreedModel  from '../../Intention/breedsearch'
+import searchbreedModel from '../../Intention/breedsearch'
 import vSelect from '../../tools/vueSelect/components/Select'
 import inputSelect from '../../tools/vueSelect/components/inputselect'
 import {
@@ -147,37 +123,37 @@ export default {
     props: ['param'],
     data() {
         return {
-           dateText:'',
+            dateText: '',
             loadParam: {
-              loading: true,
-              show:false,
-              color: '#5dc596',
-              size: '15px',
-              cur: 1,
-              all: 7
+                loading: true,
+                show: false,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7
             },
-            breedParam:{
-                show:false,
-                breedName:'',
-                breedId:'',
-                loading:false,
-                id:''
+            breedParam: {
+                show: false,
+                breedName: '',
+                breedId: '',
+                loading: false,
+                id: ''
             }
         }
     },
     vuex: {
-      getters: {
-         initProvince,
-         initBreedlist,
-         initBreedDetail
-      },
-      actions: {
-         getProvinceList,
-         getBreedData,
-         getBreedDetail
-      }
+        getters: {
+            initProvince,
+            initBreedlist,
+            initBreedDetail
+        },
+        actions: {
+            getProvinceList,
+            getBreedData,
+            getBreedDetail
+        }
     },
-    methods:{
+    methods: {
         createDateText() {
             let date = new Date()
             let year = date.getFullYear()
@@ -186,55 +162,60 @@ export default {
             let str = `${year}/${month}/${day}`
             this.dateText = str.replace(/\b(\w)\b/g, "0$1")
         },
-        searchBreed:function(brredName,breedId){
-            this.breedParam.show=true;      
+        searchBreed: function(brredName, breedId) {
+            this.breedParam.show = true;
         },
     },
-    events:{
-        breed:function(breed){
+    events: {
+        breed: function(breed) {
             this.param.breedName = breed.breedName;
             this.param.breedId = breed.breedId;
             this.breedParam.breedName = breed.breedName;
             this.breedParam.id = breed.breedId;
-            this.breedParam.loading=true;
+            this.breedParam.loading = true;
             this.getBreedDetail(this.breedParam);
-        }   
+        }
     },
     ready() {
         this.createDateText()
     },
     created() {
-      this.getProvinceList(this.loadParam);
-      this.getBreedData(this.loadParam);
-      if(this.param.breedId){
-        this.breedParam.breedName = this.param.breedName;
-        this.breedParam.id = this.param.breedId;
-        this.getBreedDetail(this.breedParam);
-      }
+        this.getProvinceList(this.loadParam);
+        this.getBreedData(this.loadParam);
+        if (this.param.breedId) {
+            this.breedParam.breedName = this.param.breedName;
+            this.breedParam.id = this.param.breedId;
+            this.getBreedDetail(this.breedParam);
+        }
     }
 }
 </script>
 <style scoped>
-.modal{
+.modal {
     z-index: 1083
 }
-.modal_con{
+
+.modal_con {
     z-index: 1084;
     bottom: 150px;
 }
-.top-title{
+
+.top-title {
     position: absolute;
     top: 0;
     right: 0;
 }
-.edit_footer{
+
+.edit_footer {
     bottom: 150px;
 }
+
 .edit-content {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
+
 .editsection {
     width: 100%;
     box-sizing: border-box;
@@ -259,6 +240,7 @@ export default {
     flex: auto;
     width: 50%;
 }
+
 .edit-input {
     height: 36px;
     line-height: 36px;

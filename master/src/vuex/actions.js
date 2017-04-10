@@ -3635,7 +3635,7 @@ export const customerAudit = ({ dispatch }, param) => { //客户审核(跟进)
         console.log('fail');
     });
 }
-export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转供应商,拉黑,移出黑名单
+export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转供应商,移出供应商,拉黑,移出黑名单
     param.loading = true;
     console.log(param);
     const data = {};
@@ -3645,9 +3645,14 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
         data.blacklist = param.blacklist;
     } else if (param.link == '/customer/setSupplier') {
         data.customerIds = param.customerIds;
-        data.supplier = 1;
+        if (!param.supplier) {
+            data.supplier = 1;
+        } else {
+            data.supplier = param.supplier;
+        }
         data.comments = param.blackComments;
     }
+
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.link,
@@ -4536,17 +4541,17 @@ export const createRemark = ({ dispatch }, param) => { //新增客户备注
 }
 export const createProduct = ({ dispatch }, param) => { //新增客户产品
     const data = {
-        "type": param.type,
-        "name": param.name,
+        /*"type": param.type,*/
+        "name": param.breedName, //默认产品名就是品种名
         "breedId": param.breedId,
-        "quality": param.quality,
+        /*"quality": param.quality,*/
         "location": param.location,
         "spec": param.spec,
-        "number": param.number,
+        /*"number": param.number,
         "price": param.price,
         "unit": param.unit,
         "duedate": param.duedate,
-        "coa": param.coa,
+        "coa": param.coa,*/
         "cid": param.cid,
         "breedName": param.breedName
     }

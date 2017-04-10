@@ -1068,7 +1068,7 @@ export default {
         clientTransferSupplier: function(initBreedDetail) {
             console.log(initBreedDetail)
             this.auditParam = initBreedDetail;
-            this.auditParam.supplier = true;
+            this.auditParam.confirm = true;
             this.auditParam.arr = [];
             if (initBreedDetail.id) {
                 this.auditParam.arr.push(initBreedDetail.id);

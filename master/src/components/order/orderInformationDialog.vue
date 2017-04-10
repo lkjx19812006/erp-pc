@@ -591,22 +591,23 @@ export default {
         },
         showModifyBreed: function(index) {
             this.breedInfo.status = 2;
-            this.updateParam.price = this.param.goods[index].price,
-                this.updateParam.number = this.param.goods[index].number,
-                this.updateParam.index = index;
-            this.breedInfo.breedId = this.param.goods[index].breedId,
-                this.breedInfo.breedName = this.param.goods[index].breedName,
-                this.breedInfo.title = this.param.goods[index].title,
-                this.breedInfo.quality = this.param.goods[index].quality,
-                this.breedInfo.location = this.param.goods[index].location,
-                this.breedInfo.spec = this.param.goods[index].spec,
-                this.breedInfo.number = this.param.goods[index].number,
-                this.breedInfo.unit = this.param.goods[index].unit,
-                this.breedInfo.price = this.param.goods[index].price,
-                this.breedInfo.costPrice = this.param.goods[index].costPrice,
-                this.breedInfo.sourceType = this.param.goods[index].sourceType,
-                this.breedInfo.id = this.param.goods[index].orderId,
-                this.updateParam.show = true;
+            this.updateParam.number = this.param.goods[index].number;
+            this.updateParam.price = this.param.goods[index].price;
+            this.updateParam.costPrice = this.param.goods[index].costPrice;
+            this.updateParam.index = index;
+            this.breedInfo.breedId = this.param.goods[index].breedId;
+            this.breedInfo.breedName = this.param.goods[index].breedName;
+            this.breedInfo.title = this.param.goods[index].title;
+            this.breedInfo.quality = this.param.goods[index].quality;
+            this.breedInfo.location = this.param.goods[index].location;
+            this.breedInfo.spec = this.param.goods[index].spec;
+            this.breedInfo.number = this.param.goods[index].number;
+            this.breedInfo.unit = this.param.goods[index].unit;
+            this.breedInfo.price = this.param.goods[index].price;
+            this.breedInfo.costPrice = this.param.goods[index].costPrice;
+            this.breedInfo.sourceType = this.param.goods[index].sourceType;
+            this.breedInfo.id = this.param.goods[index].orderId;
+            this.updateParam.show = true;
             this.altogether -= parseFloat(this.breedInfo.number) * parseFloat(this.breedInfo.price);
             this.costmoney -= parseFloat(this.breedInfo.number) * parseFloat(this.breedInfo.costPrice);
         },

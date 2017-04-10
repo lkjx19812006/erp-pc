@@ -180,7 +180,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.intentionList.length>0&&param.intentionList[param.intentionList.length-1].breedId!=''" @click="confirm()">{{$t('static.confirm')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&intentionInfo.status==0&&param.intentionList.length>0&&param.intentionList[param.intentionList.length-1].breedId!=''" @click="confirm()">{{$t('static.confirm')}}</button>
                     <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.confirm')}}</button>
                 </div>
             </validator>

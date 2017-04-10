@@ -112,7 +112,7 @@
                                 <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
                             </dd>
                         </dl>
-                        <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">{{$t('static.export_order')}}</a></button>
+                        <button class="new_btn transfer"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">{{$t('static.export_order')}}</a></button>
                         <button type="button" class="new_btn transfer" @click="resetTime()">{{$t('static.clear_all')}}</button>
                         <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
                     </div>
