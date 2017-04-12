@@ -23,6 +23,10 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==5">
         <msg></msg>
     </div>
+    <!-- 预售意向留言 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==9">
+        <pre-sell-msg></pre-sell-msg>
+    </div>
     <!-- 我的寄样申请列表 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==7">
         <my-sample></my-sample>>
@@ -39,6 +43,7 @@ import potentialIntention from '../components/Intention/intentionList/potentialI
 import myOffer from '../components/Intention/intentionList/myOffer.vue'
 import orgOffer from '../components/Intention/intentionList/orgOffer.vue'
 import msg from '../components/Intention/intentionList/msg.vue'
+import preSellMsg from '../components/Intention/intentionList/preSellMsg.vue'
 import mySample from '../components/Intention/intentionList/mySendSample'
 import orgSample from '../components/Intention/intentionList/orgSendSample'
 export default {
@@ -49,6 +54,7 @@ export default {
         myOffer,
         orgOffer,
         msg,
+        preSellMsg,
         mySample,
         orgSample
     }

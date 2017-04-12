@@ -3240,6 +3240,9 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         if (search == 'trackingDay' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&trackingDay=' + param.trackingDay
         }
+        if (search == 'orderSum' && param[search] !== '' && param[search] != 'undefined') {
+            clienturl += '&orderSum=' + param.orderSum
+        }
     }
     Vue.http({
         method: 'GET',
@@ -4797,6 +4800,9 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
         let detail = res.json().result;
 
         let intentionList = detail.intentionList;
+        for (let i = 0; i < intentionList.length; i++) {
+            intentionList[i].show = false; //是否处于展开状态
+        }
         detail.intentionList = {};
         detail.intentionList.arr = intentionList;
         detail.intentionList.show = false;
@@ -5025,6 +5031,9 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         if (search == 'especial' && param[search] !== '') {
             url += '&especial=' + param.especial
         }
+        if (search == 'preSell' && param[search] !== '') {
+            url += '&preSell=' + param.preSell
+        }
         if (search == 'invoic' && param[search] !== '') {
             url += '&invoic=' + param.invoic
         }
@@ -5064,6 +5073,7 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         if (search == 'label' && param[search] !== '') {
             url += '&label=' + param.label
         }
+
     }
     Vue.http({
         method: 'GET',
@@ -5124,7 +5134,7 @@ export const getSupplyDemandList = ({ dispatch }, param) => { //匹配供求信�
     })
 }
 
-export const getIntentionDetail = ({ dispatch }, param, id, index) => { //意向详情
+export const getIntentionDetail = ({ dispatch }, param) => { //意向详情
     param.loading = true;
     var url = apiUrl.clientList + '/intention/' + param.id;
     Vue.http({
@@ -5144,6 +5154,10 @@ export const getIntentionDetail = ({ dispatch }, param, id, index) => { //意向
         };
         for (var i in result.offers.arr) {
             result.offers.arr[i].show = false;
+            result.offers.arr[i].checked = false;
+            if (param.offerId && param.offerId == result.offers.arr[i].id) {
+                result.offers.arr[i].checked = true;
+            }
         };
         var arr = result.msgs;
         result.msgs = null;
@@ -5174,7 +5188,7 @@ export const getIntentionDetail = ({ dispatch }, param, id, index) => { //意向
             param.image_t_show = res.json().result.pics[2].url;
         }
         if (param.getOffers) {
-            param.getOffers(id, index, result);
+            param.getOffers(param.index, result);
         }
 
         param.loading = false;
@@ -5245,6 +5259,9 @@ export const getMsgList = ({ dispatch }, param) => { //留言信息列表以及�
     if (param.phone && param.phone != '') {
         url += '&phone=' + param.phone
     }
+    if (param.type && param.type != '') {
+        url += '&type=' + param.type
+    }
     Vue.http({
         method: 'GET',
         url: url,
@@ -5258,12 +5275,19 @@ export const getMsgList = ({ dispatch }, param) => { //留言信息列表以及�
             msg[i].checked = false;
             msg[i].show = false;
         }
+        msg.key = param.key;
         dispatch(types.MSG_LIST_DATA, msg);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
 
-        localStorage.msgParam = JSON.stringify(param);
+        if (param.key == "msgList") {
+            localStorage.msgParam = JSON.stringify(param);
+        }
+        if (param.key == "preSellMsgList") {
+            localStorage.preSellMsgParam = JSON.stringify(param);
+        }
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -6739,10 +6763,11 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
         param.images = param.files;
     }
     var today = new Date();
-    const data1 = {
+    const data = {
         "userId": param.userId,
         "type": param.type,
         "especial": param.especial,
+        "preSell": param.preSell,
         "customerName": param.customerName,
         "customerId": param.customerId,
         "customerPhone": param.customerPhone,
@@ -6761,7 +6786,10 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
         "sampleUnit": param.sampleUnit,
         "sampleAmount": param.sampleAmount,
         "breedId": param.breedId,
-        "country": param.country,
+        "country": param.country, //国家（预售时出口国复用此字段）
+        "transportType": param.transportType, //运输类型，1/2 空运/海运
+        "transportNo": param.transportNo, //航班号
+        "arriveTime": param.arriveTime, //到达时间（到达港口复用address）
         "quality": param.quality,
         "price": param.price,
         "province": param.province,
@@ -6775,14 +6803,13 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
         "inType": param.inType,
         "validate": param.validate,
         "description": param.description
-
     }
 
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,
         emulateHTTP: true,
-        body: data1,
+        body: data,
         emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest",

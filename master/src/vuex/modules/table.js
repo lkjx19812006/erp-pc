@@ -636,9 +636,8 @@ const state = {
         offerList: [
             { "id": "163", "intentionId": "57568d24a2ec516dc1d0f57c", "userId": "3ed2a1d7dafe449eb5e631a46f20f713", "customerId": null, "number": 3000, "unit": "63", "price": 12.000000, "incidentals": 1.000000, "incidentalsDesc": "含运费价格", "total": 36000.000000, "qualification": null, "quality": null, "location": null, "spec": null, "advance": null, "invoic": null, "visit": null, "pack": null, "sampling": null, "sampleNumber": null, "sampleUnit": null, "sampleAmount": null, "address": null, "comments": null, "otime": "2016-06-07 17:19", "clients": null, "status": 1, "description": "", "updater": null, "utime": "2016-09-27 10:08", "creater": null, "ctime": "2016-09-27 10:08" },
         ],
-        msgList: [
-            { "id": 1508, "intentionId": "f0d082de37ba4230880fe5ff06b0f647", "userId": "b11741af0efc49ed815545c0d88ddc98", "phone": null, "comments": "asdadasdasdadasd", "reserve": null, "status": 1, "ctime": "2016-09-01 17:53", "reply": null, "replier": null, "rtime": null, "updater": null, "utime": null, "creater": null }
-        ],
+        msgList: [],
+        preSellMsgList: [],
         intentionDetail: {
             "id": "1008",
             "chanceId": "",
@@ -2012,7 +2011,8 @@ const mutations = {
         state.basicBaseList[data.key] = data;
     },
     [MSG_LIST_DATA](state, data) { //留言列表
-        state.basicBaseList.msgList = data;
+        console.log(data.key);
+        state.basicBaseList[data.key] = data;
     },
     [MSG_UPDATE_DATA](state, data) { //留言修改
         if (data.key == 'msgList') {

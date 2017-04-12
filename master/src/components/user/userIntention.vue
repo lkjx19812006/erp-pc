@@ -25,17 +25,20 @@
                         <div style="margin-top:15px">
                             <dt class="left transfer marg_top">意向类型：</dt>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.param.type===0&&this.param.especial===0}" @click="selectType(0,0)">
+                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.param.type===0&&this.param.especial===0&&this.param.preSell==0}" @click="selectType(0,0,0)">
                                     普通求购
                                 </button>
-                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.param.type===0&&this.param.especial===1}" @click="selectType(0,1)">
+                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.param.type===0&&this.param.especial===1&&this.param.preSell==0}" @click="selectType(0,1,0)">
                                     紧急求购
                                 </button>
-                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.param.type===1&&this.param.especial===0}" @click="selectType(1,0)">
+                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.param.type===1&&this.param.especial===0&&this.param.preSell==0}" @click="selectType(1,0,0)">
                                     普通供应
                                 </button>
-                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.param.type===1&&this.param.especial===1}" @click="selectType(1,1)">
+                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.param.type===1&&this.param.especial===1&&this.param.preSell==0}" @click="selectType(1,1,0)">
                                     低价资源
+                                </button>
+                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.param.type===1&&this.param.especial===1&&this.param.preSell==1}" @click="selectType(1,1,1)">
+                                    预售资源
                                 </button>
                             </div>
                         </div>
@@ -97,7 +100,7 @@
                                     <label class="editlabel">过期时间</label>
                                     <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" style="height:36px">
                                     </mz-datepicker>
-                                    <button type="button" class="btn btn-default" style="margin-top:-6px" height="24" width="24" @click="reset()">清空</button>
+                                    <button type="button" class="btn btn-default" style="margin-top:-6px" height="24" width="24" @click="reset('duedate')">清空</button>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">规格</label>
@@ -122,7 +125,7 @@
                             <img src="/static/images/receiverinfo@2x.png" style="display:inline" />
                             <h5 style="display:inline">交收信息</h5>
                         </div>
-                        <div class="editpage">
+                        <div v-if="param.preSell===0" class="editpage">
                             <div class="editpageleft">
                                 <div class="editpage-input">
                                     <label class="editlabel">省</label>
@@ -157,6 +160,94 @@
                                 <div class="editpage-input col-md-12" style="padding-left: 0px;padding-right: 30px;">
                                     <label class="editlabel">客户备注</label>
                                     <textarea class="form-control" v-model="param.description" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="editpageright">
+                                <!-- <div class="editpage-input">
+                                   <label class="editlabel">是否国际</label>
+                                   <select type="text" class="form-control edit-input" v-model="param.intl">
+                                     <option value="0">国内</option>
+                                     <option value="1">国际</option>
+                                   </select>
+                                 </div> -->
+                                <div class="editpage-input">
+                                    <label class="editlabel">发票</label>
+                                    <select type="text" class="form-control edit-input" v-model="param.invoic">
+                                        <option value="0">无</option>
+                                        <option value="1">普通</option>
+                                        <option value="2">增值</option>
+                                    </select>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">预付比例</label>
+                                    <select type="text" class="form-control edit-input" v-model="param.advance">
+                                        <option value=0>0</option>
+                                        <option value=0.1>10%</option>
+                                        <option value=0.2>20%</option>
+                                        <option value=0.3>30%</option>
+                                        <option value=0.4>40%</option>
+                                        <option value=0.5>50%</option>
+                                        <option value=0.6>60%</option>
+                                        <option value=0.7>70%</option>
+                                        <option value=0.8>80%</option>
+                                        <option value=0.9>90%</option>
+                                        <option value=1>100%</option>
+                                    </select>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">是否提供样品</label>
+                                    <select type="text" class="form-control edit-input" v-model="param.sampling">
+                                        <option value="0">无</option>
+                                        <option value="1">有</option>
+                                    </select>
+                                </div>
+                                <div class="editpage-input" v-show="param.sampling==1">
+                                    <label class="editlabel">样品单位</label>
+                                    <div type="text" class="edit-input">
+                                        <input-select :prevalue="param.sampleUnit" :value.sync="param.sampleUnit" :options="initBreedDetail.units.arr" placeholder="样品单位" label="name">
+                                        </input-select>
+                                    </div>
+                                </div>
+                                <div class="editpage-input" v-show="param.sampling==1">
+                                    <label class="editlabel">样品数量</label>
+                                    <input type="text" v-model='param.sampleNumber' class="form-control edit-input" value="{{param.sampleNumber}}" />
+                                </div>
+                                <div class="editpage-input" v-show="param.sampling==1">
+                                    <label class="editlabel">样品总价</label>
+                                    <input type="text" v-model='param.sampleAmount' class="form-control edit-input" value="{{param.sampleAmount}}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="param.preSell===1" class="editpage">
+                            <div class="editpageleft">
+                                <div class="editpage-input">
+                                    <label class="editlabel">出口国家</label>
+                                    <div type="text" class="edit-input">
+                                        <v-select :debounce="250" :value.sync="country" :options="initCountrylist" placeholder="国" label="cname">
+                                        </v-select>
+                                    </div>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">运输类型</label>
+                                    <select type="text" class="form-control edit-input" v-model="param.transportType">
+                                        <option value="1">空运</option>
+                                        <option value="2">海运</option>
+                                    </select>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">航班号</label>
+                                    <input type="text" v-model='param.transportNo' class="form-control edit-input" />
+                                </div>
+                                <!-- 到港地点复用address -->
+                                <div class="editpage-input">
+                                    <label class="editlabel">到港地点</label>
+                                    <input type="text" v-model='param.address' class="form-control edit-input" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">到港时间</label>
+                                    <mz-datepicker :time.sync="param.arriveTime" format="yyyy-MM-dd HH:mm:ss" style="height:36px">
+                                    </mz-datepicker>
+                                    <button type="button" class="btn btn-default" style="margin-top:-6px" height="24" width="24" @click="reset('arrive')">清空</button>
                                 </div>
                             </div>
                             <div class="editpageright">
@@ -380,9 +471,10 @@ export default {
         }
     },
     methods: {
-        selectType: function(type, especial) {
+        selectType: function(type, especial, preSell) {
             this.param.type = type;
             this.param.especial = especial;
+            this.param.preSell = preSell;
         },
         searchBreed: function(breedName, breedId) {
             console.log('breed');
@@ -427,8 +519,14 @@ export default {
             }
             this.param.callback = this.param.callback;
         },
-        reset: function() {
-            this.param.duedate = "";
+        reset: function(type) {
+            if (type == "duedate") {
+                this.param.duedate = "";
+            }
+            if (type == "arrive") {
+                this.param.arriveTime = "";
+            }
+
         },
         selectProvince: function() {
             this.province = '';

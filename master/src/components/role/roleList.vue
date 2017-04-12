@@ -25,6 +25,7 @@
                         <tr>
                             <th>功能名称</th>
                             <th>功能英文名</th>
+                            <th>安全码</th>
                             <th>功能说明</th>
                             <th>创建时间</th>
                             <th colspan="2">操作</th>
@@ -34,6 +35,7 @@
                         <tr v-for="item in initScopeDetail.subcategory">
                             <td>{{item.cname}}</td>
                             <td>{{item.ename}}</td>
+                            <td>{{item.safecode}}</td>
                             <td>{{item.remark}}</td>
                             <td>{{item.ctime}}</td>
                             <td>

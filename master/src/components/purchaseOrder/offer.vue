@@ -2,6 +2,7 @@
     <!-- 意向报价 -->
     <div>
         <customer-model :param="customerParam" v-if="customerParam.show"></customer-model>
+        <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
         <div class="container modal_con" v-show="param.show">
             <div @click="param.show=false" class="top-title">
@@ -71,6 +72,7 @@
 import vSelect from '../tools/vueSelect/components/Select'
 import pressImage from '../imagePress'
 import inputSelect from '../tools/vueSelect/components/inputselect'
+import tipsdialogModel from '../tips/tipDialog'
 import customerModel from '../Intention/clientname'
 import {
     initUnitlist,
@@ -86,6 +88,7 @@ import {
 export default {
     components: {
         customerModel,
+        tipsdialogModel,
         vSelect,
         inputSelect,
         pressImage,
@@ -96,6 +99,11 @@ export default {
             customerParam: {
                 show: false,
                 link: '/customer/suppliers'
+            },
+            tipsParam: {
+                show: false,
+                name: '',
+                alert: true
             },
         }
     },
@@ -116,6 +124,16 @@ export default {
             this.customerParam.show = true;
         },
         confirm: function() {
+            if (this.param.number < 0) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "数量不能为负数";
+                return;
+            }
+            if (this.param.price < 0) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "单价不能为负数";
+                return;
+            }
             this.offerPurchaseOrder(this.param);
         }
 

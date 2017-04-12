@@ -1,5 +1,6 @@
 <template>
     <div>
+        <cart-model :param="orderParam" v-if="orderParam.show"></cart-model>
         <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con" v-show="param.show">
             <div @click.stop="param.show=false" class="top-title">
@@ -70,6 +71,7 @@
                                           <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                             求购意向信息（{{initPurchaseDetail.intentionList.arr.length}}）
                                           </a>
+                                          <button type="button" class="btn btn-base pull-right" @click.stop="openGoodsList()">购物车({{orderParam.goods.length}})</button>
                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initPurchaseDetail.intentionList.show&&initPurchaseDetail.intentionList.arr.length>0">
@@ -85,10 +87,12 @@
                                                     <th>报价信息</th>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="item in initPurchaseDetail.intentionList.arr">
+                                                    <tr v-for="(index,item) in initPurchaseDetail.intentionList.arr">
+                                                        <!-- 关于意向的报价信息 -->
                                                         <td v-if="item.purchaseOffer" colspan="7">
                                                             <table class="table table-hover table_color table-striped" style="width:80%;float:right;border-top:1px soild red">
                                                                 <thead>
+                                                                    <th></th>
                                                                     <th>业务员</th>
                                                                     <th>单价</th>
                                                                     <th>数量</th>
@@ -97,7 +101,11 @@
                                                                     <th>杂费说明</th>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr v-for="offer in item.offers.arr">
+                                                                    <tr v-for="(sub,offer) in item.offers.arr">
+                                                                        <td>
+                                                                            <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!offer.checked,'checkbox_select':offer.checked}" id="client_ids" @click="selectOfferInfo(index,sub)">
+                                                                            </label>
+                                                                        </td>
                                                                         <td>{{offer.employeeName}}</td>
                                                                         <td>{{offer.price}}元</td>
                                                                         <td>{{offer.number}}</td>
@@ -108,6 +116,7 @@
                                                                 </tbody>
                                                             </table>
                                                         </td>
+                                                        <!-- 意向信息 -->
                                                         <td v-if="!item.purchaseOffer">{{item.breedName}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.number}}{{item.unit | Unit}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.price}}元/{{item.unit | Unit}}</td>
@@ -115,34 +124,6 @@
                                                         <td v-if="!item.purchaseOffer">{{item.spec}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.onSell | onsell}}</td>
                                                         <td v-if="!item.purchaseOffer"><a @click="getIntentionInfo(item.id,$index)">报价信息</a></td>
-                                                        <!-- <td v-if="!item.purchaseOffer">
-                                                            <Poptip placement="left-end" width="800">
-                                                                <div @click="getIntentionInfo(item.id,$index)">
-                                                                    <Icon type="chevron-left" size="18"></Icon>
-                                                                    报价信息
-                                                                </div>
-                                                                <div class="api" slot="content">
-                                                                    <table class="table contactSet">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>业务员</th>
-                                                                                <th>价格</th>
-                                                                                <th>供货数量</th>
-                                                                                <th>图片</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="item in initIntentionDetail.offers.arr">
-                                                                                <td>{{item.customerName}}</td>
-                                                                                <td>{{item.customerPhone}}</td>
-                                                                                <td>{{item.number}}</td>
-                                                                                <td></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </Poptip>
-                                                        </td> -->
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -158,6 +139,7 @@
     </div>
 </template>
 <script>
+import cartModel from './purchaseOrderCart.vue'
 import pressImage from '../../components/imagePress'
 import filter from '../../filters/filters.js'
 import {
@@ -173,6 +155,7 @@ import {
 } from '../../vuex/actions'
 export default {
     components: {
+        cartModel,
         pressImage,
         filter,
     },
@@ -182,9 +165,16 @@ export default {
             intentionParam: {
                 loading: false,
                 id: "",
-                index: "", //记录上一次点下的意向的下标
+                offerId: "", //表示被选中的报价ID
+                index: "",
                 getOffers: this.getOffers
+            },
+            orderParam: { //生成订单的参数
+                loading: false,
+                show: false,
+                goods: []
             }
+
         }
     },
     vuex: {
@@ -201,50 +191,103 @@ export default {
     },
     methods: {
         getIntentionInfo: function(id, index) {
-            this.intentionParam.id = id;
-            this.getIntentionDetail(this.intentionParam, id, index);
+            //如果是关闭，就不需要请求接口
+            let arr = this.$store.state.table.purchaseDetail.intentionList.arr;
+            if (arr[index].show) { //之前是打开状态，现在需要关闭
+                arr.splice(index + 1, 1);
+                arr[index].show = false;
+            } else {
+                this.intentionParam.id = id;
+                this.intentionParam.index = index;
+                //展开的时候需要知道里面哪条报价被选中了
+                let goods = this.orderParam.goods; //购物车商品信息
+                for (let i = 0; i < goods.length; i++) {
+                    if (id == goods[i].intentionId) {
+                        this.intentionParam.offerId = goods[i].offerId;
+                        break;
+                    }
+                }
+                this.getIntentionDetail(this.intentionParam);
+            }
+
         },
 
-        getOffers: function(id, index, data) {
+        getOffers: function(index, data) { //可以打开多个意向的详情
             let arr = this.$store.state.table.purchaseDetail.intentionList.arr;
-            if (this.intentionParam.index === "") { //如果之前没有插入
-                this.intentionParam.index = index;
-                arr.push({});
-                for (let i = arr.length - 1; i > index + 1; i--) {
-                    arr[i] = arr[i - 1];
-                }
-                //插入的数据
-                data.purchaseOffer = true;
-                arr[index + 1] = data;
-            } else {
-                if (index == this.intentionParam.index) { //如果现在插入的地方是前一次插入前的地方
-                    arr.splice(this.intentionParam.index + 1, 1);
-                    this.intentionParam.index = "";
-                } else if (index < this.intentionParam.index) { //如果现在插入在前一次插入前之前的地方
-                    arr.splice(this.intentionParam.index + 1, 1);
-                    this.intentionParam.index = index;
+            if (!arr[index].purchaseOffer) {
 
+                if (!arr[index].show) {
                     arr.push({});
                     for (let i = arr.length - 1; i > index + 1; i--) {
                         arr[i] = arr[i - 1];
                     }
+
                     //插入的数据
                     data.purchaseOffer = true;
                     arr[index + 1] = data;
-                } else if (index > this.intentionParam.index + 1) { //如果现在插入在前一次插入后之后的地方
-                    arr.splice(this.intentionParam.index + 1, 1);
-                    this.intentionParam.index = index - 1;
-                    arr.push({});
-                    for (let i = arr.length - 1; i > index; i--) {
-                        arr[i] = arr[i - 1];
+                } else { //正常情况下，这一步不会执行
+                    arr.splice(index + 1, 1);
+                }
+                arr[index].show = !arr[index].show;
+
+            }
+
+        },
+        //选择报价用于生成订单,同时生成购物车（商品列表信息）
+        selectOfferInfo: function(index, sub) {
+            let intentionList = this.$store.state.table.purchaseDetail.intentionList.arr; //意向列表
+            let offerList = intentionList[index].offers.arr; //报价列表
+            let offer = offerList[sub]; //选中的报价
+            let flag = !offer.checked;
+            let goods = this.orderParam.goods; //购物车商品信息
+            let isAdd = true; //是否需要往购物车中添加商品
+            for (let i = 0; i < offerList.length; i++) {
+                offerList[i].checked = false;
+            }
+            offer.checked = flag;
+            //将选中报价信息加入购物车/替换商品信息/移出购物车
+            if (!flag) { //从购物车中清除商品
+
+                for (let k = 0; k < goods.length; k++) {
+                    if (goods[k].intentionId == intentionList[index].id) {
+                        console.log("移出购物车");
+                        goods.splice(k, 1);
+                        return;
                     }
-                    //插入的数据
-                    data.purchaseOffer = true;
-                    arr[index] = data;
+                }
+            } else {
+
+                for (let k = 0; k < goods.length; k++) {
+                    if (goods[k].intentionId == intentionList[index].id) {
+                        isAdd = false;
+                        console.log("替换商品");
+                        goods[k] = {
+                            intentionId: intentionList[index].id,
+                            offerId: offer.id,
+                            breedName: offer.breedName,
+                            breedId: offer.breedId,
+                            number: offer.number,
+                            price: offer.price,
+                            unit: offer.unit
+                        }
+                        return;
+                    }
+                }
+                if (isAdd) {
+                    console.log("加入购物车");
+                    goods.push({
+                        intentionId: intentionList[index].id,
+                        offerId: offer.id,
+                        breedName: offer.breedName,
+                        breedId: offer.breedId,
+                        number: offer.number,
+                        price: offer.price,
+                        unit: offer.unit
+                    });
                 }
             }
-            console.log(this.$store.state.table.purchaseDetail.intentionList.arr);
         },
+
 
         enfoldment: function(param) {
 
@@ -253,6 +296,10 @@ export default {
             }
             this.$store.state.table.purchaseDetail[param.crete].show = !this.$store.state.table.purchaseDetail[param.crete].show;
         },
+        openGoodsList: function() {
+            this.orderParam.show = true;
+            console.log(this.orderParam.goods);
+        }
 
     },
     filter: (filter, {}),
