@@ -321,7 +321,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
+                                                            <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0  &&initIntlIntentionDetail.inquireTime>1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
                                                             </a>
                                                         </td>
                                                     </tr>
