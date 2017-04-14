@@ -787,7 +787,7 @@ export default {
             //如果this.param.addressId = 0,则新增客户地址
             this.param.callback = this.param.callback;
             this.createOrder(this.param);
-
+            location.reload();
         },
         changeTotal: function() {
             var patt = new RegExp(/\.\d{3,}/);

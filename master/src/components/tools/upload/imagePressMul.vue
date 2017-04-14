@@ -69,8 +69,10 @@ export default {
         },
         methods: {
             previewImg: function(e) {
+                console.log(this.files)
                 let _self = this;
                 let input = e.target;
+                console.log(input.files);
                 if (input.files && input.files[0]) {
                     let file = input.files[0];
                     let fileNameArr = file.name.split('.');
@@ -175,6 +177,7 @@ export default {
             },
             delFile: function(index) {
                 this.files.splice(index, 1);
+                this.files=[];
                 if (this.files.length == 0) {
                     this.value = "";
                 }
