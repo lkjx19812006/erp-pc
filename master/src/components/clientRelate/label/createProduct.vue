@@ -32,8 +32,8 @@
                                 <input type="text" class="form-control" v-model="param.breedName" v-validate:breed="['required']" value="{{param.breedName}}" @click="searchBreed(param.breedName,param.breedId)" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">规格 <span class="system_danger" v-if="$validation.spec.required">规格不能为空</span></label>
-                                <input type="text" class="form-control" v-show="!breedParam.id" v-model="param.spec" v-validate:spec="['required']" value="{{param.spec}}" />
+                                <label class="editlabel">规格</label>
+                                <input type="text" class="form-control" v-show="!breedParam.id" v-model="param.spec" value="{{param.spec}}" />
                                 <div type="text" v-if="breedParam.id">
                                     <input-select :value.sync="param.spec" :prevalue="param.spec" :options="initBreedDetail.specs.arr" placeholder="规格" label="name">
                                     </input-select>

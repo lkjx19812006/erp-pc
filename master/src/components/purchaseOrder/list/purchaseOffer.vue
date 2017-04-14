@@ -27,6 +27,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
+                        <th>采购单类型</th>
                         <th>业务员</th>
                         <th>发布日期</th>
                         <th>过期时间</th>
@@ -39,6 +40,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initPurchaseOfferList">
+                        <td>{{item.type | indentType}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.pubdate}}</td>
                         <td>{{item.duedate}}</td>

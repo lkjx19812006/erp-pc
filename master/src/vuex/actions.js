@@ -1292,7 +1292,11 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     if (data.addressId == null || data.addressId == '' || !data.addressId) {
         data.addressId = 0;
     }
+    if (!data.pre) {
+        data.pre = 0;
+    }
     const body = {
+        pre: data.pre,
         type: data.type,
         sourceType: data.sourceType,
         sample: data.sample,
@@ -3671,6 +3675,7 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
         if (param.link == '/customer/transferBlacklist') { dispatch(types.CUSTOMER_BATCH_DELETE, param); }
         if (param.link == '/customer/setSupplier') { dispatch(types.CUSTOMER_BATCH_SUPPLIER, param); }
         if (param.callback) {
+            console.log(param.callback);
             param.callback(res.json().msg);
         }
     }, (res) => {
@@ -4837,6 +4842,7 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
 
 export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
     const body = {
+        type: param.type,
         customerId: param.customerId,
         customerName: param.customerName,
         customerPhone: param.customerPhone,
@@ -5012,6 +5018,49 @@ export const offerPurchaseOrder = ({ dispatch }, param) => { //采购单意向�
 
     }, (res) => {
         console.log('fail');
+    });
+}
+
+export const createOrderByPurchase = ({ dispatch }, param) => { //采购单报价生成订单
+    param.loading = true;
+    const body = {
+        customer: param.customer,
+        customerName: param.customerName,
+        consignee: param.consignee,
+        consigneeAddr: param.consigneeAddr,
+        consigneePhone: param.consigneePhone,
+        incidentals: param.incidentals,
+        incidentalsDesc: param.incidentalsDesc,
+        preferential: param.preferential,
+        preferentialDesc: param.preferentialDesc,
+        province: param.province,
+        city: param.city,
+        district: param.district,
+        intentionOfferList: param.intentionOfferList
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        console.log("success");
+        param.show = false;
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
+
+
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+        param.show = false;
     });
 }
 

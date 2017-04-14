@@ -1,6 +1,7 @@
 <template>
     <div>
         <cart-model :param="orderParam" v-if="orderParam.show"></cart-model>
+        <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con" v-show="param.show">
             <div @click.stop="param.show=false" class="top-title">
@@ -80,10 +81,10 @@
                                                 <thead>
                                                     <th>品种</th>
                                                     <th>数量</th>
-                                                    <th>单价</th>
                                                     <th>产地</th>
                                                     <th>规格</th>
-                                                    <th>上架状态</th>
+                                                    <th>质量要求</th>
+                                                    <th>竞争性指标</th>
                                                     <th>报价信息</th>
                                                 </thead>
                                                 <tbody>
@@ -97,8 +98,7 @@
                                                                     <th>单价</th>
                                                                     <th>数量</th>
                                                                     <th>单位</th>
-                                                                    <th>杂费</th>
-                                                                    <th>杂费说明</th>
+                                                                    <th>备注</th>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="(sub,offer) in item.offers.arr">
@@ -110,8 +110,7 @@
                                                                         <td>{{offer.price}}元</td>
                                                                         <td>{{offer.number}}</td>
                                                                         <td>{{offer.unit | Unit}}</td>
-                                                                        <td>{{offer.incidentals}}元</td>
-                                                                        <td>{{offer.incidentalsDesc}}</td>
+                                                                        <td>{{offer.comments}}</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -119,10 +118,10 @@
                                                         <!-- 意向信息 -->
                                                         <td v-if="!item.purchaseOffer">{{item.breedName}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.number}}{{item.unit | Unit}}</td>
-                                                        <td v-if="!item.purchaseOffer">{{item.price}}元/{{item.unit | Unit}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.location}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.spec}}</td>
-                                                        <td v-if="!item.purchaseOffer">{{item.onSell | onsell}}</td>
+                                                        <td v-if="!item.purchaseOffer">{{item.quality}}</td>
+                                                        <td v-if="!item.purchaseOffer">{{item.mainStandard}}</td>
                                                         <td v-if="!item.purchaseOffer"><a @click="getIntentionInfo(item.id,$index)">报价信息</a></td>
                                                     </tr>
                                                 </tbody>
@@ -140,6 +139,7 @@
 </template>
 <script>
 import cartModel from './purchaseOrderCart.vue'
+import tipsdialogModel from '../tips/tipDialog'
 import pressImage from '../../components/imagePress'
 import filter from '../../filters/filters.js'
 import {
@@ -156,6 +156,7 @@ import {
 export default {
     components: {
         cartModel,
+        tipsdialogModel,
         pressImage,
         filter,
     },
@@ -169,10 +170,30 @@ export default {
                 index: "",
                 getOffers: this.getOffers
             },
+            tipsParam: {
+                show: false,
+                name: '',
+                alert: true
+            },
             orderParam: { //生成订单的参数
                 loading: false,
                 show: false,
-                goods: []
+                link: '/intention/addSellOrderByOffer',
+                callback: this.callback,
+                customer: '', //客户ID
+                customerName: '', //客户名称
+                consignee: '', //收货人
+                consigneeAddr: '', //收货地址
+                consigneePhone: '', //收货人手机
+                incidentals: '', //杂费
+                incidentalsDesc: '', //杂费说明
+                preferential: '', //优惠金额
+                preferentialDesc: '', //优惠说明
+                province: '',
+                city: '',
+                district: '',
+                goods: [], //用于前端显示
+                intentionOfferList: [] //传入后台，由goods生成
             }
 
         }
@@ -250,7 +271,7 @@ export default {
 
                 for (let k = 0; k < goods.length; k++) {
                     if (goods[k].intentionId == intentionList[index].id) {
-                        console.log("移出购物车");
+
                         goods.splice(k, 1);
                         return;
                     }
@@ -260,7 +281,7 @@ export default {
                 for (let k = 0; k < goods.length; k++) {
                     if (goods[k].intentionId == intentionList[index].id) {
                         isAdd = false;
-                        console.log("替换商品");
+
                         goods[k] = {
                             intentionId: intentionList[index].id,
                             offerId: offer.id,
@@ -274,7 +295,7 @@ export default {
                     }
                 }
                 if (isAdd) {
-                    console.log("加入购物车");
+
                     goods.push({
                         intentionId: intentionList[index].id,
                         offerId: offer.id,
@@ -297,8 +318,30 @@ export default {
             this.$store.state.table.purchaseDetail[param.crete].show = !this.$store.state.table.purchaseDetail[param.crete].show;
         },
         openGoodsList: function() {
-            this.orderParam.show = true;
-            console.log(this.orderParam.goods);
+            if (this.orderParam.goods.length <= 0) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "您的购物车空空如也!!!";
+            } else {
+                this.orderParam.customer = this.initPurchaseDetail.customerId;
+                this.orderParam.customerName = this.initPurchaseDetail.customerName;
+                this.orderParam.consignee = this.initPurchaseDetail.customerName;
+                this.orderParam.consigneePhone = this.initPurchaseDetail.customerPhone;
+                this.orderParam.consigneeAddr = '';
+                this.orderParam.incidentals = 0;
+                this.orderParam.incidentalsDesc = '';
+                this.orderParam.preferential = 0;
+                this.orderParam.preferentialDesc = '';
+                this.orderParam.province = '';
+                this.orderParam.city = '';
+                this.orderParam.district = '';
+
+                this.orderParam.show = true;
+            }
+
+        },
+        callback: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
         }
 
     },
