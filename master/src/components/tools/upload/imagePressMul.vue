@@ -177,7 +177,7 @@ export default {
             },
             delFile: function(index) {
                 this.files.splice(index, 1);
-                this.files=[];
+                this.files = [];
                 if (this.files.length == 0) {
                     this.value = "";
                 }
