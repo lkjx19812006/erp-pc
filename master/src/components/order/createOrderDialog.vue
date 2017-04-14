@@ -811,7 +811,7 @@ export default {
             this.param.consigneeAddr = param.consigneeAddr;
             //如果this.param.addressId = 0,则新增客户地址
             this.createOrder(this.param);
-
+            location.reload();
         },
         changeTotal: function() {
             var patt = new RegExp(/\.\d{3,}/);

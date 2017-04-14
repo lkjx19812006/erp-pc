@@ -571,6 +571,7 @@ export default {
                 this.auditParam.title = this.$t('static.reapply');
             }
             this.auditParam.callback = this.applyBack;
+            localtion.reload();//提交审核后自动刷新
         },
         onlyselected: function(index) {
             const _self = this;
