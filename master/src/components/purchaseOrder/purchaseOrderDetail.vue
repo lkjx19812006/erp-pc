@@ -72,6 +72,7 @@
                                           <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                             求购意向信息（{{initPurchaseDetail.intentionList.arr.length}}）
                                           </a>
+                                          <span style="color:red">小提示：同一意向只能选择一条报价信息</span>
                                           <button type="button" class="btn btn-base pull-right" @click.stop="openGoodsList()">购物车({{orderParam.goods.length}})</button>
                                         </h4>
                                     </div>
@@ -103,8 +104,20 @@
                                                                 <tbody>
                                                                     <tr v-for="(sub,offer) in item.offers.arr">
                                                                         <td>
-                                                                            <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!offer.checked,'checkbox_select':offer.checked}" id="client_ids" @click="selectOfferInfo(index,sub)">
-                                                                            </label>
+                                                                            <!-- <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!offer.checked,'checkbox_select':offer.checked}" id="client_ids" @click="selectOfferInfo(index,sub)">
+                                                                            </label> -->
+                                                                            <span v-if="!offer.checked">
+                                                                                <a id="add-in" @click="selectOfferInfo(index,sub)">
+                                                                                    加入购物车
+                                                                                </a>
+
+                                                                            </span>
+                                                                            <span v-if="offer.checked">
+                                                                                <a id="remove-out" @click="selectOfferInfo(index,sub)">
+                                                                                    移出购物车
+                                                                                </a>
+                                                                                (已加入)
+                                                                            </span>
                                                                         </td>
                                                                         <td>{{offer.employeeName}}</td>
                                                                         <td>{{offer.price}}元</td>
@@ -448,5 +461,18 @@ section article {
 
 .client-detailInfo img {
     margin-right: 8px;
+}
+
+#add-in,
+#remove-out {
+    color: black;
+}
+
+#add-in:hover {
+    color: #5cadff;
+}
+
+#remove-out:hover {
+    color: red;
 }
 </style>
