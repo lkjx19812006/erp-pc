@@ -103,8 +103,8 @@
                                     <button type="button" class="btn btn-default" style="margin-top:-6px" height="24" width="24" @click="reset('duedate')">清空</button>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">规格<span class="system_danger" v-if="!param.spec">规格不能为空</span></label>
-                                    <input type="text" v-show="!breedParam.id" v-model="param.spec" class="form-control edit-input" disabled="disabled" />
+                                    <label class="editlabel">规格<span class="system_danger" v-if="$validation.spec.required">规格不能为空</span></label>
+                                    <input type="text" v-show="!breedParam.id" v-model="param.spec" class="form-control edit-input" disabled="disabled" v-validate:spec="{required:true}"/>
                                     <div type="text" class="edit-input" v-if="breedParam.id">
                                         <input-select :value.sync="param.spec" :prevalue="param.spec" :options="initBreedDetail.specs.arr" placeholder="规格" label="name">
                                         </input-select>

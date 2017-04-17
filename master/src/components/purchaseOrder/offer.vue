@@ -54,6 +54,17 @@
                                     </select>
                                 </div>
                             </div>
+                            <!-- 质量要求和报价备注 -->
+                            <div class="editpage-input col-md-12">
+                                <div class="left" style="width:50%;">
+                                    <label class="editlabel">质量要求</label>
+                                    <input type="text" v-model="param.quality" class="form-control edit-input"  />
+                                </div>
+                                <div class="left" style="width:50%;">
+                                    <label class="editlabel">报价备注</label>
+                                    <input type="text" v-model="param.description" class="form-control edit-input"  />
+                                </div>
+                            </div>
                         </div>
                     </section>
                     <div>
