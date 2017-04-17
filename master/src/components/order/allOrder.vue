@@ -445,9 +445,7 @@ export default {
                 this.loadParam.orgName = this.selectOrgParam.orgName;
 
                 this.employeeParam.orgId = this.selectOrgParam.orgId;
-
                 this.selectSearch();
-
             }
         },
         selectSearch: function() {

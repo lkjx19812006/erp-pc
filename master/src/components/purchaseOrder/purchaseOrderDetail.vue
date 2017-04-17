@@ -110,7 +110,6 @@
                                                                                 <a id="add-in" @click="selectOfferInfo(index,sub)">
                                                                                     加入购物车
                                                                                 </a>
-
                                                                             </span>
                                                                             <span v-if="offer.checked">
                                                                                 <a id="remove-out" @click="selectOfferInfo(index,sub)">

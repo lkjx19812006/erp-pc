@@ -4997,8 +4997,8 @@ export const offerPurchaseOrder = ({ dispatch }, param) => { //采购单意向�
         number: param.number,
         unit: param.unit,
         price: param.price,
-        quality:param.quality,
-        description:param.description
+        quality: param.quality,
+        description: param.description
     }
     Vue.http({
         method: 'POST',
@@ -7332,7 +7332,7 @@ export const getClientcount = ({ dispatch }, param) => { //我的客户统计
         }
     }).then((res) => {
         param.loading = false;
-        console.log(res.json().result)
+
         var clientCount = res.json().result;
         dispatch(types.MY_CLIENT_COUNT, clientCount);
     }, (res) => {
@@ -7353,7 +7353,7 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
         }
     }).then((res) => {
         param.loading = false;
-        console.log(res.json().result)
+
         var clientCount = res.json().result;
 
 
@@ -7364,8 +7364,62 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
     })
 }
 
+export const getClientAllcount = ({ dispatch }, param) => { //全部客户统计
+    param.loading = true;
+    let body = {
+        groupBy: param.groupBy
+    }
+    if (param.employeeId) {
+        body.employeeId = param.employeeId;
+    }
+    if (param.orgId) {
+        body.orgId = param.orgId;
+    }
+    if (param.country) {
+        body.country = param.country;
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        var clientCount = res.json().result;
+        //计算成交占比（traded/total）
+        let computeRate = function(traded, total) {
+            let rate;
+            if (total == 0 || traded == 0) {
+                rate = 0;
+            } else {
+                rate = traded / total * 10000;
+            }
+            if (rate != 0) {
+                let temp = rate.toString().split(".")[0];
+                rate = temp / 100;
+            }
+            return rate;
+        }
+        clientCount.tradedRate = computeRate(clientCount.traded, clientCount.total);
+        for (let i = 0; i < clientCount.statisticsList.length; i++) {
+            clientCount.statisticsList[i].tradedRate = computeRate(clientCount.statisticsList[i].traded, clientCount.statisticsList[i].total);
+        }
+
+        dispatch(types.MY_CLIENT_COUNT, clientCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
 export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交易统计)
-    console.log(param)
+
     if (param) param.loading = true;
     var url = apiUrl.clientList + '/report/order/list' + '?' + '&page=' + param.cur + '&pageSize=10';
     if (param.endTime && param.endTime !== '') {
