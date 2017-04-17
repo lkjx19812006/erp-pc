@@ -177,7 +177,9 @@ export default {
                 customerId: "",
                 number: "",
                 unit: "",
-                price: ""
+                price: "",
+                quality:"",
+                description:""
             },
             tipsParam: {
                 show: false,

@@ -4996,7 +4996,9 @@ export const offerPurchaseOrder = ({ dispatch }, param) => { //采购单意向�
         customerId: param.customerId,
         number: param.number,
         unit: param.unit,
-        price: param.price
+        price: param.price,
+        quality:param.quality,
+        description:param.description
     }
     Vue.http({
         method: 'POST',
