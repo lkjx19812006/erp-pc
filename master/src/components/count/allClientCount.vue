@@ -19,11 +19,11 @@
             <dd class="left margin_right">
                 <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="按回车键搜索" readonly="true" @click="selectOrg()">
             </dd>
-            <dt class="left transfer marg_top">国家：</dt>
+            <!-- <dt class="left transfer marg_top">国家：</dt>
             <div type="text" class="left margin_right">
                 <v-select :debounce="250" :value.sync="country" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
                 </v-select>
-            </div>
+            </div> -->
             <dd class="pull-left" style="margin-right:10px">
                 <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="selectSearch()">搜索</button>
             </dd>
@@ -195,9 +195,9 @@ export default {
             this.loadParam.orgId = "";
             this.loadParam.orgName = "";
             //需要把country内容清空
-            this.country.id = "";
+            /*this.country.id = "";
             this.country.cname = "";
-            this.country.cnameEn = "";
+            this.country.cnameEn = "";*/
             this.selectSearch();
         }
     },
