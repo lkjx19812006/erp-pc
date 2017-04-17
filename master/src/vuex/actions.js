@@ -3675,7 +3675,6 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
         if (param.link == '/customer/transferBlacklist') { dispatch(types.CUSTOMER_BATCH_DELETE, param); }
         if (param.link == '/customer/setSupplier') { dispatch(types.CUSTOMER_BATCH_SUPPLIER, param); }
         if (param.callback) {
-            console.log(param.callback);
             param.callback(res.json().msg);
         }
     }, (res) => {
@@ -5024,6 +5023,7 @@ export const offerPurchaseOrder = ({ dispatch }, param) => { //采购单意向�
 export const createOrderByPurchase = ({ dispatch }, param) => { //采购单报价生成订单
     param.loading = true;
     const body = {
+        intl: 0,
         customer: param.customer,
         customerName: param.customerName,
         consignee: param.consignee,
