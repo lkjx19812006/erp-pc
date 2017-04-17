@@ -1127,3 +1127,15 @@ Vue.filter('isImage', function(val) { //判断是否图片
     }
 
 });
+
+Vue.filter('indentType', function(val) { //判断是否图片
+    var val = val;
+    if (val === 0) {
+        return "药厂采购单";
+    } else if (val == 1) {
+        return "药商采购单";
+    } else {
+        return "其他";
+    }
+
+});

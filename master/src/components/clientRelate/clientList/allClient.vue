@@ -518,7 +518,6 @@ export default {
             this.customerTransferBlacklist(this.auditParam);
         },
         supplierback: function(title) {
-            console.log(title)
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;

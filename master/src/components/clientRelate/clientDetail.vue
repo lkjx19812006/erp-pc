@@ -1066,7 +1066,6 @@ export default {
             this.addrDel(this.labelDelParam)
         },
         clientTransferSupplier: function(initBreedDetail) {
-            console.log(initBreedDetail)
             this.auditParam = initBreedDetail;
             this.auditParam.confirm = true;
             this.auditParam.arr = [];

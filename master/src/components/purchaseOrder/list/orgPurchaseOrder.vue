@@ -57,6 +57,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
+                        <th>采购单类型</th>
                         <th>客户名称</th>
                         <th>客户手机</th>
                         <th>业务员</th>
@@ -74,6 +75,7 @@
                         <td>
                             <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
+                        <td>{{item.type | indentType}}</td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.pubdate}}</td>

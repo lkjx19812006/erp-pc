@@ -141,8 +141,11 @@
                     <label v-if="item.validate<=0&&(item.orderStatus==0||item.orderStatus==70)" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                   </td> -->
                             <td>{{item.tradeTime | subtime}}</td>
-                            <td v-if="item.type==1">{{$t('static.sell')}}</td>
-                            <td v-if="item.type==0">{{$t('static.purchase')}}</td>
+                            <td>
+                                <div v-if="item.type==1&&item.pre==0">{{$t('static.sell')}}</div>
+                                <div v-if="item.type==0&&item.pre==0">{{$t('static.purchase')}}</div>
+                                <div v-if="item.type==1&&item.pre==1">预售</div>
+                            </td>
                             <td v-if="item.mode==1">{{$t('static.together')}}</td>
                             <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
                             <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
@@ -423,6 +426,7 @@ export default {
                 show: false,
                 title1: this.$t('static.new_order'),
                 type: 1,
+                pre: 0,
                 sourceType: 0,
                 sample: 0,
                 intl: '',

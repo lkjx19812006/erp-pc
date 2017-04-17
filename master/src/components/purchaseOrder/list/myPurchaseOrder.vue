@@ -64,6 +64,7 @@
                 <thead>
                     <tr>
                         <th></th>
+                        <th>采购单类型</th>
                         <th>客户名称</th>
                         <th>客户手机</th>
                         <th>业务员</th>
@@ -88,6 +89,7 @@
                         <td @click.stop="">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
                         </td>
+                        <td>{{item.type | indentType}}</td>
                         <td>
                             <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
@@ -177,6 +179,7 @@ export default {
                 show: false,
                 link: "/indent/add",
                 callback: this.callback,
+                type: "",
                 customerId: "",
                 customerName: "",
                 customerPhone: "",
@@ -185,6 +188,7 @@ export default {
                 city: "",
                 district: "",
                 address: "",
+                duedate: "",
                 intentionList: [] //意向信息
             },
             importParam: {
@@ -287,6 +291,10 @@ export default {
             this.createParam.show = true;
         },
         excelImport: function() {
+            //重新进入时将之前的信息请空
+            this.importParam.success = 0;
+            this.importParam.mFile = "";
+            this.importParam.result = "";
             this.importParam.show = true;
         },
         editPurchase: function(item, index) {

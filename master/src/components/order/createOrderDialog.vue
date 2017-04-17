@@ -6,6 +6,7 @@
         <consignee-model :param="consigneeParam" v-if="consigneeParam.show"></consignee-model>
         <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
         <supplier-dialog :param="supplierParam" v-if="supplierParam.show"></supplier-dialog>
+        <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
         <div class="container modal_con" v-show="param.show">
             <div @click="param.show=false" class="top-title">
@@ -17,9 +18,21 @@
             <validator name="validation">
                 <div class="edit-model">
                     <div class="clearfix">
+                        <div class="editpage-input col-md-3">
+                            <label class="editlabel">预订</label>
+                            <select class="form-control edit-input" v-model="param.pre">
+                                <option value="0">{{$t('static.no')}}</option>
+                                <option value="1">{{$t('static.yes')}}</option>
+                            </select>
+                        </div>
                         <!--订单类型  -->
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
+                        <div class="editpage-input col-md-3">
+                            <label class="editlabel">
+                                {{$t('static.order_type')}}
+                                <span class="system_danger" v-if="$validation.type.required">
+                                    {{$t('static.select_order_type')}}
+                                </span>
+                            </label>
                             <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly" />
                             <select class="form-control edit-input" v-model="param.type" @change="exChange()">
                                 <option value="0">{{$t('static.purchase')}}</option>
@@ -334,6 +347,7 @@ import searchbreedModel from '../Intention/breedsearch'
 import consigneeModel from '../clientRelate/addressSearch'
 import searchemgModel from '../order/second_order/allEmployee'
 import supplierDialog from '../order/second_order/selectAllSupplier.vue'
+import tipsdialogModel from '../tips/tipDialog'
 import {
     initCountrylist,
     initProvince,
@@ -365,7 +379,8 @@ export default {
         consigneeModel,
         inputSelect,
         searchemgModel,
-        supplierDialog
+        supplierDialog,
+        tipsdialogModel
     },
     props: ['param'],
     data() {
@@ -460,6 +475,11 @@ export default {
                 supplierName: '',
                 employee: this.param.employee,
                 link: '/customer/suppliers'
+            },
+            tipsParam: {
+                show: false,
+                alert: true,
+                name: "",
             },
             selectType: 1,
             createOrSelect: 0, //选择还是新建客户收货地址,0新建,1选择
@@ -777,6 +797,11 @@ export default {
             if (this.param.intl == 1) {}
         },
         confirm: function(param) {
+            if (param.type == 0 && param.pre == 1) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "暂不支持预购订单！";
+                return;
+            }
             this.resetParam();
             this.param.country = this.country.cnameEn;
             this.param.province = this.province.cname;
@@ -785,7 +810,6 @@ export default {
             this.param.show = false;
             this.param.consigneeAddr = param.consigneeAddr;
             //如果this.param.addressId = 0,则新增客户地址
-            this.param.callback = this.param.callback;
             this.createOrder(this.param);
             location.reload();
         },

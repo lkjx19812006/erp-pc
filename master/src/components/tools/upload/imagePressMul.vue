@@ -13,7 +13,7 @@
                 <span></span>
             </div>
         </div>
-        <form>
+        <form id="box">
             <input type="file" @change="previewImg" class="input_image" name="photo" accept="{{type}}">
             <img v-bind:src="image" class="image_show" v-if="imageShow&&!showurl">
             <img src="../../../../static/images/default_image.png" class="image_show" v-if="imageShow&&showurl">
@@ -55,7 +55,8 @@ export default {
                     imageShow: true,
                     showurl: '../../../../static/images/default_image.png',
                     fileName: ''
-                }
+                },
+                box: document.getElementById("box")
             }
         },
         props: {
@@ -69,10 +70,8 @@ export default {
         },
         methods: {
             previewImg: function(e) {
-                console.log(this.files)
                 let _self = this;
                 let input = e.target;
-                console.log(input.files);
                 if (input.files && input.files[0]) {
                     let file = input.files[0];
                     let fileNameArr = file.name.split('.');
@@ -177,7 +176,7 @@ export default {
             },
             delFile: function(index) {
                 this.files.splice(index, 1);
-                this.files=[];
+                box.reset(); //重置表单
                 if (this.files.length == 0) {
                     this.value = "";
                 }
