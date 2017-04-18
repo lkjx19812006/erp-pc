@@ -31,7 +31,7 @@
                             <label>成交占比:</label><span>{{item.tradedRate}}%</span>
                         </div>
                         <div>
-                            <label>成交金额:</label><span>{{item.tradedTotal}}元</span>
+                            <label>成交金额:</label><span>{{item.tradedTotal | money}}元</span>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                                 <td>{{detail.supplier}}</td>
                                 <td>{{detail.traded}}</td>
                                 <td>{{detail.tradedRate}}%</td>
-                                <td>{{detail.tradedTotal}}元</td>
+                                <td>{{detail.tradedTotal | money}}元</td>
                             </tr>
                         </tbody>
                     </table>

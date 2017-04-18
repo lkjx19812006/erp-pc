@@ -292,6 +292,7 @@ export default {
         transferCallback: function(name) {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
+
         }
 
     },

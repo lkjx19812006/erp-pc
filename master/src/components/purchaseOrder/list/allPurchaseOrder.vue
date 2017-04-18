@@ -23,7 +23,7 @@
                     <!-- 单个业务员搜索 -->
                     <dt class="left transfer marg_top">业务员：</dt>
                     <dd class="left margin_right">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="{{$t('static.select_salesman')}}" @click="selectEmployee()">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="{{$t('static.select_salesman')}}" @click="selectEmployee()" readonly="readonly">
                     </dd>
                     <dt class="left transfer marg_top">询价状态：</dt>
                     <dd class="left margin_right">
@@ -81,10 +81,10 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initAllPurchaseList">
+                        <td>{{item.type | indentType}}</td>
                         <td>
                             <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
-                        <td>{{item.type | indentType}}</td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.pubdate}}</td>
@@ -200,7 +200,7 @@ export default {
             this.loadParam.employeeName = '';
             this.loadParam.org = '';
             this.loadParam.orgName = '';
-            this.loadParam.purchaseContent='';
+            this.loadParam.purchaseContent = '';
             this.getPurchaseOrderList(this.loadParam);
         },
         selectOrg: function() {

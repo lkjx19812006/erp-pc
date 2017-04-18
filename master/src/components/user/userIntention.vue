@@ -23,7 +23,7 @@
                     <section class="editsection" v-cloak>
                         <input type="hidden" class="form-control edit-input" value="{{param.id}}" />
                         <div style="margin-top:15px">
-                            <dt class="left transfer marg_top">意向类型：</dt> 
+                            <dt class="left transfer marg_top">意向类型：</dt>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.param.type===0&&this.param.especial===0&&this.param.preSell==0}" @click="selectType(0,0,0)">
                                     普通求购
@@ -54,8 +54,17 @@
                         </div>
                         <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                             <label class="editlabel">药材图片</label>
-                            <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                            <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
                         </div>
+                        <!-- 当为预售资源时，进口资质和检测报告需要上传 -->
+                        <!-- <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
+                            <label class="editlabel">进口资质</label>
+                            <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                        </div>
+                        <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
+                            <label class="editlabel">检测报告</label>
+                            <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                        </div> -->
                         <div class="editpage">
                             <div class="editpageleft">
                                 <div class="editpage-input">
@@ -106,7 +115,7 @@
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">规格<span class="system_danger" v-if="$validation.spec.required">规格不能为空</span></label>
-                                    <input type="text" v-show="!breedParam.id" v-model="param.spec" class="form-control edit-input" disabled="disabled" v-validate:spec="{required:true}"/>
+                                    <input type="text" v-show="!breedParam.id" v-model="param.spec" class="form-control edit-input" disabled="disabled" v-validate:spec="{required:true}" />
                                     <div type="text" class="edit-input" v-if="breedParam.id">
                                         <input-select :value.sync="param.spec" :prevalue="param.spec" :options="initBreedDetail.specs.arr" placeholder="规格" label="name">
                                         </input-select>
@@ -479,10 +488,7 @@ export default {
             this.param.preSell = preSell;
         },
         searchBreed: function(breedName, breedId) {
-            console.log('breed');
             this.breedParam.show = true;
-            /*this.param.breedName = this.breedParam.breedName;
-            this.param.breedId = this.breedParam.breedId;*/
         },
         searchCustomer: function(customerName, customerId, customerPhone) {
             this.empNameParam.show = true;
@@ -495,6 +501,7 @@ export default {
             this.tipParam.show = false;
         },
         createOrUpdateIntention: function() {
+            this.param.pics = this.setPics(this.param.images);
             if (this.param.flag == 0) {
                 this.param.country = this.country.cname;
                 this.param.province = this.province.cname;
@@ -552,8 +559,66 @@ export default {
             if (this.city != '' && this.city != null) {
                 this.getDistrictList(this.city);
             }
+        },
+        /*
+         * 设置图片数组
+         * @param pics原图片数组（从后台获取）
+         * 
+         */
+        setPics: function(images) {
+            let imageArr = images.split(",");
+            let pics = [];
+            if (imageArr.length > 0) {
+                for (let i = 0; i < imageArr.length; i++) {
+                    let temp = {
+                        url: imageArr[i],
+                        path: imageArr[i]
+                    }
+                    pics.push(temp);
+                }
+            }
+            console.log(pics);
+            return pics;
+        },
+        /*
+         * 设置图片路径拼接字符串，与setPics相反的操作
+         * @param pics原图片数组（从后台获取）
+         */
+        setImages: function(pics) {
+            let images = '';
+            if (pics.length > 0) {
+                for (let i = 0; i < pics.length; i++) {
+                    if (i == 0) {
+                        images = pics[0].path;
+                    } else {
+                        images = images + "," + pics[i].path;
+                    }
 
-        }
+                }
+            }
+            return images;
+        },
+        /*
+         * 设置文件信息
+         * @param pics原图片数组（从后台获取）
+         * 
+         */
+        setFiles: function(pics) {
+            let files = [];
+            if (pics.length > 0) {
+                for (let i = 0; i < pics.length; i++) {
+                    let temp = {
+                        imageShow: true,
+                        showurl: pics[i].url,
+                        path: pics[i].path
+                    }
+                    files.push(temp);
+                }
+            }
+
+            return files;
+        },
+
 
     },
     events: {
@@ -569,34 +634,14 @@ export default {
             this.param.customerName = customer.customerName;
             this.param.customerId = customer.customerId;
             this.param.customerPhone = customer.customerPhone;
-        },
-        getFiles: function(files) {
-            this.param.files = [];
-            for (let i = 0; i < files.length; i++) {
-                if (i == 0) {
-                    this.param.files = files[0].path;
-                } else {
-                    this.param.files = this.param.files + "," + files[i].path;
-                }
-            }
-        }
-    },
-    created() {
-        this.imageParam.files = [];
-        for (let i = 0; i < this.param.images.length; i++) {
-            if (i == 0) {
-                this.param.files = this.param.images[0].path;
-            } else {
-                this.param.files = this.param.files + "," + this.param.images[i].path;
-            }
-            let temp = {
-                imageShow: true,
-                showurl: this.param.images[i].url,
-                path: this.param.images[i].path
-            }
-            this.imageParam.files.push(temp);
         }
 
+    },
+    created() {
+        this.imageParam.files = this.setFiles(this.param.pics);
+        this.param.images = this.setImages(this.param.pics);
+        console.log(this.imageParam.files);
+        console.log(this.param.images);
 
         //设置过期时间,7天后
         if (!this.param.duedate) {

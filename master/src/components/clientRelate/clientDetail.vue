@@ -356,6 +356,7 @@
                                                       number:item.number,
                                                       location:item.location,
                                                       type:item.type,
+                                                      preSell:item.preSell,
                                                       country:item.country,
                                                       province:item.province,
                                                       city:item.city,
@@ -378,13 +379,8 @@
                                                       validate:item.validate,
                                                       inType:3,
                                                       loading:false,
-                                                      images:item.pics,
-                                                      image_f:'',
-                                                      image_s:'',
-                                                      image_t:'',
-                                                      image_f_show:'',
-                                                      image_s_show:'',
-                                                      image_t_show:''
+                                                      pics:item.pics,
+                                                      images:''
                                                   })">
                                                             <a class="operate"><img src="/static/images/edit.png" height="18" width="30" />
                                                             </a>
@@ -1134,6 +1130,7 @@ export default {
                 number: '',
                 location: '',
                 type: 0,
+                preSell: 0,
                 visit: 0,
                 validate: 0,
                 country: '中国',
@@ -1152,12 +1149,7 @@ export default {
                 qualification: 'GMP',
                 url: '/intention/',
                 key: 'client',
-                image_f: '',
-                image_s: '',
-                image_t: '',
-                image_f_show: '',
-                image_s_show: '',
-                image_t_show: '',
+                pics: '',
                 images: '',
                 inType: 3,
                 audit: 0

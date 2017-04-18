@@ -34,6 +34,28 @@
                 <button type="button" class="btn btn-primary" style="margin-right:10px" height="24" width="24" class="new_btn" @click="selectSearch()">刷新</button>
             </dd>
         </div>
+        <div style="max-height: 200px;margin-top:10px">
+            <table class="table table-hover table_color table-bordered table-striped " v-cloak>
+                <thead>
+                    <tr style="background:none;color:#000;">
+                        <th></th>
+                        <th>客户数：</th>
+                        <th>供应商数：</th>
+                        <th>成交客户数：</th>
+                        <th>成交占比：</th>
+                        <th>成交总额：</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td>合计</td>
+                    <td>{{initClientcount.total}}</td>
+                    <td>{{initClientcount.supplier}}</td>
+                    <td>{{initClientcount.traded}}</td>
+                    <td>{{initClientcount.tradedRate}}<span v-if="initClientcount.tradedRate!=0">%</span></td>
+                    <td>{{initClientcount.tradedTotal | money}}元</td>
+                </tbody>
+            </table>
+        </div>
         <div class="clearfix" style="margin-top:10px">
             <div class="btn-group pull-left">
                 <button type="button" class="btn btn-default" style="width:70px" v-bind:class="{ 'btn-warning': loadParam.groupBy=='employee_id'}" @click="selectGroupBy('employee_id')">
@@ -76,20 +98,10 @@
                         <div class="module_td">{{item.supplier}}</div>
                         <div class="module_td">{{item.traded}}</div>
                         <div class="module_td">{{item.tradedRate}}<span v-if="item.tradedRate!=0">%</span></div>
-                        <div class="module_td">{{item.tradedTotal}}元</div>
+                        <div class="module_td">{{item.tradedTotal | money}}元</div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="total">
-        总计：
-        <div>
-            <span>客户数：{{initClientcount.total}},</span>
-            <span>供应商数：{{initClientcount.supplier}},</span>
-            <span>成交客户数：{{initClientcount.traded}},</span>
-            <span>成交占比：{{initClientcount.tradedRate}}<span v-if="initClientcount.tradedRate!=0">%</span>,</span>
-            <span>成交总额：{{initClientcount.tradedTotal}}元</span>
         </div>
     </div>
 </template>
@@ -242,6 +254,10 @@ export default {
     margin-right: 15px
 }
 
+.table>thead>tr>th {
+    width: 285px;
+}
+
 .module {
     position: relative;
 }
@@ -272,13 +288,6 @@ export default {
 
 .module_tr {
     border-bottom: 1px solid #ddd;
-}
-
-.total {
-    margin-top: 550px;
-    color: red;
-    font-size: 16px;
-    border: 1px solid #ddd;
 }
 
 .clear {

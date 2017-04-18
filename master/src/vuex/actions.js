@@ -892,8 +892,7 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
         userId: param.user,
         employee: param.employee
     }
-    console.log(param)
-    dispatch(types.ORDER_TABLE, param);
+
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
@@ -905,7 +904,13 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        param.callback(res.json().result);
+        dispatch(types.ORDER_TABLE, param);
+        if (res.json().result) {
+            param.callback(res.json().result);
+        } else {
+            param.callback(res.json().msg);
+        }
+
     }, (res) => {
         console.log('fail');
     })
@@ -6747,12 +6752,6 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
 
 export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意向
 
-    if (param.files) {
-        param.images = param.files;
-    }
-    /*if (param.image_f) { param.images += param.image_f + ',' }
-    if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t };*/
     const data1 = {
         "id": param.id,
         "type": param.type,
@@ -6813,10 +6812,7 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
     })
 }
 
-export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增意向
-    if (param.files) {
-        param.images = param.files;
-    }
+export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
     var today = new Date();
     const data = {
         "userId": param.userId,
@@ -6873,7 +6869,6 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
     }).then((res) => {
         console.log('添加成功')
         if (param.callback) {
-            console.log("有回调函数");
             param.callback(res.json().msg);
         }
         param.id = res.json().result.intentionId;
