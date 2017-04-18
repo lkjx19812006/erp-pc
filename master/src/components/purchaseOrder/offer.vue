@@ -65,6 +65,13 @@
                                     <input type="text" v-model="param.description" class="form-control edit-input"  />
                                 </div>
                             </div>
+                            <!-- 产地 -->
+                            <div class="editpage-input col-md-12">
+                                <div class="left" style="width:50%">
+                                    <label class="editlabel">产地</label>
+                                    <input type="text" v-model="param.location" class="form-control edit-input" />
+                                </div>
+                            </div>
                         </div>
                     </section>
                     <div>

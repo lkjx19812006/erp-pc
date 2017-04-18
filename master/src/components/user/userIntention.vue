@@ -23,7 +23,7 @@
                     <section class="editsection" v-cloak>
                         <input type="hidden" class="form-control edit-input" value="{{param.id}}" />
                         <div style="margin-top:15px">
-                            <dt class="left transfer marg_top">意向类型：</dt>
+                            <dt class="left transfer marg_top">意向类型：</dt> 
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.param.type===0&&this.param.especial===0&&this.param.preSell==0}" @click="selectType(0,0,0)">
                                     普通求购
@@ -40,6 +40,8 @@
                                 <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.param.type===1&&this.param.especial===1&&this.param.preSell==1}" @click="selectType(1,1,1)">
                                     预售资源
                                 </button>
+                                <!-- 必须选择意向类型 -->
+                                <span class="system_danger" v-if="$validation.breedname.required">请选择意向类型</span>
                             </div>
                         </div>
                         <div v-if="param.selectCustomer" style="margin-top:15px">

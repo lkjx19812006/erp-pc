@@ -1,17 +1,33 @@
 <template>
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+    <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户名：</dt>
-                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    <dt class="left transfer marg_top">询价状态：</dt>
+                    <dd class="left margin_right">
+                        <select class="form-control" v-model="loadParam.inquire" @change="selectSearch()">
+                            <option value="0">初始</option>
+                            <option value="1">询价中</option>
+                            <option value="2">报价中</option>
+                        </select>
+                    </dd>
+                    <!-- 新增采购品种搜索 -->
+                    <dt class="left transfer marg_top" style="margin-left:50px">采购品种：</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.purchaseContent" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
+                    <!-- 单个业务员搜索 -->
+                    <dt class="left transfer marg_top" style="margin-left:50px">业务员：</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="{{$t('static.select_salesman')}}" @click="selectEmployee()" readonly="readonly">
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:50px">
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
                 </dl>
                 <dd class="pull-right" style="margin-right:10px">
@@ -67,6 +83,7 @@ import filter from '../../../filters/filters'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import common from '../../../common/common'
 import mglistModel from '../../mguan/mgListComponent.vue'
+import employeeModel from '../../clientRelate/searchEmpInfo'
 import {
     initPurchaseOfferList
 } from '../../../vuex/getters'
@@ -78,7 +95,8 @@ export default {
         detailModel,
         tipsdialogModel,
         pagination,
-        mglistModel
+        mglistModel,
+        employeeModel
     },
     vuex: {
         getters: {
@@ -99,11 +117,10 @@ export default {
                 all: 7,
                 total: "",
                 link: '/indent/queryOfferList',
-                key: 'purchaseOfferList'
-
+                key: 'purchaseOfferList',
+                employeeName:'',
+                employee:''
             },
-
-
             detailParam: {
                 show: false,
                 loading: false,
@@ -117,7 +134,14 @@ export default {
                 name: '',
                 alert: true
             },
-
+            employeeParam: {
+                show: false,
+                org: true,
+                orgId: "",
+                //单个业务员搜索
+                employeeId: '',
+                employeeName: ''
+            },
             checked: false
         }
     },
@@ -134,6 +158,17 @@ export default {
             this.tipsParam.name = name;
             this.tipsParam.show = true;
             this.getPurchaseOrderList(this.loadParam);
+        },
+        resetCondition:function(){
+            this.loadParam.purchaseContent = '';
+            this.loadParam.customerName = '';
+            this.loadParam.employeeName = '';
+            this.loadParam.inquire = '';
+            this.loadParam.employee='';
+            this.getPurchaseOrderList(this.loadParam)
+        },
+        selectEmployee: function() {
+            this.employeeParam.show = true;
         }
 
     },
@@ -141,6 +176,11 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getPurchaseOrderList(this.loadParam);
+        },
+        a:function(employee){
+            this.loadParam.employeeName = employee.employeeName;
+            this.loadParam.employee = employee.employeeId;
+            this.selectSearch(this.loadParam)
         }
     },
     created() {

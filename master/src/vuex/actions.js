@@ -4762,6 +4762,9 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
     if (param.org) {
         url += '&org=' + param.org;
     }
+    if (param.purchaseContent) {
+        url += '&buyDesc=' + param.purchaseContent;
+    }
     Vue.http({
         method: 'GET',
         url: url,
@@ -4998,7 +5001,8 @@ export const offerPurchaseOrder = ({ dispatch }, param) => { //采购单意向�
         unit: param.unit,
         price: param.price,
         quality: param.quality,
-        description: param.description
+        description: param.description,
+        location: param.location
     }
     Vue.http({
         method: 'POST',

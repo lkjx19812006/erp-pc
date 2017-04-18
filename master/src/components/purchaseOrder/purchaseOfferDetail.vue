@@ -179,7 +179,8 @@ export default {
                 unit: "",
                 price: "",
                 quality:"",
-                description:""
+                description:"",
+                location:""
             },
             tipsParam: {
                 show: false,
