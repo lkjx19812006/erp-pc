@@ -23,7 +23,7 @@
                     <!-- 单个业务员搜索 -->
                     <dt class="left transfer marg_top" style="margin-left:50px">业务员：</dt>
                     <dd class="left margin_right">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="{{$t('static.select_salesman')}}" @click="selectEmployee()">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="{{$t('static.select_salesman')}}" @click="selectEmployee()" readonly="readonly">
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:50px">
