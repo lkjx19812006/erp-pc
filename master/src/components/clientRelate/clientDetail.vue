@@ -313,13 +313,14 @@
                                         link:initClientDetail.intentions,
                                         crete:'intentions'
                                         })">
-                                  <img class="pull-left" src="/static/images/intent.png" height="29" width="26"  />
-                                  <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                    {{$t('static.intention')}}（{{initClientDetail.intentions.arr.length}}）
-                                  </a>
-                                  <button type="button" class="btn btn-base pull-right" @click.stop="createIntention()">{{$t('static.new')}}</button>
-                            </h4>
+                                            <img class="pull-left" src="/static/images/intent.png" height="29" width="26"  />
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                                {{$t('static.intention')}}（{{initClientDetail.intentions.arr.length}}）
+                                            </a>
+                                            <button type="button" class="btn btn-base pull-right" @click.stop="createIntention()">{{$t('static.new')}}</button>
+                                        </h4>
                                     </div>
+                                    <!-- 意向 -->
                                     <div class="panel-collapse" v-show="!initClientDetail.intentions.show&&initClientDetail.intentions.arr.length>0">
                                         <div class="panel-body panel-set">
                                             <table class="table contactSet">

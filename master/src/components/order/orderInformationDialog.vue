@@ -134,6 +134,7 @@
                             </div>
                         </div>
                     </section>
+                    <!-- 原材料信息 -->
                     <div>
                         <div style="margin-top:20px;">
                             <img src="/static/images/breedinfo@2x.png" style="display:inline" />
@@ -236,18 +237,19 @@
                                         <label class="editlabel">{{$t('static.quality')}}</label>
                                         <input type="text" v-model="breedInfo.quality" class="form-control edit-input" />
                                     </div>
+                                    <!-- 产地和规格 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.specification')}}</label>
-                                        <input type="text" v-show="!breedParam.id" v-model="breedInfo.spec" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                                        <div type="text" class="edit-input" v-if="breedParam.id">
+                                        <input type="text" v-show="!breedInfo.breedName" v-model="breedInfo.spec" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                                        <div type="text" class="edit-input" v-if="breedInfo.breedName">
                                             <input-select :value.sync="breedInfo.spec" :prevalue="breedInfo.spec" :options="initBreedDetail.specs.arr" placeholder="规格/Specifications" label="name">
                                             </input-select>
                                         </div>
                                     </div>
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.origin')}}</label>
-                                        <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                                        <div type="text" class="edit-input" v-if="breedParam.id">
+                                        <input type="text" v-show="!breedInfo.breedName" v-model="breedInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                                        <div type="text" class="edit-input" v-if="breedInfo.breedName">
                                             <input-select :prevalue="breedInfo.location" :value.sync="breedInfo.location" :options="initBreedDetail.locals.arr" placeholder="产地/Origin" label="name">
                                             </input-select>
                                         </div>
@@ -671,6 +673,7 @@ export default {
             this.district.cname = "";
         },
         modifyBreed: function() {
+
             this.param.goods[this.updateParam.index].breedId = this.breedInfo.breedId,
                 this.param.goods[this.updateParam.index].breedName = this.breedInfo.breedName,
                 this.param.goods[this.updateParam.index].title = this.breedInfo.breedName,

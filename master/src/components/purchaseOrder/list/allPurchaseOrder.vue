@@ -44,6 +44,11 @@
                             <option value="4">ios</option>
                         </select>
                     </dd>
+                    <!-- 新增采购品种搜索 -->
+                    <dt class="left transfer marg_top">采购品种：</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.purchaseContent" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:50px">
                     <button type="button" class="btn btn-default margin_right" height="24" width="24" @click="selectSearch()">搜索</button>
@@ -195,6 +200,7 @@ export default {
             this.loadParam.employeeName = '';
             this.loadParam.org = '';
             this.loadParam.orgName = '';
+            this.loadParam.purchaseContent='';
             this.getPurchaseOrderList(this.loadParam);
         },
         selectOrg: function() {
