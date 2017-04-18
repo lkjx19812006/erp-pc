@@ -2,7 +2,7 @@
     <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
     <select-org-model :param="selectOrgParam" v-if="selectOrgParam.show"></select-org-model>
     <div class="service-nav clearfix">
-        <div class="my_enterprise col-xs-1">部门客户统计</div>
+        <div class="my_enterprise col-xs-1">全部客户统计</div>
     </div>
     <div class="order_table">
         <div class="cover_loading">

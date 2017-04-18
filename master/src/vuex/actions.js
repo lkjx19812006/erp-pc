@@ -7418,6 +7418,52 @@ export const getClientAllcount = ({ dispatch }, param) => { //全部客户统计
     })
 }
 
+export const getClientOverview = ({ dispatch }, param) => { //客户总览统计
+    param.loading = true;
+    let body = {};
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        var clientCount = res.json().result;
+        //计算成交占比（traded/total）
+        let computeRate = function(traded, total) {
+            let rate;
+            if (total == 0 || traded == 0) {
+                rate = 0;
+            } else {
+                rate = traded / total * 10000;
+            }
+            if (rate != 0) {
+                let temp = rate.toString().split(".")[0];
+                rate = temp / 100;
+            }
+            return rate;
+        }
+
+        for (let i = 0; i < clientCount.length; i++) {
+            clientCount[i].tradedRate = computeRate(clientCount[i].traded, clientCount[i].total);
+            let list = clientCount[i].statisticsList;
+            for (let k = 0; k < list.length; k++) {
+                list[k].tradedRate = computeRate(list[k].traded, list[k].total);
+            }
+        }
+
+        dispatch(types.MY_CLIENT_COUNT, clientCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
 export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交易统计)
 
     if (param) param.loading = true;
