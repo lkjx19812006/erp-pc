@@ -35,7 +35,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- 业务员 应收金额 应收 应付 列表 -->
                 <div class="table">
                     <table>
                         <tr class="tb-header">
@@ -109,7 +108,8 @@ export default {
 .listContent {
     min-width: 1000px;
     max-width: 100%;
-    min-height: 670px;
+    min-height: 650px;
+    max-height: 700px;
     overflow-x: auto;
     clear: both;
     width: 100%;

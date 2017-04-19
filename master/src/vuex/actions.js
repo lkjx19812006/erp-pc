@@ -283,14 +283,6 @@ export const getNoticeList = ({ dispatch }, param) => {
                 noticeList[i].checked = false;
                 noticeList[i].show = false;
             }
-            for (let i = 0; i < noticeList.length; i++) {
-                noticeList[i].shortMessage = "";
-                if (noticeList[i].message.length > 28) {
-                    noticeList[i].shortMessage = noticeList[i].message.substring(0, 28) + "...";
-                } else {
-                    noticeList[i].shortMessage = noticeList[i].message.substring(0, 28);
-                }
-            }
 
             dispatch(types.NOTICE_TABLE, noticeList);
             param.all = res.json().result.pages;
@@ -1389,7 +1381,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     });
 }
 export const alterOrder = ({ dispatch }, param) => { //修改订单
-    console.log(param.tradeTime)
+
     if (param.city == null || param.city == '' || !param.city) {
         param.city = '';
     }
@@ -7377,6 +7369,9 @@ export const getClientAllcount = ({ dispatch }, param) => { //全部客户统计
     if (param.country) {
         body.country = param.country;
     }
+    if (param.intl) {
+        body.intl = param.intl;
+    }
 
     Vue.http({
         method: 'POST',
@@ -7420,6 +7415,7 @@ export const getClientAllcount = ({ dispatch }, param) => { //全部客户统计
 export const getClientOverview = ({ dispatch }, param) => { //客户总览统计
     param.loading = true;
     let body = {};
+
     Vue.http({
         method: 'POST',
         url: apiUrl.commonList + param.link,

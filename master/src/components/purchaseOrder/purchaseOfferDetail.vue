@@ -84,7 +84,7 @@
                                                     <th>产地</th>
                                                     <th>规格</th>
                                                     <th>上架状态</th>
-                                                    <th>报价次数</th>
+                                                    <th>报价人数</th>
                                                     <th>报价</th>
                                                 </thead>
                                                 <tbody>
@@ -178,9 +178,9 @@ export default {
                 number: "",
                 unit: "",
                 price: "",
-                quality:"",
-                description:"",
-                location:""
+                quality: "",
+                description: "",
+                location: ""
             },
             tipsParam: {
                 show: false,

@@ -19,6 +19,14 @@
             <dd class="left margin_right">
                 <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="按回车键搜索" readonly="true" @click="selectOrg()">
             </dd>
+            <dt class="left transfer marg_top">是否国际：</dt>
+            <dd class="left margin_right">
+                <select v-model="loadParam.intl" class="form-control" @change="selectSearch()">
+                    <option value="">全部</option>
+                    <option value="0">否</option>
+                    <option value="1">是</option>
+                </select>
+            </dd>
             <!-- <dt class="left transfer marg_top">国家：</dt>
             <div type="text" class="left margin_right">
                 <v-select :debounce="250" :value.sync="country" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
@@ -143,7 +151,8 @@ export default {
                 orgName: '',
                 employeeId: '',
                 employeeName: '',
-                country: ''
+                country: '',
+                intl: '0'
 
             },
             countryParam: {

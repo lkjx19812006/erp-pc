@@ -118,8 +118,8 @@ export default {
                 total: "",
                 link: '/indent/queryOfferList',
                 key: 'purchaseOfferList',
-                employeeName:'',
-                employee:''
+                employeeName: '',
+                employee: ''
             },
             detailParam: {
                 show: false,
@@ -159,12 +159,12 @@ export default {
             this.tipsParam.show = true;
             this.getPurchaseOrderList(this.loadParam);
         },
-        resetCondition:function(){
+        resetCondition: function() {
             this.loadParam.purchaseContent = '';
             this.loadParam.customerName = '';
             this.loadParam.employeeName = '';
             this.loadParam.inquire = '';
-            this.loadParam.employee='';
+            this.loadParam.employee = '';
             this.getPurchaseOrderList(this.loadParam)
         },
         selectEmployee: function() {
@@ -177,7 +177,7 @@ export default {
             this.loadParam.cur = input;
             this.getPurchaseOrderList(this.loadParam);
         },
-        a:function(employee){
+        a: function(employee) {
             this.loadParam.employeeName = employee.employeeName;
             this.loadParam.employee = employee.employeeId;
             this.selectSearch(this.loadParam)
@@ -234,8 +234,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 213px;
-    min-width: 213px;
+    width: 189px;
+    min-width: 189px;
 }
 
 .service-nav {
