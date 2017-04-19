@@ -186,7 +186,7 @@
                         </td>
 
                         <td>{{item.employeeName}}</td>
-                        <td>{{item.ctime}}</td>
+                        <td>{{item.ctime|timeFilters}}</td>
                         <td>{{item.lastOrderTime}}</td>
                         <td class="underline"  @click="clickOn({
                                 id:item.id,
@@ -632,7 +632,12 @@ export default {
     ready(){
       common('tab','table_box',1);
     },
-    filter:(filter,{})
+    filters: {
+        timeFilters:function(mytime){
+           // debugger;
+            return mytime?mytime.substring(0,10):'';
+        }    
+    }
 }
 </script>
 <style scoped>

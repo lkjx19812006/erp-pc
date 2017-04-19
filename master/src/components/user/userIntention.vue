@@ -583,6 +583,7 @@ export default {
     },
     created() {
         this.imageParam.files = [];
+        console.log(this.param)
         for (let i = 0; i < this.param.images.length; i++) {
             if (i == 0) {
                 this.param.files = this.param.images[0].path;
@@ -596,7 +597,7 @@ export default {
             }
             this.imageParam.files.push(temp);
         }
-
+        console.log(this.imageParam.files)
 
         //设置过期时间,7天后
         if (!this.param.duedate) {
