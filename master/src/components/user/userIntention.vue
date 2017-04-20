@@ -638,6 +638,7 @@ export default {
 
     },
     created() {
+
         this.imageParam.files = this.setFiles(this.param.pics);
         this.param.images = this.setImages(this.param.pics);
 

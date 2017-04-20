@@ -10,6 +10,7 @@
         <applysend-model :param="applyParam" v-if="applyParam.show"></applysend-model>
         <reapply-model :param="reapplyParam" v-if="reapplyParam.show"></reapply-model>
         <contract-model :param="contractParam" v-if="contractParam.show"></contract-model>
+        <cancel-model :param="cancelParam" v-if="cancelParam.show"></cancel-model>
         <saleapply-model :param="applicationParam" v-if="applicationParam.show"></saleapply-model>
         <language-model v-show="false"></language-model>
         <mglist-model>
@@ -244,6 +245,10 @@
                                         goodsBack:[]
                                         },item.goods)">{{$t('static.edit')}}
                                 </button>
+                                <!-- 取消订单,在订单状态为20和70或者新建的订单还未申请审核可以取消，并说明原因 -->
+                                <button class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70||(item.orderStatus==0&&item.validate==0)" @click="cancelOrder(item.id,$index)">
+                                    取消订单
+                                </button>
                                 <div v-if="item.validate==2">
                                     <button class="btn btn-danger" @click="clickOn({
                                                 show:true,
@@ -355,6 +360,7 @@ import disposeModel from '../order/orderStatus'
 import tipsdialogModel from '../tips/tipDialog'
 import auditModel from '../order/orgAudit'
 import common from '../../common/common'
+import cancelModel from './cancleMsg'
 import changeMenu from '../../components/tools/tabs/tabs.js'
 import applysendModel from '../order/second_order/orderAudit'
 import reapplyModel from '../tips/auditDialog'
@@ -374,7 +380,8 @@ import {
     orderStatu,
     getOrderDetail,
     applyContract,
-    afterSalesApply
+    afterSalesApply,
+    orderCancle
 } from '../../vuex/actions'
 export default {
     components: {
@@ -392,7 +399,8 @@ export default {
         applysendModel,
         contractModel,
         saleapplyModel,
-        languageModel
+        languageModel,
+        cancelModel
     },
     data() {
         return {
@@ -529,6 +537,16 @@ export default {
                 auditComment: '',
                 callback: '',
                 logistics: ''
+            },
+            cancelParam: {
+                show: false,
+                index: '',
+                id: '',
+                cancleCauses: '',
+                link: '/order/cancle',
+                key: 'orgOrderList',
+                callback: this.orderCancle, //cancelMsg.vue中会执行此方法
+                cancelBack: this.cancelBack //取消成功后会调用此方法(action中执行)
             }
         }
     },
@@ -545,7 +563,8 @@ export default {
             orderStatu,
             getOrderDetail,
             applyContract,
-            afterSalesApply
+            afterSalesApply,
+            orderCancle
         }
     },
     methods: {
@@ -566,7 +585,12 @@ export default {
             this.tipsParam.alert = true;
             this.getEmpolyeeOrder(this.loadParam);
         },
-
+        cancelBack: function(title) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.selectSearch();
+        },
         orderCheck: function(id, index, validate) {
             this.auditParam.id = id;
             this.auditParam.index = index;
@@ -580,6 +604,11 @@ export default {
             }
             this.auditParam.callback = this.applyBack;
             localtion.reload(); //提交审核后自动刷新
+        },
+        cancelOrder: function(id, index) {            
+            this.cancelParam.id = id;
+            this.cancelParam.index = index;
+            this.cancelParam.show = true;
         },
         onlyselected: function(index) {
             const _self = this;

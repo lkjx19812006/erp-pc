@@ -217,8 +217,9 @@
                                 <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                             </td>
                             <td>{{item.employeeName}}</td>
-                            <td>{{item.ctime}}</td>
-                            <td>{{item.lastOrderTime}}</td>
+                            <!-- 修改时间 -->
+                            <td>{{item.ctime|timeFilters}}</td>
+                            <td>{{item.lastOrderTim}}</td>
                             <td class="underline" @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -710,7 +711,12 @@ export default {
     ready() {
         common('tab', 'table_box', 1);
     },
-    filter: (filter, {})
+    filters: {
+        timeFilters:function(mytime){
+           // debugger;
+            return mytime?mytime.substring(0,10):'';
+        }    
+    }
 
 }
 </script>

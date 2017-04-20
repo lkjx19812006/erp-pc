@@ -43,8 +43,8 @@
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
                         <td>{{item.employeeName}}</td>
-                        <td>{{item.ctime}}</td>
-                        <td>{{item.lastOrderTime}}</td>
+                        <td>{{item.ctime|timeFilters}}</td>
+                        <td>{{item.lastOrderTime|timeFilters}}</td>
                         <td class="underline" @click="clickOn({
                       id:item.id,
                       sub:$index,
@@ -244,6 +244,12 @@ export default {
     },
     created() {
         changeMenu(this.$store.state.table.isTop, this.getClientList, this.loadParam, localStorage.blackClientParam);
+    },
+    filters: {
+        timeFilters:function(mytime){
+           // debugger;
+            return mytime?mytime.substring(0,10):'';
+        }    
     }
 }
 </script>
