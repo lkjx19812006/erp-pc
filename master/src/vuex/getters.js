@@ -321,6 +321,9 @@ export const initOfferList = (state) => {
 export const initMsgList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.msgList));
 }
+export const initPreSellMsgList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.preSellMsgList));
+}
 
 /*--意向详情--*/
 export const initIntentionDetail = (state) => {

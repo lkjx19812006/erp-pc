@@ -972,29 +972,32 @@ Vue.filter('inquire', function(val) { //国际意向询价状态
 
 Vue.filter('Unit', function(val) { //国际意向单位
     var val = val;
-    if (val == 71) {
-        return '吨（T）';
-    }
-    if (val == 63) {
-        return '公斤（KG）';
-    }
     if (val == 1) {
         return '斤（HKG）';
     }
     if (val == 3) {
         return '克（G）';
     }
+    if (val == 63) {
+        return '公斤（KG）';
+    }
     if (val == 64) {
         return '棵（Tree）';
+    }
+    if (val == 66) {
+        return '份';
     }
     if (val == 69) {
         return '朵（Flower）';
     }
-    if (val == 72) {
-        return '株（Plant）';
-    }
     if (val == 70) {
         return '瓶（Bottle）';
+    }
+    if (val == 71) {
+        return '吨（T）';
+    }
+    if (val == 72) {
+        return '株（Plant）';
     }
     if (val == 73) {
         return '只（Only）';
@@ -1103,10 +1106,51 @@ Vue.filter('indentSource', function(val) { //采购单来源
 Vue.filter('file', function(val) { //文件后缀名获取
     var val = val;
     var file = val.substring(val.lastIndexOf('.') + 1);
-    if (file == 'word' || file == 'excle' || file == 'ppt' || file == 'txt' || file == 'jpg') {
+    if (file == "doc" || file == "docx") {
+        return "word";
+    } else if (file == "xls" || file == "xlsx") {
+        return "excel";
+    } else if (file == "jpg" || file == "jpeg" || file == "png") {
+        return "image";
+    } else if (file != "") {
         return file;
     } else {
-        return '';
+        return "other"
     }
+
+});
+
+Vue.filter('isImage', function(val) { //判断是否图片
+    var val = val;
+    var file = val.substring(val.lastIndexOf('.') + 1);
+    if (file == "jpg" || file == "jpeg" || file == "png") {
+        return true;
+    } else {
+        return false;
+    }
+
+});
+
+Vue.filter('indentType', function(val) { //判断采购单类型
+    var val = val;
+    if (val === 0) {
+        return "药厂采购单";
+    } else if (val == 1) {
+        return "药商采购单";
+    } else {
+        return "其他";
+    }
+
+});
+
+Vue.filter('textDisplay', function(val, maxLength) { //文本内容显示，超过maxLength长度部分以...表示
+    var val = val;
+    let length = val.toString().length;
+    if (length <= maxLength) {
+        return val;
+    } else {
+        return val.toString().substring(0, maxLength) + "...";
+    }
+
 
 });

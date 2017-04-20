@@ -1,6 +1,5 @@
 <template>
-    <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
-    <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
+    <breed-detail-model :param="breedDetailParam" v-if="breedDetailParam.show"></breed-detail-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <mglist-model>
         <!-- 头部搜索-->
@@ -26,39 +25,30 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th>留言会员</th>
-                        <th>会员手机</th>
-                        <th>发布意向客户</th>
-                        <th>发布品种</th>
-                        <th>客户手机</th>
-                        <th>留言信息</th>
-                        <th>备注</th>
-                        <th>回复</th>
-                        <th>修改时间</th>
-                        <th>操作</th>
+                        <th>留言时间</th>
+                        <th>预售产品</th>
+                        <th>规格</th>
+                        <th>出口国</th>
+                        <th>预售价格</th>
+                        <th>到港时间</th>
+                        <th>会员名</th>
+                        <th>手机号</th>
+                        <th>归属业务员</th>
+                        <th>要求</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initMsgList">
-                        <td class="underline" @click="clickOn({
-                                 id:item.userId,
-                                 sub:$index,
-                                 show:true,
-                                 name:item.fullname,
-                                 loading:false
-                             })">{{item.fullname}}</td>
+                    <tr v-for="item in initPreSellMsgList">
+                        <td>{{item.ctime}}</td>
+                        <td class="underline" @click="editBreed(item.breedId)">{{item.breedName}}</td>
+                        <td>{{item.spec}}</td>
+                        <td>{{item.country}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.arriveTime}}</td>
+                        <td>{{item.fullname}}</td>
                         <td>{{item.phone}}</td>
-                        <td>{{item.customerName}}</td>
-                        <td>{{item.breedName}}</td>
-                        <td>{{item.customerPhone}}</td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.content}}</td>
-                        <td>{{item.comments}}</td>
-                        <td>{{item.reply}}</td>
-                        <td>{{item.utime}}</td>
-                        <td @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments,updateParam.callback=callback">
-                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30" alt="编辑" title="编辑" />
-                            </a>
-                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -72,32 +62,34 @@ import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import editmsgModel from '../editMsg'
 import tipsModel from '../../tips/tipDialog'
-import detailModel from '../../user/userDetail'
+import breedDetailModel from '../../serviceBaselist/breeddetail'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import mglistModel from '../../mguan/mgListComponent.vue'
 import {
-    initMsgList
+    initPreSellMsgList
 } from '../../../vuex/getters'
 import {
     getMsgList,
-    getUserDetail
+    getUserDetail,
+    getBreedDetail
 } from '../../../vuex/actions'
 export default {
     components: {
         pagination,
         editmsgModel,
-        detailModel,
+        breedDetailModel,
         tipsModel,
         mglistModel
     },
     vuex: {
         getters: {
-            initMsgList
+            initPreSellMsgList
         },
         actions: {
             getMsgList,
-            getUserDetail
+            getUserDetail,
+            getBreedDetail
         }
     },
     data() {
@@ -108,75 +100,39 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                key: 'msgList',
-                type: '0',
+                key: 'preSellMsgList',
+                type: 1,
                 fullName: '',
                 phone: '',
                 total: 0
-
+            },
+            breedDetailParam: {
+                show: false,
+                link: '/details/',
+                id: ''
             },
             tipsParam: {
                 name: '',
                 show: false,
                 alert: true
             },
-            changeParam: {
-                show: false
-            },
-            updateParam: {
-                show: false,
-                index: '',
-                comments: '',
-                key: 'msgList',
-                id: ''
-            },
-            checked: false
         }
     },
     methods: {
-        clickShow: function(index) {
-            this.$store.state.table.basicBaseList.msgList[index].show = !this.$store.state.table.basicBaseList.msgList[index].show;
-        },
         searchMsg: function() {
             this.getMsgList(this.loadParam);
         },
-        onlyselected: function(index) {
-            var _this = this;
-            this.$store.state.table.basicBaseList.msgList[index].checked = !this.$store.state.table.basicBaseList.msgList[index].checked;
-            if (!this.$store.state.table.basicBaseList.msgList[index].checked) {
-                this.checked = false;
-            } else {
-                this.checked = true;
-                this.$store.state.table.basicBaseList.msgList.forEach(function(item) {
-                    if (!item.checked) {
-                        _this.checked = false;
-                    }
-                })
-            }
 
-
+        editBreed: function(id) {
+            this.breedDetailParam.show = true;
+            this.breedDetailParam.id = id;
+            this.getBreedDetail(this.breedDetailParam);
         },
-        checkedAll: function() {
-            this.checked = !this.checked;
-            if (this.checked) {
-                this.$store.state.table.basicBaseList.msgList.forEach(function(item) {
-                    item.checked = true;
-                })
-            } else {
-                this.$store.state.table.basicBaseList.msgList.forEach(function(item) {
-                    item.checked = false;
-                })
-            }
-        },
-
         callback: function(title) {
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
         },
-        clickOn: function(param) {
-            this.changeParam = param;
-        }
     },
     events: {
         fresh: function(input) {
@@ -185,7 +141,7 @@ export default {
         }
     },
     created() {
-        changeMenu(this.$store.state.table.isTop, this.getMsgList, this.loadParam, localStorage.msgParam);
+        changeMenu(this.$store.state.table.isTop, this.getMsgList, this.loadParam, localStorage.preSellMsgParam);
     },
     ready() {
         common('tab', 'table_box', 1);

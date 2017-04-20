@@ -134,6 +134,7 @@ export const login = ({ dispatch }, data) => { //登录
 }
 export const resetPawd = ({ dispatch }, data) => { //修改密码(需要提供原密码)
     console.log(data);
+    console.log("哈哈")
     const body = {
         no: data.no,
         newPwd: data.newPwd,
@@ -262,13 +263,6 @@ export const getNoticeList = ({ dispatch }, param) => {
             page: param.cur,
             pageSize: 15
         }
-        if (param.mTimeStart) {
-            body.mTimeStart = param.mTimeStart;
-        }
-        if (param.mTimeEnd) {
-            body.mTimeEnd = param.mTimeEnd;
-        }
-        console.log(param.read);
         if (param.read) {
             body.read = param.read;
         }
@@ -289,14 +283,6 @@ export const getNoticeList = ({ dispatch }, param) => {
             for (var i in noticeList) {
                 noticeList[i].checked = false;
                 noticeList[i].show = false;
-            }
-            for (let i = 0; i < noticeList.length; i++) {
-                noticeList[i].shortMessage = "";
-                if (noticeList[i].message.length > 28) {
-                    noticeList[i].shortMessage = noticeList[i].message.substring(0, 28) + "...";
-                } else {
-                    noticeList[i].shortMessage = noticeList[i].message.substring(0, 28);
-                }
             }
 
             dispatch(types.NOTICE_TABLE, noticeList);
@@ -899,8 +885,7 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
         userId: param.user,
         employee: param.employee
     }
-    console.log(param)
-    dispatch(types.ORDER_TABLE, param);
+
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
@@ -912,7 +897,13 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        param.callback(res.json().result);
+        dispatch(types.ORDER_TABLE, param);
+        if (res.json().result) {
+            param.callback(res.json().result);
+        } else {
+            param.callback(res.json().msg);
+        }
+
     }, (res) => {
         console.log('fail');
     })
@@ -1299,7 +1290,11 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     if (data.addressId == null || data.addressId == '' || !data.addressId) {
         data.addressId = 0;
     }
+    if (!data.pre) {
+        data.pre = 0;
+    }
     const body = {
+        pre: data.pre,
         type: data.type,
         sourceType: data.sourceType,
         sample: data.sample,
@@ -1387,7 +1382,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     });
 }
 export const alterOrder = ({ dispatch }, param) => { //修改订单
-    console.log(param.tradeTime)
+
     if (param.city == null || param.city == '' || !param.city) {
         param.city = '';
     }
@@ -3247,6 +3242,9 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         if (search == 'trackingDay' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&trackingDay=' + param.trackingDay
         }
+        if (search == 'orderSum' && param[search] !== '' && param[search] != 'undefined') {
+            clienturl += '&orderSum=' + param.orderSum
+        }
     }
     Vue.http({
         method: 'GET',
@@ -3642,7 +3640,7 @@ export const customerAudit = ({ dispatch }, param) => { //客户审核(跟进)
         console.log('fail');
     });
 }
-export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转供应商,拉黑,移出黑名单
+export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转供应商,移出供应商,拉黑,移出黑名单
     param.loading = true;
     console.log(param);
     const data = {};
@@ -3652,9 +3650,14 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
         data.blacklist = param.blacklist;
     } else if (param.link == '/customer/setSupplier') {
         data.customerIds = param.customerIds;
-        data.supplier = 1;
+        if (!param.supplier) {
+            data.supplier = 1;
+        } else {
+            data.supplier = param.supplier;
+        }
         data.comments = param.blackComments;
     }
+
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.link,
@@ -4543,17 +4546,17 @@ export const createRemark = ({ dispatch }, param) => { //新增客户备注
 }
 export const createProduct = ({ dispatch }, param) => { //新增客户产品
     const data = {
-        "type": param.type,
-        "name": param.name,
+        /*"type": param.type,*/
+        "name": param.breedName, //默认产品名就是品种名
         "breedId": param.breedId,
-        "quality": param.quality,
+        /*"quality": param.quality,*/
         "location": param.location,
         "spec": param.spec,
-        "number": param.number,
+        /*"number": param.number,
         "price": param.price,
         "unit": param.unit,
         "duedate": param.duedate,
-        "coa": param.coa,
+        "coa": param.coa,*/
         "cid": param.cid,
         "breedName": param.breedName
     }
@@ -4738,24 +4741,27 @@ export const transferManager = ({ dispatch }, param) => { //员工划转为主�
 
 export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表以及搜索
     param.loading = true;
-     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
-    if(param.customerName){
-         url += '&customerName=' + param.customerName;
+    var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
+    if (param.customerName) {
+        url += '&customerName=' + param.customerName;
     }
-    if(param.customerPhone){
-         url += '&customerPhone='+ param.customerPhone;
+    if (param.customerPhone) {
+        url += '&customerPhone=' + param.customerPhone;
     }
-    if(param.inquire){
-         url += '&inquire='+ param.inquire;
+    if (param.inquire) {
+        url += '&inquire=' + param.inquire;
     }
-    if(param.source){
-         url += '&source='+ param.source;
+    if (param.source) {
+        url += '&source=' + param.source;
     }
-    if(param.employee){
-         url += '&employee='+ param.employee;
+    if (param.employee) {
+        url += '&employee=' + param.employee;
     }
-    if(param.org){
-         url += '&org='+ param.org;
+    if (param.org) {
+        url += '&org=' + param.org;
+    }
+    if (param.purchaseContent) {
+        url += '&buyDesc=' + param.purchaseContent;
     }
     Vue.http({
         method: 'GET',
@@ -4766,7 +4772,7 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
         }
     }).then((res) => {
         let purchaseOrder = res.json().result.list;
-        
+
         for (let i = 0; i < purchaseOrder.length; i++) {
             purchaseOrder[i].checked = false;
         }
@@ -4799,9 +4805,31 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
         let detail = res.json().result;
 
         let intentionList = detail.intentionList;
+        for (let i = 0; i < intentionList.length; i++) {
+            intentionList[i].show = false; //是否处于展开状态
+        }
         detail.intentionList = {};
         detail.intentionList.arr = intentionList;
         detail.intentionList.show = false;
+
+        if (param.intentionList && param.intentionListBack) {
+            let arr = detail.intentionList.arr;
+            for (let i = 0; i < arr.length; i++) {
+                let temp = {
+                    id: arr[i].id,
+                    breedId: arr[i].breedId,
+                    breedName: arr[i].breedName,
+                    location: arr[i].location,
+                    spec: arr[i].spec,
+                    number: arr[i].number,
+                    unit: arr[i].unit,
+                    price: arr[i].price,
+                    status: 1
+                };
+                param.intentionList.push(temp);
+                param.intentionListBack.push(temp);
+            }
+        }
 
         dispatch(types.PURCHASE_DETAIL, detail);
         param.loading = false;
@@ -4814,6 +4842,7 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
 
 export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
     const body = {
+        type: param.type,
         customerId: param.customerId,
         customerName: param.customerName,
         customerPhone: param.customerPhone,
@@ -4859,11 +4888,16 @@ export const importPurchase = ({ dispatch }, param) => { //excel导入采购单
         emulateHTTP: false,
         body: data
     }).then((res) => {
-        param.success = true;
+
         if (res.json().code == 1000) {
+            param.success = 2;
             param.result = res.json().result;
-        } else {
+        } else if (res.json().code == 200) {
+            param.success = 1;
             param.result = "";
+        } else {
+            param.success = 3;
+            param.result = res.json().msg;
         }
 
         if (param.callback) {
@@ -4963,7 +4997,10 @@ export const offerPurchaseOrder = ({ dispatch }, param) => { //采购单意向�
         customerId: param.customerId,
         number: param.number,
         unit: param.unit,
-        price: param.price
+        price: param.price,
+        quality: param.quality,
+        description: param.description,
+        location: param.location
     }
     Vue.http({
         method: 'POST',
@@ -4987,6 +5024,50 @@ export const offerPurchaseOrder = ({ dispatch }, param) => { //采购单意向�
     });
 }
 
+export const createOrderByPurchase = ({ dispatch }, param) => { //采购单报价生成订单
+    param.loading = true;
+    const body = {
+        intl: 0,
+        customer: param.customer,
+        customerName: param.customerName,
+        consignee: param.consignee,
+        consigneeAddr: param.consigneeAddr,
+        consigneePhone: param.consigneePhone,
+        incidentals: param.incidentals,
+        incidentalsDesc: param.incidentalsDesc,
+        preferential: param.preferential,
+        preferentialDesc: param.preferentialDesc,
+        province: param.province,
+        city: param.city,
+        district: param.district,
+        intentionOfferList: param.intentionOfferList
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        console.log("success");
+        param.show = false;
+        if (param.callback) {
+            param.callback(res.json().msg + "，稍后将跳转到我的订单页面");
+        }
+
+
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+        param.show = false;
+    });
+}
+
 export const getIntentionList = ({ dispatch }, param) => { //意向信息列表以及搜索
     param.loading = true;
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
@@ -5002,6 +5083,9 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         }
         if (search == 'especial' && param[search] !== '') {
             url += '&especial=' + param.especial
+        }
+        if (search == 'preSell' && param[search] !== '') {
+            url += '&preSell=' + param.preSell
         }
         if (search == 'invoic' && param[search] !== '') {
             url += '&invoic=' + param.invoic
@@ -5042,6 +5126,7 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         if (search == 'label' && param[search] !== '') {
             url += '&label=' + param.label
         }
+
     }
     Vue.http({
         method: 'GET',
@@ -5102,7 +5187,7 @@ export const getSupplyDemandList = ({ dispatch }, param) => { //匹配供求信�
     })
 }
 
-export const getIntentionDetail = ({ dispatch }, param, id, index) => { //意向详情
+export const getIntentionDetail = ({ dispatch }, param) => { //意向详情
     param.loading = true;
     var url = apiUrl.clientList + '/intention/' + param.id;
     Vue.http({
@@ -5122,6 +5207,10 @@ export const getIntentionDetail = ({ dispatch }, param, id, index) => { //意向
         };
         for (var i in result.offers.arr) {
             result.offers.arr[i].show = false;
+            result.offers.arr[i].checked = false;
+            if (param.offerId && param.offerId == result.offers.arr[i].id) {
+                result.offers.arr[i].checked = true;
+            }
         };
         var arr = result.msgs;
         result.msgs = null;
@@ -5152,7 +5241,7 @@ export const getIntentionDetail = ({ dispatch }, param, id, index) => { //意向
             param.image_t_show = res.json().result.pics[2].url;
         }
         if (param.getOffers) {
-            param.getOffers(id, index, result);
+            param.getOffers(param.index, result);
         }
 
         param.loading = false;
@@ -5223,6 +5312,9 @@ export const getMsgList = ({ dispatch }, param) => { //留言信息列表以及�
     if (param.phone && param.phone != '') {
         url += '&phone=' + param.phone
     }
+    if (param.type && param.type != '') {
+        url += '&type=' + param.type
+    }
     Vue.http({
         method: 'GET',
         url: url,
@@ -5236,12 +5328,19 @@ export const getMsgList = ({ dispatch }, param) => { //留言信息列表以及�
             msg[i].checked = false;
             msg[i].show = false;
         }
+        msg.key = param.key;
         dispatch(types.MSG_LIST_DATA, msg);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
 
-        localStorage.msgParam = JSON.stringify(param);
+        if (param.key == "msgList") {
+            localStorage.msgParam = JSON.stringify(param);
+        }
+        if (param.key == "preSellMsgList") {
+            localStorage.preSellMsgParam = JSON.stringify(param);
+        }
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -6646,12 +6745,6 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
 
 export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意向
 
-    if (param.files) {
-        param.images = param.files;
-    }
-    /*if (param.image_f) { param.images += param.image_f + ',' }
-    if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t };*/
     const data1 = {
         "id": param.id,
         "type": param.type,
@@ -6712,15 +6805,13 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
     })
 }
 
-export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增意向
-    if (param.files) {
-        param.images = param.files;
-    }
+export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
     var today = new Date();
-    const data1 = {
+    const data = {
         "userId": param.userId,
         "type": param.type,
         "especial": param.especial,
+        "preSell": param.preSell,
         "customerName": param.customerName,
         "customerId": param.customerId,
         "customerPhone": param.customerPhone,
@@ -6739,7 +6830,10 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
         "sampleUnit": param.sampleUnit,
         "sampleAmount": param.sampleAmount,
         "breedId": param.breedId,
-        "country": param.country,
+        "country": param.country, //国家（预售时出口国复用此字段）
+        "transportType": param.transportType, //运输类型，1/2 空运/海运
+        "transportNo": param.transportNo, //航班号
+        "arriveTime": param.arriveTime, //到达时间（到达港口复用address）
         "quality": param.quality,
         "price": param.price,
         "province": param.province,
@@ -6753,14 +6847,13 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
         "inType": param.inType,
         "validate": param.validate,
         "description": param.description
-
     }
 
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,
         emulateHTTP: true,
-        body: data1,
+        body: data,
         emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -6769,7 +6862,6 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
     }).then((res) => {
         console.log('添加成功')
         if (param.callback) {
-            console.log("有回调函数");
             param.callback(res.json().msg);
         }
         param.id = res.json().result.intentionId;
@@ -7232,7 +7324,7 @@ export const getClientcount = ({ dispatch }, param) => { //我的客户统计
         }
     }).then((res) => {
         param.loading = false;
-        console.log(res.json().result)
+
         var clientCount = res.json().result;
         dispatch(types.MY_CLIENT_COUNT, clientCount);
     }, (res) => {
@@ -7253,7 +7345,7 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
         }
     }).then((res) => {
         param.loading = false;
-        console.log(res.json().result)
+
         var clientCount = res.json().result;
 
 
@@ -7264,8 +7356,112 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
     })
 }
 
+export const getClientAllcount = ({ dispatch }, param) => { //全部客户统计
+    param.loading = true;
+    let body = {
+        groupBy: param.groupBy
+    }
+    if (param.employeeId) {
+        body.employeeId = param.employeeId;
+    }
+    if (param.orgId) {
+        body.orgId = param.orgId;
+    }
+    if (param.country) {
+        body.country = param.country;
+    }
+    if (param.intl) {
+        body.intl = param.intl;
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        var clientCount = res.json().result;
+        //计算成交占比（traded/total）
+        let computeRate = function(traded, total) {
+            let rate;
+            if (total == 0 || traded == 0) {
+                rate = 0;
+            } else {
+                rate = traded / total * 10000;
+            }
+            if (rate != 0) {
+                let temp = rate.toString().split(".")[0];
+                rate = temp / 100;
+            }
+            return rate;
+        }
+        clientCount.tradedRate = computeRate(clientCount.traded, clientCount.total);
+        for (let i = 0; i < clientCount.statisticsList.length; i++) {
+            clientCount.statisticsList[i].tradedRate = computeRate(clientCount.statisticsList[i].traded, clientCount.statisticsList[i].total);
+        }
+
+        dispatch(types.MY_CLIENT_COUNT, clientCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
+export const getClientOverview = ({ dispatch }, param) => { //客户总览统计
+    param.loading = true;
+    let body = {};
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        var clientCount = res.json().result;
+        //计算成交占比（traded/total）
+        let computeRate = function(traded, total) {
+            let rate;
+            if (total == 0 || traded == 0) {
+                rate = 0;
+            } else {
+                rate = traded / total * 10000;
+            }
+            if (rate != 0) {
+                let temp = rate.toString().split(".")[0];
+                rate = temp / 100;
+            }
+            return rate;
+        }
+
+        for (let i = 0; i < clientCount.length; i++) {
+            clientCount[i].tradedRate = computeRate(clientCount[i].traded, clientCount[i].total);
+            let list = clientCount[i].statisticsList;
+            for (let k = 0; k < list.length; k++) {
+                list[k].tradedRate = computeRate(list[k].traded, list[k].total);
+            }
+        }
+
+        dispatch(types.MY_CLIENT_COUNT, clientCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
 export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交易统计)
-    console.log(param)
+
     if (param) param.loading = true;
     var url = apiUrl.clientList + '/report/order/list' + '?' + '&page=' + param.cur + '&pageSize=10';
     if (param.endTime && param.endTime !== '') {

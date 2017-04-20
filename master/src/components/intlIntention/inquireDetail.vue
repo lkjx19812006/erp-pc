@@ -165,7 +165,7 @@
                                                 <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                             </span> 
                                             <!-- 确认报价 -->
-                                            <button v-if="itemOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
+                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.items.arr[0].inquire!=3" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
                                                 确认报价
                                             </button>
                                         </h4>
@@ -244,13 +244,14 @@
                                                                 {{$t('static.quo_complete')}}
                                                             </div>
                                                         </td>
+                                                        <!-- 报价，当 -->
                                                         <td>
-                                                            <a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
+                                                            <a v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&item.inquire !=3" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
                                                             </a>
                                                         </td>
                                                         <!-- 保留上次报价 -->
                                                         <td>
-                                                            <button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.offerId)">保留上次报价</button>
+                                                            <button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1&&item.inquire !=3" @click="saveLast(item.offerId)">保留上次报价</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -275,7 +276,7 @@
                                                   <p class="pull-right" v-for="item in initIntlIntentionDetail.extractiveTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                               </span>
                                               <!-- 确认报价 -->
-                                              <button v-if="extractiveOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
+                                              <button v-if="extractiveOfferConfirm&&initIntlIntentionDetail.extractive.arr.length>0&&initIntlIntentionDetail.extractive.arr[0].inquire!=3" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.extractive.show&&initIntlIntentionDetail.extractive.arr.length>0">
@@ -359,12 +360,12 @@
                                                         </td>
                                                         <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> -->
                                                         <td>
-                                                            <a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
+                                                            <a v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&item.inquire !=3" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
                                                             </a>
                                                         </td>
                                                         <!-- 保留上次报价 -->
                                                         <td>
-                                                            <button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1" @click="saveLast(item.offerId)">保留上次报价</button>
+                                                            <button class="btn btn-info btn-xs" v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&initIntlIntentionDetail.inquireTime>1&&item.inquire !=3" @click="saveLast(item.offerId)">保留上次报价</button>
                                                         </td>
                                                     </tr>
                                             </table>
@@ -739,9 +740,13 @@ export default {
     methods: {
         getOperation: function(menus, path) {
             for (let i = 0; i < menus.length; i++) {
+
                 if (menus[i].url == path) {
+                    console.log(menus[i]);
                     for (let j = 0; j < menus[i].subcategory.length; j++) {
+
                         if (menus[i].subcategory[j].id == 120) {
+                            console.log("120");
                             this.itemOfferConfirm = true;
                             continue;
                         }
@@ -765,7 +770,7 @@ export default {
             this.pictureParam.img = img;
         },
         enfoldment: function(param) {
-            
+
             if (this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length == 0) {
                 this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = true;
             }
@@ -794,6 +799,7 @@ export default {
         },
         //编辑原材料报价
         editOffer: function(item, index) {
+            console.log(item);
             this.editOfferParam.id = item.offerId; //?报价ID？？？没有
             this.editOfferParam.intentionId = item.intentionId;
             this.editOfferParam.inquireId = item.inquireId;
@@ -812,14 +818,13 @@ export default {
             this.editOfferParam.number = item.number;
             this.editOfferParam.unit = item.unit;
             this.editOfferParam.offerEUnit = item.offerEUnit;
-            //this.editOfferParam.total = item.total;
+
             this.editOfferParam.comment = item.offerComment;
+            this.editOfferParam.supplier = item.supplier;
             this.editOfferParam.supplierName = item.supplierName;
             this.editOfferParam.origCurrency = item.origCurrency;
             this.editOfferParam.exchangeRate = item.exchangeRate;
             this.editOfferParam.offererName = this.$store.state.table.login.name;
-            /*      this.editOfferParam.countleft = this.initCurrencylist[item.origCurrency-1].rate;
-                    this.editOfferParam.countright = this.initCurrencylist[item.currency-1].rate;*/
             this.editOfferParam.lastIndex = this.param.index; //列表页，询价的索引，报价后将inquire改为=2
             this.editOfferParam.index = index; //条目的索引
             this.editOfferParam.show = true;

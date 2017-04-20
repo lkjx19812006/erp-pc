@@ -23,26 +23,31 @@
                     <!-- 单个业务员搜索 -->
                     <dt class="left transfer marg_top">业务员：</dt>
                     <dd class="left margin_right">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="{{$t('static.select_salesman')}}" @click="selectEmployee()">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="{{$t('static.select_salesman')}}" @click="selectEmployee()" readonly="readonly">
                     </dd>
                     <dt class="left transfer marg_top">询价状态：</dt>
                     <dd class="left margin_right">
-                         <select class="form-control" v-model="loadParam.inquire" @change="selectSearch()">
+                        <select class="form-control" v-model="loadParam.inquire" @change="selectSearch()">
                             <option value="0">初始</option>
                             <option value="1">询价中</option>
                             <option value="2">报价中</option>
                             <option value="3">报价完成</option>
-                         </select>
+                        </select>
                     </dd>
                     <dt class="left transfer marg_top">采购单来源：</dt>
                     <dd class="left margin_right">
-                         <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
+                        <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
                             <option value="0">业务员导入</option>
                             <option value="1">web</option>
                             <option value="2">android</option>
                             <option value="3">weixin</option>
                             <option value="4">ios</option>
-                         </select>
+                        </select>
+                    </dd>
+                    <!-- 新增采购品种搜索 -->
+                    <dt class="left transfer marg_top">采购品种：</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.purchaseContent" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:50px">
@@ -61,39 +66,33 @@
             </div>
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
-                     <tr>
+                    <tr>
+                        <th>采购单类型</th>
                         <th>客户名称</th>
                         <th>客户手机</th>
                         <th>业务员</th>
-                        <th>省</th>
-                        <th>市</th>
-                        <th>区</th>
                         <th>发布日期</th>
                         <th>过期时间</th>
                         <th>采购单来源</th>
                         <th>采购内容描述</th>
                         <th>备注</th>
                         <th>询价状态</th>
-                        
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in initAllPurchaseList">
+                        <td>{{item.type | indentType}}</td>
                         <td>
                             <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
                         <td>{{item.customerPhone}}</td>
-                        <td>{{item.employee}}</td>
-                        <td>{{item.province}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.district}}</td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.pubdate}}</td>
                         <td>{{item.duedate}}</td>
                         <td>{{item.source | indentSource}}</td>
                         <td>{{item.buyDesc}}</td>
                         <td>{{item.comment}}</td>
                         <td>{{item.inquire | inquire}}</td>
-                        
                     </tr>
                 </tbody>
             </table>
@@ -116,7 +115,7 @@ import {
     initLogin
 } from '../../../vuex/getters'
 import {
-   getPurchaseOrderList,
+    getPurchaseOrderList,
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -132,7 +131,7 @@ export default {
             initLogin
         },
         actions: {
-           getPurchaseOrderList,
+            getPurchaseOrderList,
         }
     },
     data() {
@@ -145,16 +144,16 @@ export default {
                 cur: 1,
                 all: 7,
                 total: "",
-                link:'/indent/queryList',
+                link: '/indent/queryList',
                 key: 'allPurchaseList',
-                source:'',
-                inquire:'',
-                customerName:'',
-                customerPhone:'',
-                employee:'',
-                employeeName:'',
-                org:'',
-                orgName:''
+                source: '',
+                inquire: '',
+                customerName: '',
+                customerPhone: '',
+                employee: '',
+                employeeName: '',
+                org: '',
+                orgName: ''
             },
             detailParam: {
                 show: false,
@@ -188,29 +187,30 @@ export default {
         selectSearch: function() {
             this.getPurchaseOrderList(this.loadParam);
         },
-        selectEmployee: function() {  
+
+        selectEmployee: function() {
             this.employeeParam.show = true;
         },
-        resetCondition:function(){  //清除搜索条件
-            this.loadParam.source='';
-            this.loadParam.inquire='';
-            this.loadParam.customerName='';
-            this.loadParam.customerPhone='';
-            this.loadParam.employee='';
-            this.loadParam.employeeName='';
-            this.loadParam.org='';
-            this.loadParam.orgName='';
+        resetCondition: function() { //清除搜索条件
+            this.loadParam.source = '';
+            this.loadParam.inquire = '';
+            this.loadParam.customerName = '';
+            this.loadParam.customerPhone = '';
+            this.loadParam.employee = '';
+            this.loadParam.employeeName = '';
+            this.loadParam.org = '';
+            this.loadParam.orgName = '';
+            this.loadParam.purchaseContent = '';
             this.getPurchaseOrderList(this.loadParam);
-            console.log(this.loadParam)
         },
-        selectOrg:function(){
-         this.selectOrgParam.show = true;
+        selectOrg: function() {
+            this.selectOrgParam.show = true;
         },
-       callback:function() {
+        callback: function() {
             if (this.selectOrgParam.orgId) {
-                if(this.loadParam.employeeName){
-                    this.loadParam.employee='';
-                    this.loadParam.employeeName='';
+                if (this.loadParam.employeeName) {
+                    this.loadParam.employee = '';
+                    this.loadParam.employeeName = '';
                 }
                 this.loadParam.org = this.selectOrgParam.orgId;
                 this.loadParam.orgName = this.selectOrgParam.orgName;
@@ -231,7 +231,7 @@ export default {
         }
     },
     created() {
-        this.getPurchaseOrderList(this.loadParam);        
+        this.getPurchaseOrderList(this.loadParam);
     },
     ready() {
         common('tab', 'table_box', 1);
@@ -248,9 +248,11 @@ export default {
     top: 33px;
     right: 106px;
 }
-.margin_right{
+
+.margin_right {
     margin-right: 15px
 }
+
 .transfer {
     margin-right: 8px;
 }
@@ -281,7 +283,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    min-width: 144px;
+    width: 170px;
+    min-width: 170px;
 }
 
 .service-nav {

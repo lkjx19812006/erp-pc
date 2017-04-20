@@ -1,363 +1,375 @@
 <template>
-	<div class="service-nav clearfix">
-		<div class="my_enterprise col-xs-1">部门客户统计</div>
-	</div>
-	<div class="order_table">
+    <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
+    <select-org-model :param="selectOrgParam" v-if="selectOrgParam.show"></select-org-model>
+    <div class="service-nav clearfix">
+        <div class="my_enterprise col-xs-1">全部客户统计</div>
+    </div>
+    <div class="order_table">
         <div class="cover_loading">
             <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
         </div>
-        <div class="count_top">
-        	<div class="count_select clearfix">
-        		<label class="pull-left">业务员：</label>
-        		<select class="form-control pull-left" style="width:170px;" v-model="loadParam.employeeId" @change="selectSearch()">
-        			<option slected value="">全部</option>
-        			<option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
-        		</select>
-        	</div>
-        	<table class="table table-hover table_color table-bordered table-striped " v-cloak>
-	            <thead>
-	                <tr style="background:none;color:#000">
-	                    <th rowspan="2">客户总数</th>
-	                    <th colspan="3">星级分类</th>
-	                    <th colspan="25">客户类型分类</th>
-	                </tr>
-	                <tr style="background:none;color:#000">
-	                    <th>一星</th>
-	                    <th>二星</th>
-						<th>三星</th>
-						<th>其他</th>
-						<th>合作社</th>
-						<th>药商</th>
-						<th>个体户</th>
-						<th>药厂</th>
-						<th>药店</th>
-						<th>贸易公司</th>
-						<th>医院</th>
-						<th>零售商行</th>
-						<th>药农</th>
-						<th>介绍人</th>
-						<th>药贩子</th>
-						<th>产地药商</th>
-						<th>养生诊所</th>
-						<th>化工厂</th>
-						<th>化妆品厂</th>
-						<th>提取物厂</th>
-						<th>食品厂</th>
-						<th>实验室</th>
-						<th>网上电商</th>
-						<th>中成药生产商</th>
-						<th>西药生产商</th>
-						<th>饮片厂</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr >
-	                	<td>{{item.name }}</td>
-	                	<td v-for="item in initClientcount.level">{{item.count}}</td>
-		                <td v-for="item in initClientcount.type">{{item.count}}</td>
-	                </tr>
-	            </tbody>
-	        </table>
+        <div class="clearfix" style="margin-top:10px">
+            <span v-show="loadParam.groupBy!='org_id'">
+                <dt class="left transfer marg_top">业务员：</dt>
+                <dd class="left margin_right">
+                    <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="按回车键搜索" readonly="true" @click="selectEmployee()">
+                </dd>
+            </span>
+            <dt class="left transfer marg_top">部门：</dt>
+            <dd class="left margin_right">
+                <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="按回车键搜索" readonly="true" @click="selectOrg()">
+            </dd>
+            <dt class="left transfer marg_top">是否国际：</dt>
+            <dd class="left margin_right">
+                <select v-model="loadParam.intl" class="form-control" @change="selectSearch()">
+                    <option value="">全部</option>
+                    <option value="0">否</option>
+                    <option value="1">是</option>
+                </select>
+            </dd>
+            <!-- <dt class="left transfer marg_top">国家：</dt>
+            <div type="text" class="left margin_right">
+                <v-select :debounce="250" :value.sync="country" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
+                </v-select>
+            </div> -->
+            <dd class="pull-left" style="margin-right:10px">
+                <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="selectSearch()">搜索</button>
+            </dd>
+            <dd class="pull-left" style="margin-right:10px">
+                <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="resetCondition()">清空条件</button>
+            </dd>
+            <dd class="pull-left" style="margin-right:10px">
+                <button type="button" class="btn btn-primary" style="margin-right:10px" height="24" width="24" class="new_btn" @click="selectSearch()">刷新</button>
+            </dd>
         </div>
-        <div class="clearfix">
-	        <div class="click_change pull-left">
-	        	<span class="date_active" v-bind:class="{ 'date_active': isA}" @click="clickday()">日</span>
-	        	<span v-bind:class="{ 'date_active': !isA&&isB}" @click="clickweek()">周</span>
-	        	<span v-bind:class="{ 'date_active': !isA&&!isB&&!isC}" @click="clickmonth()">月</span>
-	        	<span v-bind:class="{ 'date_active': !isA&&!isB&&isC}" @click="clickyear()">年</span>
-	        </div>
-	        <div class="count_select clearfix pull-right">
-        		<label class="pull-left">业务员：</label>
-        		<select class="form-control pull-left" style="width:170px;" v-model="loadParam.employeeId" @change="selectSearch()">
-        			<option slected value="">全部</option>
-        			<option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
-        		</select>
-        	</div>
-	    </div>
+        <div style="max-height: 200px;margin-top:10px">
+            <table class="table table-hover table_color table-bordered table-striped " v-cloak>
+                <thead>
+                    <tr style="background:none;color:#000;">
+                        <th></th>
+                        <th>客户数：</th>
+                        <th>供应商数：</th>
+                        <th>成交客户数：</th>
+                        <th>成交占比：</th>
+                        <th>成交总额：</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td>合计</td>
+                    <td>{{initClientcount.total}}</td>
+                    <td>{{initClientcount.supplier}}</td>
+                    <td>{{initClientcount.traded}}</td>
+                    <td>{{initClientcount.tradedRate}}<span v-if="initClientcount.tradedRate!=0">%</span></td>
+                    <td>{{initClientcount.tradedTotal | money}}元</td>
+                </tbody>
+            </table>
+        </div>
+        <div class="clearfix" style="margin-top:10px">
+            <div class="btn-group pull-left">
+                <button type="button" class="btn btn-default" style="width:70px" v-bind:class="{ 'btn-warning': loadParam.groupBy=='employee_id'}" @click="selectGroupBy('employee_id')">
+                    业务员
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.groupBy=='org_id'}" @click="selectGroupBy('org_id')">
+                    部门
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.groupBy=='country'}" @click="selectGroupBy('country')">
+                    国家
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.groupBy=='province'}" @click="selectGroupBy('province')">
+                    省
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.groupBy=='city'}" @click="selectGroupBy('city')">
+                    市
+                </button>
+            </div>
+        </div>
         <div class="module clear">
-        	<div class="module_table" v-show="currentView==1">
-        		<div class="module_thead  clearfix" >
-        			<div class="module_th">日期</div>
-        			<div class="module_th">业务员</div>
-        			<div class="module_th">每日新增</div>
-        			<!-- <div class="module_th">成交量</div> -->
-        			<div class="module_th">撮合新增成交</div>
-        			<div class="module_th">自营新增成交</div>
-        			<div class="module_th">撮合复购成交</div>
-        			<div class="module_th">自营复购成交</div>
-        			<div class="module_th">三方新增成交</div>
-        			<div class="module_th">三方复购成交</div>
-        		</div>
-        		<div class="module_tbody" id="module_judge">
-        			<div class="module_tr clearfix" v-for="item in initClientcount.day">
-        				<div class="module_td">{{item.date}}</div>
-        				<div class="module_td">{{item.employeeName}}</div>
-	        			<div class="module_td">{{item.count}}</div>
-	        			<div class="module_td">{{item.matchAddCount}}</div>
-	        			<div class="module_td">{{item.selfAddCount}}</div>
-	        			<div class="module_td">{{item.matchRepeatCount}}</div>
-	        			<div class="module_td">{{item.selfRepeatCount}}</div>
-	        			<div class="module_td">{{item.thirdAddCount}}</div>
-	        			<div class="module_td">{{item.thirdRepeatCount}}</div>
-        			</div>
-        		</div>
-        	</div>
-        	<div class="module_table" v-show="currentView==2">
-        		<div class="module_thead  clearfix">
-        			<div class="module_th">日期</div>
-        			<div class="module_th">业务员</div>
-        			<div class="module_th">每周新增</div>
-        			<!-- <div class="module_th">成交量</div> -->
-        			<div class="module_th">撮合新增成交</div>
-        			<div class="module_th">自营新增成交</div>
-        			<div class="module_th">撮合复购成交</div>
-        			<div class="module_th">自营复购成交</div>
-        			<div class="module_th">三方新增成交</div>
-        			<div class="module_th">三方复购成交</div>
-        		</div>
-        		<div class="module_tbody">
-        			<div class="module_tr clearfix" v-for="item in initClientcount.week">
-        				<div class="module_td">{{item.date}}</div>
-        				<div class="module_td">{{item.employeeName}}</div>
-	        			<div class="module_td">{{item.count}}</div>
-	        			<div class="module_td">{{item.matchAddCount}}</div>
-	        			<div class="module_td">{{item.selfAddCount}}</div>
-	        			<div class="module_td">{{item.matchRepeatCount}}</div>
-	        			<div class="module_td">{{item.selfRepeatCount}}</div>
-	        			<div class="module_td">{{item.thirdAddCount}}</div>
-	        			<div class="module_td">{{item.thirdRepeatCount}}</div>
-        			</div>
-        		</div>
-        	</div>
-        	<div class="module_table" v-show="currentView==3">
-        		<div class="module_thead  clearfix">
-        			<div class="module_th">日期</div>
-        			<div class="module_th">业务员</div>
-        			<div class="module_th">每月新增</div>
-        			<!-- <div class="module_th">成交量</div> -->
-        			<div class="module_th">撮合新增成交</div>
-        			<div class="module_th">自营新增成交</div>
-        			<div class="module_th">撮合复购成交</div>
-        			<div class="module_th">自营复购成交</div>
-        			<div class="module_th">三方新增成交</div>
-        			<div class="module_th">三方复购成交</div>
-        		</div>
-        		<div class="module_tbody">
-        			<div class="module_tr clearfix" v-for="item in initClientcount.month">
-        				<div class="module_td">{{item.date}}</div>
-        				<div class="module_td">{{item.employeeName}}</div>
-	        			<div class="module_td">{{item.count}}</div>
-	        			<div class="module_td">{{item.matchAddCount}}</div>
-	        			<div class="module_td">{{item.selfAddCount}}</div>
-	        			<div class="module_td">{{item.matchRepeatCount}}</div>
-	        			<div class="module_td">{{item.selfRepeatCount}}</div>
-	        			<div class="module_td">{{item.thirdAddCount}}</div>
-	        			<div class="module_td">{{item.thirdRepeatCount}}</div>
-        			</div>
-        		</div>
-        	</div>
-        	<div class="module_table" v-show="currentView==4">
-        		<div class="module_thead  clearfix">
-        			<div class="module_th">日期</div>
-        			<div class="module_th">业务员</div>
-        			<div class="module_th">每年新增</div>
-        			<!-- <div class="module_th">成交量</div> -->
-        			<div class="module_th">撮合新增成交</div>
-        			<div class="module_th">自营新增成交</div>
-        			<div class="module_th">撮合复购成交</div>
-        			<div class="module_th">自营复购成交</div>
-        			<div class="module_th">三方新增成交</div>
-        			<div class="module_th">三方复购成交</div>
-        		</div>
-        		<div class="module_tbody">
-        			<div class="module_tr clearfix" v-for="item in initClientcount.year">
-        				<div class="module_td">{{item.date}}</div>
-        				<div class="module_td">{{item.employeeName}}</div>
-	        			<div class="module_td">{{item.count}}</div>
-	        			<div class="module_td">{{item.matchAddCount}}</div>
-	        			<div class="module_td">{{item.selfAddCount}}</div>
-	        			<div class="module_td">{{item.matchRepeatCount}}</div>
-	        			<div class="module_td">{{item.selfRepeatCount}}</div>
-	        			<div class="module_td">{{item.thirdAddCount}}</div>
-	        			<div class="module_td">{{item.thirdRepeatCount}}</div>
-        			</div>
-        		</div>
-        	</div>
+            <div class="module_table">
+                <div class="module_thead  clearfix">
+                    <div class="module_th">
+                        <span v-if="loadParam.groupBy=='employee_id'">业务员</span>
+                        <span v-if="loadParam.groupBy=='org_id'">部门</span>
+                        <span v-if="loadParam.groupBy=='country'">国家</span>
+                        <span v-if="loadParam.groupBy=='province'">省</span>
+                        <span v-if="loadParam.groupBy=='city'">市</span>
+                    </div>
+                    <div class="module_th">总客户数</div>
+                    <div class="module_th">供应商数</div>
+                    <div class="module_th">成交客户数</div>
+                    <div class="module_th">成交占比</div>
+                    <div class="module_th">成交总额</div>
+                </div>
+                <div class="module_tbody" id="module_judge">
+                    <div class="module_tr clearfix" v-for="item in initClientcount.statisticsList">
+                        <div class="module_td">{{item.name}}</div>
+                        <div class="module_td">{{item.total}}</div>
+                        <div class="module_td">{{item.supplier}}</div>
+                        <div class="module_td">{{item.traded}}</div>
+                        <div class="module_td">{{item.tradedRate}}<span v-if="item.tradedRate!=0">%</span></div>
+                        <div class="module_td">{{item.tradedTotal | money}}元</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script>
-	import {
-		initClientcount,
-		initEmployeeList,
-		initLogin
-	} from '../../vuex/getters'
-	import {
-		getClientcount,
-		getEmployeeList,
-		getClientOrgcount
-	} from '../../vuex/actions'
-	import pagination from  '../pagination'
-	export default {
-		components:{
-			pagination
-		},
-		data() {
-	        return {
-	            loadParam: {
-	                loading: true,
-	                show:false,
-	                color: '#5dc596',
-	                size: '15px',
-	                cur: 1,
-	                all: 7,
-	                total:0,
-	                link:'/count/getCustomerAdd?role=org',
-	                orgId:this.initLogin.orgId,
-	                employeeId:''
-	            },
-	            isA:true,
-	            isB:false,
-	            isC:false,
-	            currentView:1
-	        }
-	    },
-	    methods:{
-	    	clickday:function(){
-	    		this.isA = true;
-	    		this.currentView = 1;
-	    	},
-	    	clickweek:function(){
-	    		this.isB = true;
-	    		this.isA = false;
-	    		this.currentView = 2;
-	    	},
-	    	clickmonth:function(){
-	    		this.isB = false;
-	    		this.isA = false;
-	    		this.isC = false;
-	    		this.currentView = 3;
-	    	},
-	    	clickyear:function(){
-	    		this.isB = false;
-	    		this.isA = false;
-	    		this.isC = true;
-	    		this.currentView = 4;
-	    	},
-	    	selectSearch:function(){
-	    		this.getClientcount(this.loadParam);
-	    	}
-	    },
-	    vuex: {
-	        getters: {
-	            initClientcount,
-	            initEmployeeList,
-	            initLogin
-	        },
-	        actions: {
-	            getClientcount,
-	            getEmployeeList,
-	            getClientOrgcount
-	        }
-	    },
-	    events: {
-	        fresh: function(input) {
-	            this.loadParam.cur = input;
-	            this.getClientOrgcount(this.loadParam);
-	        },
-	    },
-	    created() {
-	        this.getClientOrgcount(this.loadParam);
-	        this.getEmployeeList(this.loadParam);
-	        console.log(this.initLogin);
-	        window.onload=function(){ 
-	        	console.log(document.getElementById('module_judge').style.maxHeight)
-	        	if(document.getElementById('module_judge').style.maxHeight < 500){
-	        		document.getElementsByClassName('module_thead')[0].style.paddingRight = '17px'	}
-			} 
-	    }
-	}
+import {
+    initClientcount,
+    initLogin,
+    initCountrylist
+} from '../../vuex/getters'
+import {
+
+    getCountryList,
+    getClientAllcount,
+} from '../../vuex/actions'
+import pagination from '../pagination'
+import employeeModel from '../clientRelate/searchEmpInfo'
+import selectOrgModel from '../../components/tips/treeDialog'
+import vSelect from '../tools/vueSelect/components/Select'
+export default {
+    components: {
+        pagination,
+        vSelect,
+        employeeModel,
+        selectOrgModel
+    },
+    data() {
+        return {
+            loadParam: {
+                loading: true,
+                show: false,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7,
+                total: 0,
+                link: '/customer/allStatistics',
+                groupBy: 'employee_id',
+                orgId: '',
+                orgName: '',
+                employeeId: '',
+                employeeName: '',
+                country: '',
+                intl: '0'
+
+            },
+            countryParam: {
+                loading: true,
+                show: false,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7
+            },
+            country: {
+                id: '',
+                cname: '',
+                cnameEn: ''
+            },
+            employeeParam: {
+                show: false,
+                org: true,
+                orgId: '',
+                employeeId: '',
+                employeeName: ''
+            },
+            selectOrgParam: {
+                show: false,
+                orgId: '',
+                orgName: '',
+                callback: this.callback
+            },
+
+        }
+    },
+    methods: {
+        selectGroupBy: function(groupBy) {
+            this.loadParam.groupBy = groupBy;
+            this.selectSearch();
+        },
+        selectSearch: function() {
+            this.loadParam.country = '';
+            if (this.country.id) {
+                this.loadParam.country = this.country.id;
+            }
+            this.getClientAllcount(this.loadParam);
+        },
+        selectEmployee: function() {
+            this.employeeParam.show = true;
+        },
+        selectOrg: function() {
+            this.selectOrgParam.show = true;
+        },
+        callback: function() {
+            if (this.selectOrgParam.orgId) {
+                this.loadParam.orgId = this.selectOrgParam.orgId;
+                this.loadParam.orgName = this.selectOrgParam.orgName;
+                this.employeeParam.orgId = this.selectOrgParam.orgId;
+                this.selectSearch();
+            }
+        },
+        resetCondition: function() {
+            this.loadParam.employeeId = "";
+            this.loadParam.employeeName = "";
+            this.loadParam.orgId = "";
+            this.loadParam.orgName = "";
+            //需要把country内容清空
+            /*this.country.id = "";
+            this.country.cname = "";
+            this.country.cnameEn = "";*/
+            this.selectSearch();
+        }
+    },
+    vuex: {
+        getters: {
+            initClientcount,
+            initLogin,
+            initCountrylist
+        },
+        actions: {
+            getCountryList,
+            getClientAllcount
+        }
+    },
+    events: {
+        fresh: function(input) {
+            this.loadParam.cur = input;
+        },
+        a: function(employee) {
+            this.loadParam.employeeId = employee.employeeId;
+            this.loadParam.employeeName = employee.employeeName;
+        },
+    },
+    created() {
+        this.getCountryList(this.countryParam);
+        this.getClientAllcount(this.loadParam);
+        window.onload = function() {
+            console.log(document.getElementById('module_judge').style.maxHeight)
+            if (document.getElementById('module_judge').style.maxHeight < 500) {
+                document.getElementsByClassName('module_thead')[0].style.paddingRight = '17px'
+            }
+        }
+    }
+}
 </script>
 <style scoped>
-	.module{
-		position: relative;
-	}
-	.module_table{
-		border: 1px solid #ddd;
-		max-height:400px; 
-		padding: 0;
-		position: absolute;
-		width: 100%;
-		float: left;
-		overflow: hidden;
-	}
-	.module_thead{
-		position: absolute;
-		z-index: 10;
-		left: 0;
-		right: 0;
-		width:100%;
-	}
-	.module_tbody{
-		margin-top: 30px;
-		max-height:500px;
-		line-height:25px;
-		overflow: auto;
-	}
-	.module_tr{
-		border-bottom: 1px solid #ddd;
-	}
-	.module_tr:last-of-type{
-		border-bottom: none;
-	}
-	.module_th{
-		background: #004796;
-		color: #fff;
-		float: left;
-		width: 11.111%;
-		line-height: 30px;
-	}
-	.module_td{
-		float: left;
-		width:11.111%;
-		line-height: 30px;
-	}
-	.module_th,.module_td{
-		border-right: 1px solid #ddd;
-	}
-	.module_th:last-of-type,.module_td:last-of-type{
-		border-right: none;
-	}
-	.click_change{
-		text-align: left;
-		border: 1px solid #ddd;
-		border-bottom: none;
-		border-right: none;
-		width: 224px;
-		line-height: 30px;
-		margin-top: 20px;
-	}
-	.click_change span{
-		padding:0 20px;
-		display: inline-block;
-		border-right: 1px solid #ddd;
-		cursor: pointer;
-	}
-	.date_active{
-		background: #fa6705;
-		color: #fff;
-	}
-	.count_top{
-		width: 100%;
-	}
-	.count_select{
-		text-align: left;
-		padding-left: 16px;
-		padding-bottom: 8px;
-		padding-top: 8px;
-		padding-right: 10px;
-	}
-	.count_select select{
-		border: 1px solid #ddd;
-	}
+.transfer {
+    margin-right: 8px;
+}
+
+.margin_right {
+    margin-right: 15px
+}
+
+.table>thead>tr>th {
+    width: 285px;
+}
+
+.module {
+    position: relative;
+}
+
+.module_table {
+    border: 1px solid #ddd;
+    max-height: 600px;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+    float: left;
+    overflow: hidden;
+}
+
+.module_thead {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    right: 0;
+}
+
+.module_tbody {
+    margin-top: 30px;
+    max-height: 500px;
+    line-height: 25px;
+    overflow: auto;
+}
+
+.module_tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.clear {
+    clear: both;
+}
+
+.module_tr:last-of-type {
+    border-bottom: none;
+}
+
+.module_th {
+    background: #004796;
+    color: #fff;
+    float: left;
+    width: 16.666%;
+    line-height: 30px;
+}
+
+.module_td {
+    float: left;
+    width: 16.666%;
+    line-height: 30px;
+}
+
+.module_th,
+.module_td {
+    border-right: 1px solid #ddd;
+}
+
+.module_th:last-of-type,
+.module_td:last-of-type {
+    border-right: none;
+}
+
+.click_change {
+    text-align: left;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-right: none;
+    width: 224px;
+    line-height: 30px;
+    margin-top: 20px;
+}
+
+.click_change span {
+    padding: 0 20px;
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.date_active {
+    background: #fa6705;
+    color: #fff;
+}
+
+.count_top {
+    width: 100%;
+}
+
+.count_select {
+    text-align: left;
+    padding-left: 16px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    padding-right: 10px;
+}
+
+.count_select select {
+    border: 1px solid #ddd;
+}
+
+.btn-warning {
+    background-color: #fa6705;
+}
 </style>

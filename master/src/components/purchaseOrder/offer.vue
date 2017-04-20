@@ -1,7 +1,8 @@
 <template>
-    <!-- 创建订单 -->
+    <!-- 意向报价 -->
     <div>
-        <supplier-model :param="customerParam" v-if="customerParam.show"></supplier-model>
+        <customer-model :param="customerParam" v-if="customerParam.show"></customer-model>
+        <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
         <div class="container modal_con" v-show="param.show">
             <div @click="param.show=false" class="top-title">
@@ -14,7 +15,7 @@
                 <div class="edit-model">
                     <section class="editsection">
                         <div style="margin-top:20px;">
-                            <img src="/static/images/breedInfo@2x.png" style="display:inline" />
+                            <img src="/static/images/breedinfo@2x.png" style="display:inline" />
                             <h5 style="display:inline">基本信息</h5>
                         </div>
                         <div class="clearfix">
@@ -49,8 +50,26 @@
                                 <div class="left" style="width:45%;">
                                     <label class="editlabel">单位<span class="system_danger" v-if="$validation.unit.required">{{$t('static.required')}}</span></label>
                                     <select class="form-control edit-input" v-model="param.unit" disabled="true">
-                                        <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}({{item.ename}})</option>
+                                        <option v-for="item in initUnitlist" value="{{item.id}}">元/{{item.name}}({{item.ename}})</option>
                                     </select>
+                                </div>
+                            </div>
+                            <!-- 质量要求和报价备注 -->
+                            <div class="editpage-input col-md-12">
+                                <div class="left" style="width:50%;">
+                                    <label class="editlabel">质量要求</label>
+                                    <input type="text" v-model="param.quality" class="form-control edit-input" />
+                                </div>
+                                <div class="left" style="width:50%;">
+                                    <label class="editlabel">报价备注</label>
+                                    <input type="text" v-model="param.description" class="form-control edit-input" />
+                                </div>
+                            </div>
+                            <!-- 产地 -->
+                            <div class="editpage-input col-md-12">
+                                <div class="left" style="width:50%">
+                                    <label class="editlabel">产地</label>
+                                    <input type="text" v-model="param.location" class="form-control edit-input" />
                                 </div>
                             </div>
                         </div>
@@ -71,7 +90,8 @@
 import vSelect from '../tools/vueSelect/components/Select'
 import pressImage from '../imagePress'
 import inputSelect from '../tools/vueSelect/components/inputselect'
-import supplierModel from '../order/second_order/selectAllSupplier.vue'
+import tipsdialogModel from '../tips/tipDialog'
+import customerModel from '../Intention/clientname'
 import {
     initUnitlist,
     initEmployeeList,
@@ -85,7 +105,8 @@ import {
 } from '../../vuex/actions'
 export default {
     components: {
-        supplierModel,
+        customerModel,
+        tipsdialogModel,
         vSelect,
         inputSelect,
         pressImage,
@@ -96,6 +117,11 @@ export default {
             customerParam: {
                 show: false,
                 link: '/customer/suppliers'
+            },
+            tipsParam: {
+                show: false,
+                name: '',
+                alert: true
             },
         }
     },
@@ -116,19 +142,25 @@ export default {
             this.customerParam.show = true;
         },
         confirm: function() {
+            if (this.param.number < 0) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "数量不能为负数";
+                return;
+            }
+            if (this.param.price < 0) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "单价不能为负数";
+                return;
+            }
             this.offerPurchaseOrder(this.param);
         }
 
 
     },
-    watch: {
-
-    },
     events: {
-
-        supplier: function(supplier) {
-            this.param.customerId = supplier.customer;
-            this.param.customerName = supplier.customerName;
+        customer: function(customer) {
+            this.param.customerId = customer.customerId;
+            this.param.customerName = customer.customerName;
         },
 
     },

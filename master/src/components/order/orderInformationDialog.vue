@@ -134,6 +134,7 @@
                             </div>
                         </div>
                     </section>
+                    <!-- 原材料信息 -->
                     <div>
                         <div style="margin-top:20px;">
                             <img src="/static/images/breedinfo@2x.png" style="display:inline" />
@@ -236,18 +237,19 @@
                                         <label class="editlabel">{{$t('static.quality')}}</label>
                                         <input type="text" v-model="breedInfo.quality" class="form-control edit-input" />
                                     </div>
+                                    <!-- 产地和规格 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.specification')}}</label>
-                                        <input type="text" v-show="!breedParam.id" v-model="breedInfo.spec" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                                        <div type="text" class="edit-input" v-if="breedParam.id">
+                                        <input type="text" v-show="!breedInfo.breedName" v-model="breedInfo.spec" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                                        <div type="text" class="edit-input" v-if="breedInfo.breedName">
                                             <input-select :value.sync="breedInfo.spec" :prevalue="breedInfo.spec" :options="initBreedDetail.specs.arr" placeholder="规格/Specifications" label="name">
                                             </input-select>
                                         </div>
                                     </div>
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.origin')}}</label>
-                                        <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                                        <div type="text" class="edit-input" v-if="breedParam.id">
+                                        <input type="text" v-show="!breedInfo.breedName" v-model="breedInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                                        <div type="text" class="edit-input" v-if="breedInfo.breedName">
                                             <input-select :prevalue="breedInfo.location" :value.sync="breedInfo.location" :options="initBreedDetail.locals.arr" placeholder="产地/Origin" label="name">
                                             </input-select>
                                         </div>
@@ -313,7 +315,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.goods.length>0" @click="confirm()">{{$t('static.confirm')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.goods.length>0&&breedInfo.status==0" @click="confirm()">{{$t('static.confirm')}}</button>
                     <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.confirm')}}</button>
                 </div>
             </validator>
@@ -591,22 +593,23 @@ export default {
         },
         showModifyBreed: function(index) {
             this.breedInfo.status = 2;
-            this.updateParam.price = this.param.goods[index].price,
-                this.updateParam.number = this.param.goods[index].number,
-                this.updateParam.index = index;
-            this.breedInfo.breedId = this.param.goods[index].breedId,
-                this.breedInfo.breedName = this.param.goods[index].breedName,
-                this.breedInfo.title = this.param.goods[index].title,
-                this.breedInfo.quality = this.param.goods[index].quality,
-                this.breedInfo.location = this.param.goods[index].location,
-                this.breedInfo.spec = this.param.goods[index].spec,
-                this.breedInfo.number = this.param.goods[index].number,
-                this.breedInfo.unit = this.param.goods[index].unit,
-                this.breedInfo.price = this.param.goods[index].price,
-                this.breedInfo.costPrice = this.param.goods[index].costPrice,
-                this.breedInfo.sourceType = this.param.goods[index].sourceType,
-                this.breedInfo.id = this.param.goods[index].orderId,
-                this.updateParam.show = true;
+            this.updateParam.number = this.param.goods[index].number;
+            this.updateParam.price = this.param.goods[index].price;
+            this.updateParam.costPrice = this.param.goods[index].costPrice;
+            this.updateParam.index = index;
+            this.breedInfo.breedId = this.param.goods[index].breedId;
+            this.breedInfo.breedName = this.param.goods[index].breedName;
+            this.breedInfo.title = this.param.goods[index].title;
+            this.breedInfo.quality = this.param.goods[index].quality;
+            this.breedInfo.location = this.param.goods[index].location;
+            this.breedInfo.spec = this.param.goods[index].spec;
+            this.breedInfo.number = this.param.goods[index].number;
+            this.breedInfo.unit = this.param.goods[index].unit;
+            this.breedInfo.price = this.param.goods[index].price;
+            this.breedInfo.costPrice = this.param.goods[index].costPrice;
+            this.breedInfo.sourceType = this.param.goods[index].sourceType;
+            this.breedInfo.id = this.param.goods[index].orderId;
+            this.updateParam.show = true;
             this.altogether -= parseFloat(this.breedInfo.number) * parseFloat(this.breedInfo.price);
             this.costmoney -= parseFloat(this.breedInfo.number) * parseFloat(this.breedInfo.costPrice);
         },
@@ -670,6 +673,7 @@ export default {
             this.district.cname = "";
         },
         modifyBreed: function() {
+
             this.param.goods[this.updateParam.index].breedId = this.breedInfo.breedId,
                 this.param.goods[this.updateParam.index].breedName = this.breedInfo.breedName,
                 this.param.goods[this.updateParam.index].title = this.breedInfo.breedName,

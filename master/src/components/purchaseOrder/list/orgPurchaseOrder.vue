@@ -22,22 +22,27 @@
                     </dd>
                     <dt class="left transfer marg_top">询价状态：</dt>
                     <dd class="left margin_right">
-                         <select class="form-control" v-model="loadParam.inquire" @change="selectSearch()">
+                        <select class="form-control" v-model="loadParam.inquire" @change="selectSearch()">
                             <option value="0">初始</option>
                             <option value="1">询价中</option>
                             <option value="2">报价中</option>
                             <option value="3">报价完成</option>
-                         </select>
+                        </select>
                     </dd>
                     <dt class="left transfer marg_top">采购单来源：</dt>
                     <dd class="left margin_right">
-                         <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
+                        <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
                             <option value="0">业务员导入</option>
                             <option value="1">web</option>
                             <option value="2">android</option>
                             <option value="3">weixin</option>
                             <option value="4">ios</option>
-                         </select>
+                        </select>
+                    </dd>
+                    <!-- 新增采购品种搜索 -->
+                    <dt class="left transfer marg_top">采购品种：</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.purchaseContent" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:50px">
@@ -57,12 +62,10 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
+                        <th>采购单类型</th>
                         <th>客户名称</th>
                         <th>客户手机</th>
                         <th>业务员</th>
-                        <th>省</th>
-                        <th>市</th>
-                        <th>区</th>
                         <th>发布日期</th>
                         <th>过期时间</th>
                         <th>采购单来源</th>
@@ -74,14 +77,12 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initOrgPurchaseList">
+                        <td>{{item.type | indentType}}</td>
                         <td>
                             <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
                         <td>{{item.customerPhone}}</td>
-                        <td>{{item.employee}}</td>
-                        <td>{{item.province}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.district}}</td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.pubdate}}</td>
                         <td>{{item.duedate}}</td>
                         <td>{{item.source | indentSource}}</td>
@@ -89,8 +90,7 @@
                         <td>{{item.comment}}</td>
                         <td>{{item.inquire | inquire}}</td>
                         <td style="text-align: left">
-                            <a class="operate" @click.stop="deletePurchase(item.id,$index)"><img src="/static/images/del.png" height="18" width="28" alt="删除" />
-                            </a>
+                            <button v-if="item.inquire==0" class="btn btn-primary btn-apply" @click.stop="deletePurchase(item.id,$index)">删除</button>
                         </td>
                     </tr>
                 </tbody>
@@ -131,8 +131,8 @@ export default {
             initLogin
         },
         actions: {
-           getPurchaseOrderList,
-           deletePurchaseOrder
+            getPurchaseOrderList,
+            deletePurchaseOrder
         }
     },
     data() {
@@ -145,14 +145,14 @@ export default {
                 cur: 1,
                 all: 7,
                 total: "",
-                link:'/indent/queryOrgList',
+                link: '/indent/queryOrgList',
                 key: 'orgPurchaseList',
-                source:'',
-                inquire:'',
-                customerName:'',
-                customerPhone:'',
-                employee:'',
-                employeeName:''
+                source: '',
+                inquire: '',
+                customerName: '',
+                customerPhone: '',
+                employee: '',
+                employeeName: ''
             },
             detailParam: {
                 show: false,
@@ -161,7 +161,7 @@ export default {
                 id: "",
                 customerId: ""
             },
-           deleteParam: {
+            deleteParam: {
                 show: false,
                 link: this.deletePurchaseOrder, //删除的接口地址
                 key: "orgPurchaseList",
@@ -184,16 +184,17 @@ export default {
         selectSearch: function() {
             this.getPurchaseOrderList(this.loadParam);
         },
-        selectEmployee: function() {   
+        selectEmployee: function() {
             this.employeeParam.show = true;
         },
-        resetCondition:function(){  //清除搜索条件
-            this.loadParam.source='';
-            this.loadParam.inquire='';
-            this.loadParam.customerName='';
-            this.loadParam.customerPhone='';
-            this.loadParam.employee='';
-            this.loadParam.employeeName='';
+        resetCondition: function() { //清除搜索条件
+            this.loadParam.source = '';
+            this.loadParam.inquire = '';
+            this.loadParam.customerName = '';
+            this.loadParam.customerPhone = '';
+            this.loadParam.employee = '';
+            this.loadParam.employeeName = '';
+            this.loadParam.purchaseContent = '';
             this.getPurchaseOrderList(this.loadParam);
         },
         detailClick: function(id, customerId) {
@@ -201,7 +202,7 @@ export default {
             this.detailParam.customerId = customerId;
             this.detailParam.show = true;
         },
-        deletePurchase: function(id,index) {
+        deletePurchase: function(id, index) {
             this.deleteParam.show = true;
             this.deleteParam.id = id;
             this.deleteParam.index = index;
@@ -220,7 +221,7 @@ export default {
         },
     },
     created() {
-        this.getPurchaseOrderList(this.loadParam);        
+        this.getPurchaseOrderList(this.loadParam);
     },
     ready() {
         common('tab', 'table_box', 1);
@@ -237,9 +238,11 @@ export default {
     top: 33px;
     right: 106px;
 }
-.margin_right{
+
+.margin_right {
     margin-right: 15px
 }
+
 .transfer {
     margin-right: 8px;
 }
@@ -270,8 +273,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 131px;
-    min-width: 110px;
+    width: 150px;
+    min-width: 150px;
 }
 
 .service-nav {

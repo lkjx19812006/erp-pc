@@ -18,7 +18,7 @@
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top">{{$t("static.client_name")}}：</dt>
                         <dd class="left">
-                            <input type="text" class="form-control" v-model="loadParam.name" placeholder={{$t("static.Enter_search")}} @keyup.enter="selectSearch()">
+                            <input type="text" class="form-control" v-model="loadParam.name" placeholder="{{$t('static.Enter_search')}}" @keyup.enter="selectSearch()">
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
@@ -80,7 +80,7 @@
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top" style="letter-spacing:3px">{{$t("static.cellphone")}}：</dt>
                         <dd class="left">
-                            <input type="text" class="form-control" v-model="loadParam.phone" placeholder={{$t("static.Enter_search")}} @keyup.enter="selectSearch()">
+                            <input type="text" class="form-control" v-model="loadParam.phone" placeholder="{{$t('static.Enter_search')}}" @keyup.enter="selectSearch()">
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
@@ -98,8 +98,12 @@
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top">{{$t("static.business_scope")}}：</dt>
                         <dd class="left">
-                            <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder={{$t("static.Enter_search")}} @keyup.enter="selectSearch()">
+                            <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder="{{$t('static.Enter_search')}}" @keyup.enter="selectSearch()">
                         </dd>
+                    </dl>
+                    <dl class="clear left transfer">
+                        <dt class="left transfer marg_top">已成交：</dt>
+                        <label class="checkbox_unselect" style="background-position:1px 5px" v-bind:class="{'checkbox_unselect':!loadParam.orderSum,'checkbox_select':loadParam.orderSum}" id="client_ids" @click="selectOrderSum()"></label>
                     </dl>
                     <dd class="left transfer">
                         <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">{{$t("static.search")}}</button>
@@ -177,6 +181,7 @@
                             <th>{{$t('static.recent_contact')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.transaction_num')}}</th>
+                            <th>成交金额</th>
                             <th>{{$t('static.client_type')}}</th>
                             <th>{{$t('static.contact')}}</th>
                             <th>{{$t('static.position')}}</th>
@@ -212,8 +217,9 @@
                                 <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                             </td>
                             <td>{{item.employeeName}}</td>
-                            <td>{{item.ctime}}</td>
-                            <td>{{item.lastOrderTime}}</td>
+                            <!-- 修改时间 -->
+                            <td>{{item.ctime|timeFilters}}</td>
+                            <td>{{item.lastOrderTim}}</td>
                             <td class="underline" @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -225,6 +231,7 @@
                                 key:'myCustomerList'
                                 })">{{item.name}}</td>
                             <td>{{item.orderTotal}}</td>
+                            <td>{{item.orderAmount}}元</td>
                             <td v-if="this.language=='zh_CN'">{{item.typeDesc}}</td>
                             <td v-if="this.language=='en'">{{item.type | customerTypeEn}}</td>
                             <td>{{item.mainContact}}</td>
@@ -360,6 +367,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                total: 0,
                 link: '/customer/employeeDistributed',
                 key: 'myCustomerList',
                 name: '',
@@ -381,7 +389,7 @@ export default {
                 ctimeStart: '',
                 ctimeEnd: '',
                 audit: '',
-                total: 0
+                orderSum: ''
             },
             language: '',
             excelImportParam: {
@@ -466,6 +474,14 @@ export default {
         }
     },
     methods: {
+        selectOrderSum: function() {
+            if (this.loadParam.orderSum === "") {
+                this.loadParam.orderSum = 1;
+            } else {
+                this.loadParam.orderSum = ""
+            }
+            this.selectSearch();
+        },
         selectSearch: function() {
             this.getClientList(this.loadParam);
         },
@@ -538,6 +554,7 @@ export default {
             this.loadParam.audit = '';
             this.loadParam.ctimeStart = '';
             this.loadParam.ctimeEnd = '';
+            this.loadParam.orderSum = '';
             this.getClientList(this.loadParam);
         },
         eventClick: function(id) {
@@ -694,7 +711,12 @@ export default {
     ready() {
         common('tab', 'table_box', 1);
     },
-    filter: (filter, {})
+    filters: {
+        timeFilters:function(mytime){
+           // debugger;
+            return mytime?mytime.substring(0,10):'';
+        }    
+    }
 
 }
 </script>

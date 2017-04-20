@@ -19,6 +19,15 @@
                             <h5 style="display:inline">基本信息</h5>
                         </div>
                         <div class="clearfix">
+                            <!-- 采购单类型 -->
+                            <div class="editpage-input col-md-4">
+                                <label class="editlabel">采购单类型：<span class="system_danger" v-if="$validation.type.required">{{$t('static.required')}}</span></label>
+                                <input type="text" class="form-control edit-input" v-model="param.type" v-validate:type="['required']" v-show="false" />
+                                <select class="form-control" v-model="param.type">
+                                    <option value="0">药厂采购单</option>
+                                    <option value="1">药商采购单</option>
+                                </select>
+                            </div>
                             <!-- 客户选择 -->
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">客户名称： <span class="system_danger" v-if="$validation.custname.required">{{$t('static.required')}}</span></label>
@@ -79,6 +88,8 @@
                                     <th>单位</th>
                                     <th>产地</th>
                                     <th>规格</th>
+                                    <th>质量</th>
+                                    <th>竞争性指标</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -91,6 +102,8 @@
                                     <td>{{item.unit | Unit}}</td>
                                     <td>{{item.location}}</td>
                                     <td>{{item.spec}}</td>
+                                    <td>{{item.quality}}</td>
+                                    <td>{{item.mainStandard}}</td>
                                     <td v-if="intentionInfo.status==0" @click="showModifyIntention($index)"><a>{{$t('static.edit')}}</a></td>
                                     <td v-else>{{$t('static.edit')}}</td>
                                     <td v-if="intentionInfo.status==0" @click="deleteIntention($index)"><a>{{$t('static.del')}}</a></td>
@@ -126,6 +139,15 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- 规格 -->
+                                    <div class="editpage-input col-md-6">
+                                        <label class="editlabel">{{$t('static.specification')}}</label>
+                                        <input type="text" v-show="!breedParam.id" v-model="intentionInfo.spec" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                                        <div type="text" class="edit-input" v-if="breedParam.id">
+                                            <input-select :value.sync="intentionInfo.spec" :prevalue="intentionInfo.spec" :options="initBreedDetail.specs.arr" placeholder="规格/Specification" label="name">
+                                            </input-select>
+                                        </div>
+                                    </div>
                                     <!-- 价格  -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
@@ -140,19 +162,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="editpage-input col-md-6">
-                                        <label class="editlabel">{{$t('static.quality')}}</label>
-                                        <input type="text" v-model="intentionInfo.quality" class="form-control edit-input" />
-                                    </div> -->
-                                    <!-- 规格 -->
-                                    <div class="editpage-input col-md-6">
-                                        <label class="editlabel">{{$t('static.specification')}}</label>
-                                        <input type="text" v-show="!breedParam.id" v-model="intentionInfo.spec" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                                        <div type="text" class="edit-input" v-if="breedParam.id">
-                                            <input-select :value.sync="intentionInfo.spec" :prevalue="intentionInfo.spec" :options="initBreedDetail.specs.arr" placeholder="规格/Specification" label="name">
-                                            </input-select>
-                                        </div>
-                                    </div>
                                     <!-- 产地 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.origin')}}</label>
@@ -161,6 +170,16 @@
                                             <input-select :prevalue="intentionInfo.location" :value.sync="intentionInfo.location" :options="initBreedDetail.locals.arr" placeholder="产地/Origin" label="name">
                                             </input-select>
                                         </div>
+                                    </div>
+                                    <!-- 质量要求 -->
+                                    <div class="editpage-input col-md-6">
+                                        <label class="editlabel">质量要求</label>
+                                        <input type="text" v-model="intentionInfo.quality" class="form-control edit-input" />
+                                    </div>
+                                    <!-- 竞争性指标 -->
+                                    <div class="editpage-input col-md-6">
+                                        <label class="editlabel">竞争性指标</label>
+                                        <input type="text" v-model="intentionInfo.mainStandard" class="form-control edit-input" />
                                     </div>
                                     <div class="col-md-12" style="margin-top:10px;text-align:right">
                                         <button type="button" class="btn btn-confirm" v-if="intentionInfo.status==1" @click="cancelAddIntention()">{{$t('static.cancel')}}
@@ -180,7 +199,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.intentionList.length>0&&param.intentionList[param.intentionList.length-1].breedId!=''" @click="confirm()">{{$t('static.confirm')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&intentionInfo.status==0&&param.intentionList.length>0&&param.intentionList[param.intentionList.length-1].breedId!=''" @click="confirm()">{{$t('static.confirm')}}</button>
                     <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.confirm')}}</button>
                 </div>
             </validator>
@@ -274,7 +293,9 @@ export default {
                 spec: '',
                 number: '',
                 unit: '',
-                price: ''
+                price: '',
+                quality: '', //质量要求
+                mainStandard: '', //竞争性指标
             },
             addParam: {
                 show: false,
@@ -352,6 +373,8 @@ export default {
                 this.intentionInfo.number = '';
                 this.intentionInfo.unit = '';
                 this.intentionInfo.price = '';
+                this.intentionInfo.quality = ''; //质量要求
+                this.intentionInfo.mainStandard = ''; //竞争性指标
 
                 this.param.intentionList.push({
                     breedId: '',
@@ -361,7 +384,8 @@ export default {
                     number: '',
                     unit: '',
                     price: '',
-
+                    quality: '',
+                    mainStandard: ''
                 });
                 this.addParam.show = true;
             }
@@ -383,6 +407,8 @@ export default {
             this.param.intentionList[this.param.intentionList.length - 1].number = this.intentionInfo.number;
             this.param.intentionList[this.param.intentionList.length - 1].unit = this.intentionInfo.unit;
             this.param.intentionList[this.param.intentionList.length - 1].price = this.intentionInfo.price;
+            this.param.intentionList[this.param.intentionList.length - 1].quality = this.intentionInfo.quality;
+            this.param.intentionList[this.param.intentionList.length - 1].mainStandard = this.intentionInfo.mainStandard;
             this.intentionInfo.status = 0;
             this.addParam.show = false;
 
@@ -404,6 +430,8 @@ export default {
             this.intentionInfo.number = this.param.intentionList[index].number;
             this.intentionInfo.unit = this.param.intentionList[index].unit;
             this.intentionInfo.price = this.param.intentionList[index].price;
+            this.intentionInfo.quality = this.param.intentionList[index].quality;
+            this.intentionInfo.mainStandard = this.param.intentionList[index].mainStandard;
 
             this.updateParam.show = true;
 
@@ -424,6 +452,8 @@ export default {
             this.param.intentionList[this.updateParam.index].number = this.intentionInfo.number;
             this.param.intentionList[this.updateParam.index].unit = this.intentionInfo.unit;
             this.param.intentionList[this.updateParam.index].price = this.intentionInfo.price;
+            this.param.intentionList[this.updateParam.index].quality = this.intentionInfo.quality;
+            this.param.intentionList[this.updateParam.index].mainStandard = this.intentionInfo.mainStandard;
 
             this.intentionInfo.status = 0;
             this.updateParam.show = false;

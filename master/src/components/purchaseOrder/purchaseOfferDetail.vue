@@ -84,7 +84,7 @@
                                                     <th>产地</th>
                                                     <th>规格</th>
                                                     <th>上架状态</th>
-                                                    <th>报价信息</th>
+                                                    <th>报价人数</th>
                                                     <th>报价</th>
                                                 </thead>
                                                 <tbody>
@@ -117,9 +117,7 @@
                                                         <td v-if="!item.purchaseOffer">{{item.location}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.spec}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.onSell | onsell}}</td>
-                                                        <td v-if="!item.purchaseOffer">
-                                                            <a @click="getIntentionInfo(item.id,$index)">报价信息</a>
-                                                        </td>
+                                                        <td v-if="!item.purchaseOffer">{{item.offerNumber}}</td>
                                                         <td v-if="!item.purchaseOffer">
                                                             <a @click="offer(item)">报价</a>
                                                         </td>
@@ -179,7 +177,10 @@ export default {
                 customerId: "",
                 number: "",
                 unit: "",
-                price: ""
+                price: "",
+                quality: "",
+                description: "",
+                location: ""
             },
             tipsParam: {
                 show: false,
@@ -255,6 +256,8 @@ export default {
         },
         offer: function(item) {
             this.offerParam.breedName = item.breedName;
+            this.offerParam.number = item.number;
+            this.offerParam.unit = item.unit;
             this.offerParam.intentionId = item.id;
             this.offerParam.show = true;
 

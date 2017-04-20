@@ -904,7 +904,7 @@ export default {
         },
         selectImg: function(param) { //将上传的图片分别付给不同的变量
             this.imgType = param;
-            console.log(this.imgType)
+            console.log(this.imgType+"哈哈哈")
         },
         deliverCallback: function(title) {
             this.tipParam.show = true;

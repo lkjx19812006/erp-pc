@@ -636,9 +636,8 @@ const state = {
         offerList: [
             { "id": "163", "intentionId": "57568d24a2ec516dc1d0f57c", "userId": "3ed2a1d7dafe449eb5e631a46f20f713", "customerId": null, "number": 3000, "unit": "63", "price": 12.000000, "incidentals": 1.000000, "incidentalsDesc": "含运费价格", "total": 36000.000000, "qualification": null, "quality": null, "location": null, "spec": null, "advance": null, "invoic": null, "visit": null, "pack": null, "sampling": null, "sampleNumber": null, "sampleUnit": null, "sampleAmount": null, "address": null, "comments": null, "otime": "2016-06-07 17:19", "clients": null, "status": 1, "description": "", "updater": null, "utime": "2016-09-27 10:08", "creater": null, "ctime": "2016-09-27 10:08" },
         ],
-        msgList: [
-            { "id": 1508, "intentionId": "f0d082de37ba4230880fe5ff06b0f647", "userId": "b11741af0efc49ed815545c0d88ddc98", "phone": null, "comments": "asdadasdasdadasd", "reserve": null, "status": 1, "ctime": "2016-09-01 17:53", "reply": null, "replier": null, "rtime": null, "updater": null, "utime": null, "creater": null }
-        ],
+        msgList: [],
+        preSellMsgList: [],
         intentionDetail: {
             "id": "1008",
             "chanceId": "",
@@ -1170,8 +1169,6 @@ const mutations = {
         state.basicBaseList.userTypeList = data;
     },
     [ORDER_TABLE](state, data) { //订单列表
-
-        console.log(data.key)
         if (data.key) {
             state.basicBaseList[data.key] = data;
         } else if (data.titles == '申请发货') {
@@ -1182,7 +1179,7 @@ const mutations = {
         } else if (data.link == '/order/transferToEmployee') {
             //state.basicBaseList.orderList.shift(data.id)
 
-            state.basicBaseList.userOrderList.splice(data.itemSub, 1)
+            state.basicBaseList.userOrderList.splice(data.itemSub, 1);
 
         } else {
             state.basicBaseList.orderList = data;
@@ -1525,13 +1522,13 @@ const mutations = {
     },
     [DELETE_BREED_DATA](state, data) { //删除客户/订单信息
         state.basicBaseList[data.key].splice(data.sub, 1);
-       
+
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
 
         /*if(data.key=='labels'||data.key=='locals'||data.key=='specs'||data.key=='alias'||data.key=='units'){*/
-        state[data.headline][data.key].arr.splice(data.sub,1);
-        
+        state[data.headline][data.key].arr.splice(data.sub, 1);
+
     },
     [DELETE_SHOW_STATUE](state, data) { //删除枚举
         state.systemBaseList.enumlist.splice(data.sub, 1);
@@ -2014,7 +2011,8 @@ const mutations = {
         state.basicBaseList[data.key] = data;
     },
     [MSG_LIST_DATA](state, data) { //留言列表
-        state.basicBaseList.msgList = data;
+        console.log(data.key);
+        state.basicBaseList[data.key] = data;
     },
     [MSG_UPDATE_DATA](state, data) { //留言修改
         if (data.key == 'msgList') {
@@ -2295,7 +2293,7 @@ const mutations = {
 
 
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
-        var temp = {
+        /*var temp = {
             "id": data.id,
             "type": data.type,
             "especial": data.especial,
@@ -2335,19 +2333,20 @@ const mutations = {
             "validate": data.validate,
             "loading": true,
             "onSell": 0
-        };
-
+        };*/
+        data.onSell = 0;
+        console.log(data);
         if (data.key == "myIntentionList") {
             console.log("意向列表页添加意向");
-            state.basicBaseList.myIntentionList.unshift(temp);
+            state.basicBaseList.myIntentionList.unshift(data);
         }
         if (data.key == "user") {
             console.log("会员详情页添加意向");
-            state.userDetail.intention.arr.unshift(temp);
+            state.userDetail.intention.arr.unshift(data);
         }
         if (data.key == "client") {
             console.log("客户详情页添加意向");
-            state.clientDetail.intentions.arr.unshift(temp);
+            state.clientDetail.intentions.arr.unshift(data);
         }
 
     },

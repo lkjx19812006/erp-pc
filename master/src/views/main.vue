@@ -39,9 +39,9 @@
                 </p>
                 <!-- 全选 -->
                 <div class="checkall" v-if="noticeParam.type==0&&this.initNoticeList.length!==0">
-                      <span>{{$t('static.Select_all')}} : </span>
-                      <label class="selectAll" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()" style="position:relative; bottom:-1px; float:right">
-                      </label>
+                    <span>{{$t('static.Select_all')}} : </span>
+                    <label class="selectAll" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()" style="position:relative; bottom:-1px; float:right">
+                    </label>
                 </div>
                 <!-- 标记为已读 -->
                 <div class="btn btn-info btn-xs" style="float:right; margin-left:30px; margin-top:11px" @click="signRead" v-if="noticeParam.type==0&&this.initNoticeList.length!==0">{{$t('static.Mark_read')}}</div>
@@ -49,18 +49,18 @@
                     <div class="cover_loading">
                         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
                     </div>
-                    <div class="notice_message_view" v-for="item in initNoticeList" v-bind:class="{'level-five':item.urgent>80&&noticeParam.type !== 2,'level-four':item.urgent<=80&&item.urgent>60&&noticeParam.type !== 2,'level-three':item.urgent<=60&&item.urgent>40&&noticeParam.type !== 2,'level-two':item.urgent<=40&&item.urgent>20&&noticeParam.type !== 2,'level-one':item.urgent<=20&&noticeParam.type !== 2,'level-default': noticeParam.type===2}" >
+                    <div class="notice_message_view" v-for="item in initNoticeList" v-bind:class="{'level-five':item.urgent>80&&noticeParam.type !== 2,'level-four':item.urgent<=80&&item.urgent>60&&noticeParam.type !== 2,'level-three':item.urgent<=60&&item.urgent>40&&noticeParam.type !== 2,'level-two':item.urgent<=40&&item.urgent>20&&noticeParam.type !== 2,'level-one':item.urgent<=20&&noticeParam.type !== 2,'level-default': noticeParam.type===2}">
                         <div class="message_view_left">
                             <span>标题：{{item.title}}
                                 <label v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)" style="position:relative; bottom:-3px; float:right" v-if="noticeParam.type==0">
                                 </label>
                             </span>
-                            <p>内容：{{item.shortMessage}}</p>
+                            <p>内容：{{item.message | textDisplay '28'}}</p>
                             <time>{{item.mtime}}</time>
                             <div class="message_view_right">
                                 <Poptip placement="left" trigger="hover">
                                     <a>{{$t('static.details')}}</a>
-                                    <div class="api order-detail" slot="content" >
+                                    <div class="api order-detail" slot="content">
                                         {{item.message}}
                                     </div>
                                 </Poptip>
@@ -71,15 +71,16 @@
                 </div>
                 <!-- 底部分页 -->
                 <div class="page" v-if="this.initNoticeList.length!==0">
-                   <pagination :combination="noticeParam" slot="page"></pagination>
+                    <pagination :combination="noticeParam" slot="page"></pagination>
                 </div>
             </div>
-            
             <div class="employee_right col-md-5 col-xs-12">
                 <p class="employee_right_title clear">
                     <span class="left">{{$t('static.order_message')}}</span>
                 </p>
-                <div class="refreshBtn"><button class="btn btn-primary right" @click="refresh()">{{$t('static.refresh')}}</button></div>
+                <div class="refreshBtn">
+                    <button class="btn btn-primary right" @click="refresh()">{{$t('static.refresh')}}</button>
+                </div>
                 <div class="employee_right_message">
                     <div class="cover_loading">
                         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -177,7 +178,7 @@ export default {
                 cur: 1,
                 all: 7,
                 total: 0,
-                
+
             },
             noticeParam: {
                 loading: true,
@@ -188,16 +189,14 @@ export default {
                 cur: 1,
                 all: 7,
                 total: 0,
-                id:null,
-                mTimeStart: "",
-                mTimeEnd: "",
-                read: "0",
+                id: null,
+                read: "0"
 
             },
-            notificationParam:{
-                link:'',
-                ids:[],
-                callback:''
+            notificationParam: {
+                link: '',
+                ids: [],
+                callback: ''
             },
             orderDetailParam: {
                 loading: true,
@@ -420,20 +419,14 @@ export default {
         selectType: function(type) {
             this.noticeParam.type = type;
             if (type == 0) { //当天
-                this.noticeParam.mTimeStart = "";
-                this.noticeParam.mTimeEnd = "";
                 this.noticeParam.read = "0";
                 this.noticeParam.link = "/notification/queryToday";
             }
             if (type == 1) { //三日内
-                this.noticeParam.mTimeStart = util.getDate(-2);
-                this.noticeParam.mTimeEnd = util.getDate(1);
-                this.noticeParam.read = "0";
-                this.noticeParam.link = "/notification/query";
+                this.noticeParam.read = "";
+                this.noticeParam.link = "/notification/queryRdDay";
             }
             if (type == 2) { //已读
-                this.noticeParam.mTimeStart = "";
-                this.noticeParam.mTimeEnd = "";
                 this.noticeParam.read = "1";
                 this.noticeParam.link = "/notification/query";
             }
@@ -470,27 +463,27 @@ export default {
         refreshNotice: function() {
             this.getNoticeList(this.noticeParam);
         },
-        read:function(param){
-            this.notificationParam.ids=[];
+        read: function(param) {
+            this.notificationParam.ids = [];
             this.notificationParam.ids.push(param);
-            this.notificationParam.link = '/notification/read'; 
-            this.notificationParam.callback = this.notificationCallback;          
+            this.notificationParam.link = '/notification/read';
+            this.notificationParam.callback = this.notificationCallback;
             this.readNotice(this.notificationParam);
 
         },
-        signRead:function(){
-            this.notificationParam.ids=[];
-            for(var i=0; i<this.initNoticeList.length;i++){
-                if(this.initNoticeList[i].checked == true){
+        signRead: function() {
+            this.notificationParam.ids = [];
+            for (var i = 0; i < this.initNoticeList.length; i++) {
+                if (this.initNoticeList[i].checked == true) {
                     this.notificationParam.ids.push(this.initNoticeList[i].id)
                 }
             }
-            this.notificationParam.link = '/notification/read'; 
-            this.notificationParam.callback = this.notificationCallback;          
-            this.readNotice(this.notificationParam); 
+            this.notificationParam.link = '/notification/read';
+            this.notificationParam.callback = this.notificationCallback;
+            this.readNotice(this.notificationParam);
         },
-        notificationCallback:function(title){
-            this.tipParam.show=true;
+        notificationCallback: function(title) {
+            this.tipParam.show = true;
             this.tipParam.name = title;
             this.getNoticeList(this.noticeParam);
         }
@@ -526,9 +519,10 @@ export default {
 }
 </script>
 <style scoped>
-.left{
+.left {
     margin-bottom: 10px;
 }
+
 .checkbox_select {
     background-image: url(/static/images/selected.png);
     display: inline-block;
@@ -540,6 +534,7 @@ export default {
     text-align: center;
     background-position: 5px;
 }
+
 .checkbox_unselect {
     background-image: url(/static/images/unselect.png);
     display: inline-block;
@@ -552,36 +547,39 @@ export default {
     background-position: 5px;
 }
 
-.checkall{ 
-    float:right;
+.checkall {
+    float: right;
     margin: 10px 11px 0 15px;
 }
 
-.checkall span{
-    font-size:14px; 
+.checkall span {
+    font-size: 14px;
     vertical-align: middle;
-} 
-.checkall input{
-   margin-top: 0;
-   width: 17px;
-   height:17px;
-   vertical-align: middle;
-   cursor: pointer;
 }
 
-.page{
-    position:fixed;
+.checkall input {
+    margin-top: 0;
+    width: 17px;
+    height: 17px;
+    vertical-align: middle;
+    cursor: pointer;
 }
-.order-detail{
-   font-size:15px;
-   color: #D9534F;
-   overflow-x:hidden;
-   word-wrap:break-word;
-   width: 350px;
-   min-height:50px;
-   white-space: normal;
-   padding: 10px 5px;
+
+.page {
+    position: fixed;
 }
+
+.order-detail {
+    font-size: 15px;
+    color: #D9534F;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    width: 350px;
+    min-height: 50px;
+    white-space: normal;
+    padding: 10px 5px;
+}
+
 .employee {
     position: relative;
     padding: 25px 30px 0 40px;
@@ -605,11 +603,11 @@ export default {
 
 .employee_right_message {
     clear: both;
-    white-space: nowrap; 
-    border-top:none;
-    padding-top:5px;
-    max-height:600px;
-    overflow-y:auto;
+    white-space: nowrap;
+    border-top: none;
+    padding-top: 5px;
+    max-height: 600px;
+    overflow-y: auto;
 }
 
 .employee_message_view {
@@ -679,18 +677,23 @@ export default {
 .level-four {
     border-left: 4px solid #F0AD4E;
 }
+
 .level-three {
     border-left: 4px solid #5BC0DE;
 }
+
 .level-two {
     border-left: 4px solid #CCCCCC;
 }
+
 .level-one {
     border-left: 4px solid #5CB85C;
 }
-.level-default{
+
+.level-default {
     border-left: 4px solid #CCCCCC;
 }
+
 .linechart {
     width: 100%;
     height: 420px;

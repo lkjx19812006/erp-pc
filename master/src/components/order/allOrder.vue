@@ -170,7 +170,14 @@
                             <td>{{item.employeeName}}</td>
                             <td>{{item.consignee}}</td>
                             <td>{{item.consigneePhone}}</td>
-                            <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
+                            <td>
+                                <Poptip placement="top" trigger="hover">
+                                    <span>{{item.consigneeAddr | textDisplay '5'}}</span>
+                                    <div class="api" slot="content">
+                                        {{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}
+                                    </div>
+                                </Poptip>
+                            </td>
                             <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
                             <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
                             <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
@@ -445,9 +452,7 @@ export default {
                 this.loadParam.orgName = this.selectOrgParam.orgName;
 
                 this.employeeParam.orgId = this.selectOrgParam.orgId;
-
                 this.selectSearch();
-
             }
         },
         selectSearch: function() {
@@ -604,5 +609,9 @@ export default {
 
 .order_pagination {
     text-align: center;
+}
+
+.api {
+    color: #3399ff;
 }
 </style>

@@ -8,6 +8,7 @@
         <cancel-model :param="cancelParam" v-if="cancelParam.show"></cancel-model>
         <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
+        <employee-model :param="transferParam" v-if="transferParam.show"></employee-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <language-model v-show="false"></language-model>
         <mglist-model :param="mgListParam">
@@ -111,7 +112,7 @@
                                 <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
                             </dd>
                         </dl>
-                        <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">{{$t('static.export_order')}}</a></button>
+                        <button class="new_btn transfer"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">{{$t('static.export_order')}}</a></button>
                         <button type="button" class="new_btn transfer" @click="resetTime()">{{$t('static.clear_all')}}</button>
                         <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
                     </div>
@@ -176,7 +177,14 @@
                             <td>{{item.employeeName}}</td>
                             <td>{{item.consignee}}</td>
                             <td>{{item.consigneePhone}}</td>
-                            <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
+                            <td>
+                                <Poptip placement="top" trigger="hover">
+                                    <span>{{item.consigneeAddr | textDisplay '5'}}</span>
+                                    <div class="api" slot="content">
+                                        {{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}
+                                    </div>
+                                </Poptip>
+                            </td>
                             <!-- <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
                                 <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
                                 <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
@@ -290,9 +298,13 @@
                         </div>
                    </td> -->
                             <td>
-                                <!-- 取消订单,在订单状态为20和70时可以取消，并说明原因 -->
-                                <button class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70" @click="cancelOrder(item.id,$index)">
+                                <!-- 取消订单,在订单状态为20和70或者新建的订单还未申请审核可以取消，并说明原因 -->
+                                <button class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70||(item.orderStatus==0&&item.validate==0)" @click="cancelOrder(item.id,$index)">
                                     取消订单
+                                </button>
+                                <!-- 订单划转到任意一个业务员 -->
+                                <button class="btn btn-warning btn-apply" v-if="(item.orderStatus==0||item.orderStatus==10)&&item.validate==0" @click="transferToEmployee(item,$index)">
+                                    划转
                                 </button>
                                 <!-- 审核 -->
                                 <button class="btn btn-warning btn-apply" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
@@ -330,7 +342,7 @@ import disposeModel from '../order/orderStatus'
 import tipsdialogModel from '../tips/tipDialog'
 import auditModel from '../../components/tips/auditDialog'
 import cancelModel from './cancleMsg'
-//单个业务员搜索
+//单个业务员搜索，有两个地方引用到这个模块
 import employeeModel from '../clientRelate/searchEmpInfo'
 import breedsearchModel from '../intention/breedsearch'
 import filter from '../../filters/filters'
@@ -352,7 +364,8 @@ import {
     orderStatu,
     getOrderDetail,
     orderOrgAudit,
-    orderCancle
+    orderCancle,
+    transferOrder
 } from '../../vuex/actions'
 
 export default {
@@ -420,6 +433,15 @@ export default {
                 employeeName: '',
 
             },
+            transferParam: { //划转订单
+                show: false,
+                link: '/order/transferToEmployee',
+                callback: '',
+                employee: '',
+                id: '',
+                user: '' //在这里无效，主要是为了配合注册客户订单的划转
+            },
+            employeeStatus: 0, //表示是哪个地方用到了选择业务员的模块,初始为0,1表示搜索，2表示划转订单
             dialogParam: {
                 show: false
             },
@@ -528,7 +550,8 @@ export default {
             orderStatu,
             getOrderDetail,
             orderOrgAudit,
-            orderCancle
+            orderCancle,
+            transferOrder
         }
     },
     methods: {
@@ -547,6 +570,7 @@ export default {
             this.breedSearchParam.show = true;
         },
         selectEmployee: function() {
+            this.employeeStatus = 1;
             this.employeeParam.show = true;
         },
         resetTime: function() {
@@ -646,6 +670,23 @@ export default {
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.selectSearch();
+        },
+        //订单划转到业务员
+        transferToEmployee: function(item, itemSub) {
+            //将employeeStatus置为2,表示是划转业务员
+            this.employeeStatus = 2;
+            this.transferParam.id = item.id;
+            this.transferParam.employee = "";
+            this.transferParam.callback = this.transferCallback;
+            this.transferParam.show = true;
+            this.transferParam.itemSub = itemSub;
+
+        },
+        transferCallback: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.tipsParam.alert = true;
+            this.selectSearch();
         }
     },
     filter: (filter, {}),
@@ -663,9 +704,16 @@ export default {
             this.selectSearch();
         },
         a: function(employee) {
-            this.loadParam.employeeId = employee.employeeId;
-            this.loadParam.employeeName = employee.employeeName;
-            this.selectSearch();
+            if (this.employeeStatus == 1) {
+                this.loadParam.employeeId = employee.employeeId;
+                this.loadParam.employeeName = employee.employeeName;
+                this.selectSearch();
+            }
+            if (this.employeeStatus == 2) {
+                this.transferParam.employee = employee.employeeId;
+                this.transferOrder(this.transferParam);
+            }
+
         },
     },
     created() {
@@ -732,5 +780,9 @@ export default {
     position: fixed;
     bottom: 20px;
     padding-top: 50px;
+}
+
+.api {
+    color: #3399ff;
 }
 </style>

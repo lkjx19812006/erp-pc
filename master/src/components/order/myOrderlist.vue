@@ -10,6 +10,7 @@
         <applysend-model :param="applyParam" v-if="applyParam.show"></applysend-model>
         <reapply-model :param="reapplyParam" v-if="reapplyParam.show"></reapply-model>
         <contract-model :param="contractParam" v-if="contractParam.show"></contract-model>
+        <cancel-model :param="cancelParam" v-if="cancelParam.show"></cancel-model>
         <saleapply-model :param="applicationParam" v-if="applicationParam.show"></saleapply-model>
         <language-model v-show="false"></language-model>
         <mglist-model>
@@ -141,8 +142,11 @@
                     <label v-if="item.validate<=0&&(item.orderStatus==0||item.orderStatus==70)" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                   </td> -->
                             <td>{{item.tradeTime | subtime}}</td>
-                            <td v-if="item.type==1">{{$t('static.sell')}}</td>
-                            <td v-if="item.type==0">{{$t('static.purchase')}}</td>
+                            <td>
+                                <div v-if="item.type==1&&item.pre==0">{{$t('static.sell')}}</div>
+                                <div v-if="item.type==0&&item.pre==0">{{$t('static.purchase')}}</div>
+                                <div v-if="item.type==1&&item.pre==1">预售</div>
+                            </td>
                             <td v-if="item.mode==1">{{$t('static.together')}}</td>
                             <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
                             <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
@@ -165,7 +169,14 @@
                             <td>{{item.currency | Currency}}</td>
                             <td>{{item.consignee}}</td>
                             <td>{{item.consigneePhone}}</td>
-                            <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
+                            <td>
+                                <Poptip placement="top" trigger="hover">
+                                    <span>{{item.consigneeAddr | textDisplay '5'}}</span>
+                                    <div class="api" slot="content">
+                                        {{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}
+                                    </div>
+                                </Poptip>
+                            </td>
                             <td v-if="this.language=='zh_CN'">
                                 <div>{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</div>
                                 <div v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</div>
@@ -233,6 +244,10 @@
                                         goods:item.goods,
                                         goodsBack:[]
                                         },item.goods)">{{$t('static.edit')}}
+                                </button>
+                                <!-- 取消订单,在订单状态为20和70或者新建的订单还未申请审核可以取消，并说明原因 -->
+                                <button class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70||(item.orderStatus==0&&item.validate==0)" @click="cancelOrder(item.id,$index)">
+                                    取消订单
                                 </button>
                                 <div v-if="item.validate==2">
                                     <button class="btn btn-danger" @click="clickOn({
@@ -345,6 +360,7 @@ import disposeModel from '../order/orderStatus'
 import tipsdialogModel from '../tips/tipDialog'
 import auditModel from '../order/orgAudit'
 import common from '../../common/common'
+import cancelModel from './cancleMsg'
 import changeMenu from '../../components/tools/tabs/tabs.js'
 import applysendModel from '../order/second_order/orderAudit'
 import reapplyModel from '../tips/auditDialog'
@@ -364,7 +380,8 @@ import {
     orderStatu,
     getOrderDetail,
     applyContract,
-    afterSalesApply
+    afterSalesApply,
+    orderCancle
 } from '../../vuex/actions'
 export default {
     components: {
@@ -382,7 +399,8 @@ export default {
         applysendModel,
         contractModel,
         saleapplyModel,
-        languageModel
+        languageModel,
+        cancelModel
     },
     data() {
         return {
@@ -423,6 +441,7 @@ export default {
                 show: false,
                 title1: this.$t('static.new_order'),
                 type: 1,
+                pre: 0,
                 sourceType: 0,
                 sample: 0,
                 intl: '',
@@ -458,6 +477,7 @@ export default {
                 ],
                 link: createOrder,
                 key: 'myOrderList',
+                callback: '' //成功后的回调函数
 
             },
             detailParam: {
@@ -517,6 +537,16 @@ export default {
                 auditComment: '',
                 callback: '',
                 logistics: ''
+            },
+            cancelParam: {
+                show: false,
+                index: '',
+                id: '',
+                cancleCauses: '',
+                link: '/order/cancle',
+                key: 'orgOrderList',
+                callback: this.orderCancle, //cancelMsg.vue中会执行此方法
+                cancelBack: this.cancelBack //取消成功后会调用此方法(action中执行)
             }
         }
     },
@@ -533,7 +563,8 @@ export default {
             orderStatu,
             getOrderDetail,
             applyContract,
-            afterSalesApply
+            afterSalesApply,
+            orderCancle
         }
     },
     methods: {
@@ -554,7 +585,12 @@ export default {
             this.tipsParam.alert = true;
             this.getEmpolyeeOrder(this.loadParam);
         },
-
+        cancelBack: function(title) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.selectSearch();
+        },
         orderCheck: function(id, index, validate) {
             this.auditParam.id = id;
             this.auditParam.index = index;
@@ -567,6 +603,12 @@ export default {
                 this.auditParam.title = this.$t('static.reapply');
             }
             this.auditParam.callback = this.applyBack;
+            localtion.reload(); //提交审核后自动刷新
+        },
+        cancelOrder: function(id, index) {            
+            this.cancelParam.id = id;
+            this.cancelParam.index = index;
+            this.cancelParam.show = true;
         },
         onlyselected: function(index) {
             const _self = this;
@@ -852,5 +894,9 @@ export default {
 
 .order_pagination {
     text-align: center;
+}
+
+.api {
+    color: #3399ff;
 }
 </style>
