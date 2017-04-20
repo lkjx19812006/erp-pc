@@ -331,7 +331,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.goods.length>0&&param.goods[param.goods.length-1].breedId!=''" @click="confirm(param)">{{$t('static.confirm')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.goods.length>0&&param.goods[param.goods.length-1].breedId!=''&&breedInfo.status==0" @click="confirm(param)">{{$t('static.confirm')}}</button>
                     <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.confirm')}}</button>
                 </div>
             </validator>
@@ -811,7 +811,7 @@ export default {
             this.param.consigneeAddr = param.consigneeAddr;
             //如果this.param.addressId = 0,则新增客户地址
             this.createOrder(this.param);
-            location.reload();
+
         },
         changeTotal: function() {
             var patt = new RegExp(/\.\d{3,}/);

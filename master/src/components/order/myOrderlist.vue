@@ -469,6 +469,7 @@ export default {
                 ],
                 link: createOrder,
                 key: 'myOrderList',
+                callback: '' //成功后的回调函数
 
             },
             detailParam: {

@@ -340,7 +340,7 @@
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.number}}</td>
                                                         <td>{{item.price}}元</td>
-                                                        <td>{{item.unit}}</td>
+                                                        <td>{{item.unit | unit}}</td>
                                                         <td @click.stop="updateIntention({
                                                       flag:1,
                                                       show:true,

@@ -9,7 +9,7 @@
 
 var util = {
     add: accAdd,
-    sbu: subtr,
+    sub: subtr,
     mul: accMul,
     div: accDiv,
     getDate: getDate

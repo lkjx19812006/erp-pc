@@ -5056,7 +5056,7 @@ export const createOrderByPurchase = ({ dispatch }, param) => { //采购单报�
         console.log("success");
         param.show = false;
         if (param.callback) {
-            param.callback(res.json().msg);
+            param.callback(res.json().msg + "，稍后将跳转到我的订单页面");
         }
 
 
