@@ -157,12 +157,6 @@ export default {
 
 
     },
-    watch: {
-        'param.number': function(o, n) {
-            console.log(o);
-            console.log(n);
-        }
-    },
     events: {
         customer: function(customer) {
             this.param.customerId = customer.customerId;
