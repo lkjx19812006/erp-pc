@@ -44,7 +44,7 @@
                     <dd class="left margin_right">
                         <input type="text" class="form-control" v-model="loadParam.purchaseContent" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
-                </dl>               
+                </dl>
                 <dl class="clear left transfer" style="margin-left:50px">
                     <button type="button" class="btn btn-default margin_right" height="24" width="24" @click="selectSearch()">搜索</button>
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
@@ -77,10 +77,10 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initOrgPurchaseList">
+                        <td>{{item.type | indentType}}</td>
                         <td>
                             <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
-                        <td>{{item.type | indentType}}</td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.pubdate}}</td>
@@ -194,7 +194,7 @@ export default {
             this.loadParam.customerPhone = '';
             this.loadParam.employee = '';
             this.loadParam.employeeName = '';
-             this.loadParam.purchaseContent='';
+            this.loadParam.purchaseContent = '';
             this.getPurchaseOrderList(this.loadParam);
         },
         detailClick: function(id, customerId) {
@@ -273,8 +273,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 168px;
-    min-width: 168px;
+    width: 150px;
+    min-width: 150px;
 }
 
 .service-nav {

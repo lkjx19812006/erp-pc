@@ -159,6 +159,7 @@
                                                             intentionParam.number=item.number,
                                                             intentionParam.location=item.location,
                                                             intentionParam.type=item.type,
+                                                            intentionParam.preSell=item.preSell,
                                                             intentionParam.country=item.country,
                                                             intentionParam.province=item.province,
                                                             intentionParam.city=item.city,
@@ -179,66 +180,13 @@
                                                             intentionParam.key='user',
                                                             intentionParam.validate=item.validate,
                                                             intentionParam.description=item.description,
-                                                            intentionParam.images=item.pics,
-                                                            intentionParam.image_f='',
-                                                            intentionParam.image_s='',
-                                                            intentionParam.image_t='',
-                                                            intentionParam.image_f_show='',
-                                                            intentionParam.image_s_show='',
-                                                            intentionParam.image_t_show='',
                                                             intentionParam.inType=2,
+                                                            intentionParam.images='',
+                                                            intentionParam.pics=item.pics,
                                                             intentionParam.callback=intentionCallback
                                                         )"><img src="/static/images/edit.png" height="18" width="30" />
                                                             </a>
                                                         </td>
-                                                        <!--  <td  @click="clickShow($index,{
-                                            concrete:'intention'
-                                            })">
-                                            <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                            <div class="breed_action" v-show="item.show">
-                                                 <dt @click="updateIntention(
-                                                      intentionParam.loading=true,
-                                                      intentionParam.sub=$index,
-                                                      intentionParam.id=item.id,
-                                                      intentionParam.breedName=item.breedName,
-                                                      intentionParam.price=item.price,
-                                                      intentionParam.unit=item.unit,
-                                                      intentionParam.especial=item.especial,
-                                                      intentionParam.quality=item.quality,
-                                                      intentionParam.spec=item.spec,
-                                                      intentionParam.number=item.number,
-                                                      intentionParam.location=item.location,
-                                                      intentionParam.type=item.type,
-                                                      intentionParam.country=item.country,
-                                                      intentionParam.province=item.province,
-                                                      intentionParam.city=item.city,
-                                                      intentionParam.district=item.district,
-                                                      intentionParam.address=item.address,
-                                                      intentionParam.invoic=item.invoic,
-                                                      intentionParam.sampling=item.sampling,
-                                                      intentionParam.sampleUnit=item.sampleUnit,
-                                                      intentionParam.advance=item.advance,
-                                                      intentionParam.intl=item.intl,
-                                                      intentionParam.sampleNumber=item.sampleNumber,
-                                                      intentionParam.sampleAmount=item.sampleAmount,
-                                                      intentionParam.qualification=item.qualification,
-                                                      intentionParam.pack=item.pack,
-                                                      intentionParam.visit=item.visit,
-                                                      intentionParam.duedate=item.duedate,
-                                                      intentionParam.breedId=item.breedId,
-                                                      intentionParam.key='user',
-                                                      intentionParam.validate=item.validate,
-                                                      intentionParam.description=item.description,
-                                                      intentionParam.image_f='',
-                                                      intentionParam.image_s='',
-                                                      intentionParam.image_t='',
-                                                      intentionParam.image_f_show='',
-                                                      intentionParam.image_s_show='',
-                                                      intentionParam.image_t_show='',
-                                                      intentionParam.inType=2
-                                                  )">编辑</dt>
-                                          </div>
-                                          </td> -->
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -522,6 +470,7 @@ export default {
                 number: '',
                 location: '',
                 type: '',
+                preSell: '',
                 country: '',
                 pack: '',
                 province: '',
@@ -539,12 +488,8 @@ export default {
                 sampleAmount: 0,
                 qualification: '',
                 url: '/intention/',
-                image_f: '',
-                image_s: '',
-                image_t: '',
-                image_f_show: '',
-                image_s_show: '',
-                image_t_show: '',
+                images: '',
+                pics: [],
                 description: '',
                 inType: 2,
                 loading: false
@@ -733,7 +678,6 @@ export default {
             this.trackingParam.flag = 0; //0表示添加
         },
         updateTracking: function(item, index) {
-
             item.show = !item.show;
             item.index = index;
             this.trackingParam = item;
@@ -764,6 +708,7 @@ export default {
                 number: '',
                 location: '',
                 type: 0,
+                preSell: 0,
                 visit: 0,
                 validate: 1,
                 country: '中国',
@@ -782,9 +727,7 @@ export default {
                 sampleAmount: 0,
                 qualification: '',
                 url: '/intention/',
-                image_f: '',
-                image_s: '',
-                image_t: '',
+                pics: [],
                 images: '',
                 inType: 2,
                 audit: 0

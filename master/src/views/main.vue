@@ -55,7 +55,7 @@
                                 <label v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)" style="position:relative; bottom:-3px; float:right" v-if="noticeParam.type==0">
                                 </label>
                             </span>
-                            <p>内容：{{item.shortMessage}}</p>
+                            <p>内容：{{item.message | textDisplay '28'}}</p>
                             <time>{{item.mtime}}</time>
                             <div class="message_view_right">
                                 <Poptip placement="left" trigger="hover">

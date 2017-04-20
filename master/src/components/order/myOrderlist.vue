@@ -169,7 +169,14 @@
                             <td>{{item.currency | Currency}}</td>
                             <td>{{item.consignee}}</td>
                             <td>{{item.consigneePhone}}</td>
-                            <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
+                            <td>
+                                <Poptip placement="top" trigger="hover">
+                                    <span>{{item.consigneeAddr | textDisplay '5'}}</span>
+                                    <div class="api" slot="content">
+                                        {{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}
+                                    </div>
+                                </Poptip>
+                            </td>
                             <td v-if="this.language=='zh_CN'">
                                 <div>{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</div>
                                 <div v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</div>
@@ -595,7 +602,7 @@ export default {
                 this.auditParam.title = this.$t('static.reapply');
             }
             this.auditParam.callback = this.applyBack;
-            localtion.reload();//提交审核后自动刷新
+            localtion.reload(); //提交审核后自动刷新
         },
         cancelOrder: function(id, index) {            
             this.cancelParam.id = id;
@@ -886,5 +893,9 @@ export default {
 
 .order_pagination {
     text-align: center;
+}
+
+.api {
+    color: #3399ff;
 }
 </style>

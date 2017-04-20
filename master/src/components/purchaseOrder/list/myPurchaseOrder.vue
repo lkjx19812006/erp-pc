@@ -179,7 +179,7 @@ export default {
                 inquire: '',
                 customerName: '',
                 customerPhone: '',
-                purchaseContent:''
+                purchaseContent: ''
             },
             createParam: {
                 show: false,
@@ -264,7 +264,7 @@ export default {
             this.loadParam.inquire = '';
             this.loadParam.customerName = '';
             this.loadParam.customerPhone = '';
-            this.loadParam.purchaseContent=''
+            this.loadParam.purchaseContent = ''
             this.getPurchaseOrderList(this.loadParam);
         },
         checkedAll: function() { //全选
@@ -440,8 +440,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 150px;
-    min-width: 150px;
+    width: 136px;
+    min-width: 136px;
 }
 
 .service-nav {

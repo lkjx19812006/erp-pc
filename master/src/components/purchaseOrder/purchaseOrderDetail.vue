@@ -86,12 +86,13 @@
                                                     <th>规格</th>
                                                     <th>质量要求</th>
                                                     <th>竞争性指标</th>
+                                                    <th>报价人数</th>
                                                     <th>报价信息</th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="(index,item) in initPurchaseDetail.intentionList.arr">
                                                         <!-- 关于意向的报价信息 -->
-                                                        <td v-if="item.purchaseOffer" colspan="7">
+                                                        <td v-if="item.purchaseOffer" colspan="8">
                                                             <table class="table table-hover table_color table-striped" style="width:80%;float:right;border-top:1px soild red">
                                                                 <thead>
                                                                     <th></th>
@@ -110,7 +111,6 @@
                                                                                 <a id="add-in" @click="selectOfferInfo(index,sub)">
                                                                                     加入购物车
                                                                                 </a>
-
                                                                             </span>
                                                                             <span v-if="offer.checked">
                                                                                 <a id="remove-out" @click="selectOfferInfo(index,sub)">
@@ -135,6 +135,7 @@
                                                         <td v-if="!item.purchaseOffer">{{item.spec}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.quality}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.mainStandard}}</td>
+                                                        <td v-if="!item.purchaseOffer">{{item.offerNumber}}</td>
                                                         <td v-if="!item.purchaseOffer"><a @click="getIntentionInfo(item.id,$index)">报价信息</a></td>
                                                     </tr>
                                                 </tbody>

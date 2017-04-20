@@ -1179,7 +1179,7 @@ const mutations = {
         } else if (data.link == '/order/transferToEmployee') {
             //state.basicBaseList.orderList.shift(data.id)
 
-            state.basicBaseList.userOrderList.splice(data.itemSub, 1)
+            state.basicBaseList.userOrderList.splice(data.itemSub, 1);
 
         } else {
             state.basicBaseList.orderList = data;
@@ -2293,7 +2293,7 @@ const mutations = {
 
 
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
-        var temp = {
+        /*var temp = {
             "id": data.id,
             "type": data.type,
             "especial": data.especial,
@@ -2333,19 +2333,20 @@ const mutations = {
             "validate": data.validate,
             "loading": true,
             "onSell": 0
-        };
-
+        };*/
+        data.onSell = 0;
+        console.log(data);
         if (data.key == "myIntentionList") {
             console.log("意向列表页添加意向");
-            state.basicBaseList.myIntentionList.unshift(temp);
+            state.basicBaseList.myIntentionList.unshift(data);
         }
         if (data.key == "user") {
             console.log("会员详情页添加意向");
-            state.userDetail.intention.arr.unshift(temp);
+            state.userDetail.intention.arr.unshift(data);
         }
         if (data.key == "client") {
             console.log("客户详情页添加意向");
-            state.clientDetail.intentions.arr.unshift(temp);
+            state.clientDetail.intentions.arr.unshift(data);
         }
 
     },

@@ -284,14 +284,6 @@ export const getNoticeList = ({ dispatch }, param) => {
                 noticeList[i].checked = false;
                 noticeList[i].show = false;
             }
-            for (let i = 0; i < noticeList.length; i++) {
-                noticeList[i].shortMessage = "";
-                if (noticeList[i].message.length > 28) {
-                    noticeList[i].shortMessage = noticeList[i].message.substring(0, 28) + "...";
-                } else {
-                    noticeList[i].shortMessage = noticeList[i].message.substring(0, 28);
-                }
-            }
 
             dispatch(types.NOTICE_TABLE, noticeList);
             param.all = res.json().result.pages;
@@ -893,8 +885,7 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
         userId: param.user,
         employee: param.employee
     }
-    console.log(param)
-    dispatch(types.ORDER_TABLE, param);
+
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
@@ -906,7 +897,13 @@ export const transferOrder = ({ dispatch }, param) => { //注册客户订单划�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        param.callback(res.json().result);
+        dispatch(types.ORDER_TABLE, param);
+        if (res.json().result) {
+            param.callback(res.json().result);
+        } else {
+            param.callback(res.json().msg);
+        }
+
     }, (res) => {
         console.log('fail');
     })
@@ -1385,7 +1382,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     });
 }
 export const alterOrder = ({ dispatch }, param) => { //修改订单
-    console.log(param.tradeTime)
+
     if (param.city == null || param.city == '' || !param.city) {
         param.city = '';
     }
@@ -5001,9 +4998,9 @@ export const offerPurchaseOrder = ({ dispatch }, param) => { //采购单意向�
         number: param.number,
         unit: param.unit,
         price: param.price,
-        quality:param.quality,
-        description:param.description,
-        location:param.location
+        quality: param.quality,
+        description: param.description,
+        location: param.location
     }
     Vue.http({
         method: 'POST',
@@ -6748,12 +6745,6 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
 
 export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意向
 
-    if (param.files) {
-        param.images = param.files;
-    }
-    /*if (param.image_f) { param.images += param.image_f + ',' }
-    if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t };*/
     const data1 = {
         "id": param.id,
         "type": param.type,
@@ -6814,10 +6805,7 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
     })
 }
 
-export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增意向
-    if (param.files) {
-        param.images = param.files;
-    }
+export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
     var today = new Date();
     const data = {
         "userId": param.userId,
@@ -6874,7 +6862,6 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
     }).then((res) => {
         console.log('添加成功')
         if (param.callback) {
-            console.log("有回调函数");
             param.callback(res.json().msg);
         }
         param.id = res.json().result.intentionId;
@@ -7337,7 +7324,7 @@ export const getClientcount = ({ dispatch }, param) => { //我的客户统计
         }
     }).then((res) => {
         param.loading = false;
-        console.log(res.json().result)
+
         var clientCount = res.json().result;
         dispatch(types.MY_CLIENT_COUNT, clientCount);
     }, (res) => {
@@ -7358,7 +7345,7 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
         }
     }).then((res) => {
         param.loading = false;
-        console.log(res.json().result)
+
         var clientCount = res.json().result;
 
 
@@ -7369,8 +7356,112 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
     })
 }
 
+export const getClientAllcount = ({ dispatch }, param) => { //全部客户统计
+    param.loading = true;
+    let body = {
+        groupBy: param.groupBy
+    }
+    if (param.employeeId) {
+        body.employeeId = param.employeeId;
+    }
+    if (param.orgId) {
+        body.orgId = param.orgId;
+    }
+    if (param.country) {
+        body.country = param.country;
+    }
+    if (param.intl) {
+        body.intl = param.intl;
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        var clientCount = res.json().result;
+        //计算成交占比（traded/total）
+        let computeRate = function(traded, total) {
+            let rate;
+            if (total == 0 || traded == 0) {
+                rate = 0;
+            } else {
+                rate = traded / total * 10000;
+            }
+            if (rate != 0) {
+                let temp = rate.toString().split(".")[0];
+                rate = temp / 100;
+            }
+            return rate;
+        }
+        clientCount.tradedRate = computeRate(clientCount.traded, clientCount.total);
+        for (let i = 0; i < clientCount.statisticsList.length; i++) {
+            clientCount.statisticsList[i].tradedRate = computeRate(clientCount.statisticsList[i].traded, clientCount.statisticsList[i].total);
+        }
+
+        dispatch(types.MY_CLIENT_COUNT, clientCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
+export const getClientOverview = ({ dispatch }, param) => { //客户总览统计
+    param.loading = true;
+    let body = {};
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        var clientCount = res.json().result;
+        //计算成交占比（traded/total）
+        let computeRate = function(traded, total) {
+            let rate;
+            if (total == 0 || traded == 0) {
+                rate = 0;
+            } else {
+                rate = traded / total * 10000;
+            }
+            if (rate != 0) {
+                let temp = rate.toString().split(".")[0];
+                rate = temp / 100;
+            }
+            return rate;
+        }
+
+        for (let i = 0; i < clientCount.length; i++) {
+            clientCount[i].tradedRate = computeRate(clientCount[i].traded, clientCount[i].total);
+            let list = clientCount[i].statisticsList;
+            for (let k = 0; k < list.length; k++) {
+                list[k].tradedRate = computeRate(list[k].traded, list[k].total);
+            }
+        }
+
+        dispatch(types.MY_CLIENT_COUNT, clientCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
 export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交易统计)
-    console.log(param)
+
     if (param) param.loading = true;
     var url = apiUrl.clientList + '/report/order/list' + '?' + '&page=' + param.cur + '&pageSize=10';
     if (param.endTime && param.endTime !== '') {
