@@ -113,8 +113,10 @@
                                     <div class="editpage-input col-md-6">
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
-                                                <label class="editlabel">{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-                                                <input type="number" v-model="intentionInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                                <label class="editlabel">{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span>
+                                                    <span class="system_danger" v-if="$inner.number.min">数量不能小于0</span>
+                                                </label>
+                                                <input type="number" v-model="intentionInfo.number" class="form-control edit-input" v-validate:number="{required:true,min:0}" />
                                             </div>
                                             <div class="left" style="width:45%;">
                                                 <label class="editlabel">{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
@@ -126,19 +128,19 @@
                                         </div>
                                     </div>
                                     <!-- 价格  -->
-                                    <div class="editpage-input col-md-6">
-                                        <label class="editlabel">{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
-                                        <div style="clear:both;height:36px;">
-                                            <div class="left" style="width:45%;">
-                                                <input type="number" v-model="intentionInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
-                                            </div>
-                                            <div class="left" style="width:45%;">
-                                                <select class="form-control edit-input" v-model="intentionInfo.unit" disabled="true">
-                                                    <option v-for="item in initUnitlist" value="{{item.id}}">元/{{item.name}}({{item.ename}})</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+                                   <!--  <div class="editpage-input col-md-6">
+                                       <label class="editlabel">{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
+                                       <div style="clear:both;height:36px;">
+                                           <div class="left" style="width:45%;">
+                                               <input type="number" v-model="intentionInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
+                                           </div>
+                                           <div class="left" style="width:45%;">
+                                               <select class="form-control edit-input" v-model="intentionInfo.unit" disabled="true">
+                                                   <option v-for="item in initUnitlist" value="{{item.id}}">元/{{item.name}}({{item.ename}})</option>
+                                               </select>
+                                           </div>
+                                       </div>
+                                   </div> -->
                                     <!-- <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.quality')}}</label>
                                         <input type="text" v-model="intentionInfo.quality" class="form-control edit-input" />

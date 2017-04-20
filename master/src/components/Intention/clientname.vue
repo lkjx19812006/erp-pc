@@ -78,7 +78,7 @@ export default{
                 size: '15px',
                 cur: 1,
                 all: 7,
-                link:'/customer/employeeDistributed',
+                link:'/customer/suppliers',
                 name:'',
                 phone:'',
                 type:'',

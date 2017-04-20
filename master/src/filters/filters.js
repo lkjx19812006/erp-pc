@@ -966,7 +966,7 @@ Vue.filter('inquire', function(val) { //国际意向询价状态
         return '报价中';
     }
     if (val === 3) {
-        return '报价完成';
+        return '询价结束';
     }
 })
 
