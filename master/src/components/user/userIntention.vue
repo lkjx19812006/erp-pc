@@ -638,29 +638,9 @@ export default {
 
     },
     created() {
-<<<<<<< HEAD
-        this.imageParam.files = [];
-        console.log(this.param)
-        for (let i = 0; i < this.param.images.length; i++) {
-            if (i == 0) {
-                this.param.files = this.param.images[0].path;
-            } else {
-                this.param.files = this.param.files + "," + this.param.images[i].path;
-            }
-            let temp = {
-                imageShow: true,
-                showurl: this.param.images[i].url,
-                path: this.param.images[i].path
-            }
-            this.imageParam.files.push(temp);
-        }
-        console.log(this.imageParam.files)
-=======
+
         this.imageParam.files = this.setFiles(this.param.pics);
         this.param.images = this.setImages(this.param.pics);
-        console.log(this.imageParam.files);
-        console.log(this.param.images);
->>>>>>> 330c99cf3b47272cd0ba3a1f82ef11fcfe0b7467
 
         //设置过期时间,7天后
         if (!this.param.duedate) {
