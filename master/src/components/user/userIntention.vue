@@ -67,13 +67,15 @@
                         </div> -->
                         <div class="editpage">
                             <div class="editpageleft">
+                                <!-- 品种 -->
                                 <div class="editpage-input">
                                     <label class="editlabel">品种名称<span class="system_danger" v-if="$validation.breedname.required">品种不能为空</span></label>
                                     <input type="text" v-model="param.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" value="{{param.breedName}}" @click="searchBreed(param.breedName,param.breedId)" readonly="true" />
                                 </div>
+                                <!-- 单价 -->
                                 <div class="editpage-input" style="width:80%">
                                     <label class="editlabel">单价<span class="system_danger" v-if="$validation.price.money">请输入不超过小数点两位的数字</span></label>
-                                    <input type="number" v-model='param.price' v-validate:price="['money']" class="form-control edit-input" value="{{param.price}}" style="display:-webkit-inline-box" /><span v-show="param.unit">元/{{param.unit}}</span>
+                                    <input type="number" v-model='param.price' v-validate:price="['money']" class="form-control edit-input" value="{{param.price}}" style="display:-webkit-inline-box" /><span v-show="param.unit">元/{{param.unit | Unit}}</span>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">质量要求</label>
@@ -104,7 +106,7 @@
                                     <label class="editlabel">单位<span class="system_danger" v-if="$validation.unit.required">单位不能为空</span></label>
                                     <input type="text" v-model="param.unit" class="form-control edit-input" v-validate:unit="{required:true}" v-show="false" />
                                     <select v-model="param.unit" class="form-control edit-input">
-                                        <option v-for="item in initUnitlist">{{item.name}}</option>
+                                        <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}</option>
                                     </select>
                                 </div>
                                 <div class="editpage-input" style="clear:both;padding-top:15px">
@@ -136,6 +138,7 @@
                             <img src="/static/images/receiverinfo@2x.png" style="display:inline" />
                             <h5 style="display:inline">交收信息</h5>
                         </div>
+                        <!-- 非预售或预购 -->
                         <div v-if="param.preSell===0" class="editpage">
                             <div class="editpageleft">
                                 <div class="editpage-input">
@@ -213,11 +216,15 @@
                                     </select>
                                 </div>
                                 <div class="editpage-input" v-show="param.sampling==1">
-                                    <label class="editlabel">样品单位</label>
+                                    <!-- <label class="editlabel">样品单位</label>
                                     <div type="text" class="edit-input">
                                         <input-select :prevalue="param.sampleUnit" :value.sync="param.sampleUnit" :options="initBreedDetail.units.arr" placeholder="样品单位" label="name">
                                         </input-select>
-                                    </div>
+                                    </div> -->
+                                    <label class="editlabel">样品单位</label>
+                                    <select v-model="param.sampleUnit" class="form-control edit-input">
+                                        <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}</option>
+                                    </select>
                                 </div>
                                 <div class="editpage-input" v-show="param.sampling==1">
                                     <label class="editlabel">样品数量</label>
@@ -229,6 +236,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 预售或者预购 -->
                         <div v-if="param.preSell===1" class="editpage">
                             <div class="editpageleft">
                                 <div class="editpage-input">
@@ -301,11 +309,15 @@
                                     </select>
                                 </div>
                                 <div class="editpage-input" v-show="param.sampling==1">
-                                    <label class="editlabel">样品单位</label>
+                                    <!-- <label class="editlabel">样品单位</label>
                                     <div type="text" class="edit-input">
                                         <input-select :prevalue="param.sampleUnit" :value.sync="param.sampleUnit" :options="initBreedDetail.units.arr" placeholder="样品单位" label="name">
                                         </input-select>
-                                    </div>
+                                    </div> -->
+                                    <label class="editlabel">样品单位</label>
+                                    <select v-model="param.sampleUnit" class="form-control edit-input">
+                                        <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}</option>
+                                    </select>
                                 </div>
                                 <div class="editpage-input" v-show="param.sampling==1">
                                     <label class="editlabel">样品数量</label>
