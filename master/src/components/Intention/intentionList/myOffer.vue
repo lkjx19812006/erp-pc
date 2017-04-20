@@ -70,7 +70,7 @@
                           </span>
                         </td>
                         <td>{{item.price}}</td>
-                        <td>{{item.number}}{{item.unit}}</td>
+                        <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.orderTime}}次</td>
                         <!-- <td>{{item.userName}}</td>

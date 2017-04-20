@@ -37,7 +37,6 @@ var locales = {
             previous_page: '上一页',
             next_page: '下一页',
             img_canceled: 'cancle',
-            deadline: 'Edeadline',
             confirm: '确定',
             edit: '编辑',
             del: '删除',
@@ -405,7 +404,7 @@ var locales = {
             female: '女',
             label: '标签',
             product: '产品',
-            product_type:'产品类别',
+            product_type: '产品类别',
             test_report: '检测报告',
             whether_main_contact: '是否主联系人',
             validate_name: '不得少于两位',
@@ -432,7 +431,7 @@ var locales = {
             quoted: '已再次报价',
             hasbeen_quote: '需要再次报价',
             transcation: '成交时间',
-            is_transcation:'是否成交',
+            is_transcation: '是否成交',
             transcation_amount: '成交金额',
             wait_payment: '待支付',
             installment: '分期付款',
@@ -565,6 +564,7 @@ var locales = {
             Read: '已读',
             Enter_search: '按回车键搜索',
             upload_clients: 'excel导入客户',
+            two_decimal: '至多两位小数'
 
         }
     },
@@ -962,7 +962,7 @@ var locales = {
             female: 'Female',
             label: 'Label',
             product: 'Product',
-            product_type:' productType',
+            product_type: ' productType',
             test_report: 'Test report',
             whether_main_contact: 'Whether main contact',
             validate_name: 'Shall not be less than two',
@@ -989,7 +989,7 @@ var locales = {
             not_quote: 'Not quoted',
             quoted: 'Has been quoted',
             transcation: 'Transaction time',
-            is_transcation:'isTranscation',
+            is_transcation: 'isTranscation',
             transcation_amount: 'Transaction amount',
             wait_payment: 'Waiting to pay',
             installment: 'Installment payment',
@@ -1122,6 +1122,7 @@ var locales = {
             Read: 'Read',
             Enter_search: 'Click enter to search',
             upload_clients: 'upload clients by .xlsx',
+            two_decimal: 'at most two decimal places'
         }
     }
 }

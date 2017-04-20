@@ -97,7 +97,7 @@
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input" style="float:left;width:50%">
-                                    <label class="editlabel" for="system">数量<span class="system_danger" v-if="$validation.number.quantity">不超过小数点四位的数字</span></label>
+                                    <label class="editlabel" for="system">数量<span class="system_danger" v-if="$validation.number.quantity">不超过小数点两位的数字</span></label>
                                     <input type="number" v-model="param.number" v-validate:number="['quantity']" class="form-control edit-input" value="{{param.number}}" />
                                 </div>
                                 <div class="editpage-input" style="float:right;width:50%">

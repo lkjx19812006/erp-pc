@@ -231,7 +231,7 @@
                         <td>{{item.breedName}}</td>
                         <td>{{item.location}}</td>
                         <td>{{item.spec}}</td>
-                        <td>{{item.number}}{{item.unit}}</td>
+                        <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.duedateDesc}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.inTypeDesc}}</td>

@@ -12,7 +12,7 @@
         <validator name="validation">
             <form novalidate>
                 <div class="edit-model">
-                    <section class="editsection"  v-cloak>
+                    <section class="editsection" v-cloak>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">名称 <span class="system_danger" v-if="$validation.username.required">请输入产品名称</span></label>
@@ -20,8 +20,8 @@
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">类型<span class="system_danger" v-if="$validation.type.required">请选择产品类型</span></label>
-                                 <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
-                                 <select  value="{{param.type}}" v-model="param.type" class="form-control" >
+                                <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly" />
+                                <select value="{{param.type}}" v-model="param.type" class="form-control">
                                     <option>药材</option>
                                     <option>提取物</option>
                                     <option>饮片</option>
@@ -31,8 +31,8 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种类别 <span class="system_danger" v-if="$validation.breed.required">请选择品种类别</span></label>
-                                <input v-show="false" type="text" class="form-control" v-model="param.breedId" v-validate:breed="['required']" readonly="readonly"/>
-                                <select   v-model="param.breedId" class="form-control"   >
+                                <input v-show="false" type="text" class="form-control" v-model="param.breedId" v-validate:breed="['required']" readonly="readonly" />
+                                <select v-model="param.breedId" class="form-control">
                                     <option v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                                 </select>
                                 <!-- <input type="text" id="breed" class="form-control" v-model="param.breedId" v-validate:breed="['required']" value="{{param.breedId}}" disabled="true"  @click="searchBreed(param.categoryName,param.breedId)"/> -->
@@ -44,59 +44,50 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-
                                 <label class="editlabel">产地 <span class="system_danger" v-if="$validation.location1.required">请输入产地</span></label>
-                                <input v-show="false" type="text" class="form-control" v-model="param.location" v-validate:location1="['required']" readonly="readonly"/>
-                                 <select  value="{{param.location}}" v-model="param.location" class="form-control">
+                                <input v-show="false" type="text" class="form-control" v-model="param.location" v-validate:location1="['required']" readonly="readonly" />
+                                <select value="{{param.location}}" v-model="param.location" class="form-control">
                                     <option v-for="item in initProvince">{{item.cname}}</option>
                                 </select>
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">质量</label>
-                                <input type="text" class="form-control" v-model="param.quality" value="{{param.quality}}"/>
+                                <input type="text" class="form-control" v-model="param.quality" value="{{param.quality}}" />
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-
-                                <label class="editlabel">数量 <span class="system_danger" v-if="$validation.number.quantity">请输入不超过小数点四位的数字</span></label>
+                                <label class="editlabel">数量 <span class="system_danger" v-if="$validation.number.quantity">请输入不超过小数点两位的数字</span></label>
                                 <input type="number" class="form-control" v-model="param.number" v-validate:number="['quantity']" value="{{param.number}}" />
                             </div>
-                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">规格 <span class="system_danger" v-if="$validation.spec.required">请输入规格</span></label>
-                                <input type="text" class="form-control" v-model="param.spec"  v-validate:spec="['required']" value="{{param.spec}}"/>
-
+                                <input type="text" class="form-control" v-model="param.spec" v-validate:spec="['required']" value="{{param.spec}}" />
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">单位</label>
                                 <div type="text" class="editpage-input" style="margin-top:0">
-                                   <input-select
-                                     :value.sync="param.unit"
-                                     :prevalue="param.unit"
-                                     :options="initCategorylist.unit"
-                                     placeholder="单位"
-                                     label="name" 
-                                   >
-                                   </input-select>
-                                 </div>
+                                    <input-select :value.sync="param.unit" :prevalue="param.unit" :options="initCategorylist.unit" placeholder="单位" label="name">
+                                    </input-select>
+                                </div>
                             </div>
-                           <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">价格 <span class="system_danger" v-if="$validation.price.money">请输入不超过小数点两位的数字</span></label>
-                                 <input type="number" v-model='param.price' class="form-control edit-input" value="{{param.price}}" v-validate:price="['money']" style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
+                                <input type="number" v-model='param.price' class="form-control edit-input" value="{{param.price}}" v-validate:price="['money']" style="display:-webkit-inline-box" /><span v-show="param.unit">/{{param.unit}}</span>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">检测报告</label>
-                                <select  value="{{param.coa}}" v-model="param.coa" class="form-control">
+                                <select value="{{param.coa}}" v-model="param.coa" class="form-control">
                                     <option value="1">有</option>
                                     <option value="0" selected>无</option>
                                 </select>
                                 <!-- <input type="text" class="form-control" v-model="param.coa" value="{{param.coa}}"/> -->
                             </div>
-                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">价格过期时间</label>
                                 <mz-datepicker :time.sync="param.duedate" format="yyyy/MM/dd HH:mm:ss"></mz-datepicker>
                             </div>
@@ -109,7 +100,7 @@
                         <div class="clearfix">
                             <div class="client-detailInfo col-xs-12">
                                 <label class="editlabel">备注</label>
-                                <textarea  value="{{param.comments}}" v-model="param.comments" class="form-control" style="resize:none;width:100%;" rows="5">
+                                <textarea value="{{param.comments}}" v-model="param.comments" class="form-control" style="resize:none;width:100%;" rows="5">
                                 </textarea>
                                 <!-- <input type="text" class="form-control" v-model="param.coa" value="{{param.coa}}"/> -->
                             </div>
@@ -148,38 +139,38 @@ export default {
     props: ['param'],
     data() {
         return {
-           dateText:'',
+            dateText: '',
             loadParam: {
-              loading: true,
-              show:false,
-              color: '#5dc596',
-              size: '15px',
-              cur: 1,
-              all: 7
+                loading: true,
+                show: false,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7
             },
-            breedParam:{
-                show:false,
-                breedName:'',
-                breedId:'',
-                loading:false,
-                id:''
+            breedParam: {
+                show: false,
+                breedName: '',
+                breedId: '',
+                loading: false,
+                id: ''
             },
-            supplyParam:{
-                show:false,
-                cid:'',
-                cName:''
+            supplyParam: {
+                show: false,
+                cid: '',
+                cName: ''
             }
         }
     },
     vuex: {
-      getters: {
-         initProvince,
-        initCategorylist
-      },
-      actions: {
-         getProvinceList,
-         getCategoryData
-      }
+        getters: {
+            initProvince,
+            initCategorylist
+        },
+        actions: {
+            getProvinceList,
+            getCategoryData
+        }
     },
     route: {
         activate: function(transition) {
@@ -191,7 +182,7 @@ export default {
             transition.next()
         }
     },
-    methods:{
+    methods: {
         createDateText() {
             let date = new Date()
             let year = date.getFullYear()
@@ -200,22 +191,22 @@ export default {
             let str = `${year}/${month}/${day}`
             this.dateText = str.replace(/\b(\w)\b/g, "0$1")
         },
-        selectSupply:function(cid,cName){
-            this.supplyParam.show=true;
+        selectSupply: function(cid, cName) {
+            this.supplyParam.show = true;
             console.log(this.param)
-            if("id" in this.param){
+            if ("id" in this.param) {
                 this.supplyParam.cid = this.param.id;
                 this.supplyParam.cName = this.param.cName;
             }
         },
-        save:function(){
-            this.param.show=false;
+        save: function() {
+            this.param.show = false;
             this.param.callback = this.param.callback;
             this.param.link(this.param);
         }
     },
-    events:{
-        supply:function(supply){
+    events: {
+        supply: function(supply) {
             console.log(supply)
             this.param.cid = supply.cid;
             this.param.cName = supply.customerName;
@@ -225,8 +216,8 @@ export default {
         this.createDateText()
     },
     created() {
-      this.getProvinceList(this.loadParam);
-      this.getCategoryData(this.loadParam);
+        this.getProvinceList(this.loadParam);
+        this.getCategoryData(this.loadParam);
     }
 }
 </script>
@@ -236,7 +227,8 @@ export default {
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
-.top-title{
+
+.top-title {
     position: fixed;
     right: 0;
     left: 0;
@@ -244,7 +236,7 @@ export default {
 }
 
 .edit-model {
-    overflow:inherit;
+    overflow: inherit;
     padding: 10px 30px 50px 30px;
 }
 
@@ -312,6 +304,7 @@ export default {
 .editpage-image {
     display: inline-block;
 }
+
 .edit-input:focus {
     border-color: #fa6705;
 }

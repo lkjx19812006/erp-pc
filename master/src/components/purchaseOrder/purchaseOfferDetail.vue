@@ -15,7 +15,7 @@
                     <div class="container-fluid">
                         <div class="navbar-header">
                             <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                            <span class="navbar-brand navbar-name" href="#">{{initPurchaseDetail.customerName}}</span>
+                            <span class="navbar-brand navbar-name" href="#"></span>
                         </div>
                     </div>
                 </nav>
@@ -23,42 +23,6 @@
             <section>
                 <div class="client-section clearfix">
                     <div class="col-md-12">
-                        <!-- 客户信息 -->
-                        <h4 class="section_title">基本信息</h4>
-                        <div class="panel panel-default" style="border:none">
-                            <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                <label class="col-md-3 col-sm-4 col-xs-6">姓名：{{initClientDetail.name}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">类型：{{initClientDetail.type |customerType}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">是否供应商：
-                                    <span v-if="initClientDetail.supplier==0">否</span>
-                                    <span v-if="initClientDetail.supplier==1">是</span>
-                                </label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">分类：{{initClientDetail.classify | classify}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">手机号：{{initClientDetail.mainPhone}}
-                                    <span v-if="initClientDetail.phoneProvince!=''||initClientDetail.phoneCity!=''">
-                                        （{{initClientDetail.phoneProvince}}{{initClientDetail.phoneCity}}）
-                                    </span>
-                                </label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">电话：{{initClientDetail.tel}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">邮箱：{{initClientDetail.email}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">邮编：{{initClientDetail.number}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">省市：{{initClientDetail.provinceName}}{{initClientDetail.cityName}}</label>
-                            </ul>
-                        </div>
-                        <!-- 其他信息 -->
-                        <!-- <h4 class="section_title">其他</h4>
-                        <div class="panel panel-default" style="border:none">
-                            <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                <label class="col-md-3 col-sm-4 col-xs-6">姓名：</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">类型：</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">手机号：</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">国家</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">省</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">市</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">详细地址</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">经营范围</label>
-                            </ul>
-                        </div> -->
                         <!-- 意向列表 -->
                         <article>
                             <div class="panel-group">
