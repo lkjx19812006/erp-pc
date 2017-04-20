@@ -44,8 +44,11 @@
                             </div>
                             <div class="editpage-input col-md-6">
                                 <div class="left" style="width:45%;">
-                                    <label class="editlabel">单价<span class="system_danger" v-if="$validation.price.required">{{$t('static.required')}}</span></label>
-                                    <input type="number" v-model="param.price" class="form-control edit-input" v-validate:price="{required:true}" />
+                                    <label class="editlabel">单价
+                                        <span class="system_danger" v-if="$validation.price.required">必填</span>
+                                        <span class="system_danger" v-if="!$validation.price.required&&$validation.price.money">至多两位小数</span>
+                                    </label>
+                                    <input type="number" v-model="param.price" class="form-control edit-input" v-validate:price="['required','money']" />
                                 </div>
                                 <div class="left" style="width:45%;">
                                     <label class="editlabel">单位<span class="system_danger" v-if="$validation.unit.required">{{$t('static.required')}}</span></label>
@@ -155,7 +158,15 @@ export default {
             this.offerPurchaseOrder(this.param);
         }
 
+    },
+    watch: {
 
+    },
+    computed: {
+        price: function() {
+            return this.param.price - 1;
+
+        }
     },
     events: {
         customer: function(customer) {
