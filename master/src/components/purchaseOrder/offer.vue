@@ -67,11 +67,21 @@
                             </div>
                             <!-- 产地 -->
                             <div class="editpage-input col-md-12">
-                                <div class="left" style="width:50%">
-                                    <label class="editlabel">产地</label>
-                                    <input type="text" v-model="param.location" class="form-control edit-input" />
-                                </div>
+                                 
+                                    <div class="left" style="width:50%">
+                                        <label class="editlabel">产地</label>
+                                        <input type="text" v-model="param.location" class="form-control edit-input" />
+                                    </div>
+                                
+                                <!-- 规格 -->
+                                
+                                    <div class="left" style="width:50%">
+                                        <label class="editlabel">规格</label>
+                                        <input type="text" v-model="param.spec" class="form-control edit-input" />
+                                    </div>
+                                
                             </div>
+                           
                         </div>
                     </section>
                     <div>

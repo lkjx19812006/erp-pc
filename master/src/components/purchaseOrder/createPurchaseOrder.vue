@@ -149,7 +149,7 @@
                                         </div>
                                     </div>
                                     <!-- 价格  -->
-                                    <div class="editpage-input col-md-6">
+                                    <!-- <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
@@ -161,7 +161,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <!-- 产地 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.origin')}}</label>

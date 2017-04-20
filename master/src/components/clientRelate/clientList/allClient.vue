@@ -167,7 +167,7 @@
                         </td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.ctime|timeFilters}}</td>
-                        <td>{{item.lastOrderTime}}</td>
+                        <td>{{item.lastOrderTime|timeFilters}}</td>
                         <td class="underline" @click="clickOn({
                                 id:item.id,
                                 sub:$index,

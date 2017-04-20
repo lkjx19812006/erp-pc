@@ -5000,7 +5000,8 @@ export const offerPurchaseOrder = ({ dispatch }, param) => { //采购单意向�
         price: param.price,
         quality: param.quality,
         description: param.description,
-        location: param.location
+        location: param.location,
+        spec: param.spec
     }
     Vue.http({
         method: 'POST',
