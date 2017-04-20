@@ -348,14 +348,19 @@ export default {
                 this.orderParam.province = '';
                 this.orderParam.city = '';
                 this.orderParam.district = '';
-
                 this.orderParam.show = true;
             }
-
         },
         callback: function(name) {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
+            let _this = this;
+            setTimeout(function() {
+                _this.$router.go({ //成功后跳转到我的订单页面
+                    path: 'order?id=0'
+                });
+            }, 500);
+
         }
 
     },

@@ -92,6 +92,10 @@
                         <label class="editlabel">优惠说明</label>
                         <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" style="width:95%" />
                     </div>
+                    <div class="editpage-input col-md-6">
+                        <label class="editlabel">总金额</label>
+                        <input type="text" class="form-control edit-input" v-model="total" style="width:95%" readonly="readonly" />
+                    </div>
                 </div>
             </section>
             <div class="edit_footer">
@@ -103,6 +107,7 @@
 </template>
 <script>
 import vSelect from '../tools/vueSelect/components/Select'
+import util from '../tools/util.js'
 import pressImage from '../../components/imagePress'
 import filter from '../../filters/filters.js'
 import {
@@ -160,6 +165,19 @@ export default {
             getCityList,
             getDistrictList,
             createOrderByPurchase
+        }
+    },
+    computed: {
+        total: function() {
+            let goods = this.param.goods;
+            let sum = 0;
+            for (let i = 0; i < goods.length; i++) {
+                console.log(util.mul(goods[i].price, goods[i].number));
+                sum = util.add(sum, util.mul(goods[i].price, goods[i].number));
+
+            }
+
+            return util.sub(util.add(sum, this.param.incidentals), this.param.preferential);
         }
     },
     methods: {

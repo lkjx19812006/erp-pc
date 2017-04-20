@@ -972,29 +972,32 @@ Vue.filter('inquire', function(val) { //国际意向询价状态
 
 Vue.filter('Unit', function(val) { //国际意向单位
     var val = val;
-    if (val == 71) {
-        return '吨（T）';
-    }
-    if (val == 63) {
-        return '公斤（KG）';
-    }
     if (val == 1) {
         return '斤（HKG）';
     }
     if (val == 3) {
         return '克（G）';
     }
+    if (val == 63) {
+        return '公斤（KG）';
+    }
     if (val == 64) {
         return '棵（Tree）';
+    }
+    if (val == 66) {
+        return '份';
     }
     if (val == 69) {
         return '朵（Flower）';
     }
-    if (val == 72) {
-        return '株（Plant）';
-    }
     if (val == 70) {
         return '瓶（Bottle）';
+    }
+    if (val == 71) {
+        return '吨（T）';
+    }
+    if (val == 72) {
+        return '株（Plant）';
     }
     if (val == 73) {
         return '只（Only）';

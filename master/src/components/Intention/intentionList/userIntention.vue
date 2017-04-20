@@ -237,6 +237,7 @@
                                   breedName:item.breedName,
                                   breedId:item.breedId,
                                   type:item.type,
+                                  preSell:item.preSell,
                                   especial:item.especial,
                                   quality:item.quality,
                                   qualification:item.qualification,
@@ -269,13 +270,8 @@
                                    link:editintentInfo,
                                    url:'/intention/',
                                    key:'userIntentionList',
-                                   images:item.pics,
-                                   image_f:'',
-                                   image_s:'',
-                                   image_t:'',
-                                   image_f_show:'',
-                                   image_s_show:'',
-                                   image_t_show:'',
+                                   images:'',
+                                   pics:item.pics,
                                    duedate:item.duedate
                                    })">
                                     <img src="/static/images/edit.png" height="18" width="30" alt="编辑" title="编辑" />
