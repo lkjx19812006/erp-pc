@@ -244,7 +244,8 @@
                             <td>{{item.bizScope}}</td>
                             <td v-if="this.initLogin.orgId==29">{{item.audit | tracking}}</td>
                             <td v-if="this.initLogin.orgId==29">{{item.auditComment}}</td>
-                            <td @click="modifyClient({
+                            <td>
+                                <a class="btn btn-default" style="padding:1px 5px;font-size: 12px;" @click="modifyClient({
                                     id:item.id,
                                     sub:$index,
                                     show:true,
@@ -274,9 +275,7 @@
                                     employeeId:item.employeeId,
                                     employeeName:item.employeeName,
                                     orgId:item.orgId
-                                    })">
-                                <a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" />
-                                </a>
+                                    })">编辑</a>
                                 <a v-if="this.initLogin.orgId==29" class="btn btn-success" style="padding:1px 5px;font-size: 12px;" @click="updateTracking(item,$index)">跟进</a>
                             </td>
                         </tr>
@@ -712,10 +711,10 @@ export default {
         common('tab', 'table_box', 1);
     },
     filters: {
-        timeFilters:function(mytime){
-           // debugger;
-            return mytime?mytime.substring(0,10):'';
-        }    
+        timeFilters: function(mytime) {
+            // debugger;
+            return mytime ? mytime.substring(0, 10) : '';
+        }
     }
 
 }

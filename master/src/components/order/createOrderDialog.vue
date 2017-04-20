@@ -207,11 +207,17 @@
                                         <label class="editlabel">{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
                                         <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" @click="searchBreed()" readonly="true" />
                                     </div>
+                                    <!-- 数量,必填至多两位小数 -->
                                     <div class="editpage-input col-md-6">
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
-                                                <label class="editlabel">{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-                                                <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                                <label class="editlabel">{{$t('static.quantity')}}
+                                                    <span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span>
+                                                    <span class="system_danger" v-if="!$inner.number.required&&$inner.number.quantity">
+                                                        {{$t('static.two_decimal')}}
+                                                    </span>
+                                                </label>
+                                                <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="['required','quantity']" />
                                             </div>
                                             <div class="left" style="width:45%;">
                                                 <label class="editlabel">{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
@@ -222,12 +228,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- 采购价格 -->
+                                    <!-- 价格,必填至多两位小数 -->
                                     <div class="editpage-input col-md-6">
-                                        <label class="editlabel"><span v-if="param.type==0">{{$t('static.purchase')}}</span>{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
+                                        <label class="editlabel">
+                                            <span v-if="param.type==0">{{$t('static.purchase')}}</span> {{$t('static.price')}}
+                                            <span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span>
+                                            <span class="system_danger" v-if="!$inner.pack0.required&&$inner.pack0.money">
+                                                {{$t('static.two_decimal')}}
+                                            </span>
+                                        </label>
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
-                                                <input type="number" v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
+                                                <input type="number" v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="['required','money']" />
                                             </div>
                                             <div class="left" style="width:45%;">
                                                 <select class="form-control edit-input" v-model="breedInfo.unit" disabled="true">
@@ -236,11 +248,18 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- 成本价格,,必填至多两位小数 -->
                                     <div class="editpage-input col-md-6" v-if="this.initLogin.orgId!=='11'&&param.type==1">
-                                        <label class="editlabel">{{$t('static.cost_price')}}<span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span></label>
+                                        <label class="editlabel">
+                                            {{$t('static.cost_price')}}
+                                            <span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span>
+                                            <span class="system_danger" v-if="!$inner.cost.required&&$inner.cost.money">
+                                                {{$t('static.two_decimal')}}
+                                            </span>
+                                        </label>
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
-                                                <input type="number" v-model="breedInfo.costPrice" class="form-control edit-input" v-validate:cost="{required:true}" />
+                                                <input type="number" v-model="breedInfo.costPrice" class="form-control edit-input" v-validate:cost="['required','money']" />
                                             </div>
                                             <div class="left" style="width:45%;">
                                                 <select class="form-control edit-input" v-model="breedInfo.unit" disabled="true">
