@@ -58,11 +58,11 @@
                             <div class="editpage-input col-md-12">
                                 <div class="left" style="width:50%;">
                                     <label class="editlabel">质量要求</label>
-                                    <input type="text" v-model="param.quality" class="form-control edit-input"  />
+                                    <input type="text" v-model="param.quality" class="form-control edit-input" />
                                 </div>
                                 <div class="left" style="width:50%;">
                                     <label class="editlabel">报价备注</label>
-                                    <input type="text" v-model="param.description" class="form-control edit-input"  />
+                                    <input type="text" v-model="param.description" class="form-control edit-input" />
                                 </div>
                             </div>
                             <!-- 产地 -->
@@ -158,11 +158,13 @@ export default {
 
     },
     watch: {
-
+        'param.number': function(o, n) {
+            console.log(o);
+            console.log(n);
+        }
     },
     events: {
         customer: function(customer) {
-            console.log(customer);
             this.param.customerId = customer.customerId;
             this.param.customerName = customer.customerName;
         },
