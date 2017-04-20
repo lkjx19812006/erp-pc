@@ -134,6 +134,7 @@ export const login = ({ dispatch }, data) => { //登录
 }
 export const resetPawd = ({ dispatch }, data) => { //修改密码(需要提供原密码)
     console.log(data);
+    console.log("哈哈")
     const body = {
         no: data.no,
         newPwd: data.newPwd,

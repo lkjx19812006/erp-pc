@@ -116,7 +116,7 @@
                                     </div>
                                     <div class="panel-collapse" v-else v-show="initOrderDetail.goods.show">
                                         <div class="panel-body panel-set">
-                                            <table class="table  contactSet">
+                                            <table class="table contactSet">
                                                 <thead>
                                                     <th>{{$t('static.breed')}}</th>
                                                     <th>{{$t('static.origin')}}</th>
@@ -398,25 +398,28 @@
                                             <table class="table  contactSet">
                                                 <thead>
                                                     <th>{{$t('static.file_type')}}</th>
-                                                    <th>{{$t('static.file_origin')}}</th>
+                                                   <!-- 删除文件来源 <th>{{$t('static.file_origin')}}</th> -->
                                                     <th>文件名称</th>
                                                     <th>{{$t('static.file_path')}}</th>
                                                     <th>{{$t('static.description')}}</th>
-                                                    <th>{{$t('static.create_time')}}</th>
-                                                    <th v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2"></th>
+                                                    <!-- 删除创建时间<th>{{$t('static.create_time')}}</th> -->
+                                                    <th v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2">操作</th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.contractList.arr">
                                                         <td>{{item.url | file}}</td>
-                                                        <td>{{item.bizType}}</td>
+                                                        <!-- 删除文件来源<td>{{item.bizType}}</td> -->
                                                         <th>{{item.name}}</th>
                                                         <td>
                                                             <img :src="item.url" v-if="item.url | isImage" @click="clickBig(item.url)" style="margin:auto" />
-                                                            <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
+                                                            
                                                         </td>
                                                         <td>{{item.description}}</td>
-                                                        <td>{{item.ctime}}</td>
+                                                        <!-- 删除创建时间<td>{{item.ctime}}</td> -->
                                                         <td v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2">
+                                                        <!-- 下载 -->
+                                                            <a href="{{item.url}}" download="" class="btn btn-default">下载<!-- <img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /> --></a>
+
                                                             <button class="btn btn-default" @click="deleteCompact({
                                                             id:item.id,
                                                             sub:$index,
@@ -468,19 +471,21 @@
                                             <table class="table  contactSet">
                                                 <thead>
                                                     <th>{{$t('static.file_type')}}</th>
-                                                    <th>{{$t('static.file_origin')}}</th>
+                                                    <th>文件名称</th>
                                                     <th>{{$t('static.file_path')}}</th>
                                                     <th>{{$t('static.description')}}</th>
+                                                    <th>{{$t('static.handle')}}</th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.payPics.arr">
                                                         <td>{{item.url | file}}</td>
-                                                        <td>{{item.bizType}}</td>
+                                                        <td>{{item.name}}</td>
                                                         <td>
                                                             <img :src="item.url" v-if="item.url | isImage" @click="clickBig(item.url)" style="margin:auto" />
-                                                            <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
+                                                            
                                                         </td>
                                                         <td>{{item.description}}</td>
+                                                        <td><a href="{{item.url}}" download="" class='btn btn-default'>下载</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -516,19 +521,22 @@
                                             <table class="table  contactSet">
                                                 <thead>
                                                     <th>{{$t('static.file_type')}}</th>
-                                                    <th>{{$t('static.file_origin')}}</th>
+                                                    <th>文件名称</th>                                                   
                                                     <th>{{$t('static.file_path')}}</th>
                                                     <th>{{$t('static.description')}}</th>
+                                                     <th>{{$t('static.handle')}}</th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.attachFiles.arr">
                                                         <td>{{item.url | file}}</td>
-                                                        <td>{{item.bizType}}</td>
+                                                      <!--   <td>{{item.bizType}}</td> -->
+                                                        <td>{{item.name}}</td>
                                                         <td>
                                                             <img :src="item.url" v-if="item.url | isImage" @click="clickBig(item.url)" style="margin:auto" />
-                                                            <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
+                                                            
                                                         </td>
                                                         <td>{{item.description}}</td>
+                                                        <td><a href="{{item.url}}" download="" class="btn btn-default">下载</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -568,19 +576,21 @@
                                             <table class="table  contactSet">
                                                 <thead>
                                                     <th>{{$t('static.file_type')}}</th>
-                                                    <th>{{$t('static.file_origin')}}</th>
+                                                    <!-- <th>{{$t('static.file_origin')}}</th> -->
+                                                    <th>文件名称</th>
                                                     <th>{{$t('static.file_path')}}</th>
                                                     <th>{{$t('static.description')}}</th>
+                                                    <th>{{$t('static.handle')}}</th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.sendPics.arr">
                                                         <td>{{item.url | file}}</td>
-                                                        <td>{{item.bizType}}</td>
+                                                        <td>{{item.name}}</td>
                                                         <td>
                                                             <img :src="item.url" v-if="item.url | isImage" @click="clickBig(item.url)" style="margin:auto" />
-                                                            <a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                                                         </td>
                                                         <td>{{item.description}}</td>
+                                                        <th><a href="{{item.url}}" download="" class="btn btn-default">下载</a></th>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -893,7 +903,18 @@ section article {
 .table>thead>tr>th {
     text-align: center;
 }
-
+/* .downloadbtn{
+    display: inline-block;
+    border:1px solid #ccc;
+    background-color:#fff;
+    color:#333;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size:13px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    user-select: none;
+} */
 .edit-detail {
     border: 1px solid #ddd;
     border-radius: 3px;
