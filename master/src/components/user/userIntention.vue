@@ -640,8 +640,6 @@ export default {
     created() {
         this.imageParam.files = this.setFiles(this.param.pics);
         this.param.images = this.setImages(this.param.pics);
-        console.log(this.imageParam.files);
-        console.log(this.param.images);
 
         //设置过期时间,7天后
         if (!this.param.duedate) {
