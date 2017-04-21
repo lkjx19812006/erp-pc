@@ -659,7 +659,7 @@ Vue.filter('subtime', function(val) { //将时间的时分秒去掉
     }
     return val;
 })
-Vue.filter('dateTime', function(val) { //将时间的时分秒去掉
+Vue.filter('dateTime', function(val) { //较正时间格式
     var val = val;
     var now = new Date();
     var year = now.getFullYear();
