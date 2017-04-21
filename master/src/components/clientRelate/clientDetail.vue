@@ -308,7 +308,6 @@
                                     </div>
                                 </div>
                                 <!-- 新增意向 -->
-
                                 <div class="panel panel-default" v-if="param.inquiry!='询价'">
                                     <div class="panel-heading" v-cloak>
                                         <h4 class="panel-title clearfix" @click.stop="enfoldment({
@@ -322,7 +321,6 @@
                                             <button type="button" class="btn btn-base pull-right" @click.stop="createIntention()">{{$t('static.new')}}</button>
                                         </h4>
                                     </div>
-                                    
                                     <div class="panel-collapse" v-show="!initClientDetail.intentions.show&&initClientDetail.intentions.arr.length>0">
                                         <div class="panel-body panel-set">
                                             <table class="table contactSet">
@@ -777,17 +775,13 @@
                                             <table class="table contactSet">
                                                 <thead>
                                                     <th>{{$t('static.type')}}</th>
-                                                   <!--  <th>{{$t('static.name')}}</th> -->
+                                                    <!--  <th>{{$t('static.name')}}</th> -->
                                                     <th>{{$t('static.breed')}}</th>
                                                     <th>{{$t('static.quality')}}</th>
                                                     <th>{{$t('static.origin')}}</th>
                                                     <th>{{$t('static.specification')}}</th>
-                                                    <th>{{$t('static.order_type')}}</th>
+                                                    <th>成交类型</th>
                                                     <th>{{$t('static.product_type')}}</th>
-                                                   <!--  <th>{{$t('static.quantity')}}</th> -->
-                                                   <!--  <th>{{$t('static.price')}}</th> -->
-                                                   <!--  <th>{{$t('static.unit')}}单位</th> -->
-                                                   <!--  <th>{{$t('static.deadline')}}啊啊</th> -->
                                                     <th>{{$t('static.test_report')}}</th>
                                                     <th colspan="2">{{$t('static.operation')}}</th>
                                                 </thead>
@@ -799,12 +793,8 @@
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.location}}</td>
                                                         <td>{{item.spec}}</td>
-                                                        <td>{{item.mode|order_type}}</td>
+                                                        <td>{{item.mode | order_type}}</td>
                                                         <td>{{item.cType==-1?'未定义':(item.cType==0?'客户供应':'客户需求')}}</td>
-                                                       <!--  <td>{{item.number}}</td>
-                                                       <td>{{item.price}}</td>
-                                                       <td>{{item.unit}}</td> -->
-                                                        <!-- <td>{{item.duedate}}啊啊</td> -->
                                                         <td v-if="item.coa==0">无</td>
                                                         <td v-if="item.coa==1">有</td>
                                                         <td @click.stop="newproduct({
@@ -1201,25 +1191,33 @@ export default {
         }
     },
     filters: {
-        order_type:function(num){
-            if(num){
-                switch(num){
-                    case 1 : return "撮合";break;
-                    case 2 : return "三方";break;
-                    case 3 : return "自营";break;
-                    default : return "";break;
+        order_type: function(num) {
+            if (num) {
+                switch (num) {
+                    case 1:
+                        return "撮合";
+                        break;
+                    case 2:
+                        return "三方";
+                        break;
+                    case 3:
+                        return "自营";
+                        break;
+                    default:
+                        return "";
+                        break;
                 }
-            }else{
+            } else {
                 return "未成交";
             }
         },
-        ctypes:function(typ){
-            if(typ){
-                if(typ==-1){
+        ctypes: function(typ) {
+            if (typ) {
+                if (typ == -1) {
                     return '未定义';
-                }else if(typ == 0){
+                } else if (typ == 0) {
                     return '客户供应'
-                }else if(typ == 1){
+                } else if (typ == 1) {
                     return '客户需求'
                 }
             }

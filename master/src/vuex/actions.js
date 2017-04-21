@@ -6746,7 +6746,7 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
 
 export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意向
 
-    const data1 = {
+    const data = {
         "id": param.id,
         "type": param.type,
         "especial": param.especial,
@@ -6765,7 +6765,6 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         "pack": param.pack,
         "sampling": param.sampling,
         "sampleNumber": param.sampleNumber,
-        "sampleUnit": param.sampleUnit,
         "sampleAmount": param.sampleAmount,
         "breedId": param.breedId,
         "country": param.country,
@@ -6782,11 +6781,14 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         "images": param.images,
         'description': param.description
     }
+    if (param.sampleUnit !== undefined && param.sampleUnit !== "") { //只能传数字（单位ID）
+        data.sampleUnit = param.sampleUnit;
+    }
     Vue.http({
         method: "PUT",
         url: apiUrl.clientList + '/intention/',
         emulateHTTP: false,
-        body: data1,
+        body: data,
         emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -6828,7 +6830,6 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
         "pack": param.pack,
         "sampling": param.sampling,
         "sampleNumber": param.sampleNumber,
-        "sampleUnit": param.sampleUnit,
         "sampleAmount": param.sampleAmount,
         "breedId": param.breedId,
         "country": param.country, //国家（预售时出口国复用此字段）
@@ -6848,6 +6849,9 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
         "inType": param.inType,
         "validate": param.validate,
         "description": param.description
+    }
+    if (param.sampleUnit !== undefined && param.sampleUnit !== "") { //只能传数字（单位ID）
+        data.sampleUnit = param.sampleUnit;
     }
 
     Vue.http({
