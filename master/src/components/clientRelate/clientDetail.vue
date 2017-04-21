@@ -380,7 +380,8 @@
                                                       inType:3,
                                                       loading:false,
                                                       pics:item.pics,
-                                                      images:''
+                                                      images:'',
+                                                      
                                                   })">
                                                             <a class="operate"><img src="/static/images/edit.png" height="18" width="30" />
                                                             </a>
@@ -1155,10 +1156,10 @@ export default {
 
         },
 
-        updateIntention: function(param) {
-            //console.log(initClientDetail.intentions.arr);
+        updateIntention: function(param) {            
             this.intentionParam = param;
         },
+
         callback: function() {
             this.auditParam.blackComments = this.auditParam.auditComment;
             this.auditParam.customerIds = this.auditParam.arr;

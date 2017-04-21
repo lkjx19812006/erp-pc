@@ -1351,7 +1351,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        data.callback(res.json().msg);
+        //data.callback(res.json().msg);
         if (res.json().code == 200) {
             data.no = res.json().result.no;
             data.id = res.json().result.id;
@@ -6796,9 +6796,10 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         }
     }).then((res) => {
         console.log('修改成功!!!!')
+        alert("修改成功")
         param.show = false;
         param.ctime = param.ctime;
-        param.callback(res.json().msg);
+        //param.callback(res.json().msg);
         if (res.json().code == 200) {
             dispatch(types.UPDATA_INTENTION_DATA, param);
         }

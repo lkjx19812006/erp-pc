@@ -85,13 +85,13 @@
                     <div class="cover_loading">
                         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
                     </div>
-                    <div class="employee_message_view" v-for="item in initBacklogList">
+                    <div class="employee_message_view" v-for="item in initBacklogList" @click='selectIndex=$index' :class="{actColor:$index===selectIndex}">
                         <div class="message_view_left">
                             <span></span>
                             <p>{{item.taskDesc}}</p>
                             <time>{{item.date}}</time>
                         </div>
-                        <div class="message_view_right" v-if="item.bizType=='order_validate'">
+                        <div class="message_view_right" v-if="item.bizType=='order_validate'" >
                             <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
                             <a @click="showOrderDetail(item.bizId)">{{$t('static.details')}}</a>
                             <a @click="showRecord(item)">{{$t('static.records')}}</a>
@@ -169,6 +169,8 @@ export default {
     },
     data() {
         return {
+            selectIndex:null,
+            isActive:true,
             loadParam: {
                 loading: true,
                 show: false,
@@ -281,7 +283,7 @@ export default {
                 warehouse: '',
                 way: '', //0/1 第三方/自运
             },
-            checked: false
+            checked: false           
         }
     },
     vuex: {
@@ -305,6 +307,8 @@ export default {
         showOrderDetail: function(id) {
             this.orderDetailParam.id = id;
             this.orderDetailParam.show = true;
+        },
+        showBg:function($index,e){                      
         },
         compactDetail: function(id) { //合同详情
             this.detailParam.id = id;
@@ -522,7 +526,9 @@ export default {
 .left {
     margin-bottom: 10px;
 }
-
+.employee_right_message>.actColor{
+    background-color: #ccc 
+}
 .checkbox_select {
     background-image: url(/static/images/selected.png);
     display: inline-block;

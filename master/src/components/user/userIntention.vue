@@ -41,7 +41,7 @@
                                     预售资源
                                 </button>
                                 <!-- 必须选择意向类型 -->
-                                <span class="system_danger" v-if="$validation.breedname.required">请选择意向类型</span>
+                               <!--  <span class="system_danger" v-if="$validation.breedname.required">请选择意向类型</span> -->
                             </div>
                         </div>
                         <div v-if="param.selectCustomer" style="margin-top:15px">
