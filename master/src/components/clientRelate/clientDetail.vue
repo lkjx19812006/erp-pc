@@ -1166,7 +1166,7 @@ export default {
         },
 
         updateIntention: function(param) {
-            console.log(initClientDetail.intentions.arr);
+            //console.log(initClientDetail.intentions.arr);
             this.intentionParam = param;
         },
         callback: function() {

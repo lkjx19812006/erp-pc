@@ -63,6 +63,7 @@
 <script>
 import pagination from '../pagination'
 import {
+	initLogin,
     initCustomerlist
 } from '../../vuex/getters'
 import {
@@ -78,11 +79,11 @@ export default{
                 size: '15px',
                 cur: 1,
                 all: 7,
-                link:'/customer/suppliers',
+                link:'/customer/employeeDistributed',
                 name:'',
                 phone:'',
                 type:'',
-                employeeId:'',
+                employeeId:this.initLogin.id,
                 total:0
             },
 			checked:false,
@@ -94,7 +95,8 @@ export default{
 	},
 	vuex:{
 		getters:{
-			initCustomerlist
+			initCustomerlist,
+			initLogin
 		},
 		actions:{
 			getClientList
@@ -133,6 +135,7 @@ export default{
 	    }
     },
 	created(){
+		console.log(this.initLogin)
 		if("employeeId" in this.param){
                 this.loadParam.employeeId = this.param.employeeId;
         }
