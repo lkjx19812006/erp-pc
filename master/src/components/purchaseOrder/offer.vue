@@ -1,7 +1,8 @@
 <template>
     <!-- 意向报价 -->
     <div>
-        <customer-model :param="customerParam" v-if="customerParam.show"></customer-model>
+        <!-- <customer-model :param="customerParam" v-if="customerParam.show"></customer-model> -->
+        <supplier-dialog :param="customerParam" v-if="customerParam.show"></supplier-dialog>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
         <div class="container modal_con" v-show="param.show">
@@ -104,7 +105,8 @@ import vSelect from '../tools/vueSelect/components/Select'
 import pressImage from '../imagePress'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipsdialogModel from '../tips/tipDialog'
-import customerModel from '../Intention/clientname'
+/*import customerModel from '../Intention/clientname'*/
+import supplierDialog from '../order/second_order/selectAllSupplier.vue'
 import {
     initUnitlist,
     initEmployeeList,
@@ -118,18 +120,20 @@ import {
 } from '../../vuex/actions'
 export default {
     components: {
-        customerModel,
+        /*customerModel,*/
         tipsdialogModel,
         vSelect,
         inputSelect,
         pressImage,
+        supplierDialog
     },
     props: ['param'],
     data() {
         return {
             customerParam: {
                 show: false,
-                link: '/customer/suppliers'
+                link: '/customer/suppliers',
+                employeeId:this.initLogin.id
             },
             tipsParam: {
                 show: false,

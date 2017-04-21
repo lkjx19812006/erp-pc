@@ -177,7 +177,10 @@ export default{
         }
     },
 	created() {
-      this.getProductList(this.loadParam);
+        if('employeeId' in this.param){
+            this.loadParam.employeeId=this.param.employeeId
+        }
+        this.getProductList(this.loadParam);
     }
 }
 </script>
