@@ -398,7 +398,7 @@
                                             <table class="table  contactSet">
                                                 <thead>
                                                     <th>{{$t('static.file_type')}}</th>
-                                                   <!-- 删除文件来源 <th>{{$t('static.file_origin')}}</th> -->
+                                                    <!-- 删除文件来源 <th>{{$t('static.file_origin')}}</th> -->
                                                     <th>文件名称</th>
                                                     <th>{{$t('static.file_path')}}</th>
                                                     <th>{{$t('static.description')}}</th>
@@ -412,15 +412,13 @@
                                                         <th>{{item.name}}</th>
                                                         <td>
                                                             <img :src="item.url" v-if="item.url | isImage" @click="clickBig(item.url)" style="margin:auto" />
-                                                            
                                                         </td>
                                                         <td>{{item.description}}</td>
                                                         <!-- 删除创建时间<td>{{item.ctime}}</td> -->
-                                                        <td v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2">
-                                                        <!-- 下载 -->
+                                                        <td>
+                                                            <!-- 下载 -->
                                                             <a href="{{item.url}}" download="" class="btn btn-default">下载<!-- <img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /> --></a>
-
-                                                            <button class="btn btn-default" @click="deleteCompact({
+                                                            <button v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2" class="btn btn-default" @click="deleteCompact({
                                                             id:item.id,
                                                             sub:$index,
                                                             show:true,
@@ -482,7 +480,6 @@
                                                         <td>{{item.name}}</td>
                                                         <td>
                                                             <img :src="item.url" v-if="item.url | isImage" @click="clickBig(item.url)" style="margin:auto" />
-                                                            
                                                         </td>
                                                         <td>{{item.description}}</td>
                                                         <td><a href="{{item.url}}" download="" class='btn btn-default'>下载</a></td>
@@ -521,19 +518,18 @@
                                             <table class="table  contactSet">
                                                 <thead>
                                                     <th>{{$t('static.file_type')}}</th>
-                                                    <th>文件名称</th>                                                   
+                                                    <th>文件名称</th>
                                                     <th>{{$t('static.file_path')}}</th>
                                                     <th>{{$t('static.description')}}</th>
-                                                     <th>{{$t('static.handle')}}</th>
+                                                    <th>{{$t('static.handle')}}</th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.attachFiles.arr">
                                                         <td>{{item.url | file}}</td>
-                                                      <!--   <td>{{item.bizType}}</td> -->
+                                                        <!--   <td>{{item.bizType}}</td> -->
                                                         <td>{{item.name}}</td>
                                                         <td>
                                                             <img :src="item.url" v-if="item.url | isImage" @click="clickBig(item.url)" style="margin:auto" />
-                                                            
                                                         </td>
                                                         <td>{{item.description}}</td>
                                                         <td><a href="{{item.url}}" download="" class="btn btn-default">下载</a></td>
@@ -903,6 +899,8 @@ section article {
 .table>thead>tr>th {
     text-align: center;
 }
+
+
 /* .downloadbtn{
     display: inline-block;
     border:1px solid #ccc;
@@ -915,6 +913,7 @@ section article {
     cursor: pointer;
     user-select: none;
 } */
+
 .edit-detail {
     border: 1px solid #ddd;
     border-radius: 3px;
