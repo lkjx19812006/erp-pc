@@ -605,7 +605,7 @@ export default {
             this.auditParam.callback = this.applyBack;
             localtion.reload(); //提交审核后自动刷新
         },
-        cancelOrder: function(id, index) {            
+        cancelOrder: function(id, index) {
             this.cancelParam.id = id;
             this.cancelParam.index = index;
             this.cancelParam.show = true;

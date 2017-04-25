@@ -88,9 +88,16 @@ export const initToDoOrderlist = (state) => {
     return parseJson(state.table.basicBaseList.toDoOrderList);
 }
 export const initOrderlist = (state) => {
-        return parseJson(state.table.basicBaseList.orderList);
-    }
-    /*---列表页订单统计---*/
+    return parseJson(state.table.basicBaseList.orderList);
+}
+
+/*---待采购统计---*/
+export const initMyOrderLinklist = (state) => {
+    return parseJson(state.table.basicBaseList.myOrderLinkList);
+}
+
+
+/*---列表页订单统计---*/
 export const initOrgOrderStatis = (state) => {
     return parseJson(state.table.basicBaseList.orgOrderStatis);
 }
