@@ -218,8 +218,8 @@
                             </td>
                             <td>{{item.employeeName}}</td>
                             <!-- 修改时间 -->
-                            <td>{{item.ctime|timeFilters}}</td>
-                            <td>{{item.lastOrderTim}}</td>
+                            <td>{{item.ctime | timeFilters}}</td>
+                            <td>{{item.lastOrderTime | timeFilters}}</td>
                             <td class="underline" @click="clickOn({
                                 id:item.id,
                                 sub:$index,

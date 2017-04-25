@@ -510,3 +510,8 @@ export const initScopeDetail = (state) => { //获取权限详情
 export const initDictionary = (state) => { //获取邮件统计
     return JSON.parse(JSON.stringify(state.table.dictionary));
 }
+
+/*库存管理*/
+export const initStockList = (state) => {//获取库存列表
+    return JSON.parse(JSON.stringify(state.table.stockList))
+}

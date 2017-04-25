@@ -195,3 +195,4 @@ export const EMAIL_DATA = 'EMAIL_DATA' //邮件列表
 export const EMAIL_COUNT = 'EMAIL_COUNT' //邮件列表
 
 export const MUlT_DICTIONARY = 'MUlT_DICTIONARY' //邮件列表
+export const STOCK_LIST = 'STOCK_LIST'

@@ -133,7 +133,8 @@ import {
     EMAIL_DATA,
     EMAIL_COUNT,
     MUlT_DICTIONARY,
-    MY_ORG_COUNT
+    MY_ORG_COUNT,
+    STOCK_LIST
 
 } from '../mutation-types'
 
@@ -1147,8 +1148,9 @@ const state = {
     employeeDetail: {},
     orgDetail: {},
     dictionary: [{ fileName: '', dictionary: {}, arr: [], isEdit: false }],
-    orgCount: {} //部门统计state
-
+    orgCount: {}, //部门统计state
+    stockList:[{checked:false},{checked:false}],
+    stockCartList:[]
 }
 
 const mutations = {
@@ -2425,12 +2427,13 @@ const mutations = {
     [MUlT_DICTIONARY](state, data) {
         state.dictionary = data;
     },
-
+    [STOCK_LIST](state,data) {//库存列表
+        state.stockList = data;
+    },
     // 部门统计
     [MY_ORG_COUNT](state, data) {
         state.orgCount = data;
     }
-
 }
 
 export default {

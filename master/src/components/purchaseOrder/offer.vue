@@ -179,11 +179,14 @@ export default {
     },
     events: {
         supplier: function(supplier) {
-
             this.param.customerId = supplier.customer;
             this.param.customerName = supplier.customerName;
         },
 
+        /* customer: function(customer) {
+             this.param.customerId = customer.customerId;
+             this.param.customerName = customer.customerName;
+         },*/
     },
     created() {
         //获取单位列表
