@@ -213,7 +213,10 @@ export default {
             }
         },
         deleteCart:function($index){
-        	this.$store.state.table.stockCartList.splice($index,1)
+        	this.$store.state.table.stockCartList.splice($index,1);
+        	if(this.$store.state.table.stockCartList.length==0){
+        		this.param.leng = 0;
+        	}
         },
         createOrder: function() {
             this.param.stockCartList = [];

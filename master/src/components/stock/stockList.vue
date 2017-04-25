@@ -250,6 +250,10 @@ export default {
 }
 
 .cartbtnAct{
+	background: #fff;
+	color:#fa6705
+}
+.cartbtnAct:hover{
 	background: #fa6705;
 	color:#fff
 }
