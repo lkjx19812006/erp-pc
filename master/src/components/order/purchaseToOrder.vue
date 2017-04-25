@@ -10,89 +10,101 @@
             <div class="edit-content">
                 <h3>生成订单</h3>
             </div>
-            <form>
-                <div class="edit-model">
-                    <div>
-                        <h4 style="text-align: left;font-size: 14px;margin:10px 0 10px 0">基本信息</h4>
-                        <div class="clear">
-                            <div class="col-md-6">
-                                <label class="pull-left">客户：</label>
-                                <input type="text" class="form-control" v-model="param.customerName" @click="selectCustomer()" readonly="readonly">
+            <validator name="validation">
+                <form>
+                    <div class="edit-model">
+                        <div>
+                            <h4 style="text-align: left;font-size: 14px;margin:10px 0 10px 0">基本信息</h4>
+                            <div class="clear">
+                                <div class="col-md-6">
+                                    <label class="pull-left">客户：
+                                        <span class="system_danger" v-if="$validation.customer.required">
+                                            必填项
+                                        </span>
+                                    </label>
+                                    <input type="text" v-show="false" v-model="param.customer" v-validate:customer="['required']">
+                                    <input type="text" class="form-control" v-model="param.customerName" @click="selectCustomer()" readonly="readonly">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="pull-left">客户手机：
+                                        <span class="system_danger" v-if="$validation.phone.phone">
+                                            必填项
+                                        </span>
+                                    </label>
+                                    <input type="text" class="form-control" v-model="param.customerPhone" v-validate:phone="['phone']">
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="pull-left">客户手机：</label>
-                                <input type="text" class="form-control" v-model="param.customerPhone">
+                            <h4 style="text-align: left;font-size: 14px;margin:10px 0 10px 0">商品信息</h4>
+                            <table class="table table-hover table_color table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>品种</th>
+                                        <th>数量</th>
+                                        <th>采购价格</th>
+                                        <th>质量</th>
+                                        <th>规格</th>
+                                        <th>产地</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in param.orderLinkList">
+                                        <td>{{item.breedName}}</td>
+                                        <td>
+                                            <input type="text" class="form-control pull-left" style="width:50%;margin-right:-10px" v-model="item.number">
+                                            <span style="line-height:32px;">{{item.unit | Unit}}</span>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control pull-left" style="width:40%;margin-right:-10px" v-model="item.buyPrice">
+                                            <span style="line-height:32px;">元/{{item.unit | Unit}}</span>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" v-model="item.quality">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" v-model="item.spec">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" v-model="item.location">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h4 style="text-align: left;font-size: 14px;margin:10px 0 10px 0">其他信息</h4>
+                            <div class="clear">
+                                <div class="col-md-6">
+                                    <label class="pull-left">杂费：</label>
+                                    <input type="text" class="form-control" v-model="param.incidentals">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="pull-left">杂费说明：</label>
+                                    <input type="text" class="form-control" v-model="param.incidentalsDesc">
+                                </div>
                             </div>
-                        </div>
-                        <h4 style="text-align: left;font-size: 14px;margin:10px 0 10px 0">商品信息</h4>
-                        <table class="table table-hover table_color table-striped ">
-                            <thead>
-                                <tr>
-                                    <th>品种</th>
-                                    <th>数量</th>
-                                    <th>采购价格</th>
-                                    <th>质量</th>
-                                    <th>规格</th>
-                                    <th>产地</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="item in param.orderLinkList">
-                                    <td>{{item.breedName}}</td>
-                                    <td>
-                                        <input type="text" class="form-control pull-left" style="width:50%;margin-right:-10px" v-model="item.number">
-                                        <span style="line-height:32px;">{{item.unit | Unit}}</span>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control pull-left" style="width:40%;margin-right:-10px" v-model="item.price">
-                                        <span style="line-height:32px;">元/{{item.unit | Unit}}</span>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" v-model="item.quality">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" v-model="item.spec">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" v-model="item.location">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <h4 style="text-align: left;font-size: 14px;margin:10px 0 10px 0">其他信息</h4>
-                        <div class="clear">
-                            <div class="col-md-6">
-                                <label class="pull-left">杂费：</label>
-                                <input type="text" class="form-control" v-model="param.incidentals">
+                            <div class="clear">
+                                <div class="col-md-6">
+                                    <label class="pull-left">优惠金额：</label>
+                                    <input type="text" class="form-control" v-model="param.preferential">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="pull-left">优惠说明：</label>
+                                    <input type="text" class="form-control" v-model="param.preferentialDesc">
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="pull-left">杂费说明：</label>
-                                <input type="text" class="form-control" v-model="param.incidentalsDesc">
-                            </div>
-                        </div>
-                        <div class="clear">
-                            <div class="col-md-6">
-                                <label class="pull-left">优惠金额：</label>
-                                <input type="text" class="form-control" v-model="param.preferential">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="pull-left">优惠说明：</label>
-                                <input type="text" class="form-control" v-model="param.preferentialDesc">
-                            </div>
-                        </div>
-                        <div class="clear">
-                            <div class="col-md-6">
-                                <label class="pull-left">总金额：</label>
-                                <input type="text" class="form-control" v-model="total" readonly="readonly">
+                            <div class="clear">
+                                <div class="col-md-6">
+                                    <label class="pull-left">总金额：</label>
+                                    <input type="text" class="form-control" v-model="total" readonly="readonly">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="edit_footer">
-                    <button type="button" class="btn btn-default btn-close" @click="close()">{{$t('static.cancel')}}</button>
-                    <button type="button" class="btn  btn-confirm" @click="confirm()">{{$t('static.confirm')}}</button>
-                </div>
-            </form>
+                    <div class="edit_footer">
+                        <button type="button" class="btn btn-default btn-close" @click="close()">{{$t('static.cancel')}}</button>
+                        <button v-if="$validation.valid" type="button" class="btn  btn-confirm" @click="confirm()">{{$t('static.confirm')}}</button>
+                        <button v-else type="button" class="btn  btn-confirm" disabled="disabled">{{$t('static.confirm')}}</button>
+                    </div>
+                </form>
+            </validator>
         </div>
     </div>
 </template>
@@ -147,7 +159,7 @@ export default {
             let goods = this.param.orderLinkList;
             let sum = 0;
             for (let i = 0; i < goods.length; i++) {
-                sum = util.add(sum, util.mul(goods[i].price, goods[i].number));
+                sum = util.add(sum, util.mul(goods[i].buyPrice, goods[i].number));
             }
             sum = util.add(sum, util.sub(this.param.incidentals, this.param.preferential))
             return sum;
@@ -161,6 +173,19 @@ export default {
             this.customerParam.show = true;
         },
         confirm: function() {
+            let orderLinkList = this.param.orderLinkList;
+            for (let i = 0; i < orderLinkList.length; i++) {
+                if (!(/^([\+]?([1-9]\d*)|0)(\.\d{1,2})?$/.test(orderLinkList[i].number))) {
+                    this.tipsParam.show = true;
+                    this.tipsParam.name = "“" + orderLinkList[i].breedName + "”数量格式有误,并且至多精确到两位小数！";
+                    return;
+                }
+                if (!(/^([\+]?([1-9]\d*)|0)(\.\d{1,2})?$/.test(orderLinkList[i].buyPrice))) {
+                    this.tipsParam.show = true;
+                    this.tipsParam.name = "“" + orderLinkList[i].breedName + "”价格格式有误,并且至多精确到两位小数！";
+                    return;
+                }
+            }
             this.createOrderByOrderLink(this.param);
         }
     },

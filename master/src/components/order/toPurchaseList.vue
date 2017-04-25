@@ -31,8 +31,6 @@
                             <th>品种</th>
                             <th>数量</th>
                             <th>销售订单所属业务员</th>
-                            <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tr>
@@ -50,8 +48,6 @@
                             <td>{{item.breedName}}</td>
                             <td>{{item.number}}{{item.unit | Unit}}</td>
                             <td>{{item.sellEmployee}}</td>
-                            <td></td>
-                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -110,6 +106,7 @@ export default {
                 employee: this.initLogin.id,
                 orderStatus: 0,
                 orderLinkList: [],
+                callback: this.callback
 
             },
             tipsParam: {
@@ -180,6 +177,11 @@ export default {
                 this.orderParam.show = true;
             }
 
+        },
+        callback: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.getOrderLinkList(this.loadParam);
         }
 
     },
@@ -256,8 +258,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 200px;
-    min-width: 200px;
+    width: 400px;
+    min-width: 400px;
 }
 
 .order_pagination {
