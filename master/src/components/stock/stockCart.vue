@@ -26,12 +26,14 @@
                                 <th>品种</th>
                                 <th>单价</th>
                                 <th>数量</th>
+                                <th>操作</th>
                             </thead>
                             <tbody>
                                 <tr v-for="item in param.goods">
                                     <td>{{item.breedName}}</td>
                                     <td>{{item.priceAndNumber.breedPrice}}元</td>
                                     <td>{{item.priceAndNumber.breedNum}}/{{item.unitId | unit}}</td>
+                                    <td><a @click='deleteCart($index)'>移除购物车</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -101,7 +103,7 @@
             </section>
             <div class="edit_footer">
                 <button type="button" class="btn btn-confirm" @click="createOrder()">生成订单</button>
-                <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">返回继续选择商品</button>
             </div>
         </div>
     </div>
@@ -210,6 +212,9 @@ export default {
                 this.getDistrictList(this.city);
             }
         },
+        deleteCart:function($index){
+        	this.$store.state.table.stockCartList.splice($index,1)
+        },
         createOrder: function() {
             this.param.stockCartList = [];
             this.param.province = this.province.cname;
@@ -218,9 +223,9 @@ export default {
             let goods = this.param.goods;
             for (let i = 0; i < goods.length; i++) {
                 this.param.stockCartList.push({                    
-                    freezeNum:goods[i].priceAndNumber.breedNum,
-                    id: goods[i].breedId,
-                    price:goods[i].priceAndNumber.breedPrice
+                    freezeNum:parseFloat(goods[i].priceAndNumber.breedNum),
+                    id: goods[i].id,
+                    price:parseFloat(goods[i].priceAndNumber.breedPrice)
                 });
             }
             this.createOrderByStock(this.param);

@@ -5085,7 +5085,8 @@ export const  createOrderByStock = ({ dispatch },param) => { //库存列表页�
         province: param.province,
         city: param.city,
         district: param.district,
-        stockList: param.stockCartList
+        stockList: param.stockCartList,
+        orderStatus:param.orderStatus
     };
     console.log(body)
     Vue.http({
