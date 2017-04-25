@@ -1351,7 +1351,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        //data.callback(res.json().msg);
+        data.callback(res.json().msg);
         if (res.json().code == 200) {
             data.no = res.json().result.no;
             data.id = res.json().result.id;
@@ -5067,6 +5067,50 @@ export const createOrderByPurchase = ({ dispatch }, param) => { //采购单报�
         console.log('fail');
         param.show = false;
     });
+}
+
+export const  createOrderByStock = ({ dispatch },param) => { //库存列表页面生成订单
+    param.loading = true;
+    const body = {
+        intl: 0,
+        customer: param.customer,
+        customerName: param.customerName,
+        consignee: param.consignee,
+        consigneeAddr: param.consigneeAddr,
+        consigneePhone: param.consigneePhone,
+        incidentals: param.incidentals,
+        incidentalsDesc: param.incidentalsDesc,
+        preferential: param.preferential,
+        preferentialDesc: param.preferentialDesc,
+        province: param.province,
+        city: param.city,
+        district: param.district,
+        stockList: param.stockCartList
+    };
+    console.log(body)
+    Vue.http({
+        method:'POST',
+        url:'/crm/api/v1/stock/addOrderByStock/',
+        emulateHTTP:false,
+        body:body,
+        emulateJSON:false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) =>{
+        param.loading = false;
+        console.log("success");
+        param.show = false;
+        if (param.callback) {
+            param.callback(res.json().msg + "，稍后将跳转到我的订单页面");
+        }
+
+    },(res) =>{
+        param.loading = false;
+        console.log("提交失败");
+        param.show = false
+    })
 }
 
 export const getIntentionList = ({ dispatch }, param) => { //意向信息列表以及搜索
@@ -8979,5 +9023,36 @@ export const saveDictionary = ({ dispatch }, param) => { //保存字典
         console.log('success');
     }, (res) => {
         console.log('fail');
+    })
+}
+
+export const getStockList = ({ dispatch },param) =>{
+    var url = '/crm/api/v1/stock/queryStockList/'
+    /*if(param.breedName){
+        url += '&breedName='+param.breedName
+    }*/
+    var body = {
+
+    };
+    Vue.http({
+        method:'POST',
+        url:url,
+        emulateHTTP:true,
+        body:body,
+        emulateJSON:false,
+        headers:{
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) =>{
+        console.log(res.json())
+        var data = res.json().result
+        for(let i = 0;i<data.length;i++){
+            data[i].checked = false
+        }
+        dispatch(types.STOCK_LIST,data)
+        console.log('success');
+    },(res) =>{
+        console.log('fail')
     })
 }

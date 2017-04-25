@@ -183,10 +183,14 @@ export default {
         }
     },
     events: {
-        customer: function(customer) {
+       /* customer: function(customer) {
             this.param.customerId = customer.customerId;
             this.param.customerName = customer.customerName;
-        },
+        },*/
+        supplier:function(data){
+            this.param.customerName = data.customerName;
+            this.param.customerId = data.customer;
+        }
 
     },
     created() {
