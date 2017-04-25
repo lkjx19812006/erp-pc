@@ -2428,7 +2428,6 @@ const mutations = {
     [MY_ORG_COUNT](state, data) {
         state.orgCount = data;
     }
-
 }
 
 export default {

@@ -1,6 +1,6 @@
 <template>
 	<order-data :param="orderData" v-if="orderData.show"></order-data>
-	<stock-cart :param="cartData" v-if="cartData.show"></stock-cart>
+	<stock-cart :param="cartData" v-if="cartData.show&&cartData.leng"></stock-cart>
 	<mglist-model>
 		<!-- 头部搜索-->
         <div slot="top">
@@ -15,11 +15,11 @@
                     <button type="button" class="btn btn-default margin_right" height="24" width="24" @click="selectSearch()">搜索</button>
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
                 </dl>
-                <dd class="pull-right" style="margin-right:10px">
-                    <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
-                </dd>
-                <dd class="pull-right" style="margin-right:10px">
-                	<button type='button' class='btn btn-default margin_right' height="24" width="24" @click="showCartList()">购物车({{cartData.leng}})</button>
+               <!--  <dd class="pull-right" style="margin-right:10px">
+                   <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
+               </dd> -->
+                <dd class="cartdd" style="margin-left:10px">
+                	<button type='button' class='btn btn-default cartbtn' :class={cartbtnAct:cartData.leng} height="24" width="24" @click="showCartList()">购物车({{cartData.leng}})</button>
                     
                 </dd>
             </div>
@@ -33,8 +33,8 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>药材名称</th>
-                        <th>规格/片形</th>
+                        <th style="min-width:150px;text-align: center;">药材名称</th>
+                        <th style="min-width:200px;text-align: center;">规格/片形</th>
                         <th>产地</th>
                         <th>库存可用量</th>
                         <th>库存单位</th>
@@ -64,7 +64,7 @@
                         <td>{{item.depotType}}</td>
                        	<td><a @click="addToCart($index,{
                        			breedName:item.breedName,
-                       			breedId:item.breedId,
+                       			id:item.id,
                        			specAttribute:item.specAttribute,
                        			location:item.location,
                        			usableNum:item.usableNum,
@@ -107,13 +107,16 @@ export default {
 			loadParam:{
 				loading:false,
 				breedName:"",
-				cur:3,				
+				cur:1,
+				all:7,
+				total:''				
 			},
 			cartData:{
 				loading: false,
                 show: false,
                 //link: '/intention/addSellOrderByOffer',
-                //callback: this.callback,
+                callback: this.callback,
+                orderStatus:0,
                 customer: '', //客户ID
                 customerName: '', //客户名称
                 consignee: '', //收货人
@@ -132,6 +135,7 @@ export default {
 			},
 			orderData:{
 				show: false,
+				id:'',
                 breedName:'',
                 specAttribute:'',
                 location:'',
@@ -176,7 +180,7 @@ export default {
 		addToCart:function($index,data){
 			this.orderData.show=true;
 			this.orderData.breedName = data.breedName;
-			this.orderData.breedId = data.breedId;
+			this.orderData.id = data.id;
 			this.orderData.specAttribute = data.specAttribute;
 			this.orderData.location = data.location;
 			this.orderData.usableNum = data.usableNum;
@@ -187,23 +191,35 @@ export default {
 		showCartList:function(){
 			this.cartData.show=true
 		},
-		deepCopy:function(source) { 
+		deepCopy:function(source) {  // 深拷贝
 			var result={};
 			for (var key in source) {
 			      result[key] = typeof source[key]==='object'? this.deepCopy(source[key]): source[key];
 			} 
 			return result; 
+		},
+		callback:function(){//生成订单后，清空购物车
+			this.$store.state.table.stockCartList = [];
+			this.cartData.leng=0
+		},
+		watachStock:function(){ //
+			this.$store.state.table.stockCartList = [];
+			this.cartData.leng=0
 		}
 	},
 	created(){
 		this.getStockList(this.loadParam)
+		this.watachStock()
+	},
+	watch:{
+		'$route':"watchStock" //监听路由变化，当离开此页面的时候清空购物车
 	},
 	events:{
 		'addOrderDetail':function(msg){
 			console.log(msg)
 			this.orderData.priceAndNumber = msg;
 			//console.log(this.orderData)
-			var product = this.deepCopy(this.orderData);
+			var product = this.deepCopy(this.orderData); //将每次添加到购物车的数据深拷贝，加到购物车列表里面
 			this.$store.state.table.stockCartList.push(product)
 			console.log(this.$store.state.table.stockCartList)
 			this.cartData.goods = this.$store.state.table.stockCartList
@@ -227,4 +243,18 @@ export default {
 </script>
 
 <style>
+.cartbtn{
+	margin-left: 690px;
+	color: ;
+	background: #ccc
+}
+
+.cartbtnAct{
+	background: #fff;
+	color:#fa6705
+}
+.cartbtnAct:hover{
+	background: #fa6705;
+	color:#fff
+}
 </style>
