@@ -1188,7 +1188,6 @@ const mutations = {
 
     },
     [ORDER_LINK](state, data) {
-        console.log(data);
         if (data.key) {
             state.basicBaseList[data.key] = data;
         }

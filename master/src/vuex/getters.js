@@ -92,7 +92,7 @@ export const initOrderlist = (state) => {
 }
 
 /*---待采购统计---*/
-export const initMyOrderLinklist = (state) => {
+export const initMyOrderLinkList = (state) => {
     return parseJson(state.table.basicBaseList.myOrderLinkList);
 }
 

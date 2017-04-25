@@ -18,6 +18,12 @@ var util = {
 //加法 
 function accAdd(arg1, arg2) {
     let r1, r2, m;
+    if (!arg1) {
+        arg1 = 0;
+    }
+    if (!arg2) {
+        arg2 = 0;
+    }
     try {
         r1 = arg1.toString().split(".")[1].length
     } catch (e) {
@@ -35,6 +41,12 @@ function accAdd(arg1, arg2) {
 //减法 
 function subtr(arg1, arg2) {
     let r1, r2, m, n;
+    if (!arg1) {
+        arg1 = 0;
+    }
+    if (!arg2) {
+        arg2 = 0;
+    }
     try {
         r1 = arg1.toString().split(".")[1].length
     } catch (e) {
@@ -51,6 +63,12 @@ function subtr(arg1, arg2) {
 }
 //乘法 
 function accMul(arg1, arg2) {
+    if (!arg1) {
+        arg1 = 0;
+    }
+    if (!arg2) {
+        arg2 = 0;
+    }
     let m = 0,
         s1 = arg1.toString(),
         s2 = arg2.toString();

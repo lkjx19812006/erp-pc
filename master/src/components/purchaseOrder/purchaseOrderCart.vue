@@ -172,9 +172,7 @@ export default {
             let goods = this.param.goods;
             let sum = 0;
             for (let i = 0; i < goods.length; i++) {
-                console.log(util.mul(goods[i].price, goods[i].number));
                 sum = util.add(sum, util.mul(goods[i].price, goods[i].number));
-
             }
 
             return util.sub(util.add(sum, this.param.incidentals), this.param.preferential);

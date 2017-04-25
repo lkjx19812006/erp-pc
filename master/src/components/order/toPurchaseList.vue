@@ -1,5 +1,7 @@
 <template>
     <div>
+        <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+        <order-model :param="orderParam" v-if="orderParam.show"></order-model>
         <mglist-model>
             <!-- 头部搜索 -->
             <div slot="top">
@@ -9,11 +11,10 @@
                 </div>
                 <div class="clear">
                     <div class="right">
-                        <button class="btn btn-default transfer" @click="newOrder()">{{$t('static.new')}}</button>
+                        <button class="btn btn-default transfer" @click="newOrder()">生成订单</button>
                         <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                     </div>
                     <div class="left">
-                        <button type="button" class="new_btn" @click="resetTime()">{{$t('static.clear_all')}}</button>
                         <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
                     </div>
                 </div>
@@ -26,6 +27,7 @@
                 <table class="table table-hover table_color table-striped " v-cloak id="tab">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>品种</th>
                             <th>数量</th>
                             <th>销售订单所属业务员</th>
@@ -33,8 +35,18 @@
                             <th></th>
                         </tr>
                     </thead>
+                    <tr>
+                        <th>
+                            <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
+                        </th>
+                        <th style="color:#fa6705;font-size: 14px">全选</th>
+                        <th colspan="2"></th>
+                    </tr>
                     <tbody>
-                        <tr v-for="item in initMyOrderLinklist" v-cloak>
+                        <tr v-for="item in initMyOrderLinkList" v-cloak>
+                            <td @click.stop="">
+                                <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
+                            </td>
                             <td>{{item.breedName}}</td>
                             <td>{{item.number}}{{item.unit | Unit}}</td>
                             <td>{{item.sellEmployee}}</td>
@@ -51,18 +63,23 @@
 </template>
 <script>
 import mglistModel from '../mguan/mgListComponent.vue'
+import orderModel from './purchaseToOrder.vue'
+import tipsdialogModel from '../tips/tipDialog'
 import pagination from '../pagination'
 import filter from '../../filters/filters'
 import common from '../../common/common'
 
 import {
-    initMyOrderLinklist
+    initLogin,
+    initMyOrderLinkList
 } from '../../vuex/getters'
 import {
     getOrderLinkList
 } from '../../vuex/actions'
 export default {
     components: {
+        tipsdialogModel,
+        orderModel,
         mglistModel,
         pagination,
         filter
@@ -78,12 +95,36 @@ export default {
                 all: 1,
                 link: "/order/myOrderLinkList",
                 key: "myOrderLinkList",
-            }
+            },
+            orderParam: {
+                show: false,
+                link: "/order/createOrderByOrderLink",
+                type: 0,
+                customer: "",
+                customerName: "",
+                customerPhone: "",
+                incidentals: 0,
+                incidentalsDesc: "",
+                preferential: 0,
+                preferentialDesc: "",
+                employee: this.initLogin.id,
+                orderStatus: 0,
+                orderLinkList: [],
+
+            },
+            tipsParam: {
+                show: false,
+                name: '',
+                alert: true
+            },
+            checked: false
+
         }
     },
     vuex: {
         getters: {
-            initMyOrderLinklist
+            initLogin,
+            initMyOrderLinkList
         },
         actions: {
             getOrderLinkList
@@ -91,15 +132,62 @@ export default {
     },
     methods: {
         selectSearch: function() {
-            this.getEmpolyeeOrder(this.loadParam);
+            this.checked = false;
+            this.getOrderLinkList(this.loadParam);
         },
+        checkedAll: function() {
+            this.checked = !this.checked;
+            if (this.checked) {
+                this.$store.state.table.basicBaseList.myOrderLinkList.forEach(function(item) {
+                    item.checked = true;
+                })
+            } else {
+                this.$store.state.table.basicBaseList.myOrderLinkList.forEach(function(item) {
+                    item.checked = false;
+                })
+            }
+        },
+        onlyselected: function(sub, id) {
+            //this.id = id;
+            const _this = this;
+            this.$store.state.table.basicBaseList.myOrderLinkList[sub].checked = !this.$store.state.table.basicBaseList.myOrderLinkList[sub].checked;
+            if (!this.$store.state.table.basicBaseList.myOrderLinkList[sub].checked) {
+                _this.checked = false;
+            } else {
+                _this.checked = true;
+                this.$store.state.table.basicBaseList.myOrderLinkList.forEach(function(item) {
+                    if (!item.checked) {
+                        _this.checked = false;
+                    }
+                })
+            }
+        },
+        newOrder: function() {
+            let list = this.initMyOrderLinkList;
+            this.orderParam.orderLinkList = [];
+
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].checked) {
+                    this.orderParam.orderLinkList.push(list[i]);
+                }
+            }
+
+            if (this.orderParam.orderLinkList.length <= 0) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "请至少选择一个条目";
+                return;
+            } else {
+                this.orderParam.show = true;
+            }
+
+        }
 
     },
 
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getEmpolyeeOrder(this.loadParam);
+            this.getOrderLinkList(this.loadParam);
         }
     },
     filter: (filter, {}),
@@ -107,6 +195,7 @@ export default {
         common('tab', 'table_box', 1);
     },
     created() {
+
         this.getOrderLinkList(this.loadParam);
         //changeMenu(this.$store.state.table.isTop, this.getEmpolyeeOrder, this.loadParam, localStorage.myOrderParam);
 

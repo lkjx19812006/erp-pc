@@ -1462,6 +1462,9 @@ export const getOrderLinkList = ({ dispatch }, param) => { //获取“待采购�
     }).then((res) => {
         let orderLinkList = res.json().result;
         orderLinkList.key = param.key;
+        for (let i = 0; i < orderLinkList.length; i++) {
+            orderLinkList[i].checked = false;
+        }
         dispatch(types.ORDER_LINK, orderLinkList);
         param.loading = false;
     }, (res) => {
@@ -1474,6 +1477,43 @@ export const updateOrderLink = ({ dispatch }, param) => { //修改“待采购�
     const body = {
         sellId: param.sellId,
         sellEmployee: param.sellEmployee,
+        orderLinkList: param.orderLinkList
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
+        param.show = false;
+
+    }, (res) => {
+        console.log('fail');
+        param.show = false;
+    });
+}
+
+export const createOrderByOrderLink = ({ dispatch }, param) => { //“待采购”生成订单
+    const body = {
+        type: param.type,
+        customer: param.customer,
+        customerName: param.customerName,
+        customerPhone: param.customerPhone,
+        incidentals: param.incidentals,
+        incidentalsDesc: param.incidentalsDesc,
+        preferential: param.preferential,
+        preferentialDesc: param.preferentialDesc,
+        employee: param.employee,
+        orderStatus: param.orderStatus,
         orderLinkList: param.orderLinkList
     }
     Vue.http({
