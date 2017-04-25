@@ -46,12 +46,28 @@
             <table class="table table-hover table_color table-bordered table-striped " v-cloak>
                 <thead>
                     <tr style="background:none;color:#000;">
-                        <th></th>
-                        <th>客户数：</th>
-                        <th>供应商数：</th>
-                        <th>成交客户数：</th>
-                        <th>成交占比：</th>
-                        <th>成交总额：</th>
+                      <th rowspan="2"></th>
+                      <th rowspan="2">客户数</th>
+                      <th rowspan="2">供应商数</th>
+                      <th rowspan="2">成交客户数</th>
+                      <th rowspan="2">成交占比</th>
+                      <th colspan = "4">撮合</th>
+                      <th colspan = "4">联营</th>
+                      <th colspan = "4">自营</th>
+                    </tr>
+                    <tr style="background:none;color:#000;">
+                        <th>销售订单数</th>
+                        <th>销售订单金额</th>
+                        <th>采购订单数</th>
+                        <th>采购订单金额</th>
+                        <th>销售订单数</th>
+                        <th>销售订单金额</th>
+                        <th>采购订单数</th>
+                        <th>采购订单金额</th>
+                        <th>销售订单数</th>
+                        <th>销售订单金额</th>
+                        <th>采购订单数</th>
+                        <th>采购订单金额</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,7 +76,18 @@
                     <td>{{initClientcount.supplier}}</td>
                     <td>{{initClientcount.traded}}</td>
                     <td>{{initClientcount.tradedRate}}<span v-if="initClientcount.tradedRate!=0">%</span></td>
-                    <td>{{initClientcount.tradedTotal | money}}元</td>
+                    <td>{{initClientcount.sellMateCount }}</td>
+                    <td>{{initClientcount.sellMateTotal | money}}元</td>
+                    <td>{{initClientcount.buyMateCount }}</td>
+                    <td>{{initClientcount.buyMateTotal | money}}元</td>
+                    <td>{{initClientcount.sellTripleCount }}</td>
+                    <td>{{initClientcount.sellTripleTotal | money}}元</td>
+                    <td>{{initClientcount.buyTripleCount }}</td>
+                    <td>{{initClientcount.buyTripleTotal | money}}元</td>
+                    <td>{{initClientcount.sellSelfCount }}</td>
+                    <td>{{initClientcount.sellSelfTotal | money}}元</td>
+                    <td>{{initClientcount.buySelfCount }}</td>
+                    <td>{{initClientcount.buySelfTotal | money}}元</td>
                 </tbody>
             </table>
         </div>
@@ -71,6 +98,9 @@
                 </button>
                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.groupBy=='org_id'}" @click="selectGroupBy('org_id')">
                     部门
+                </button>
+                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.groupBy=='type'}" @click="selectGroupBy('type')">
+                    类型
                 </button>
                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': loadParam.groupBy=='country'}" @click="selectGroupBy('country')">
                     国家
@@ -84,32 +114,63 @@
             </div>
         </div>
         <div class="module clear">
-            <div class="module_table">
-                <div class="module_thead  clearfix">
-                    <div class="module_th">
-                        <span v-if="loadParam.groupBy=='employee_id'">业务员</span>
-                        <span v-if="loadParam.groupBy=='org_id'">部门</span>
-                        <span v-if="loadParam.groupBy=='country'">国家</span>
-                        <span v-if="loadParam.groupBy=='province'">省</span>
-                        <span v-if="loadParam.groupBy=='city'">市</span>
-                    </div>
-                    <div class="module_th">总客户数</div>
-                    <div class="module_th">供应商数</div>
-                    <div class="module_th">成交客户数</div>
-                    <div class="module_th">成交占比</div>
-                    <div class="module_th">成交总额</div>
-                </div>
-                <div class="module_tbody" id="module_judge">
-                    <div class="module_tr clearfix" v-for="item in initClientcount.statisticsList">
-                        <div class="module_td">{{item.name}}</div>
-                        <div class="module_td">{{item.total}}</div>
-                        <div class="module_td">{{item.supplier}}</div>
-                        <div class="module_td">{{item.traded}}</div>
-                        <div class="module_td">{{item.tradedRate}}<span v-if="item.tradedRate!=0">%</span></div>
-                        <div class="module_td">{{item.tradedTotal | money}}元</div>
-                    </div>
-                </div>
-            </div>
+          <div class="module_table">
+              <table class="table table-hover table_color table-bordered table-striped " v-cloak>
+                <thead v-show="true">
+                <tr style="background:none;color:#000;">
+                  <th rowspan="2">
+                    <span v-if="loadParam.groupBy=='employee_id'">业务员</span>
+                    <span v-if="loadParam.groupBy=='org_id'">部门</span>
+                    <span v-if="loadParam.groupBy=='country'">国家</span>
+                    <span v-if="loadParam.groupBy=='province'">省</span>
+                    <span v-if="loadParam.groupBy=='city'">市</span>
+                  </th>
+                  <th rowspan="2">客户数</th>
+                  <th rowspan="2">供应商数</th>
+                  <th rowspan="2">成交客户数</th>
+                  <th rowspan="2">成交占比</th>
+                  <th colspan = "4">撮合</th>
+                  <th colspan = "4">联营</th>
+                  <th colspan = "4">自营</th>
+                </tr>
+                <tr style="background:none;color:#000;">
+                  <th>销售订单数</th>
+                  <th>销售订单金额</th>
+                  <th>采购订单数</th>
+                  <th>采购订单金额</th>
+                  <th>销售订单数</th>
+                  <th>销售订单金额</th>
+                  <th>采购订单数</th>
+                  <th>采购订单金额</th>
+                  <th>销售订单数</th>
+                  <th>销售订单金额</th>
+                  <th>采购订单数</th>
+                  <th>采购订单金额</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in initClientcount.statisticsList">
+                    <td>{{item.name}}</td>
+                    <td>{{item.total}}</td>
+                    <td>{{item.supplier}}</td>
+                    <td>{{item.traded}}</td>
+                    <td>{{item.tradedRate}}<span v-if="initClientcount.tradedRate!=0">%</span></td>
+                    <td>{{item.sellMateCount }}</td>
+                    <td>{{item.sellMateTotal | money}}元</td>
+                    <td>{{item.buyMateCount }}</td>
+                    <td>{{item.buyMateTotal | money}}元</td>
+                    <td>{{item.sellTripleCount }}</td>
+                    <td>{{item.sellTripleTotal | money}}元</td>
+                    <td>{{item.buyTripleCount }}</td>
+                    <td>{{item.buyTripleTotal | money}}元</td>
+                    <td>{{item.sellSelfCount }}</td>
+                    <td>{{item.sellSelfTotal | money}}元</td>
+                    <td>{{item.buySelfCount }}</td>
+                    <td>{{item.buySelfTotal | money}}元</td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
         </div>
     </div>
 </template>
@@ -277,8 +338,16 @@ export default {
     padding: 0;
     position: absolute;
     width: 100%;
+
     float: left;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+.can_slide {
+    max-height: 600px;
+    position: absolute;
+    overflow-x: auto;
+    overflow-y: auto;
 }
 
 .module_thead {
@@ -311,13 +380,13 @@ export default {
     background: #004796;
     color: #fff;
     float: left;
-    width: 16.666%;
+    width: 5.55%;
     line-height: 30px;
 }
 
 .module_td {
     float: left;
-    width: 16.666%;
+    width: 5.56%;
     line-height: 30px;
 }
 

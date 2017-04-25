@@ -43,7 +43,7 @@
                             <td>供应商数</td>
                             <td>成交客户数</td>
                             <td>成交占比</td>
-                            <td>成交金额</td>
+                            <!--<td>成交金额</td>-->
                         </tr>
                         <tbody v-for="detail in item.statisticsList">
                             <tr class="tb-content">
@@ -52,7 +52,7 @@
                                 <td>{{detail.supplier}}</td>
                                 <td>{{detail.traded}}</td>
                                 <td>{{detail.tradedRate}}%</td>
-                                <td>{{detail.tradedTotal | money}}元</td>
+                                <!--<td>{{detail.tradedTotal | money}}元</td>-->
                             </tr>
                         </tbody>
                     </table>
