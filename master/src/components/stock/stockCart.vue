@@ -1,5 +1,6 @@
 <template>
 <searchcustomer-model :param="customerParam" v-if='customerParam.show'></searchcustomer-model>
+<validator name='validation'>
     <div>
         <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con" v-show="param.show">
@@ -39,10 +40,11 @@
                         </table>
                     </div>
                 </div>
+
                 <div class="client-section clearfix">
                     <div class="editpage-input col-md-6" @click="selectCustomer()">
                         <label class="editlabel">客户名称</label>
-                        <input type="text" class="form-control edit-input" style="width:95%" v-model="customerName" readonly="readonly" />
+                        <input type="text" class="form-control edit-input" style="width:95%" v-model="customerName" readonly="readonly" v-validate:custName="{required:true}"/>
                     </div>
                     <div class="editpage-input col-md-6">
                         <label class="editlabel">收货人</label>
@@ -102,11 +104,12 @@
                 </div>
             </section>
             <div class="edit_footer">
-                <button type="button" class="btn btn-confirm" @click="createOrder()">生成订单</button>
+                <button type="button" class="btn btn-confirm" @click="createOrder()" :disabled="$validation.invalid">生成订单</button>
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">返回继续选择商品</button>
             </div>
         </div>
     </div>
+    </validator>
 </template>
 <script>
 import vSelect from '../tools/vueSelect/components/Select'
@@ -180,12 +183,12 @@ export default {
             let goods = this.param.goods;
             let sum = 0;
             for (let i = 0; i < goods.length; i++) {
-                //console.log(util.mul(goods[i].price, goods[i].number));
-                //sum = util.add(sum, util.mul(goods[i].price, goods[i].number));
-                sum+=goods[i].priceAndNumber.breedPrice*goods[i].priceAndNumber.breedNum
+                console.log(util.mul(goods[i].priceAndNumber.breedNum, goods[i].priceAndNumber.breedPrice));
+                sum = util.add(sum, util.mul(goods[i].priceAndNumber.breedNum, goods[i].priceAndNumber.breedPrice));
+                //sum+=goods[i].priceAndNumber.breedPrice*goods[i].priceAndNumber.breedNum
             }
 
-            return sum + this.param.incidentals - this.param.preferential//util.sub(util.add(sum, this.param.incidentals), this.param.preferential);
+            return util.sub(util.add(sum, this.param.incidentals), this.param.preferential);//sum + this.param.incidentals - this.param.preferential 
         }
     },
     methods: {
