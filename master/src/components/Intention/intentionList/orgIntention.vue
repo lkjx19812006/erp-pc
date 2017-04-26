@@ -133,7 +133,7 @@
                             <div v-if="item.especial==1&&item.type==1&&item.preSell==0">低价资源</div>
                             <div v-if="item.especial==1&&item.type==1&&item.preSell==1">预售资源</div>
                         </td>
-                        <td>{{item.ctime}}</td>
+                        <td>{{item.pubdate}}</td>
                         <td>{{item.employeeName}}</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,

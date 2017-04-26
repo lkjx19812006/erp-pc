@@ -71,21 +71,16 @@
                             </div>
                             <!-- 产地 -->
                             <div class="editpage-input col-md-12">
-                                 
-                                    <div class="left" style="width:50%">
-                                        <label class="editlabel">产地</label>
-                                        <input type="text" v-model="param.location" class="form-control edit-input" />
-                                    </div>
-                                
+                                <div class="left" style="width:50%">
+                                    <label class="editlabel">产地</label>
+                                    <input type="text" v-model="param.location" class="form-control edit-input" />
+                                </div>
                                 <!-- 规格 -->
-                                
-                                    <div class="left" style="width:50%">
-                                        <label class="editlabel">规格</label>
-                                        <input type="text" v-model="param.spec" class="form-control edit-input" />
-                                    </div>
-                                
+                                <div class="left" style="width:50%">
+                                    <label class="editlabel">规格</label>
+                                    <input type="text" v-model="param.spec" class="form-control edit-input" />
+                                </div>
                             </div>
-                           
                         </div>
                     </section>
                     <div>
@@ -133,7 +128,7 @@ export default {
             customerParam: {
                 show: false,
                 link: '/customer/suppliers',
-                employeeId:this.initLogin.id
+                employeeId: this.initLogin.id
             },
             tipsParam: {
                 show: false,
@@ -183,15 +178,15 @@ export default {
         }
     },
     events: {
-       /* customer: function(customer) {
-            this.param.customerId = customer.customerId;
-            this.param.customerName = customer.customerName;
-        },*/
-        supplier:function(data){
-            this.param.customerName = data.customerName;
-            this.param.customerId = data.customer;
-        }
+        supplier: function(supplier) {
+            this.param.customerId = supplier.customer;
+            this.param.customerName = supplier.customerName;
+        },
 
+        /* customer: function(customer) {
+             this.param.customerId = customer.customerId;
+             this.param.customerName = customer.customerName;
+         },*/
     },
     created() {
         //获取单位列表

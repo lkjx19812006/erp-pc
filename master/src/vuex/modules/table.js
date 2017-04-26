@@ -9,6 +9,7 @@ import {
     ORDER_DETAIL_DATA,
     ORDER_UPDATE_DATA,
     ORDER_STATISTIC,
+    ORDER_LINK,
     CHANGE_SHOW_STATUE,
     SYSTEM_DATA,
     PROVINCE_DATA,
@@ -518,7 +519,7 @@ const state = {
             "payPics": null,
             "sendPics": null
         }],
-
+        myOrderLinkList: "",
         orgOrderStatis: "",
         allOrderStatis: "",
 
@@ -1187,6 +1188,11 @@ const mutations = {
             state.basicBaseList.orderList = data;
         }
 
+    },
+    [ORDER_LINK](state, data) {
+        if (data.key) {
+            state.basicBaseList[data.key] = data;
+        }
     },
     [ORDER_STATISTIC](state, data) {
         if (data.key == "orgOrderList") {

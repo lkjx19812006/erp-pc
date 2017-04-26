@@ -162,7 +162,7 @@
                                 <span v-if="item.especial==1&&item.type==0">紧急求购</span>
                                 <span v-if="item.especial==1&&item.type==1">低价资源</span>
                             </td>
-                            <td>{{item.ctime}}</td>
+                            <td>{{item.pubdate}}</td>
                             <td v-if="item.employeeName!==''">{{item.employeeName}}</td>
                             <td v-if="item.employeeName==''">暂无归属业务员</td>
                             <td class="underline" @click.stop="detailClick({

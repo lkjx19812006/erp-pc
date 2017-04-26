@@ -9,6 +9,8 @@
         <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
         <apply-model :param="applyDetails" v-if="applyDetails.show"></apply-model>
         <delete-model :param="deleteParam" v-if="deleteParam.show"></delete-model>
+        <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
+        <purchase-model :param="purchaseParam" v-if="purchaseParam.show"></purchase-model>
         <shadow-model :param="param">
             <div class="cover_loading">
                 <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
@@ -135,6 +137,41 @@
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.price}}（{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
                                                         <td>{{item.amount}}（{{initOrderDetail.currency | Currency}}）</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- “待采购” -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title clearfix" @click="enfoldment({
+                                        link:'',
+                                        crete:'orderLinkList'
+                                        })">
+                                            <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.orderLinkList.arr.length!==null">
+                                              待采购（{{initOrderDetail.orderLinkList.arr.length}}）
+                                            </a>
+                                            <button type="button" class="btn btn-base pull-right" @click.stop="editPurchase()">编辑</button>
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse" v-if="initOrderDetail.orderLinkList.arr.length&&initOrderDetail.orderLinkList.show" v-cloak>
+                                        <div class="panel-body panel-set">
+                                            <table class="table  contactSet">
+                                                <thead>
+                                                    <th>品种</th>
+                                                    <th>数量</th>
+                                                    <th>采购业务员</th>
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in initOrderDetail.orderLinkList.arr">
+                                                        <td>{{item.breedName}}</td>
+                                                        <td>{{item.number}}{{item.unit | Unit}}</td>
+                                                        <td>{{item.buyEmployee}}</td>
+                                                        <td></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -613,6 +650,8 @@ import trackingModel from '../order/ordergoods'
 import credenceModel from '../order/createcredence'
 import disposeModel from '../order/orderStatus'
 import pictureModel from '../tips/pictureDialog'
+import employeeModel from '../clientRelate/searchEmpInfo'
+import purchaseModel from './second_order/toBePurchased'
 import dividedModel from './second_order/newDivided'
 import filter from '../../filters/filters'
 import tipsModel from '../tips/tipDialog'
@@ -632,7 +671,8 @@ import {
     dividedPayment,
     paymentAudit,
     getMyFundList,
-    specDel
+    specDel,
+    updateOrderLink
 } from '../../vuex/actions'
 export default {
     components: {
@@ -640,6 +680,8 @@ export default {
         credenceModel,
         disposeModel,
         pictureModel,
+        employeeModel,
+        purchaseModel,
         dividedModel,
         filter,
         tipsModel,
@@ -708,6 +750,24 @@ export default {
             },
             deleteParam: {
                 show: false
+            },
+            employeeParam: {
+                show: false,
+                org: true,
+                orgId: '',
+                employeeId: '',
+                employeeName: ''
+            },
+
+            purchaseParam: {
+                link: "/order/updateOrderLink",
+                show: false,
+                sellId: this.param.id,
+                sellEmployee: this.initLogin.id,
+                goods: [], //订单中的商品
+                orderLinkList: [], //订单中的待采购
+                list: [], //goods和orderLinkList重组后的信息
+                callback: this.callback
             }
         }
     },
@@ -723,25 +783,58 @@ export default {
             dividedPayment,
             paymentAudit,
             getMyFundList,
-            specDel
+            specDel,
+            updateOrderLink
         }
     },
     methods: {
         enfoldment: function(param) {
-            console.log(this.$store.state.table.orderDetail[param.crete])
+
             if (this.$store.state.table.orderDetail[param.crete].arr.length == 0) {
                 this.$store.state.table.orderDetail[param.crete].show = false;
             }
             this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
         },
+
+        editPurchase: function() {
+            this.purchaseParam.goods = this.initOrderDetail.goods.arr;
+            this.purchaseParam.orderLinkList = this.initOrderDetail.orderLinkList.arr;
+            //获取list
+            let goods = this.purchaseParam.goods;
+            let orderLinkList = this.purchaseParam.orderLinkList;
+            let result = [];
+            for (let i = 0; i < goods.length; i++) {
+                result.push(goods[i]);
+                let temp = [];
+                for (let k = 0; k < orderLinkList.length; k++) {
+                    if (orderLinkList[k].sellGoodsId == goods[i].id) {
+                        // 待报价条目所处的状态,0初始，1添加，2编辑,在actions中处理
+                        //orderLinkList[k].flag = 0; 
+                        temp.push(orderLinkList[k]);
+                    }
+                }
+                result.push({
+                    arr: temp,
+                    breedId: goods[i].breedId,
+                    breedName: goods[i].breedName,
+                    unit: goods[i].unit,
+                    sellGoodsId: goods[i].id,
+                    show: true,
+                    toBePurchased: true, //表示这是一个“待采购”
+                });
+            }
+            this.purchaseParam.list = result;
+            this.purchaseParam.show = true;
+
+        },
         applyInfo: function(item) {
-            console.log(item)
+
             this.auditParam = item;
             this.auditParam.callback = this.callback;
             if (item.titles == '重新申请审核' || item.titles == '重新申请支付') {
                 this.getMyFundList(item);
                 if (this.initMyFundList != '' && this.initMyFundList[0]) {
-                    console.log(this.initMyFundList[0])
+
                     item.amount = this.initMyFundList[0].amount;
                     item.payName = this.initMyFundList[0].payName;
                     item.payUserName = this.initMyFundList[0].payUserName;
@@ -752,14 +845,6 @@ export default {
                     item.currency = this.initMyFundList[0].currency;
                     item.comment = this.initMyFundList[0].comment;
                     this.auditParam.show = true;
-                    /* item.amount = this.initMyFundList[this.initMyFundList.length-1].amount;
-                    item.payName = this.initMyFundList[this.initMyFundList.length-1].payName;
-                    item.payUserName = this.initMyFundList[this.initMyFundList.length-1].payUserName;
-                    item.payNumber = this.initMyFundList[this.initMyFundList.length-1].payNumber;
-                    item.payWay = this.initMyFundList[this.initMyFundList.length-1].payWay;
-                    item.paySubName = this.initMyFundList[this.initMyFundList.length-1].paySubName;
-                    item.images = this.initMyFundList[this.initMyFundList.length-1].images;
-                    this.auditParam.show=true;*/
                 } else {
                     this.auditParam.show = false;
                 }
@@ -777,17 +862,14 @@ export default {
             this.applyDetails = item;
         },
         divided_payments: function(id, total, stages) {
-            console.log(stages.arr)
-            console.log(this.initOrderDetail)
             this.divideParam.show = true;
             this.divideParam.id = id;
             this.divideParam.total = total;
             this.divideParam.stages = stages.arr;
             this.divideParam.callback = this.callback;
-            console.log(this.divideParam)
         },
         createChance: function(item, index) {
-            console.log(item)
+
             item.show = !item.show;
             item.index = index;
             this.trackingParam = item;
@@ -799,7 +881,7 @@ export default {
         },
         createcredence: function(initOrderDetail) {
             this.credenceParam = initOrderDetail;
-            console.log(this.credenceParam.show)
+
             this.credenceParam.creCallback = this.pictureCallback;
         },
         clickBig: function(img) {
@@ -816,6 +898,7 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
+            this.getOrderDetail(this.param);
         },
         pictureCallback: function(title) {
             this.tipsParam.show = true;
@@ -825,9 +908,11 @@ export default {
         }
     },
     filter: (filter, {}),
+    events: {
+
+    },
     created() {
         this.getOrderDetail(this.param);
-        console.log(this.initOrderDetail)
     }
 }
 </script>
