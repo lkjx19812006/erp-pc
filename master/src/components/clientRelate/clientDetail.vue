@@ -775,10 +775,10 @@
                                         <div class="panel-body panel-set">
                                             <table class="table contactSet">
                                                 <thead>
-                                                    <th>{{$t('static.type')}}</th>
+                                                    <!-- <th>{{$t('static.type')}}</th> -->
                                                     <!--  <th>{{$t('static.name')}}</th> -->
                                                     <th>{{$t('static.breed')}}</th>
-                                                    <th>{{$t('static.quality')}}</th>
+                                                    <!-- <th>{{$t('static.quality')}}</th> -->
                                                     <th>{{$t('static.origin')}}</th>
                                                     <th>{{$t('static.specification')}}</th>
                                                     <th>成交类型</th>
@@ -788,10 +788,10 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initClientDetail.products.arr">
-                                                        <td>{{item.type}}</td>
+                                                        <!-- <td>{{item.type}}</td> -->
                                                         <!-- <td>{{item.name}}</td> -->
                                                         <td>{{item.breedName}}</td>
-                                                        <td>{{item.quality}}</td>
+                                                        <!-- <td>{{item.quality}}</td> -->
                                                         <td>{{item.location}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.mode | order_type}}</td>
@@ -1156,7 +1156,7 @@ export default {
 
         },
 
-        updateIntention: function(param) {            
+        updateIntention: function(param) {
             this.intentionParam = param;
         },
 

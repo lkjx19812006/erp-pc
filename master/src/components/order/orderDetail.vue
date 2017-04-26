@@ -144,7 +144,7 @@
                                     </div>
                                 </div>
                                 <!-- “待采购” -->
-                                <div class="panel panel-default">
+                                <div v-if="initOrderDetail.type==1" class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
                                         link:'',

@@ -108,6 +108,16 @@
                             <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
                         </dd>
                     </dl>
+                    <dl class="clear left transfer">
+                        <dt class="left transfer marg_top">是否样品：</dt>
+                        <dd class="left">
+                            <select class="form-control" v-model="loadParam.sample" @change="selectSearch()">
+                                <option value="">{{$t('static.please_select')}}</option>
+                                <option value="0">{{$t('static.no')}}</option>
+                                <option value="1">{{$t('static.yes')}}</option>
+                            </select>
+                        </dd>
+                    </dl>
                     <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
                     <button type="button" class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
                     <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
@@ -298,6 +308,7 @@ export default {
                 show: false,
                 cur: 1,
                 all: 1,
+                total: 0,
                 link: '/order/',
                 key: 'allOrderList',
                 breedId: '',
@@ -318,7 +329,7 @@ export default {
                 endTime: '',
                 mode: '',
                 validate: '',
-                total: 0
+                sample: ''
             },
             selectOrgParam: {
                 show: false,
@@ -505,7 +516,7 @@ export default {
             this.employeeParam.orgId = ""; //保证employeeParam.orgId与loadParam.org同步变化
             this.loadParam.breedId = "";
             this.loadParam.breedName = "";
-
+            this.loadParam.sample = "";
             this.selectSearch();
         },
         applyBack: function(title) {

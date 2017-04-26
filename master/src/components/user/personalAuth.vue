@@ -1,7 +1,7 @@
 <template>
     <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
-    <div  class="modal modal-main fade account-modal" role="dialog"></div>
-    <div class="container modal_con" >
+    <div class="modal modal-main fade account-modal" role="dialog"></div>
+    <div class="container modal_con">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -9,16 +9,21 @@
             <h3>个人认证</h3>
         </div>
         <div class="edit-model">
-           <section class="editsection" v-cloak>
-               <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-               <div class="editpage">
-                  <div class="editpageleft">
-                      <div class="editpage-input">
-                           <label class="editlabel">备注</label>
-                           <input type="text" v-model='param.ucomment' class="form-control edit-input" value="{{param.ucomment}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <table class="table  table_color contactSet">
+            <section class="editsection" v-cloak>
+                <input type="hidden" class="form-control edit-input" value="{{param.id}}" />
+                <div class="editpage">
+                    <div class="editpageleft">
+                        <div class="editpage-input">
+                            <label class="editlabel">申请认证时间：</label>
+                            <input v-if="initIdentify.files.length>0" type="text" v-model="initIdentify.files[0].ctime" class="form-control edit-input" disabled="disabled" />
+                            <input v-else type="text" class="form-control edit-input" disabled="disabled" value="无法获取申请时间" />
+                        </div>
+                        <div class="editpage-input">
+                            <label class="editlabel">备注</label>
+                            <input type="text" v-model='param.ucomment' class="form-control edit-input" value="{{param.ucomment}}" />
+                        </div>
+                        <div class="editpage-input">
+                            <table class="table  table_color contactSet">
                                 <thead>
                                     <th>名称</th>
                                     <th>文件类型</th>
@@ -36,10 +41,10 @@
                                     </tr>
                                 </tbody>
                             </table>
-                       </div>
-                  </div>
-               </div>
-           </section>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
@@ -58,20 +63,20 @@ import {
     getAuthInfo
 } from '../../vuex/actions'
 export default {
-    components:{
+    components: {
         pictureModel
     },
     props: ['param'],
     data() {
         return {
-            pictureParam:{
-                show:false,
-                img:''
+            pictureParam: {
+                show: false,
+                img: ''
             }
         }
     },
     vuex: {
-       getters: {
+        getters: {
             initIdentify
         },
         actions: {
@@ -79,32 +84,36 @@ export default {
             getAuthInfo
         }
     },
-    methods:{
-        clickBig:function(img){
-          this.pictureParam.show = true;
-          this.pictureParam.img = img;
+    methods: {
+        clickBig: function(img) {
+            this.pictureParam.show = true;
+            this.pictureParam.img = img;
         }
     },
     created() {
         this.getAuthInfo(this.param);
-  }
+    }
 }
 </script>
 <style scoped>
-.modal{
- z-index: 1083
+.modal {
+    z-index: 1083
 }
-.modal_con{
-  z-index: 1084;
+
+.modal_con {
+    z-index: 1084;
 }
+
 .big-font {
     font-size: 36px;
 }
-.top-title{
-  left: 0;
-  right: 0;
-  width: 800px;
+
+.top-title {
+    left: 0;
+    right: 0;
+    width: 800px;
 }
+
 .editsection {
     width: 100%;
     box-sizing: border-box;
@@ -113,9 +122,11 @@ export default {
 .edit-input:focus {
     border-color: #fa6705;
 }
-.editpage-input{
+
+.editpage-input {
     margin-top: 10px;
 }
+
 .addblack span {
     color: #333;
     font-size: 14px;
@@ -132,7 +143,8 @@ export default {
 .btn-close {
     color: #fa6705;
 }
-table{
+
+table {
     display: table;
 }
 </style>

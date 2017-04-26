@@ -41,7 +41,7 @@
                                     预售资源
                                 </button>
                                 <!-- 必须选择意向类型 -->
-                               <!--  <span class="system_danger" v-if="$validation.breedname.required">请选择意向类型</span> -->
+                                <!--  <span class="system_danger" v-if="$validation.breedname.required">请选择意向类型</span> -->
                             </div>
                         </div>
                         <div v-if="param.selectCustomer" style="margin-top:15px">
@@ -257,9 +257,9 @@
                                     <label class="editlabel">航班号</label>
                                     <input type="text" v-model='param.transportNo' class="form-control edit-input" />
                                 </div>
-                                <!-- 到港地点复用address -->
+                                <!-- 库存地复用address -->
                                 <div class="editpage-input">
-                                    <label class="editlabel">到港地点</label>
+                                    <label class="editlabel">库存地</label>
                                     <input type="text" v-model='param.address' class="form-control edit-input" />
                                 </div>
                                 <div class="editpage-input">
@@ -589,7 +589,6 @@ export default {
                     pics.push(temp);
                 }
             }
-            console.log(pics);
             return pics;
         },
         /*

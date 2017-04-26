@@ -57,6 +57,16 @@
                                 </mz-datepicker>
                             </div>
                         </dl>
+                        <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">是否样品：</dt>
+                            <dd class="left">
+                                <select class="form-control" v-model="loadParam.sample" @change="selectSearch()">
+                                    <option value="">{{$t('static.please_select')}}</option>
+                                    <option value="0">{{$t('static.no')}}</option>
+                                    <option value="1">{{$t('static.yes')}}</option>
+                                </select>
+                            </dd>
+                        </dl>
                     </div>
                 </div>
                 <div class="clear">
@@ -411,6 +421,7 @@ export default {
                 show: false,
                 cur: 1,
                 all: 1,
+                total: 0,
                 consignee: '',
                 link: '/order/myList',
                 key: 'myOrderList',
@@ -430,7 +441,8 @@ export default {
                 endTime: '',
                 startTime: '',
                 mode: '',
-                total: 0
+                sample: ''
+
             },
             dialogParam: {
                 show: false,
@@ -814,6 +826,7 @@ export default {
             this.loadParam.type = "";
             this.loadParam.clients = "";
             this.loadParam.payWay = "";
+            this.loadParam.sample = "";
             this.getEmpolyeeOrder(this.loadParam);
         }
     },

@@ -431,6 +431,9 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         if (key == 'employeeId' && param[key] !== '') {
             url += '&employee=' + param[key];
         }
+        if (key == 'sample' && param[key] !== '') {
+            url += '&sample=' + param[key];
+        }
     }
     Vue.http({
         method: 'GET',
@@ -953,6 +956,9 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
         if (key == 'validate' && param[key] !== '') {
             body.validate = param[key];
         }
+        if (key == 'sample' && param[key] !== '') {
+            body.sample = param[key];
+        }
     }
     Vue.http({
         method: 'POST',
@@ -984,7 +990,6 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
     })
 }
 export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
-    console.log(param)
     param.loading = true;
     const body = {
         org: param.org,
@@ -1033,6 +1038,9 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
         }
         if (key == 'endTime' && param[key] != '') {
             body.endTime = param[key];
+        }
+        if (key == 'sample' && param[key] != '') {
+            body.sample = param[key];
         }
     }
 
@@ -5172,7 +5180,7 @@ export const createOrderByPurchase = ({ dispatch }, param) => { //采购单报�
     });
 }
 
-export const  createOrderByStock = ({ dispatch },param) => { //库存列表页面生成订单
+export const createOrderByStock = ({ dispatch }, param) => { //库存列表页面生成订单
     param.loading = true;
     const body = {
         intl: 0,
@@ -5189,20 +5197,20 @@ export const  createOrderByStock = ({ dispatch },param) => { //库存列表页�
         city: param.city,
         district: param.district,
         stockList: param.stockCartList,
-        orderStatus:param.orderStatus
+        orderStatus: param.orderStatus
     };
     console.log(body)
     Vue.http({
-        method:'POST',
-        url:'/crm/api/v1/stock/addOrderByStock/',
-        emulateHTTP:false,
-        body:body,
-        emulateJSON:false,
+        method: 'POST',
+        url: '/crm/api/v1/stock/addOrderByStock/',
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
-    }).then((res) =>{
+    }).then((res) => {
         param.loading = false;
         console.log("success");
         param.show = false;
@@ -5210,7 +5218,7 @@ export const  createOrderByStock = ({ dispatch },param) => { //库存列表页�
             param.callback(res.json().msg + "，稍后将跳转到我的订单页面");
         }
 
-    },(res) =>{
+    }, (res) => {
         param.loading = false;
         console.log("提交失败");
         param.show = false
@@ -9130,33 +9138,33 @@ export const saveDictionary = ({ dispatch }, param) => { //保存字典
     })
 }
 
-export const getStockList = ({ dispatch },param) =>{
+export const getStockList = ({ dispatch }, param) => {
     var url = '/crm/api/v1/stock/queryStockList/'
-    /*if(param.breedName){
-        url += '&breedName='+param.breedName
-    }*/
+        /*if(param.breedName){
+            url += '&breedName='+param.breedName
+        }*/
     var body = {
 
     };
     Vue.http({
-        method:'POST',
-        url:url,
-        emulateHTTP:true,
-        body:body,
-        emulateJSON:false,
-        headers:{
+        method: 'POST',
+        url: url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
-    }).then((res) =>{
+    }).then((res) => {
         console.log(res.json())
         var data = res.json().result
-        for(let i = 0;i<data.length;i++){
+        for (let i = 0; i < data.length; i++) {
             data[i].checked = false
         }
-        dispatch(types.STOCK_LIST,data)
+        dispatch(types.STOCK_LIST, data)
         console.log('success');
-    },(res) =>{
+    }, (res) => {
         console.log('fail')
     })
 }

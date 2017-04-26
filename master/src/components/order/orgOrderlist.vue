@@ -112,6 +112,16 @@
                                 <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
                             </dd>
                         </dl>
+                        <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">是否样品：</dt>
+                            <dd class="left">
+                                <select class="form-control" v-model="loadParam.sample" @change="selectSearch()">
+                                    <option value="">{{$t('static.please_select')}}</option>
+                                    <option value="0">{{$t('static.no')}}</option>
+                                    <option value="1">{{$t('static.yes')}}</option>
+                                </select>
+                            </dd>
+                        </dl>
                         <button class="new_btn transfer"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">{{$t('static.export_order')}}</a></button>
                         <button type="button" class="new_btn transfer" @click="resetTime()">{{$t('static.clear_all')}}</button>
                         <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
@@ -394,6 +404,7 @@ export default {
                 show: false,
                 cur: 1,
                 all: 1,
+                total: 0,
                 org: this.initLogin.orgId,
                 link: '/order/sectionList',
                 key: 'orgOrderList',
@@ -415,7 +426,8 @@ export default {
                 ftime: '',
                 mode: '',
                 validate: '',
-                total: 0
+                sample: ''
+
             },
             language: '',
             mgListParam: {
@@ -592,6 +604,7 @@ export default {
             this.loadParam.employeeName = "";
             this.loadParam.startTime = "";
             this.loadParam.endTime = "";
+            this.loadParam.sample = "";
             this.selectSearch();
         },
 

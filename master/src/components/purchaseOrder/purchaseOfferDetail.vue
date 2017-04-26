@@ -144,7 +144,8 @@ export default {
                 price: "",
                 quality: "",
                 description: "",
-                location: ""
+                location: "",
+                images: "",
             },
             tipsParam: {
                 show: false,
