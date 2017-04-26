@@ -4,21 +4,15 @@
         <div class="myOrder" v-if="$route.path.split('=')[1]==0">
             <stock-List></stock-List>
         </div>
-        <!-- 资源列表 -->
-        <div class="myOrder" v-if="$route.path.split('=')[1]==1">
-            <resource-List></resource-List>
-        </div>
+
     </div>
 </template>
 <script>
 import stockList from '../components/stock/stockList.vue'
-import resourceList from '../components/stock/resourceList.vue'
 
 export default {
     components: {
-
-        stockList,
-        resourceList
+        stockList
     }
 }
 </script>
