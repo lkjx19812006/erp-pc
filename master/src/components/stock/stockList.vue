@@ -34,7 +34,8 @@
                     <tr>
                         <th></th>
                         <th style="min-width:150px;text-align: center;">药材名称</th>
-                        <th style="min-width:200px;text-align: center;">规格/片形</th>
+                        <th >规格</th>
+                        <th>片型</th>
                         <th>产地</th>
                         <th>库存可用量</th>
                         <th>库存单位</th>
@@ -56,7 +57,8 @@
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
                         </td>
                         <td>{{item.breedName}}</td>
-                        <td>{{item.specAttribute | specFilter}}</td>
+                        <td>{{item.specAttribute | specFilter_a}}</td>
+                        <td>{{item.specAttribute | specFilter_b}}</td>
                         <td>{{item.location}}</td>
                         <td>{{item.usableNum}}</td>
                         <td>{{item.unitId | Unit}}</td>
@@ -81,6 +83,8 @@
 
 <script>
 import mglistModel from '../mguan/mgListComponent.vue'
+import changeMenu from '../../components/tools/tabs/tabs.js'
+import common from '../../common/common'
 import pagination from '../pagination'
 import orderData from '../stock/orderData'
 import stockCart from '../stock/stockCart'
@@ -211,6 +215,9 @@ export default {
 		this.getStockList(this.loadParam)
 		this.watachStock()
 	},
+	ready() {
+        common('tab', 'table_box', 1);
+    },
 	watch:{
 		'$route':"watchStock" //监听路由变化，当离开此页面的时候清空购物车
 	},
@@ -228,11 +235,20 @@ export default {
 		}
 	},
 	filters:{
-		specFilter:function(data){
+		specFilter_a:function(data){
 			if(data){
 				data = JSON.parse(data)
 				for(var key in data){
-					return data[key]['规格']+'/'+data[key]['片型']
+					return data[key]['规格']
+				}
+			}
+			
+		},
+		specFilter_b:function(data){
+			if(data){
+				data = JSON.parse(data)
+				for(var key in data){
+					return data[key]['片型']
 				}
 			}
 			
