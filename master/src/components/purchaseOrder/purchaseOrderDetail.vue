@@ -96,7 +96,7 @@
                                                             <table class="table table-hover table_color table-striped" style="width:80%;float:right;border-top:1px soild red">
                                                                 <thead>
                                                                     <th></th>
-                                                                    <th>业务员</th>
+                                                                    <th>业务员(或客户信息)</th>
                                                                     <th>单价</th>
                                                                     <th>数量</th>
                                                                     <th>单位</th>
@@ -119,7 +119,14 @@
                                                                                 (已加入)
                                                                             </span>
                                                                         </td>
-                                                                        <td>{{offer.employeeName}}</td>
+                                                                        <td>
+                                                                            <span v-if="offer.employeeName=='没有归属业务员'||!offer.employeeName">
+                                                                                {{offer.customerName}}({{offer.customerPhone}})
+                                                                            </span>
+                                                                            <span v-else>
+                                                                                {{offer.employeeName}}
+                                                                            </span>
+                                                                        </td>
                                                                         <td>{{offer.price}}元</td>
                                                                         <td>{{offer.number}}</td>
                                                                         <td>{{offer.unit | Unit}}</td>
