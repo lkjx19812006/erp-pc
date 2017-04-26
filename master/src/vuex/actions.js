@@ -6944,7 +6944,7 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         }
     }).then((res) => {
         console.log('修改成功!!!!')
-        alert("修改成功")
+       
         param.show = false;
         param.ctime = param.ctime;
         //param.callback(res.json().msg);
@@ -9131,10 +9131,11 @@ export const saveDictionary = ({ dispatch }, param) => { //保存字典
 }
 
 export const getStockList = ({ dispatch },param) =>{
-    var url = '/crm/api/v1/stock/queryStockList/'
-    /*if(param.breedName){
+    var url = '/crm/api/v1/stock/queryStockList/?&page='+param.cur+'&pageSize=20';
+
+    if(param.breedName){
         url += '&breedName='+param.breedName
-    }*/
+    }
     var body = {
 
     };
@@ -9150,11 +9151,14 @@ export const getStockList = ({ dispatch },param) =>{
         }
     }).then((res) =>{
         console.log(res.json())
-        var data = res.json().result
+        var data = res.json().result.list
         for(let i = 0;i<data.length;i++){
             data[i].checked = false
         }
         dispatch(types.STOCK_LIST,data)
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
         console.log('success');
     },(res) =>{
         console.log('fail')

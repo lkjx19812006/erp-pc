@@ -1,6 +1,7 @@
 <template>
 	<order-data :param="orderData" v-if="orderData.show"></order-data>
 	<stock-cart :param="cartData" v-if="cartData.show&&cartData.leng"></stock-cart>
+	<breed-search :param='loadParam' v-if='loadParam.show'></breed-search>
 	<mglist-model>
 		<!-- 头部搜索-->
         <div slot="top">
@@ -8,7 +9,7 @@
                 <dl class="clear left transfer">
                     <dt class="left transfer marg_top">药品名称：</dt>
                     <dd class="left margin_right">
-                        <input type="text" class="form-control" v-model="loadParam.breedName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                        <input type="text" class="form-control" v-model="loadParam.breedName" readonly="readonly" placeholder="按回车键搜索" @keyup.enter="selectSearch()" @click='openBreedSearch()'/>
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:20px">
@@ -34,13 +35,13 @@
                     <tr>
                         <th></th>
                         <th style="min-width:150px;text-align: center;">药材名称</th>
-                        <th >规格</th>
-                        <th>片型</th>
-                        <th>产地</th>
-                        <th>库存可用量</th>
-                        <th>库存单位</th>
-                        <th>仓库名称</th> 
-                        <th>仓库类型</th>                    
+                        <th style="min-width:200px;text-align: center;">规格</th>
+                        <th style="min-width:150px;text-align: center;">片型</th>
+                        <th style="min-width:200px;text-align: center;">产地</th>
+                        <th style="min-width:150px;text-align: center;">库存可用量</th>
+                        <th style="min-width:150px;text-align: center;">库存单位</th>
+                        <th style="min-width:150px;text-align: center;">仓库名称</th> 
+                        <th style="min-width:150px;text-align: center;">仓库类型</th>                    
                         <th style="min-width:200px;text-align: center;">操作</th>
                     </tr>
                 </thead>
@@ -83,6 +84,7 @@
 
 <script>
 import mglistModel from '../mguan/mgListComponent.vue'
+import breedSearch from '../../components/Intention/breedsearch.vue'
 import changeMenu from '../../components/tools/tabs/tabs.js'
 import common from '../../common/common'
 import pagination from '../pagination'
@@ -96,7 +98,8 @@ export default {
 		mglistModel,
 		pagination,
 		orderData,
-		stockCart
+		stockCart,
+		breedSearch
 	},
 	vuex:{
 		actions:{
@@ -112,8 +115,9 @@ export default {
 				loading:false,
 				breedName:"",
 				cur:1,
-				all:7,
-				total:''				
+				all:1,
+				total:'',
+				show:false				
 			},
 			cartData:{
 				loading: false,
@@ -148,12 +152,18 @@ export default {
                 callback:this.callback ,
                 index:''               
 			},
+			breedSearchParam:{
+				show:false
+			},
 			checked:false
 		}
 	},
 	methods:{
 		selectSearch:function(){
 			this.getStockList(this.loadParam)
+		},
+		openBreedSearch:function(){
+			this.loadParam.show = true
 		},
 		checkedAll:function(){
 			this.checked = !this.checked;
@@ -232,7 +242,15 @@ export default {
 			this.cartData.goods = this.$store.state.table.stockCartList
 			//console.log(this.$store.state.table.stockCartList.length)
 			this.cartData.leng = this.$store.state.table.stockCartList.length
-		}
+		},
+		breed: function(breed) {
+            this.loadParam.breedId = breed.breedId;
+            this.loadParam.breedName = breed.breedName;
+            this.selectSearch();
+        },
+        fresh:function(page){
+        	this.getStockList(this.loadParam)
+        }
 	},
 	filters:{
 		specFilter_a:function(data){
@@ -260,9 +278,10 @@ export default {
 
 <style>
 .cartbtn{
-	margin-left: 690px;
+	margin-left: 100px;
 	color: ;
-	background: #ccc
+	background: #ccc;
+	position: fixed;
 }
 
 .cartbtnAct{

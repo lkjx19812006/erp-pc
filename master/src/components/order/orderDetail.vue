@@ -569,7 +569,21 @@
                                                             <img :src="item.url" v-if="item.url | isImage" @click="clickBig(item.url)" style="margin:auto" />
                                                         </td>
                                                         <td>{{item.description}}</td>
-                                                        <td><a href="{{item.url}}" download="" class="btn btn-default">下载</a></td>
+                                                        <td>
+                                                        <a href="{{item.url}}" download="" class="btn btn-default">下载</a>
+                                                        <button v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2" class="btn btn-default" @click="deleteCompact({
+                                                            id:item.id,
+                                                            sub:$index,
+                                                            show:true,
+                                                            name:'附件',
+                                                            title:'附件',
+                                                            link:specDel,
+                                                            url:'/customer/file/',
+                                                            key:'attachFiles',
+                                                            headline:'orderDetail'
+                                                          })">{{$t('static.del')}}</button>
+                                                        </td> 
+
                                                     </tr>
                                                 </tbody>
                                             </table>
