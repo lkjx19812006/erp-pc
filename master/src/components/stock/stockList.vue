@@ -1,6 +1,8 @@
 <template>
 	<order-data :param="orderData" v-if="orderData.show"></order-data>
 	<stock-cart :param="cartData" v-if="cartData.show&&cartData.leng"></stock-cart>
+	<breed-search :param='loadParam' v-if='loadParam.show'></breed-search>
+	<import-excel :param='importParam' v-if='importParam.show'></import-excel>
 	<mglist-model>
 		<!-- 头部搜索-->
         <div slot="top">
@@ -8,7 +10,7 @@
                 <dl class="clear left transfer">
                     <dt class="left transfer marg_top">药品名称：</dt>
                     <dd class="left margin_right">
-                        <input type="text" class="form-control" v-model="loadParam.breedName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                        <input type="text" class="form-control" v-model="loadParam.breedName" readonly="readonly" placeholder="按回车键搜索" @keyup.enter="selectSearch()" @click='openBreedSearch()'/>
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:20px">
@@ -18,9 +20,55 @@
                <!--  <dd class="pull-right" style="margin-right:10px">
                    <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                </dd> -->
-                <dd class="cartdd" style="margin-left:10px">
+                <dd class="pull-right" style="margin-right:200px">
                 	<button type='button' class='btn btn-default cartbtn' :class={cartbtnAct:cartData.leng} height="24" width="24" @click="showCartList()">购物车({{cartData.leng}})</button>
-                    
+                	<!-- 库存模板下载 -->
+                	<button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn">
+                        <a href="http://erp.yaocaimaimai.net/local/template/Resource_template.xlsx">
+                            EXCEL库存模板下载
+                        </a>
+                    </button>
+                	<!-- EXCEL导入客户 -->
+                    <button type="button" class="btn btn-primary" @click="excelImport()">excel导入社会库存</button>
+					<!-- 新建社会库存 -->
+                    <button type="button" class="btn btn-default" @click="createCustomer({
+                                            show:true,
+                                            loading:false,
+                                            id:'',
+                                            category:'',
+                                            typeDesc:'其他',
+                                            classify:'1,买',
+                                            type:0,
+                                            name:'',
+                                            mainPhone:'',
+                                            principal:'',
+                                            bizScope:'',
+                                            province:'',
+                                            city:'',
+                                            address:'',
+                                            email:'',
+                                            employee:'',
+                                            employeeId:this.initLogin.id,
+                                            employeeName:this.initLogin.name,
+                                            orgId:this.initLogin.orgId,
+                                            orgName:'',
+                                            contacts:[
+                                                {
+                                                    mainContact:'',
+                                                    name:'',
+                                                    position:'',
+                                                    department:'',
+                                                    phone:'',
+                                                    tel:'',
+                                                    email:'',
+                                                    qq:'',
+                                                    wechart:'',
+                                                    main:'',
+                                                }
+                                            ],
+                                            link:saveCreate,
+                                            key:'myCustomerList'
+                                            })">{{$t("static.new")}}</button>
                 </dd>
             </div>
         </div>
@@ -34,13 +82,14 @@
                     <tr>
                         <th></th>
                         <th style="min-width:150px;text-align: center;">药材名称</th>
-                        <th style="min-width:200px;text-align: center;">规格/片形</th>
-                        <th>产地</th>
-                        <th>库存可用量</th>
-                        <th>库存单位</th>
-                        <th>仓库名称</th> 
-                        <th>仓库类型</th>                    
-                        <th style="min-width:200px;text-align: center;">操作</th>
+                        <th style="min-width:200px;text-align: center;">规格</th>
+                        <th style="min-width:150px;text-align: center;">片型</th>
+                        <th style="min-width:200px;text-align: center;">产地</th>
+                        <th style="min-width:150px;text-align: center;">库存可用量</th>
+                        <th style="min-width:150px;text-align: center;">库存单位</th>
+                        <th style="min-width:150px;text-align: center;">仓库名称</th> 
+                        <th style="min-width:150px;text-align: center;">库存类型</th>                    
+                        <th style="min-width:300px;text-align: center;">操作</th>
                     </tr>
                 </thead>
                 <tr>
@@ -56,20 +105,24 @@
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
                         </td>
                         <td>{{item.breedName}}</td>
-                        <td>{{item.specAttribute | specFilter}}</td>
+                        <td>{{item.specAttribute | specFilter_a}}</td>
+                        <td>{{item.specAttribute | specFilter_b}}</td>
                         <td>{{item.location}}</td>
                         <td>{{item.usableNum}}</td>
                         <td>{{item.unitId | Unit}}</td>
                         <td>{{item.depotName}}</td>
                         <td>{{item.depotType}}</td>
-                       	<td><a @click="addToCart($index,{
+                       	<td><button class="btn btn-default" @click="addToCart($index,{
                        			breedName:item.breedName,
                        			id:item.id,
                        			specAttribute:item.specAttribute,
                        			location:item.location,
                        			usableNum:item.usableNum,
                        			unitId:item.unitId
-                       		})">加入购物车</a></td>
+                       		})">加入购物车</button>
+							<button class="btn btn-default" v-if="item.depotType=='社会库存'">编辑</button>
+							<button class="btn btn-default" v-if="item.depotType=='社会库存'">删除</button>
+                       		</td>
                     </tr>
                 </tbody>
             </table>
@@ -81,22 +134,29 @@
 
 <script>
 import mglistModel from '../mguan/mgListComponent.vue'
+import importExcel from '../../components/purchaseOrder/indentExcelImport.vue'
+import breedSearch from '../../components/Intention/breedsearch.vue'
+import changeMenu from '../../components/tools/tabs/tabs.js'
+import common from '../../common/common'
 import pagination from '../pagination'
 import orderData from '../stock/orderData'
 import stockCart from '../stock/stockCart'
 import filter from '../../filters/filters'
-import {getStockList} from '../../vuex/actions'
+import {getStockList , importStock} from '../../vuex/actions'
 import {initStockList} from '../../vuex/getters'
 export default {
 	components:{
 		mglistModel,
 		pagination,
 		orderData,
-		stockCart
+		stockCart,
+		breedSearch,
+		importExcel
 	},
 	vuex:{
 		actions:{
-			getStockList
+			getStockList,
+			importStock
 		},
 		getters:{
 			initStockList
@@ -107,9 +167,11 @@ export default {
 			loadParam:{
 				loading:false,
 				breedName:"",
+				breedId:'',
 				cur:1,
-				all:7,
-				total:''				
+				all:1,
+				total:'',
+				show:false				
 			},
 			cartData:{
 				loading: false,
@@ -144,12 +206,27 @@ export default {
                 callback:this.callback ,
                 index:''               
 			},
+			importParam: {
+                loading: false,
+                show: false,
+                link: this.importStock,
+                callback: this.selectSearch,
+                success: 0, //上传后，返回码的解析，0/1/2/3，初始/成功/错误（1000）/其他错误
+                mFile: "", //excel文件
+                result: "" // 导入成功后的返回信息
+            },
+			breedSearchParam:{
+				show:false
+			},
 			checked:false
 		}
 	},
 	methods:{
 		selectSearch:function(){
 			this.getStockList(this.loadParam)
+		},
+		openBreedSearch:function(){
+			this.loadParam.show = true
 		},
 		checkedAll:function(){
 			this.checked = !this.checked;
@@ -176,6 +253,13 @@ export default {
                     }
                 })
             }
+		},
+		excelImport:function(){//导入库存
+			this.importParam.success = 0;
+            this.importParam.mFile = "";
+            this.importParam.result = "";
+            this.importParam.show = true;
+            console.log(this.importStock)
 		},
 		addToCart:function($index,data){
 			this.orderData.show=true;
@@ -205,12 +289,19 @@ export default {
 		watachStock:function(){ //
 			this.$store.state.table.stockCartList = [];
 			this.cartData.leng=0
+		},
+		resetCondition:function(){
+			this.loadParam.breedId='';
+			this.getStockList(this.loadParam)
 		}
 	},
 	created(){
 		this.getStockList(this.loadParam)
 		this.watachStock()
 	},
+	ready() {
+        common('tab', 'table_box', 1);
+    },
 	watch:{
 		'$route':"watchStock" //监听路由变化，当离开此页面的时候清空购物车
 	},
@@ -225,14 +316,32 @@ export default {
 			this.cartData.goods = this.$store.state.table.stockCartList
 			//console.log(this.$store.state.table.stockCartList.length)
 			this.cartData.leng = this.$store.state.table.stockCartList.length
-		}
+		},
+		breed: function(breed) {
+			console.log(breed.breedId)
+            this.loadParam.breedId = breed.breedId;
+            this.loadParam.breedName = breed.breedName;
+            this.selectSearch();
+        },
+        fresh:function(page){
+        	this.getStockList(this.loadParam)
+        }
 	},
 	filters:{
-		specFilter:function(data){
+		specFilter_a:function(data){
 			if(data){
 				data = JSON.parse(data)
 				for(var key in data){
-					return data[key]['规格']+'/'+data[key]['片型']
+					return data[key]['规格']
+				}
+			}
+			
+		},
+		specFilter_b:function(data){
+			if(data){
+				data = JSON.parse(data)
+				for(var key in data){
+					return data[key]['片型']
 				}
 			}
 			
@@ -244,9 +353,7 @@ export default {
 
 <style>
 .cartbtn{
-	margin-left: 690px;
-	color: ;
-	background: #ccc
+	background: #ccc;
 }
 
 .cartbtnAct{

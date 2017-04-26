@@ -6952,7 +6952,7 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         }
     }).then((res) => {
         console.log('修改成功!!!!')
-        alert("修改成功")
+
         param.show = false;
         param.ctime = param.ctime;
         //param.callback(res.json().msg);
@@ -9139,12 +9139,11 @@ export const saveDictionary = ({ dispatch }, param) => { //保存字典
 }
 
 export const getStockList = ({ dispatch }, param) => {
-    var url = '/crm/api/v1/stock/queryStockList/'
-        /*if(param.breedName){
-            url += '&breedName='+param.breedName
-        }*/
+    var url = '/crm/api/v1/stock/queryStockList/';
     var body = {
-
+        page: param.cur,
+        breedId: param.breedId,
+        pageSize: 20
     };
     Vue.http({
         method: 'POST',
@@ -9157,13 +9156,47 @@ export const getStockList = ({ dispatch }, param) => {
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log(res.json())
-        var data = res.json().result
+
+        var data = res.json().result.list
         for (let i = 0; i < data.length; i++) {
             data[i].checked = false
         }
         dispatch(types.STOCK_LIST, data)
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
         console.log('success');
+    }, (res) => {
+        console.log('fail')
+    })
+}
+
+export const importStock = ({ dispatch }, param) => { //excel导入社会库存
+    param.loading = true;
+    let data = new FormData();
+    data.append('mFile', param.mFile);
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/stock/importByExcel',
+        emulateJSON: false,
+        emulateHTTP: false,
+        body: data
+    }).then((res) => {
+        if (res.json().code == 1000) {
+            param.success = 2;
+            param.result = res.json().result;
+        } else if (res.json().code == 200) {
+            param.success = 1;
+            param.result = '';
+        } else {
+            param.success = 3;
+            param.result = res.json().msg;
+        }
+
+        if (param.callback) {
+            param.callback();
+        }
+        param.loading = false;
     }, (res) => {
         console.log('fail')
     })
