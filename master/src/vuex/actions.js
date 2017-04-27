@@ -9163,7 +9163,7 @@ export const getStockList = ({ dispatch },param) =>{
     })
 }
 
-export const importStock = ({dispatch},param) =>{//excel导入社会库存
+export const importStock = ({ dispatch },param) =>{//excel导入社会库存
     param.loading =true;
     let data = new FormData();
     data.append('mFile',param.mFile);
@@ -9189,6 +9189,42 @@ export const importStock = ({dispatch},param) =>{//excel导入社会库存
             param.callback();
         }
         param.loading = false;
+    },(res) =>{
+        console.log('fail')
+    })
+}
+
+export const createStockInfo = ({ dispatch },param) =>{//新建库存
+    var today = new Date();
+    var body = {
+        
+    };
+    Vue.http({
+        method:'POST',
+        url:'/crm/api/v1/stock/addStock',
+        emulateJSON:false,
+        emulateHTTP:false,
+        body:body
+    }).then((res) => {
+        console.log(res.json())
+    },(res) =>{
+        console.log('fail')
+    })
+}
+
+export const editStockInfo =({ dispatch },param) =>{//修改库存
+    var today = new Date();
+    var body ={
+
+    };
+    Vue.http({
+        method:'PUT',
+        url:'/crm/api/v1/stock/updateStock',
+        emulateJSON:false,
+        emulateHTTP:false,
+        body:body
+    }).then((res) =>{
+        console.log(res.json())
     },(res) =>{
         console.log('fail')
     })

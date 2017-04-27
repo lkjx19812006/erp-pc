@@ -2,6 +2,7 @@
 	<order-data :param="orderData" v-if="orderData.show"></order-data>
 	<stock-cart :param="cartData" v-if="cartData.show&&cartData.leng"></stock-cart>
 	<breed-search :param='loadParam' v-if='loadParam.show'></breed-search>
+	<create-stock :param='createParam' v-if='createParam.show'></create-stock>
 	<import-excel :param='importParam' v-if='importParam.show'></import-excel>
 	<mglist-model>
 		<!-- 头部搜索-->
@@ -31,43 +32,23 @@
                 	<!-- EXCEL导入客户 -->
                     <button type="button" class="btn btn-primary" @click="excelImport()">excel导入社会库存</button>
 					<!-- 新建社会库存 -->
-                    <button type="button" class="btn btn-default" @click="createCustomer({
+                    <button type="button" class="btn btn-default" @click="createStock({
                                             show:true,
-                                            loading:false,
-                                            id:'',
-                                            category:'',
-                                            typeDesc:'其他',
-                                            classify:'1,买',
-                                            type:0,
-                                            name:'',
-                                            mainPhone:'',
-                                            principal:'',
-                                            bizScope:'',
-                                            province:'',
-                                            city:'',
-                                            address:'',
-                                            email:'',
-                                            employee:'',
-                                            employeeId:this.initLogin.id,
-                                            employeeName:this.initLogin.name,
-                                            orgId:this.initLogin.orgId,
-                                            orgName:'',
-                                            contacts:[
-                                                {
-                                                    mainContact:'',
-                                                    name:'',
-                                                    position:'',
-                                                    department:'',
-                                                    phone:'',
-                                                    tel:'',
-                                                    email:'',
-                                                    qq:'',
-                                                    wechart:'',
-                                                    main:'',
-                                                }
-                                            ],
-                                            link:saveCreate,
-                                            key:'myCustomerList'
+                                            flag:0,                                            
+                                            breedName:'',
+                                            contactName:'',
+                                            specification:'',
+                                            specAttribute:'',
+                                            location:'',
+                                            depotName:'',
+                                            usableNum:'',
+                                            unit:'',
+                                            canProcess:'',
+                                            canDeposite:'',
+                                            price:'',
+                                            dueDate:'',
+                                            comment:'',
+                                            key:''
                                             })">{{$t("static.new")}}</button>
                 </dd>
             </div>
@@ -120,7 +101,24 @@
                        			usableNum:item.usableNum,
                        			unitId:item.unitId
                        		})">加入购物车</button>
-							<button class="btn btn-default" v-if="item.depotType=='社会库存'">编辑</button>
+							<button class="btn btn-default" v-if="item.depotType=='社会库存'" @click="updataStock({
+                                            show:true,
+                                            flag:1,                                            
+                                            breedName:item.breedName,
+                                            contactName:item.contactName,
+                                            specification:item.specAttribute,
+                                            specAttribute:item.specAttribute,
+                                            location:item.location,
+                                            depotName:item.depotName,
+                                            usableNum:item.usableNum,
+                                            unit:item.unitId,
+                                            canProcess:item.canProcess,
+                                            canDeposite:item.canDeposite,
+                                            price:item.price,
+                                            dueDate:item.dueDate,
+                                            comment:item.comment,
+                                            key:''
+                                            })">编辑</button>
 							<button class="btn btn-default" v-if="item.depotType=='社会库存'">删除</button>
                        		</td>
                     </tr>
@@ -141,6 +139,7 @@ import common from '../../common/common'
 import pagination from '../pagination'
 import orderData from '../stock/orderData'
 import stockCart from '../stock/stockCart'
+import createStock from '../stock/createNewStock'
 import filter from '../../filters/filters'
 import {getStockList , importStock} from '../../vuex/actions'
 import {initStockList} from '../../vuex/getters'
@@ -151,7 +150,8 @@ export default {
 		orderData,
 		stockCart,
 		breedSearch,
-		importExcel
+		importExcel,
+		createStock
 	},
 	vuex:{
 		actions:{
@@ -214,6 +214,9 @@ export default {
                 success: 0, //上传后，返回码的解析，0/1/2/3，初始/成功/错误（1000）/其他错误
                 mFile: "", //excel文件
                 result: "" // 导入成功后的返回信息
+            },
+            createParam:{
+            	show:false
             },
 			breedSearchParam:{
 				show:false
@@ -293,6 +296,13 @@ export default {
 		resetCondition:function(){
 			this.loadParam.breedId='';
 			this.getStockList(this.loadParam)
+		},
+		createStock:function(data){
+			this.createParam = data;
+		},
+		updataStock:function(data){
+			this.createParam = data;
+			console.log(data);
 		}
 	},
 	created(){
