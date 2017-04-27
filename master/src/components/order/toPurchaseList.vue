@@ -1,22 +1,33 @@
 <template>
     <div>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+        <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
+        <breed-model :param="breedParam" v-if="breedParam.show"></breed-model>
         <order-model :param="orderParam" v-if="orderParam.show"></order-model>
         <mglist-model>
             <!-- 头部搜索 -->
             <div slot="top">
-                <div class="clear">
+                <div class="clear" style="margin-bottom:10px">
                     <div class="left">
+                        <dt class="left transfer marg_top">销售订单所属业务员：</dt>
+                        <dd class="left">
+                            <input type="text" class="form-control" v-model="loadParam.sellEmployeeName" @click="selectEmployee()" readonly="readonly" />
+                        </dd>
+                        <dt class="left transfer marg_top">品种：</dt>
+                        <dd class="left">
+                            <input type="text" class="form-control" v-model="loadParam.breedName" @click="selectBreed()" readonly="readonly" />
+                        </dd>
                     </div>
-                </div>
-                <div class="clear">
                     <div class="right">
                         <button class="btn btn-default transfer" @click="newOrder()">生成订单</button>
                         <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                     </div>
-                    <div class="left">
+                    <div class="right">
+                        <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
                         <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
                     </div>
+                </div>
+                <div class="clear">
                 </div>
             </div>
             <!-- 中间列表 -->
@@ -30,7 +41,9 @@
                             <th></th>
                             <th>品种</th>
                             <th>数量</th>
+                            <th>单位</th>
                             <th>销售订单所属业务员</th>
+                            <th>创建时间</th>
                         </tr>
                     </thead>
                     <tr>
@@ -38,7 +51,7 @@
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
                         </th>
                         <th style="color:#fa6705;font-size: 14px">全选</th>
-                        <th colspan="2"></th>
+                        <th colspan="4"></th>
                     </tr>
                     <tbody>
                         <tr v-for="item in initMyOrderLinkList" v-cloak>
@@ -46,8 +59,10 @@
                                 <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                             </td>
                             <td>{{item.breedName}}</td>
-                            <td>{{item.number}}{{item.unit | Unit}}</td>
-                            <td>{{item.sellEmployee}}</td>
+                            <td>{{item.number}}</td>
+                            <td>{{item.unit | Unit}}</td>
+                            <td>{{item.sellEmployeeName}}</td>
+                            <td>{{item.ctime | date}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -60,6 +75,8 @@
 <script>
 import mglistModel from '../mguan/mgListComponent.vue'
 import orderModel from './purchaseToOrder.vue'
+import employeeModel from '../clientRelate/searchEmpInfo'
+import breedModel from '../intention/breedsearch'
 import tipsdialogModel from '../tips/tipDialog'
 import pagination from '../pagination'
 import filter from '../../filters/filters'
@@ -75,7 +92,9 @@ import {
 export default {
     components: {
         tipsdialogModel,
+        employeeModel,
         orderModel,
+        breedModel,
         mglistModel,
         pagination,
         filter
@@ -89,8 +108,23 @@ export default {
                 show: false,
                 cur: 1,
                 all: 1,
+                total: 0,
                 link: "/order/myOrderLinkList",
                 key: "myOrderLinkList",
+                sellEmployee: "",
+                sellEmployeeName: "",
+                breedId: "",
+                breedName: "",
+            },
+            employeeParam: {
+                show: false,
+                org: true,
+                orgId: "",
+                employeeId: '',
+                employeeName: '',
+            },
+            breedParam: {
+                show: false
             },
             orderParam: {
                 show: false,
@@ -128,6 +162,20 @@ export default {
         }
     },
     methods: {
+        selectEmployee: function() {
+            this.employeeParam.show = true;
+        },
+        selectBreed: function() {
+            this.breedParam.show = true;
+        },
+        resetCondition: function() {
+            this.loadParam.breedId = "";
+            this.loadParam.breedName = "";
+            this.loadParam.sellEmployee = "";
+            this.loadParam.sellEmployeeName = "";
+            this.selectSearch();
+
+        },
         selectSearch: function() {
             this.checked = false;
             this.getOrderLinkList(this.loadParam);
@@ -190,7 +238,17 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getOrderLinkList(this.loadParam);
-        }
+        },
+        a: function(employee) {
+            this.loadParam.sellEmployee = employee.employeeId;
+            this.loadParam.sellEmployeeName = employee.employeeName;
+            this.selectSearch();
+        },
+        breed: function(breed) {
+            this.loadParam.breedId = breed.breedId;
+            this.loadParam.breedName = breed.breedName;
+            this.selectSearch();
+        },
     },
     filter: (filter, {}),
     ready() {
@@ -258,8 +316,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 400px;
-    min-width: 400px;
+    width: 285px;
+    min-width: 285px;
 }
 
 .order_pagination {

@@ -62,11 +62,17 @@ export default {
         props: {
             param: {
                 default: null,
-                qiniu: ''
+                qiniu: '',
+                files: []
             },
             value: '',
             showurl: '',
             type: '*'
+        },
+        watch: {
+            'param.files': function(curVal, oldVal) {
+                this.files = curVal;
+            }
         },
         methods: {
             previewImg: function(e) {

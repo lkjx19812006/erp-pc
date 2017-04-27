@@ -381,7 +381,10 @@
                                                       loading:false,
                                                       pics:item.pics,
                                                       images:'',
-                                                      
+                                                      importQualityPics:item.importQualityPics,
+                                                      importQualityImages:'',
+                                                      testReportPics:item.testReportPics,
+                                                      testReportImages:'',
                                                   })">
                                                             <a class="operate"><img src="/static/images/edit.png" height="18" width="30" />
                                                             </a>
@@ -1147,7 +1150,11 @@ export default {
                 qualification: 'GMP',
                 url: '/intention/',
                 key: 'client',
-                pics: '',
+                pics: [],
+                importQualityPics: [],
+                importQualityImages: '',
+                testReportPics: [],
+                testReportImages: '',
                 images: '',
                 inType: 3,
                 audit: 0

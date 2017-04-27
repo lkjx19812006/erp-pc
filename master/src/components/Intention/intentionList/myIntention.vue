@@ -144,6 +144,10 @@
                          url:'/intention/',
                          pics:[],
                          images:'',
+                         importQualityPics:[],
+                         importQualityImages:'',
+                         testReportPics:[],
+                         testReportImages:'',
                          audit:0,
                          onSell:0,
                          ctime:''
@@ -285,6 +289,10 @@
                                                key:'myIntentionList',
                                                pics:item.pics,
                                                images:'',
+                                               importQualityPics:item.importQualityPics,
+                                               importQualityImages:'',
+                                               testReportPics:item.testReportPics,
+                                               testReportImages:'',
                                                duedate:item.duedate,
                                                description: item.description
                                                })"><img src="/static/images/edit.png" height="18" width="28" alt="编辑" />
