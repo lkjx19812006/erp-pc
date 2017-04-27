@@ -86,7 +86,14 @@
                         <td>{{item.pubdate}}</td>
                         <td>{{item.duedate}}</td>
                         <td>{{item.source | indentSource}}</td>
-                        <td>{{item.buyDesc}}</td>
+                        <td>
+                            <Poptip placement="left" trigger="hover">
+                                <span>{{item.buyDesc | textDisplay "8"}}</span>
+                                <div class="api" slot="content">
+                                    {{item.buyDesc}}
+                                </div>
+                            </Poptip>
+                        </td>
                         <td>{{item.comment}}</td>
                         <td>{{item.inquire | inquire}}</td>
                         <td style="text-align: left">
@@ -283,5 +290,11 @@ export default {
 
 dl {
     margin-bottom: 5px;
+}
+
+.api {
+    max-width: 400px;
+    color: #3399ff;
+    white-space: normal;
 }
 </style>

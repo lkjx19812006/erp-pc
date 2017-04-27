@@ -381,7 +381,10 @@
                                                       loading:false,
                                                       pics:item.pics,
                                                       images:'',
-                                                      
+                                                      importQualityPics:item.importQualityPics,
+                                                      importQualityImages:'',
+                                                      testReportPics:item.testReportPics,
+                                                      testReportImages:'',
                                                   })">
                                                             <a class="operate"><img src="/static/images/edit.png" height="18" width="30" />
                                                             </a>
@@ -775,10 +778,10 @@
                                         <div class="panel-body panel-set">
                                             <table class="table contactSet">
                                                 <thead>
-                                                    <th>{{$t('static.type')}}</th>
+                                                    <!-- <th>{{$t('static.type')}}</th> -->
                                                     <!--  <th>{{$t('static.name')}}</th> -->
                                                     <th>{{$t('static.breed')}}</th>
-                                                    <th>{{$t('static.quality')}}</th>
+                                                    <!-- <th>{{$t('static.quality')}}</th> -->
                                                     <th>{{$t('static.origin')}}</th>
                                                     <th>{{$t('static.specification')}}</th>
                                                     <th>成交类型</th>
@@ -788,10 +791,10 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initClientDetail.products.arr">
-                                                        <td>{{item.type}}</td>
+                                                        <!-- <td>{{item.type}}</td> -->
                                                         <!-- <td>{{item.name}}</td> -->
                                                         <td>{{item.breedName}}</td>
-                                                        <td>{{item.quality}}</td>
+                                                        <!-- <td>{{item.quality}}</td> -->
                                                         <td>{{item.location}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.mode | order_type}}</td>
@@ -1147,7 +1150,11 @@ export default {
                 qualification: 'GMP',
                 url: '/intention/',
                 key: 'client',
-                pics: '',
+                pics: [],
+                importQualityPics: [],
+                importQualityImages: '',
+                testReportPics: [],
+                testReportImages: '',
                 images: '',
                 inType: 3,
                 audit: 0
@@ -1156,7 +1163,7 @@ export default {
 
         },
 
-        updateIntention: function(param) {            
+        updateIntention: function(param) {
             this.intentionParam = param;
         },
 

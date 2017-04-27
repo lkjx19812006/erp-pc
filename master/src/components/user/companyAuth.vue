@@ -15,6 +15,11 @@
                     <div class="editpage">
                         <div class="editpageleft">
                             <div class="editpage-input">
+                                <label class="editlabel">申请认证时间：</label>
+                                <input v-if="initIdentify.files.length>0" type="text" v-model="initIdentify.files[0].ctime" class="form-control edit-input" disabled="disabled" />
+                                <input v-else type="text" class="form-control edit-input" disabled="disabled" value="无法获取申请时间" />
+                            </div>
+                            <div class="editpage-input">
                                 <label class="editlabel">备注</label>
                                 <input type="text" v-model='param.ccomment' class="form-control edit-input" value="{{param.ccomment}}" />
                             </div>

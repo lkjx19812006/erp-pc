@@ -144,7 +144,7 @@
                                     </div>
                                 </div>
                                 <!-- “待采购” -->
-                                <div class="panel panel-default">
+                                <div v-if="initOrderDetail.type==1" class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
                                         link:'',
@@ -164,14 +164,12 @@
                                                     <th>品种</th>
                                                     <th>数量</th>
                                                     <th>采购业务员</th>
-                                                    <th></th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.orderLinkList.arr">
                                                         <td>{{item.breedName}}</td>
                                                         <td>{{item.number}}{{item.unit | Unit}}</td>
-                                                        <td>{{item.buyEmployee}}</td>
-                                                        <td></td>
+                                                        <td>{{item.buyEmployeeName}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -570,8 +568,8 @@
                                                         </td>
                                                         <td>{{item.description}}</td>
                                                         <td>
-                                                        <a href="{{item.url}}" download="" class="btn btn-default">下载</a>
-                                                        <button v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2" class="btn btn-default" @click="deleteCompact({
+                                                            <a href="{{item.url}}" download="" class="btn btn-default">下载</a>
+                                                            <button v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2" class="btn btn-default" @click="deleteCompact({
                                                             id:item.id,
                                                             sub:$index,
                                                             show:true,
@@ -582,8 +580,7 @@
                                                             key:'attachFiles',
                                                             headline:'orderDetail'
                                                           })">{{$t('static.del')}}</button>
-                                                        </td> 
-
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>

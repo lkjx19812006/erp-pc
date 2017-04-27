@@ -181,8 +181,12 @@
                                                             intentionParam.validate=item.validate,
                                                             intentionParam.description=item.description,
                                                             intentionParam.inType=2,
-                                                            intentionParam.images='',
                                                             intentionParam.pics=item.pics,
+                                                            intentionParam.images='',
+                                                            intentionParam.importQualityPics=item.importQualityPics,
+                                                            intentionParam.importQualityImages='',
+                                                            intentionParam.testReportPics=item.testReportPics,
+                                                            intentionParam.testReportImages='',
                                                             intentionParam.callback=intentionCallback
                                                         )"><img src="/static/images/edit.png" height="18" width="30" />
                                                             </a>
@@ -729,6 +733,10 @@ export default {
                 url: '/intention/',
                 pics: [],
                 images: '',
+                importQualityPics: [],
+                importQualityImages: '',
+                testReportPics: [],
+                testReportImages: '',
                 inType: 2,
                 audit: 0
             };

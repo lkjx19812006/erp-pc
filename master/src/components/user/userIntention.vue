@@ -41,7 +41,7 @@
                                     预售资源
                                 </button>
                                 <!-- 必须选择意向类型 -->
-                               <!--  <span class="system_danger" v-if="$validation.breedname.required">请选择意向类型</span> -->
+                                <!--  <span class="system_danger" v-if="$validation.breedname.required">请选择意向类型</span> -->
                             </div>
                         </div>
                         <div v-if="param.selectCustomer" style="margin-top:15px">
@@ -57,14 +57,14 @@
                             <press-image :value.sync="param.pics" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
                         </div>
                         <!-- 当为预售资源时，进口资质和检测报告需要上传 -->
-                        <!-- <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
+                        <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                             <label class="editlabel">进口资质</label>
-                            <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                            <press-image :value.sync="param.importQualityImages" :type.sync="type" :param="importQualityParam" style="float:left;margin-left:5%;width:20%"></press-image>
                         </div>
                         <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                             <label class="editlabel">检测报告</label>
-                            <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
-                        </div> -->
+                            <press-image :value.sync="param.testReportImages" :type.sync="type" :param="testReportParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                        </div>
                         <div class="editpage">
                             <div class="editpageleft">
                                 <!-- 品种 -->
@@ -257,9 +257,9 @@
                                     <label class="editlabel">航班号</label>
                                     <input type="text" v-model='param.transportNo' class="form-control edit-input" />
                                 </div>
-                                <!-- 到港地点复用address -->
+                                <!-- 库存地复用address -->
                                 <div class="editpage-input">
-                                    <label class="editlabel">到港地点</label>
+                                    <label class="editlabel">库存地</label>
                                     <input type="text" v-model='param.address' class="form-control edit-input" />
                                 </div>
                                 <div class="editpage-input">
@@ -464,11 +464,21 @@ export default {
                 city: ''
             },
             type: "image/jpeg,image/jpg,image/png",
-            imageParam: {
+            imageParam: { //意向产品图片
                 url: '/crm/api/v1/file/',
                 qiniu: false,
                 files: []
-            }
+            },
+            importQualityParam: { //进口资质图片
+                url: '/crm/api/v1/file/',
+                qiniu: false,
+                files: []
+            },
+            testReportParam: { //检测报告图片
+                url: '/crm/api/v1/file/',
+                qiniu: false,
+                files: []
+            },
         }
     },
     vuex: {
@@ -526,6 +536,7 @@ export default {
                 //this.tipParam.name = '新建意向成功';
                 this.param.show = false;
                 this.param.callback = this.param.callback;
+
                 this.createIntentionInfo(this.param);
             }
             if (this.param.flag == 1) {
@@ -589,7 +600,6 @@ export default {
                     pics.push(temp);
                 }
             }
-            console.log(pics);
             return pics;
         },
         /*
@@ -630,6 +640,22 @@ export default {
 
             return files;
         },
+        init: function(pics, importQualityPics, testReportPics) {
+            this.param.pics = pics;
+            this.param.importQualityPics = importQualityPics;
+            this.param.testReportPics = testReportPics;
+
+            //产品图片
+            this.imageParam.files = this.setFiles(this.param.pics);
+            this.param.images = this.setImages(this.param.pics);
+            //进口资质图片
+            this.importQualityParam.files = this.setFiles(this.param.importQualityPics);
+            this.param.importQualityImages = this.setImages(this.param.importQualityPics);
+            //检测报告图片
+            this.testReportParam.files = this.setFiles(this.param.testReportPics);
+            this.param.testReportImages = this.setImages(this.param.testReportPics);
+
+        }
 
 
     },
@@ -650,9 +676,15 @@ export default {
 
     },
     created() {
-
-        this.imageParam.files = this.setFiles(this.param.pics);
-        this.param.images = this.setImages(this.param.pics);
+        if (this.param.flag == 1) {
+            this.param.init = this.init;
+        }
+        if (this.param.id) {
+            this.param.loading = true;
+            this.getIntentionDetail(this.param);
+        } else {
+            this.param.loading = false;
+        }
 
         //设置过期时间,7天后
         if (!this.param.duedate) {
@@ -674,12 +706,6 @@ export default {
             this.breedParam.breedName = this.param.breedName;
             this.breedParam.id = this.param.breedId;
             this.getBreedDetail(this.breedParam);
-        }
-        if (this.param.id) {
-            this.param.loading = true;
-            this.getIntentionDetail(this.param);
-        } else {
-            this.param.loading = false;
         }
         if (this.param.country) {
             this.countryParam.country = this.param.country;

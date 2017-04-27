@@ -431,6 +431,9 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         if (key == 'employeeId' && param[key] !== '') {
             url += '&employee=' + param[key];
         }
+        if (key == 'sample' && param[key] !== '') {
+            url += '&sample=' + param[key];
+        }
     }
     Vue.http({
         method: 'GET',
@@ -953,6 +956,9 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
         if (key == 'validate' && param[key] !== '') {
             body.validate = param[key];
         }
+        if (key == 'sample' && param[key] !== '') {
+            body.sample = param[key];
+        }
     }
     Vue.http({
         method: 'POST',
@@ -984,7 +990,6 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
     })
 }
 export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
-    console.log(param)
     param.loading = true;
     const body = {
         org: param.org,
@@ -1034,6 +1039,9 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
         if (key == 'endTime' && param[key] != '') {
             body.endTime = param[key];
         }
+        if (key == 'sample' && param[key] != '') {
+            body.sample = param[key];
+        }
     }
 
     Vue.http({
@@ -1054,12 +1062,10 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
             orderList[i].checked = false;
             orderList[i].show = false;
         }
-        console.log('订单查询成功')
         orderList.key = param.key;
         dispatch(types.ORDER_TABLE, orderList);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
-        console.log(param.cur)
         param.loading = false;
 
         localStorage.orgOrderParam = JSON.stringify(param);
@@ -1447,7 +1453,14 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
 export const getOrderLinkList = ({ dispatch }, param) => { //获取“待采购”列表
     param.loading = true;
     const body = {
-
+        page: param.cur,
+        pageSize: 15,
+    }
+    if (param.sellEmployee) {
+        body.sellEmployee = param.sellEmployee;
+    }
+    if (param.breedId) {
+        body.breedId = param.breedId;
     }
     Vue.http({
         method: 'POST',
@@ -1460,7 +1473,9 @@ export const getOrderLinkList = ({ dispatch }, param) => { //获取“待采购�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        let orderLinkList = res.json().result;
+        let orderLinkList = res.json().result.list;
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
         orderLinkList.key = param.key;
         for (let i = 0; i < orderLinkList.length; i++) {
             orderLinkList[i].checked = false;
@@ -5172,7 +5187,7 @@ export const createOrderByPurchase = ({ dispatch }, param) => { //采购单报�
     });
 }
 
-export const  createOrderByStock = ({ dispatch },param) => { //库存列表页面生成订单
+export const createOrderByStock = ({ dispatch }, param) => { //库存列表页面生成订单
     param.loading = true;
     const body = {
         intl: 0,
@@ -5189,20 +5204,20 @@ export const  createOrderByStock = ({ dispatch },param) => { //库存列表页�
         city: param.city,
         district: param.district,
         stockList: param.stockCartList,
-        orderStatus:param.orderStatus
+        orderStatus: param.orderStatus
     };
     console.log(body)
     Vue.http({
-        method:'POST',
-        url:'/crm/api/v1/stock/addOrderByStock/',
-        emulateHTTP:false,
-        body:body,
-        emulateJSON:false,
+        method: 'POST',
+        url: '/crm/api/v1/stock/addOrderByStock/',
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
-    }).then((res) =>{
+    }).then((res) => {
         param.loading = false;
         console.log("success");
         param.show = false;
@@ -5210,7 +5225,7 @@ export const  createOrderByStock = ({ dispatch },param) => { //库存列表页�
             param.callback(res.json().msg + "，稍后将跳转到我的订单页面");
         }
 
-    },(res) =>{
+    }, (res) => {
         param.loading = false;
         console.log("提交失败");
         param.show = false
@@ -5336,7 +5351,7 @@ export const getSupplyDemandList = ({ dispatch }, param) => { //匹配供求信�
     })
 }
 
-export const getIntentionDetail = ({ dispatch }, param) => { //意向详情
+export const getIntentionDetail = ({ dispatch }, param, extraParam) => { //意向详情
     param.loading = true;
     var url = apiUrl.clientList + '/intention/' + param.id;
     Vue.http({
@@ -5377,18 +5392,13 @@ export const getIntentionDetail = ({ dispatch }, param) => { //意向详情
             result.trackings.arr[i].show = false;
         };
         dispatch(types.INTENTION_DETAIL_DATA, result);
-        if (res.json().result.pics[0]) {
-            param.image_f = res.json().result.pics[0].path;
-            param.image_f_show = res.json().result.pics[0].url;
+        if (param.init) {
+            let pics = res.json().result.pics;
+            let importQualityPics = res.json().result.importQualityPics;
+            let testReportPics = res.json().result.testReportPics;
+            param.init(pics, importQualityPics, testReportPics); //用于修改意向时相关参数的初始化
         }
-        if (res.json().result.pics[1]) {
-            param.image_s = res.json().result.pics[1].path;
-            param.image_s_show = res.json().result.pics[1].url;
-        }
-        if (res.json().result.pics[2]) {
-            param.image_t = res.json().result.pics[2].path;
-            param.image_t_show = res.json().result.pics[2].url;
-        }
+
         if (param.getOffers) {
             param.getOffers(param.index, result);
         }
@@ -6927,7 +6937,9 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         "quality": param.quality,
         "duedate": param.duedate,
         "images": param.images,
-        'description': param.description
+        "importQualityImages": param.importQualityImages,
+        "testReportImages": param.testReportImages,
+        "description": param.description
     }
     if (param.sampleUnit !== undefined && param.sampleUnit !== "") { //只能传数字（单位ID）
         data.sampleUnit = param.sampleUnit;
@@ -6944,7 +6956,7 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         }
     }).then((res) => {
         console.log('修改成功!!!!')
-       
+
         param.show = false;
         param.ctime = param.ctime;
         //param.callback(res.json().msg);
@@ -6970,7 +6982,7 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
         "breedName": param.breedName,
         "qualification": param.qualification,
         "spec": param.spec,
-        "address": param.address,
+        "address": param.address, //预售的库存地复用address
         "advance": param.advance,
         "invoic": param.invoic,
         'visit': param.visit,
@@ -6984,7 +6996,7 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
         "country": param.country, //国家（预售时出口国复用此字段）
         "transportType": param.transportType, //运输类型，1/2 空运/海运
         "transportNo": param.transportNo, //航班号
-        "arriveTime": param.arriveTime, //到达时间（到达港口复用address）
+        "arriveTime": param.arriveTime, //到达时间
         "quality": param.quality,
         "price": param.price,
         "province": param.province,
@@ -6994,7 +7006,9 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
         "number": param.number,
         "quality": param.quality,
         "duedate": param.duedate,
-        "images": param.images,
+        "images": param.images, //产品图片
+        "importQualityImages": param.importQualityImages, //进口资质图片
+        "testReportImages": param.testReportImages, //检测报告图片
         "inType": param.inType,
         "validate": param.validate,
         "description": param.description
@@ -9130,66 +9144,67 @@ export const saveDictionary = ({ dispatch }, param) => { //保存字典
     })
 }
 
-export const getStockList = ({ dispatch },param) =>{
+export const getStockList = ({ dispatch }, param) => {
     var url = '/crm/api/v1/stock/queryStockList/';
     var body = {
-        page:param.cur,
-        breedId:param.breedId,
-        pageSize:20
+        page: param.cur,
+        breedId: param.breedId,
+        pageSize: 20
     };
     Vue.http({
-        method:'POST',
-        url:url,
-        emulateHTTP:true,
-        body:body,
-        emulateJSON:false,
-        headers:{
+        method: 'POST',
+        url: url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
-    }).then((res) =>{
-        console.log(res.json())
+    }).then((res) => {
+
         var data = res.json().result.list
-        for(let i = 0;i<data.length;i++){
+        for (let i = 0; i < data.length; i++) {
             data[i].checked = false
         }
-        dispatch(types.STOCK_LIST,data)
+        dispatch(types.STOCK_LIST, data)
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
         console.log('success');
-    },(res) =>{
+    }, (res) => {
         console.log('fail')
     })
 }
 
-export const importStock = ({ dispatch },param) =>{//excel导入社会库存
-    param.loading =true;
+
+export const importStock = ({ dispatch }, param) => { //excel导入社会库存
+    param.loading = true;
     let data = new FormData();
-    data.append('mFile',param.mFile);
+    data.append('mFile', param.mFile);
     Vue.http({
-        method:'POST',
-        url:'/crm/api/v1/stock/importByExcel',
-        emulateJSON:false,
-        emulateHTTP:false,
-        body:data
-    }).then((res) =>{
-        if(res.json().code == 1000){
-            param.success =2;
+        method: 'POST',
+        url: '/crm/api/v1/stock/importByExcel',
+        emulateJSON: false,
+        emulateHTTP: false,
+        body: data
+    }).then((res) => {
+        if (res.json().code == 1000) {
+            param.success = 2;
             param.result = res.json().result;
-        }else if(res.json().code == 200){
+        } else if (res.json().code == 200) {
             param.success = 1;
             param.result = '';
-        }else{
+        } else {
             param.success = 3;
             param.result = res.json().msg;
         }
 
-        if(param.callback){
+        if (param.callback) {
             param.callback();
         }
         param.loading = false;
-    },(res) =>{
+    }, (res) => {
         console.log('fail')
     })
 }

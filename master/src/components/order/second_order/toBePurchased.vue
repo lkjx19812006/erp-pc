@@ -47,8 +47,8 @@
                                                         <span style="line-height:32px;">{{purchase.unit | Unit}}</span>
                                                     </td>
                                                     <td>
-                                                        <span v-if="purchase.flag===0">{{purchase.buyEmployee}}</span>
-                                                        <input v-else class="form-control" type="text" v-model="purchase.buyEmployee" readonly="readonly" @click="selectEmployee($parent.$index,$index)">
+                                                        <span v-if="purchase.flag===0">{{purchase.buyEmployeeName}}</span>
+                                                        <input v-else class="form-control" type="text" v-model="purchase.buyEmployeeName" readonly="readonly" @click="selectEmployee($parent.$index,$index)">
                                                     </td>
                                                     <td>
                                                         <a v-if="purchase.flag===0" @click="showEdit($parent.$index,$index)">编辑</a>
@@ -190,7 +190,9 @@ export default {
     events: {
 
         a: function(employee) {
+
             this.param.list[this.parentIndex].arr[this.index].buyEmployee = employee.employeeId;
+            this.param.list[this.parentIndex].arr[this.index].buyEmployeeName = employee.employeeName;
             this.param.list[this.parentIndex].arr[this.index].buyOrg = employee.orgId;
         },
     },

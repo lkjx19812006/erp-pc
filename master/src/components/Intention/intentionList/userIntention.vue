@@ -270,8 +270,12 @@
                                    link:editintentInfo,
                                    url:'/intention/',
                                    key:'userIntentionList',
-                                   images:'',
                                    pics:item.pics,
+                                   images:'',
+                                   importQualityPics:item.importQualityPics,
+                                   importQualityImages:'',
+                                   testReportPics:item.testReportPics,
+                                   testReportImages:'',
                                    duedate:item.duedate
                                    })">
                                     <img src="/static/images/edit.png" height="18" width="30" alt="编辑" title="编辑" />

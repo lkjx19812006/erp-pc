@@ -20,6 +20,10 @@
                             <h5 style="display:inline">基本信息</h5>
                         </div>
                         <div class="clearfix">
+                            <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
+                                <label class="editlabel">药材图片</label>
+                                <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                            </div>
                             <!-- 品种，不可编辑 -->
                             <div class="editpage-input col-md-6">
                                 <label class="editlabel">品种： </label>
@@ -97,7 +101,7 @@
 </template>
 <script>
 import vSelect from '../tools/vueSelect/components/Select'
-import pressImage from '../imagePress'
+import pressImage from '../tools/upload/imagePressMul'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipsdialogModel from '../tips/tipDialog'
 /*import customerModel from '../Intention/clientname'*/
@@ -135,6 +139,11 @@ export default {
                 name: '',
                 alert: true
             },
+            imageParam: {
+                url: '/crm/api/v1/file/',
+                qiniu: false,
+                files: []
+            }
         }
     },
     vuex: {
@@ -154,6 +163,8 @@ export default {
             this.customerParam.show = true;
         },
         confirm: function() {
+            console.log(this.param.images);
+            return;
             if (this.param.number < 0) {
                 this.tipsParam.show = true;
                 this.tipsParam.name = "数量不能为负数";
@@ -269,13 +280,13 @@ export default {
 }
 
 .edit_footer {
-    position: absolute;
+    position: fixed;
     border-top: 1px solid #ddd;
     text-align: right;
     padding: 10px 20px;
     margin-top: 0px;
     width: 700px;
-    bottom: 0px;
+    bottom: 200px;
 }
 
 .edit_footer button {

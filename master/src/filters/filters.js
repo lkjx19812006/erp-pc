@@ -1145,6 +1145,12 @@ Vue.filter('indentType', function(val) { //判断采购单类型
 
 Vue.filter('textDisplay', function(val, maxLength) { //文本内容显示，超过maxLength长度部分以...表示
     var val = val;
+    if (!val) {
+        val = "";
+    }
+    if (!maxLength) {
+        maxLength = 5;
+    }
     let length = val.toString().length;
     if (length <= maxLength) {
         return val;
