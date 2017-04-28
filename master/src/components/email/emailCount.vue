@@ -1,9 +1,9 @@
 <template>
-   
+
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
-            <div class="clear" style="margin-top:3px;"> 
+            <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer" >
                     <!-- <div class="client-detailInfo col-xs-6"> -->
                     <dt class="left transfer marg_top">日期：</dt>
@@ -11,11 +11,11 @@
                     </mz-datepicker>
                     <!-- </div> -->
                 </dl>
-                
+
                 <dd class="left transfer">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">{{$t("static.search")}}</button>
                 </dd>
-                
+
                 <dd class="pull-right" style="margin-right:20px">
                   <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                 </dd>
@@ -30,14 +30,16 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
+                        <th>业务员</th>
                         <th>日期</th>
                         <th>邮箱</th>
                         <th>发件数量</th>
-                        <th>收件数量</th> 
+                        <th>收件数量</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in initEmailCount">
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.date}}</td>
                         <td>{{item.no}}</td>
                         <td>{{item.sendNumber}}</td>
@@ -49,7 +51,7 @@
         <!--底部分页-->
         <!-- <pagination :combination="loadParam"  slot="page"></pagination> -->
 
-    </mglist-model> 
+    </mglist-model>
 
 </template>
 <script>
@@ -94,22 +96,22 @@ export default {
                 total:0,
                 date:''
             },
-            
-            
+
+
         }
     },
     methods: {
         selectSearch:function(){
           this.getEmailCount(this.loadParam);
         },
-        
+
     },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getEmailCount(this.loadParam);
         },
-       
+
     },
     created() {
           this.getEmailCount(this.loadParam);
@@ -160,8 +162,8 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 430px;
-    min-width: 427px;
+    width: 350px;
+    min-width: 300px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;
