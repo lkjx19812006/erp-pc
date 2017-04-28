@@ -4,12 +4,21 @@
 	<breed-search :param='loadParam' v-if='loadParam.show'></breed-search>
 	<create-stock :param='createParam' v-if='createParam.show'></create-stock>
 	<import-excel :param='importParam' v-if='importParam.show'></import-excel>
+	<deletestock-model :param='deleteParam' v-if='deleteParam.show'></deletestock-model>
 	<mglist-model>
 		<!-- 头部搜索-->
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
                     <dt class="left transfer marg_top">药品名称：</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.breedName" readonly="readonly" placeholder="按回车键搜索" @keyup.enter="selectSearch()" @click='openBreedSearch()'/>
+                    </dd>
+                    <dt class="left transfer marg_top" style="margin-left: 20px">仓库地：</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.breedName" readonly="readonly" placeholder="按回车键搜索" @keyup.enter="selectSearch()" @click='openBreedSearch()'/>
+                    </dd>
+                    <dt class="left transfer marg_top" style="margin-left: 20px">库存类型：</dt>
                     <dd class="left margin_right">
                         <input type="text" class="form-control" v-model="loadParam.breedName" readonly="readonly" placeholder="按回车键搜索" @keyup.enter="selectSearch()" @click='openBreedSearch()'/>
                     </dd>
@@ -36,7 +45,8 @@
                                             show:true,
                                             flag:0,                                            
                                             breedName:'',
-                                            contactName:'',
+                                            breedId:'',
+                                            employeeName:'',
                                             specification:'',
                                             specAttribute:'',
                                             location:'',
@@ -63,9 +73,10 @@
                     <tr>
                         <th></th>
                         <th style="min-width:150px;text-align: center;">药材名称</th>
-                        <th style="min-width:200px;text-align: center;">规格</th>
+                        <th style="min-width:150px;text-align: center;">入库时间</th>
+                        <th style="min-width:150px;text-align: center;">规格</th>
                         <th style="min-width:150px;text-align: center;">片型</th>
-                        <th style="min-width:200px;text-align: center;">产地</th>
+                        <th style="min-width:150px;text-align: center;">产地</th>
                         <th style="min-width:150px;text-align: center;">库存可用量</th>
                         <th style="min-width:150px;text-align: center;">库存单位</th>
                         <th style="min-width:150px;text-align: center;">仓库名称</th> 
@@ -86,6 +97,7 @@
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
                         </td>
                         <td>{{item.breedName}}</td>
+                        <td>{{item.ctime}}</td>
                         <td>{{item.specAttribute | specFilter_a}}</td>
                         <td>{{item.specAttribute | specFilter_b}}</td>
                         <td>{{item.location}}</td>
@@ -105,7 +117,9 @@
                                             show:true,
                                             flag:1,                                            
                                             breedName:item.breedName,
-                                            contactName:item.contactName,
+                                            breedId:item.breedId,
+                                            id:item.id,
+                                            employeeName:item.employeeName,
                                             specification:item.specAttribute,
                                             specAttribute:item.specAttribute,
                                             location:item.location,
@@ -119,7 +133,12 @@
                                             comment:item.comment,
                                             key:''
                                             })">编辑</button>
-							<button class="btn btn-default" v-if="item.depotType=='社会库存'">删除</button>
+							<button class="btn btn-default" v-if="item.depotType=='社会库存'" @click="deleteStock({
+											id:item.id,
+                                            sub:$index,
+                                            show:true,
+                                            link:deleteStockInfo
+                                            })">删除</button>
                        		</td>
                     </tr>
                 </tbody>
@@ -133,6 +152,7 @@
 <script>
 import mglistModel from '../mguan/mgListComponent.vue'
 import importExcel from '../../components/purchaseOrder/indentExcelImport.vue'
+import deletestockModel from '../stock/deleteStockTip'
 import breedSearch from '../../components/Intention/breedsearch.vue'
 import changeMenu from '../../components/tools/tabs/tabs.js'
 import common from '../../common/common'
@@ -141,7 +161,7 @@ import orderData from '../stock/orderData'
 import stockCart from '../stock/stockCart'
 import createStock from '../stock/createNewStock'
 import filter from '../../filters/filters'
-import {getStockList , importStock} from '../../vuex/actions'
+import {getStockList , importStock, deleteStockInfo} from '../../vuex/actions'
 import {initStockList} from '../../vuex/getters'
 export default {
 	components:{
@@ -151,12 +171,14 @@ export default {
 		stockCart,
 		breedSearch,
 		importExcel,
-		createStock
+		createStock,
+		deletestockModel
 	},
 	vuex:{
 		actions:{
 			getStockList,
-			importStock
+			importStock,
+			deleteStockInfo
 		},
 		getters:{
 			initStockList
@@ -214,6 +236,9 @@ export default {
                 success: 0, //上传后，返回码的解析，0/1/2/3，初始/成功/错误（1000）/其他错误
                 mFile: "", //excel文件
                 result: "" // 导入成功后的返回信息
+            },
+            deleteParam:{
+            	show:false
             },
             createParam:{
             	show:false
@@ -294,6 +319,7 @@ export default {
 			this.cartData.leng=0
 		},
 		resetCondition:function(){
+			this.loadParam.breedName='';
 			this.loadParam.breedId='';
 			this.getStockList(this.loadParam)
 		},
@@ -301,8 +327,13 @@ export default {
 			this.createParam = data;
 		},
 		updataStock:function(data){
+
 			this.createParam = data;
 			console.log(data);
+		},
+		deleteStock:function(data){
+			this.deleteParam.show = true
+			this.deleteParam = data
 		}
 	},
 	created(){

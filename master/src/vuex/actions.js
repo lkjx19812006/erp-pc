@@ -9211,8 +9211,26 @@ export const importStock = ({ dispatch }, param) => { //excel导入社会库存
 
 export const createStockInfo = ({ dispatch },param) =>{//新建库存
     var today = new Date();
+    console.log(param)
+    var canDeposite , canProcess , unitId,usableNum,specAttribute,
+    unitId = parseInt(param.unit)
+    canDeposite = parseInt(param.canDeposite)
+    canProcess = parseInt(param.canProcess)
+    usableNum = parseInt(param.usableNum)
+    //"2017-04-29 00:00:00"
+    //specAttribute = '{"'+param.breedName+'":{"片型":'+'"'+param.specAttribute+'"'+','+'"规格":'+'"'+param.specification+'"'+'}}'
     var body = {
-        
+        breedId:param.breedId,
+        canDeposite: canDeposite,
+        canProcess: canProcess,
+        depotName:param.depotName,
+        due_date:param.dueDate,
+        employee:param.employeeId,
+        location:param.location,
+        unit_id:unitId,
+        usableNum:usableNum,
+        specAttribute:param.specification,
+        shape:param.specAttribute,
     };
     Vue.http({
         method:'POST',
@@ -9228,13 +9246,35 @@ export const createStockInfo = ({ dispatch },param) =>{//新建库存
 }
 
 export const editStockInfo =({ dispatch },param) =>{//修改库存
-    var today = new Date();
-    var body ={
+   var today = new Date();
+    console.log(param)
+    var canDeposite , canProcess , unitId,usableNum,specAttribute
+    unitId = parseInt(param.unit)
+    canDeposite = parseInt(param.canDeposite)
+    canProcess = parseInt(param.canProcess)
+    usableNum = parseInt(param.usableNum)
+    //"2017-04-29 00:00:00"
+    //specAttribute = '{"'+param.breedName+'":{"片型":'+'"'+param.specAttribute+'"'+','+'"规格":'+'"'+param.specification+'"'+'}}'
 
+    //dueData = param.dueData.parse()
+    var body = {
+        id:param.id,
+        breedId:param.breedId,
+        canDeposite: canDeposite,
+        canProcess: canProcess,
+        depotName:param.depotName,
+        due_date:param.dueDate,
+        employee:param.employeeId,
+        location:param.location,
+        unit_id:unitId,
+        shape:param.specAttribute,        
+        usableNum:usableNum,
+        specAttribute:param.specification
     };
     Vue.http({
-        method:'PUT',
+        method:'POST',
         url:'/crm/api/v1/stock/updateStock',
+        body:body,
         emulateJSON:false,
         emulateHTTP:false,
         body:body
@@ -9243,4 +9283,28 @@ export const editStockInfo =({ dispatch },param) =>{//修改库存
     },(res) =>{
         console.log('fail')
     })
+}
+
+
+export const deleteStockInfo = ({ dispatch }, param) => { //删除库存信息
+    console.log(param)
+    var body={
+        id:param.id
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/stock/deleteStock',
+        body:body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('删除成功')
+        dispatch(types.DELETE_STOCK_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    });
 }

@@ -30,19 +30,19 @@
                                 <!-- 联系业务员 -->
                                 <div class="client-detailInfo  col-md-6">
                                     <label>联系业务员<span class="system_danger" v-if="$validation.emp.required">请选择业务员</span></label>
-                                    <input type="text" class="form-control edit-input" v-validate:emp="{required:true}" v-model="param.contactName" readonly="readonly" @click='searchEmpInfo()'/>
+                                    <input type="text" class="form-control edit-input" v-validate:emp="{required:true}" v-model="param.employeeName" readonly="readonly" @click='searchEmpInfo()'/>
                                 </div>
                             </div>
                             <div class="col-md-12">
                              	<!-- 规格 -->
                                 <div class="client-detailInfo  col-md-6">
                                     <label class="editlabel">{{$t('static.specification')}}<span class="system_danger" v-if="$validation.specification.required">请输入规格</span></label>
-                                    <input type="text" class="form-control edit-input" v-validate:specification="{required:true}" v-model="param.specification" />
+                                    <input type="text" class="form-control edit-input" v-validate:specification="{required:true}" v-model=" specAttribute"  @click="changeSpec()"/>
                                 </div>
                                 <!-- 片型 -->
                                 <div class="client-detailInfo  col-md-6">
                                     <label class="editlabel">片型<span class="system_danger" v-if="$validation.spec.required">请输入片型</span></label>
-                                    <input type="text" class="form-control edit-input" v-validate:spec="{required:true}" v-model="param.specAttribute" />
+                                    <input type="text" class="form-control edit-input" v-validate:spec="{required:true}" v-model="param.specAttribute | specFilter_b"  @change="changeShape()"/>
                                 </div>
                             </div>  
                             <div class="col-md-12">
@@ -54,7 +54,13 @@
                             	<!-- 仓库地 -->
                                 <div class="client-detailInfo  col-md-6">
                                     <label class="editlabel" for="system">仓库地址<span class="system_danger" v-if="$validation.stocklocation.required">请输入仓库地址</span></label>
-                                    <input type="text" class="form-control edit-input" v-validate:stocklocation="{required:true}" v-model="param.depotName" />
+                                    <select class="form-control edit-input" v-model="param.depotName" v-validate:stocklocation="{required:true}">
+                                    	<option value="亳州">亳州</option>
+                                    	<option value="玉林">玉林</option>
+                                    	<option value="安国">安国</option>
+                                    	<option value="定西">定西</option>
+                                    	<option value="成都">成都</option>
+                                    </select>
                                 </div>
                             </div>  
                                 
@@ -69,7 +75,9 @@
                                     <label class="editlabel">{{$t('static.unit')}}
                                     	<span class="system_danger" v-if="$validation.unit.required">请输入单位</span>
                                     </label>
-                                    <input type="text" class="form-control edit-input" v-model="param.unit" v-validate:unit="{required:true}" />
+                                    <select v-model="param.unit" class="form-control edit-input" v-validate:unit="{required:true}">
+                                        <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}</option>
+                                    </select>
                                 </div>
                             </div> 
                             <div class="col-md-12">
@@ -77,16 +85,16 @@
                                 <div class="client-detailInfo col-md-6">
                                     <label>是否可加工</label>
                                     <select class="form-control edit-input" v-model='param.canProcess'>
-                                        <option value="1">{{$t('static.yes')}}</option>
-                                        <option value="0">{{$t('static.no')}}</option>
+                                        <option value=1>{{$t('static.yes')}}</option>
+                                        <option value=0>{{$t('static.no')}}</option>
                                     </select>
                                 </div>
                                 <!-- 可否押款 -->
                               <div class="client-detailInfo col-md-6">
                                     <label>可否押款</label>
                                     <select class="form-control edit-input" v-model='param.canDeposite'>
-                                        <option value="1">{{$t('static.yes')}}</option>
-                                        <option value="0">{{$t('static.no')}}</option>
+                                        <option value=1>{{$t('static.yes')}}</option>
+                                        <option value=0>{{$t('static.no')}}</option>
                                     </select>
                                 </div>
                             </div>  
@@ -99,7 +107,7 @@
                                 <!-- 过期时间 -->
                                 <div class="editpage-input" style="margin-top: 0px;">
                                     <label class="editlabel">过期时间</label>
-                                    <mz-datepicker :time.sync="param.dueDate" format="yyyy-MM-dd HH:mm:ss" style="height:36px">
+                                    <mz-datepicker :time.sync="param.dueDate" format="yyyy-MM-dd HH:mm:ss" style="height:36px" @change="changeDate()">
                                     </mz-datepicker>
                                     <button type="button" class="btn btn-default" style="margin-top:-6px" height="24" width="24" @click="reset('duedate')">清空</button>
                                 </div>
@@ -133,10 +141,12 @@ import vSelect from '../tools/vueSelect/components/Select'
 import languageModel from '../tools/language.vue'
 import mzDatepicker from '../calendar/vue.datepicker.js'
 import {
+	initUnitlist
     } from '../../vuex/getters'
 import {
 	createStockInfo,
-	editStockInfo
+	editStockInfo,
+	getUnitList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -168,17 +178,21 @@ export default {
                 name: '创建成功',
                 alert: true
             },
+            specAttribute:this.spec,
+            
             loading: false,
-
+            ischangeSpec:false,
+            ischangeShape:false
         }
     },
     vuex: {
         getters: {
-            
+            initUnitlist
         },
         actions: {
             createStockInfo,
-            editStockInfo
+            editStockInfo,
+            getUnitList
         }
     },
     methods: {
@@ -191,17 +205,33 @@ export default {
     	createOrUpdateStock:function(){
     		if (this.param.flag == 0) {
                 //this.tipParam.name = '新建意向成功';
+                var times_a = this.param.dueDate.substr(0,10)
+    			var mtimes_a = Date.parse(times_a.substr(5,2)+'/'+times_a.substr(8,2)+'/'+times_a.substr(0,4))
+    			this.param.dueDate = mtimes_a;
                 this.param.show = false;
-                this.param.callback = this.param.callback;
+                console.log(this.param)
                 this.createStockInfo(this.param);
             }
             if (this.param.flag == 1) {
                 //this.tipParam.name = '修改意向成功';
+               	
                 this.param.show = false;
-                this.param.callback = this.param.callback;
                 this.editStockInfo(this.param);
             }
             this.param.callback = this.param.callback;
+    	},
+    	changeDate:function(){
+    		var times_b = this.param.dueDate.substr(0,10)
+    		var mtims_b = Date.parse(times_b.substr(5,2)+'/'+times_b.substr(8,2)+'/'+times_b.substr(0,4))
+            this.param.dueDate = mtimes_b;
+    	},
+    	changeSpec:function(){
+    		console.log("哈哈")
+    		this.ischangeSpec= true
+    		console.log(this.spec)
+    	},
+    	changeShape:function(){
+    		this.ischangeShape= true
     	},
     	reset: function(type) {
             if (type == "duedate") {
@@ -209,33 +239,54 @@ export default {
             }
         },
     },
+    created:function(){
+    	this.getUnitList()
+    },
+    computed:{
+    	spec:function(){
+
+    		var data = JSON.parse(this.param.specAttribute)
+			for(var key in data){
+				return data[key]['规格']
+			}
+    	}
+    },
     events:{
     	a:function(res){
-    		this.param.contactName = res.employeeName
+    		this.param.employeeName = res.employeeName
+    		this.param.employeeId =res.employeeId
     	},
     	breed: function(breed) {
 			console.log(breed.breedId)
             this.loadParam.breedId = breed.breedId;
             this.loadParam.breedName = breed.breedName;
             this.param.breedName = breed.breedName;
+            this.param.breedId = breed.breedId;;
         }
     },
     filters:{
 		specFilter_a:function(data){
-			if(data&&this.param.flag==1){
-				data = JSON.parse(data)
-				for(var key in data){
-					return data[key]['规格']
-				}
+			if(data&&this.param.flag==1&&this.param.specAttribute.substr(0,1)=='{'){
+
+					data = JSON.parse(data)
+					for(var key in data){
+						return data[key]['规格']
+					}
+				
 			}
 			
 		},
 		specFilter_b:function(data){
-			if(data){
-				data = JSON.parse(data)
-				for(var key in data){
-					return data[key]['片型']
+			if(data&&this.param.flag==1){
+				if(this.ischangeShape){
+					return data
+				}else{
+					data = JSON.parse(data)
+					for(var key in data){
+						return data[key]['片型']
+					}
 				}
+				
 			}
 			
 		}
