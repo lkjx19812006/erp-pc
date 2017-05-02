@@ -67,7 +67,8 @@
                                             price:'',
                                             dueDate:'',
                                             comment:'',
-                                            key:''
+                                            key:'',
+                                            callback:getStockList
                                             })">{{$t("static.new")}}</button>
                 </dd>
             </div>
@@ -250,6 +251,7 @@ export default {
                 dueDate:'',
                 comment:'',
                 key:''
+
             },
 			breedSearchParam:{
 				show:false
@@ -364,7 +366,8 @@ export default {
             this.createParam.price=item.price,
             this.createParam.dueDate=item.dueDate,
             this.createParam.comment=item.comment,
-            this.createParam.key=''
+            this.createParam.key='',
+            this.createParam.callback = this.getStockList
 		},
 		deleteStock:function(data){
 			this.deleteParam.show = true

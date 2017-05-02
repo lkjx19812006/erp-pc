@@ -214,7 +214,6 @@ export default {
                 this.param.show = false;
                 this.editStockInfo(this.param);
             }
-            this.param.callback = this.param.callback;
     	},
     	changeDate:function(){
     		var times_b = this.param.dueDate.substr(0,10)

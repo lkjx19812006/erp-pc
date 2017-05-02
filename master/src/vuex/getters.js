@@ -515,3 +515,11 @@ export const initDictionary = (state) => { //获取邮件统计
 export const initStockList = (state) => {//获取库存列表
     return JSON.parse(JSON.stringify(state.table.stockList))
 }
+
+export const getLineschart = (state) =>{//获取折线图
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.linesChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.linesChartLoading))
+    };
+    return option;
+}

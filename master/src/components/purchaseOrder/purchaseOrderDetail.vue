@@ -2,6 +2,7 @@
     <div>
         <cart-model :param="orderParam" v-if="orderParam.show"></cart-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+        <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
         <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con" v-show="param.show">
             <div @click.stop="param.show=false" class="top-title">
@@ -101,6 +102,8 @@
                                                                     <th>数量</th>
                                                                     <th>单位</th>
                                                                     <th>备注</th>
+                                                                    <th>描述</th>
+                                                                    <th>编辑描述</th>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="(sub,offer) in item.offers.arr">
@@ -131,6 +134,8 @@
                                                                         <td>{{offer.number}}</td>
                                                                         <td>{{offer.unit | Unit}}</td>
                                                                         <td>{{offer.comments}}</td>
+                                                                        <td>{{offer.description}}</td>
+                                                                        <td><a href="javascript:void(0)" @click="editDes(index,sub,offer)">备注</a></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -161,6 +166,7 @@
 <script>
 import cartModel from './purchaseOrderCart.vue'
 import tipsdialogModel from '../tips/tipDialog'
+import auditDialog from '../tips/auditDialog'
 import pressImage from '../../components/imagePress'
 import filter from '../../filters/filters.js'
 import {
@@ -172,13 +178,15 @@ import {
 import {
     getPurchaseOrderDetail,
     getClientDetail,
-    getIntentionDetail
+    getIntentionDetail,
+    editDescription
 } from '../../vuex/actions'
 export default {
     components: {
         cartModel,
         tipsdialogModel,
         pressImage,
+        auditDialog,
         filter,
     },
     props: ['param'],
@@ -215,6 +223,17 @@ export default {
                 district: '',
                 goods: [], //用于前端显示
                 intentionOfferList: [] //传入后台，由goods生成
+            },
+            auditParam:{
+                show:false,
+                title:"编辑描述",
+                confirm:true,
+                id:'',
+                description:'',
+                auditComment:'',
+                callback:this.editDescription,
+                sub:'',
+                index:''
             }
 
         }
@@ -228,7 +247,8 @@ export default {
         actions: {
             getPurchaseOrderDetail,
             getClientDetail,
-            getIntentionDetail
+            getIntentionDetail,
+            editDescription
         }
     },
     methods: {
@@ -368,6 +388,13 @@ export default {
                 });
             }, 500);
 
+        },
+        editDes:function(index,sub,offer){
+            this.auditParam.show = true;
+            this.auditParam.auditComment = offer.description;
+            this.auditParam.id = offer.id;
+            this.auditParam.sub = sub;
+            this.auditParam.index = index
         }
 
     },

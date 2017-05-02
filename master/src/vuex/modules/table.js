@@ -135,7 +135,9 @@ import {
     MUlT_DICTIONARY,
     MY_ORG_COUNT,
     STOCK_LIST,
-    DELETE_STOCK_DATA
+    DELETE_STOCK_DATA,
+    ADD_STOCK_LIST,
+    UPDATE_OFFERDESCRIPTION
 } from '../mutation-types'
 
 
@@ -1905,6 +1907,10 @@ const mutations = {
             state.basicBaseList[data.key] = data;
         }
     },
+    [UPDATE_OFFERDESCRIPTION](state,data){//更新采购单报价描述报价描述
+        state.purchaseDetail.intentionList.arr[data.index].offers.arr[data.sub].description=data.auditComment;
+        
+    },
     [PURCHASE_DETAIL](state, data) { //采购单详情
         state.purchaseDetail = data;
     },
@@ -2430,8 +2436,13 @@ const mutations = {
     [STOCK_LIST](state,data) {//库存列表
         state.stockList = data;
     },
-    [DELETE_STOCK_DATA](state,data) {//库存列表
+    [DELETE_STOCK_DATA](state,data) {//删除库存列表
         state.stockList.splice(data.sub, 1)
+    },
+    [ADD_STOCK_LIST](state,data) {//新增库存列表
+        console.log(data)
+        console.log(state.stockList)
+        state.stockList.unshift(data)
     },
     // 部门统计
     [MY_ORG_COUNT](state, data) {
