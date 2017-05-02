@@ -10,6 +10,7 @@ import {
     ORDER_UPDATE_DATA,
     ORDER_STATISTIC,
     ORDER_LINK,
+    LINK_ORDER,
     CHANGE_SHOW_STATUE,
     SYSTEM_DATA,
     PROVINCE_DATA,
@@ -521,7 +522,9 @@ const state = {
             "payPics": null,
             "sendPics": null
         }],
-        myOrderLinkList: "",
+        myOrderLinkList: [],
+        orgOrderLinkList: [],
+        linkOrder: [],
         orgOrderStatis: "",
         allOrderStatis: "",
 
@@ -1151,8 +1154,8 @@ const state = {
     orgDetail: {},
     dictionary: [{ fileName: '', dictionary: {}, arr: [], isEdit: false }],
     orgCount: {}, //部门统计state
-    stockList:[{checked:false},{checked:false}],
-    stockCartList:[]
+    stockList: [{ checked: false }, { checked: false }],
+    stockCartList: []
 }
 
 const mutations = {
@@ -1195,6 +1198,9 @@ const mutations = {
         if (data.key) {
             state.basicBaseList[data.key] = data;
         }
+    },
+    [LINK_ORDER](state, data) {
+        state.basicBaseList.linkOrder = data;
     },
     [ORDER_STATISTIC](state, data) {
         if (data.key == "orgOrderList") {
@@ -2433,7 +2439,7 @@ const mutations = {
     [MUlT_DICTIONARY](state, data) {
         state.dictionary = data;
     },
-    [STOCK_LIST](state,data) {//库存列表
+    [STOCK_LIST](state, data) { //库存列表
         state.stockList = data;
     },
     [DELETE_STOCK_DATA](state,data) {//删除库存列表

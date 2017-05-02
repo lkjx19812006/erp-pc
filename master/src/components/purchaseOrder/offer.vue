@@ -163,8 +163,6 @@ export default {
             this.customerParam.show = true;
         },
         confirm: function() {
-            console.log(this.param.images);
-            return;
             if (this.param.number < 0) {
                 this.tipsParam.show = true;
                 this.tipsParam.name = "数量不能为负数";
@@ -214,7 +212,7 @@ export default {
 .modal_con {
     z-index: 1082;
     width: 700px;
-    height: 500px;
+    bottom: 200px;
 }
 
 .top-title {

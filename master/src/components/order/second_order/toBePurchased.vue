@@ -157,6 +157,7 @@ export default {
         confirm: function() {
             //首先要将this.param.list拆分成goods和orderLinkList两部分
             let orderLinkList = [];
+            let backTemp = [];
             let list = this.param.list;
             for (let i = 0; i < list.length; i = i + 2) {
                 let total = list[i].number; //每个商品总数量
@@ -182,8 +183,25 @@ export default {
                     return;
                 }
             }
-            this.param.orderLinkList = orderLinkList;
+            //循环param.orderLinkBack和orderLinkList找到前者有而后者没有的项，追加到orderLinkList后（status置为0）
+            for (let j = 0; j < this.param.orderLinkBack.length; j++) {
+                let isExist = false;
+                for (let l = 0; l < orderLinkList.length; l++) {
+                    if (this.param.orderLinkBack[j].id == orderLinkList[l].id) {
+                        isExist = true;
+                        break;
+                    }
+                }
+                if (!isExist) {
+                    this.param.orderLinkBack[j].status = 0;
+                    backTemp.push(this.param.orderLinkBack[j]);
+                }
+            }
+            for (let m = 0; m < backTemp.length; m++) {
 
+                orderLinkList.push(backTemp[m]);
+            }
+            this.param.orderLinkList = orderLinkList;
             this.updateOrderLink(this.param);
         }
     },

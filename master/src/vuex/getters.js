@@ -95,6 +95,14 @@ export const initOrderlist = (state) => {
 export const initMyOrderLinkList = (state) => {
     return parseJson(state.table.basicBaseList.myOrderLinkList);
 }
+export const initOrgOrderLinkList = (state) => {
+    return parseJson(state.table.basicBaseList.orgOrderLinkList);
+}
+
+/*---采销对应---*/
+export const initLinkOrder = (state) => {
+    return parseJson(state.table.basicBaseList.linkOrder);
+}
 
 
 /*---列表页订单统计---*/
@@ -512,7 +520,7 @@ export const initDictionary = (state) => { //获取邮件统计
 }
 
 /*库存管理*/
-export const initStockList = (state) => {//获取库存列表
+export const initStockList = (state) => { //获取库存列表
     return JSON.parse(JSON.stringify(state.table.stockList))
 }
 
@@ -523,3 +531,4 @@ export const getLineschart = (state) =>{//获取折线图
     };
     return option;
 }
+
