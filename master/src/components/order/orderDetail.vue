@@ -144,17 +144,15 @@
                                     </div>
                                 </div>
                                 <!-- 采销对应 -->
-                                <!-- <div class="panel panel-default">
+                                <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
-                                        link:'',
-                                        crete:'orderLinkList'
-                                        })">
+                                                key:'linkOrder'
+                                            })">
                                             <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
                                             <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initLinkOrder.arr.length!==null">
-                                              待采购（{{initLinkOrder.arr.length}}）
+                                              采销对应（{{initLinkOrder.arr.length}}）
                                             </a>
-                                            <button type="button" class="btn btn-base pull-right" @click.stop="">编辑</button>
                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-if="initLinkOrder.arr.length&&initLinkOrder.show" v-cloak>
@@ -163,19 +161,25 @@
                                                 <thead>
                                                     <th>品种</th>
                                                     <th>数量</th>
-                                                    <th>采购业务员</th>
+                                                    <th>
+                                                        <span v-if="initOrderDetail.type == 1">采购业务员</span>
+                                                        <span v-else>销售业务员</span>
+                                                    </th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initLinkOrder.arr">
                                                         <td>{{item.breedName}}</td>
                                                         <td>{{item.number}}{{item.unit | Unit}}</td>
-                                                        <td>{{item.buyEmployeeName}}</td>
+                                                        <td>
+                                                            <span v-if="initOrderDetail.type == 1">{{item.buyEmployeeName}}</span>
+                                                            <span v-else>{{item.sellEmployeeName}}</span>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                                 <!-- “待采购” -->
                                 <div v-if="initOrderDetail.type==1&&initOrderDetail.intl===0" class="panel panel-default">
                                     <div class="panel-heading">
@@ -838,10 +842,18 @@ export default {
     },
     methods: {
         enfoldment: function(param) {
-            if (this.$store.state.table.orderDetail[param.crete].arr.length == 0) {
-                this.$store.state.table.orderDetail[param.crete].show = false;
+            if (param.crete) {
+                if (this.$store.state.table.orderDetail[param.crete].arr.length == 0) {
+                    this.$store.state.table.orderDetail[param.crete].show = false;
+                }
+                this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
+            } else if (param.key) {
+                if (this.$store.state.table.basicBaseList[param.key].arr.length == 0) {
+                    this.$store.state.table.basicBaseList[param.key].show = false;
+                }
+                this.$store.state.table.basicBaseList[param.key].show = !this.$store.state.table.basicBaseList[param.key].show;
             }
-            this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
+
         },
 
         editPurchase: function() {
