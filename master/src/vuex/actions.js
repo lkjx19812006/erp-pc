@@ -9357,7 +9357,6 @@ export const editStockInfo = ({ dispatch }, param) => { //修改库存
         body: body
     }).then((res) => {
         console.log(res.json())
-<<<<<<< HEAD
         param.callback({
             loading:false,
             breedName:"",
@@ -9371,10 +9370,6 @@ export const editStockInfo = ({ dispatch }, param) => { //修改库存
         })
         //window.location.reload()
     },(res) =>{
-=======
-        window.location.reload()
-    }, (res) => {
->>>>>>> d5a0e49cd59d6e65aef5a5b6b3606afe45a084b8
         console.log('fail')
     })
 }
