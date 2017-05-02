@@ -2112,7 +2112,6 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             orderDetail.contractList = {};
             orderDetail.contractList.arr = contractList;
             orderDetail.contractList.show = true;
-            console.log(orderDetail.contractList.arr)
             for (var i in orderDetail.contractList.arr) {
                 orderDetail.contractList.arr[i].show = false;
             }
@@ -2164,13 +2163,14 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
 }
 
 export const getLinkOrder = ({ dispatch }, param) => { //获取关联订单（采销对应）
+    console.log(param);
     const body = {
         id: param.id
     }
 
     Vue.http({
         method: 'POST',
-        url: apiUrl.orderList + param.link,
+        url: apiUrl.orderList + '/order/queryLinkOrder',
         emulateJSON: true,
         body: body,
         emulateJSON: false,

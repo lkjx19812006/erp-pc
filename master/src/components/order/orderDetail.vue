@@ -144,7 +144,7 @@
                                     </div>
                                 </div>
                                 <!-- 采销对应 -->
-                                <div class="panel panel-default">
+                                <!-- <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
                                         link:'',
@@ -175,7 +175,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- “待采购” -->
                                 <div v-if="initOrderDetail.type==1&&initOrderDetail.intl===0" class="panel panel-default">
                                     <div class="panel-heading">
@@ -712,6 +712,7 @@ import {
 } from '../../vuex/getters'
 import {
     getOrderDetail,
+    getLinkOrder,
     uploadDocument,
     dividedPayment,
     paymentAudit,
@@ -820,7 +821,6 @@ export default {
     vuex: {
         getters: {
             initOrderDetail,
-            getLinkOrder,
             initLinkOrder,
             initMyFundList,
             initLogin
