@@ -12,7 +12,7 @@
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
             <div class="edit-content">
-                <h3>{{$t('static.new')}}啊</h3>
+                <h3>{{$t('static.new')}}</h3>
             </div>
             <validator name="validation">
                 <form novalidate>

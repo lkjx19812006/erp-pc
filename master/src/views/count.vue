@@ -31,9 +31,14 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==6">
         <allorder-count></allorder-count>
     </div>
+     <!-- 我的统计（新） -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==8">
+        <my-newcount></my-newcount>
+    </div>
 </template>
 <script>
 import personalCount from '../components/count/myCount'
+import myNewcount from '../components/count/myNewcount'
 import orgCount from '../components/count/orgCount'
 import orderCount from '../components/count/myOrdercount'
 import orgorderCount from '../components/count/orgOrdercount'
@@ -50,7 +55,8 @@ export default {
         allCount,
         clientOverview,
         allorderCount,
-        orgManage
+        orgManage,
+        myNewcount
     }
 }
 </script>

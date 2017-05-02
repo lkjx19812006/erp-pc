@@ -4935,6 +4935,31 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
     })
 }
 
+export const editDescription = ({ dispatch }, param) => {//编辑报价描述
+    var url = apiUrl.clientList + "/intention/offerDescription"
+    var body = {
+        id:param.id,
+        description:param.auditComment
+    }
+    Vue.http({
+        method:'POST',
+        url:url,
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) =>{
+        dispatch(types.UPDATE_OFFERDESCRIPTION, param)
+        console.log(res.json())
+    },(res) =>{
+        console.log('提交失败')
+    })
+
+}
+
 export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详情
     param.loading = true;
     var url = apiUrl.clientList + param.link + "?id=" + param.id;
@@ -4968,7 +4993,8 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
                     number: arr[i].number,
                     unit: arr[i].unit,
                     price: arr[i].price,
-                    status: 1
+                    status: 1,
+                    description:arr[i].description
                 };
                 param.intentionList.push(temp);
                 param.intentionListBack.push(temp);
@@ -9246,8 +9272,13 @@ export const createStockInfo = ({ dispatch }, param) => { //新建库存
     canDeposite = parseInt(param.canDeposite)
     canProcess = parseInt(param.canProcess)
     usableNum = parseInt(param.usableNum)
+<<<<<<< HEAD
+    //"2017-04-29 00:00:00"
+    specAttribute = '{"'+param.breedName+'":{"规格":'+'"'+param.specAttribute+'"'+','+'"片型":'+'"'+param.shape+'"'+'}}'
+=======
         //"2017-04-29 00:00:00"
         //specAttribute = '{"'+param.breedName+'":{"片型":'+'"'+param.specAttribute+'"'+','+'"规格":'+'"'+param.specification+'"'+'}}'
+>>>>>>> d5a0e49cd59d6e65aef5a5b6b3606afe45a084b8
     var body = {
         breedId: param.breedId,
         breedName: param.breedName,
@@ -9270,8 +9301,22 @@ export const createStockInfo = ({ dispatch }, param) => { //新建库存
         body: body
     }).then((res) => {
         console.log(res.json())
-        window.location.reload()
-    }, (res) => {
+
+        param.specAttribute=specAttribute
+        param.callback({
+            loading:false,
+            breedName:"",
+            breedId:'',
+            depotName:'',
+            depotType:'',
+            cur:1,
+            all:1,
+            total:'',
+            show:false
+        })
+        //dispatch(types.ADD_STOCK_LIST, param);
+        //window.location.reload()
+    },(res) =>{
         console.log('fail')
     })
 }
@@ -9312,8 +9357,24 @@ export const editStockInfo = ({ dispatch }, param) => { //修改库存
         body: body
     }).then((res) => {
         console.log(res.json())
+<<<<<<< HEAD
+        param.callback({
+            loading:false,
+            breedName:"",
+            breedId:'',
+            depotName:'',
+            depotType:'',
+            cur:1,
+            all:1,
+            total:'',
+            show:false
+        })
+        //window.location.reload()
+    },(res) =>{
+=======
         window.location.reload()
     }, (res) => {
+>>>>>>> d5a0e49cd59d6e65aef5a5b6b3606afe45a084b8
         console.log('fail')
     })
 }

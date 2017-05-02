@@ -103,6 +103,7 @@ export const CALL_COUNT_DATA = 'CALL_COUNT_DATA' //客户通话记录统计
 export const CALL_RECORD_VOICE_DATA = 'CALL_RECORD_VOICE_DATA' //客户通话记录录音
 
 export const PURCHASE_LIST_DATA = 'PURCHASE_LIST_DATA' //采购单列表
+export const UPDATE_OFFERDESCRIPTION = 'UPDATE_OFFERDESCRIPTION'//采购单更新报价描述
 export const DELETE_PURCHASE = 'DELETE_PURCHASE' //删除采购单
 export const INQUIRE_PURCHASE_STATUS = 'INQUIRE_PURCHASE_STATUS' //（单个/批量）采购单询价
 export const PURCHASE_DETAIL = 'PURCHASE_DETAIL' //采购单详情
@@ -197,4 +198,7 @@ export const EMAIL_COUNT = 'EMAIL_COUNT' //邮件列表
 
 export const MUlT_DICTIONARY = 'MUlT_DICTIONARY' //邮件列表
 export const STOCK_LIST = 'STOCK_LIST' //库存列表
+export const ADD_STOCK_LIST = 'ADD_STOCK_LIST' //添加库存列表
 export const DELETE_STOCK_DATA = 'DELETE_STOCK_DATA' //删除库存列表
+
+export const CHANGE_LINESCHARTS = 'CHANGE_LINESCHARTS'//重叠折线列表
