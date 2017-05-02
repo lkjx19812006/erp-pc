@@ -9272,13 +9272,9 @@ export const createStockInfo = ({ dispatch }, param) => { //新建库存
     canDeposite = parseInt(param.canDeposite)
     canProcess = parseInt(param.canProcess)
     usableNum = parseInt(param.usableNum)
-<<<<<<< HEAD
-    //"2017-04-29 00:00:00"
+
     specAttribute = '{"'+param.breedName+'":{"规格":'+'"'+param.specAttribute+'"'+','+'"片型":'+'"'+param.shape+'"'+'}}'
-=======
-        //"2017-04-29 00:00:00"
-        //specAttribute = '{"'+param.breedName+'":{"片型":'+'"'+param.specAttribute+'"'+','+'"规格":'+'"'+param.specification+'"'+'}}'
->>>>>>> d5a0e49cd59d6e65aef5a5b6b3606afe45a084b8
+
     var body = {
         breedId: param.breedId,
         breedName: param.breedName,
