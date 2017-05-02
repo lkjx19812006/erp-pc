@@ -143,8 +143,41 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- 采销对应 -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title clearfix" @click="enfoldment({
+                                        link:'',
+                                        crete:'orderLinkList'
+                                        })">
+                                            <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initLinkOrder.arr.length!==null">
+                                              待采购（{{initLinkOrder.arr.length}}）
+                                            </a>
+                                            <button type="button" class="btn btn-base pull-right" @click.stop="">编辑</button>
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse" v-if="initLinkOrder.arr.length&&initLinkOrder.show" v-cloak>
+                                        <div class="panel-body panel-set">
+                                            <table class="table  contactSet">
+                                                <thead>
+                                                    <th>品种</th>
+                                                    <th>数量</th>
+                                                    <th>采购业务员</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in initLinkOrder.arr">
+                                                        <td>{{item.breedName}}</td>
+                                                        <td>{{item.number}}{{item.unit | Unit}}</td>
+                                                        <td>{{item.buyEmployeeName}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- “待采购” -->
-                                <div v-if="initOrderDetail.type==1" class="panel panel-default">
+                                <div v-if="initOrderDetail.type==1&&initOrderDetail.intl===0" class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
                                         link:'',
@@ -673,6 +706,7 @@ import shadowModel from '../mguan/shadow.vue'
 import deleteModel from '../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import {
     initOrderDetail,
+    initLinkOrder,
     initMyFundList,
     initLogin
 } from '../../vuex/getters'
@@ -777,6 +811,7 @@ export default {
                 sellEmployee: this.initLogin.id,
                 goods: [], //订单中的商品
                 orderLinkList: [], //订单中的待采购
+                orderLinkBack: [], //备份初始的待采购信息（id）
                 list: [], //goods和orderLinkList重组后的信息
                 callback: this.callback
             }
@@ -785,11 +820,14 @@ export default {
     vuex: {
         getters: {
             initOrderDetail,
+            getLinkOrder,
+            initLinkOrder,
             initMyFundList,
             initLogin
         },
         actions: {
             getOrderDetail,
+            getLinkOrder,
             uploadDocument,
             dividedPayment,
             paymentAudit,
@@ -800,7 +838,6 @@ export default {
     },
     methods: {
         enfoldment: function(param) {
-
             if (this.$store.state.table.orderDetail[param.crete].arr.length == 0) {
                 this.$store.state.table.orderDetail[param.crete].show = false;
             }
@@ -810,6 +847,7 @@ export default {
         editPurchase: function() {
             this.purchaseParam.goods = this.initOrderDetail.goods.arr;
             this.purchaseParam.orderLinkList = this.initOrderDetail.orderLinkList.arr;
+            this.purchaseParam.orderLinkBack = [];
             //获取list
             let goods = this.purchaseParam.goods;
             let orderLinkList = this.purchaseParam.orderLinkList;
@@ -821,6 +859,9 @@ export default {
                     if (orderLinkList[k].sellGoodsId == goods[i].id) {
                         // 待报价条目所处的状态,0初始，1添加，2编辑,在actions中处理
                         //orderLinkList[k].flag = 0; 
+                        if (orderLinkList[k].id) {
+                            this.purchaseParam.orderLinkBack.push(orderLinkList[k]);
+                        }
                         temp.push(orderLinkList[k]);
                     }
                 }
@@ -836,7 +877,6 @@ export default {
             }
             this.purchaseParam.list = result;
             this.purchaseParam.show = true;
-
         },
         applyInfo: function(item) {
 
@@ -924,6 +964,7 @@ export default {
     },
     created() {
         this.getOrderDetail(this.param);
+        this.getLinkOrder(this.param);
     }
 }
 </script>

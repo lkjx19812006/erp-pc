@@ -2163,6 +2163,31 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
     })
 }
 
+export const getLinkOrder = ({ dispatch }, param) => { //获取关联订单（采销对应）
+    const body = {
+        id: param.id
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateJSON: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('支付成功')
+
+        let result = res.json().result;
+        dispatch(types.LINK_ORDER, result);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 export const downOrderDetailPDF = ({ dispatch }, param) => { //下载订单详情PDF
     param.loading = true;
     var url = apiUrl.orderList + '/fund/downPDFVoucher';
@@ -5119,7 +5144,8 @@ export const offerPurchaseOrder = ({ dispatch }, param) => { //采购单意向�
         quality: param.quality,
         description: param.description,
         location: param.location,
-        spec: param.spec
+        spec: param.spec,
+        images: param.images
     }
     Vue.http({
         method: 'POST',

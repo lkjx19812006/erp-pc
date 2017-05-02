@@ -59,9 +59,13 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==14">
         <orderhandle-model></orderhandle-model>
     </div>
-    <!-- 订单处理 -->
+    <!-- 我的待采购 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==15">
         <to-purchase-model></to-purchase-model>
+    </div>
+    <!-- 部门待采购 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==16">
+        <org-to-purchase-model></org-to-purchase-model>
     </div>
 </template>
 <script>
@@ -81,6 +85,7 @@ import orgafterapplyModel from '../components/order/orgSalesApply'
 import orderhandleModel from '../components/order/orderHandle'
 import ordersupplyList from '../components/order/intentionalOrder'
 import toPurchaseModel from '../components/order/toPurchaseList'
+import orgToPurchaseModel from '../components/order/orgToPurchaseList'
 export default {
     components: {
         paymentRecord,
@@ -98,7 +103,8 @@ export default {
         myafterapplyModel,
         ordersupplyList,
         orderhandleModel,
-        toPurchaseModel
+        toPurchaseModel,
+        orgToPurchaseModel
     }
 }
 </script>

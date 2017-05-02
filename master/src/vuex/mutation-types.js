@@ -37,6 +37,7 @@ export const SAMPLE_DETAIL = 'SAMPLE_DETAIL' //寄样详情
 export const DELETE_DATA = 'DELETE_DATA' //删除信息
 export const APPLY_DATA = 'APPLY_DATA' //申请寄样
 export const ORDER_LINK = 'ORDER_LINK' //"待采购"列表
+export const LINK_ORDER = 'LINK_ORDER' //关联订单
 export const UNIT_LIST = 'UNIT_LIST' //常用单位
 export const CURRENCY_LIST = 'CURRENCY_LIST' //常用货币
 
