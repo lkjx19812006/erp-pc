@@ -2,7 +2,9 @@
 	<order-data :param="orderData" v-if="orderData.show"></order-data>
 	<stock-cart :param="cartData" v-if="cartData.show&&cartData.leng"></stock-cart>
 	<breed-search :param='loadParam' v-if='loadParam.show'></breed-search>
+	<create-stock :param='createParam' v-if='createParam.show'></create-stock>
 	<import-excel :param='importParam' v-if='importParam.show'></import-excel>
+	<deletestock-model :param='deleteParam' v-if='deleteParam.show'></deletestock-model>
 	<mglist-model>
 		<!-- 头部搜索-->
         <div slot="top">
@@ -11,6 +13,23 @@
                     <dt class="left transfer marg_top">药品名称：</dt>
                     <dd class="left margin_right">
                         <input type="text" class="form-control" v-model="loadParam.breedName" readonly="readonly" placeholder="按回车键搜索" @keyup.enter="selectSearch()" @click='openBreedSearch()'/>
+                    </dd>
+                    <dt class="left transfer marg_top" style="margin-left: 20px">仓库地：</dt>
+                    <dd class="left margin_right">
+                        <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotName" @keyup.enter="selectSearch()">
+                            <option value="亳州">亳州</option>
+                            <option value="玉林">玉林</option>
+                            <option value="安国">安国</option>
+                            <option value="定西">定西</option>
+                            <option value="成都">成都</option>
+                        </select>
+                    </dd>
+                    <dt class="left transfer marg_top" style="margin-left: 20px">库存类型：</dt>
+                    <dd class="left margin_right">
+                        <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotType" @keyup.enter="selectSearch()">
+                            <option value="社会库存">社会库存</option>
+                            <option value="自营库存">自营库存</option>
+                        </select>
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:20px">
@@ -31,43 +50,24 @@
                 	<!-- EXCEL导入客户 -->
                     <button type="button" class="btn btn-primary" @click="excelImport()">excel导入社会库存</button>
 					<!-- 新建社会库存 -->
-                    <button type="button" class="btn btn-default" @click="createCustomer({
+                    <button type="button" class="btn btn-default" @click="createStock({
                                             show:true,
-                                            loading:false,
-                                            id:'',
-                                            category:'',
-                                            typeDesc:'其他',
-                                            classify:'1,买',
-                                            type:0,
-                                            name:'',
-                                            mainPhone:'',
-                                            principal:'',
-                                            bizScope:'',
-                                            province:'',
-                                            city:'',
-                                            address:'',
-                                            email:'',
-                                            employee:'',
-                                            employeeId:this.initLogin.id,
-                                            employeeName:this.initLogin.name,
-                                            orgId:this.initLogin.orgId,
-                                            orgName:'',
-                                            contacts:[
-                                                {
-                                                    mainContact:'',
-                                                    name:'',
-                                                    position:'',
-                                                    department:'',
-                                                    phone:'',
-                                                    tel:'',
-                                                    email:'',
-                                                    qq:'',
-                                                    wechart:'',
-                                                    main:'',
-                                                }
-                                            ],
-                                            link:saveCreate,
-                                            key:'myCustomerList'
+                                            flag:0,                                            
+                                            breedName:'',
+                                            breedId:'',
+                                            employeeName:'',
+                                            shape:'',
+                                            specAttribute:'',
+                                            location:'',
+                                            depotName:'',
+                                            usableNum:'',
+                                            unit:'',
+                                            canProcess:'',
+                                            canDeposite:'',
+                                            price:'',
+                                            dueDate:'',
+                                            comment:'',
+                                            key:''
                                             })">{{$t("static.new")}}</button>
                 </dd>
             </div>
@@ -82,9 +82,10 @@
                     <tr>
                         <th></th>
                         <th style="min-width:150px;text-align: center;">药材名称</th>
-                        <th style="min-width:200px;text-align: center;">规格</th>
+                        <th style="min-width:150px;text-align: center;">入库时间</th>
+                        <th style="min-width:150px;text-align: center;">规格</th>
                         <th style="min-width:150px;text-align: center;">片型</th>
-                        <th style="min-width:200px;text-align: center;">产地</th>
+                        <th style="min-width:150px;text-align: center;">产地</th>
                         <th style="min-width:150px;text-align: center;">库存可用量</th>
                         <th style="min-width:150px;text-align: center;">库存单位</th>
                         <th style="min-width:150px;text-align: center;">仓库名称</th> 
@@ -105,6 +106,7 @@
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
                         </td>
                         <td>{{item.breedName}}</td>
+                        <td>{{item.ctime | timeFilter}}</td>
                         <td>{{item.specAttribute | specFilter_a}}</td>
                         <td>{{item.specAttribute | specFilter_b}}</td>
                         <td>{{item.location}}</td>
@@ -120,8 +122,13 @@
                        			usableNum:item.usableNum,
                        			unitId:item.unitId
                        		})">加入购物车</button>
-							<button class="btn btn-default" v-if="item.depotType=='社会库存'">编辑</button>
-							<button class="btn btn-default" v-if="item.depotType=='社会库存'">删除</button>
+							<button class="btn btn-default" v-if="item.depotType=='社会库存'" @click="updataStock(item)">编辑</button>
+							<button class="btn btn-default" v-if="item.depotType=='社会库存'" @click="deleteStock({
+											id:item.id,
+                                            sub:$index,
+                                            show:true,
+                                            link:deleteStockInfo
+                                            })">删除</button>
                        		</td>
                     </tr>
                 </tbody>
@@ -135,14 +142,16 @@
 <script>
 import mglistModel from '../mguan/mgListComponent.vue'
 import importExcel from '../../components/purchaseOrder/indentExcelImport.vue'
+import deletestockModel from '../stock/deleteStockTip'
 import breedSearch from '../../components/Intention/breedsearch.vue'
 import changeMenu from '../../components/tools/tabs/tabs.js'
 import common from '../../common/common'
 import pagination from '../pagination'
 import orderData from '../stock/orderData'
 import stockCart from '../stock/stockCart'
+import createStock from '../stock/createNewStock'
 import filter from '../../filters/filters'
-import {getStockList , importStock} from '../../vuex/actions'
+import {getStockList , importStock, deleteStockInfo} from '../../vuex/actions'
 import {initStockList} from '../../vuex/getters'
 export default {
 	components:{
@@ -151,12 +160,15 @@ export default {
 		orderData,
 		stockCart,
 		breedSearch,
-		importExcel
+		importExcel,
+		createStock,
+		deletestockModel
 	},
 	vuex:{
 		actions:{
 			getStockList,
-			importStock
+			importStock,
+			deleteStockInfo
 		},
 		getters:{
 			initStockList
@@ -168,6 +180,8 @@ export default {
 				loading:false,
 				breedName:"",
 				breedId:'',
+				depotName:'',
+				depotType:'',
 				cur:1,
 				all:1,
 				total:'',
@@ -214,6 +228,28 @@ export default {
                 success: 0, //上传后，返回码的解析，0/1/2/3，初始/成功/错误（1000）/其他错误
                 mFile: "", //excel文件
                 result: "" // 导入成功后的返回信息
+            },
+            deleteParam:{
+            	show:false
+            },
+            createParam:{
+            	show:false,
+                flag:'',                                            
+                breedName:'',
+                breedId:'',
+                employeeName:'',
+                shape:'',
+                specAttribute:'',
+                location:'',
+                depotName:'',
+                usableNum:'',
+                unit:'',
+                canProcess:'',
+                canDeposite:'',
+                price:'',
+                dueDate:'',
+                comment:'',
+                key:''
             },
 			breedSearchParam:{
 				show:false
@@ -291,8 +327,48 @@ export default {
 			this.cartData.leng=0
 		},
 		resetCondition:function(){
+			this.loadParam.breedName='';
 			this.loadParam.breedId='';
+			this.loadParam.depotName='';
+			this.loadParam.depotType='';
 			this.getStockList(this.loadParam)
+		},
+		createStock:function(data){
+			this.createParam = data;
+		},
+		updataStock:function(item){
+			var spec = item.specAttribute;
+			var spec_a = '';
+			var spec_b = '';
+			if(spec){
+				spec = JSON.parse(spec)
+				for(var key in spec){
+					spec_a = spec[key]['规格'];
+					spec_b = spec[key]['片型']
+				}
+			}
+			this.createParam.show=true,
+            this.createParam.flag=1,                                            
+            this.createParam.breedName=item.breedName,
+            this.createParam.breedId=item.breedId,
+            this.createParam.id=item.id,
+            this.createParam.employeeName=item.employeeName,
+            this.createParam.specAttribute=spec_a,
+            this.createParam.shape=spec_b,
+            this.createParam.location=item.location,
+            this.createParam.depotName=item.depotName,
+            this.createParam.usableNum=item.usableNum,
+            this.createParam.unit=item.unitId,
+            this.createParam.canProcess=item.canProcess,
+            this.createParam.canDeposite=item.canDeposite,
+            this.createParam.price=item.price,
+            this.createParam.dueDate=item.dueDate,
+            this.createParam.comment=item.comment,
+            this.createParam.key=''
+		},
+		deleteStock:function(data){
+			this.deleteParam.show = true
+			this.deleteParam = data
 		}
 	},
 	created(){
@@ -345,6 +421,20 @@ export default {
 				}
 			}
 			
+		},
+		timeFilter:function(data){
+			Date.prototype.toLocaleString = function(){
+				var month = this.getMonth()+1;
+				var date = this.getDate()
+				if(month<=9){
+					month = '0'+ month
+				}
+				if(date<=9){
+					date = '0'+ date
+				}
+          		return this.getFullYear() + "-" + month + "-" + date
+    		};
+			return new Date(data).toLocaleString()
 		}
 	},
 	filter: (filter, {})

@@ -9175,6 +9175,8 @@ export const getStockList = ({ dispatch }, param) => {
     var body = {
         page: param.cur,
         breedId: param.breedId,
+        depotName:param.depotName,
+        depotType:param.depotType,
         pageSize: 20
     };
     Vue.http({
@@ -9202,6 +9204,7 @@ export const getStockList = ({ dispatch }, param) => {
         console.log('fail')
     })
 }
+
 
 export const importStock = ({ dispatch }, param) => { //excel导入社会库存
     param.loading = true;
@@ -9232,4 +9235,108 @@ export const importStock = ({ dispatch }, param) => { //excel导入社会库存
     }, (res) => {
         console.log('fail')
     })
+}
+
+export const createStockInfo = ({ dispatch },param) =>{//新建库存
+    var today = new Date();
+    console.log(param)
+    var canDeposite , canProcess , unitId,usableNum,specAttribute,
+    unitId = parseInt(param.unit)
+    canDeposite = parseInt(param.canDeposite)
+    canProcess = parseInt(param.canProcess)
+    usableNum = parseInt(param.usableNum)
+    //"2017-04-29 00:00:00"
+    //specAttribute = '{"'+param.breedName+'":{"片型":'+'"'+param.specAttribute+'"'+','+'"规格":'+'"'+param.specification+'"'+'}}'
+    var body = {
+        breedId:param.breedId,
+        breedName:param.breedName,
+        canDeposite: canDeposite,
+        canProcess: canProcess,
+        depotName:param.depotName,
+        due_date:param.dueDate,
+        employee:param.employeeId,
+        location:param.location,
+        unit_id:unitId,
+        usableNum:usableNum,
+        spec:param.specAttribute,
+        shape:param.shape,
+    };
+    Vue.http({
+        method:'POST',
+        url:'/crm/api/v1/stock/addStock',
+        emulateJSON:false,
+        emulateHTTP:false,
+        body:body
+    }).then((res) => {
+        console.log(res.json())
+        window.location.reload()
+    },(res) =>{
+        console.log('fail')
+    })
+}
+
+export const editStockInfo =({ dispatch },param) =>{//修改库存
+   var today = new Date();
+    console.log(param)
+    var canDeposite , canProcess , unitId,usableNum,specAttribute
+    unitId = parseInt(param.unit)
+    canDeposite = parseInt(param.canDeposite)
+    canProcess = parseInt(param.canProcess)
+    usableNum = parseInt(param.usableNum)
+    //"2017-04-29 00:00:00"
+    //specAttribute = '{"'+param.breedName+'":{"片型":'+'"'+param.specAttribute+'"'+','+'"规格":'+'"'+param.specification+'"'+'}}'
+
+    //dueData = param.dueData.parse()
+    var body = {
+        id:param.id,
+        breedName:param.breedName,
+        breedId:param.breedId,
+        canDeposite: canDeposite,
+        canProcess: canProcess,
+        depotName:param.depotName,
+        due_date:param.dueDate,
+        employee:param.employeeId,
+        location:param.location,
+        unit_id:unitId,
+        shape:param.shape,        
+        usableNum:usableNum,
+        spec:param.specAttribute
+    };
+    Vue.http({
+        method:'POST',
+        url:'/crm/api/v1/stock/updateStock',
+        body:body,
+        emulateJSON:false,
+        emulateHTTP:false,
+        body:body
+    }).then((res) =>{
+        console.log(res.json())
+        window.location.reload()
+    },(res) =>{
+        console.log('fail')
+    })
+}
+
+
+export const deleteStockInfo = ({ dispatch }, param) => { //删除库存信息
+    console.log(param)
+    var body={
+        id:param.id
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/stock/deleteStock',
+        body:body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('删除成功')
+        dispatch(types.DELETE_STOCK_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    });
 }

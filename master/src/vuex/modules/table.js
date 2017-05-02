@@ -135,8 +135,8 @@ import {
     EMAIL_COUNT,
     MUlT_DICTIONARY,
     MY_ORG_COUNT,
-    STOCK_LIST
-
+    STOCK_LIST,
+    DELETE_STOCK_DATA
 } from '../mutation-types'
 
 
@@ -2435,6 +2435,9 @@ const mutations = {
     },
     [STOCK_LIST](state, data) { //库存列表
         state.stockList = data;
+    },
+    [DELETE_STOCK_DATA](state,data) {//库存列表
+        state.stockList.splice(data.sub, 1)
     },
     // 部门统计
     [MY_ORG_COUNT](state, data) {
