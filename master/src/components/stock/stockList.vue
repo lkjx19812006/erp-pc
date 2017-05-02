@@ -16,11 +16,20 @@
                     </dd>
                     <dt class="left transfer marg_top" style="margin-left: 20px">仓库地：</dt>
                     <dd class="left margin_right">
-                        <input type="text" class="form-control" v-model="loadParam.breedName" readonly="readonly" placeholder="按回车键搜索" @keyup.enter="selectSearch()" @click='openBreedSearch()'/>
+                        <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotName" @keyup.enter="selectSearch()">
+                            <option value="亳州">亳州</option>
+                            <option value="玉林">玉林</option>
+                            <option value="安国">安国</option>
+                            <option value="定西">定西</option>
+                            <option value="成都">成都</option>
+                        </select>
                     </dd>
                     <dt class="left transfer marg_top" style="margin-left: 20px">库存类型：</dt>
                     <dd class="left margin_right">
-                        <input type="text" class="form-control" v-model="loadParam.breedName" readonly="readonly" placeholder="按回车键搜索" @keyup.enter="selectSearch()" @click='openBreedSearch()'/>
+                        <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotType" @keyup.enter="selectSearch()">
+                            <option value="社会库存">社会库存</option>
+                            <option value="自营库存">自营库存</option>
+                        </select>
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:20px">
@@ -47,7 +56,7 @@
                                             breedName:'',
                                             breedId:'',
                                             employeeName:'',
-                                            specification:'',
+                                            shape:'',
                                             specAttribute:'',
                                             location:'',
                                             depotName:'',
@@ -97,7 +106,7 @@
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
                         </td>
                         <td>{{item.breedName}}</td>
-                        <td>{{item.ctime}}</td>
+                        <td>{{item.ctime | timeFilter}}</td>
                         <td>{{item.specAttribute | specFilter_a}}</td>
                         <td>{{item.specAttribute | specFilter_b}}</td>
                         <td>{{item.location}}</td>
@@ -113,26 +122,7 @@
                        			usableNum:item.usableNum,
                        			unitId:item.unitId
                        		})">加入购物车</button>
-							<button class="btn btn-default" v-if="item.depotType=='社会库存'" @click="updataStock({
-                                            show:true,
-                                            flag:1,                                            
-                                            breedName:item.breedName,
-                                            breedId:item.breedId,
-                                            id:item.id,
-                                            employeeName:item.employeeName,
-                                            specification:item.specAttribute,
-                                            specAttribute:item.specAttribute,
-                                            location:item.location,
-                                            depotName:item.depotName,
-                                            usableNum:item.usableNum,
-                                            unit:item.unitId,
-                                            canProcess:item.canProcess,
-                                            canDeposite:item.canDeposite,
-                                            price:item.price,
-                                            dueDate:item.dueDate,
-                                            comment:item.comment,
-                                            key:''
-                                            })">编辑</button>
+							<button class="btn btn-default" v-if="item.depotType=='社会库存'" @click="updataStock(item)">编辑</button>
 							<button class="btn btn-default" v-if="item.depotType=='社会库存'" @click="deleteStock({
 											id:item.id,
                                             sub:$index,
@@ -190,6 +180,8 @@ export default {
 				loading:false,
 				breedName:"",
 				breedId:'',
+				depotName:'',
+				depotType:'',
 				cur:1,
 				all:1,
 				total:'',
@@ -241,7 +233,23 @@ export default {
             	show:false
             },
             createParam:{
-            	show:false
+            	show:false,
+                flag:'',                                            
+                breedName:'',
+                breedId:'',
+                employeeName:'',
+                shape:'',
+                specAttribute:'',
+                location:'',
+                depotName:'',
+                usableNum:'',
+                unit:'',
+                canProcess:'',
+                canDeposite:'',
+                price:'',
+                dueDate:'',
+                comment:'',
+                key:''
             },
 			breedSearchParam:{
 				show:false
@@ -321,15 +329,42 @@ export default {
 		resetCondition:function(){
 			this.loadParam.breedName='';
 			this.loadParam.breedId='';
+			this.loadParam.depotName='';
+			this.loadParam.depotType='';
 			this.getStockList(this.loadParam)
 		},
 		createStock:function(data){
 			this.createParam = data;
 		},
-		updataStock:function(data){
-
-			this.createParam = data;
-			console.log(data);
+		updataStock:function(item){
+			var spec = item.specAttribute;
+			var spec_a = '';
+			var spec_b = '';
+			if(spec){
+				spec = JSON.parse(spec)
+				for(var key in spec){
+					spec_a = spec[key]['规格'];
+					spec_b = spec[key]['片型']
+				}
+			}
+			this.createParam.show=true,
+            this.createParam.flag=1,                                            
+            this.createParam.breedName=item.breedName,
+            this.createParam.breedId=item.breedId,
+            this.createParam.id=item.id,
+            this.createParam.employeeName=item.employeeName,
+            this.createParam.specAttribute=spec_a,
+            this.createParam.shape=spec_b,
+            this.createParam.location=item.location,
+            this.createParam.depotName=item.depotName,
+            this.createParam.usableNum=item.usableNum,
+            this.createParam.unit=item.unitId,
+            this.createParam.canProcess=item.canProcess,
+            this.createParam.canDeposite=item.canDeposite,
+            this.createParam.price=item.price,
+            this.createParam.dueDate=item.dueDate,
+            this.createParam.comment=item.comment,
+            this.createParam.key=''
 		},
 		deleteStock:function(data){
 			this.deleteParam.show = true
@@ -386,6 +421,20 @@ export default {
 				}
 			}
 			
+		},
+		timeFilter:function(data){
+			Date.prototype.toLocaleString = function(){
+				var month = this.getMonth()+1;
+				var date = this.getDate()
+				if(month<=9){
+					month = '0'+ month
+				}
+				if(date<=9){
+					date = '0'+ date
+				}
+          		return this.getFullYear() + "-" + month + "-" + date
+    		};
+			return new Date(data).toLocaleString()
 		}
 	},
 	filter: (filter, {})

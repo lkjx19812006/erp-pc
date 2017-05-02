@@ -37,12 +37,12 @@
                              	<!-- 规格 -->
                                 <div class="client-detailInfo  col-md-6">
                                     <label class="editlabel">{{$t('static.specification')}}<span class="system_danger" v-if="$validation.specification.required">请输入规格</span></label>
-                                    <input type="text" class="form-control edit-input" v-validate:specification="{required:true}" v-model=" specAttribute"  @click="changeSpec()"/>
+                                    <input type="text" class="form-control edit-input" v-validate:specification="{required:true}" v-model=" param.specAttribute"/>
                                 </div>
                                 <!-- 片型 -->
                                 <div class="client-detailInfo  col-md-6">
                                     <label class="editlabel">片型<span class="system_danger" v-if="$validation.spec.required">请输入片型</span></label>
-                                    <input type="text" class="form-control edit-input" v-validate:spec="{required:true}" v-model="param.specAttribute | specFilter_b"  @change="changeShape()"/>
+                                    <input type="text" class="form-control edit-input" v-validate:spec="{required:true}" v-model="param.shape"/>
                                 </div>
                             </div>  
                             <div class="col-md-12">
@@ -177,12 +177,8 @@ export default {
                 remain: true,
                 name: '创建成功',
                 alert: true
-            },
-            specAttribute:this.spec,
-            
-            loading: false,
-            ischangeSpec:false,
-            ischangeShape:false
+            },            
+            loading: false
         }
     },
     vuex: {
@@ -225,14 +221,6 @@ export default {
     		var mtims_b = Date.parse(times_b.substr(5,2)+'/'+times_b.substr(8,2)+'/'+times_b.substr(0,4))
             this.param.dueDate = mtimes_b;
     	},
-    	changeSpec:function(){
-    		console.log("哈哈")
-    		this.ischangeSpec= true
-    		console.log(this.spec)
-    	},
-    	changeShape:function(){
-    		this.ischangeShape= true
-    	},
     	reset: function(type) {
             if (type == "duedate") {
                 this.param.duedate = "";
@@ -241,15 +229,6 @@ export default {
     },
     created:function(){
     	this.getUnitList()
-    },
-    computed:{
-    	spec:function(){
-
-    		var data = JSON.parse(this.param.specAttribute)
-			for(var key in data){
-				return data[key]['规格']
-			}
-    	}
     },
     events:{
     	a:function(res){
@@ -263,34 +242,7 @@ export default {
             this.param.breedName = breed.breedName;
             this.param.breedId = breed.breedId;;
         }
-    },
-    filters:{
-		specFilter_a:function(data){
-			if(data&&this.param.flag==1&&this.param.specAttribute.substr(0,1)=='{'){
-
-					data = JSON.parse(data)
-					for(var key in data){
-						return data[key]['规格']
-					}
-				
-			}
-			
-		},
-		specFilter_b:function(data){
-			if(data&&this.param.flag==1){
-				if(this.ischangeShape){
-					return data
-				}else{
-					data = JSON.parse(data)
-					for(var key in data){
-						return data[key]['片型']
-					}
-				}
-				
-			}
-			
-		}
-	},       
+    }    
 
 }
 </script>

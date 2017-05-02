@@ -9149,6 +9149,8 @@ export const getStockList = ({ dispatch }, param) => {
     var body = {
         page: param.cur,
         breedId: param.breedId,
+        depotName:param.depotName,
+        depotType:param.depotType,
         pageSize: 20
     };
     Vue.http({
@@ -9221,6 +9223,7 @@ export const createStockInfo = ({ dispatch },param) =>{//新建库存
     //specAttribute = '{"'+param.breedName+'":{"片型":'+'"'+param.specAttribute+'"'+','+'"规格":'+'"'+param.specification+'"'+'}}'
     var body = {
         breedId:param.breedId,
+        breedName:param.breedName,
         canDeposite: canDeposite,
         canProcess: canProcess,
         depotName:param.depotName,
@@ -9229,8 +9232,8 @@ export const createStockInfo = ({ dispatch },param) =>{//新建库存
         location:param.location,
         unit_id:unitId,
         usableNum:usableNum,
-        specAttribute:param.specification,
-        shape:param.specAttribute,
+        spec:param.specAttribute,
+        shape:param.shape,
     };
     Vue.http({
         method:'POST',
@@ -9240,6 +9243,7 @@ export const createStockInfo = ({ dispatch },param) =>{//新建库存
         body:body
     }).then((res) => {
         console.log(res.json())
+        window.location.reload()
     },(res) =>{
         console.log('fail')
     })
@@ -9259,6 +9263,7 @@ export const editStockInfo =({ dispatch },param) =>{//修改库存
     //dueData = param.dueData.parse()
     var body = {
         id:param.id,
+        breedName:param.breedName,
         breedId:param.breedId,
         canDeposite: canDeposite,
         canProcess: canProcess,
@@ -9267,9 +9272,9 @@ export const editStockInfo =({ dispatch },param) =>{//修改库存
         employee:param.employeeId,
         location:param.location,
         unit_id:unitId,
-        shape:param.specAttribute,        
+        shape:param.shape,        
         usableNum:usableNum,
-        specAttribute:param.specification
+        spec:param.specAttribute
     };
     Vue.http({
         method:'POST',
@@ -9280,6 +9285,7 @@ export const editStockInfo =({ dispatch },param) =>{//修改库存
         body:body
     }).then((res) =>{
         console.log(res.json())
+        window.location.reload()
     },(res) =>{
         console.log('fail')
     })
