@@ -54,7 +54,7 @@
                         </div>
                         <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                             <label class="editlabel">药材图片</label>
-                            <press-image :value.sync="param.pics" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                            <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
                         </div>
                         <!-- 当为预售资源时，进口资质和检测报告需要上传 -->
                         <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
