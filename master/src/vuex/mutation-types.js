@@ -202,3 +202,4 @@ export const ADD_STOCK_LIST = 'ADD_STOCK_LIST' //添加库存列表
 export const DELETE_STOCK_DATA = 'DELETE_STOCK_DATA' //删除库存列表
 
 export const CHANGE_LINESCHARTS = 'CHANGE_LINESCHARTS'//重叠折线列表
+export const CHANGE_COLCHARTS = 'CHANGE_COLCHARTS' // 柱状图

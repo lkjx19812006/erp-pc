@@ -10,7 +10,8 @@ import {
     CHANGE_CHARTS,
     CHANGE_LINECHARTS,
     CHANGE_PIECHARTS,
-    CHANGE_LINESCHARTS
+    CHANGE_LINESCHARTS,
+    CHANGE_COLCHARTS
 } from '../mutation-types'
 
 const state = {
@@ -182,14 +183,14 @@ const state = {
     lineChartLoading: false,
 
     linesChartOption:{
-            title: {
-            text: '折线图堆叠'
+        title: {
+            text: ''
         },
         tooltip: {
             trigger: 'axis'
         },
         legend: {
-            data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+            data:['新增','活跃','成交','客户总数']
         },
         grid: {
             left: '3%',
@@ -212,51 +213,45 @@ const state = {
         },
         series: [
             {
-                name:'邮件营销',
+                name:'新增',
                 type:'line',
                 stack: '总量',
                 data:[120, 132, 101, 134, 90, 230, 210]
             },
             {
-                name:'联盟广告',
+                name:'活跃',
                 type:'line',
                 stack: '总量',
                 data:[220, 182, 191, 234, 290, 330, 310]
             },
             {
-                name:'视频广告',
+                name:'成交',
                 type:'line',
                 stack: '总量',
                 data:[150, 232, 201, 154, 190, 330, 410]
             },
             {
-                name:'直接访问',
+                name:'客户总数',
                 type:'line',
                 stack: '总量',
                 data:[320, 332, 301, 334, 390, 330, 320]
-            },
-            {
-                name:'搜索引擎',
-                type:'line',
-                stack: '总量',
-                data:[820, 932, 901, 934, 1290, 1330, 1320]
             }
         ]
     },linesChartLoading: false,
 
     PieChartOption: {
-          tooltip : {
+        tooltip : {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
-          },
-          color: ['#fa6705', '#ccc'],
-          legend: {
+        },
+        color: ['#fa6705', '#ccc'],
+        legend: {
             orient : 'vertical',
             x : 'left',
             data:['已完成','未完成'],
             show: false
-          },
-          toolbox: {
+        },
+        toolbox: {
             show : true,
             feature : {
               //mark : {show: true},
@@ -264,9 +259,9 @@ const state = {
               restore : {show: false},
               //saveAsImage : {show: true}
             }
-          },
-          calculable : false,
-          series : [
+        },
+        calculable : false,
+        series : [
             {
               name:'饼图实例',
               type:'pie',
@@ -278,7 +273,66 @@ const state = {
                 ]
             }
           ]
-      },PieChartLoading: false
+      },PieChartLoading: false,
+
+    ColChartOption:{
+        title: {
+            text: ''
+        },
+        tooltip : {
+            trigger: 'item',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '7%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data :  ['新增用户','新增活跃用户','新增成交用户','用户总数'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                type:'bar',
+                barWidth: '60px',
+                data:[150, 52, 200, 110],
+                itemStyle: {
+                    normal: {
+                        color: function(params) {
+                            var colorList = [
+                                '#91c7ae','#c23531', '#2f4554', '#61a0a8',
+                                '#d48265'
+                            ];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{c}'
+                    }
+                }
+               
+            }
+             
+        ]
+      },ColChartLoading:false
 }
 
 const mutations = {
@@ -306,6 +360,12 @@ const mutations = {
         state.PieChartOption.legend.data = data.results.dateList;
         state.PieChartOption.series.data = data.results.achieveList;
         state.PieChartLoading=false;
+    },
+
+    [CHANGE_COLCHARTS](state,data) {
+        state.linesChartOption.xAxis.data = data.results.dateList;
+        state.linesChartOption.series.data = data.results.achieveList;
+        state.linesChartLoading=false;
     }
 }
 

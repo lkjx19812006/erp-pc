@@ -1,217 +1,213 @@
 <template>
-    <div>
+    <div class="box" style="max-height: 1000px;overflow: auto;">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">我的统计</div>
         </div>
-        <div class="order_table">
+        <div class="user_all">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <div class="employee_left col-md-3 col-xs-12">
-                <div class="complete_rate">
-                    <!--  <span>个人业绩完成率</span>
-                   <a class="select_btn" @click="freshPiecharts(getPiechart)">
-                       <span class="select_btn_date">2016年7月</span>
-                       <span class="select_btn_img"><img src="/static/images/down_arrow.png" height="13" width="24" /></span>
-                   </a> -->
-                </div>
-                <div class="pie_chart">
-                    <div class="Piechart" v-echarts="getLineschart.options" :loading="getLineschart.load"></div>
+            <!-- 折线图 -->
+            <div class="line_today">
+                <h4 class="detail_title bg-info">用户总览
+                    <span class="detail_num">
+                        <div class="show_type">
+                            <dt class="left transfer marg_top" style="margin-left: 20px">客户类型：</dt>
+                            <dd class="left margin_right">
+                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotType" @keyup.enter="selectSearch()">
+                                    <option value="社会库存">社会库存</option>
+                                    <option value="自营库存">自营库存</option>
+                                </select>
+                            </dd>
+                            <dt class="left transfer marg_top" style="margin-left: 20px">按月：</dt>
+                            <dd class="left margin_right">
+                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotType" @keyup.enter="selectSearch()">
+                                    <option value="社会库存">社会库存</option>
+                                    <option value="自营库存">自营库存</option>
+                                </select>
+                            </dd>
+                        </div>
+                    </span>
+                </h4>
+                
+                <div class="line_chart">
+                    <div class="linechart" v-echarts="getLineschart.options" :loading="getLineschart.load"></div>
                 </div>
             </div>
-            <div class="clearfix">
-                <table class="table table-hover table_color table-bordered table-striped " v-cloak>
-                    <thead>
-                        <tr style="background:none;color:#000">
-                            <th rowspan="2">客户总数</th>
-                            <th colspan="4">星级分类</th>
-                            <th colspan="25">客户类型分类</th>
-                        </tr>
-                        <tr style="background:none;color:#000">
-                            <th>其他</th>
-                            <th>一星</th>
-                            <th>二星</th>
-                            <th>三星</th>
-                            <th>其他</th>
-                            <th>合作社</th>
-                            <th>药商</th>
-                            <th>药厂</th>
-                            <th>个体户</th>
-                            <th>药店</th>
-                            <th>贸易公司</th>
-                            <th>医院</th>
-                            <th>零售商行</th>
-                            <th>药农</th>
-                            <th>介绍人</th>
-                            <th>药贩子</th>
-                            <th>产地药商</th>
-                            <th>销地药商</th>
-                            <th>养生诊所</th>
-                            <th>化工厂</th>
-                            <th>化妆品厂</th>
-                            <th>提取物厂</th>
-                            <th>食品厂</th>
-                            <th>实验室</th>
-                            <th>网上电商</th>
-                            <th>中成药生产商</th>
-                            <th>西药生产商</th>
-                            <th>饮片厂</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{initClientcount.total }}</td>
-                            <td v-for="item in initClientcount.level">{{item.count}}</td>
-                            <td v-for="item in initClientcount.type">{{item.count}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- <div class="click_change">
-            <span class="date_active" v-bind:class="{ 'date_active': currentView==1}" @click="clickChange(1)">日</span>
-            <span v-bind:class="{ 'date_active': currentView==2}" @click="clickChange(2)">周</span>
-            <span v-bind:class="{ 'date_active': currentView==3}" @click="clickChange(3)">月</span>
-            <span v-bind:class="{ 'date_active': currentView==4}" @click="clickChange(4)">年</span>
-        </div> -->
-            <div class="click_change">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': currentView==1}" @click="clickChange(1)">
-                        日
-                    </button>
-                    <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': currentView==2}" @click="clickChange(2)">
-                        周
-                    </button>
-                    <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': currentView==3}" @click="clickChange(3)">
-                        月
-                    </button>
-                    <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': currentView==4}" @click="clickChange(4)">
-                        年
-                    </button>
+            <!-- 今日新增 -->
+            <div class="bar_today">
+                <h4 class="detail_title bg-info">今日新增<span class="detail_num"><a href="javascript:void(0);" class="btn btn-info">60人</a>&nbsp<a href="javascript:void(0);" class="btn btn-info">more</a></span></h4>
+                <!-- 柱状图 -->
+                <div class="bar_chart_left">
+                    <div class="barchart" v-echarts="getColchart.options" :loading="getColchart.load"></div>
+                </div>
+                
+                <div class="today_list_right">
+                    <table class="table table-hover table_color table-striped">
+                        <thead>
+                            <tr>
+                                <th style="min-width:150px;text-align: center;">用户</th>
+                                <th style="min-width:200px;text-align: center;">联系方式</th>
+                                <th style="min-width:150px;text-align: center;">区域</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in todayData">
+                                <td><a href="javascript:void(0);">{{item.name}}</a></td>
+                                <td>{{item.phone}}</td>
+                                <td>{{item.address}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--底部分页-->
+                    <pagination :combination="loadParam" slot="page"></pagination>
                 </div>
             </div>
-            <div class="module clear">
-                <div class="module_table" v-show="currentView==1">
-                    <div class="module_thead  clearfix">
-                        <div class="module_th">日期</div>
-                        <div class="module_th">业务员</div>
-                        <div class="module_th">每日新增</div>
-                        <!-- <div class="module_th">成交量</div> -->
-                        <div class="module_th">撮合新增成交</div>
-                        <div class="module_th">自营新增成交</div>
-                        <div class="module_th">撮合复购成交</div>
-                        <div class="module_th">自营复购成交</div>
-                        <div class="module_th">三方新增成交</div>
-                        <div class="module_th">三方复购成交</div>
+            <!-- 用户详情 -->
+            <div class="user_detail">
+                <!-- 顶部筛选 -->
+                <div class="search">
+                    <dl class="clear left transfer" style="margin-top:20px">
+                        <dt class="left transfer marg_top">客户名称：</dt>
+                        <dd class="left margin_right">
+                            <input type="text" class="form-control" v-model="loadParam.breedName" readonly="readonly" placeholder="按回车键搜索" @keyup.enter="selectSearch()" @click='openBreedSearch()'/>
+                        </dd>
+                        <dt class="left transfer marg_top" style="margin-left: 20px">时间：</dt>
+                        <dd class="left margin_right">
+                            <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotName" @keyup.enter="selectSearch()">
+                                <option value="亳州">亳州</option>
+                                <option value="玉林">玉林</option>
+                                <option value="安国">安国</option>
+                                <option value="定西">定西</option>
+                                <option value="成都">成都</option>
+                            </select>
+                        </dd>
+                        <dt class="left transfer marg_top" style="margin-left: 20px">区域：</dt>
+                        <dd class="left margin_right">
+                            <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotName" @keyup.enter="selectSearch()">
+                                <option value="亳州">亳州</option>
+                                <option value="玉林">玉林</option>
+                                <option value="安国">安国</option>
+                                <option value="定西">定西</option>
+                                <option value="成都">成都</option>
+                            </select>
+                        </dd>
+                        <dt class="left transfer marg_top" style="margin-left: 20px">客户类型：</dt>
+                        <dd class="left margin_right">
+                            <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotType" @keyup.enter="selectSearch()">
+                                <option value="社会库存">社会库存</option>
+                                <option value="自营库存">自营库存</option>
+                            </select>
+                        </dd>
+                    </dl>
+                </div>
+                <!-- 左侧 -->
+                <div class="user_detail_left">
+                    <div class="detail_left_top">
+                            <h4 class="detail_title bg-info">新增用户<span class="detail_num"><a href="javascript:void(0);" class="btn btn-info">60人</a>&nbsp<a href="javascript:void(0);" class="btn btn-info">more</a></span></h4>
+                            <table class="table table-hover table_color table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width:100px;text-align: center;">用户</th>
+                                        <th style="min-width:150px;text-align: center;">联系方式</th>
+                                        <th style="min-width:100px;text-align: center;">区域</th>
+                                        <th style="min-width:150px;text-align: center;">时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in todayData">
+                                        <td><a href="javascript:void(0);">{{item.name}}</a></td>
+                                        <td>{{item.phone}}</td>
+                                        <td>{{item.address}}</td>
+                                        <td>2017-05-03</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        <!--底部分页-->
+                            <pagination :combination="loadParam" slot="page"></pagination>
                     </div>
-                    <div class="module_tbody" id="module_judge">
-                        <div class="module_tr clearfix" v-for="item in initClientcount.day">
-                            <div class="module_td">{{item.date}}</div>
-                            <div class="module_td">{{item.employeeName}}</div>
-                            <div class="module_td">{{item.count}}</div>
-                            <div class="module_td">{{item.matchAddCount}}</div>
-                            <div class="module_td">{{item.selfAddCount}}</div>
-                            <div class="module_td">{{item.matchRepeatCount}}</div>
-                            <div class="module_td">{{item.selfRepeatCount}}</div>
-                            <div class="module_td">{{item.thirdAddCount}}</div>
-                            <div class="module_td">{{item.thirdRepeatCount}}</div>
-                        </div>
+                    <div class="detail_left_top">
+                         <h4 class="detail_title bg-info">成交用户<span class="detail_num">人数：<a href="javascript:void(0);" class="btn btn-info">60</a>人次：<a href="javascript:void(0);" class="btn btn-info">60</a>&nbsp<a href="javascript:void(0);" class="btn btn-info">more</a></span></h4>
+                            <table class="table table-hover table_color table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width:100px;text-align: center;">用户</th>
+                                        <th style="min-width:120px;text-align: center;">联系方式</th>
+                                        <th style="min-width:130px;text-align: center;">订单号</th>
+                                        <th style="min-width:150px;text-align: center;">时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in todayData">
+                                        <td><a href="javascript:void(0);">{{item.name}}</a></td>
+                                        <td>{{item.phone}}</td>
+                                        <td>123456789</td>
+                                        <td>2017-05-03</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        <!--底部分页-->
+                            <pagination :combination="loadParam" slot="page"></pagination>
                     </div>
                 </div>
-                <div class="module_table" v-show="currentView==2">
-                    <div class="module_thead  clearfix">
-                        <div class="module_th">日期</div>
-                        <div class="module_th">业务员</div>
-                        <div class="module_th">每周新增</div>
-                        <!-- <div class="module_th">成交量</div> -->
-                        <div class="module_th">撮合新增成交</div>
-                        <div class="module_th">自营新增成交</div>
-                        <div class="module_th">撮合复购成交</div>
-                        <div class="module_th">自营复购成交</div>
-                        <div class="module_th">三方新增成交</div>
-                        <div class="module_th">三方复购成交</div>
-                    </div>
-                    <div class="module_tbody">
-                        <div class="module_tr clearfix" v-for="item in initClientcount.week">
-                            <div class="module_td">{{item.date}}</div>
-                            <div class="module_td">{{item.employeeName}}</div>
-                            <div class="module_td">{{item.count}}</div>
-                            <div class="module_td">{{item.matchAddCount}}</div>
-                            <div class="module_td">{{item.selfAddCount}}</div>
-                            <div class="module_td">{{item.matchRepeatCount}}</div>
-                            <div class="module_td">{{item.selfRepeatCount}}</div>
-                            <div class="module_td">{{item.thirdAddCount}}</div>
-                            <div class="module_td">{{item.thirdRepeatCount}}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="module_table" v-show="currentView==3">
-                    <div class="module_thead  clearfix">
-                        <div class="module_th">日期</div>
-                        <div class="module_th">业务员</div>
-                        <div class="module_th">每月新增</div>
-                        <!-- <div class="module_th">成交量</div> -->
-                        <div class="module_th">撮合新增成交</div>
-                        <div class="module_th">自营新增成交</div>
-                        <div class="module_th">撮合复购成交</div>
-                        <div class="module_th">自营复购成交</div>
-                        <div class="module_th">三方新增成交</div>
-                        <div class="module_th">三方复购成交</div>
-                    </div>
-                    <div class="module_tbody">
-                        <div class="module_tr clearfix" v-for="item in initClientcount.month">
-                            <div class="module_td">{{item.date}}</div>
-                            <div class="module_td">{{item.employeeName}}</div>
-                            <div class="module_td">{{item.count}}</div>
-                            <div class="module_td">{{item.matchAddCount}}</div>
-                            <div class="module_td">{{item.selfAddCount}}</div>
-                            <div class="module_td">{{item.matchRepeatCount}}</div>
-                            <div class="module_td">{{item.selfRepeatCount}}</div>
-                            <div class="module_td">{{item.thirdAddCount}}</div>
-                            <div class="module_td">{{item.thirdRepeatCount}}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="module_table" v-show="currentView==4">
-                    <div class="module_thead  clearfix">
-                        <div class="module_th">日期</div>
-                        <div class="module_th">业务员</div>
-                        <div class="module_th">每年新增</div>
-                        <!-- <div class="module_th">成交量</div> -->
-                        <div class="module_th">撮合新增成交</div>
-                        <div class="module_th">自营新增成交</div>
-                        <div class="module_th">撮合复购成交</div>
-                        <div class="module_th">自营复购成交</div>
-                        <div class="module_th">三方新增成交</div>
-                        <div class="module_th">三方复购成交</div>
-                    </div>
-                    <div class="module_tbody">
-                        <div class="module_tr clearfix" v-for="item in initClientcount.year">
-                            <div class="module_td">{{item.date}}</div>
-                            <div class="module_td">{{item.employeeName}}</div>
-                            <div class="module_td">{{item.count}}</div>
-                            <div class="module_td">{{item.matchAddCount}}</div>
-                            <div class="module_td">{{item.selfAddCount}}</div>
-                            <div class="module_td">{{item.matchRepeatCount}}</div>
-                            <div class="module_td">{{item.selfRepeatCount}}</div>
-                            <div class="module_td">{{item.thirdAddCount}}</div>
-                            <div class="module_td">{{item.thirdRepeatCount}}</div>
-                        </div>
-                    </div>
+
+                <!-- 右侧 -->
+                <div class="user_detail_right">
+                    <h4 class="detail_title bg-info">活跃用户<span class="detail_num">人数：<a href="javascript:void(0);" class="btn btn-info">60</a>人次：<a href="javascript:void(0);" class="btn btn-info">60</a>&nbsp<a href="javascript:void(0);" class="btn btn-info">more</a></span></h4>
+                            <table class="table table-hover table_color table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width:100px;text-align: center;">用户</th>
+                                        <th style="min-width:120px;text-align: center;">联系方式</th>
+                                        <th style="min-width:130px;text-align: center;">
+                                            活跃类型
+                                            <select>
+                                                <option>报价</option>
+                                                <option>留言</option>
+                                            </select>
+                                        </th>
+                                        <th style="min-width:150px;text-align: center;">编号</th>
+                                        <th style="min-width:150px;text-align: center;">时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in todayData">
+                                        <td><a href="javascript:void(0);">{{item.name}}</a></td>
+                                        <td>{{item.phone}}</td>
+                                        <td>报价</td>
+                                        <td>123456789</td>
+                                        <td>2017-05-03</td>
+                                    </tr>
+                                    <tr v-for="item in todayData">
+                                        <td><a href="javascript:void(0);">{{item.name}}</a></td>
+                                        <td>{{item.phone}}</td>
+                                        <td>报价</td>
+                                        <td>123456789</td>
+                                        <td>2017-05-03</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        <!--底部分页-->
+                            <pagination :combination="loadParam" slot="page"></pagination>
                 </div>
             </div>
+
+
         </div>
     </div>
 </template>
 <script>
+import pagination from '../pagination'
+
 import {
     initClientcount,
-    getPiechart,
+    getColchart,
     getLineschart
 } from '../../vuex/getters'
 import {
     getClientcount
 } from '../../vuex/actions'
-import pagination from '../pagination'
+
 export default {
     components: {
         pagination
@@ -224,10 +220,46 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
-                all: 7,
+                all: 4,
                 total: 0
             },
-            currentView: 3
+            todayData:[
+                {
+                    name:"张三",
+                    phone:'15821955110',
+                    address:'四川雅安'
+                },
+                {
+                    name:"张三",
+                    phone:'15821955110',
+                    address:'四川雅安'
+                },
+                {
+                    name:"张三",
+                    phone:'15821955110',
+                    address:'四川雅安'
+                },
+                {
+                    name:"张三",
+                    phone:'15821955110',
+                    address:'四川雅安'
+                },
+                {
+                    name:"张三",
+                    phone:'15821955110',
+                    address:'四川雅安'
+                },
+                {
+                    name:"张三",
+                    phone:'15821955110',
+                    address:'四川雅安'
+                },
+                {
+                    name:"张三",
+                    phone:'15821955110',
+                    address:'四川雅安'
+                }
+            ]
         }
     },
     methods: {
@@ -238,7 +270,7 @@ export default {
     vuex: {
         getters: {
             initClientcount,
-            getPiechart,
+            getColchart,
             getLineschart
         },
         actions: {
@@ -253,116 +285,110 @@ export default {
     },
     created() {
         this.getClientcount(this.loadParam);
-        console.log(this.initClientcount);
-        window.onload = function() {
-            console.log(document.getElementById('module_judge').style.maxHeight)
-            if (document.getElementById('module_judge').style.maxHeight < 500) {
-                document.getElementsByClassName('module_thead')[0].style.paddingRight = '17px'
-            }
-        }
     }
 }
 </script>
 <style scoped>
-.pie_chart {
-    width: 1000px;
-    height: 370px;
-    text-align: center;
-    margin: auto;
-    margin-left:300px;
+.box{
+    overflow: auto;
+    background-color:#f0f0f0
 }
-.Piechart {
+.user_all{
+    overflow: auto;
+}
+.show_type{
+    width: 100%;
+    height:40px;
+    line-height: 30px;
+    padding-top: 5px;
+}
+.line_today{
+    width: 1200px;
+    margin: 0 auto;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 10px;
+}
+.line_chart {
+    width: 1200px;
+    height: 380px;
+    text-align: center;
+    margin: 0 auto;
+    background-color:#fff;
+}
+.linechart {
     width: 100%;
     height: 100%;
 }
-.table {
-    display: table;
+.bar_today{
+    width:1200px;
+    margin: 30px auto;
+    overflow: hidden;
+    background-color:#fff;
+    border-radius: 10px;
 }
-
-.module {
-    position: relative;
+.bar_chart_left{
+    width: 600px;
+    height: 370px;
+    text-align: center;
+    float:left;
+    border-right:1px solid #ccc;;
 }
-
-.module_table {
-    border: 1px solid #ddd;
-    padding: 0;
-    position: absolute;
+.today_list_right{
+    width: 580px;
+    float: right;   
+}
+.barchart {
     width: 100%;
+    height: 100%;
+}
+.user_detail{
+    width: 1200px;
+    height:1100px;
+    margin:0 auto;
+}
+.search{
+    width: 100%;
+    height:75px;
+    background: #fff;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-radius: 10px;
+}
+.user_detail_left{
+    width: 520px;
+    padding-left: 0px;
     float: left;
+    border-radius: 10px;
     overflow: hidden;
 }
-
-.module_thead {
-    position: absolute;
-    z-index: 10;
-    left: 0;
-    right: 0;
-    width: 100%;
+.detail_title{
+    padding-left:20px;
+    line-height: 50px;
+    background: #fafafa
 }
-
-.module_tbody {
-    margin-top: 30px;
-    max-height: 500px;
-    line-height: 25px;
-    overflow: auto;
-}
-
-.module_tr {
-    border-bottom: 1px solid #ddd;
-}
-
-.module_tr:last-of-type {
-    border-bottom: none;
-}
-
-.module_th {
-    background: #f5f7f9;
-    color: #000;
-    float: left;
-    width: 11.111%;
-    line-height: 30px;
-}
-
-.module_td {
-    float: left;
-    width: 11.111%;
-    line-height: 30px;
-}
-
-.module_th,
-.module_td {
-    border-right: 1px solid #ddd;
-}
-
-.module_th:last-of-type,
-.module_td:last-of-type {
-    border-right: none;
-}
-
-.click_change {
-    text-align: left;
-    border: 1px solid #ddd;
-    border-bottom: none;
-    border-right: none;
-    width: 224px;
-    line-height: 30px;
-    margin-top: 20px;
-    border-top: 0px solid #ddd;
-}
-
-.click_change span {
-    padding: 0 20px;
+.detail_num{
     display: inline-block;
-    border-right: 1px solid #ddd;
-    cursor: pointer;
+    float: right;
+    margin-right:20px;
+    color:#ff9e4d
 }
-
-.date_active {
-    background: #fa6705;
-    color: #fff;
+.detail_left_top{
+    width: 100%;
+    height:400px;
+    background: #fff;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 10px;
 }
+.user_detail_right{
+    float: right;
+    height:820px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.acolor{
 
-.btn-warning {
-    background-color: #fa6705;
 }
 </style>
