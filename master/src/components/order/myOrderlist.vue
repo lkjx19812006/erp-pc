@@ -648,6 +648,7 @@ export default {
         },
         newOrder: function() {
             //新建订单时将一些之前填入的信息请空
+            
             this.createParam.goods = [];
             this.createParam.total = "";
             this.createParam.cost = "";

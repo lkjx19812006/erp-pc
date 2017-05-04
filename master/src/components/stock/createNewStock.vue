@@ -55,6 +55,7 @@
                                 <div class="client-detailInfo  col-md-6">
                                     <label class="editlabel" for="system">仓库地址<span class="system_danger" v-if="$validation.stocklocation.required">请输入仓库地址</span></label>
                                     <select class="form-control edit-input" v-model="param.depotName" v-validate:stocklocation="{required:true}">
+                                        <option value="上海">上海</option>
                                     	<option value="亳州">亳州</option>
                                     	<option value="玉林">玉林</option>
                                     	<option value="安国">安国</option>
