@@ -208,6 +208,23 @@ export const freshCharts = ({ dispatch }, getCharList) => {
         });
 };
 
+//我的统计重叠折线图
+export const freshLinesCharts = ({ dispatch }, getCharList) => {
+    if (getCharList) getCharList.load = true;
+    var url = '/crm/api/v1/count/getEmployeeCustomerStatistics?'
+    if(getCharList){
+        url+='&customerTypeId='+getCharList.type
+    }
+
+    Vue.http.get(url)
+        .then((res) => {
+            console.log(res.json())
+            dispatch(types.CHANGE_LINESCHARTS, res.json().result.list);
+        }, (res) => {
+            console.log('fail');
+        });
+};
+
 //折线图
 export const freshLinecharts = ({ dispatch }, getLinechart) => {
     if (getLinechart) getLinechart.load = true;
@@ -4938,15 +4955,15 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
     })
 }
 
-export const editDescription = ({ dispatch }, param) => { //编辑报价描述
+export const editDescription = ({ dispatch }, param) => {//编辑报价描述
     var url = apiUrl.clientList + "/intention/offerDescription"
     var body = {
-        id: param.id,
-        description: param.auditComment
+        id:param.id,
+        description:param.auditComment
     }
     Vue.http({
-        method: 'POST',
-        url: url,
+        method:'POST',
+        url:url,
         emulateHTTP: false,
         body: body,
         emulateJSON: false,
@@ -4954,10 +4971,10 @@ export const editDescription = ({ dispatch }, param) => { //编辑报价描述
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
-    }).then((res) => {
+    }).then((res) =>{
         dispatch(types.UPDATE_OFFERDESCRIPTION, param)
         console.log(res.json())
-    }, (res) => {
+    },(res) =>{
         console.log('提交失败')
     })
 
@@ -4997,7 +5014,7 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
                     unit: arr[i].unit,
                     price: arr[i].price,
                     status: 1,
-                    description: arr[i].description
+                    description:arr[i].description
                 };
                 param.intentionList.push(temp);
                 param.intentionListBack.push(temp);
@@ -9279,7 +9296,7 @@ export const createStockInfo = ({ dispatch }, param) => { //新建库存
     canProcess = parseInt(param.canProcess)
     usableNum = parseInt(param.usableNum)
 
-    specAttribute = '{"' + param.breedName + '":{"规格":' + '"' + param.specAttribute + '"' + ',' + '"片型":' + '"' + param.shape + '"' + '}}'
+    specAttribute = '{"'+param.breedName+'":{"规格":'+'"'+param.specAttribute+'"'+','+'"片型":'+'"'+param.shape+'"'+'}}'
 
     var body = {
         breedId: param.breedId,
@@ -9304,21 +9321,21 @@ export const createStockInfo = ({ dispatch }, param) => { //新建库存
     }).then((res) => {
         console.log(res.json())
 
-        param.specAttribute = specAttribute
+        param.specAttribute=specAttribute
         param.callback({
-                loading: false,
-                breedName: "",
-                breedId: '',
-                depotName: '',
-                depotType: '',
-                cur: 1,
-                all: 1,
-                total: '',
-                show: false
-            })
-            //dispatch(types.ADD_STOCK_LIST, param);
-            //window.location.reload()
-    }, (res) => {
+            loading:false,
+            breedName:"",
+            breedId:'',
+            depotName:'',
+            depotType:'',
+            cur:1,
+            all:1,
+            total:'',
+            show:false
+        })
+        //dispatch(types.ADD_STOCK_LIST, param);
+        //window.location.reload()
+    },(res) =>{
         console.log('fail')
     })
 }
@@ -9360,18 +9377,18 @@ export const editStockInfo = ({ dispatch }, param) => { //修改库存
     }).then((res) => {
         console.log(res.json())
         param.callback({
-                loading: false,
-                breedName: "",
-                breedId: '',
-                depotName: '',
-                depotType: '',
-                cur: 1,
-                all: 1,
-                total: '',
-                show: false
-            })
-            //window.location.reload()
-    }, (res) => {
+            loading:false,
+            breedName:"",
+            breedId:'',
+            depotName:'',
+            depotType:'',
+            cur:1,
+            all:1,
+            total:'',
+            show:false
+        })
+        //window.location.reload()
+    },(res) =>{
         console.log('fail')
     })
 }

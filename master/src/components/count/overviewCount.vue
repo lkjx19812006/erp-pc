@@ -10,24 +10,41 @@
             <!-- 折线图 -->
             <div class="line_today">
                 <h4 class="detail_title bg-info">用户总览
-                    <span class="detail_num">
+                    <span class="detail_num ">
                         <div class="show_type">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.timeType==='year'}" @click="selectTime('year')">
+                                    年
+                                </button>
+                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.timeType==='month'}"
+                                 @click="selectTime('month')">
+                                    月
+                                </button>
+                            </div>
                             <dt class="left transfer marg_top" style="margin-left: 20px">客户类型：</dt>
                             <dd class="left margin_right">
-                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="" @keyup.enter="selectSearch()">
-                                    <option value="产地">产地</option>
-                                    <option value="药厂">药厂</option>
-                                    <option value="药商">药商</option>
-                                    <option value="服务商">服务商</option>
+                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.type" @change="selectType()">
+                                    <option value=''>全部</option>
+                                    <option value='0'>产地</option>
+                                    <option value='1'>药厂</option>
+                                    <option value='2'>药商</option>
+                                    <option value='3'>服务商</option>
                                 </select>
                             </dd>
-                            <dt class="left transfer marg_top" style="margin-left: 20px">按月：</dt>
-                            <dd class="left margin_right">
-                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="" @keyup.enter="selectSearch()">
-                                    <option value="月">月</option>
-                                    <option value="日">日</option>
-                                </select>
+                            <dt v-if="loadParam.timeType!='month'" class="left transfer marg_top" style="margin-left: 20px">请选择年份：</dt>
+                            <dd v-if="loadParam.timeType!='month'" class="left margin_right">
+                                <input type="" name="" class="form-control" @change="changeYear()" v-model='loadParam.year'/>
+                                <mz-datepicker :time.sync="loadParam.year" format="yyyy" >
+                                </mz-datepicker>
                             </dd>
+
+                            <dt v-if="loadParam.timeType!='year'" class="left transfer marg_top" style="margin-left: 20px">请选择年和月：</dt>
+                            <dd v-if="loadParam.timeType!='year'" class="left margin_right">
+                                <mz-datepicker :time.sync="loadParam.yearMonth" format="yyyy/MM">
+                                </mz-datepicker>
+                            </dd>
+                           
+                            
                         </div>
                     </span>
                 </h4>
@@ -72,45 +89,44 @@
                     <dl class="clear left transfer" style="margin-top:20px">
                         <dt class="left transfer marg_top">客户名称：</dt>
                         <dd class="left margin_right">
-                            <input type="text" class="form-control" v-model="" readonly="readonly" placeholder="按回车键搜索" @keyup.enter="selectSearch()" @click=''/>
+                            <input type="text" class="form-control" v-model="" readonly="readonly" placeholder="按回车键搜索" @keyup.enter="" @click=''/>
                         </dd>
-                        <dt class="left transfer marg_top" style="margin-left: 20px">时间：</dt>
+                        <div class="left">
+                            <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
+                            <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss" style='width:30px'>
+                            </mz-datepicker>
+                        </div>
+                        <div class="left">
+                            <dt class="left marg_top">~~</dt>
+                            <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
+                            </mz-datepicker>
+                        </div>
+                        <dt class="left transfer marg_top" style="margin-left: 20px">区域:</dt>
                         <dd class="left margin_right">
-                            <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotName" @keyup.enter="selectSearch()">
-                                <option value="亳州">亳州</option>
-                                <option value="玉林">玉林</option>
-                                <option value="安国">安国</option>
-                                <option value="定西">定西</option>
-                                <option value="成都">成都</option>
-                            </select>
-                        </dd>
-                        <dt class="left transfer marg_top" style="margin-left: 20px">区域：</dt>
-                        <dd class="left margin_right">
-                            <input type="text" class="form-control edit-input" disabled="disabled" placeholder="选择区域" />
-                            <div v-if="country.cnameEn" type="text" class="edit-input">
-                                <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
+                            <div  type="text" class="edit-input">
+                                <v-select :debounce="250" :value.sync="province" :on-change="" :options="initProvince" placeholder="省/Province" label="cname">
                                 </v-select>
                             </div>
                         </dd>
-                        <dt class="left transfer marg_top" style="margin-left: 20px">客户类型：</dt>
+                        <dt class="left transfer marg_top" style="margin-left: 10px">客户类型：</dt>
                         <dd class="left margin_right">
-                            <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotType" @keyup.enter="selectSearch()">
-                                <option value="社会库存">社会库存</option>
-                                <option value="自营库存">自营库存</option>
+                            <select class="form-control edit-input" placeholder="按回车键搜索" v-model=""  @change="selectType()">
+                                    <option value='0'>产地</option>
+                                    <option value='1'>药厂</option>
+                                    <option value='2'>药商</option>
+                                    <option value='3'>服务商</option>
                             </select>
                         </dd>
-                        <button class="btn btn-default" style="margin-left: 140px" @click="showDetail('regionalUser')">查看区域用户</button>
+                        <button class="btn btn-default" style="margin-left: 100px" @click="showDetail('regionalUser')">查看区域用户</button>
                         <button class="btn btn-default" @click="showDetail('customerType')">查看客户类型</button>
-                    </dl>
-                   
-                        
+                    </dl>   
                     
                 </div>
                 <!-- 左侧 -->
                 <div class="user_detail_left">
                     <div class="detail_left_top">
                             <h4 class="detail_title bg-info">新增用户<span class="detail_num"><a href="javascript:void(0);" class="person_num">60人</a>&nbsp<a href="javascript:void(0);" class="btn btn-link" @click="showDetail('newUserDetail')">more>></a></span></h4>
-                            <table class="table table-hover table_color table-striped">
+                            <table class="table table-hover table_color table-bordered table-striped ">
                                 <thead>
                                     <tr>
                                         <th style="min-width:100px;text-align: center;">用户</th>
@@ -132,7 +148,13 @@
                             <pagination :combination="loadParam" slot="page"></pagination>
                     </div>
                     <div class="detail_left_top">
-                         <h4 class="detail_title bg-info">成交用户<span class="detail_num"><a href="javascript:void(0);" class="person_num">人数：60</a><a href="javascript:void(0);" class="person_num">人次：60</a>&nbsp<a href="javascript:void(0);" class="btn btn-link" @click="showDetail('newDealDetail')">more>></a></span></h4>
+                         <h4 class="detail_title bg-info">成交用户
+                             <span class="detail_num">
+                                 <a href="javascript:void(0);" class="person_num">人数：60</a>
+                                 <a href="javascript:void(0);" class="person_num">人次：60</a>&nbsp
+                                 <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('newDealDetail')">more>></a>
+                             </span>
+                         </h4>
                             <table class="table table-hover table_color table-striped">
                                 <thead>
                                     <tr>
@@ -212,7 +234,8 @@ import {
 } from '../../vuex/getters'
 import {
     getClientcount,
-    getProvinceList
+    getProvinceList,
+    freshLinesCharts
 } from '../../vuex/actions'
 
 export default {
@@ -226,12 +249,18 @@ export default {
             loadParam: {
                 loading: true,
                 show: false,
-                color: '#5dc596',
-                size: '15px',
                 cur: 1,
                 all: 4,
                 total: 0,
-                id:7
+                id:7,//国家id
+                type:'',
+                timeType:'month',
+                year:'',
+                yearMonth:''
+            },
+            province: {
+                id: '',
+                cname: ''
             },
             todayData:[
                 {
@@ -272,11 +301,6 @@ export default {
             ]
         }
     },
-    methods: {
-        clickChange: function(currentView) {
-            this.currentView = currentView;
-        }
-    },
     vuex: {
         getters: {
             initClientcount,
@@ -286,7 +310,8 @@ export default {
         },
         actions: {
             getClientcount,
-            getProvinceList
+            getProvinceList,
+            freshLinesCharts
         }
     },
     events: {
@@ -297,13 +322,22 @@ export default {
     },
     methods:{
         showDetail:function(data){
-
             this.$dispatch("showDetail",data)
+        },
+        selectType:function(){
+            this.freshLinesCharts(this.loadParam)
+        },
+        selectTime:function(data){
+            this.loadParam.timeType = data
+        },
+        changeYear:function(){
+            console.log('adsad')
         }
     },
     created() {
         this.getClientcount(this.loadParam);
-        //this.getProvinceList()
+        this.getProvinceList(this.loadParam)
+        this.freshLinesCharts()
     }
 }
 </script>
@@ -320,6 +354,7 @@ export default {
     height:40px;
     line-height: 30px;
     padding-top: 5px;
+    font-size:14px;
 }
 .line_today{
     width: 1200px;

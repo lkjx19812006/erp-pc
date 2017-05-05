@@ -540,10 +540,18 @@ export const getColchart = (state) =>{ //获取柱状图
     return option
 }
 
-export const getRegionalchart = (state) =>{
+export const getRegionalchart = (state) =>{//区域客户中国地图数据
     const option = {
         options:JSON.parse(JSON.stringify(state.echarts.regionalChartOption)),
         load:JSON.parse(JSON.stringify(state.echarts.regionalChartLoading))
+    }
+    return option
+}
+
+export const getCustypechart = (state) =>{ //客户类型折线图数据
+    const option = {
+        options:JSON.parse(JSON.stringify(state.echarts.custypeChartOption)),
+        load:JSON.parse(JSON.stringify(state.echarts.custypeChartLoading))
     }
     return option
 }
