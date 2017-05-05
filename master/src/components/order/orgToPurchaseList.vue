@@ -183,11 +183,11 @@ export default {
         checkedAll: function() {
             this.checked = !this.checked;
             if (this.checked) {
-                this.$store.state.table.basicBaseList.myOrderLinkList.forEach(function(item) {
+                this.$store.state.table.basicBaseList.orgOrderLinkList.forEach(function(item) {
                     item.checked = true;
                 })
             } else {
-                this.$store.state.table.basicBaseList.myOrderLinkList.forEach(function(item) {
+                this.$store.state.table.basicBaseList.orgOrderLinkList.forEach(function(item) {
                     item.checked = false;
                 })
             }
@@ -195,12 +195,12 @@ export default {
         onlyselected: function(sub, id) {
             //this.id = id;
             const _this = this;
-            this.$store.state.table.basicBaseList.myOrderLinkList[sub].checked = !this.$store.state.table.basicBaseList.myOrderLinkList[sub].checked;
-            if (!this.$store.state.table.basicBaseList.myOrderLinkList[sub].checked) {
+            this.$store.state.table.basicBaseList.orgOrderLinkList[sub].checked = !this.$store.state.table.basicBaseList.orgOrderLinkList[sub].checked;
+            if (!this.$store.state.table.basicBaseList.orgOrderLinkList[sub].checked) {
                 _this.checked = false;
             } else {
                 _this.checked = true;
-                this.$store.state.table.basicBaseList.myOrderLinkList.forEach(function(item) {
+                this.$store.state.table.basicBaseList.orgOrderLinkList.forEach(function(item) {
                     if (!item.checked) {
                         _this.checked = false;
                     }

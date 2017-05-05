@@ -54,7 +54,7 @@
                         </div>
                         <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                             <label class="editlabel">药材图片</label>
-                            <press-image :value.sync="param.pics" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                            <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
                         </div>
                         <!-- 当为预售资源时，进口资质和检测报告需要上传 -->
                         <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
@@ -263,10 +263,16 @@
                                     <input type="text" v-model='param.address' class="form-control edit-input" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">到港时间</label>
+                                    <label class="editlabel">到港时间<span class="system_danger" v-if="$validation.arrivetime.required">必填项</span></label>
+                                    <input type="text" v-model="param.arriveTime" v-validate:arrivetime="['required']" v-show="false">
                                     <mz-datepicker :time.sync="param.arriveTime" format="yyyy-MM-dd HH:mm:ss" style="height:36px">
                                     </mz-datepicker>
                                     <button type="button" class="btn btn-default" style="margin-top:-6px" height="24" width="24" @click="reset('arrive')">清空</button>
+                                </div>
+                                <!-- 客户备注 -->
+                                <div class="editpage-input col-md-12" style="padding-left: 0px;padding-right: 30px;">
+                                    <label class="editlabel">备注</label>
+                                    <textarea class="form-control" v-model="param.description" rows="5"></textarea>
                                 </div>
                             </div>
                             <div class="editpageright">

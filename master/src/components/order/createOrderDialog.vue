@@ -49,7 +49,7 @@
                         </div>
                         <!-- 是否样品单： -->
                         <div class="editpage-input col-md-6">
-                            <label class="editlabel">是否样品单：<span class="system_danger" v-if="$validation.sample.required">{{$t('static.required')}}</span>
+                            <label class="editlabel">{{$t('static.sample_order')}}：<span class="system_danger" v-if="$validation.sample.required">{{$t('static.required')}}</span>
                             </label>
                             <input type="text" class="form-control edit-input" v-model="param.sample" v-validate:sample="{required:true}" v-show="false" />
                             <select class="form-control edit-input" v-model="param.sample">
@@ -251,6 +251,7 @@
 
                                     <!-- 成本价格,,必填至多两位小数 -->
                                     <div class="editpage-input col-md-6" v-if="initLogin.orgId!=11&&param.type===1">
+
                                         <label class="editlabel">
                                             {{$t('static.cost_price')}}
                                             <span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span>
@@ -742,7 +743,7 @@ export default {
                 this.breedInfo.number = '';
                 this.breedInfo.unit = '';
                 this.breedInfo.price = '';
-                this.breedInfo.costPrice = '';
+                this.breedInfo.costPrice = 0;
                 if (this.param.type == 0) {
                     this.breedInfo.costPrice = 0;
                 }

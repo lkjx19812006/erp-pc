@@ -313,7 +313,7 @@
                             </a>
                             <a class="operate" v-if="item.onSell==2" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架" />
                             </a>
-                            <a class="operate" v-if="item.type==1" @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" alt="生成订单" />
+                            <a class="operate" v-if="item.type==1&&item.preSell===0" @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" alt="生成订单" />
                             </a>
                             <a class="operate" @click.stop="sengSample(item,$index)">
                                 <img src="/static/images/sample.png" alt="寄样申请" />
