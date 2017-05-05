@@ -3334,6 +3334,9 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         if (search == 'name' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&name=' + param.name
         }
+        if (search == 'id' && param[search] !== '' && param[search] != 'undefined') {
+            clienturl += '&id=' + param.id
+        }
         if (search == 'type' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&type=' + param.type
         }
@@ -6432,6 +6435,9 @@ export const getUserList = ({ dispatch }, param) => { //会员信息列表
     for (var key in param) {
         if (key == 'phone' && param[key] !== '') {
             url += '&phone=' + param[key];
+        }
+        if (key == 'id' && param[key] !== '') {
+            url += '&id=' + param[key];
         }
         if (key == 'fullname' && param[key] !== '') {
             url += '&fullname=' + param[key];

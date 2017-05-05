@@ -10,9 +10,14 @@ import {
     CHANGE_CHARTS,
     CHANGE_LINECHARTS,
     CHANGE_PIECHARTS,
-    CHANGE_LINESCHARTS
+    CHANGE_LINESCHARTS,
+    CHANGE_COLCHARTS,
+    CHANGE_REGIONALCHARTS
 } from '../mutation-types'
-
+import china from '../../assets/map/china.js'
+const randomData = function() {
+    return Math.round(Math.random()*1000);
+}
 const state = {
     barChartOption: {
         tooltip: {
@@ -182,81 +187,222 @@ const state = {
     lineChartLoading: false,
 
     linesChartOption:{
-            title: {
-            text: '折线图堆叠'
+        title: {
+            text: ''
         },
         tooltip: {
-            trigger: 'axis'
+            trigger: 'axis',
+
+            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+            },
+
         },
         legend: {
-            data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+            data: ['新增', '活跃','成交','客户总数','haha总数']
         },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
-        },
-        xAxis: {
+        xAxis: [{
             type: 'category',
-            boundaryGap: false,
-            data: ['周一','周二','周三','周四','周五','周六','周日']
-        },
-        yAxis: {
-            type: 'value'
-        },
-        series: [
-            {
-                name:'邮件营销',
-                type:'line',
-                stack: '总量',
-                data:[120, 132, 101, 134, 90, 230, 210]
-            },
-            {
-                name:'联盟广告',
-                type:'line',
-                stack: '总量',
-                data:[220, 182, 191, 234, 290, 330, 310]
-            },
-            {
-                name:'视频广告',
-                type:'line',
-                stack: '总量',
-                data:[150, 232, 201, 154, 190, 330, 410]
-            },
-            {
-                name:'直接访问',
-                type:'line',
-                stack: '总量',
-                data:[320, 332, 301, 334, 390, 330, 320]
-            },
-            {
-                name:'搜索引擎',
-                type:'line',
-                stack: '总量',
-                data:[820, 932, 901, 934, 1290, 1330, 1320]
+            data: ['1周', '2周', '3周', '4周', '5周', '6周', '7周', '8周', '9周', '10周', '11周', '12周']
+        }],
+        yAxis: [{
+            type: 'value',
+            min: 0,
+            max: 100,
+            interval: 20,
+            axisLabel: {
+                formatter: '{value} 个'
             }
+        }],
+        series: [{
+                name: '新增',
+                type:'line',
+                data: [90, 34, 48, 57, 39, 21, 13, 12, 14, 36, 62, 49],
+                
+            }, {
+                name: '活跃',
+                type:'line',
+                data: [50, 54, 58, 37, 31, 63, 34, 37, 48, 51, 72, 69],
+                
+            },
+            {
+                name: '成交',
+                type:'line',
+                data: [60, 34, 58, 47, 39, 53, 34, 77, 48, 51, 32, 39],
+                
+            },
+            {
+                name: '客户总数',
+                type:'line',
+                data: [80, 55, 48, 51, 31, 63, 34, 37, 48, 23, 42, 44],
+                
+            },
+            {
+                name: 'haha总数',
+                type:'line',
+                data: [11, 22, 33, 44, 55, 66, 34, 37, 48, 23, 42, 44],
+                
+            }
+
         ]
     },linesChartLoading: false,
 
+    regionalChartOption:{
+        title: {
+            text: '区域客户',
+            subtext: '',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data:['iphone3','iphone4','iphone5']
+        },
+        visualMap: {
+            min: 0,
+            max: 2500,
+            left: 'left',
+            top: 'bottom',
+            text: ['高','低'],           // 文本，默认为数值文本
+            calculable: true
+        },
+        toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                dataView: {readOnly: false},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        series: [
+            {
+                name: 'iphone3',
+                type: 'map',
+                mapType: 'china',
+                roam: false,
+                label: {
+                    normal: {
+                        show: true
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {name: '北京',value: randomData() },
+                    {name: '天津',value: randomData() },
+                    {name: '上海',value: randomData() },
+                    {name: '重庆',value: randomData() },
+                    {name: '河北',value: randomData() },
+                    {name: '河南',value: randomData() },
+                    {name: '云南',value: randomData() },
+                    {name: '辽宁',value: randomData() },
+                    {name: '黑龙江',value: randomData() },
+                    {name: '湖南',value: randomData() },
+                    {name: '安徽',value: randomData() },
+                    {name: '山东',value: randomData() },
+                    {name: '新疆',value: randomData() },
+                    {name: '江苏',value: randomData() },
+                    {name: '浙江',value: randomData() },
+                    {name: '江西',value: randomData() },
+                    {name: '湖北',value: randomData() },
+                    {name: '广西',value: randomData() },
+                    {name: '甘肃',value: randomData() },
+                    {name: '山西',value: randomData() },
+                    {name: '内蒙古',value: randomData() },
+                    {name: '陕西',value: randomData() },
+                    {name: '吉林',value: randomData() },
+                    {name: '福建',value: randomData() },
+                    {name: '贵州',value: randomData() },
+                    {name: '广东',value: randomData() },
+                    {name: '青海',value: randomData() },
+                    {name: '西藏',value: randomData() },
+                    {name: '四川',value: randomData() },
+                    {name: '宁夏',value: randomData() },
+                    {name: '海南',value: randomData() },
+                    {name: '台湾',value: randomData() },
+                    {name: '香港',value: randomData() },
+                    {name: '澳门',value: randomData() }
+                ]
+            },
+            {
+                name: 'iphone4',
+                type: 'map',
+                mapType: 'china',
+                label: {
+                    normal: {
+                        show: true
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {name: '北京',value: randomData() },
+                    {name: '天津',value: randomData() },
+                    {name: '上海',value: randomData() },
+                    {name: '重庆',value: randomData() },
+                    {name: '河北',value: randomData() },
+                    {name: '安徽',value: randomData() },
+                    {name: '新疆',value: randomData() },
+                    {name: '浙江',value: randomData() },
+                    {name: '江西',value: randomData() },
+                    {name: '山西',value: randomData() },
+                    {name: '内蒙古',value: randomData() },
+                    {name: '吉林',value: randomData() },
+                    {name: '福建',value: randomData() },
+                    {name: '广东',value: randomData() },
+                    {name: '西藏',value: randomData() },
+                    {name: '四川',value: randomData() },
+                    {name: '宁夏',value: randomData() },
+                    {name: '香港',value: randomData() },
+                    {name: '澳门',value: randomData() }
+                ]
+            },
+            {
+                name: 'iphone5',
+                type: 'map',
+                mapType: 'china',
+                label: {
+                    normal: {
+                        show: true
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {name: '北京',value: randomData() },
+                    {name: '天津',value: randomData() },
+                    {name: '上海',value: randomData() },
+                    {name: '广东',value: randomData() },
+                    {name: '台湾',value: randomData() },
+                    {name: '香港',value: randomData() },
+                    {name: '澳门',value: randomData() }
+                ]
+            }
+        ]
+    },regionalChartLoading: false,
+
     PieChartOption: {
-          tooltip : {
+        tooltip : {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
-          },
-          color: ['#fa6705', '#ccc'],
-          legend: {
+        },
+        color: ['#fa6705', '#ccc'],
+        legend: {
             orient : 'vertical',
             x : 'left',
             data:['已完成','未完成'],
             show: false
-          },
-          toolbox: {
+        },
+        toolbox: {
             show : true,
             feature : {
               //mark : {show: true},
@@ -264,9 +410,9 @@ const state = {
               restore : {show: false},
               //saveAsImage : {show: true}
             }
-          },
-          calculable : false,
-          series : [
+        },
+        calculable : false,
+        series : [
             {
               name:'饼图实例',
               type:'pie',
@@ -278,7 +424,66 @@ const state = {
                 ]
             }
           ]
-      },PieChartLoading: false
+      },PieChartLoading: false,
+
+    ColChartOption:{
+        title: {
+            text: ''
+        },
+        tooltip : {
+            trigger: 'item',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '7%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data :  ['新增用户','新增活跃用户','新增成交用户','用户总数'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                type:'bar',
+                barWidth: '60px',
+                data:[150, 52, 200, 110],
+                itemStyle: {
+                    normal: {
+                        color: function(params) {
+                            var colorList = [
+                                '#91c7ae','#c23531', '#2f4554', '#61a0a8',
+                                '#d48265'
+                            ];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{c}'
+                    }
+                }
+               
+            }
+             
+        ]
+      },ColChartLoading:false
 }
 
 const mutations = {
@@ -302,10 +507,22 @@ const mutations = {
         state.linesChartLoading=false;
     },
     
+    [CHANGE_REGIONALCHARTS](state,data){
+        state.regionalChartOption.xAxis.data = data.results.dateList;
+        state.regionalChartOption.series.data = data.results.achieveList;
+        stete.linesChartLoading = false;
+    },
+
     [CHANGE_PIECHARTS](state, data) {
         state.PieChartOption.legend.data = data.results.dateList;
         state.PieChartOption.series.data = data.results.achieveList;
         state.PieChartLoading=false;
+    },
+
+    [CHANGE_COLCHARTS](state,data) {
+        state.linesChartOption.xAxis.data = data.results.dateList;
+        state.linesChartOption.series.data = data.results.achieveList;
+        state.linesChartLoading=false;
     }
 }
 

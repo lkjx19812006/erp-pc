@@ -532,3 +532,18 @@ export const getLineschart = (state) =>{//获取折线图
     return option;
 }
 
+export const getColchart = (state) =>{ //获取柱状图
+    const option = {
+        options:JSON.parse(JSON.stringify(state.echarts.ColChartOption)),
+        load:JSON.parse(JSON.stringify(state.echarts.ColChartLoading))
+    }
+    return option
+}
+
+export const getRegionalchart = (state) =>{
+    const option = {
+        options:JSON.parse(JSON.stringify(state.echarts.regionalChartOption)),
+        load:JSON.parse(JSON.stringify(state.echarts.regionalChartLoading))
+    }
+    return option
+}

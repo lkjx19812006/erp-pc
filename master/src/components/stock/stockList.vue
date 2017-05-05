@@ -18,6 +18,7 @@
                     <dd class="left margin_right">
                         <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotName" @keyup.enter="selectSearch()">
                             <option value="亳州">亳州</option>
+                            <option value="上海">上海</option>
                             <option value="玉林">玉林</option>
                             <option value="安国">安国</option>
                             <option value="定西">定西</option>
@@ -123,8 +124,8 @@
                        			usableNum:item.usableNum,
                        			unitId:item.unitId
                        		})">加入购物车</button>
-							<button class="btn btn-default" v-if="item.depotType=='社会库存'" @click="updataStock(item)">编辑</button>
-							<button class="btn btn-default" v-if="item.depotType=='社会库存'" @click="deleteStock({
+							<button class="btn btn-default" v-if="item.depotType=='社会库存'&&this.initLogin.id==item.id" @click="updataStock(item)">编辑</button>
+							<button class="btn btn-default" v-if="item.depotType=='社会库存'&&this.initLogin.id==item.id" @click="deleteStock({
 											id:item.id,
                                             sub:$index,
                                             show:true,
@@ -153,7 +154,7 @@ import stockCart from '../stock/stockCart'
 import createStock from '../stock/createNewStock'
 import filter from '../../filters/filters'
 import {getStockList , importStock, deleteStockInfo} from '../../vuex/actions'
-import {initStockList} from '../../vuex/getters'
+import {initStockList,initLogin} from '../../vuex/getters'
 export default {
 	components:{
 		mglistModel,
@@ -172,7 +173,8 @@ export default {
 			deleteStockInfo
 		},
 		getters:{
-			initStockList
+			initStockList,
+            initLogin
 		}
 	},
 	data(){

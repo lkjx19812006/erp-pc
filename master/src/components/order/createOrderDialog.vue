@@ -911,6 +911,7 @@ export default {
         }
     },
     created() {
+               
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
         this.getEmployeeList(this.orgParam);

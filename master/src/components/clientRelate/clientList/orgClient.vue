@@ -18,6 +18,11 @@
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
+                    <!-- 客户id -->
+                    <dt class="left transfer marg_top" style="margin-left:5px">{{$t("static.client_id")}}：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.id" placeholder="{{$t('static.Enter_search')}}" @keyup.enter="selectSearch()">
+                    </dd>
                 </dl>
                 <dl class="clear left transfer">
                     <dt class="left transfer marg_top">{{$t("static.province_of_phone")}}：</dt>
@@ -311,6 +316,7 @@ export default {
                 link: '/customer/orgDistributed',
                 key: 'orgCustomerList',
                 name: '',
+                id:'',
                 phone: '',
                 employeeId: '',
                 employeeName: '',
@@ -426,6 +432,7 @@ export default {
         },
         resetCondition: function() {
             this.loadParam.name = '';
+            this.loadParam.id = '';
             this.loadParam.phone = '';
             this.loadParam.employeeId = '';
             this.loadParam.employeeName = '';

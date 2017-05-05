@@ -19,6 +19,11 @@
                             <dd class="left">
                                 <input type="text" class="form-control" v-model="loadParam.fullname" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                             </dd>
+                            <!-- 客户id -->
+                            <dt class="left transfer marg_top" style="margin-left:5px">{{$t("static.loginClient_id")}}：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.id" placeholder="{{$t('static.Enter_search')}}" @keyup.enter="selectSearch()">
+                            </dd>
                         </dl>
                         <dl class="clear left transfer">
                             <dt class="left transfer marg_top" style="letter-spacing:8px">来源：</dt>
@@ -377,6 +382,7 @@ export default {
                 loading: true,
                 show: false,
                 fullname: '',
+                id:'',
                 source: '',
                 bizMain: '',
                 bizType: '',
@@ -521,6 +527,7 @@ export default {
         },
         resetCondition: function() {
             this.loadParam.fullname = "";
+            this.loadParam.id = "";
             this.loadParam.source = "";
             this.loadParam.bizMain = "";
             this.loadParam.bizType = "";
