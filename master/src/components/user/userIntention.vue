@@ -263,10 +263,16 @@
                                     <input type="text" v-model='param.address' class="form-control edit-input" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">到港时间</label>
+                                    <label class="editlabel">到港时间<span class="system_danger" v-if="$validation.arrivetime.required">必填项</span></label>
+                                    <input type="text" v-model="param.arriveTime" v-validate:arrivetime="['required']" v-show="false">
                                     <mz-datepicker :time.sync="param.arriveTime" format="yyyy-MM-dd HH:mm:ss" style="height:36px">
                                     </mz-datepicker>
                                     <button type="button" class="btn btn-default" style="margin-top:-6px" height="24" width="24" @click="reset('arrive')">清空</button>
+                                </div>
+                                <!-- 客户备注 -->
+                                <div class="editpage-input col-md-12" style="padding-left: 0px;padding-right: 30px;">
+                                    <label class="editlabel">备注</label>
+                                    <textarea class="form-control" v-model="param.description" rows="5"></textarea>
                                 </div>
                             </div>
                             <div class="editpageright">
