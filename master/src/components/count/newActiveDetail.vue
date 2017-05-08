@@ -63,14 +63,10 @@
 </template>
 <script>
 import {
-    initMyOrderCount,
-    initMyTimeOrderCount,
-    initOrderStatics
+
 } from '../../vuex/getters'
 import {
-    getOrderCount,
-    getOrderCountList,
-    getTimeOrderCount
+ 
 } from '../../vuex/actions'
 import filter from '../../filters/filters'
 import pagination from '../pagination'
@@ -106,14 +102,10 @@ export default {
     },
     vuex: {
         getters: {
-            initMyOrderCount,
-            initMyTimeOrderCount,
-            initOrderStatics
+
         },
         actions: {
-            getOrderCount,
-            getTimeOrderCount,
-            getOrderCountList
+
         }
     },
     methods:{

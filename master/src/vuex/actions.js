@@ -212,14 +212,35 @@ export const freshCharts = ({ dispatch }, getCharList) => {
 export const freshLinesCharts = ({ dispatch }, getCharList) => {
     if (getCharList) getCharList.load = true;
     var url = '/crm/api/v1/count/getEmployeeCustomerStatistics?'
-    if(getCharList){
+    if(getCharList.type){
         url+='&customerTypeId='+getCharList.type
     }
-
+    if(getCharList.year.length!=0){
+        url+='&dateType=month'+'&starTime='+getCharList.year[0]+'&endTime='+getCharList.year[1]
+    }
+    if(getCharList.monthArr.length!=0){
+        url+='&dateType=day'+'&starTime='+getCharList.monthArr[0]+'&endTime='+getCharList.monthArr[1]
+    }
     Vue.http.get(url)
-        .then((res) => {
-            console.log(res.json())
+        .then((res) => { 
+            if(res.json().result==null) {
+                console.log("没有数据")
+                return
+            }          
             dispatch(types.CHANGE_LINESCHARTS, res.json().result.list);
+        }, (res) => {
+            console.log('fail');
+        });
+};
+
+//我的统计柱状图
+export const freshColCharts = ({ dispatch }, getCharList) => {    
+    Vue.http.get(url)
+        .then((res) => { 
+            if(res.json().result==null) {
+                return
+            }          
+            dispatch(types.CHANGE_COLCHARTS, res.json().result.list);
         }, (res) => {
             console.log('fail');
         });
@@ -5295,12 +5316,14 @@ export const createOrderByStock = ({ dispatch }, param) => { //库存列表页�
         console.log("success");
         param.show = false;
         if (param.callback) {
-            param.callback(res.json().msg + "，稍后将跳转到我的订单页面");
+            param.callback(res.json().msg + "，生成订单成功");
         }
 
     }, (res) => {
         param.loading = false;
-        console.log("提交失败");
+        if (param.callback) {
+            param.callback(res.json().msg + "，服务器错误，提交失败");
+        }
         param.show = false
     })
 }

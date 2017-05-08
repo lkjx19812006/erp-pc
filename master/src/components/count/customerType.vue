@@ -92,11 +92,11 @@
 import pagination from '../pagination'
 
 import {
-    initClientcount,
+
     getCustypechart
 } from '../../vuex/getters'
 import {
-    getClientcount
+
 } from '../../vuex/actions'
 
 export default {
@@ -106,7 +106,7 @@ export default {
     data() {
         return {
             loadParam: {
-                loading: true,
+                loading: false,
                 show: false,
                 color: '#5dc596',
                 size: '15px',
@@ -146,17 +146,14 @@ export default {
     },
     vuex: {
         getters: {
-            initClientcount,
             getCustypechart
         },
         actions: {
-            getClientcount
         }
     },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getClientcount(this.loadParam);
         },
     },
     methods:{
@@ -165,7 +162,7 @@ export default {
     	}
     },
     created() {
-        this.getClientcount(this.loadParam);
+
         console.log(this.getCustypechart)
     }
 }

@@ -221,24 +221,24 @@ const state = {
         series: [{
                 name: '新增',
                 type:'line',
-                data: [90, 34, 48, 57, 39, 21, 13, 12, 14, 36, 62, 49],
+                data: [10,13, 20, 18, 11, 16, 13, 12, 14, 12, 11, 3],
                 
             }, {
                 name: '活跃',
                 type:'line',
-                data: [50, 54, 58, 37, 31, 63, 34, 37, 48, 51, 72, 69],
+                data: [3, 11, 12, 14, 12, 13, 20, 15, 20, 5, 3, 8],
                 
             },
             {
                 name: '成交',
                 type:'line',
-                data: [60, 34, 58, 47, 39, 53, 34, 77, 48, 51, 32, 39],
+                data: [6, 14, 18, 17, 3, 13, 14, 17, 4, 11, 12, 19],
                 
             },
             {
                 name: '客户总数',
                 type:'line',
-                data: [80, 55, 48, 51, 31, 63, 34, 37, 48, 23, 42, 44],
+                data: [10, 15, 4, 11, 3, 13, 14, 17, 18, 20, 12, 14],
                 
             },
         ]
@@ -311,7 +311,7 @@ const state = {
             trigger: 'item',
             formatter: function(params) {  
                 var res = params.name+'<br/>';  
-                var myseries = option.series;  
+                var myseries = options.series;  
                 for (var i = 0; i < myseries.length; i++) {  
                     res+= myseries[i].name;  
                     for(var j=0;j<myseries[i].data.length;j++){  

@@ -555,3 +555,7 @@ export const getCustypechart = (state) =>{ //客户类型折线图数据
     }
     return option
 }
+
+export const getYear = (state) =>{
+    return JSON.parse(JSON.stringify(state.table.yearNum));
+}

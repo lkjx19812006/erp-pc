@@ -10,34 +10,11 @@
             </div>
             <!-- 折线图 -->
             <div class="line_today">
-                <h4 class="detail_title bg-info">用户总览
-                    <span class="detail_num">
-                        <div class="show_type">
-                            <dt class="left transfer marg_top" style="margin-left: 20px">客户类型：</dt>
-                            <dd class="left margin_right">
-                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="" @keyup.enter="">
-                                    <option value="产地">产地</option>
-                                    <option value="药厂">药厂</option>
-                                    <option value="药商">药商</option>
-                                    <option value="服务商">服务商</option>
-                                </select>
-                            </dd>
-                            <dt class="left transfer marg_top" style="margin-left: 20px">按月：</dt>
-                            <dd class="left margin_right">
-                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.depotType" @keyup.enter="selectSearch()">
-                                    <option value="月">月</option>
-                                    <option value="日">日</option>
-                                </select>
-                            </dd>
-                        </div>
-                    </span>
-                </h4>
-                
+                <h4 class="detail_title bg-info">用户总览</h4>               
                 <div class="line_chart">
                     <div class="linechart" v-echarts="getRegionalchart.options" :loading="getRegionalchart.load"></div>
                 </div>
-            </div>
-            
+            </div>            
             <!-- 用户详情 -->
             <div class="user_detail">
                 <div class="user_detail_right">
@@ -81,8 +58,6 @@
 
                         </tbody>
                     </table>
-                    <!--底部分页-->
-                    <pagination :combination="loadParam" slot="page"></pagination>
                 </div>
             </div>
         </div>
@@ -91,12 +66,10 @@
 <script>
 import pagination from '../pagination'
 import {
-    initClientcount,
-    getColchart,
     getRegionalchart
 } from '../../vuex/getters'
 import {
-    getClientcount
+
 } from '../../vuex/actions'
 
 export default {
@@ -106,7 +79,7 @@ export default {
     data() {
         return {
             loadParam: {
-                loading: true,
+                loading: false,
                 show: false,
                 color: '#5dc596',
                 size: '15px',
@@ -161,18 +134,14 @@ export default {
     },
     vuex: {
         getters: {
-            initClientcount,
-            getColchart,
             getRegionalchart
         },
         actions: {
-            getClientcount
         }
     },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getClientcount(this.loadParam);
         },
     },
     methods:{
@@ -181,7 +150,6 @@ export default {
     	}
     },
     created() {
-        this.getClientcount(this.loadParam);
     }
 }
 </script>
