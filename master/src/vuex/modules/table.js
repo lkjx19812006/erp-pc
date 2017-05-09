@@ -138,7 +138,9 @@ import {
     STOCK_LIST,
     DELETE_STOCK_DATA,
     ADD_STOCK_LIST,
-    UPDATE_OFFERDESCRIPTION
+    UPDATE_OFFERDESCRIPTION,
+    OFFER_MESSAGE_TABLE,
+    CLEAR_NOTICE_TABLE
 } from '../mutation-types'
 
 
@@ -263,6 +265,8 @@ const state = {
     basicBaseList: {
         //待办事项列表
         backlogList: [],
+        //报价项列表
+        offerMessageList:[],
         //流程记录
         flowRecord: [],
         //通知列表
@@ -1155,7 +1159,8 @@ const state = {
     dictionary: [{ fileName: '', dictionary: {}, arr: [], isEdit: false }],
     orgCount: {}, //部门统计state
     stockList: [{ checked: false }, { checked: false }],
-    stockCartList: []
+    stockCartList: [],
+    yearNum:[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030]
 }
 
 const mutations = {
@@ -1165,11 +1170,17 @@ const mutations = {
     [BACKLOG_TABLE](state, data) {
         state.basicBaseList.backlogList = data;
     },
+    [CLEAR_NOTICE_TABLE](state, data) {
+        state.basicBaseList.noticeList = [];
+    },
+    [OFFER_MESSAGE_TABLE](state,data){
+        state.basicBaseList.offerMessageList = data;
+    },
     [FLOW_RECORD_TABLE](state, data) {
         state.basicBaseList.flowRecord = data;
     },
     [NOTICE_TABLE](state, data) {
-        state.basicBaseList.noticeList = data;
+        state.basicBaseList.noticeList = state.basicBaseList.noticeList.concat(data);
         console.log(state.basicBaseList.noticeList)
     },
 
@@ -1956,13 +1967,10 @@ const mutations = {
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerCurrency = data.currency;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].exchangeRate = data.exchangeRate;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].origCurrency = data.origCurrency;
-
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].supplierName = data.supplierName;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].supplier = data.supplier;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].product = data.product;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offererName = data.offererName;
-
-
         state.basicBaseList.intlIntentionDetail.itemsTotal = data.itemsTotal;
         state.basicBaseList.intlIntentionInquireList[data.lastIndex].inquire = 2; //原材料报价后将inquire置为2
 
@@ -1983,8 +1991,6 @@ const mutations = {
             state.basicBaseList.intlIntentionDetail.offers.arr[data.index].comment = data.comment;
             state.basicBaseList.intlIntentionDetail.offersTotal = data.offersTotal;
         }
-
-
     },
 
     [DEL_OTHER_OFFER](state, data) { //删除国际意向其他报价
@@ -2006,7 +2012,6 @@ const mutations = {
             console.log('上传的报价文件');
             state.basicBaseList.intlIntentionDetail.offerFiles.arr.unshift(data);
         }
-
     },
 
     [DEL_INTL_INTENT_FILE](state, data) { //删除国际意向文件
@@ -2018,8 +2023,6 @@ const mutations = {
             console.log('删除的报价文件');
             state.basicBaseList.intlIntentionDetail.offerFiles.arr.splice(data.index, 1);
         }
-
-
     },
 
 

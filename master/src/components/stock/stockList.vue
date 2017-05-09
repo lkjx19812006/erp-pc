@@ -5,6 +5,7 @@
 	<create-stock :param='createParam' v-if='createParam.show'></create-stock>
 	<import-excel :param='importParam' v-if='importParam.show'></import-excel>
 	<deletestock-model :param='deleteParam' v-if='deleteParam.show'></deletestock-model>
+    <tipsdialog-model :param='tipsParam' v-if='tipsParam.show'></tipsdialog-model>
 	<mglist-model>
 		<!-- 头部搜索-->
         <div slot="top">
@@ -85,11 +86,12 @@
                         <th></th>
                         <th style="min-width:150px;text-align: center;">药材名称</th>
                         <th style="min-width:150px;text-align: center;">入库时间</th>
-                        <th style="min-width:150px;text-align: center;">规格</th>
-                        <th style="min-width:150px;text-align: center;">片型</th>
+                        <th style="min-width:120px;text-align: center;">联系业务员</th>
+                        <th style="min-width:120px;text-align: center;">规格</th>
+                        <th style="min-width:120px;text-align: center;">片型</th>
                         <th style="min-width:150px;text-align: center;">产地</th>
-                        <th style="min-width:150px;text-align: center;">库存可用量</th>
-                        <th style="min-width:150px;text-align: center;">库存单位</th>
+                        <th style="min-width:120px;text-align: center;">库存可用量</th>
+                        <th style="min-width:120px;text-align: center;">库存单位</th>
                         <th style="min-width:150px;text-align: center;">仓库名称</th> 
                         <th style="min-width:150px;text-align: center;">库存类型</th>                    
                         <th style="min-width:300px;text-align: center;">操作</th>
@@ -109,6 +111,7 @@
                         </td>
                         <td>{{item.breedName}}</td>
                         <td>{{item.ctime | timeFilter}}</td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.specAttribute | specFilter_a}}</td>
                         <td>{{item.specAttribute | specFilter_b}}</td>
                         <td>{{item.location}}</td>
@@ -124,8 +127,8 @@
                        			usableNum:item.usableNum,
                        			unitId:item.unitId
                        		})">加入购物车</button>
-							<button class="btn btn-default" v-if="item.depotType=='社会库存'&&this.initLogin.id==item.id" @click="updataStock(item)">编辑</button>
-							<button class="btn btn-default" v-if="item.depotType=='社会库存'&&this.initLogin.id==item.id" @click="deleteStock({
+							<button class="btn btn-default" v-if="item.depotType=='社会库存'&&this.initLogin.id==item.employee" @click="updataStock(item)">编辑</button>
+							<button class="btn btn-default" v-if="item.depotType=='社会库存'&&this.initLogin.id==item.employee" @click="deleteStock({
 											id:item.id,
                                             sub:$index,
                                             show:true,
@@ -146,6 +149,7 @@ import mglistModel from '../mguan/mgListComponent.vue'
 import importExcel from '../../components/purchaseOrder/indentExcelImport.vue'
 import deletestockModel from '../stock/deleteStockTip'
 import breedSearch from '../../components/Intention/breedsearch.vue'
+import tipsdialogModel from '../tips/tipDialog'
 import changeMenu from '../../components/tools/tabs/tabs.js'
 import common from '../../common/common'
 import pagination from '../pagination'
@@ -164,7 +168,8 @@ export default {
 		breedSearch,
 		importExcel,
 		createStock,
-		deletestockModel
+		deletestockModel,
+        tipsdialogModel
 	},
 	vuex:{
 		actions:{
@@ -193,7 +198,6 @@ export default {
 			cartData:{
 				loading: false,
                 show: false,
-                //link: '/intention/addSellOrderByOffer',
                 callback: this.callback,
                 orderStatus:0,
                 customer: '', //客户ID
@@ -223,6 +227,11 @@ export default {
                 callback:this.callback ,
                 index:''               
 			},
+            tipsParam:{
+                show:false,
+                name:'',
+                alert: true
+            },
 			importParam: {
                 loading: false,
                 show: false,
@@ -322,7 +331,9 @@ export default {
 			} 
 			return result; 
 		},
-		callback:function(){//生成订单后，清空购物车
+		callback:function(name){//生成订单后，清空购物车
+            this.tipsParam.name = name
+            this.tipsParam.show = true
 			this.$store.state.table.stockCartList = [];
 			this.cartData.leng=0
 		},
@@ -378,6 +389,7 @@ export default {
 	},
 	created(){
 		this.getStockList(this.loadParam)
+        console.log(this.initLogin.id)
 		this.watachStock()
 	},
 	ready() {

@@ -20,17 +20,17 @@ export default (router) => router.map({
         subRoutes: {
             '/': {
                 component: function(resolve) { //登录之后显示的
-                    require(['./views/main'], resolve)
+                    require(['./views/myMessage'], resolve)
                 }
             },
             '/*any': {
                 component: function(resolve) {
-                    require(['./views/message'], resolve)
+                    require(['./views/myMessage'], resolve)
                 }
             },
             '/main': {
                 component: function(resolve) {
-                    require(['./views/main'], resolve)
+                    require(['./views/myMessage'], resolve)
                 }
             },
             '/count': {
@@ -147,6 +147,11 @@ export default (router) => router.map({
             '/stock': {
                 component: function(resolve) {
                     require(['./views/stock'], resolve)
+                }
+            },
+            '/myMessage': {
+                component: function(resolve) {
+                    require(['./views/main'], resolve)
                 }
             }
 
