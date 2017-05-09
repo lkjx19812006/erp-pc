@@ -249,7 +249,7 @@
                                         </div>
                                     </div>
                                     <!-- 成本价格,必填至多两位小数 -->
-                                    <div class="editpage-input col-md-6" v-if="this.initLogin.orgId!=='11'&&param.type==1">
+                                    <div class="editpage-input col-md-6" v-if="this.initLogin.orgId!='11'&&param.type==1">
                                         <label class="editlabel">
                                             {{$t('static.cost_price')}}
                                             <span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span>
@@ -911,7 +911,7 @@ export default {
         }
     },
     created() {
-               
+
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
         this.getEmployeeList(this.orgParam);
