@@ -12,9 +12,15 @@
       </div>
       <div class="employee_message_view" v-for="item in backloglist" @click='selectIndex=$index' :class="{actColor:$index===selectIndex}">
         <div class="message_view_left">
-          <span></span>
-          <p>{{item.taskDesc}}</p>
-          <time>{{item.date}}</time>
+          <span>标题：{{item.title}}
+                                <label v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)" style="position:relative; bottom:-3px; float:right" v-if="loadparam.type==0">
+                                </label>
+                            </span>
+          <p>内容：{{item.message }}</p>
+          <time>{{item.mtime}}</time>
+          <div class="message_view_right">
+            <a @click="showDetail(item)">{{$t('static.details')}}</a>
+          </div>
         </div>
         <div class="message_view_right" v-if="item.bizType=='order_validate'">
         </div>
@@ -47,6 +53,9 @@ export default {
   methods: {
     refresh() {
       console.log('asdasdadas');
+    },
+    showDetail(item) {
+      console.log(item);
     }
   }
 }
@@ -83,6 +92,7 @@ export default {
 .message_view_left {
   color: #333;
   font-size: 15px;
+  white-space: normal;
 }
 
 .message_view_left span {

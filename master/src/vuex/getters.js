@@ -51,6 +51,12 @@ export const initBacklogList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.backlogList));
 }
 
+
+/*---待处理的报价消息---*/
+export const initOfferMessageList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.offerMessageList));
+}
+
 /*---流程记录---*/
 export const initFlowRecord = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.flowRecord));
@@ -540,10 +546,22 @@ export const getColchart = (state) =>{ //获取柱状图
     return option
 }
 
-export const getRegionalchart = (state) =>{
+export const getRegionalchart = (state) =>{//区域客户中国地图数据
     const option = {
         options:JSON.parse(JSON.stringify(state.echarts.regionalChartOption)),
         load:JSON.parse(JSON.stringify(state.echarts.regionalChartLoading))
     }
     return option
+}
+
+export const getCustypechart = (state) =>{ //客户类型折线图数据
+    const option = {
+        options:JSON.parse(JSON.stringify(state.echarts.custypeChartOption)),
+        load:JSON.parse(JSON.stringify(state.echarts.custypeChartLoading))
+    }
+    return option
+}
+
+export const getYear = (state) =>{
+    return JSON.parse(JSON.stringify(state.table.yearNum));
 }

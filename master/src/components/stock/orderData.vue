@@ -29,9 +29,10 @@
 			            </table>
 	                    <div class="good-num">
 	                    	<span class="tip-title">商品数量:</span>
-	                    	<input type="number" name="" class="tip-input" v-model="orderDetail.breedNum" v-validate:number="{'required':true,min:0}">
+	                    	<input type="number" name="" class="tip-input" v-model="orderDetail.breedNum" v-validate:number="{'required':true,min:0,max:param.usableNum}">
 	                    	<p class="error-tip" v-if="$validation.number.required">数量不能为空</p>
 	                    	<p class="error-tip" v-if="$validation.number.min">数量不能小于0</p>
+	                    	<p class="error-tip" v-if="$validation.number.max">数量不能大于库存数量</p>
 	                    </div>
 						<div class="good-price">
 							<span class="tip-title">销售价格:</span>

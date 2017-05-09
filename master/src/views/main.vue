@@ -38,29 +38,16 @@
                             </span>
               <p>内容：{{item.message }}</p>
               <time>{{item.mtime}}</time>
-              <div class="message_view_right">
-                <Poptip placement="left" trigger="hover">
-                  <a>{{$t('static.details')}}</a>
-                  <div class="api order-detail" slot="content">
-                    {{item.message}}
-                  </div>
-                </Poptip>
-                <a @click="read(item.id)" v-if="noticeParam.type==0">{{$t('static.Read')}}</a>
-              </div>
             </div>
           </div>
           <infinite-loading :on-infinite="onInfinite" :distance="10"></infinite-loading>
         </div>
-        <!-- 底部分页 -->
-        <!--   <div class="page" v-if="this.initNoticeList.length!==0">
-          <pagination :combination="noticeParam" slot="page"></pagination>
-        </div> -->
       </div>
       <div class="employee_right col-md-4 col-xs-12">
         <message-view :loadparam="loadParam" :backloglist="initBacklogList"></message-view>
       </div>
       <div class="employee_right col-md-4 col-xs-12">
-        <offer-message-view :loadparam="loadParam" :backloglist="initBacklogList"></offer-message-view>
+        <offer-message-view :loadparam="offerNoticeParam" :backloglist="initOfferMessageList"></offer-message-view>
       </div>
     </div>
   </div>
@@ -74,12 +61,14 @@ import offerMessageView from '../components/message/offerMessage'
 import {
   getList,
   initBacklogList,
-  initNoticeList
+  initNoticeList,
+  initOfferMessageList
 } from '../vuex/getters'
 import {
   getBacklogList,
   getNoticeList,
-  readNotice
+  readNotice,
+  getOfferMessageList
 } from '../vuex/actions'
 export default {
   components: {
@@ -116,6 +105,20 @@ export default {
         read: "0",
         callback: ''
       },
+      offerNoticeParam: {
+        loading: true,
+        bizType: ['offer'],
+        link: '/notification/queryToday',
+        type: 0, //0/1/2,今日/三天/已读通知
+        color: '#5dc596',
+        size: '15px',
+        cur: 1,
+        all: 7,
+        total: 0,
+        id: null,
+        read: "0",
+        callback: ''
+      },
       tipParam: {
         show: false,
         alert: true,
@@ -133,18 +136,20 @@ export default {
     getters: {
       getList,
       initBacklogList,
-      initNoticeList
+      initNoticeList,
+      initOfferMessageList
     },
     actions: {
       getBacklogList,
       getNoticeList,
-      readNotice
+      readNotice,
+      getOfferMessageList
     },
   },
   methods: {
     onInfinite() {
       if (this.initNoticeList.length == 0) {
-         return setTimeout(() => {
+        return setTimeout(() => {
           this.$broadcast('$InfiniteLoading:loaded');
         }, 1000);
       }
@@ -158,10 +163,10 @@ export default {
           this.$broadcast('$InfiniteLoading:loaded');
         }, 500);
       } else {
-         setTimeout(() => {
-           this.$broadcast('$InfiniteLoading:complete');
+        setTimeout(() => {
+          this.$broadcast('$InfiniteLoading:complete');
         }, 500);
-       
+
       }
     },
     selectType: function(type) {
@@ -207,6 +212,7 @@ export default {
       }
     },
     refreshNotice: function() {
+      this.noticeParam.cur=1;
       this.getNoticeList(this.noticeParam);
     },
     read: function(param) {
@@ -232,7 +238,6 @@ export default {
       this.tipParam.name = title;
       this.getNoticeList(this.noticeParam);
     }
-
   },
   created() {
     if (this.$route.query.id > this.getList[0].subcategory.length || isNaN(this.$route.query.id) || !this.$route.query.id) {
@@ -242,6 +247,7 @@ export default {
     this.getBacklogList(this.loadParam);
     //获取消息通知
     this.getNoticeList(this.noticeParam);
+    this.getOfferMessageList(this.offerNoticeParam);
   },
   events: {
     fresh: function(input) {

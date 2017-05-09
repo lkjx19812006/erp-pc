@@ -208,6 +208,44 @@ export const freshCharts = ({ dispatch }, getCharList) => {
     });
 };
 
+//我的统计重叠折线图
+export const freshLinesCharts = ({ dispatch }, getCharList) => {
+  if (getCharList) getCharList.load = true;
+  var url = '/crm/api/v1/count/getEmployeeCustomerStatistics?'
+  if (getCharList.type) {
+    url += '&customerTypeId=' + getCharList.type
+  }
+  if (getCharList.year.length != 0) {
+    url += '&dateType=month' + '&starTime=' + getCharList.year[0] + '&endTime=' + getCharList.year[1]
+  }
+  if (getCharList.monthArr.length != 0) {
+    url += '&dateType=day' + '&starTime=' + getCharList.monthArr[0] + '&endTime=' + getCharList.monthArr[1]
+  }
+  Vue.http.get(url)
+    .then((res) => {
+      if (res.json().result == null) {
+        console.log("没有数据")
+        return
+      }
+      dispatch(types.CHANGE_LINESCHARTS, res.json().result.list);
+    }, (res) => {
+      console.log('fail');
+    });
+};
+
+//我的统计柱状图
+export const freshColCharts = ({ dispatch }, getCharList) => {
+  Vue.http.get(url)
+    .then((res) => {
+      if (res.json().result == null) {
+        return
+      }
+      dispatch(types.CHANGE_COLCHARTS, res.json().result.list);
+    }, (res) => {
+      console.log('fail');
+    });
+};
+
 //折线图
 export const freshLinecharts = ({ dispatch }, getLinechart) => {
   if (getLinechart) getLinechart.load = true;
@@ -258,48 +296,87 @@ export const getBacklogList = ({ dispatch }, param) => {
 
 //获取通知列表
 export const getNoticeList = ({ dispatch }, param) => {
-    param.loading = true;
-    let body = {
-      page: param.cur,
-      pageSize: 15
-    }
-    if (param.read) {
-      body.read = param.read;
-    }
-
-    Vue.http({
-      method: 'POST',
-      url: apiUrl.orderList + param.link,
-      emulateHTTP: true,
-      body: body,
-      emulateJSON: false,
-      headers: {
-        "X-Requested-With": "XMLHttpRequest",
-        'Content-Type': 'application/json;charset=UTF-8'
-      }
-    }).then((res) => {
-
-      var noticeList = res.json().result.list;
-      if(param.callback)param.callback(noticeList);
-      for (var i in noticeList) {
-        noticeList[i].checked = false;
-        noticeList[i].show = false;
-      }
-
-      dispatch(types.NOTICE_TABLE, noticeList);
-      param.all = res.json().result.pages;
-      param.total = res.json().result.total;
-      param.loading = false;
-      //localStorage.BacklogParam = JSON.stringify(param);
-
-    }, (res) => {
-      console.log('fail');
-      let arr=[];
-      param.callback(arr);
-      param.loading = false;
-    })
+  param.loading = true;
+  let body = {
+    page: param.cur,
+    pageSize: 15
   }
-  //已读接口 
+  if (param.read) {
+    body.read = param.read;
+  }
+  Vue.http({
+    method: 'POST',
+    url: apiUrl.orderList + param.link,
+    emulateHTTP: true,
+    body: body,
+    emulateJSON: false,
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  }).then((res) => {
+    var noticeList = res.json().result.list;
+    if (param.callback) param.callback(noticeList);
+    for (var i in noticeList) {
+      noticeList[i].checked = false;
+      noticeList[i].show = false;
+    }
+    if(param.cur===1){
+        dispatch(types.CLEAR_NOTICE_TABLE); 
+    }
+    dispatch(types.NOTICE_TABLE, noticeList);
+    param.all = res.json().result.pages;
+    param.total = res.json().result.total;
+    param.loading = false;
+  }, (res) => {
+    console.log('fail');
+    let arr = [];
+    param.callback(arr);
+    param.loading = false;
+  })
+}
+
+//获取报价消息通知列表
+export const getOfferMessageList = ({ dispatch }, param) => {
+  param.loading = true;
+  let body = {
+    page: param.cur,
+    pageSize: 15,
+    bizTypes:param.bizType
+  }
+  if (param.read) {
+    body.read = param.read;
+  }
+  Vue.http({
+    method: 'POST',
+    url: apiUrl.orderList + param.link,
+    emulateHTTP: true,
+    body: body,
+    emulateJSON: false,
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  }).then((res) => {
+    var noticeList = res.json().result.list;
+    if (param.callback) param.callback(noticeList);
+    for (var i in noticeList) {
+      noticeList[i].checked = false;
+      noticeList[i].show = false;
+    }
+    dispatch(types.OFFER_MESSAGE_TABLE, noticeList);
+    param.all = res.json().result.pages;
+    param.total = res.json().result.total;
+    param.loading = false;
+  }, (res) => {
+    console.log('fail');
+    let arr = [];
+    param.callback(arr);
+    param.loading = false;
+  })
+}
+
+//已读接口 
 export const readNotice = ({ dispatch }, param) => {
     var body = {
       ids: param.ids
@@ -4941,6 +5018,7 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
   })
 }
 
+
 export const editDescription = ({ dispatch }, param) => { //编辑报价描述
   var url = apiUrl.clientList + "/intention/offerDescription"
   var body = {
@@ -4963,7 +5041,6 @@ export const editDescription = ({ dispatch }, param) => { //编辑报价描述
   }, (res) => {
     console.log('提交失败')
   })
-
 }
 
 export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详情
@@ -5006,7 +5083,6 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
         param.intentionListBack.push(temp);
       }
     }
-
     dispatch(types.PURCHASE_DETAIL, detail);
     param.loading = false;
 
@@ -5564,6 +5640,7 @@ export const getMsgList = ({ dispatch }, param) => { //留言信息列表以及�
     param.loading = false;
   })
 }
+
 
 export const updateMsg = ({ dispatch }, param) => { //修改留言信息
 

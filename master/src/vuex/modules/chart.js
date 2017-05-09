@@ -12,7 +12,8 @@ import {
     CHANGE_PIECHARTS,
     CHANGE_LINESCHARTS,
     CHANGE_COLCHARTS,
-    CHANGE_REGIONALCHARTS
+    CHANGE_REGIONALCHARTS,
+    CHANGE_CUSTYPECHARTS
 } from '../mutation-types'
 import china from '../../assets/map/china.js'
 const randomData = function() {
@@ -199,11 +200,71 @@ const state = {
 
         },
         legend: {
-            data: ['新增', '活跃','成交','客户总数','haha总数']
+            data: ['新增', '活跃','成交','客户总数']
         },
         xAxis: [{
             type: 'category',
-            data: ['1周', '2周', '3周', '4周', '5周', '6周', '7周', '8周', '9周', '10周', '11周', '12周']
+            axisLabel: {
+                interval: 0
+            },
+            data: ['5月1号', '5月2号', '5月3号', '5月4号', '5月5号', '5月6号', '5月7号', '5月8号', '5月9号', '5月10号', '5月11号', '5月12号']
+        }],
+        yAxis: [{
+            type: 'value',
+            min: 0,
+            max: 20,
+            interval: 5,
+            axisLabel: {
+                formatter: '{value} 个'
+            }
+        }],
+        series: [{
+                name: '新增',
+                type:'line',
+                data: [10,13, 20, 18, 11, 16, 13, 12, 14, 12, 11, 3],
+                
+            }, {
+                name: '活跃',
+                type:'line',
+                data: [3, 11, 12, 14, 12, 13, 20, 15, 20, 5, 3, 8],
+                
+            },
+            {
+                name: '成交',
+                type:'line',
+                data: [6, 14, 18, 17, 3, 13, 14, 17, 4, 11, 12, 19],
+                
+            },
+            {
+                name: '客户总数',
+                type:'line',
+                data: [10, 15, 4, 11, 3, 13, 14, 17, 18, 20, 12, 14],
+                
+            },
+        ]
+    },linesChartLoading: false,
+
+    custypeChartOption:{
+        title: {
+            text: '区域'
+        },
+        tooltip: {
+            trigger: 'axis',
+
+            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+            },
+
+        },
+        legend: {
+            data: ['新增啊', '活跃','成交','客户总数']
+        },
+        xAxis: [{
+            type: 'category',
+            axisLabel: {
+                interval: 0
+            },
+            data: ['5月1号', '5月2号', '5月3号', '5月4号', '5月5号', '5月6号', '5月7号', '5月8号', '5月9号', '5月10号', '5月11号', '5月12号']
         }],
         yAxis: [{
             type: 'value',
@@ -215,7 +276,7 @@ const state = {
             }
         }],
         series: [{
-                name: '新增',
+                name: '新增啊',
                 type:'line',
                 data: [90, 34, 48, 57, 39, 21, 13, 12, 14, 36, 62, 49],
                 
@@ -237,15 +298,8 @@ const state = {
                 data: [80, 55, 48, 51, 31, 63, 34, 37, 48, 23, 42, 44],
                 
             },
-            {
-                name: 'haha总数',
-                type:'line',
-                data: [11, 22, 33, 44, 55, 66, 34, 37, 48, 23, 42, 44],
-                
-            }
-
         ]
-    },linesChartLoading: false,
+    },custypeChartLoading: false,
 
     regionalChartOption:{
         title: {
@@ -254,12 +308,25 @@ const state = {
             left: 'center'
         },
         tooltip: {
-            trigger: 'item'
+            trigger: 'item',
+            formatter: function(params) {  
+                var res = params.name+'<br/>';  
+                var myseries = options.series;  
+                for (var i = 0; i < myseries.length; i++) {  
+                    res+= myseries[i].name;  
+                    for(var j=0;j<myseries[i].data.length;j++){  
+                        if(myseries[i].data[j].name==params.name){  
+                          res+=' : '+myseries[i].data[j].value+'</br>';  
+                        }  
+                    }         
+                }  
+                return res;  
+            }  
         },
         legend: {
             orient: 'vertical',
             left: 'left',
-            data:['iphone3','iphone4','iphone5']
+            data:['新增用户','活跃用户','成交用户']
         },
         visualMap: {
             min: 0,
@@ -282,7 +349,7 @@ const state = {
         },
         series: [
             {
-                name: 'iphone3',
+                name: '新增用户',
                 type: 'map',
                 mapType: 'china',
                 roam: false,
@@ -332,7 +399,7 @@ const state = {
                 ]
             },
             {
-                name: 'iphone4',
+                name: '活跃用户',
                 type: 'map',
                 mapType: 'china',
                 label: {
@@ -366,7 +433,7 @@ const state = {
                 ]
             },
             {
-                name: 'iphone5',
+                name: '成交用户',
                 type: 'map',
                 mapType: 'china',
                 label: {
@@ -502,8 +569,19 @@ const mutations = {
     },
 
     [CHANGE_LINESCHARTS](state, data) {
-        state.linesChartOption.xAxis.data = data.results.dateList;
-        state.linesChartOption.series.data = data.results.achieveList;
+     
+        state.linesChartOption.xAxis[0].data=[];
+        state.linesChartOption.series[0].data=[];
+        state.linesChartOption.series[1].data =[];
+        state.linesChartOption.series[2].data=[];
+        state.linesChartOption.series[3].data=[];
+        for(var i=0;i<data.length;i++){                   
+          state.linesChartOption.xAxis[0].data.push(data[i].countDate)          
+          state.linesChartOption.series[0].data.push(data[i].newAddNumber)
+          state.linesChartOption.series[1].data.push(data[i].activeNumber)
+          state.linesChartOption.series[2].data.push(data[i].transactionNumber)
+          state.linesChartOption.series[3].data.push(data[i].customerTotal)  
+        }
         state.linesChartLoading=false;
     },
     
@@ -511,6 +589,12 @@ const mutations = {
         state.regionalChartOption.xAxis.data = data.results.dateList;
         state.regionalChartOption.series.data = data.results.achieveList;
         stete.linesChartLoading = false;
+    },
+
+    [CHANGE_CUSTYPECHARTS](state,data){
+        state.custypeChartOption.xAxis.data = data.results.dateList;
+        state.custypeChartOption.series.data = data.results.achieveList;
+        stete.custypeChartLoading = false;
     },
 
     [CHANGE_PIECHARTS](state, data) {
