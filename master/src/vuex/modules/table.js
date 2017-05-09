@@ -1169,7 +1169,7 @@ const mutations = {
         state.basicBaseList.flowRecord = data;
     },
     [NOTICE_TABLE](state, data) {
-        state.basicBaseList.noticeList = data;
+        state.basicBaseList.noticeList = state.basicBaseList.noticeList.concat(data);
         console.log(state.basicBaseList.noticeList)
     },
 

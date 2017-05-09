@@ -11,6 +11,10 @@ import tabs from './components/tools/tabs/tabs.vue'
 import VueI18n from './filters/i18n'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+import fullCalendar from 'vue-fullcalendar';
+import InfiniteLoading from 'vue-infinite-loading';
+
+
 /*import alert from 'vue-strap/src/alert'*/
 
 
@@ -22,6 +26,8 @@ require('./components/tools/util.js')
 Vue.component('PulseLoader', PulseLoader);
 Vue.component('treeview', treeview);
 Vue.component('tabs', tabs);
+Vue.component('full-calendar', fullCalendar);
+Vue.component('InfiniteLoading', InfiniteLoading);
 
 Vue.directive('echarts', require('./directives/echarts'));
 

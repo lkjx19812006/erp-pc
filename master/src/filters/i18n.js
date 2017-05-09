@@ -565,8 +565,8 @@ var locales = {
             Read: '已读',
             Enter_search: '按回车键搜索',
             upload_clients: 'excel导入客户',
-            two_decimal: '至多两位小数'
-
+            two_decimal: '至多两位小数',
+            offer_message:'报价消息'
         }
     },
     en: {
@@ -1125,7 +1125,8 @@ var locales = {
             Read: 'Read',
             Enter_search: 'Click enter to search',
             upload_clients: 'upload clients by .xlsx',
-            two_decimal: 'at most two decimal places'
+            two_decimal: 'at most two decimal places',
+            offer_message:'Quote message'
         }
     }
 }
