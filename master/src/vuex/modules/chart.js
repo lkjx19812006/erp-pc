@@ -210,13 +210,13 @@ const state = {
             data: ['5月1号', '5月2号', '5月3号', '5月4号', '5月5号', '5月6号', '5月7号', '5月8号', '5月9号', '5月10号', '5月11号', '5月12号']
         }],
         yAxis: [{
-            type: 'value',
-            min: 0,
+            type: 'value'
+            /*min: 0,
             max: 20,
             interval: 5,
             axisLabel: {
                 formatter: '{value} 个'
-            }
+            }*/
         }],
         series: [{
                 name: '新增',
@@ -246,7 +246,7 @@ const state = {
 
     custypeChartOption:{
         title: {
-            text: '区域'
+            text: ''
         },
         tooltip: {
             trigger: 'axis',
@@ -257,7 +257,7 @@ const state = {
 
         },
         legend: {
-            data: ['新增啊', '活跃','成交','客户总数']
+            data: ['产地', '药厂','药商','服务商']
         },
         xAxis: [{
             type: 'category',
@@ -276,24 +276,24 @@ const state = {
             }
         }],
         series: [{
-                name: '新增啊',
+                name: '产地',
                 type:'line',
                 data: [90, 34, 48, 57, 39, 21, 13, 12, 14, 36, 62, 49],
                 
             }, {
-                name: '活跃',
+                name: '药厂',
                 type:'line',
                 data: [50, 54, 58, 37, 31, 63, 34, 37, 48, 51, 72, 69],
                 
             },
             {
-                name: '成交',
+                name: '药商',
                 type:'line',
                 data: [60, 34, 58, 47, 39, 53, 34, 77, 48, 51, 32, 39],
                 
             },
             {
-                name: '客户总数',
+                name: '服务商',
                 type:'line',
                 data: [80, 55, 48, 51, 31, 63, 34, 37, 48, 23, 42, 44],
                 
@@ -416,18 +416,33 @@ const state = {
                     {name: '上海',value: randomData() },
                     {name: '重庆',value: randomData() },
                     {name: '河北',value: randomData() },
+                    {name: '河南',value: randomData() },
+                    {name: '云南',value: randomData() },
+                    {name: '辽宁',value: randomData() },
+                    {name: '黑龙江',value: randomData() },
+                    {name: '湖南',value: randomData() },
                     {name: '安徽',value: randomData() },
+                    {name: '山东',value: randomData() },
                     {name: '新疆',value: randomData() },
+                    {name: '江苏',value: randomData() },
                     {name: '浙江',value: randomData() },
                     {name: '江西',value: randomData() },
+                    {name: '湖北',value: randomData() },
+                    {name: '广西',value: randomData() },
+                    {name: '甘肃',value: randomData() },
                     {name: '山西',value: randomData() },
                     {name: '内蒙古',value: randomData() },
+                    {name: '陕西',value: randomData() },
                     {name: '吉林',value: randomData() },
                     {name: '福建',value: randomData() },
+                    {name: '贵州',value: randomData() },
                     {name: '广东',value: randomData() },
+                    {name: '青海',value: randomData() },
                     {name: '西藏',value: randomData() },
                     {name: '四川',value: randomData() },
                     {name: '宁夏',value: randomData() },
+                    {name: '海南',value: randomData() },
+                    {name: '台湾',value: randomData() },
                     {name: '香港',value: randomData() },
                     {name: '澳门',value: randomData() }
                 ]
@@ -448,7 +463,34 @@ const state = {
                     {name: '北京',value: randomData() },
                     {name: '天津',value: randomData() },
                     {name: '上海',value: randomData() },
+                    {name: '重庆',value: randomData() },
+                    {name: '河北',value: randomData() },
+                    {name: '河南',value: randomData() },
+                    {name: '云南',value: randomData() },
+                    {name: '辽宁',value: randomData() },
+                    {name: '黑龙江',value: randomData() },
+                    {name: '湖南',value: randomData() },
+                    {name: '安徽',value: randomData() },
+                    {name: '山东',value: randomData() },
+                    {name: '新疆',value: randomData() },
+                    {name: '江苏',value: randomData() },
+                    {name: '浙江',value: randomData() },
+                    {name: '江西',value: randomData() },
+                    {name: '湖北',value: randomData() },
+                    {name: '广西',value: randomData() },
+                    {name: '甘肃',value: randomData() },
+                    {name: '山西',value: randomData() },
+                    {name: '内蒙古',value: randomData() },
+                    {name: '陕西',value: randomData() },
+                    {name: '吉林',value: randomData() },
+                    {name: '福建',value: randomData() },
+                    {name: '贵州',value: randomData() },
                     {name: '广东',value: randomData() },
+                    {name: '青海',value: randomData() },
+                    {name: '西藏',value: randomData() },
+                    {name: '四川',value: randomData() },
+                    {name: '宁夏',value: randomData() },
+                    {name: '海南',value: randomData() },
                     {name: '台湾',value: randomData() },
                     {name: '香港',value: randomData() },
                     {name: '澳门',value: randomData() }
@@ -576,8 +618,8 @@ const mutations = {
         state.linesChartOption.series[2].data=[];
         state.linesChartOption.series[3].data=[];
         for(var i=0;i<data.length;i++){                   
-          state.linesChartOption.xAxis[0].data.push(data[i].countDate)          
-          state.linesChartOption.series[0].data.push(data[i].newAddNumber)
+          state.linesChartOption.xAxis[0].data.push(data[i].countDate.toString().substring(6,8))          
+          state.linesChartOption.series[0].data.push(data[i].addNumber)
           state.linesChartOption.series[1].data.push(data[i].activeNumber)
           state.linesChartOption.series[2].data.push(data[i].transactionNumber)
           state.linesChartOption.series[3].data.push(data[i].customerTotal)  
@@ -586,9 +628,16 @@ const mutations = {
     },
     
     [CHANGE_REGIONALCHARTS](state,data){
-        state.regionalChartOption.xAxis.data = data.results.dateList;
-        state.regionalChartOption.series.data = data.results.achieveList;
-        stete.linesChartLoading = false;
+        console.log('asda')
+        for(var i = 0;i<=33;i++){
+            state.regionalChartOption.series[0].data[i].value = data[i].addNumber
+            state.regionalChartOption.series[0].data[i].name = data[i].provinceName
+            state.regionalChartOption.series[1].data[i].value = data[i].activeNumber
+            state.regionalChartOption.series[1].data[i].name = data[i].provinceName
+            state.regionalChartOption.series[2].data[i].value = data[i].transactionNumber 
+            state.regionalChartOption.series[2].data[i].name = data[i].provinceName           
+        }
+        state.linesChartLoading = false;
     },
 
     [CHANGE_CUSTYPECHARTS](state,data){
@@ -604,9 +653,16 @@ const mutations = {
     },
 
     [CHANGE_COLCHARTS](state,data) {
-        state.linesChartOption.xAxis.data = data.results.dateList;
-        state.linesChartOption.series.data = data.results.achieveList;
-        state.linesChartLoading=false;
+        //state.linesChartOption.xAxis.data = data
+        
+        console.log(data)
+        state.ColChartOption.series[0].data[0] = data[0].addNumber
+        state.ColChartOption.series[0].data[1] = data[0].activeNumber
+        state.ColChartOption.series[0].data[2] = data[0].transactionNumber
+        state.ColChartOption.series[0].data[3] = data[0].customerTotal
+        state.ColChartLoading=false;
+        console.log(state.ColChartOption.series[0].data[0])
+        console.log(state.ColChartOption.series[0])
     }
 }
 

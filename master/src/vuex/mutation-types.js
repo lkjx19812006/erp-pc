@@ -206,3 +206,14 @@ export const CHANGE_COLCHARTS = 'CHANGE_COLCHARTS' // 柱状图
 
 export const CHANGE_REGIONALCHARTS = 'CHANGE_REGIONALCHARTS'//区域用户中国地图
 export const CHANGE_CUSTYPECHARTS = 'CHANGE_CUSTYPECHARTS'//客户类型折线图
+
+export const NEW_USER_DETAIL = 'NEW_USER_DETAIL' //新增用户详情
+
+export const NEW_DEAL_DETAIL = 'NEW_DEAL_DETAIL'//新增成交用户
+
+export const NEW_ACTIVE_DETAIL = 'NEW_ACTIVE_DETAIL'//新增成交用户
+
+export const YESTODAY_DETAIL = 'YESTODAY_DETAIL'//新增昨日成交用户
+
+export const PROVINCE_DETAIL = 'PROVINCE_DETAIL'//新增昨日成交用户
+

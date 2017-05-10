@@ -138,7 +138,12 @@ import {
     STOCK_LIST,
     DELETE_STOCK_DATA,
     ADD_STOCK_LIST,
-    UPDATE_OFFERDESCRIPTION
+    UPDATE_OFFERDESCRIPTION,
+    NEW_USER_DETAIL,
+    NEW_DEAL_DETAIL,
+    NEW_ACTIVE_DETAIL,
+    YESTODAY_DETAIL,
+    PROVINCE_DETAIL
 } from '../mutation-types'
 
 
@@ -1156,7 +1161,12 @@ const state = {
     orgCount: {}, //部门统计state
     stockList: [{ checked: false }, { checked: false }],
     stockCartList: [],
-    yearNum:[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030]
+    yearNum:[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],
+    newUserDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
+    newDealDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
+    newActiveDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
+    yestodayDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
+    provinceDetail:[]
 }
 
 const mutations = {
@@ -2454,6 +2464,25 @@ const mutations = {
     // 部门统计
     [MY_ORG_COUNT](state, data) {
         state.orgCount = data;
+    },
+    //我的统计新增用户详情
+    [NEW_USER_DETAIL](state,data) {
+        state.newUserDetail = data
+    },
+    //我的统计成交用户
+    [NEW_DEAL_DETAIL](state,data) {
+        state.newDealDetail = data
+    },
+     //我的统计活跃用户
+    [NEW_ACTIVE_DETAIL](state,data) {
+        state.newActiveDetail = data
+    },
+    //昨日
+    [YESTODAY_DETAIL](state,data){
+        state.yestodayDetail = data
+    },
+    [PROVINCE_DETAIL](state,data){
+        state.provinceDetail = data
     }
 }
 

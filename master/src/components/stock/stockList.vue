@@ -396,8 +396,12 @@ export default {
         common('tab', 'table_box', 1);
     },
 	watch:{
-		'$route':"watchStock" //监听路由变化，当离开此页面的时候清空购物车
+	 	'$route':"watchStock" //监听路由变化，当离开此页面的时候清空购物车
 	},
+    beforeRouteLeave:function(to,from,next){
+        console.log("路由变化")
+        this.watachStock()
+    },
 	events:{
 		'addOrderDetail':function(msg){
 			console.log(msg)
