@@ -55,9 +55,6 @@
                     <td>{{item.cost | money}}</td>
                 </tr>
             </table>
-            <div class="base_pagination">
-                <pagination :combination="loadParam"></pagination>
-            </div>
         </div>
     </div>
 </template>
@@ -69,29 +66,16 @@ import {
  
 } from '../../vuex/actions'
 import filter from '../../filters/filters'
-import pagination from '../pagination'
-import mzDatepicker from '../calendar/vue.datepicker.js'
 import common from '../../common/common.js'
 export default {
     components: {
-        pagination,
-        mzDatepicker,
-        pagination
     },
     data() {
         return {
             loadParam: {
                 loading: false,
-                color: '#5dc596',
-                size: '15px',
-                employee: '',
-                endTime: '',
-                startTime: '',
                 orderType: 1,
                 timeType: 'month',
-                cur: 1,
-                all: 15,
-                total: 0,
                 name:"newActiveDetail"
             },
 
@@ -116,7 +100,6 @@ export default {
     events: {
     },
     created() {
-
 
     },
     filter: (filter, {}),

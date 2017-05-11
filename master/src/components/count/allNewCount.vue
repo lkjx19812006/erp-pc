@@ -8,9 +8,9 @@
     <!-- 活跃用户详情 -->
 	<new-activedetail :param="" v-show="loadParam.activeDetail"></new-activedetail>
     <!-- 区域用户 -->
-    <regional-user :param="" v-show="loadParam.regionalUser"></regional-user>
+    <regional-user :param="showParam" v-show="loadParam.regionalUser"></regional-user>
     <!-- 客户类型 -->
-    <customer-type :param="" v-show="loadParam.customerType"></customer-type>
+    <customer-type :param="showParam" v-show="loadParam.customerType"></customer-type>
 </template>
 
 <script>
@@ -39,6 +39,9 @@ export default{
                 activeDetail:false,
                 regionalUser:false,
                 customerType:false
+            },
+            showParam:{
+            	name:'全部'
             }
 		}
 	},
