@@ -199,14 +199,17 @@ const state = {
         },
         tooltip: {
             trigger: 'axis',
-
             axisPointer: { // 坐标轴指示器，坐标轴触发有效
                 type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
             },
 
         },
         legend: {
-            data: ['新增', '活跃','成交','客户总数']
+            data: ['新增', '活跃','成交','客户总数'],
+            selectedMode:'multiple',
+            selected:{
+                '客户总数':false
+            }
         },
         xAxis: [{
             type: 'category',
@@ -244,6 +247,7 @@ const state = {
             {
                 name: '客户总数',
                 type:'line',
+                showSymbol:false,
                 data: [10, 15, 4, 11, 3, 13, 14, 17, 18, 20, 12, 14],
                 
             },
@@ -263,8 +267,13 @@ const state = {
 
         },
         legend: {
-            data: ['新增', '活跃','成交','客户总数']
+            data: ['新增', '活跃','成交','客户总数'],
+            selectedMode:'multiple',
+            selected:{
+            '客户总数':false
+            }
         },
+
         xAxis: [{
             type: 'category',
             axisLabel: {
@@ -320,7 +329,11 @@ const state = {
 
         },
         legend: {
-            data: ['新增', '活跃','成交','客户总数']
+            data: ['新增', '活跃','成交','客户总数'],
+            selectedMode:'multiple',
+            selected:{
+            '客户总数':false
+            }
         },
         xAxis: [{
             type: 'category',

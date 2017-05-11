@@ -213,11 +213,11 @@ export const freshLinesCharts = ({ dispatch }, getCharList) => {
     if (getCharList) getCharList.load = true;
     var url = '/crm/api/v1/count/getEmployeeCustomerStatistics'
     var startTime,endTime
-    if(getCharList.year.length!=0){
+    if(getCharList.timeType=='month'){
         startTime = getCharList.year[0]
         endTime = getCharList.year[1]
     }
-    if(getCharList.monthArr.length!=0){
+    if(getCharList.timeType=='day'){
         startTime = getCharList.monthArr[0]
         endTime = getCharList.monthArr[1]
     }
@@ -474,11 +474,11 @@ export const getCusTypeData = ({dispatch},param) =>{//获取客户类型折线�
 export const freshOrgCount = ({dispatch},getCharList) =>{//获取部门客户类型折线图
     if (getCharList) getCharList.load = true;
     var startTime,endTime
-    if(getCharList.year.length!=0){
+    if(getCharList.timeType=='month'){
         startTime = getCharList.year[0]
         endTime = getCharList.year[1]
     }
-    if(getCharList.monthArr.length!=0){
+    if(getCharList.timeType=='day'){
         startTime = getCharList.monthArr[0]
         endTime = getCharList.monthArr[1]
     }
@@ -511,11 +511,11 @@ export const freshOrgCount = ({dispatch},getCharList) =>{//获取部门客户类
 export const freshAllCount = ({dispatch},getCharList) =>{//获取全部客户统计折线图
     if (getCharList) getCharList.load = true;
     var startTime,endTime
-    if(getCharList.year.length!=0){
+    if(getCharList.timeType=="month"){
         startTime = getCharList.year[0]
         endTime = getCharList.year[1]
     }
-    if(getCharList.monthArr.length!=0){
+    if(getCharList.timeType=="day"){
         startTime = getCharList.monthArr[0]
         endTime = getCharList.monthArr[1]
     }

@@ -101,14 +101,14 @@
             <!-- 用户详情 -->
             <div class="user_detail">
 
-                <!-- 详情 -->
+                <!-- 详情
                 <div class="user_detail_right">
                     <h4 class="detail_title bg-info">部门
-	                    <span class="detail_num">
-		                    <button class="btn btn-default btn-warning" style="margin-left: 50px" @click="showDetail('regionalUser')">   		查看区域用户
-		                    </button>
+                	                    <span class="detail_num">
+                		                    <button class="btn btn-default btn-warning" style="margin-left: 50px" @click="showDetail('regionalUser')">   		查看区域用户
+                		                    </button>
                         	<button class="btn btn-default btn-warning" @click="showDetail('customerType')">查看客户类型</button>
-	                    </span>
+                	                    </span>
                     </h4>
                     <table class="table table-hover table_color table-striped">
                         <thead>
@@ -130,7 +130,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div> -->
             </div>
 
 
@@ -174,7 +174,7 @@ export default {
                 total: 0,
                 id:7,//国家id
                 type:'',
-                timeType:'day',
+                timeType:'month',
                 year:['2017-01-01 00:00:00','2018-01-01 00:00:00'],
                 yearMonth:'',
                 month:'',
@@ -232,7 +232,7 @@ export default {
             this.$dispatch("showDetail",data)
         },
         selectType:function(data){
-            if(data=='month'){
+            if(data=='month'){//选择月
                 if(this.loadParam.month==''){//选择年份未选择月份默认月份为1月份
                     this.loadParam.month='1'
                 }
@@ -245,12 +245,32 @@ export default {
         selectTime:function(data){ //切换年月显示
             
             if(data=="month"){
-                this.loadParam.year=[];
+            	var date = new Date()
+            	var year = date.getFullYear()
+                this.loadParam.year=[year+'-01-01 00:00:00',(year+1)+'-01-01 00:00:00'];
+                var month = date.getMonth()
+                var day = date.getDate()
+                if(day>5){
+                	month = month+1
+                }
+                this.loadParam.yearMonth = year
+                this.loadParam.month = month
+                this.loadParam.monthArr=this.mGetDate(this.loadParam.yearMonth,this.loadParam.month)
+
                 this.loadParam.timeType = 'day'
-            }else{
-                this.loadParam.yearMonth='';
-                this.loadParam.month='';
+                this.freshAllCount(this.loadParam)
+                console.log(this.loadParam)
+
+            }else if(data=='year'){
+                // this.loadParam.yearMonth='';
+                // this.loadParam.month='';
+                var date = new Date()
+            	var year = date.getFullYear()
+                this.loadParam.year=[year+'-01-01 00:00:00',(year+1)+'-01-01 00:00:00'];
                 this.loadParam.timeType = 'month'
+                console.log(this.loadParam)
+                this.freshAllCount(this.loadParam)
+                
             }
         },
         mGetDate:function (year, month){//判断每月多少天

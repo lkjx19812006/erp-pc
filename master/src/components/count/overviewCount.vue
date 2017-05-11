@@ -201,7 +201,7 @@ export default {
                 total: 0,
                 id:7,//国家id
                 type:'',
-                timeType:'day',
+                timeType:'month',
                 year:['2017-01-01 00:00:00','2018-01-01 00:00:00'],
                 yearMonth:'',
                 month:'',
@@ -314,12 +314,32 @@ export default {
         selectTime:function(data){ //切换年月显示
             
             if(data=="month"){
-                this.loadParam.year=[];
+                var date = new Date()
+                var year = date.getFullYear()
+                this.loadParam.year=[year+'-01-01 00:00:00',(year+1)+'-01-01 00:00:00'];
+                var month = date.getMonth()
+                var day = date.getDate()
+                if(day>5){
+                    month = month+1
+                }
+                this.loadParam.yearMonth = year
+                this.loadParam.month = month
+                this.loadParam.monthArr=this.mGetDate(this.loadParam.yearMonth,this.loadParam.month)
+
                 this.loadParam.timeType = 'day'
-            }else{
-                this.loadParam.yearMonth='';
-                this.loadParam.month='';
+                this.freshLinesCharts(this.loadParam)
+                console.log(this.loadParam)
+
+            }else if(data=='year'){
+                // this.loadParam.yearMonth='';
+                // this.loadParam.month='';
+                var date = new Date()
+                var year = date.getFullYear()
+                this.loadParam.year=[year+'-01-01 00:00:00',(year+1)+'-01-01 00:00:00'];
                 this.loadParam.timeType = 'month'
+                console.log(this.loadParam)
+                this.freshLinesCharts(this.loadParam)
+                
             }
         },
         searchCus:function(){
