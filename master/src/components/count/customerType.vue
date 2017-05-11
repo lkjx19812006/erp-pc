@@ -1,7 +1,7 @@
 <template>
     <div class="box" style="max-height: 100%;overflow: auto;">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">客户类型统计</div>
+            <div class="my_enterprise col-xs-1">{{param.name}}客户类型统计</div>
             <div class="btn btn-primary right" @click="toBackPage()">{{$t('static.back')}}</div>
         </div>
         <div class="user_all">
@@ -13,35 +13,71 @@
                 <h4 class="detail_title bg-info">用户总览
                     <span class="detail_num">
                         <div class="show_type">
-                            <dt class="left transfer marg_top" style="margin-left: 20px">客户类型：</dt>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.timeType==='month'}" @click="selectTime('year')">
+                                    年
+                                </button>
+                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.timeType==='day'}"
+                                 @click="selectTime('month')">
+                                    月
+                                </button>
+                            </div>
+                            <dt class="left transfer marg_top" style="margin-left: 20px">类型：</dt>
                             <dd class="left margin_right">
-                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="" @keyup.enter="">
-                                    <option value="产地">新增</option>
-                                    <option value="药厂">成交</option>
-                                    <option value="药商">活跃</option>
-                                    <option value="服务商">客户总数</option>
+                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="showType.type" @change="changeTypes()">
+                                    <option value="新增">新增</option>
+                                    <option value="成交">成交</option>
+                                    <option value="活跃">活跃</option>
                                 </select>
                             </dd>
-                            <!-- <dt class="left transfer marg_top" style="margin-left: 20px">按月：</dt>
-                            <dd class="left margin_right">
-                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="" @keyup.enter="">
-                                    <option value="社会库存">社会库存</option>
-                                    <option value="自营库存">自营库存</option>
+                            <dt v-if="loadParam.timeType!='day'" class="left transfer marg_top" style="margin-left: 20px">请选择年份：</dt>
+                            <dd v-if="loadParam.timeType!='day'" class="left margin_right asdf" style="margin-right: 20px">
+                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.year" @change="selectType('year')">
+                                    <!-- <option :value="item+'-01-01 00:00:00'" v-if="item<=setYear" v-for='item in getYear'>{{item}}</option> -->
+                                    <option :value="[item+'-01-01 00:00:00',(item+1)+'-01-01 00:00:00']" v-for='item in setYear'>{{item}}</option>
                                 </select>
-                            </dd> -->
+                            </dd>
+                            
+                            <dt v-if="loadParam.timeType!='month'" class="left transfer marg_top" style="margin-left: 20px">请选择年和月：</dt>
+                            <dd v-if="loadParam.timeType!='month'" class="left margin_right" style="margin-right: 20px">
+                                <select class="form-control edit-input" v-model="loadParam.yearMonth" @change="selectType('month')">
+                                    <option :value='item' v-for='item in setYear'>{{item}}</option>
+                                </select>
+                            </dd>
+                            <dd v-if="loadParam.timeType!='month'" class="left margin_right" style="margin-right: 20px">
+                                <select class="form-control edit-input" :disabled="loadParam.yearMonth?false:true" v-model="loadParam.month" @change="selectType('month')">
+                                    <option value='1'>01月</option>
+                                    <option value='2'>02月</option>
+                                    <option value='3'>03月</option>
+                                    <option value='4'>04月</option>
+                                    <option value='5'>05月</option>
+                                    <option value='6'>06月</option>
+                                    <option value='7'>07月</option>
+                                    <option value='8'>08月</option>
+                                    <option value='9'>09月</option>
+                                    <option value='10'>10月</option>
+                                    <option value='11'>11月</option>
+                                    <option value='12'>12月</option>
+                                </select>
+                            </dd>
                         </div>
                     </span>
                 </h4>
                 
-                <div class="line_chart">
+                <div class="line_chart" v-if="param.name=='业务员'">
                     <div class="linechart" v-echarts="getCustypechart.options" :loading="getCustypechart.load"></div>
                 </div>
-            </div>
-            
+                <div class="line_chart" v-if="param.name=='部门'">
+                    <div class="linechart" v-echarts="getCustypechart.options" :loading="getCustypechart.load"></div>
+                </div>
+                <div class="line_chart" v-if="param.name=='全部'">
+                    <div class="linechart" v-echarts="getCustypechart.options" :loading="getCustypechart.load"></div>
+                </div>
+            </div>            
             <!-- 用户详情 -->
             <div class="user_detail">
                 <div class="user_detail_right">
-                    <h4 class="detail_title bg-info">活跃用户
+                    <h4 class="detail_title bg-info">客户类型
                         <span class="detail_num">
                             <a href="javascript:void(0);" class="person_num">人数：60</a>
                             <a href="javascript:void(0);" class="person_num">人次：60</a>&nbsp
@@ -53,16 +89,26 @@
                                 <th style="min-width:240px;text-align: center;">客户类型</th>
                                 <th style="min-width:280px;text-align: center;">新增用户</th>
                                 <th style="min-width:280px;text-align: center;">成交用户</th>
-                                <th style="min-width:320px;text-align: center;">
-                                    活跃用户
-                                    <select>
-                                        <option>报价</option>
-                                        <option>留言</option>
-                                    </select>
-                                </th>
+                                <th style="min-width:320px;text-align: center;">活跃用户</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody v-if="param.name=='业务员'">
+                            <tr v-for="item in todayData">
+                                <td><a href="javascript:void(0);">{{item.name}}</a></td>
+                                <td>60</td>
+                                <td>789</td>
+                                <td>100</td>
+                            </tr>
+                        </tbody>
+                        <tbody v-if="param.name=='部门'">
+                            <tr v-for="item in todayData">
+                                <td><a href="javascript:void(0);">{{item.name}}</a></td>
+                                <td>60</td>
+                                <td>789</td>
+                                <td>100</td>
+                            </tr>
+                        </tbody>
+                        <tbody v-if="param.name=='全部'">
                             <tr v-for="item in todayData">
                                 <td><a href="javascript:void(0);">{{item.name}}</a></td>
                                 <td>60</td>
@@ -90,6 +136,7 @@ export default {
     components: {
         pagination
     },
+    props:['param'],
     data() {
         return {
             loadParam: {
@@ -100,7 +147,8 @@ export default {
                 cur: 1,
                 all: 4,
                 total: 0,
-                name:"customerType"
+                name:"customerType",
+                timeType:'day'
             },
             todayData:[
                 {
@@ -123,12 +171,11 @@ export default {
                     phone:'15821955110',
                     address:'四川雅安'
                 }
-            ]
-        }
-    },
-    methods: {
-        clickChange: function(currentView) {
-
+            ],
+            showType:{
+                type:'新增',
+                time:[],
+            }
         }
     },
     vuex: {
@@ -143,10 +190,23 @@ export default {
     methods:{
     	toBackPage:function(){
     		this.$dispatch('back',this.loadParam.name)
-    	}
+    	},
+        changeTypes:function(){
+            this.$dispatch('freshCus',this.showType)
+        },
+        selectTime:function(data){
+            if(data=="month"){
+                this.loadParam.year=[];
+                this.loadParam.timeType = 'day'
+            }else{
+                this.loadParam.yearMonth='';
+                this.loadParam.month='';
+                this.loadParam.timeType = 'month'
+            }
+        }
     },
     created() {
-
+        this.$dispatch('freshCus',this.showType)
     }
 }
 </script>

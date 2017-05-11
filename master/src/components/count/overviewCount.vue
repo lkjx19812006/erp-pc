@@ -73,7 +73,7 @@
             <div class="bar_today">
                 <h4 class="detail_title bg-info">昨日新增
                     <span class="detail_num">
-                        <a href="javascript:void(0);" class="person_num">人</a>&nbsp
+                        <a href="javascript:void(0);" class="person_num">{{yestodayParam.total}}人</a>&nbsp
                         <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('userTodayDetail')">more>></a>
                     </span>
                 </h4>
@@ -209,6 +209,12 @@ export default {
                 salemanId:'',
                 callback:this.callback
             },
+            yestodayParam:{
+                cur:1,
+                all:4,
+                total:0,
+                data:[]
+            },
             newPageParam:{
                 cur: 1,
                 all: 4,
@@ -339,7 +345,8 @@ export default {
             this.getActiveUser(this.activePageParam)
         },
         callback_yes:function(data){
-            this.getYestodayData(data)
+            this.yestodayParam.data = data
+            this.getYestodayData(this.yestodayParam)
         }
     },
     created() {
