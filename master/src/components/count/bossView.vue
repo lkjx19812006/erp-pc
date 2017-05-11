@@ -74,7 +74,7 @@
                 <h4 class="detail_title bg-info">昨日新增<span class="detail_num"><a href="javascript:void(0);" class="person_num">{{orgData.total}}人</a>&nbsp<a href="javascript:void(0);" class="btn btn-link" @click="showDetail('userTodayDetail')">more>></a></span></h4>
                 <!-- 柱状图 -->
                 <div class="bar_chart_left">
-                    <div class="barchart" v-echarts="getOrgColchart.options" :loading="getOrgColchart.load"></div>
+                    <div class="barchart" v-echarts="getAllColchart.options" :loading="getAllColchart.load"></div>
                 </div>
                 
                 <div class="today_list_right">
@@ -87,10 +87,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in getOrgYesTodayDetail">
+                            <tr v-for="item in getAllYesTodayDetail">
                                 <td><a href="javascript:void(0);">{{item.name}}</a></td>
-                                <td>{{item.phone}}</td>
-                                <td>{{item.address}}</td>
+                                <td>{{item.mainPhone}}</td>
+                                <td>{{item.provinceName}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -121,9 +121,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in getOrgSalemanDetail">
+                            <tr v-for="item in getAllOrgDetail">
                                 <td><a href="javascript:void(0);">{{item.employeeId}}</a></td>
-                                <td><a href="javascript:void(0);" @click="showDepart()">{{item.employeeName}}</a></td>
+                                <td><a href="javascript:void(0);" @click="showDepart()">{{item.name}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDetail('newUserDetail')">{{item.addNumber}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDetail('newActiveDetail')">{{item.transactionNumber}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDetail('newDealDetail')">{{item.activeNumber}}</a></td>
@@ -145,18 +145,17 @@ import {
     getLineschart,
     getYear,
     getAllchart,
-
-    getOrgColchart,
-    getOrgYesTodayDetail,
-    getOrgSalemanDetail
+    getAllColchart,
+    getAllYesTodayDetail,
+    getAllOrgDetail
 } from '../../vuex/getters'
 import {
     freshLinesCharts,
     freshAllCount,
+    freshAllColCharts,
+    getAllCountDetail,
 
-    freshOrgColCharts,
-    getOrgCountDetail,
-    getOrgSalemanData
+    getAllOrgData
 } from '../../vuex/actions'
 
 export default {
@@ -197,18 +196,17 @@ export default {
             getLineschart,
             getYear,
             getAllchart,
-
-            getOrgColchart,
-            getOrgYesTodayDetail,
-            getOrgSalemanDetail
+            getAllColchart,
+            getAllYesTodayDetail,
+            getAllOrgDetail
         },
         actions: {
             freshLinesCharts,
             freshAllCount,
+            freshAllColCharts,
+            getAllCountDetail,
 
-            freshOrgColCharts,
-            getOrgCountDetail,
-            getOrgSalemanData
+            getAllOrgData
         }
     },
     events: {
@@ -239,9 +237,9 @@ export default {
                     this.loadParam.month='1'
                 }
                 this.loadParam.monthArr=this.mGetDate(this.loadParam.yearMonth,this.loadParam.month)
-                //this.freshOrgCount(this.loadParam)
+                this.freshAllCount(this.loadParam)
             }else{
-                //this.freshOrgCount(this.loadParam)
+                this.freshAllCount(this.loadParam)
             }           
         },
         selectTime:function(data){ //切换年月显示
@@ -265,15 +263,16 @@ export default {
         },
         callback:function(data){
         	this.orgData.data = data
-        	//this.getOrgCountDetail(this.orgData)
+        	this.getAllCountDetail(this.orgData)
         	
         }
     },
     created() {
     	this.freshAllCount(this.loadParam)
-        // this.freshOrgCount(this.loadParam)
+        this.freshAllColCharts(this.loadParam)
+        console.log(this.getAllOrgDetail)
         // this.freshOrgColCharts(this.loadParam)
-        // this.getOrgSalemanData()
+        this.getAllOrgData()
     },
     computed:{
         setYear:function(){//计算当前年份过滤年份数组显示的年份

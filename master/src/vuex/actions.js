@@ -624,7 +624,7 @@ export const freshAllColCharts = ({ dispatch }, param) => {
         }
     }).then((res)=>{
         console.log('哈哈')
-        dispatch(types.CHANGE_ORGCOLCHARTS,res.json().result.list[0])
+        dispatch(types.CHANGE_ALLCOLCHARTS,res.json().result.list[0])
         param.callback(res.json().result.list[0].addNumberDetail)
     },(res)=>{
         console.log('fail')
@@ -658,6 +658,33 @@ export const getOrgCountDetail = ({ dispatch },param) => { //获取部门昨日�
         });
 }
 
+export const getAllCountDetail = ({ dispatch },param) => { //获取全部昨日新增详情
+    var body = {
+        page:param.cur,
+        pageSize:'7',
+        ids:param.data
+    }
+    Vue.http({
+            method: 'POST',
+            url: '/crm/api/v1/customer/getListByIds',
+            emulateHTTP: true,
+            body: body,
+            emulateJSON: false,
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        }).then((res) => { 
+            var data = res.json().result.list
+            dispatch(types.ALL_YESTODAY_DETAIL,data)
+            param.total = res.json().result.total
+            param.all = res.json().result.pages
+            
+        }, (res) => {
+            console.log('fail');
+        });
+}
+
 export const getOrgSalemanData = ({ dispatch },param) => { //获取部门业务员详情
     var body = {
     }
@@ -674,6 +701,28 @@ export const getOrgSalemanData = ({ dispatch },param) => { //获取部门业务�
         }).then((res) => { 
             console.log(res.json())
             dispatch(types.ORG_SALEMAN_DETAIL,res.json().result.list)
+        }, (res) => {
+            console.log('fail');
+        });
+}
+
+export const getAllOrgData = ({ dispatch },param) => { //获取全部部门详情
+    var body = {
+        queryType:'all'
+    }
+    Vue.http({
+            method: 'POST',
+            url: '/crm/api/v1/count/getEmployeeCustomerNumberByTypesCount',
+            emulateHTTP: true,
+            body: body,
+            emulateJSON: false,
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        }).then((res) => { 
+            console.log(res.json())
+            dispatch(types.ALL_ORG_DETAIL,res.json().result.list)
         }, (res) => {
             console.log('fail');
         });

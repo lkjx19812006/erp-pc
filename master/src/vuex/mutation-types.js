@@ -226,6 +226,9 @@ export const ORG_YESTODAY_DETAIL = 'ORG_YESTODAY_DETAIL'//部门柱状图客戶
 export const ORG_SALEMAN_DETAIL = 'ORG_SALEMAN_DETAIL'//部门业务员数据
 export const ORG_REGIONAL_DETAIL = 'ORG_REGIONAL_DETAIL'//部门区域数据
 
+export const ALL_YESTODAY_DETAIL = 'ALL_YESTODAY_DETAIL'//全部客户统计昨日详情
+export const ALL_ORG_DETAIL = 'ALL_ORG_DETAIL'//部门业务员数据
+
 export const ALL_REGIONAL_DETAIL = 'ALL_REGIONAL_DETAIL'//全部部门的客户区域统计
 export const CHANGE_ALLCHARTS = 'CHANGE_ALLCHARTS'//全部部门的客户折线统计
 

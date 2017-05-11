@@ -578,6 +578,14 @@ export const getOrgColchart = (state) =>{//获取部门柱状图
     return option
 }
 
+export const getAllColchart = (state) =>{//获取部门柱状图
+    const option = {
+        options:JSON.parse(JSON.stringify(state.echarts.allColChartOption)),
+        load:JSON.parse(JSON.stringify(state.echarts.allColChartOption))
+    }
+    return option
+}
+
 export const getCustypechart = (state) =>{ //客户类型折线图数据
     const option = {
         options:JSON.parse(JSON.stringify(state.echarts.custypeChartOption)),
@@ -622,12 +630,20 @@ export const getYesTodayDetail = (state) =>{//获取业务员昨日统计用户
     return JSON.parse(JSON.stringify(state.table.yestodayDetail))
 }
 
+export const getAllYesTodayDetail = (state) =>{//获取全部昨日统计用户
+    return JSON.parse(JSON.stringify(state.table.allYestodayDetail))
+}
+
 export const getOrgYesTodayDetail = (state) =>{//获取部门昨日用户
     return JSON.parse(JSON.stringify(state.table.orgYestodayDetail))
 }
 
 export const getOrgSalemanDetail = (state) =>{//获取部门昨日用户
     return JSON.parse(JSON.stringify(state.table.orgSalemanDetail))
+}
+
+export const getAllOrgDetail = (state) =>{//获取全部部门用户
+    return JSON.parse(JSON.stringify(state.table.allOrgDetail))
 }
 
 export const getProvinceDetail = (state) =>{//获取活跃用户
