@@ -51,6 +51,12 @@ export const initBacklogList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.backlogList));
 }
 
+
+/*---待处理的报价消息---*/
+export const initOfferMessageList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.offerMessageList));
+}
+
 /*---流程记录---*/
 export const initFlowRecord = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.flowRecord));
