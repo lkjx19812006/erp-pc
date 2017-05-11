@@ -6,22 +6,7 @@
         </div>
         <!-- 日期统计 -->
         <div class="order_table clearfix" style="margin-top: 15px;" id="top">
-            <div class="btn-group clearfix right">
-                <div class="clear transfer">
-                    <div class="left">
-                        <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
-                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                    <div class="left">
-                        <dt class="left marg_top">~~</dt>
-                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                    <button type="button" class="btn btn-default" style="margin-left: 15px;" @click="search()">{{$t('static.search')}}</button>
-                    <button type="button" class="btn btn-default" @click="resetCondition()">{{$t("static.clear_all")}}</button>
-                </div>
-            </div>
+
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -41,11 +26,11 @@
                     <th>时间</th>
  
                 </tr>
-                <tr v-for="item in initMyOrderCount">
-                    <td>{{item.tradeTime}}</td>
-                    <td>{{item.goodsDesc}}</td>
-                    <td>{{item.prepaid | money}}</td>
-                    <td>{{item.prepaid | money}}</td>
+                <tr v-for="item in getNewUserDetail">
+                    <td>{{item.name}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </table>
             <div class="base_pagination">
@@ -56,42 +41,26 @@
 </template>
 <script>
 import {
-    initMyOrderCount,
-    initMyTimeOrderCount,
-    initOrderStatics
+    getNewUserDetail
 } from '../../vuex/getters'
 import {
-    getOrderCount,
-    getOrderCountList,
-    getTimeOrderCount
+ 
 } from '../../vuex/actions'
 import filter from '../../filters/filters'
 import pagination from '../pagination'
-import mzDatepicker from '../calendar/vue.datepicker.js'
 import common from '../../common/common.js'
 export default {
     components: {
-        pagination,
-        mzDatepicker,
         pagination
     },
     data() {
         return {
             loadParam: {
-                loading: true,
-                color: '#5dc596',
-                size: '15px',
-                employee: this.$store.state.table.login.id,
-                endTime: '',
-                startTime: '',
+                loading: false,
                 orderType: 1,
                 timeType: 'month',
-                cur: 1,
-                all: 15,
-                total: 0,
-                name:"newUserDetail"
-            },
-
+                name:"newUserDetail"               
+            }
         }
     },
     methods: {
@@ -99,14 +68,10 @@ export default {
     },
     vuex: {
         getters: {
-            initMyOrderCount,
-            initMyTimeOrderCount,
-            initOrderStatics
+            getNewUserDetail
         },
         actions: {
-            getOrderCount,
-            getTimeOrderCount,
-            getOrderCountList
+       
         }
     },
     methods:{
@@ -115,12 +80,9 @@ export default {
     	}
     },
     events: {
+
     },
     created() {
-        this.getOrderCount(this.loadParam);
-        /*this.getTimeOrderCount(this.timeParam);*/
-        this.getOrderCountList(this.loadParam);
-
 
     },
     filter: (filter, {}),

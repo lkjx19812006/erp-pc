@@ -16,19 +16,19 @@
                             <dt class="left transfer marg_top" style="margin-left: 20px">客户类型：</dt>
                             <dd class="left margin_right">
                                 <select class="form-control edit-input" placeholder="按回车键搜索" v-model="" @keyup.enter="">
-                                    <option value="产地">产地</option>
-                                    <option value="药厂">药厂</option>
-                                    <option value="药商">药商</option>
-                                    <option value="服务商">服务商</option>
+                                    <option value="产地">新增</option>
+                                    <option value="药厂">成交</option>
+                                    <option value="药商">活跃</option>
+                                    <option value="服务商">客户总数</option>
                                 </select>
                             </dd>
-                            <dt class="left transfer marg_top" style="margin-left: 20px">按月：</dt>
+                            <!-- <dt class="left transfer marg_top" style="margin-left: 20px">按月：</dt>
                             <dd class="left margin_right">
                                 <select class="form-control edit-input" placeholder="按回车键搜索" v-model="" @keyup.enter="">
                                     <option value="社会库存">社会库存</option>
                                     <option value="自营库存">自营库存</option>
                                 </select>
-                            </dd>
+                            </dd> -->
                         </div>
                     </span>
                 </h4>
@@ -50,11 +50,10 @@
                     <table class="table table-hover table_color table-striped">
                         <thead>
                             <tr>
-                                <th style="min-width:200px;text-align: center;">客户类型</th>
-                                <th style="min-width:240px;text-align: center;">今日新增</th>
-                                <th style="min-width:240px;text-align: center;">新增用户</th>
-                                <th style="min-width:240px;text-align: center;">成交用户</th>
-                                <th style="min-width:280px;text-align: center;">
+                                <th style="min-width:240px;text-align: center;">客户类型</th>
+                                <th style="min-width:280px;text-align: center;">新增用户</th>
+                                <th style="min-width:280px;text-align: center;">成交用户</th>
+                                <th style="min-width:320px;text-align: center;">
                                     活跃用户
                                     <select>
                                         <option>报价</option>
@@ -66,25 +65,14 @@
                         <tbody>
                             <tr v-for="item in todayData">
                                 <td><a href="javascript:void(0);">{{item.name}}</a></td>
-                                <td>{{item.phone}}</td>
                                 <td>60</td>
                                 <td>789</td>
                                 <td>100</td>
                             </tr>
-                            <tr v-for="item in todayData">
-                                <td><a href="javascript:void(0);">{{item.name}}</a></td>
-                                <td>{{item.phone}}</td>
-                                <td>60</td>
-                                <td>789</td>
-                                <td>100</td>
-                            </tr>
-
                         </tbody>
                     </table>
                 </div>
             </div>
-
-
         </div>
     </div>
 </template>
@@ -92,7 +80,6 @@
 import pagination from '../pagination'
 
 import {
-
     getCustypechart
 } from '../../vuex/getters'
 import {
@@ -152,9 +139,6 @@ export default {
         }
     },
     events: {
-        fresh: function(input) {
-            this.loadParam.cur = input;
-        },
     },
     methods:{
     	toBackPage:function(){
@@ -163,7 +147,6 @@ export default {
     },
     created() {
 
-        console.log(this.getCustypechart)
     }
 }
 </script>

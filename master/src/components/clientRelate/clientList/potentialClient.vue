@@ -26,6 +26,30 @@
                         </select>
                     </dd>
                 </dl>
+                <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">手机市：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.phoneCityName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
+                </dl>
+                <dl class="clear left transfer">
+                    <div class="client-detailInfo col-xs-6">
+                        <dt class="left transfer marg_top">注册起始时间：</dt>
+                        <mz-datepicker :time.sync="loadParam.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </dl>
+                <dd class="left" style="margin-left:20px">
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
+                </dd>
+            </div>
+            <div class="clear" style="margin-top:3px;">
+                <dl class="clear left transfer">
+                    <dt class="left transfer marg_top" style="letter-spacing:3px">手机号：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
+                </dl>
                 <dl class="clear left transfer" style="width:330px;">
                     <dt class="left transfer marg_top">客户类型：</dt>
                     <dd class="left" style="width:71%">
@@ -57,24 +81,6 @@
                             <option value="23">Pieces Factory 饮片厂</option>
                             <option value="24">Herb tea company 茶类公司</option>
                         </select>
-                    </dd>
-                </dl>
-                <dl class="clear left transfer">
-                    <div class="client-detailInfo col-xs-6">
-                        <dt class="left transfer marg_top">注册起始时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </dl>
-                <dd class="left" style="margin-left:20px">
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
-                </dd>
-            </div>
-            <div class="clear" style="margin-top:3px;">
-                <dl class="clear left transfer">
-                    <dt class="left transfer marg_top" style="letter-spacing:3px">手机号：</dt>
-                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
                 </dl>
                 <dl class="clear left transfer">

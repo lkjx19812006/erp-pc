@@ -562,6 +562,26 @@ export const getCustypechart = (state) =>{ //客户类型折线图数据
     return option
 }
 
-export const getYear = (state) =>{
+export const getYear = (state) =>{//获取年份
     return JSON.parse(JSON.stringify(state.table.yearNum));
+}
+
+export const getNewUserDetail = (state) =>{//获取新增用户
+    return JSON.parse(JSON.stringify(state.table.newUserDetail))
+}
+
+export const getDealUserDetail = (state) =>{//获取成交用户
+    return JSON.parse(JSON.stringify(state.table.newDealDetail))
+}
+
+export const getActiveUserDetail = (state) =>{//获取活跃用户
+    return JSON.parse(JSON.stringify(state.table.newActiveDetail))
+}
+
+export const getYesTodayDetail = (state) =>{//获取活跃用户
+    return JSON.parse(JSON.stringify(state.table.yestodayDetail))
+}
+
+export const getProvinceDetail = (state) =>{//获取活跃用户
+    return JSON.parse(JSON.stringify(state.table.provinceDetail))
 }

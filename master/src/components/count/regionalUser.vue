@@ -27,35 +27,25 @@
                     <table class="table table-hover table_color table-striped">
                         <thead>
                             <tr>
-                                <th style="min-width:200px;text-align: center;">省份</th>
-                                <th style="min-width:240px;text-align: center;">今日新增</th>
-                                <th style="min-width:240px;text-align: center;">新增用户</th>
-                                <th style="min-width:240px;text-align: center;">成交用户</th>
-                                <th style="min-width:280px;text-align: center;">
+                                <th style="min-width:240px;text-align: center;">省份</th>
+                                <th style="min-width:280px;text-align: center;">新增用户</th>
+                                <th style="min-width:280px;text-align: center;">成交用户</th>
+                                <th style="min-width:320px;text-align: center;">
                                     活跃用户
-                                    <select>
-                                        <option>报价</option>
-                                        <option>留言</option>
-                                    </select>
+                                   <!--  <select>
+                                       <option>报价</option>
+                                       <option>留言</option>
+                                   </select> -->
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in todayData">
-                                <td><a href="javascript:void(0);">{{item.name}}</a></td>
-                                <td>{{item.phone}}</td>
-                                <td>60</td>
-                                <td>789</td>
-                                <td>100</td>
+                            <tr v-for="item in getProvinceDetail">
+                                <td><a href="javascript:void(0);">{{item.provinceName}}</a></td>
+                                <td>{{item.activeNumber}}</td>
+                                <td>{{item.transactionNumber}}</td>
+                                <td>{{item.activeNumber}}</td>
                             </tr>
-                            <tr v-for="item in todayData">
-                                <td><a href="javascript:void(0);">{{item.name}}</a></td>
-                                <td>{{item.phone}}</td>
-                                <td>60</td>
-                                <td>789</td>
-                                <td>100</td>
-                            </tr>
-
                         </tbody>
                     </table>
                 </div>
@@ -66,10 +56,11 @@
 <script>
 import pagination from '../pagination'
 import {
-    getRegionalchart
+    getRegionalchart,
+    getProvinceDetail
 } from '../../vuex/getters'
 import {
-
+	freshRegionalCharts
 } from '../../vuex/actions'
 
 export default {
@@ -88,43 +79,8 @@ export default {
                 total: 0,
                 name:"regionalUser"
             },
-            todayData:[
-                {
-                    name:"安徽",
-                    phone:'活跃',
-                    address:'四川雅安'
-                },
-                {
-                    name:"江苏",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"上海",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"浙江",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"山东",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"北京",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"河南",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                }
-            ]
+            provinceDetail:[]
+                
         }
     },
     methods: {
@@ -134,9 +90,11 @@ export default {
     },
     vuex: {
         getters: {
-            getRegionalchart
+            getRegionalchart,
+            getProvinceDetail
         },
         actions: {
+        	freshRegionalCharts
         }
     },
     events: {
@@ -150,6 +108,7 @@ export default {
     	}
     },
     created() {
+    	this.freshRegionalCharts(this.provinceDetail)
     }
 }
 </script>
