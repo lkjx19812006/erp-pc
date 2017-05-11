@@ -35,9 +35,20 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==8">
         <my-newcount></my-newcount>
     </div>
+    <!-- 部门统计（新） -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==9">
+        <all-orgcount></all-orgcount>
+    </div>
+    <!-- 全部统计（新） -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==10">
+        <all-newcount></all-newcount>
+    </div>
 </template>
 <script>
 import personalCount from '../components/count/myCount'
+import managerView from '../components/count/managerView'
+import allNewcount from '../components/count/allNewCount'
+import allOrgcount from '../components/count/allOrgCount'
 import myNewcount from '../components/count/myNewcount'
 import orgCount from '../components/count/orgCount'
 import orderCount from '../components/count/myOrdercount'
@@ -50,6 +61,9 @@ export default {
     components: {
         personalCount,
         orgCount,
+        allOrgcount,
+        allNewcount,
+        managerView,
         orgorderCount,
         orderCount,
         allCount,
