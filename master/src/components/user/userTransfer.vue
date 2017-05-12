@@ -150,7 +150,7 @@
                                 </div>
                                 <!-- 注册地址 -->
                                 <div class="client-detailInfo  col-md-6">
-                                    <label>详细地址</label>
+                                    <label>{{$t('static.detailed_address')}}</label>
                                     <input type="text" class="form-control edit-input" v-model="param.address" />
                                 </div>
                                 <!-- 备注 -->
