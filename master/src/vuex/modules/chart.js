@@ -14,6 +14,8 @@ import {
     CHANGE_COLCHARTS,
     CHANGE_REGIONALCHARTS,
     CHANGE_CUSTYPECHARTS,
+    CHANGE_ORGCUSTYPECHARTS,
+    CHANGE_ALLCUSTYPECHARTS,
     CHANGE_ORGCHARTS,
     CHANGE_ORGCOLCHARTS,
     ORG_REGIONAL_DETAIL,
@@ -318,7 +320,7 @@ const state = {
 
     allChartOption:{
         title: {
-            text: '新'
+            text: ''
         },
         tooltip: {
             trigger: 'axis',
@@ -377,7 +379,7 @@ const state = {
         ]
     },allChartLoading: false,
 
-    custypeChartOption:{
+    custypeChartOption:{//个人统计客户类型折线图
         title: {
             text: ''
         },
@@ -427,6 +429,108 @@ const state = {
             },
         ]
     },custypeChartLoading: false,
+
+    orgCustypeChartOption:{//部门统计客户类型折线图
+        title: {
+            text: ''
+        },
+        tooltip: {
+            trigger: 'axis',
+
+            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+            },
+
+        },
+        legend: {
+            data: ['产地', '药厂','药商','服务商']
+        },
+        xAxis: [{
+            type: 'category',
+            axisLabel: {
+                interval: 0
+            },
+            data: ['5月1号', '5月2号', '5月3号', '5月4号', '5月5号', '5月6号', '5月7号', '5月8号', '5月9号', '5月10号', '5月11号', '5月12号']
+        }],
+        yAxis: [{
+            type: 'value',
+        }],
+        series: [{
+                name: '产地',
+                type:'line',
+                data: [90, 34, 48, 57, 39, 21, 13, 12, 14, 36, 62, 49],
+                
+            }, {
+                name: '药厂',
+                type:'line',
+                data: [50, 54, 58, 37, 31, 63, 34, 37, 48, 51, 72, 69],
+                
+            },
+            {
+                name: '药商',
+                type:'line',
+                data: [60, 34, 58, 47, 39, 53, 34, 77, 48, 51, 32, 39],
+                
+            },
+            {
+                name: '服务商',
+                type:'line',
+                data: [80, 55, 48, 51, 31, 63, 34, 37, 48, 23, 42, 44],
+                
+            },
+        ]
+    },orgCustypeChartLoading: false,
+
+    allCustypeChartOption:{//全部统计客户类型折线图
+        title: {
+            text: ''
+        },
+        tooltip: {
+            trigger: 'axis',
+
+            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+            },
+
+        },
+        legend: {
+            data: ['产地', '药厂','药商','服务商']
+        },
+        xAxis: [{
+            type: 'category',
+            axisLabel: {
+                interval: 0
+            },
+            data: ['5月1号', '5月2号', '5月3号', '5月4号', '5月5号', '5月6号', '5月7号', '5月8号', '5月9号', '5月10号', '5月11号', '5月12号']
+        }],
+        yAxis: [{
+            type: 'value',
+        }],
+        series: [{
+                name: '产地',
+                type:'line',
+                data: [90, 34, 48, 57, 39, 21, 13, 12, 14, 36, 62, 49],
+                
+            }, {
+                name: '药厂',
+                type:'line',
+                data: [50, 54, 58, 37, 31, 63, 34, 37, 48, 51, 72, 69],
+                
+            },
+            {
+                name: '药商',
+                type:'line',
+                data: [60, 34, 58, 47, 39, 53, 34, 77, 48, 51, 32, 39],
+                
+            },
+            {
+                name: '服务商',
+                type:'line',
+                data: [80, 55, 48, 51, 31, 63, 34, 37, 48, 23, 42, 44],
+                
+            },
+        ]
+    },allCustypeChartLoading: false,
 
     regionalChartOption:{
         title: {
@@ -1257,8 +1361,13 @@ const mutations = {
         state.linesChartOption.series[1].data =[];
         state.linesChartOption.series[2].data=[];
         state.linesChartOption.series[3].data=[];
-        for(var i=0;i<data.length;i++){                   
-          state.linesChartOption.xAxis[0].data.push(data[i].countDate.toString().substring(6,8))          
+        for(var i=0;i<data.length;i++){
+          if(data[i].countDate.toString().substring(6,8)==''){
+            state.linesChartOption.xAxis[0].data.push(data[i].countDate.toString().substring(4,6))  
+          }else{
+            state.linesChartOption.xAxis[0].data.push(data[i].countDate.toString().substring(6,8))  
+          }                   
+                  
           state.linesChartOption.series[0].data.push(data[i].addNumber)
           state.linesChartOption.series[1].data.push(data[i].activeNumber)
           state.linesChartOption.series[2].data.push(data[i].transactionNumber)
@@ -1273,8 +1382,12 @@ const mutations = {
         state.orgChartOption.series[1].data =[];
         state.orgChartOption.series[2].data=[];
         state.orgChartOption.series[3].data=[];
-        for(var i=0;i<data.length;i++){                   
-          state.orgChartOption.xAxis[0].data.push(data[i].countDate.toString().substring(6,8))          
+        for(var i=0;i<data.length;i++){  
+          if(data[i].countDate.toString().substring(6,8)==''){
+            state.orgChartOption.xAxis[0].data.push(data[i].countDate.toString().substring(4,6))  
+          }else{
+            state.orgChartOption.xAxis[0].data.push(data[i].countDate.toString().substring(6,8)) 
+          }                                   
           state.orgChartOption.series[0].data.push(data[i].addNumber)
           state.orgChartOption.series[1].data.push(data[i].activeNumber)
           state.orgChartOption.series[2].data.push(data[i].transactionNumber)
@@ -1289,8 +1402,13 @@ const mutations = {
         state.allChartOption.series[1].data =[];
         state.allChartOption.series[2].data=[];
         state.allChartOption.series[3].data=[];
-        for(var i=0;i<data.length;i++){                   
-          state.allChartOption.xAxis[0].data.push(data[i].countDate.toString().substring(6,8))          
+        for(var i=0;i<data.length;i++){
+          if(data[i].countDate.toString().substring(6,8)==''){
+            state.allChartOption.xAxis[0].data.push(data[i].countDate.toString().substring(4,6))   
+        }else{
+            state.allChartOption.xAxis[0].data.push(data[i].countDate.toString().substring(6,8)) 
+        }                   
+                   
           state.allChartOption.series[0].data.push(data[i].addNumber)
           state.allChartOption.series[1].data.push(data[i].activeNumber)
           state.allChartOption.series[2].data.push(data[i].transactionNumber)
@@ -1335,7 +1453,7 @@ const mutations = {
         state.allRegionalChartLoading = false;
     },
 
-    [CHANGE_CUSTYPECHARTS](state,data){
+    [CHANGE_CUSTYPECHARTS](state,data){//个人客户类型折线图
         console.log(data)
         state.custypeChartOption.xAxis[0].data=[];
         state.custypeChartOption.series[0].data=[];
@@ -1343,8 +1461,13 @@ const mutations = {
         state.custypeChartOption.series[2].data=[];
         state.custypeChartOption.series[3].data=[];
         if(data.type == '新增'){
-            for(var i=0;i<data.dataList.length;i++){                   
-              state.custypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(6,8))          
+            for(var i=0;i<data.dataList.length;i++){   
+              if(data.dataList[i].countDate.toString().substring(6,8)==''){
+                state.custypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(4,6))  
+              }else{
+                state.custypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(6,8))
+              }                
+                      
               state.custypeChartOption.series[0].data.push(data.dataList[i].addNumber['0'])
               state.custypeChartOption.series[1].data.push(data.dataList[i].addNumber['1'])
               state.custypeChartOption.series[2].data.push(data.dataList[i].addNumber['2'])
@@ -1353,7 +1476,11 @@ const mutations = {
         }
         if(data.type == '成交'){
             for(var i=0;i<data.dataList.length;i++){                   
-              state.custypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(6,8))          
+             if(data.dataList[i].countDate.toString().substring(6,8)==''){
+                state.custypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(4,6))  
+              }else{
+                state.custypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(6,8))
+              }          
               state.custypeChartOption.series[0].data.push(data.dataList[i].transactionNumber['0'])
               state.custypeChartOption.series[1].data.push(data.dataList[i].transactionNumber['1'])
               state.custypeChartOption.series[2].data.push(data.dataList[i].transactionNumber['2'])
@@ -1362,7 +1489,11 @@ const mutations = {
         }
         if(data.type == '活跃'){
             for(var i=0;i<data.dataList.length;i++){                   
-              state.custypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(6,8))          
+              if(data.dataList[i].countDate.toString().substring(6,8)==''){
+                state.custypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(4,6))  
+              }else{
+                state.custypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(6,8))
+              }        
               state.custypeChartOption.series[0].data.push(data.dataList[i].activeNumber['0'])
               state.custypeChartOption.series[1].data.push(data.dataList[i].activeNumber['1'])
               state.custypeChartOption.series[2].data.push(data.dataList[i].activeNumber['2'])
@@ -1372,6 +1503,108 @@ const mutations = {
         
         state.custypeChartLoading=false;
     },
+
+    [CHANGE_ORGCUSTYPECHARTS](state,data){
+        console.log(data)
+        state.orgCustypeChartOption.xAxis[0].data=[];
+        state.orgCustypeChartOption.series[0].data=[];
+        state.orgCustypeChartOption.series[1].data =[];
+        state.orgCustypeChartOption.series[2].data=[];
+        state.orgCustypeChartOption.series[3].data=[];
+        if(data.type == '新增'){
+            for(var i=0;i<data.dataList.length;i++){   
+              if(data.dataList[i].countDate.toString().substring(6,8)==''){
+                state.orgCustypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(4,6))  
+              }else{
+                state.orgCustypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(6,8))
+              }                
+                      
+              state.orgCustypeChartOption.series[0].data.push(data.dataList[i].addNumber['0'])
+              state.orgCustypeChartOption.series[1].data.push(data.dataList[i].addNumber['1'])
+              state.orgCustypeChartOption.series[2].data.push(data.dataList[i].addNumber['2'])
+              state.orgCustypeChartOption.series[3].data.push(data.dataList[i].addNumber['3'])  
+            }
+        }
+        if(data.type == '成交'){
+            for(var i=0;i<data.dataList.length;i++){                   
+             if(data.dataList[i].countDate.toString().substring(6,8)==''){
+                state.orgCustypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(4,6))  
+              }else{
+                state.orgCustypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(6,8))
+              }          
+              state.orgCustypeChartOption.series[0].data.push(data.dataList[i].transactionNumber['0'])
+              state.orgCustypeChartOption.series[1].data.push(data.dataList[i].transactionNumber['1'])
+              state.orgCustypeChartOption.series[2].data.push(data.dataList[i].transactionNumber['2'])
+              state.orgCustypeChartOption.series[3].data.push(data.dataList[i].transactionNumber['3'])  
+            }
+        }
+        if(data.type == '活跃'){
+            for(var i=0;i<data.dataList.length;i++){                   
+              if(data.dataList[i].countDate.toString().substring(6,8)==''){
+                state.orgCustypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(4,6))  
+              }else{
+                state.orgCustypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(6,8))
+              }        
+              state.orgCustypeChartOption.series[0].data.push(data.dataList[i].activeNumber['0'])
+              state.orgCustypeChartOption.series[1].data.push(data.dataList[i].activeNumber['1'])
+              state.orgCustypeChartOption.series[2].data.push(data.dataList[i].activeNumber['2'])
+              state.orgCustypeChartOption.series[3].data.push(data.dataList[i].activeNumber['3'])  
+            }
+        }
+        
+        state.orgCustypeChartLoading=false;
+    },
+
+    [CHANGE_ALLCUSTYPECHARTS](state,data){
+        console.log(data)
+        state.allCustypeChartOption.xAxis[0].data=[];
+        state.allCustypeChartOption.series[0].data=[];
+        state.allCustypeChartOption.series[1].data =[];
+        state.allCustypeChartOption.series[2].data=[];
+        state.allCustypeChartOption.series[3].data=[];
+        if(data.type == '新增'){
+            for(var i=0;i<data.dataList.length;i++){   
+              if(data.dataList[i].countDate.toString().substring(6,8)==''){
+                state.allCustypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(4,6))  
+              }else{
+                state.allCustypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(6,8))
+              }                
+                      
+              state.allCustypeChartOption.series[0].data.push(data.dataList[i].addNumber['0'])
+              state.allCustypeChartOption.series[1].data.push(data.dataList[i].addNumber['1'])
+              state.allCustypeChartOption.series[2].data.push(data.dataList[i].addNumber['2'])
+              state.allCustypeChartOption.series[3].data.push(data.dataList[i].addNumber['3'])  
+            }
+        }
+        if(data.type == '成交'){
+            for(var i=0;i<data.dataList.length;i++){                   
+             if(data.dataList[i].countDate.toString().substring(6,8)==''){
+                state.allCustypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(4,6))  
+              }else{
+                state.allCustypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(6,8))
+              }          
+              state.allCustypeChartOption.series[0].data.push(data.dataList[i].transactionNumber['0'])
+              state.allCustypeChartOption.series[1].data.push(data.dataList[i].transactionNumber['1'])
+              state.allCustypeChartOption.series[2].data.push(data.dataList[i].transactionNumber['2'])
+              state.allCustypeChartOption.series[3].data.push(data.dataList[i].transactionNumber['3'])  
+            }
+        }
+        if(data.type == '活跃'){
+            for(var i=0;i<data.dataList.length;i++){                   
+              if(data.dataList[i].countDate.toString().substring(6,8)==''){
+                state.allCustypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(4,6))  
+              }else{
+                state.allCustypeChartOption.xAxis[0].data.push(data.dataList[i].countDate.toString().substring(6,8))
+              }        
+              state.allCustypeChartOption.series[0].data.push(data.dataList[i].activeNumber['0'])
+              state.allCustypeChartOption.series[1].data.push(data.dataList[i].activeNumber['1'])
+              state.allCustypeChartOption.series[2].data.push(data.dataList[i].activeNumber['2'])
+              state.allCustypeChartOption.series[3].data.push(data.dataList[i].activeNumber['3'])  
+            }
+        }        
+        state.allCustypeChartLoading=false;
+    },
+
 
     [CHANGE_PIECHARTS](state, data) {
         state.PieChartOption.legend.data = data.results.dateList;

@@ -25,10 +25,10 @@
             <div class="user_detail">
                 <div class="user_detail_right">
                     <h4 class="detail_title bg-info">活跃用户
-	                    <span class="detail_num">
+	                    <!-- <span class="detail_num">
 		                    <a href="javascript:void(0);" class="person_num">人数：60</a>
 		                    <a href="javascript:void(0);" class="person_num">人次：60</a>&nbsp		                    
-	                    </span>
+	                    </span> -->
                     </h4>
                     <table class="table table-hover table_color table-striped">
                         <thead>
@@ -48,7 +48,7 @@
                             </tr>
                         </tbody>
                         <tbody v-if="param.name=='部门'">
-                            <tr v-for="item in getProvinceDetail">
+                            <tr v-for="item in getOrgProvinceDetail">
                                 <td><a href="javascript:void(0);">{{item.provinceName}}</a></td>
                                 <td>{{item.activeNumber}}</td>
                                 <td>{{item.transactionNumber}}</td>
@@ -56,7 +56,7 @@
                             </tr>
                         </tbody>
                         <tbody v-if="param.name=='全部'">
-                            <tr v-for="item in getProvinceDetail">
+                            <tr v-for="item in getAllProvinceDetail">
                                 <td><a href="javascript:void(0);">{{item.provinceName}}</a></td>
                                 <td>{{item.activeNumber}}</td>
                                 <td>{{item.transactionNumber}}</td>
@@ -74,11 +74,15 @@ import pagination from '../pagination'
 import {
     getRegionalchart,
     getProvinceDetail,
+    getOrgProvinceDetail,
+    getAllProvinceDetail,
     getOrgRegionalchart,
     getAllRegionalchart
 } from '../../vuex/getters'
 import {
-	freshRegionalCharts
+	freshRegionalCharts,
+	freshOrgRegionalCharts,
+	freshAllRegionalCharts
 } from '../../vuex/actions'
 
 export default {
@@ -112,10 +116,14 @@ export default {
             getRegionalchart,
             getOrgRegionalchart,
             getAllRegionalchart,
-            getProvinceDetail
+            getProvinceDetail,
+            getOrgProvinceDetail,
+            getAllProvinceDetail
         },
         actions: {
-        	freshRegionalCharts
+        	freshRegionalCharts,
+        	freshOrgRegionalCharts,
+        	freshAllRegionalCharts
         }
     },
     events: {
@@ -129,8 +137,17 @@ export default {
     	}
     },
     created() {
-    	this.$dispatch('freshCharts',this.provinceDetail)
-    	//this.freshRegionalCharts(this.provinceDetail)
+    	if(this.param.name == '业务员'){
+			this.freshRegionalCharts(this.provinceDetail)
+    	}
+    	if(this.param.name == '部门'){
+    		this.freshOrgRegionalCharts()
+    	}
+    	if(this.param.name == '全部'){
+    		this.freshAllRegionalCharts()
+    	}
+    	//this.$dispatch('freshCharts',this.provinceDetail)
+    	
     }
 }
 </script>

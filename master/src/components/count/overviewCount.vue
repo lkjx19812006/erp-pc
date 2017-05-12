@@ -100,7 +100,10 @@
                         </tbody>
                     </table>
                     <!--底部分页-->
-                    <pagination :combination="loadParam" slot="page"></pagination>
+                    <div class="pages">
+                        <pagination :combination="loadParam" slot="page"></pagination>
+                    </div>
+                    
                 </div>
             </div>
             <!-- 用户详情 -->
@@ -431,6 +434,7 @@ export default {
 .bar_today{
     width:1200px;
     margin: 30px auto;
+    height:440px;
     overflow: hidden;
     background-color:#fff;
     border-radius: 10px;
@@ -444,7 +448,14 @@ export default {
 }
 .today_list_right{
     width: 580px;
-    float: right;   
+    float: right;
+    position: relative;  
+    height:100%; 
+}
+.pages{
+    position: absolute;
+    bottom: 10%;
+    left:10%;
 }
 .barchart {
     width: 100%;

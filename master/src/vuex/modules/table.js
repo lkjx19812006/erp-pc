@@ -145,12 +145,17 @@ import {
     NEW_ACTIVE_DETAIL,
     YESTODAY_DETAIL,
     PROVINCE_DETAIL,
+    ORG_PROVINCE_DETAIL,
     OFFER_MESSAGE_TABLE,
     CLEAR_NOTICE_TABLE,
     ORG_YESTODAY_DETAIL,
     ORG_SALEMAN_DETAIL,
     ALL_YESTODAY_DETAIL,
-    ALL_ORG_DETAIL
+    ALL_ORG_DETAIL,
+    ALL_PROVINCE_DETAIL,
+    CUSTYPE_DETAIL,
+    ORG_CUSTYPE_DETAIL,
+    ALL_CUSTYPE_DETAIL
 } from '../mutation-types'
 
 
@@ -1171,6 +1176,23 @@ const state = {
     orgCount: {}, //部门统计state
     stockList: [{ checked: false }, { checked: false }],
     stockCartList: [],
+<<<<<<< HEAD
+    yearNum:[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],
+    newUserDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
+    newDealDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
+    newActiveDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
+    yestodayDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
+    orgYestodayDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
+    allYestodayDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
+    orgSalemanDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
+    allOrgDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
+    provinceDetail:[],
+    orgProvinceDetail:[],
+    allProvinceDetail:[],
+    cusTypeDetail:[],
+    orgCusTypeDetail:[],
+    allCusTypeDetail:[],
+=======
 
     yearNum: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
     newUserDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
@@ -1183,6 +1205,7 @@ const state = {
     allOrgDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
     provinceDetail: []
 
+>>>>>>> fc88fd83019786f6a666fe59d86c4a3bab600e15
 }
 
 const mutations = {
@@ -2518,8 +2541,27 @@ const mutations = {
     //部门业务员数据
     [ALL_ORG_DETAIL](state, data) {
         state.allOrgDetail = data
+    },
+    //部门省数据
+    [ORG_PROVINCE_DETAIL](state,data){
+        state.orgProvinceDetail = data
+    },
+    //全部省数据
+    [ALL_PROVINCE_DETAIL](state,data){
+        state.allProvinceDetail = data
+    },
+    //个人类型详情
+    [CUSTYPE_DETAIL](state,data){
+        state.cusTypeDetail = data
+    },
+    //部门类型详情
+    [ORG_CUSTYPE_DETAIL](state,data){
+        state.orgCusTypeDetail = data
+    },
+    //全部类型详情
+    [ALL_CUSTYPE_DETAIL](state,data){
+        state.allCusTypeDetail = data
     }
-
 }
 
 export default {
