@@ -3,6 +3,9 @@
         <cart-model :param="orderParam" v-if="orderParam.show"></cart-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+        <custom-dialog :param="offerAcceptParam" v-if="offerAcceptParam.show"></custom-dialog>
+        <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
+        <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
         <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con" v-show="param.show">
             <div @click.stop="param.show=false" class="top-title">
@@ -60,10 +63,18 @@
                                 <label class="col-md-3 col-sm-4 col-xs-6">经营范围</label>
                             </ul>
                         </div> -->
-                        <!-- 意向列表 -->
                         <article>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" style="width:100px" v-bind:class="{ 'btn-warning': intentionOrOffer===0}" @click="clickType(0)">
+                                    意向信息
+                                </button>
+                                <button type="button" class="btn btn-default" style="width:100px" v-bind:class="{ 'btn-warning': intentionOrOffer===1}" @click="clickType(1)">
+                                    报价信息
+                                </button>
+                            </div>
                             <div class="panel-group">
-                                <div class="panel panel-default">
+                                <!-- 意向列表 -->
+                                <div v-show="intentionOrOffer === 0" class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click.stop="enfoldment({
                                                 link:initPurchaseDetail.intentionList,
@@ -94,16 +105,23 @@
                                                     <tr v-for="(index,item) in initPurchaseDetail.intentionList.arr">
                                                         <!-- 关于意向的报价信息 -->
                                                         <td v-if="item.purchaseOffer" colspan="8">
-                                                            <table class="table table-hover table_color table-striped" style="width:80%;float:right;border-top:1px soild red">
+                                                            <table class="table table-hover table_color table-striped" style="width:95%;float:right;border-top:1px soild red">
                                                                 <thead>
                                                                     <th></th>
-                                                                    <th>业务员(或客户信息)</th>
-                                                                    <th>单价</th>
+                                                                    <th>报价时间</th>
+                                                                    <th>报价类型</th>
+                                                                    <th>供应商名称</th>
+                                                                    <th>供应商ID</th>
+                                                                    <th>报价业务员</th>
+                                                                    <th>所属部门</th>
+                                                                    <th>品种</th>
+                                                                    <th>规格</th>
+                                                                    <th>产地</th>
                                                                     <th>数量</th>
-                                                                    <th>单位</th>
+                                                                    <th>价格</th>
                                                                     <th>备注</th>
-                                                                    <th>描述</th>
-                                                                    <th>编辑描述</th>
+                                                                    <th>是否采纳</th>
+                                                                    <th>原因</th>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="(sub,offer) in item.offers.arr">
@@ -122,20 +140,39 @@
                                                                                 (已加入)
                                                                             </span>
                                                                         </td>
+                                                                        <td>{{offer.otime | date}}</td>
                                                                         <td>
-                                                                            <span v-if="offer.employeeName=='没有归属业务员'||!offer.employeeName">
-                                                                                {{offer.customerName}}({{offer.customerPhone}})
-                                                                            </span>
-                                                                            <span v-else>
-                                                                                {{offer.employeeName}}
-                                                                            </span>
+                                                                            {{offer.source | offerType}}
                                                                         </td>
-                                                                        <td>{{offer.price}}元</td>
-                                                                        <td>{{offer.number}}</td>
-                                                                        <td>{{offer.unit | Unit}}</td>
-                                                                        <td>{{offer.comments}}</td>
-                                                                        <td>{{offer.description}}</td>
-                                                                        <td><a href="javascript:void(0)" @click="editDes(index,sub,offer)">备注</a></td>
+                                                                        <td>{{offer.offerCustomerName}}</td>
+                                                                        <td>{{offer.offerCustomer}}</td>
+                                                                        <td>{{offer.offerEmployeeName}}</td>
+                                                                        <td>{{offer.offerOrgName}}</td>
+                                                                        <td>{{offer.breedName}}</td>
+                                                                        <td>{{offer.spec}}</td>
+                                                                        <td>{{offer.location}}</td>
+                                                                        <td>{{offer.number}}{{offer.unit | Unit}}</td>
+                                                                        <td>{{offer.price}}</td>
+                                                                        <td>
+                                                                            <Poptip placement="top" trigger="hover">
+                                                                                <span>{{offer.description | textDisplay '5'}}</span>
+                                                                                <div class="api" slot="content">
+                                                                                    {{offer.description}}
+                                                                                </div>
+                                                                            </Poptip>
+                                                                        </td>
+                                                                        <td>
+                                                                            {{offer.accept | offerAccept}}
+                                                                        </td>
+                                                                        <td>
+                                                                            <Poptip placement="top" trigger="hover">
+                                                                                <span>{{offer.comments | textDisplay '5'}}</span>
+                                                                                <div class="api" slot="content">
+                                                                                    {{offer.comments}}
+                                                                                </div>
+                                                                            </Poptip>
+                                                                        </td>
+                                                                        <!-- <td><a href="javascript:void(0)" @click="editDes(index,sub,offer)">备注</a></td> -->
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -155,6 +192,106 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- 报价列表 -->
+                                <div v-show="intentionOrOffer === 1" class="panel panel-default">
+                                    <div class="clear" style="margin:5px">
+                                        <dt class="left transfer marg_top">报价业务员：</dt>
+                                        <dd class="left margin_right">
+                                            <input type="text" class="form-control" v-model="indentOfferParam.offerEmployeeName" placeholder="按回车键搜索" @click="selectEmployee()" readonly="readonly">
+                                        </dd>
+                                        <dt class="left transfer marg_top">品种：</dt>
+                                        <dd class="left margin_right">
+                                            <input type="text" class="form-control" v-model="indentOfferParam.breedName" placeholder="按回车键搜索" @click="breedSearch()" readonly="readonly">
+                                        </dd>
+                                        <div class="btn-group" style="margin-left:10px">
+                                            <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept===''}" @click="clickAccept('')">
+                                                全部
+                                            </button>
+                                            <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='0'}" @click="clickAccept('0')">
+                                                初始
+                                            </button>
+                                            <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='1'}" @click="clickAccept('1')">
+                                                已接受
+                                            </button>
+                                            <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='2'}" @click="clickAccept('2')">
+                                                已拒绝
+                                            </button>
+                                            <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='3'}" @click="clickAccept('3')">
+                                                正在跟进
+                                            </button>
+                                        </div>
+                                        <button type="button" class="btn btn-primary" style="width:75px" @click="resetCondition(3)">
+                                            清空条件
+                                        </button>
+                                    </div>
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title clearfix">
+                                          <img class="pull-left" src="/static/images/contact.png" height="32" width="27"/>
+                                          <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                            报价信息（{{initIndentOfferList.length}}）
+                                          </a>
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse" v-show="initIndentOfferList.length>0">
+                                        <div class="panel-body panel-set">
+                                            <table class="table  contactSet">
+                                                <thead>
+                                                    <th>报价时间</th>
+                                                    <th>报价类型</th>
+                                                    <th>供应商名称</th>
+                                                    <th>报价业务员</th>
+                                                    <th>品种</th>
+                                                    <th>规格</th>
+                                                    <th>产地</th>
+                                                    <th>数量</th>
+                                                    <th>价格</th>
+                                                    <th>备注</th>
+                                                    <th>是否采纳</th>
+                                                    <th>原因</th>
+                                                    <th v-if="param.key=='myIndent'">报价处理</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(index,item) in initIndentOfferList">
+                                                        <!-- 意向信息 -->
+                                                        <td>{{item.otime | date}}</td>
+                                                        <td>
+                                                            {{item.source | offerType}}
+                                                        </td>
+                                                        <td>{{item.offerCustomerName}}</td>
+                                                        <td>{{item.offerEmployeeName}}</td>
+                                                        <td>{{item.breedName}}</td>
+                                                        <td>{{item.spec}}</td>
+                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.number}}{{item.unit | Unit}}</td>
+                                                        <td>{{item.price}}</td>
+                                                        <td>
+                                                            <Poptip placement="top" trigger="hover">
+                                                                <span>{{item.description | textDisplay '5'}}</span>
+                                                                <div class="api" slot="content">
+                                                                    {{item.description}}
+                                                                </div>
+                                                            </Poptip>
+                                                        </td>
+                                                        <td>
+                                                            {{item.accept | offerAccept}}
+                                                        </td>
+                                                        <td>
+                                                            <Poptip placement="top" trigger="hover">
+                                                                <span>{{item.comments | textDisplay '5'}}</span>
+                                                                <div class="api" slot="content">
+                                                                    {{item.comments}}
+                                                                </div>
+                                                            </Poptip>
+                                                        </td>
+                                                        <td v-if="param.key=='myIndent'">
+                                                            <a @click="offerAccept(item)">处理</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -165,28 +302,38 @@
 </template>
 <script>
 import cartModel from './purchaseOrderCart.vue'
+import employeeModel from '../clientRelate/searchEmpInfo'
+import breedsearchModel from '../intention/breedsearch'
 import tipsdialogModel from '../tips/tipDialog'
 import auditDialog from '../tips/auditDialog'
+import customDialog from '../tips/customDialog'
 import pressImage from '../../components/imagePress'
 import filter from '../../filters/filters.js'
 import {
     initPurchaseDetail,
     initClientDetail,
-    initIntentionDetail
+    initIntentionDetail,
+    initIndentOfferList
 
 } from '../../vuex/getters'
 import {
     getPurchaseOrderDetail,
     getClientDetail,
     getIntentionDetail,
-    editDescription
+    getOffersByIntentionId,
+    getOffersByIndentId,
+    editDescription,
+    handleOfferAccept
 } from '../../vuex/actions'
 export default {
     components: {
         cartModel,
+        employeeModel,
+        breedsearchModel,
         tipsdialogModel,
         pressImage,
         auditDialog,
+        customDialog,
         filter,
     },
     props: ['param'],
@@ -198,6 +345,27 @@ export default {
                 offerId: "", //表示被选中的报价ID
                 index: "",
                 getOffers: this.getOffers
+            },
+            breedSearchParam: {
+                show: false
+            },
+            employeeParam: {
+                show: false,
+                org: false,
+                orgId: "",
+                //单个业务员搜索
+                employeeId: '',
+                employeeName: '',
+
+            },
+            indentOfferParam: {
+                id: this.param.id,
+                offerEmployee: "",
+                offerEmployeeName: "",
+                breedId: "",
+                breedName: "",
+                accept: ""
+
             },
             tipsParam: {
                 show: false,
@@ -224,17 +392,44 @@ export default {
                 goods: [], //用于前端显示
                 intentionOfferList: [] //传入后台，由goods生成
             },
-            auditParam:{
-                show:false,
-                title:"编辑描述",
-                confirm:true,
-                id:'',
-                description:'',
-                auditComment:'',
-                callback:this.editDescription,
-                sub:'',
-                index:''
-            }
+            auditParam: {
+                show: false,
+                title: "编辑描述",
+                confirm: true,
+                id: '',
+                description: '',
+                auditComment: '',
+                callback: this.editDescription,
+                sub: '',
+                index: ''
+            },
+            offerAcceptParam: {
+                id: "",
+                accept: "",
+                comments: "",
+                callback: this.acceptOfferBack,
+                title: "处理报价",
+                show: false,
+                items: [{
+                    name: "取消",
+                    handle: this.acceptCancel,
+                    style: "btn-warning"
+                }, {
+                    name: "接受",
+                    handle: this.acceptOffer,
+
+                }, {
+                    name: "不接受",
+                    handle: this.refuseOffer,
+
+                }, {
+                    name: "继续跟进",
+                    handle: this.trackOffer,
+
+                }]
+
+            },
+            intentionOrOffer: 0, //0(意向列表)1(报价列表)
 
         }
     },
@@ -242,13 +437,17 @@ export default {
         getters: {
             initPurchaseDetail,
             initClientDetail,
-            initIntentionDetail
+            initIntentionDetail,
+            initIndentOfferList
         },
         actions: {
             getPurchaseOrderDetail,
             getClientDetail,
             getIntentionDetail,
-            editDescription
+            getOffersByIntentionId,
+            getOffersByIndentId,
+            editDescription,
+            handleOfferAccept
         }
     },
     methods: {
@@ -259,6 +458,7 @@ export default {
                 arr.splice(index + 1, 1);
                 arr[index].show = false;
             } else {
+
                 this.intentionParam.id = id;
                 this.intentionParam.index = index;
                 //展开的时候需要知道里面哪条报价被选中了
@@ -269,9 +469,9 @@ export default {
                         break;
                     }
                 }
-                this.getIntentionDetail(this.intentionParam);
+                //this.getIntentionDetail(this.intentionParam);
+                this.getOffersByIntentionId(this.intentionParam);
             }
-
         },
 
         getOffers: function(index, data) { //可以打开多个意向的详情
@@ -297,6 +497,7 @@ export default {
         },
         //选择报价用于生成订单,同时生成购物车（商品列表信息）
         selectOfferInfo: function(index, sub) {
+
             let intentionList = this.$store.state.table.purchaseDetail.intentionList.arr; //意向列表
             let offerList = intentionList[index].offers.arr; //报价列表
             let offer = offerList[sub]; //选中的报价
@@ -309,10 +510,8 @@ export default {
             offer.checked = flag;
             //将选中报价信息加入购物车/替换商品信息/移出购物车
             if (!flag) { //从购物车中清除商品
-
                 for (let k = 0; k < goods.length; k++) {
                     if (goods[k].intentionId == intentionList[index].id) {
-
                         goods.splice(k, 1);
                         return;
                     }
@@ -322,7 +521,6 @@ export default {
                 for (let k = 0; k < goods.length; k++) {
                     if (goods[k].intentionId == intentionList[index].id) {
                         isAdd = false;
-
                         goods[k] = {
                             intentionId: intentionList[index].id,
                             offerId: offer.id,
@@ -336,7 +534,6 @@ export default {
                     }
                 }
                 if (isAdd) {
-
                     goods.push({
                         intentionId: intentionList[index].id,
                         offerId: offer.id,
@@ -350,7 +547,31 @@ export default {
             }
         },
 
+        clickType: function(type) {
+            this.intentionOrOffer = type;
+        },
+        clickAccept: function(accept) {
+            this.indentOfferParam.accept = accept;
+            this.selectSearch();
+        },
+        breedSearch: function() {
+            this.breedSearchParam.show = true;
+        },
+        selectEmployee: function() {
+            this.employeeParam.show = true;
+        },
+        selectSearch: function() {
+            this.getOffersByIndentId(this.indentOfferParam);
+        },
+        resetCondition: function() {
+            this.indentOfferParam.offerEmployee = "";
+            this.indentOfferParam.offerEmployeeName = "";
+            this.indentOfferParam.breedId = "";
+            this.indentOfferParam.breedName = "";
+            this.indentOfferParam.accept = "";
+            this.selectSearch(this.indentOfferParam);
 
+        },
         enfoldment: function(param) {
 
             if (this.$store.state.table.purchaseDetail[param.crete].arr.length == 0) {
@@ -389,14 +610,57 @@ export default {
             }, 500);
 
         },
-        editDes:function(index,sub,offer){
+        editDes: function(index, sub, offer) {
             this.auditParam.show = true;
             this.auditParam.auditComment = offer.description;
             this.auditParam.id = offer.id;
             this.auditParam.sub = sub;
             this.auditParam.index = index
+        },
+        offerAccept: function(item) {
+            this.offerAcceptParam.comments = "";
+            this.offerAcceptParam.id = item.id;
+            this.offerAcceptParam.show = true;
+        },
+        //取消
+        acceptCancel: function() {
+            this.offerAcceptParam.show = false;
+        },
+        //接受
+        acceptOffer: function() {
+            this.offerAcceptParam.accept = 1;
+            this.handleOfferAccept(this.offerAcceptParam);
+        },
+        //拒绝
+        refuseOffer: function() {
+            this.offerAcceptParam.accept = 2;
+            this.handleOfferAccept(this.offerAcceptParam);
+        },
+        //跟进
+        trackOffer: function() {
+            this.offerAcceptParam.accept = 3;
+            this.handleOfferAccept(this.offerAcceptParam);
+        },
+        //成功后回调
+        acceptOfferBack: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.offerAcceptParam.show = false;
+            this.getOffersByIndentId(this.indentOfferParam);
         }
 
+    },
+    events: {
+        breed: function(breed) {
+            this.indentOfferParam.breedId = breed.breedId;
+            this.indentOfferParam.breedName = breed.breedName;
+            this.selectSearch();
+        },
+        a: function(employee) {
+            this.indentOfferParam.offerEmployee = employee.employeeId;
+            this.indentOfferParam.offerEmployeeName = employee.employeeName;
+            this.selectSearch();
+        },
     },
     filter: (filter, {}),
     created() {
@@ -405,6 +669,7 @@ export default {
         }
         this.getClientDetail(clientParam);
         this.getPurchaseOrderDetail(this.param);
+        this.getOffersByIndentId(this.indentOfferParam);
     }
 }
 </script>
@@ -514,5 +779,9 @@ section article {
 
 #remove-out:hover {
     color: red;
+}
+
+.api {
+    color: #3399ff;
 }
 </style>

@@ -279,6 +279,10 @@ export const initAllPurchaseList = (state) => {
 export const initPurchaseDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.purchaseDetail));
 }
+export const initIndentOfferList = (state) => {
+    console.log(state.table.indentOfferList);
+    return JSON.parse(JSON.stringify(state.table.indentOfferList));
+}
 
 /*--采购报价信息--*/
 export const initPurchaseOfferList = (state) => {
@@ -530,7 +534,7 @@ export const initStockList = (state) => { //获取库存列表
     return JSON.parse(JSON.stringify(state.table.stockList))
 }
 
-export const getLineschart = (state) =>{//获取折线图
+export const getLineschart = (state) => { //获取折线图
     const option = {
         options: JSON.parse(JSON.stringify(state.echarts.linesChartOption)),
         load: JSON.parse(JSON.stringify(state.echarts.linesChartLoading))
@@ -538,50 +542,120 @@ export const getLineschart = (state) =>{//获取折线图
     return option;
 }
 
-export const getColchart = (state) =>{ //获取柱状图
+export const getColchart = (state) => { //获取柱状图
     const option = {
-        options:JSON.parse(JSON.stringify(state.echarts.ColChartOption)),
-        load:JSON.parse(JSON.stringify(state.echarts.ColChartLoading))
+        options: JSON.parse(JSON.stringify(state.echarts.ColChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.ColChartLoading))
     }
     return option
 }
 
-export const getRegionalchart = (state) =>{//区域客户中国地图数据
+export const getRegionalchart = (state) => { //区域客户中国地图数据
     const option = {
-        options:JSON.parse(JSON.stringify(state.echarts.regionalChartOption)),
-        load:JSON.parse(JSON.stringify(state.echarts.regionalChartLoading))
+        options: JSON.parse(JSON.stringify(state.echarts.regionalChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.regionalChartLoading))
     }
     return option
 }
 
-export const getCustypechart = (state) =>{ //客户类型折线图数据
+
+export const getOrgchart = (state) => { //获取部门折线图
     const option = {
-        options:JSON.parse(JSON.stringify(state.echarts.custypeChartOption)),
-        load:JSON.parse(JSON.stringify(state.echarts.custypeChartLoading))
+        options: JSON.parse(JSON.stringify(state.echarts.orgChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.orgChartLoading))
     }
     return option
 }
 
-export const getYear = (state) =>{//获取年份
+export const getAllchart = (state) => { //获取全部折线图
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.allChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.allChartLoading))
+    }
+    return option
+}
+
+export const getOrgColchart = (state) => { //获取部门柱状图
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.orgColChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.orgColChartOption))
+    }
+    return option
+}
+
+export const getAllColchart = (state) => { //获取部门柱状图
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.allColChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.allColChartOption))
+    }
+    return option
+}
+
+export const getCustypechart = (state) => { //客户类型折线图数据
+
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.custypeChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.custypeChartLoading))
+    }
+    return option
+}
+
+
+export const getOrgRegionalchart = (state) => { //部门区域数据
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.orgRegionalChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.orgRegionalChartLoading))
+    }
+    return option
+}
+
+export const getAllRegionalchart = (state) => { //部门区域数据
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.allRegionalChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.allRegionalChartLoading))
+    }
+    return option
+}
+
+export const getYear = (state) => { //获取年份
+
     return JSON.parse(JSON.stringify(state.table.yearNum));
 }
 
-export const getNewUserDetail = (state) =>{//获取新增用户
+export const getNewUserDetail = (state) => { //获取新增用户
     return JSON.parse(JSON.stringify(state.table.newUserDetail))
 }
 
-export const getDealUserDetail = (state) =>{//获取成交用户
+export const getDealUserDetail = (state) => { //获取成交用户
     return JSON.parse(JSON.stringify(state.table.newDealDetail))
 }
 
-export const getActiveUserDetail = (state) =>{//获取活跃用户
+export const getActiveUserDetail = (state) => { //获取活跃用户
     return JSON.parse(JSON.stringify(state.table.newActiveDetail))
 }
 
-export const getYesTodayDetail = (state) =>{//获取活跃用户
+
+export const getYesTodayDetail = (state) => { //获取业务员昨日统计用户
     return JSON.parse(JSON.stringify(state.table.yestodayDetail))
 }
 
-export const getProvinceDetail = (state) =>{//获取活跃用户
+export const getAllYesTodayDetail = (state) => { //获取全部昨日统计用户
+    return JSON.parse(JSON.stringify(state.table.allYestodayDetail))
+}
+
+export const getOrgYesTodayDetail = (state) => { //获取部门昨日用户
+    return JSON.parse(JSON.stringify(state.table.orgYestodayDetail))
+}
+
+export const getOrgSalemanDetail = (state) => { //获取部门昨日用户
+    return JSON.parse(JSON.stringify(state.table.orgSalemanDetail))
+}
+
+export const getAllOrgDetail = (state) => { //获取全部部门用户
+    return JSON.parse(JSON.stringify(state.table.allOrgDetail))
+}
+
+export const getProvinceDetail = (state) => { //获取活跃用户
+
     return JSON.parse(JSON.stringify(state.table.provinceDetail))
 }

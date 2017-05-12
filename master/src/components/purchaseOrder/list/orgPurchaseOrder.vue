@@ -176,6 +176,7 @@ export default {
             detailParam: {
                 show: false,
                 loading: false,
+                key: "orgIndent", //部门采购单，用作标记从哪个页面进入详情
                 link: "/indent/queryById",
                 id: "",
                 customerId: ""
