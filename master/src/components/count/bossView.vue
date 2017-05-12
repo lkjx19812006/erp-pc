@@ -95,42 +95,75 @@
                         </tbody>
                     </table>
                     <!--底部分页-->
-                    <pagination :combination="orgData" slot="page"></pagination>
+                    <div class="pages">
+                    	<pagination :combination="orgData" slot="page"></pagination>
+                    </div>
+                    
                 </div>
             </div>
             <!-- 用户详情 -->
             <div class="user_detail">
-
-                <!-- 详情
+				<!-- 顶部筛选 -->
+                <div class="search">
+                    <dl class="clear left transfer" style="margin-top:20px">
+                        <div class="left">
+                            <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
+                            <mz-datepicker :time.sync="searchParam.startTime" format="yyyy-MM-dd HH:mm:ss" style='width:30px'>
+                            </mz-datepicker>
+                        </div>
+                        <div class="left">
+                            <dt class="left marg_top">~~</dt>
+                            <mz-datepicker :time.sync="searchParam.endTime" format="yyyy-MM-dd HH:mm:ss">
+                            </mz-datepicker>
+                        </div>
+                        <dt class="left transfer marg_top" style="margin-left: 20px">区域:</dt>
+                        <dd class="left margin_right">
+                            <div  type="text" class="edit-input">
+                                <v-select :debounce="250" :value.sync="searchParam.provinceId"  :options="initProvince" placeholder="省/Province" label="cname">
+                                </v-select>
+                            </div>
+                        </dd>
+                        <dt class="left transfer marg_top" style="margin-left: 10px">客户类型：</dt>
+                        <dd class="left margin_right">
+                            <select class="form-control edit-input" placeholder="按回车键搜索" v-model="searchParam.type"  @change="selectType()">
+                                    <option value='0'>产地</option>
+                                    <option value='1'>药厂</option>
+                                    <option value='2'>药商</option>
+                                    <option value='3'>服务商</option>
+                            </select>
+                        </dd>
+                        <button class="btn btn-default" style="margin-left: 10px" @click="searchCus()">搜索</button>
+                        <button class="btn btn-default btn-warning" style="margin-left: 50px" @click="showDetail('regionalUser')">查看区域用户</button>
+                        <button class="btn btn-default btn-warning" @click="showDetail('customerType')">查看客户类型</button>
+                    </dl>   
+                    
+                </div>
+                <!-- 详情 -->
                 <div class="user_detail_right">
-                    <h4 class="detail_title bg-info">部门
-                	                    <span class="detail_num">
-                		                    <button class="btn btn-default btn-warning" style="margin-left: 50px" @click="showDetail('regionalUser')">   		查看区域用户
-                		                    </button>
-                        	<button class="btn btn-default btn-warning" @click="showDetail('customerType')">查看客户类型</button>
-                	                    </span>
-                    </h4>
+                    <h4 class="detail_title bg-info">部门</h4>
                     <table class="table table-hover table_color table-striped">
                         <thead>
                             <tr>
-                                <th style="min-width:240px;text-align: center;">部门编号</th>
-                                <th style="min-width:240px;text-align: center;">部门名称</th>
-                                <th style="min-width:240px;text-align：center;">新增用户</th>
-                                <th style="min-width:240px;text-align：center;">活跃用户</th>
-                                <th style="min-width:240px;text-align：center;">成交用户</th>
+                                <th style="min-width:150px;text-align: center;">部门编号</th>
+                                <th style="min-width:200px;text-align: center;">部门名称</th>
+                                <th style="min-width:210px;text-align：center;">新增用户</th>
+                                <th style="min-width:210px;text-align：center;">活跃用户</th>
+                                <th style="min-width:210px;text-align：center;">成交用户</th>
+                                <th style="min-width:220px;text-align：center;">客户总数</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="item in getAllOrgDetail">
-                                <td><a href="javascript:void(0);">{{item.employeeId}}</a></td>
+                                <td><a href="javascript:void(0);">{{item.org}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDepart()">{{item.name}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDetail('newUserDetail')">{{item.addNumber}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDetail('newActiveDetail')">{{item.transactionNumber}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDetail('newDealDetail')">{{item.activeNumber}}</a></td>
+                                <td><a href="javascript:void(0);" @click="showDetail('newDealDetail')">{{item.totalNumber}}</a></td>
                             </tr>
                         </tbody>
                     </table>
-                </div> -->
+                </div>
             </div>
 
 
@@ -147,14 +180,15 @@ import {
     getAllchart,
     getAllColchart,
     getAllYesTodayDetail,
-    getAllOrgDetail
+    getAllOrgDetail,
+    initProvince
 } from '../../vuex/getters'
 import {
     freshLinesCharts,
     freshAllCount,
     freshAllColCharts,
     getAllCountDetail,
-
+    getProvinceList,
     getAllOrgData
 } from '../../vuex/actions'
 
@@ -187,7 +221,14 @@ export default {
             	all:4,
             	total:0,
             	data:[],
-            }
+            },
+            searchParam:{
+                startTime:'',
+                endTime:'',
+                provinceId:'',
+                type:'',
+                callback:this.callback
+            },
         }
     },
     vuex: {
@@ -198,15 +239,16 @@ export default {
             getAllchart,
             getAllColchart,
             getAllYesTodayDetail,
-            getAllOrgDetail
+            getAllOrgDetail,
+            initProvince
         },
         actions: {
             freshLinesCharts,
             freshAllCount,
             freshAllColCharts,
             getAllCountDetail,
-
-            getAllOrgData
+            getAllOrgData,
+            getProvinceList
         }
     },
     events: {
@@ -219,13 +261,13 @@ export default {
         	var url
             var host = window.location.host
             if(host=='localhost'){
-            	window.open('http://localhost/#!/home/count?id=8')
+            	window.open('http://localhost/#!/home/count?id=9')
             }
             if(host=="192.168.1.103"){
-            	window.open('http://192.168.1.103/front/#!/home/count?id=8')
+            	window.open('http://192.168.1.103/front/#!/home/count?id=9')
             }
             if(host=="139.224.208.154"){
-            	window.open('http://139.224.208.154/erp/#!/home/count?id=8')
+            	window.open('http://139.224.208.154/erp/#!/home/count?id=9')
             }
         },
         showDetail:function(data){
@@ -291,7 +333,7 @@ export default {
     	this.freshAllCount(this.loadParam)
         this.freshAllColCharts(this.loadParam)
         console.log(this.getAllOrgDetail)
-        // this.freshOrgColCharts(this.loadParam)
+        this.getProvinceList(this.loadParam)
         this.getAllOrgData()
     },
     computed:{
@@ -317,7 +359,11 @@ export default {
 .user_all{
     overflow: auto;
 }
-
+.pages{
+    position: absolute;
+    bottom: 10%;
+    left:10%;
+}
 .show_type{
     width: 100%;
     height:40px;
@@ -347,6 +393,7 @@ export default {
 }
 .bar_today{
     width:1200px;
+    height:440px;
     margin: 30px auto;
     overflow: hidden;
     background-color:#fff;
@@ -361,7 +408,9 @@ export default {
 }
 .today_list_right{
     width: 580px;
-    float: right;   
+    float: right;
+    height: 100%;
+    position: relative;   
 }
 .barchart {
     width: 100%;
@@ -380,6 +429,14 @@ export default {
     float: left;
     border-radius: 10px;
     overflow: hidden;
+}
+.search{
+    width: 100%;
+    height:75px;
+    background: #fff;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-radius: 10px;
 }
 .detail_title{
     padding-left:20px;

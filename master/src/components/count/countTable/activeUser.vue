@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="detail_left">
         <h4 class="detail_title bg-info">{{param.name}}
             <span class="detail_num">
                 <!-- <a href="javascript:void(0);" class="person_num" @click="change('num')">人数：{{param.total}}</a> -->
@@ -45,7 +45,10 @@
             </tbody>
         </table>
         <!--底部分页-->
-        <pagination :combination="param" slot="page"></pagination>
+        <div class="pages">
+        	 <pagination :combination="param" slot="page"></pagination>
+        </div>
+       
     </div>
     
 </template>
@@ -98,7 +101,11 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
+.detail_left{
+	position: relative;
+	height:100%;
+}
 .detail_title{
     padding-left:20px;
     line-height: 50px;
@@ -114,5 +121,10 @@ export default{
     color:#ff9e4d;
     margin-right:10px;
     font-size:16px;
+}
+.pages{
+	position: absolute;
+	bottom: 0;
+	left:10%;
 }
 </style>

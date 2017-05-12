@@ -25,7 +25,10 @@
 	            </tbody>
 	        </table>
 	    <!--底部分页-->
-	        <pagination :combination="param" slot="page"></pagination>
+	    <div class="pages">
+	    	<pagination :combination="param" slot="page"></pagination>
+	    </div>
+	        
 	</div>
 </template>
 
@@ -76,6 +79,7 @@ export default{
     margin-bottom: 20px;
     overflow: hidden;
     border-radius: 10px;
+    position: relative;
 }
 .detail_title{
     padding-left:20px;
@@ -92,5 +96,10 @@ export default{
     color:#ff9e4d;
     margin-right:10px;
     font-size:16px;
+}
+.pages{
+	position: absolute;
+	bottom: 0;
+	left:5%;
 }
 </style>

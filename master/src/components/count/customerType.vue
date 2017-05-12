@@ -24,7 +24,7 @@
                             </div>
                             <dt class="left transfer marg_top" style="margin-left: 20px">类型：</dt>
                             <dd class="left margin_right">
-                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="showType.type" @change="changeTypes()">
+                                <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.type" @change="changeTypes()">
                                     <option value="新增">新增</option>
                                     <option value="成交">成交</option>
                                     <option value="活跃">活跃</option>
@@ -68,20 +68,20 @@
                     <div class="linechart" v-echarts="getCustypechart.options" :loading="getCustypechart.load"></div>
                 </div>
                 <div class="line_chart" v-if="param.name=='部门'">
-                    <div class="linechart" v-echarts="getCustypechart.options" :loading="getCustypechart.load"></div>
+                    <div class="linechart" v-echarts="getOrgCustypechart.options" :loading="getOrgCustypechart.load"></div>
                 </div>
                 <div class="line_chart" v-if="param.name=='全部'">
-                    <div class="linechart" v-echarts="getCustypechart.options" :loading="getCustypechart.load"></div>
+                    <div class="linechart" v-echarts="getAllCustypechart.options" :loading="getAllCustypechart.load"></div>
                 </div>
             </div>            
             <!-- 用户详情 -->
             <div class="user_detail">
                 <div class="user_detail_right">
                     <h4 class="detail_title bg-info">客户类型
-                        <span class="detail_num">
+                        <!-- <span class="detail_num">
                             <a href="javascript:void(0);" class="person_num">人数：60</a>
                             <a href="javascript:void(0);" class="person_num">人次：60</a>&nbsp
-                        </span>
+                        </span> -->
                     </h4>
                     <table class="table table-hover table_color table-striped">
                         <thead>
@@ -93,27 +93,27 @@
                             </tr>
                         </thead>
                         <tbody v-if="param.name=='业务员'">
-                            <tr v-for="item in todayData">
+                            <tr v-for="item in getCusTypeDetail">
                                 <td><a href="javascript:void(0);">{{item.name}}</a></td>
-                                <td>60</td>
-                                <td>789</td>
-                                <td>100</td>
+                                <td>{{item.addNumber}}</td>
+                                <td>{{item.activeNumber}}</td>
+                                <td>{{item.transactionNumber}}</td>
                             </tr>
                         </tbody>
                         <tbody v-if="param.name=='部门'">
-                            <tr v-for="item in todayData">
+                            <tr v-for="item in getOrgCusTypeDetail">
                                 <td><a href="javascript:void(0);">{{item.name}}</a></td>
-                                <td>60</td>
-                                <td>789</td>
-                                <td>100</td>
+                                <td>{{item.addNumber}}</td>
+                                <td>{{item.activeNumber}}</td>
+                                <td>{{item.transactionNumber}}</td>
                             </tr>
                         </tbody>
                         <tbody v-if="param.name=='全部'">
-                            <tr v-for="item in todayData">
+                            <tr v-for="item in getAllCusTypeDetail">
                                 <td><a href="javascript:void(0);">{{item.name}}</a></td>
-                                <td>60</td>
-                                <td>789</td>
-                                <td>100</td>
+                                <td>{{item.addNumber}}</td>
+                                <td>{{item.activeNumber}}</td>
+                                <td>{{item.transactionNumber}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -126,10 +126,21 @@
 import pagination from '../pagination'
 
 import {
-    getCustypechart
+    getCustypechart,
+    getOrgCustypechart,
+    getAllCustypechart,
+    getYear,
+    getCusTypeDetail,
+    getOrgCusTypeDetail,
+    getAllCusTypeDetail
 } from '../../vuex/getters'
 import {
-
+    getCusTypeData,
+    getOrgCusTypeData,
+    getAllCusTypeData,
+    getCusTypeList,
+    getOrgCusTypeList,
+    getAllCusTypeList
 } from '../../vuex/actions'
 
 export default {
@@ -148,7 +159,14 @@ export default {
                 all: 4,
                 total: 0,
                 name:"customerType",
-                timeType:'day'
+                type:'新增',
+                timeType:'month',
+                year:['2017-01-01 00:00:00','2018-01-01 00:00:00'],
+                yearMonth:'',
+                month:'',
+                monthArr:[],
+                salemanId:'',
+                callback:this.callback
             },
             todayData:[
                 {
@@ -172,17 +190,25 @@ export default {
                     address:'四川雅安'
                 }
             ],
-            showType:{
-                type:'新增',
-                time:[],
-            }
         }
     },
     vuex: {
         getters: {
-            getCustypechart
+            getCustypechart,
+            getOrgCustypechart,
+            getAllCustypechart,
+            getYear,
+            getCusTypeDetail,
+            getOrgCusTypeDetail,
+            getAllCusTypeDetail
         },
         actions: {
+            getCusTypeData,
+            getOrgCusTypeData,
+            getAllCusTypeData,
+            getCusTypeList,
+            getOrgCusTypeList,
+            getAllCusTypeList
         }
     },
     events: {
@@ -192,21 +218,128 @@ export default {
     		this.$dispatch('back',this.loadParam.name)
     	},
         changeTypes:function(){
-            this.$dispatch('freshCus',this.showType)
+            if(this.param.name=='业务员'){
+                this.getCusTypeData(this.loadParam)
+            }
+            if(this.param.name=='部门'){
+                this.getOrgCusTypeData(this.loadParam)
+            }
+            if(this.param.name=='全部'){
+                this.getAllCusTypeData(this.loadParam)
+            }
+        },
+        mGetDate:function (year, month){//判断每月多少天
+            var d = new Date(year, month, 0);
+            if(month<10){
+                month = "0"+month
+            }
+            var time = [year+'-'+month+'-01'+' 00:00:00',year+'-'+month+'-'+d.getDate()+ ' 00:00:00']
+            return time
+        },
+        selectType:function(data){
+            if(data=='month'){
+                if(this.loadParam.month==''){//选择年份未选择月份默认月份为1月份
+                    this.loadParam.month='1'
+                }
+                this.loadParam.monthArr=this.mGetDate(this.loadParam.yearMonth,this.loadParam.month)
+                //this.freshLinesCharts(this.loadParam)
+                if(this.param.name=='业务员'){
+                    this.getCusTypeData(this.loadParam)
+                }
+                if(this.param.name=='部门'){
+                    this.getOrgCusTypeData(this.loadParam)
+                }
+                if(this.param.name=='全部'){
+                    this.getAllCusTypeData(this.loadParam)
+                }
+            }else{
+                //this.freshLinesCharts(this.loadParam)
+               if(this.param.name=='业务员'){
+                    this.getCusTypeData(this.loadParam)
+                }
+                if(this.param.name=='部门'){
+                    this.getOrgCusTypeData(this.loadParam)
+                }
+                if(this.param.name=='全部'){
+                    this.getAllCusTypeData(this.loadParam)
+                }
+            }            
         },
         selectTime:function(data){
             if(data=="month"){
-                this.loadParam.year=[];
+                var date = new Date()
+                var year = date.getFullYear()
+                this.loadParam.year=[year+'-01-01 00:00:00',(year+1)+'-01-01 00:00:00'];
+                var month = date.getMonth()
+                var day = date.getDate()
+                if(day>5){
+                    month = month+1
+                }
+                this.loadParam.yearMonth = year
+                this.loadParam.month = month
+                this.loadParam.monthArr=this.mGetDate(this.loadParam.yearMonth,this.loadParam.month)
+
                 this.loadParam.timeType = 'day'
-            }else{
-                this.loadParam.yearMonth='';
-                this.loadParam.month='';
+                //this.freshLinesCharts(this.loadParam)
+                if(this.param.name=='业务员'){
+                    this.getCusTypeData(this.loadParam)
+                }
+                if(this.param.name=='部门'){
+                    this.getOrgCusTypeData(this.loadParam)
+                }
+                if(this.param.name=='全部'){
+                    this.getAllCusTypeData(this.loadParam)
+                }
+                console.log(this.loadParam)
+
+            }else if(data=='year'){
+                // this.loadParam.yearMonth='';
+                // this.loadParam.month='';
+                var date = new Date()
+                var year = date.getFullYear()
+                this.loadParam.year=[year+'-01-01 00:00:00',(year+1)+'-01-01 00:00:00'];
                 this.loadParam.timeType = 'month'
+                console.log(this.loadParam)
+                //this.freshLinesCharts(this.loadParam)
+                if(this.param.name=='业务员'){
+                    this.getCusTypeData(this.loadParam)
+                }
+                if(this.param.name=='部门'){
+                    this.getOrgCusTypeData(this.loadParam)
+                }
+                if(this.param.name=='全部'){
+                    this.getAllCusTypeData(this.loadParam)
+                }
+                
+            }
+        }
+    },
+    computed:{
+        setYear:function(){//计算当前年份过滤年份数组显示的年份
+            let now = new Date();
+            let nowYear = now.getFullYear()
+            for(var i=0;i<=this.getYear.length;i++){
+                if(this.getYear[i]>=nowYear){
+                    return this.getYear.slice(0,i+1)
+                }
             }
         }
     },
     created() {
-        this.$dispatch('freshCus',this.showType)
+        
+        if(this.param.name=='业务员'){
+            this.getCusTypeData(this.loadParam)
+            this.getCusTypeList()
+        }
+        if(this.param.name=='部门'){
+            this.getOrgCusTypeData(this.loadParam)
+            this.getOrgCusTypeList()
+        }
+        if(this.param.name=='全部'){
+            this.getAllCusTypeData(this.loadParam)
+            this.getAllCusTypeList()
+        }
+        //this.$dispatch('freshCus',this.loadParam)
     }
 }
 </script>
