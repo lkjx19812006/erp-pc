@@ -360,6 +360,8 @@ export default {
             },
             indentOfferParam: {
                 id: this.param.id,
+                link: "/intention/offer/queryByIndentId",
+                key: "indentOfferList",
                 offerEmployee: "",
                 offerEmployeeName: "",
                 breedId: "",

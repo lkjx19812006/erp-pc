@@ -942,6 +942,7 @@ const state = {
     },
     purchaseDetail: { "intentionList": { arr: [], show: false } },
     indentOfferList: [],
+    myIndentOfferList: [],
     purchaseOfferDetail: {},
     locationList: {
         provinceList: [
@@ -1176,21 +1177,21 @@ const state = {
     orgCount: {}, //部门统计state
     stockList: [{ checked: false }, { checked: false }],
     stockCartList: [],
-    yearNum:[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],
-    newUserDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
-    newDealDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
-    newActiveDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
-    yestodayDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
-    orgYestodayDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
-    allYestodayDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
-    orgSalemanDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
-    allOrgDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
-    provinceDetail:[],
-    orgProvinceDetail:[],
-    allProvinceDetail:[],
-    cusTypeDetail:[],
-    orgCusTypeDetail:[],
-    allCusTypeDetail:[],
+    yearNum: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
+    newUserDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    newDealDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    newActiveDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    yestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    orgYestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    allYestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    orgSalemanDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    allOrgDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    provinceDetail: [],
+    orgProvinceDetail: [],
+    allProvinceDetail: [],
+    cusTypeDetail: [],
+    orgCusTypeDetail: [],
+    allCusTypeDetail: [],
 }
 
 const mutations = {
@@ -1962,7 +1963,7 @@ const mutations = {
         state.purchaseDetail = data;
     },
     [INDENT_OFFER_DATA](state, data) { //采购单详情
-        state.indentOfferList = data;
+        state[data.key] = data;
     },
 
     [DELETE_PURCHASE](state, data) { //删除采购单
