@@ -239,11 +239,11 @@ export const freshLinesCharts = ({ dispatch }, getCharList) => {
                 "X-Requested-With": "XMLHttpRequest",
                 'Content-Type': 'application/json;charset=UTF-8'
             }
-        }).then((res) => { 
+        }).then((res) => {
             if(res.json().result==null) {
                 console.log("没有数据")
                 return
-            }          
+            }
             dispatch(types.CHANGE_LINESCHARTS, res.json().result.list);
         }, (res) => {
             console.log('fail');
@@ -253,7 +253,7 @@ export const freshLinesCharts = ({ dispatch }, getCharList) => {
 export const getNewUserId = ({ dispatch },param) => { //获取新增用户详情的id
     var body={}
 
-     if(param.startTime){        
+     if(param.startTime){
         body.startTime = param.startTime
      }
      if(param.endTime){
@@ -264,7 +264,7 @@ export const getNewUserId = ({ dispatch },param) => { //获取新增用户详情
      }
      if(param.type){
         body.type =param.type
-     }       
+     }
 
     Vue.http({
             method: 'POST',
@@ -276,7 +276,7 @@ export const getNewUserId = ({ dispatch },param) => { //获取新增用户详情
                 "X-Requested-With": "XMLHttpRequest",
                 'Content-Type': 'application/json;charset=UTF-8'
             }
-        }).then((res) => { 
+        }).then((res) => {
             console.log(res.json())
             param.callback(res.json().result)
         }, (res) => {
@@ -301,20 +301,20 @@ export const getNewUser = ({ dispatch },param) => { //获取新增用户详情�
                 "X-Requested-With": "XMLHttpRequest",
                 'Content-Type': 'application/json;charset=UTF-8'
             }
-        }).then((res) => { 
+        }).then((res) => {
             var data = res.json().result.list
             dispatch(types.NEW_USER_DETAIL,data)
             param.total = res.json().result.total
             param.all = res.json().result.pages
             console.log(res.json())
-            
+
         }, (res) => {
             console.log('fail');
         });
 }
 
 export const getDealUser = ({ dispatch },param) => { //获取成交用户详情的数据
-    var body,url 
+    var body,url
     console.log(param)
     if(param.showType == 'num'){
         url = '/crm/api/v1/customer/getListByIds'
@@ -342,27 +342,27 @@ export const getDealUser = ({ dispatch },param) => { //获取成交用户详情�
                 "X-Requested-With": "XMLHttpRequest",
                 'Content-Type': 'application/json;charset=UTF-8'
             }
-        }).then((res) => { 
+        }).then((res) => {
             var data = res.json().result.list
             dispatch(types.NEW_DEAL_DETAIL,data)
             param.total = res.json().result.total
             param.all = res.json().result.pages
             console.log(res.json())
-            
+
         }, (res) => {
             console.log('fail');
         });
 }
 
 export const getActiveUser = ({ dispatch },param) => { //获取活跃用户详情的数据
-    var body,url 
+    var body,url
     console.log(param)
     if(param.showType == 'time'&&param.activeType=='报价'){//报价
         url = '/crm/api/v1/intention/getOfferListByIds'
         body = {
             page:param.cur,
             pageSize:'7',
-            idsStr:param.data.offerTimesDetail   
+            idsStr:param.data.offerTimesDetail
         }
     }
     if(param.showType == 'time'&&param.activeType=='订单'){//订单
@@ -370,7 +370,7 @@ export const getActiveUser = ({ dispatch },param) => { //获取活跃用户详�
         body = {
             page:param.cur,
             pageSize:'7',
-            id:param.data.orderTimesDetail 
+            id:param.data.orderTimesDetail
         }
     }
     if(param.showType == 'time'&&param.activeType=='意向'){//意向
@@ -378,7 +378,7 @@ export const getActiveUser = ({ dispatch },param) => { //获取活跃用户详�
         body = {
             page:param.cur,
             pageSize:'7',
-            id:param.data.intentionTimesDetail 
+            id:param.data.intentionTimesDetail
         }
     }
     if(param.showType == 'time'&&param.activeType=='采购单'){//采购
@@ -386,7 +386,7 @@ export const getActiveUser = ({ dispatch },param) => { //获取活跃用户详�
         body = {
             page:param.cur,
             pageSize:'7',
-            idsStr:param.data.indentTimesDetail 
+            idsStr:param.data.indentTimesDetail
         }
     }
     /*if(param.showType == 'time'&&param.activeType=='1'){
@@ -394,7 +394,7 @@ export const getActiveUser = ({ dispatch },param) => { //获取活跃用户详�
         body = {
             page:param.cur,
             pageSize:'7',
-            id:param.data.orderTimesDetail 
+            id:param.data.orderTimesDetail
         }
     }*/
     Vue.http({
@@ -407,13 +407,13 @@ export const getActiveUser = ({ dispatch },param) => { //获取活跃用户详�
                 "X-Requested-With": "XMLHttpRequest",
                 'Content-Type': 'application/json;charset=UTF-8'
             }
-        }).then((res) => { 
+        }).then((res) => {
             var data = res.json().result.list
             dispatch(types.NEW_ACTIVE_DETAIL,data)
             param.total = res.json().result.total
             param.all = res.json().result.pages
             console.log(res.json())
-            
+
         }, (res) => {
             console.log('fail');
         });
@@ -445,7 +445,7 @@ export const getYestodayData = ({dispatch},param) =>{
 
 
 //我的统计柱状图
-export const freshColCharts = ({ dispatch }, param) => { 
+export const freshColCharts = ({ dispatch }, param) => {
     var date = new Date();
     var year =date.getFullYear()
     var month =date.getMonth()/1+1
@@ -456,7 +456,7 @@ export const freshColCharts = ({ dispatch }, param) => {
     }
     var maxDay = (day/1+1)
     if(day<10){
-        day='0'+day      
+        day='0'+day
     }
     if(maxDay<10){
         maxDay="0"+day
@@ -467,7 +467,7 @@ export const freshColCharts = ({ dispatch }, param) => {
         startTime:time[0],
         endTime:time[1],
         queryDetail:true
-    }   
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerStatistics',
@@ -486,9 +486,9 @@ export const freshColCharts = ({ dispatch }, param) => {
 };
 
 //我的统计柱状图
-export const freshRegionalCharts = ({ dispatch }, param) => { 
+export const freshRegionalCharts = ({ dispatch }, param) => {
     var body={
-    }   
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerNumberByProvinces',
@@ -587,7 +587,7 @@ export const getNoticeList = ({ dispatch }, param) => {
       noticeList[i].show = false;
     }
     if(param.cur===1){
-        dispatch(types.CLEAR_NOTICE_TABLE); 
+        dispatch(types.CLEAR_NOTICE_TABLE);
     }
     dispatch(types.NOTICE_TABLE, noticeList);
     param.all = res.json().result.pages;
@@ -641,7 +641,7 @@ export const getOfferMessageList = ({ dispatch }, param) => {
   })
 }
 
-//已读接口 
+//已读接口
 export const readNotice = ({ dispatch }, param) => {
     var body = {
       ids: param.ids
@@ -951,7 +951,7 @@ export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录�
   })
 }
 
-export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列表 
+export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列表
   param.loading = true;
   var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
   if (param.name && param.name !== '') {
@@ -5242,6 +5242,9 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
   }
   if (param.inquire) {
     url += '&inquire=' + param.inquire;
+  }
+  if (param.offer) {
+    url += '&offer=' + param.offer;
   }
   if (param.source) {
     url += '&source=' + param.source;
