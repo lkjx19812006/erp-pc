@@ -32,7 +32,8 @@ export default{
         
     },
 	ready(){
-        window.onresize=function(){  
+        window.onresize=function(){
+
 		    const tablefrom = document.body.clientHeight-document.getElementById('top').offsetHeight-document.getElementById('base_pagination').offsetHeight-115;
 		    document.getElementById('table_box').style.height = tablefrom + 'px';
 		    /*setTimeout(onresize,100);*/

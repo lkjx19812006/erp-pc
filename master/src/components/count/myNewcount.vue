@@ -9,10 +9,10 @@
 	<new-dealdetail v-show="loadParam.dealDetail"></new-dealdetail>
     <!-- 活跃用户详情 -->
 	<new-activedetail v-show="loadParam.activeDetail"></new-activedetail>
-    <!-- 区域用户 -->
-    <regional-user v-show="loadParam.regionalUser"></regional-user>
+    <!-- 我的区域用户 -->
+    <regional-user :param="showParam" v-show="loadParam.regionalUser"></regional-user>
     <!-- 客户类型 -->
-    <customer-type v-show="loadParam.customerType"></customer-type>
+    <customer-type :param="showParam" v-show="loadParam.customerType"></customer-type>
 </template>
 
 <script>
@@ -24,6 +24,10 @@
     import regionalUser from '../count/regionalUser.vue'
     import customerType from '../count/customerType.vue'
     import {initLogin} from '../../vuex/getters'
+    import {
+        freshRegionalCharts,
+        getCusTypeData
+    } from '../../vuex/actions'
 	export default {
 		components:{
 			overviewCount,
@@ -35,7 +39,10 @@
             customerType
 		},
         vuex:{
-            actions:{},
+            actions:{
+                freshRegionalCharts,
+                getCusTypeData
+            },
             getters:{
             }
         },
@@ -50,6 +57,9 @@
                     regionalUser:false,
                     customerType:false
                 },
+                showParam:{
+                    name:'业务员'
+                }
 			}
 		},
         created:function(){
@@ -128,6 +138,13 @@
                 if(data == "customerType"){
                     this.loadParam.customerType = false;
                 }                
+            },
+            freshCharts:function(data){
+                this.freshRegionalCharts(data)
+            },
+            freshCus:function(data){
+                console.log("哈哈")
+                this.getCusTypeData(data)
             }
         }
 	}

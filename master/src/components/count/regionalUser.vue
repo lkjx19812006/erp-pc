@@ -1,7 +1,7 @@
 <template>
     <div class="box" style="max-height: 100%;overflow: auto;">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">区域新增客户</div>
+            <div class="my_enterprise col-xs-1">{{param.name}}客户总览</div>
             <div class="btn btn-primary right" @click="toBackPage()">{{$t('static.back')}}</div>
         </div>
         <div class="user_all">
@@ -11,8 +11,14 @@
             <!-- 折线图 -->
             <div class="line_today">
                 <h4 class="detail_title bg-info">用户总览</h4>               
-                <div class="line_chart">
+                <div class="line_chart" v-if="param.name=='业务员'">
                     <div class="linechart" v-echarts="getRegionalchart.options" :loading="getRegionalchart.load"></div>
+                </div>
+                <div class="line_chart" v-if="param.name=='部门'">
+                    <div class="linechart" v-echarts="getOrgRegionalchart.options" :loading="getOrgRegionalchart.load"></div>
+                </div>
+                <div class="line_chart" v-if="param.name=='全部'">
+                    <div class="linechart" v-echarts="getAllRegionalchart.options" :loading="getAllRegionalchart.load"></div>
                 </div>
             </div>            
             <!-- 用户详情 -->
@@ -30,16 +36,26 @@
                                 <th style="min-width:240px;text-align: center;">省份</th>
                                 <th style="min-width:280px;text-align: center;">新增用户</th>
                                 <th style="min-width:280px;text-align: center;">成交用户</th>
-                                <th style="min-width:320px;text-align: center;">
-                                    活跃用户
-                                   <!--  <select>
-                                       <option>报价</option>
-                                       <option>留言</option>
-                                   </select> -->
-                                </th>
+                                <th style="min-width:320px;text-align: center;">活跃用户</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody v-if="param.name=='业务员'">
+                            <tr v-for="item in getProvinceDetail">
+                                <td><a href="javascript:void(0);">{{item.provinceName}}</a></td>
+                                <td>{{item.activeNumber}}</td>
+                                <td>{{item.transactionNumber}}</td>
+                                <td>{{item.activeNumber}}</td>
+                            </tr>
+                        </tbody>
+                        <tbody v-if="param.name=='部门'">
+                            <tr v-for="item in getProvinceDetail">
+                                <td><a href="javascript:void(0);">{{item.provinceName}}</a></td>
+                                <td>{{item.activeNumber}}</td>
+                                <td>{{item.transactionNumber}}</td>
+                                <td>{{item.activeNumber}}</td>
+                            </tr>
+                        </tbody>
+                        <tbody v-if="param.name=='全部'">
                             <tr v-for="item in getProvinceDetail">
                                 <td><a href="javascript:void(0);">{{item.provinceName}}</a></td>
                                 <td>{{item.activeNumber}}</td>
@@ -57,7 +73,9 @@
 import pagination from '../pagination'
 import {
     getRegionalchart,
-    getProvinceDetail
+    getProvinceDetail,
+    getOrgRegionalchart,
+    getAllRegionalchart
 } from '../../vuex/getters'
 import {
 	freshRegionalCharts
@@ -67,6 +85,7 @@ export default {
     components: {
         pagination
     },
+    props:['param'],
     data() {
         return {
             loadParam: {
@@ -91,6 +110,8 @@ export default {
     vuex: {
         getters: {
             getRegionalchart,
+            getOrgRegionalchart,
+            getAllRegionalchart,
             getProvinceDetail
         },
         actions: {
@@ -108,17 +129,16 @@ export default {
     	}
     },
     created() {
-    	this.freshRegionalCharts(this.provinceDetail)
+    	this.$dispatch('freshCharts',this.provinceDetail)
+    	//this.freshRegionalCharts(this.provinceDetail)
     }
 }
 </script>
 <style scoped>
 .box{
-    overflow: auto;
     background-color:#f0f0f0
 }
 .user_all{
-    overflow: auto;
 }
 .show_type{
     width: 100%;

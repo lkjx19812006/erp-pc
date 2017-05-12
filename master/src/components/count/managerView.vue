@@ -13,10 +13,10 @@
                     <span class="detail_num ">
                         <div class="show_type">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.timeType==='year'}" @click="selectTime('year')">
+                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.timeType==='month'}" @click="selectTime('year')">
                                     年
                                 </button>
-                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.timeType==='month'}"
+                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.timeType==='day'}"
                                  @click="selectTime('month')">
                                     月
                                 </button>
@@ -31,21 +31,21 @@
                                     <option value='3'>服务商</option>
                                 </select>
                             </dd>
-                            <dt v-if="loadParam.timeType!='month'" class="left transfer marg_top" style="margin-left: 20px">请选择年份：</dt>
-                            <dd v-if="loadParam.timeType!='month'" class="left margin_right asdf" style="margin-right: 20px">
+                            <dt v-if="loadParam.timeType!='day'" class="left transfer marg_top" style="margin-left: 20px">请选择年份：</dt>
+                            <dd v-if="loadParam.timeType!='day'" class="left margin_right asdf" style="margin-right: 20px">
                                 <select class="form-control edit-input" placeholder="按回车键搜索" v-model="loadParam.year" @change="selectType('year')">
                                     <!-- <option :value="item+'-01-01 00:00:00'" v-if="item<=setYear" v-for='item in getYear'>{{item}}</option> -->
                                     <option :value="[item+'-01-01 00:00:00',(item+1)+'-01-01 00:00:00']" v-for='item in setYear'>{{item}}</option>
                                 </select>
                             </dd>
                             
-                            <dt v-if="loadParam.timeType!='year'" class="left transfer marg_top" style="margin-left: 20px">请选择年和月：</dt>
-                            <dd v-if="loadParam.timeType!='year'" class="left margin_right" style="margin-right: 20px">
+                            <dt v-if="loadParam.timeType!='month'" class="left transfer marg_top" style="margin-left: 20px">请选择年和月：</dt>
+                            <dd v-if="loadParam.timeType!='month'" class="left margin_right" style="margin-right: 20px">
                                 <select class="form-control edit-input" v-model="loadParam.yearMonth" @change="selectType('month')">
                                     <option :value='item' v-for='item in setYear'>{{item}}</option>
                                 </select>
                             </dd>
-                            <dd v-if="loadParam.timeType!='year'" class="left margin_right" style="margin-right: 20px">
+                            <dd v-if="loadParam.timeType!='month'" class="left margin_right" style="margin-right: 20px">
                                 <select class="form-control edit-input" :disabled="loadParam.yearMonth?false:true" v-model="loadParam.month" @change="selectType('month')">
                                     <option value='1'>01月</option>
                                     <option value='2'>02月</option>
@@ -66,15 +66,15 @@
                 </h4>
                 
                 <div class="line_chart">
-                    <div class="linechart" v-echarts="getLineschart.options" :loading="getLineschart.load"></div>
+                    <div class="linechart" v-echarts="getOrgchart.options" :loading="getOrgchart.load"></div>
                 </div>
             </div>
             <!-- 今日新增 -->
             <div class="bar_today">
-                <h4 class="detail_title bg-info">今日新增<span class="detail_num"><a href="javascript:void(0);" class="person_num">60人</a>&nbsp<a href="javascript:void(0);" class="btn btn-link" @click="showDetail('userTodayDetail')">more>></a></span></h4>
+                <h4 class="detail_title bg-info">昨日新增<span class="detail_num"><a href="javascript:void(0);" class="person_num">{{orgData.total}}人</a>&nbsp<a href="javascript:void(0);" class="btn btn-link" @click="showDetail('userTodayDetail')">more>></a></span></h4>
                 <!-- 柱状图 -->
                 <div class="bar_chart_left">
-                    <div class="barchart" v-echarts="getColchart.options" :loading="getColchart.load"></div>
+                    <div class="barchart" v-echarts="getOrgColchart.options" :loading="getOrgColchart.load"></div>
                 </div>
                 
                 <div class="today_list_right">
@@ -87,7 +87,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in todayData">
+                            <tr v-for="item in getOrgYesTodayDetail">
                                 <td><a href="javascript:void(0);">{{item.name}}</a></td>
                                 <td>{{item.phone}}</td>
                                 <td>{{item.address}}</td>
@@ -95,7 +95,7 @@
                         </tbody>
                     </table>
                     <!--底部分页-->
-                    <pagination :combination="loadParam" slot="page"></pagination>
+                    <pagination :combination="orgData" slot="page"></pagination>
                 </div>
             </div>
             <!-- 用户详情 -->
@@ -104,11 +104,11 @@
                 <!-- 详情 -->
                 <div class="user_detail_right">
                     <h4 class="detail_title bg-info">业务员
-	                    <span class="detail_num">
-		                    <button class="btn btn-default btn-warning" style="margin-left: 50px" @click="showDetail('regionalUser')">   		查看区域用户
-		                    </button>
-                        	<button class="btn btn-default btn-warning" @click="showDetail('customerType')">查看客户类型</button>
-	                    </span>
+	                    <!-- <span class="detail_num">
+	                    		                    <button class="btn btn-default btn-warning" style="margin-left: 50px" @click="showDetail('regionalUser')">   		查看区域用户
+	                    		                    </button>
+	                                            	<button class="btn btn-default btn-warning" @click="showDetail('customerType')">查看客户类型</button>
+	                    </span> -->
                     </h4>
                     <table class="table table-hover table_color table-striped">
                         <thead>
@@ -121,12 +121,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in todayData">
-                                <td><a href="javascript:void(0);">{{item.phone}}</a></td>
-                                <td><a href="javascript:void(0);" @click="showDepart()">{{item.name}}</a></td>
-                                <td><a href="javascript:void(0);" @click="showDetail('newUserDetail')">35</a></td>
-                                <td><a href="javascript:void(0);" @click="showDetail('newActiveDetail')">65</a></td>
-                                <td><a href="javascript:void(0);" @click="showDetail('newDealDetail')">95</a></td>
+                            <tr v-for="item in getOrgSalemanDetail">
+                                <td><a href="javascript:void(0);">{{item.employeeId}}</a></td>
+                                <td><a href="javascript:void(0);" @click="showDepart()">{{item.employeeName}}</a></td>
+                                <td><a href="javascript:void(0);" @click="showDetail('newUserDetail')">{{item.addNumber}}</a></td>
+                                <td><a href="javascript:void(0);" @click="showDetail('newActiveDetail')">{{item.transactionNumber}}</a></td>
+                                <td><a href="javascript:void(0);" @click="showDetail('newDealDetail')">{{item.activeNumber}}</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -143,10 +143,18 @@ import pagination from '../pagination'
 import {
     getColchart,
     getLineschart,
-    getYear
+    getYear,
+    getOrgchart,
+    getOrgColchart,
+    getOrgYesTodayDetail,
+    getOrgSalemanDetail
 } from '../../vuex/getters'
 import {
-    freshLinesCharts
+    freshLinesCharts,
+    freshOrgCount,
+    freshOrgColCharts,
+    getOrgCountDetail,
+    getOrgSalemanData
 } from '../../vuex/actions'
 
 export default {
@@ -160,60 +168,43 @@ export default {
             loadParam: {
                 loading: false,
                 show: false,
+                cur: 1,
+                all: 4,
+                total: 0,
+                id:7,//国家id
                 type:'',
                 timeType:'month',
-                year:[],
+                year:['2017-01-01 00:00:00','2018-01-01 00:00:00'],
                 yearMonth:'',
                 month:'',
-                monthArr:[]
+                monthArr:[],
+                salemanId:'',
+                callback:this.callback
             },
-            todayData:[
-                {
-                    name:"张三",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"张三",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"张三",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"张三",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"张三",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"张三",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"张三",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                }
-            ],
+            orgData:{
+            	cur:1,
+            	all:4,
+            	total:0,
+            	data:[],
+            }
         }
     },
     vuex: {
         getters: {
             getColchart,
             getLineschart,
-            getYear
+            getYear,
+            getOrgchart,
+            getOrgColchart,
+            getOrgYesTodayDetail,
+            getOrgSalemanDetail
         },
         actions: {
-            freshLinesCharts
+            freshLinesCharts,
+            freshOrgCount,
+            freshOrgColCharts,
+            getOrgCountDetail,
+            getOrgSalemanData
         }
     },
     events: {
@@ -244,28 +235,60 @@ export default {
                     this.loadParam.month='1'
                 }
                 this.loadParam.monthArr=this.mGetDate(this.loadParam.yearMonth,this.loadParam.month)
-                this.freshLinesCharts(this.loadParam)
+                this.freshOrgCount(this.loadParam)
             }else{
-                this.freshLinesCharts(this.loadParam)
-            }            
+                this.freshOrgCount(this.loadParam)
+            }           
         },
         selectTime:function(data){ //切换年月显示
-            this.loadParam.timeType = data
+            
             if(data=="month"){
-                this.loadParam.year=[];
-            }else{
-                this.loadParam.yearMonth='';
-                this.loadParam.month='';
+            	var date = new Date()
+            	var year = date.getFullYear()
+                this.loadParam.year=[year+'-01-01 00:00:00',(year+1)+'-01-01 00:00:00'];
+                var month = date.getMonth()
+                var day = date.getDate()
+                if(day>5){
+                	month = month+1
+                }
+                this.loadParam.yearMonth = year
+                this.loadParam.month = month
+                this.loadParam.monthArr=this.mGetDate(this.loadParam.yearMonth,this.loadParam.month)
+
+                this.loadParam.timeType = 'day'
+                this.freshOrgCount(this.loadParam)
+                console.log(this.loadParam)
+
+            }else if(data=='year'){
+                // this.loadParam.yearMonth='';
+                // this.loadParam.month='';
+                var date = new Date()
+            	var year = date.getFullYear()
+                this.loadParam.year=[year+'-01-01 00:00:00',(year+1)+'-01-01 00:00:00'];
+                this.loadParam.timeType = 'month'
+                console.log(this.loadParam)
+                this.freshOrgCount(this.loadParam)
+                
             }
         },
         mGetDate:function (year, month){//判断每月多少天
             var d = new Date(year, month, 0);
+            if(month<10){
+                month = "0"+month
+            }
             var time = [year+'-'+month+'-01'+' 00:00:00',year+'-'+month+'-'+d.getDate()+ ' 00:00:00']
             return time
+        },
+        callback:function(data){
+        	this.orgData.data = data
+        	this.getOrgCountDetail(this.orgData)
+        	
         }
     },
     created() {
-        this.freshLinesCharts(this.loadParam)
+        this.freshOrgCount(this.loadParam)
+        this.freshOrgColCharts(this.loadParam)
+        this.getOrgSalemanData()
     },
     computed:{
         setYear:function(){//计算当前年份过滤年份数组显示的年份

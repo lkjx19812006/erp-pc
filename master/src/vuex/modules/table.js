@@ -146,7 +146,11 @@ import {
     YESTODAY_DETAIL,
     PROVINCE_DETAIL,
     OFFER_MESSAGE_TABLE,
-    CLEAR_NOTICE_TABLE
+    CLEAR_NOTICE_TABLE,
+    ORG_YESTODAY_DETAIL,
+    ORG_SALEMAN_DETAIL,
+    ALL_YESTODAY_DETAIL,
+    ALL_ORG_DETAIL
 } from '../mutation-types'
 
 
@@ -534,7 +538,7 @@ const state = {
         }],
         myOrderLinkList: [],
         orgOrderLinkList: [],
-        linkOrder: [],
+        linkOrder: { arr: [] },
         orgOrderStatis: "",
         allOrderStatis: "",
 
@@ -1167,12 +1171,18 @@ const state = {
     orgCount: {}, //部门统计state
     stockList: [{ checked: false }, { checked: false }],
     stockCartList: [],
+
     yearNum: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
     newUserDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
     newDealDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
     newActiveDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
     yestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    orgYestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    allYestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    orgSalemanDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    allOrgDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
     provinceDetail: []
+
 }
 
 const mutations = {
@@ -2489,9 +2499,27 @@ const mutations = {
     [YESTODAY_DETAIL](state, data) {
         state.yestodayDetail = data
     },
+
+    [ALL_YESTODAY_DETAIL](state, data) {
+        state.allYestodayDetail = data
+    },
+    //个人区域数据
     [PROVINCE_DETAIL](state, data) {
         state.provinceDetail = data
+    },
+    //部门昨日新增
+    [ORG_YESTODAY_DETAIL](state, data) {
+        state.orgYestodayDetail = data
+    },
+    //部门业务员数据
+    [ORG_SALEMAN_DETAIL](state, data) {
+        state.orgSalemanDetail = data
+    },
+    //部门业务员数据
+    [ALL_ORG_DETAIL](state, data) {
+        state.allOrgDetail = data
     }
+
 }
 
 export default {
