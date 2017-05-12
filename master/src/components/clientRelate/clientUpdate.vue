@@ -108,7 +108,7 @@
                                 <input type="text" v-model="param.email" class="form-control edit-input" v-validate:email="['email']" value="{{param.email}}" />
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">详细地址</label>
+                                <label class="editlabel">{{$t('static.detailed_address')}}</label>
                                 <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
                             </div>
                             <div class="editpage-input">

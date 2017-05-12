@@ -2528,23 +2528,23 @@ const mutations = {
         state.allOrgDetail = data
     },
     //部门省数据
-    [ORG_PROVINCE_DETAIL](state,data){
+    [ORG_PROVINCE_DETAIL](state, data) {
         state.orgProvinceDetail = data
     },
     //全部省数据
-    [ALL_PROVINCE_DETAIL](state,data){
+    [ALL_PROVINCE_DETAIL](state, data) {
         state.allProvinceDetail = data
     },
     //个人类型详情
-    [CUSTYPE_DETAIL](state,data){
+    [CUSTYPE_DETAIL](state, data) {
         state.cusTypeDetail = data
     },
     //部门类型详情
-    [ORG_CUSTYPE_DETAIL](state,data){
+    [ORG_CUSTYPE_DETAIL](state, data) {
         state.orgCusTypeDetail = data
     },
     //全部类型详情
-    [ALL_CUSTYPE_DETAIL](state,data){
+    [ALL_CUSTYPE_DETAIL](state, data) {
         state.allCusTypeDetail = data
     }
 }

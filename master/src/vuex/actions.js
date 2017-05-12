@@ -364,9 +364,9 @@ export const getActiveUser = ({ dispatch }, param) => { //获取活跃用户详�
     if (param.showType == 'time' && param.activeType == '报价') { //报价
         url = '/crm/api/v1/intention/getOfferListByIds'
         body = {
-            page:param.cur,
-            pageSize:'14',
-            idsStr:param.data.offerTimesDetail   
+            page: param.cur,
+            pageSize: '14',
+            idsStr: param.data.offerTimesDetail
         }
     }
     if (param.showType == 'time' && param.activeType == '订单') { //订单
@@ -398,7 +398,7 @@ export const getActiveUser = ({ dispatch }, param) => { //获取活跃用户详�
         body = {
             page:param.cur,
             pageSize:'7',
-            id:param.data.orderTimesDetail 
+            id:param.data.orderTimesDetail
         }
     }*/
     Vue.http({
@@ -451,25 +451,25 @@ export const getYestodayData = ({ dispatch }, param) => { //获取昨日新增
     })
 }
 
-export const getCusTypeData = ({dispatch},getCharList) =>{//获取个人客户类型折线图   
-        if (getCharList) getCharList.load = true;
-        var startTime,endTime
-        if(getCharList.timeType=='month'){
-            startTime = getCharList.year[0]
-            endTime = getCharList.year[1]
-        }
-        if(getCharList.timeType=='day'){
-            startTime = getCharList.monthArr[0]
-            endTime = getCharList.monthArr[1]
-        }
-        var body = {
-            dateType:getCharList.timeType,
-            startTime:startTime,
-            endTime:endTime,
-        }
-        if(getCharList.type){
-            body.type = getCharList.type
-        }
+export const getCusTypeData = ({ dispatch }, getCharList) => { //获取个人客户类型折线图   
+    if (getCharList) getCharList.load = true;
+    var startTime, endTime
+    if (getCharList.timeType == 'month') {
+        startTime = getCharList.year[0]
+        endTime = getCharList.year[1]
+    }
+    if (getCharList.timeType == 'day') {
+        startTime = getCharList.monthArr[0]
+        endTime = getCharList.monthArr[1]
+    }
+    var body = {
+        dateType: getCharList.timeType,
+        startTime: startTime,
+        endTime: endTime,
+    }
+    if (getCharList.type) {
+        body.type = getCharList.type
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerNumberByTypes',
@@ -480,11 +480,11 @@ export const getCusTypeData = ({dispatch},getCharList) =>{//获取个人客户�
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
-    }).then((res)=>{
+    }).then((res) => {
         //console.log(param)
-        var data={
-            dataList:res.json().result.list,
-            type:getCharList.type
+        var data = {
+            dataList: res.json().result.list,
+            type: getCharList.type
         }
         dispatch(types.CHANGE_CUSTYPECHARTS, data)
     }, (res) => {
@@ -492,25 +492,25 @@ export const getCusTypeData = ({dispatch},getCharList) =>{//获取个人客户�
     })
 }
 
-export const getCusTypeList = ({dispatch},getCharList) =>{//获取个人客户类型详情  
-       /* if (getCharList) getCharList.load = true;
-        var startTime,endTime
-        if(getCharList.timeType=='month'){
-            startTime = getCharList.year[0]
-            endTime = getCharList.year[1]
-        }
-        if(getCharList.timeType=='day'){
-            startTime = getCharList.monthArr[0]
-            endTime = getCharList.monthArr[1]
-        }
-        var body = {
-            dateType:getCharList.timeType,
-            startTime:startTime,
-            endTime:endTime,
-        }
-        if(getCharList.type){
-            body.type = getCharList.type
-        }*/
+export const getCusTypeList = ({ dispatch }, getCharList) => { //获取个人客户类型详情  
+    /* if (getCharList) getCharList.load = true;
+     var startTime,endTime
+     if(getCharList.timeType=='month'){
+         startTime = getCharList.year[0]
+         endTime = getCharList.year[1]
+     }
+     if(getCharList.timeType=='day'){
+         startTime = getCharList.monthArr[0]
+         endTime = getCharList.monthArr[1]
+     }
+     var body = {
+         dateType:getCharList.timeType,
+         startTime:startTime,
+         endTime:endTime,
+     }
+     if(getCharList.type){
+         body.type = getCharList.type
+     }*/
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerNumberByTypesCount',
@@ -521,35 +521,35 @@ export const getCusTypeList = ({dispatch},getCharList) =>{//获取个人客户�
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
-    }).then((res)=>{
+    }).then((res) => {
         //console.log(param)
         console.log(res.json())
-        dispatch(types.CUSTYPE_DETAIL,res.json().result.list)
-    },(res)=>{
+        dispatch(types.CUSTYPE_DETAIL, res.json().result.list)
+    }, (res) => {
         console.log('fail')
     })
 }
-export const getOrgCusTypeList = ({dispatch},getCharList) =>{//获取部门客户类型详情  
-       /* if (getCharList) getCharList.load = true;
-        var startTime,endTime
-        if(getCharList.timeType=='month'){
-            startTime = getCharList.year[0]
-            endTime = getCharList.year[1]
-        }
-        if(getCharList.timeType=='day'){
-            startTime = getCharList.monthArr[0]
-            endTime = getCharList.monthArr[1]
-        }
-        var body = {
-            dateType:getCharList.timeType,
-            startTime:startTime,
-            endTime:endTime,
-        }
-        if(getCharList.type){
-            body.type = getCharList.type
-        }*/
+export const getOrgCusTypeList = ({ dispatch }, getCharList) => { //获取部门客户类型详情  
+    /* if (getCharList) getCharList.load = true;
+     var startTime,endTime
+     if(getCharList.timeType=='month'){
+         startTime = getCharList.year[0]
+         endTime = getCharList.year[1]
+     }
+     if(getCharList.timeType=='day'){
+         startTime = getCharList.monthArr[0]
+         endTime = getCharList.monthArr[1]
+     }
+     var body = {
+         dateType:getCharList.timeType,
+         startTime:startTime,
+         endTime:endTime,
+     }
+     if(getCharList.type){
+         body.type = getCharList.type
+     }*/
     var body = {
-        queryType:'org'
+        queryType: 'org'
     }
     Vue.http({
         method: 'POST',
@@ -561,36 +561,36 @@ export const getOrgCusTypeList = ({dispatch},getCharList) =>{//获取部门客�
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
-    }).then((res)=>{
+    }).then((res) => {
         //console.log(param)
         console.log(res.json())
-        dispatch(types.ORG_CUSTYPE_DETAIL,res.json().result.list)
-    },(res)=>{
+        dispatch(types.ORG_CUSTYPE_DETAIL, res.json().result.list)
+    }, (res) => {
         console.log('fail')
     })
 }
 
-export const getAllCusTypeList = ({dispatch},getCharList) =>{//获取部门客户类型详情  
-       /* if (getCharList) getCharList.load = true;
-        var startTime,endTime
-        if(getCharList.timeType=='month'){
-            startTime = getCharList.year[0]
-            endTime = getCharList.year[1]
-        }
-        if(getCharList.timeType=='day'){
-            startTime = getCharList.monthArr[0]
-            endTime = getCharList.monthArr[1]
-        }
-        var body = {
-            dateType:getCharList.timeType,
-            startTime:startTime,
-            endTime:endTime,
-        }
-        if(getCharList.type){
-            body.type = getCharList.type
-        }*/
+export const getAllCusTypeList = ({ dispatch }, getCharList) => { //获取部门客户类型详情  
+    /* if (getCharList) getCharList.load = true;
+     var startTime,endTime
+     if(getCharList.timeType=='month'){
+         startTime = getCharList.year[0]
+         endTime = getCharList.year[1]
+     }
+     if(getCharList.timeType=='day'){
+         startTime = getCharList.monthArr[0]
+         endTime = getCharList.monthArr[1]
+     }
+     var body = {
+         dateType:getCharList.timeType,
+         startTime:startTime,
+         endTime:endTime,
+     }
+     if(getCharList.type){
+         body.type = getCharList.type
+     }*/
     var body = {
-        queryType:'all'
+        queryType: 'all'
     }
     Vue.http({
         method: 'POST',
@@ -602,35 +602,35 @@ export const getAllCusTypeList = ({dispatch},getCharList) =>{//获取部门客�
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
-    }).then((res)=>{
+    }).then((res) => {
         //console.log(param)
         console.log(res.json())
-        dispatch(types.ALL_CUSTYPE_DETAIL,res.json().result.list)
-    },(res)=>{
+        dispatch(types.ALL_CUSTYPE_DETAIL, res.json().result.list)
+    }, (res) => {
         console.log('fail')
     })
 }
 
-export const getOrgCusTypeData = ({dispatch},getCharList) =>{//获取部门客户类型折线图   
-        if (getCharList) getCharList.load = true;
-        var startTime,endTime
-        if(getCharList.timeType=='month'){
-            startTime = getCharList.year[0]
-            endTime = getCharList.year[1]
-        }
-        if(getCharList.timeType=='day'){
-            startTime = getCharList.monthArr[0]
-            endTime = getCharList.monthArr[1]
-        }
-        var body = {
-            dateType:getCharList.timeType,
-            startTime:startTime,
-            endTime:endTime,
-            queryType:'org'
-        }
-        if(getCharList.type){
-            body.type = getCharList.type
-        }
+export const getOrgCusTypeData = ({ dispatch }, getCharList) => { //获取部门客户类型折线图   
+    if (getCharList) getCharList.load = true;
+    var startTime, endTime
+    if (getCharList.timeType == 'month') {
+        startTime = getCharList.year[0]
+        endTime = getCharList.year[1]
+    }
+    if (getCharList.timeType == 'day') {
+        startTime = getCharList.monthArr[0]
+        endTime = getCharList.monthArr[1]
+    }
+    var body = {
+        dateType: getCharList.timeType,
+        startTime: startTime,
+        endTime: endTime,
+        queryType: 'org'
+    }
+    if (getCharList.type) {
+        body.type = getCharList.type
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerNumberByTypes',
@@ -641,38 +641,38 @@ export const getOrgCusTypeData = ({dispatch},getCharList) =>{//获取部门客�
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
-    }).then((res)=>{
+    }).then((res) => {
         //console.log(param)
-        var data={
-            dataList:res.json().result.list,
-            type:getCharList.type
+        var data = {
+            dataList: res.json().result.list,
+            type: getCharList.type
         }
-        dispatch(types.CHANGE_ORGCUSTYPECHARTS,data)
-    },(res)=>{
+        dispatch(types.CHANGE_ORGCUSTYPECHARTS, data)
+    }, (res) => {
         console.log('fail')
     })
 }
 
-export const getAllCusTypeData = ({dispatch},getCharList) =>{//获取全部客户类型折线图   
-        if (getCharList) getCharList.load = true;
-        var startTime,endTime
-        if(getCharList.timeType=='month'){
-            startTime = getCharList.year[0]
-            endTime = getCharList.year[1]
-        }
-        if(getCharList.timeType=='day'){
-            startTime = getCharList.monthArr[0]
-            endTime = getCharList.monthArr[1]
-        }
-        var body = {
-            dateType:getCharList.timeType,
-            startTime:startTime,
-            endTime:endTime,
-            queryType:'all'
-        }
-        if(getCharList.type){
-            body.type = getCharList.type
-        }
+export const getAllCusTypeData = ({ dispatch }, getCharList) => { //获取全部客户类型折线图   
+    if (getCharList) getCharList.load = true;
+    var startTime, endTime
+    if (getCharList.timeType == 'month') {
+        startTime = getCharList.year[0]
+        endTime = getCharList.year[1]
+    }
+    if (getCharList.timeType == 'day') {
+        startTime = getCharList.monthArr[0]
+        endTime = getCharList.monthArr[1]
+    }
+    var body = {
+        dateType: getCharList.timeType,
+        startTime: startTime,
+        endTime: endTime,
+        queryType: 'all'
+    }
+    if (getCharList.type) {
+        body.type = getCharList.type
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerNumberByTypes',
@@ -683,19 +683,19 @@ export const getAllCusTypeData = ({dispatch},getCharList) =>{//获取全部客�
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
-    }).then((res)=>{
+    }).then((res) => {
         //console.log(param)
-        var data={
-            dataList:res.json().result.list,
-            type:getCharList.type
+        var data = {
+            dataList: res.json().result.list,
+            type: getCharList.type
         }
-        dispatch(types.CHANGE_ALLCUSTYPECHARTS,data)
-    },(res)=>{
+        dispatch(types.CHANGE_ALLCUSTYPECHARTS, data)
+    }, (res) => {
         console.log('fail')
     })
 }
 
-export const freshOrgCount = ({dispatch},getCharList) =>{//获取部门客户折线图
+export const freshOrgCount = ({ dispatch }, getCharList) => { //获取部门客户折线图
     if (getCharList) getCharList.load = true;
     var startTime, endTime
     if (getCharList.timeType == 'month') {
@@ -1020,10 +1020,10 @@ export const freshRegionalCharts = ({ dispatch }, param) => {
 };
 
 //部门统计区域图
-export const freshOrgRegionalCharts = ({ dispatch }, param) => { 
-    var body={
-        queryType:'org'
-    }   
+export const freshOrgRegionalCharts = ({ dispatch }, param) => {
+    var body = {
+        queryType: 'org'
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerNumberByProvinces',
@@ -1037,18 +1037,18 @@ export const freshOrgRegionalCharts = ({ dispatch }, param) => {
     }).then((res) => {
         console.log(res.json())
         param = res.json().result.list
-        dispatch(types.ORG_REGIONAL_DETAIL,res.json().result.list)
-        dispatch(types.ORG_PROVINCE_DETAIL,res.json().result.list)
-    },(res)=>{
+        dispatch(types.ORG_REGIONAL_DETAIL, res.json().result.list)
+        dispatch(types.ORG_PROVINCE_DETAIL, res.json().result.list)
+    }, (res) => {
         console.log('fail')
     })
 };
 
 //全部统计区域图
-export const freshAllRegionalCharts = ({ dispatch }, param) => { 
-    var body={
-        queryType:'all'
-    }   
+export const freshAllRegionalCharts = ({ dispatch }, param) => {
+    var body = {
+        queryType: 'all'
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerNumberByProvinces',
@@ -1062,9 +1062,9 @@ export const freshAllRegionalCharts = ({ dispatch }, param) => {
     }).then((res) => {
         console.log(res.json())
         param = res.json().result.list
-        dispatch(types.ALL_REGIONAL_DETAIL,res.json().result.list)
-        dispatch(types.ALL_PROVINCE_DETAIL,res.json().result.list)
-    },(res)=>{
+        dispatch(types.ALL_REGIONAL_DETAIL, res.json().result.list)
+        dispatch(types.ALL_PROVINCE_DETAIL, res.json().result.list)
+    }, (res) => {
         console.log('fail')
     })
 };
@@ -1199,7 +1199,7 @@ export const getOfferMessageList = ({ dispatch }, param) => {
     })
 }
 
-//已读接口 
+//已读接口
 export const readNotice = ({ dispatch }, param) => {
         var body = {
             ids: param.ids
@@ -1509,7 +1509,7 @@ export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录�
     })
 }
 
-export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列表 
+export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列表
     param.loading = true;
     var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
     if (param.name && param.name !== '') {
@@ -5800,6 +5800,9 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
     }
     if (param.inquire) {
         url += '&inquire=' + param.inquire;
+    }
+    if (param.offer) {
+        url += '&offer=' + param.offer;
     }
     if (param.source) {
         url += '&source=' + param.source;

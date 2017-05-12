@@ -34,6 +34,14 @@
                             <option value="3">报价完成</option>
                         </select>
                     </dd>
+                    <dt class="left transfer marg_top">已收报价：</dt>
+                    <dd class="left margin_right">
+                        <select class="form-control" v-model="loadParam.offer" @change="selectSearch()">
+                            <option value="-1">全部</option>
+                            <option value="1">收到报价</option>
+                            <option value="0">暂无报价</option>
+                        </select>
+                    </dd>
                     <dt class="left transfer marg_top">采购单来源：</dt>
                     <dd class="left margin_right">
                         <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
@@ -76,6 +84,7 @@
                         <th>采购单来源</th>
                         <th>采购内容描述</th>
                         <th>备注</th>
+                        <th>收到报价数</th>
                         <th>询价状态</th>
                     </tr>
                 </thead>
@@ -99,6 +108,7 @@
                             </Poptip>
                         </td>
                         <td>{{item.comment}}</td>
+                        <td>{{item.offer}}</td>
                         <td>{{item.inquire | inquire}}</td>
                     </tr>
                 </tbody>
@@ -155,6 +165,7 @@ export default {
                 key: 'allPurchaseList',
                 source: '',
                 inquire: '',
+                offer: '-1',
                 customerName: '',
                 customerPhone: '',
                 employee: '',
@@ -202,6 +213,7 @@ export default {
         resetCondition: function() { //清除搜索条件
             this.loadParam.source = '';
             this.loadParam.inquire = '';
+            this.loadParam.offer = '-1';
             this.loadParam.customerName = '';
             this.loadParam.customerPhone = '';
             this.loadParam.employee = '';

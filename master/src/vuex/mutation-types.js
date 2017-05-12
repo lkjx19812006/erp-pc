@@ -204,8 +204,10 @@ export const DELETE_STOCK_DATA = 'DELETE_STOCK_DATA' //删除库存列表
 export const CHANGE_LINESCHARTS = 'CHANGE_LINESCHARTS'//重叠折线用户总览列表
 export const CHANGE_COLCHARTS = 'CHANGE_COLCHARTS' // 柱状图
 
+
 export const CHANGE_REGIONALCHARTS = 'CHANGE_REGIONALCHARTS'//区域用户中国地图
 export const CHANGE_CUSTYPECHARTS = 'CHANGE_CUSTYPECHARTS'//个人客户类型折线图
+
 export const CHANGE_ORGCUSTYPECHARTS = 'CHANGE_ORGCUSTYPECHARTS' //全部客户类型折线图
 export const CHANGE_ALLCUSTYPECHARTS = 'CHANGE_ALLCUSTYPECHARTS' //全部客户类型折线图
 
@@ -217,15 +219,15 @@ export const NEW_ACTIVE_DETAIL = 'NEW_ACTIVE_DETAIL'//新增活跃用户
 
 export const YESTODAY_DETAIL = 'YESTODAY_DETAIL'//新增昨日成交用户
 
-export const PROVINCE_DETAIL = 'PROVINCE_DETAIL'//个人区域省数据
-export const CUSTYPE_DETAIL = 'CUSTYPE_DETAIL'//个人客户类型详情
-export const ORG_CUSTYPE_DETAIL = 'ORG_CUSTYPE_DETAIL'//部门客户类型详情
-export const ALL_CUSTYPE_DETAIL = 'ALL_CUSTYPE_DETAIL'//部门客户类型详情
+export const PROVINCE_DETAIL = 'PROVINCE_DETAIL' //个人区域省数据
+export const CUSTYPE_DETAIL = 'CUSTYPE_DETAIL' //个人客户类型详情
+export const ORG_CUSTYPE_DETAIL = 'ORG_CUSTYPE_DETAIL' //部门客户类型详情
+export const ALL_CUSTYPE_DETAIL = 'ALL_CUSTYPE_DETAIL' //部门客户类型详情
 
-export const CHANGE_ORGCHARTS = 'CHANGE_ORGCHARTS'//部門客戶折线图
-export const ORG_PROVINCE_DETAIL = 'ORG_PROVINCE_DETAIL'//部门区域省数据
+export const CHANGE_ORGCHARTS = 'CHANGE_ORGCHARTS' //部門客戶折线图
+export const ORG_PROVINCE_DETAIL = 'ORG_PROVINCE_DETAIL' //部门区域省数据
 
-export const ALL_PROVINCE_DETAIL = 'ALL_PROVINCE_DETAIL'//全部区域省数据
+export const ALL_PROVINCE_DETAIL = 'ALL_PROVINCE_DETAIL' //全部区域省数据
 
 export const CHANGE_ORGCOLCHARTS = 'CHANGE_ORGCOLCHARTS'//部门柱状图客戶
 export const CHANGE_ALLCOLCHARTS = 'CHANGE_ALLCOLCHARTS'//全部柱状图客戶
