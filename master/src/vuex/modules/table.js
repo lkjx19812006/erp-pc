@@ -537,7 +537,7 @@ const state = {
         }],
         myOrderLinkList: [],
         orgOrderLinkList: [],
-        linkOrder: [],
+        linkOrder: {arr:[]},
         orgOrderStatis: "",
         allOrderStatis: "",
 
