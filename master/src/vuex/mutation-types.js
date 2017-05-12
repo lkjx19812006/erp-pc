@@ -206,8 +206,8 @@ export const CHANGE_LINESCHARTS = 'CHANGE_LINESCHARTS' //重叠折线用户总�
 export const CHANGE_COLCHARTS = 'CHANGE_COLCHARTS' // 柱状图
 
 
-export const CHANGE_REGIONALCHARTS = 'CHANGE_REGIONALCHARTS'//区域用户中国地图
-export const CHANGE_CUSTYPECHARTS = 'CHANGE_CUSTYPECHARTS'//个人客户类型折线图
+export const CHANGE_REGIONALCHARTS = 'CHANGE_REGIONALCHARTS' //区域用户中国地图
+export const CHANGE_CUSTYPECHARTS = 'CHANGE_CUSTYPECHARTS' //个人客户类型折线图
 export const CHANGE_ORGCUSTYPECHARTS = 'CHANGE_ORGCUSTYPECHARTS' //全部客户类型折线图
 export const CHANGE_ALLCUSTYPECHARTS = 'CHANGE_ALLCUSTYPECHARTS' //全部客户类型折线图
 
@@ -219,33 +219,25 @@ export const NEW_DEAL_DETAIL = 'NEW_DEAL_DETAIL' //新增成交用户
 
 export const NEW_ACTIVE_DETAIL = 'NEW_ACTIVE_DETAIL' //新增活跃用户
 
-export const PROVINCE_DETAIL = 'PROVINCE_DETAIL'//个人区域省数据
-export const CUSTYPE_DETAIL = 'CUSTYPE_DETAIL'//个人客户类型详情
-export const ORG_CUSTYPE_DETAIL = 'ORG_CUSTYPE_DETAIL'//部门客户类型详情
-export const ALL_CUSTYPE_DETAIL = 'ALL_CUSTYPE_DETAIL'//部门客户类型详情
+export const PROVINCE_DETAIL = 'PROVINCE_DETAIL' //个人区域省数据
+export const CUSTYPE_DETAIL = 'CUSTYPE_DETAIL' //个人客户类型详情
+export const ORG_CUSTYPE_DETAIL = 'ORG_CUSTYPE_DETAIL' //部门客户类型详情
+export const ALL_CUSTYPE_DETAIL = 'ALL_CUSTYPE_DETAIL' //部门客户类型详情
 
-export const CHANGE_ORGCHARTS = 'CHANGE_ORGCHARTS'//部門客戶折线图
-export const ORG_PROVINCE_DETAIL = 'ORG_PROVINCE_DETAIL'//部门区域省数据
+export const CHANGE_ORGCHARTS = 'CHANGE_ORGCHARTS' //部門客戶折线图
+export const ORG_PROVINCE_DETAIL = 'ORG_PROVINCE_DETAIL' //部门区域省数据
 
-export const ALL_PROVINCE_DETAIL = 'ALL_PROVINCE_DETAIL'//全部区域省数据
+export const ALL_PROVINCE_DETAIL = 'ALL_PROVINCE_DETAIL' //全部区域省数据
 
 export const YESTODAY_DETAIL = 'YESTODAY_DETAIL' //新增昨日成交用户
 
 
-export const ORG_YESTODAY_DETAIL = 'ORG_YESTODAY_DETAIL'//部门柱状图客戶详情
-export const ORG_SALEMAN_DETAIL = 'ORG_SALEMAN_DETAIL'//部门业务员数据
-export const ORG_REGIONAL_DETAIL = 'ORG_REGIONAL_DETAIL'//部门区域数据
-
-
-export const PROVINCE_DETAIL = 'PROVINCE_DETAIL' //新增昨日成交用户
-export const CHANGE_ORGCHARTS = 'CHANGE_ORGCHARTS' //部門客戶折线图
+export const ORG_YESTODAY_DETAIL = 'ORG_YESTODAY_DETAIL' //部门柱状图客戶详情
+export const ORG_SALEMAN_DETAIL = 'ORG_SALEMAN_DETAIL' //部门业务员数据
+export const ORG_REGIONAL_DETAIL = 'ORG_REGIONAL_DETAIL' //部门区域数据
 
 export const CHANGE_ORGCOLCHARTS = 'CHANGE_ORGCOLCHARTS' //部门柱状图客戶
 export const CHANGE_ALLCOLCHARTS = 'CHANGE_ALLCOLCHARTS' //全部柱状图客戶
-
-export const ORG_YESTODAY_DETAIL = 'ORG_YESTODAY_DETAIL' //部门柱状图客戶
-export const ORG_SALEMAN_DETAIL = 'ORG_SALEMAN_DETAIL' //部门业务员数据
-export const ORG_REGIONAL_DETAIL = 'ORG_REGIONAL_DETAIL' //部门区域数据
 
 export const ALL_YESTODAY_DETAIL = 'ALL_YESTODAY_DETAIL' //全部客户统计昨日详情
 export const ALL_ORG_DETAIL = 'ALL_ORG_DETAIL' //部门业务员数据
