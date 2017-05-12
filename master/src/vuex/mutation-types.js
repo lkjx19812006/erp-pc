@@ -103,10 +103,11 @@ export const CALL_COUNT_DATA = 'CALL_COUNT_DATA' //客户通话记录统计
 export const CALL_RECORD_VOICE_DATA = 'CALL_RECORD_VOICE_DATA' //客户通话记录录音
 
 export const PURCHASE_LIST_DATA = 'PURCHASE_LIST_DATA' //采购单列表
-export const UPDATE_OFFERDESCRIPTION = 'UPDATE_OFFERDESCRIPTION'//采购单更新报价描述
+export const UPDATE_OFFERDESCRIPTION = 'UPDATE_OFFERDESCRIPTION' //采购单更新报价描述
 export const DELETE_PURCHASE = 'DELETE_PURCHASE' //删除采购单
 export const INQUIRE_PURCHASE_STATUS = 'INQUIRE_PURCHASE_STATUS' //（单个/批量）采购单询价
 export const PURCHASE_DETAIL = 'PURCHASE_DETAIL' //采购单详情
+export const INDENT_OFFER_DATA = 'INDENT_OFFER_DATA' //采购单详情下的报价列表
 export const INTENTION_LIST_DATA = 'INTENTION_LIST_DATA' //意向数据列表
 export const SUPPLY_DEMAND_DATA = 'SUPPLY_DEMAND_DATA' //意向数据列表
 export const INTENTION_DETAIL_DATA = 'INTENTION_DETAIL_DATA' //意向详情
@@ -201,21 +202,22 @@ export const STOCK_LIST = 'STOCK_LIST' //库存列表
 export const ADD_STOCK_LIST = 'ADD_STOCK_LIST' //添加库存列表
 export const DELETE_STOCK_DATA = 'DELETE_STOCK_DATA' //删除库存列表
 
-export const CHANGE_LINESCHARTS = 'CHANGE_LINESCHARTS'//重叠折线用户总览列表
+export const CHANGE_LINESCHARTS = 'CHANGE_LINESCHARTS' //重叠折线用户总览列表
 export const CHANGE_COLCHARTS = 'CHANGE_COLCHARTS' // 柱状图
+
 
 export const CHANGE_REGIONALCHARTS = 'CHANGE_REGIONALCHARTS'//区域用户中国地图
 export const CHANGE_CUSTYPECHARTS = 'CHANGE_CUSTYPECHARTS'//个人客户类型折线图
 export const CHANGE_ORGCUSTYPECHARTS = 'CHANGE_ORGCUSTYPECHARTS' //全部客户类型折线图
 export const CHANGE_ALLCUSTYPECHARTS = 'CHANGE_ALLCUSTYPECHARTS' //全部客户类型折线图
 
+
 export const NEW_USER_DETAIL = 'NEW_USER_DETAIL' //新增用户详情
 
-export const NEW_DEAL_DETAIL = 'NEW_DEAL_DETAIL'//新增成交用户
+export const NEW_DEAL_DETAIL = 'NEW_DEAL_DETAIL' //新增成交用户
 
-export const NEW_ACTIVE_DETAIL = 'NEW_ACTIVE_DETAIL'//新增活跃用户
 
-export const YESTODAY_DETAIL = 'YESTODAY_DETAIL'//新增昨日成交用户
+export const NEW_ACTIVE_DETAIL = 'NEW_ACTIVE_DETAIL' //新增活跃用户
 
 export const PROVINCE_DETAIL = 'PROVINCE_DETAIL'//个人区域省数据
 export const CUSTYPE_DETAIL = 'CUSTYPE_DETAIL'//个人客户类型详情
@@ -227,20 +229,31 @@ export const ORG_PROVINCE_DETAIL = 'ORG_PROVINCE_DETAIL'//部门区域省数据
 
 export const ALL_PROVINCE_DETAIL = 'ALL_PROVINCE_DETAIL'//全部区域省数据
 
-export const CHANGE_ORGCOLCHARTS = 'CHANGE_ORGCOLCHARTS'//部门柱状图客戶
-export const CHANGE_ALLCOLCHARTS = 'CHANGE_ALLCOLCHARTS'//全部柱状图客戶
+export const YESTODAY_DETAIL = 'YESTODAY_DETAIL' //新增昨日成交用户
+
 
 export const ORG_YESTODAY_DETAIL = 'ORG_YESTODAY_DETAIL'//部门柱状图客戶详情
 export const ORG_SALEMAN_DETAIL = 'ORG_SALEMAN_DETAIL'//部门业务员数据
 export const ORG_REGIONAL_DETAIL = 'ORG_REGIONAL_DETAIL'//部门区域数据
 
-export const ALL_YESTODAY_DETAIL = 'ALL_YESTODAY_DETAIL'//全部客户统计昨日详情
-export const ALL_ORG_DETAIL = 'ALL_ORG_DETAIL'//部门业务员数据
 
-export const ALL_REGIONAL_DETAIL = 'ALL_REGIONAL_DETAIL'//全部部门的客户区域统计
-export const CHANGE_ALLCHARTS = 'CHANGE_ALLCHARTS'//全部部门的客户折线统计
+export const PROVINCE_DETAIL = 'PROVINCE_DETAIL' //新增昨日成交用户
+export const CHANGE_ORGCHARTS = 'CHANGE_ORGCHARTS' //部門客戶折线图
+
+export const CHANGE_ORGCOLCHARTS = 'CHANGE_ORGCOLCHARTS' //部门柱状图客戶
+export const CHANGE_ALLCOLCHARTS = 'CHANGE_ALLCOLCHARTS' //全部柱状图客戶
+
+export const ORG_YESTODAY_DETAIL = 'ORG_YESTODAY_DETAIL' //部门柱状图客戶
+export const ORG_SALEMAN_DETAIL = 'ORG_SALEMAN_DETAIL' //部门业务员数据
+export const ORG_REGIONAL_DETAIL = 'ORG_REGIONAL_DETAIL' //部门区域数据
+
+export const ALL_YESTODAY_DETAIL = 'ALL_YESTODAY_DETAIL' //全部客户统计昨日详情
+export const ALL_ORG_DETAIL = 'ALL_ORG_DETAIL' //部门业务员数据
+
+export const ALL_REGIONAL_DETAIL = 'ALL_REGIONAL_DETAIL' //全部部门的客户区域统计
+export const CHANGE_ALLCHARTS = 'CHANGE_ALLCHARTS' //全部部门的客户折线统计
+
 
 
 export const OFFER_MESSAGE_TABLE = 'OFFER_MESSAGE_TABLE' //获取用户报价消息
 export const CLEAR_NOTICE_TABLE = 'CLEAR_NOTICE_TABLE' //清除消息通知
-

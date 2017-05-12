@@ -77,6 +77,7 @@ import {
     DELETE_PURCHASE,
     INQUIRE_PURCHASE_STATUS,
     PURCHASE_DETAIL,
+    INDENT_OFFER_DATA,
     INTENTION_LIST_DATA,
     SUPPLY_DEMAND_DATA,
     INTENTION_DETAIL_DATA,
@@ -280,7 +281,7 @@ const state = {
         //待办事项列表
         backlogList: [],
         //报价项列表
-        offerMessageList:[],
+        offerMessageList: [],
         //流程记录
         flowRecord: [],
         //通知列表
@@ -542,7 +543,7 @@ const state = {
         }],
         myOrderLinkList: [],
         orgOrderLinkList: [],
-        linkOrder: [],
+        linkOrder: { arr: [] },
         orgOrderStatis: "",
         allOrderStatis: "",
 
@@ -940,6 +941,7 @@ const state = {
         "contractList": { arr: [], show: false }
     },
     purchaseDetail: { "intentionList": { arr: [], show: false } },
+    indentOfferList: [],
     purchaseOfferDetail: {},
     locationList: {
         provinceList: [
@@ -1174,6 +1176,7 @@ const state = {
     orgCount: {}, //部门统计state
     stockList: [{ checked: false }, { checked: false }],
     stockCartList: [],
+<<<<<<< HEAD
     yearNum:[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],
     newUserDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
     newDealDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
@@ -1189,6 +1192,20 @@ const state = {
     cusTypeDetail:[],
     orgCusTypeDetail:[],
     allCusTypeDetail:[],
+=======
+
+    yearNum: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
+    newUserDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    newDealDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    newActiveDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    yestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    orgYestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    allYestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    orgSalemanDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    allOrgDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    provinceDetail: []
+
+>>>>>>> fc88fd83019786f6a666fe59d86c4a3bab600e15
 }
 
 const mutations = {
@@ -1201,7 +1218,7 @@ const mutations = {
     [CLEAR_NOTICE_TABLE](state, data) {
         state.basicBaseList.noticeList = [];
     },
-    [OFFER_MESSAGE_TABLE](state,data){
+    [OFFER_MESSAGE_TABLE](state, data) {
         state.basicBaseList.offerMessageList = data;
     },
     [FLOW_RECORD_TABLE](state, data) {
@@ -1952,13 +1969,17 @@ const mutations = {
             state.basicBaseList[data.key] = data;
         }
     },
-    [UPDATE_OFFERDESCRIPTION](state,data){//更新采购单报价描述报价描述
-        state.purchaseDetail.intentionList.arr[data.index].offers.arr[data.sub].description=data.auditComment;
-        
+    [UPDATE_OFFERDESCRIPTION](state, data) { //更新采购单报价描述报价描述
+        state.purchaseDetail.intentionList.arr[data.index].offers.arr[data.sub].description = data.auditComment;
+
     },
     [PURCHASE_DETAIL](state, data) { //采购单详情
         state.purchaseDetail = data;
     },
+    [INDENT_OFFER_DATA](state, data) { //采购单详情
+        state.indentOfferList = data;
+    },
+
     [DELETE_PURCHASE](state, data) { //删除采购单
         state.basicBaseList[data.key].splice(data.index, 1);
     },
@@ -2473,10 +2494,10 @@ const mutations = {
     [STOCK_LIST](state, data) { //库存列表
         state.stockList = data;
     },
-    [DELETE_STOCK_DATA](state,data) {//删除库存列表
+    [DELETE_STOCK_DATA](state, data) { //删除库存列表
         state.stockList.splice(data.sub, 1)
     },
-    [ADD_STOCK_LIST](state,data) {//新增库存列表
+    [ADD_STOCK_LIST](state, data) { //新增库存列表
         console.log(data)
         console.log(state.stockList)
         state.stockList.unshift(data)
@@ -2486,38 +2507,39 @@ const mutations = {
         state.orgCount = data;
     },
     //我的统计新增用户详情
-    [NEW_USER_DETAIL](state,data) {
+    [NEW_USER_DETAIL](state, data) {
         state.newUserDetail = data
     },
     //我的统计成交用户
-    [NEW_DEAL_DETAIL](state,data) {
+    [NEW_DEAL_DETAIL](state, data) {
         state.newDealDetail = data
     },
-     //我的统计活跃用户
-    [NEW_ACTIVE_DETAIL](state,data) {
+    //我的统计活跃用户
+    [NEW_ACTIVE_DETAIL](state, data) {
         state.newActiveDetail = data
     },
     //昨日
-    [YESTODAY_DETAIL](state,data){
+    [YESTODAY_DETAIL](state, data) {
         state.yestodayDetail = data
     },
-    [ALL_YESTODAY_DETAIL](state,data){
+
+    [ALL_YESTODAY_DETAIL](state, data) {
         state.allYestodayDetail = data
     },
     //个人区域数据
-    [PROVINCE_DETAIL](state,data){
+    [PROVINCE_DETAIL](state, data) {
         state.provinceDetail = data
     },
     //部门昨日新增
-    [ORG_YESTODAY_DETAIL](state,data){
+    [ORG_YESTODAY_DETAIL](state, data) {
         state.orgYestodayDetail = data
     },
     //部门业务员数据
-    [ORG_SALEMAN_DETAIL](state,data){
+    [ORG_SALEMAN_DETAIL](state, data) {
         state.orgSalemanDetail = data
     },
     //部门业务员数据
-    [ALL_ORG_DETAIL](state,data){
+    [ALL_ORG_DETAIL](state, data) {
         state.allOrgDetail = data
     },
     //部门省数据
