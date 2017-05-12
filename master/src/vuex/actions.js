@@ -883,21 +883,11 @@ export const getOrgCountDetail = ({ dispatch }, param) => { //获取部门昨日
     });
 }
 
-export const getOrgSalemanData = ({ dispatch },param) => { //获取部门业务员详情
-    var body = {}
-    if(param){
-        if(param.startTime){        
-            body.startTime = param.startTime
-         }
-         if(param.endTime){
-            body.endTime =param.endTime
-         }
-         if(param.provinceId){
-            body.provinceId = param.provinceId.id
-         }
-         if(param.type){
-            body.type =param.type
-         }  
+export const getAllCountDetail = ({ dispatch },param) => { //获取部门业务员详情
+    var body = {
+        page: param.cur,
+        pageSize: '7',
+        ids: param.data
     }
     Vue.http({
         method: 'POST',

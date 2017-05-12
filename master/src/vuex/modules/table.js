@@ -1176,7 +1176,6 @@ const state = {
     orgCount: {}, //部门统计state
     stockList: [{ checked: false }, { checked: false }],
     stockCartList: [],
-<<<<<<< HEAD
     yearNum:[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],
     newUserDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
     newDealDetail:[{name:"测试"},{name:"测试"},{name:"测试"},{name:"测试"}],
@@ -1192,20 +1191,6 @@ const state = {
     cusTypeDetail:[],
     orgCusTypeDetail:[],
     allCusTypeDetail:[],
-=======
-
-    yearNum: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
-    newUserDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
-    newDealDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
-    newActiveDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
-    yestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
-    orgYestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
-    allYestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
-    orgSalemanDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
-    allOrgDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
-    provinceDetail: []
-
->>>>>>> fc88fd83019786f6a666fe59d86c4a3bab600e15
 }
 
 const mutations = {
