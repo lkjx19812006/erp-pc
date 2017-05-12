@@ -74,7 +74,7 @@
                 <h4 class="detail_title bg-info">昨日新增
                     <span class="detail_num">
                         <a href="javascript:void(0);" class="person_num">{{yestodayParam.total}}人</a>&nbsp
-                        <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('userTodayDetail')">more>></a>
+                        <!-- <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('userTodayDetail')">more>></a> -->
                     </span>
                 </h4>
                 <!-- 柱状图 -->
@@ -113,12 +113,12 @@
                     <dl class="clear left transfer" style="margin-top:20px">
                         <div class="left">
                             <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
-                            <mz-datepicker :time.sync="searchParam.startTime" format="yyyy-MM-dd" style='width:30px'>
+                            <mz-datepicker :time.sync="searchParam.startTime" format="yyyy-MM-dd HH:mm:ss" style='width:30px'>
                             </mz-datepicker>
                         </div>
                         <div class="left">
                             <dt class="left marg_top">~~</dt>
-                            <mz-datepicker :time.sync="searchParam.endTime" format="yyyy-MM-dd">
+                            <mz-datepicker :time.sync="searchParam.endTime" format="yyyy-MM-dd HH:mm:ss">
                             </mz-datepicker>
                         </div>
                         <dt class="left transfer marg_top" style="margin-left: 20px">区域:</dt>
@@ -402,7 +402,7 @@ export default {
     overflow: auto;
 }
 .mz-datepicker{    
-    width: 120px !important;
+    width: 180px !important;
 }
 .show_type{
     width: 100%;
@@ -512,7 +512,7 @@ export default {
 }
 .user_detail_right{
     float: right;
-    height:820px;
+    height:940px;
     width:660px;
     background: #fff;
     border-radius: 10px;

@@ -365,7 +365,7 @@ export const getActiveUser = ({ dispatch }, param) => { //获取活跃用户详�
         url = '/crm/api/v1/intention/getOfferListByIds'
         body = {
             page: param.cur,
-            pageSize: '14',
+            pageSize: '20',
             idsStr: param.data.offerTimesDetail
         }
     }
@@ -912,6 +912,21 @@ export const getAllCountDetail = ({ dispatch }, param) => { //获取部门业务
 
 export const getOrgSalemanData = ({ dispatch }, param) => { //获取部门业务员详情
     var body = {}
+    if(param){
+        if (param.startTime) {
+            body.startTime = param.startTime
+        }
+        if (param.endTime) {
+            body.endTime = param.endTime
+        }
+        if (param.provinceId) {
+            body.provinceId = param.provinceId.id
+        }
+        if (param.type) {
+            body.type = param.type
+        }
+    }
+    
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getOrgEmployeeCustomerStatistics',
@@ -933,6 +948,20 @@ export const getOrgSalemanData = ({ dispatch }, param) => { //获取部门业务
 export const getAllOrgData = ({ dispatch }, param) => { //获取全部部门详情
         var body = {
             queryType: 'all'
+        }
+        if(param){
+            if (param.startTime) {
+                body.startTime = param.startTime
+            }
+            if (param.endTime) {
+                body.endTime = param.endTime
+            }
+            if (param.provinceId) {
+                body.provinceId = param.provinceId.id
+            }
+            if (param.type) {
+                body.type = param.type
+            }
         }
         Vue.http({
             method: 'POST',

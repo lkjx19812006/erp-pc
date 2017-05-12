@@ -71,7 +71,12 @@
             </div>
             <!-- 今日新增 -->
             <div class="bar_today">
-                <h4 class="detail_title bg-info">昨日新增<span class="detail_num"><a href="javascript:void(0);" class="person_num">{{orgData.total}}人</a>&nbsp<a href="javascript:void(0);" class="btn btn-link" @click="showDetail('userTodayDetail')">more>></a></span></h4>
+                <h4 class="detail_title bg-info">昨日新增
+	                <span class="detail_num">
+		                <a href="javascript:void(0);" class="person_num">{{orgData.total}}人</a>&nbsp
+		                <!-- <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('userTodayDetail')">more>></a> -->
+	                </span>
+                </h4>
                 <!-- 柱状图 -->
                 <div class="bar_chart_left">
                     <div class="barchart" v-echarts="getAllColchart.options" :loading="getAllColchart.load"></div>
@@ -154,12 +159,19 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in getAllOrgDetail">
-                                <td><a href="javascript:void(0);">{{item.org}}</a></td>
+                                <td>{{item.org}}</td>
+                                <td @click="showDepart()">{{item.name}}</td>
+                                <td >{{item.addNumber}}</td>
+                                <td>{{item.transactionNumber}}</td>
+                                <td>{{item.activeNumber}}</td>
+                                <td>{{item.totalNumber}}</td>
+
+                                <!-- <td><a href="javascript:void(0);">{{item.org}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDepart()">{{item.name}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDetail('newUserDetail')">{{item.addNumber}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDetail('newActiveDetail')">{{item.transactionNumber}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDetail('newDealDetail')">{{item.activeNumber}}</a></td>
-                                <td><a href="javascript:void(0);" @click="showDetail('newDealDetail')">{{item.totalNumber}}</a></td>
+                                <td><a href="javascript:void(0);" @click="showDetail('newDealDetail')">{{item.totalNumber}}</a></td> -->
                             </tr>
                         </tbody>
                     </table>
@@ -284,6 +296,9 @@ export default {
                 this.freshAllCount(this.loadParam)
             }           
         },
+        searchCus:function(){
+        	this.getAllOrgData(this.searchParam)
+        },
         selectTime:function(data){ //切换年月显示
             
             if(data=="month"){
@@ -332,7 +347,6 @@ export default {
     created() {
     	this.freshAllCount(this.loadParam)
         this.freshAllColCharts(this.loadParam)
-        console.log(this.getAllOrgDetail)
         this.getProvinceList(this.loadParam)
         this.getAllOrgData()
     },
@@ -363,6 +377,9 @@ export default {
     position: absolute;
     bottom: 10%;
     left:10%;
+}
+.mz-datepicker{    
+    width: 180px !important;
 }
 .show_type{
     width: 100%;

@@ -4,7 +4,7 @@
             <span class="detail_num">
                 <!-- <a href="javascript:void(0);" class="person_num" @click="change('num')">人数：{{param.total}}</a> -->
                 <a href="javascript:void(0);" class="person_num" >人次：{{param.total}}</a>&nbsp
-                <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('newActiveDetail')">more>></a>
+               <!--  <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('newActiveDetail')">more>></a> -->
             </span>
         </h4>
         <table class="table table-hover table_color table-striped">
@@ -86,6 +86,9 @@ export default{
 			this.showType = data
 			this.$dispatch('change',data)
 		},*/
+		showDetail:function(data){
+			this.$dispatch('showD',data)
+		},
 		changeActiveType:function(){
 			this.getActiveUser(this.param)
 		}
