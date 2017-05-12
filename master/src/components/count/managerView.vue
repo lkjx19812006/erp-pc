@@ -95,21 +95,51 @@
                         </tbody>
                     </table>
                     <!--底部分页-->
-                    <pagination :combination="orgData" slot="page"></pagination>
+                    <div class="pages">
+                    	<pagination :combination="orgData" slot="page"></pagination>
+                    </div>                   
                 </div>
             </div>
             <!-- 用户详情 -->
             <div class="user_detail">
-
+				<!-- 顶部筛选 -->
+                <div class="search">
+                    <dl class="clear left transfer" style="margin-top:20px">
+                        <div class="left">
+                            <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
+                            <mz-datepicker :time.sync="searchParam.startTime" format="yyyy-MM-dd HH:mm:ss" style='width:30px'>
+                            </mz-datepicker>
+                        </div>
+                        <div class="left">
+                            <dt class="left marg_top">~~</dt>
+                            <mz-datepicker :time.sync="searchParam.endTime" format="yyyy-MM-dd HH:mm:ss">
+                            </mz-datepicker>
+                        </div>
+                        <dt class="left transfer marg_top" style="margin-left: 20px">区域:</dt>
+                        <dd class="left margin_right">
+                            <div  type="text" class="edit-input">
+                                <v-select :debounce="250" :value.sync="searchParam.provinceId"  :options="initProvince" placeholder="省/Province" label="cname">
+                                </v-select>
+                            </div>
+                        </dd>
+                        <dt class="left transfer marg_top" style="margin-left: 10px">客户类型：</dt>
+                        <dd class="left margin_right">
+                            <select class="form-control edit-input" placeholder="按回车键搜索" v-model="searchParam.type"  @change="selectType()">
+                                    <option value='0'>产地</option>
+                                    <option value='1'>药厂</option>
+                                    <option value='2'>药商</option>
+                                    <option value='3'>服务商</option>
+                            </select>
+                        </dd>
+                        <button class="btn btn-default" style="margin-left: 10px" @click="searchCus()">搜索</button>
+                        <button class="btn btn-default btn-warning" style="margin-left: 50px" @click="showDetail('regionalUser')">查看区域用户</button>
+                        <button class="btn btn-default btn-warning" @click="showDetail('customerType')">查看客户类型</button>
+                    </dl>   
+                    
+                </div>
                 <!-- 详情 -->
                 <div class="user_detail_right">
-                    <h4 class="detail_title bg-info">业务员
-	                    <!-- <span class="detail_num">
-	                    		                    <button class="btn btn-default btn-warning" style="margin-left: 50px" @click="showDetail('regionalUser')">   		查看区域用户
-	                    		                    </button>
-	                                            	<button class="btn btn-default btn-warning" @click="showDetail('customerType')">查看客户类型</button>
-	                    </span> -->
-                    </h4>
+                    <h4 class="detail_title bg-info">业务员</h4>
                     <table class="table table-hover table_color table-striped">
                         <thead>
                             <tr>
@@ -147,10 +177,12 @@ import {
     getOrgchart,
     getOrgColchart,
     getOrgYesTodayDetail,
-    getOrgSalemanDetail
+    getOrgSalemanDetail,
+    initProvince
 } from '../../vuex/getters'
 import {
     freshLinesCharts,
+    getProvinceList,
     freshOrgCount,
     freshOrgColCharts,
     getOrgCountDetail,
@@ -186,13 +218,21 @@ export default {
             	all:4,
             	total:0,
             	data:[],
-            }
+            },
+            searchParam:{
+                startTime:'',
+                endTime:'',
+                provinceId:'',
+                type:'',
+                callback:this.callback
+            },
         }
     },
     vuex: {
         getters: {
             getColchart,
             getLineschart,
+            initProvince,
             getYear,
             getOrgchart,
             getOrgColchart,
@@ -200,6 +240,7 @@ export default {
             getOrgSalemanDetail
         },
         actions: {
+        	getProvinceList,
             freshLinesCharts,
             freshOrgCount,
             freshOrgColCharts,
@@ -228,6 +269,9 @@ export default {
         },
         showDetail:function(data){
             this.$dispatch("showDetail",data)
+        },
+        searchCus:function(){
+        	this.getOrgSalemanData(this.searchParam)
         },
         selectType:function(data){
             if(data=='month'){
@@ -286,6 +330,7 @@ export default {
         }
     },
     created() {
+    	this.getProvinceList(this.loadParam)
         this.freshOrgCount(this.loadParam)
         this.freshOrgColCharts(this.loadParam)
         this.getOrgSalemanData()
@@ -313,7 +358,14 @@ export default {
 .user_all{
     overflow: auto;
 }
-
+.mz-datepicker{    
+    width: 190px !important;
+}
+.pages{
+    position: absolute;
+    bottom: 10%;
+    left:10%;
+}
 .show_type{
     width: 100%;
     height:40px;
@@ -343,6 +395,7 @@ export default {
 }
 .bar_today{
     width:1200px;
+    height:440px;
     margin: 30px auto;
     overflow: hidden;
     background-color:#fff;
@@ -357,7 +410,9 @@ export default {
 }
 .today_list_right{
     width: 580px;
-    float: right;   
+    height:100%;
+    float: right;
+    position: relative;   
 }
 .barchart {
     width: 100%;
@@ -376,6 +431,14 @@ export default {
     float: left;
     border-radius: 10px;
     overflow: hidden;
+}
+.search{
+    width: 100%;
+    height:75px;
+    background: #fff;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-radius: 10px;
 }
 .detail_title{
     padding-left:20px;
