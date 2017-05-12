@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">今日新增用户详情</div>
+            <div class="my_enterprise col-xs-1">昨日新增用户详情</div>
             <div class="btn btn-primary right" @click="toBackPage()">{{$t('static.back')}}</div>
         </div>
         <!-- 日期统计 -->

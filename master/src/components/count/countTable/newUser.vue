@@ -3,7 +3,7 @@
 	        <h4 class="detail_title bg-info">{{param.name}}
 	            <span class="detail_num">
 	                <a href="javascript:void(0);" class="person_num">{{param.total}}人</a>&nbsp
-	                <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('newUserDetail')">more>></a>
+	                <!-- <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('newUserDetail')">more>></a> -->
 	            </span>
 	        </h4>
 	        <table class="table table-hover table_color table-bordered table-striped ">
@@ -74,7 +74,7 @@ export default{
 <style scoped>
 .detail_left_top{
     width: 100%;
-    height:400px;
+    height:460px;
     background: #fff;
     margin-bottom: 20px;
     overflow: hidden;

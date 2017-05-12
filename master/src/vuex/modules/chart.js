@@ -1181,7 +1181,7 @@ const state = {
         xAxis : [
             {
                 type : 'category',
-                data :  ['新增用户','活跃用户','成交用户','用户总数'],
+                data :  ['新增用户','活跃用户','成交用户'],
                 axisTick: {
                     alignWithLabel: true
                 }
@@ -1196,7 +1196,7 @@ const state = {
             {
                 type:'bar',
                 barWidth: '60px',
-                data:[10, 52, 200, 110],
+                data:[10, 52, 200],
                 itemStyle: {
                     normal: {
                         color: function(params) {
@@ -1231,6 +1231,7 @@ const state = {
                 type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
             }
         },
+
         grid: {
             left: '7%',
             right: '4%',
@@ -1240,7 +1241,7 @@ const state = {
         xAxis : [
             {
                 type : 'category',
-                data :  ['新增用户','活跃用户','成交用户','用户总数'],
+                data :  ['新增用户','活跃用户','成交用户'],
                 axisTick: {
                     alignWithLabel: true
                 }
@@ -1255,7 +1256,7 @@ const state = {
             {
                 type:'bar',
                 barWidth: '60px',
-                data:[10, 52, 150, 110],
+                data:[10, 52, 150],
                 itemStyle: {
                     normal: {
                         color: function(params) {
@@ -1299,7 +1300,7 @@ const state = {
         xAxis : [
             {
                 type : 'category',
-                data :  ['新增用户','活跃用户','成交用户','用户总数'],
+                data :  ['新增用户','活跃用户','成交用户'],
                 axisTick: {
                     alignWithLabel: true
                 }
@@ -1314,7 +1315,7 @@ const state = {
             {
                 type:'bar',
                 barWidth: '60px',
-                data:[10, 52, 150, 110],
+                data:[10, 52, 150],
                 itemStyle: {
                     normal: {
                         color: function(params) {
@@ -1618,7 +1619,7 @@ const mutations = {
         state.ColChartOption.series[0].data[0] = data[0].addNumber
         state.ColChartOption.series[0].data[1] = data[0].activeNumber
         state.ColChartOption.series[0].data[2] = data[0].transactionNumber
-        state.ColChartOption.series[0].data[3] = data[0].customerTotal
+        //state.ColChartOption.series[0].data[3] = data[0].customerTotal
         state.ColChartLoading=false;
     },
     [CHANGE_ORGCOLCHARTS](state,data) {
@@ -1627,7 +1628,7 @@ const mutations = {
         state.orgColChartOption.series[0].data[0] = data.addNumber
         state.orgColChartOption.series[0].data[1] = data.activeNumber
         state.orgColChartOption.series[0].data[2] = data.transactionNumber
-        state.orgColChartOption.series[0].data[3] = data.customerTotal
+       // state.orgColChartOption.series[0].data[3] = data.customerTotal
         state.orgColChartLoading=false;
     },
     [CHANGE_ALLCOLCHARTS](state,data) {
@@ -1635,7 +1636,7 @@ const mutations = {
         state.allColChartOption.series[0].data[0] = data.addNumber
         state.allColChartOption.series[0].data[1] = data.activeNumber
         state.allColChartOption.series[0].data[2] = data.transactionNumber
-        state.allColChartOption.series[0].data[3] = data.customerTotal
+        //state.allColChartOption.series[0].data[3] = data.customerTotal
         state.allColChartLoading=false;
     }
 }

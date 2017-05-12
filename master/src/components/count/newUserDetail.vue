@@ -19,19 +19,23 @@
                 <button type="button" class="btn btn-warning">{{$t('static.details')}}</button>
             </div>
             <table class="table table-hover table_color table-bordered table-striped " v-cloak id="tab" style="margin-top:32px;">
-                <tr style="background:none;color:#000">
-                    <th>用户</th>
-                    <th>联系方式</th>
-                    <th>区域</th>
-                    <th>时间</th>
- 
-                </tr>
-                <tr v-for="item in getNewUserDetail">
-                    <td>{{item.name}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+               <thead>
+                    <tr style="background:none;color:#000">
+                        <th>用户</th>
+                        <th>联系方式</th>
+                        <th>区域</th>
+                        <th>时间</th>
+                    </tr>
+               </thead>
+                <tbody>
+                    <tr v-for="item in getNewUserDetail">
+                        <td>{{item.name}}</td>
+                        <td>{{item.mainPhone}}</td>
+                        <td>{{item.provinceName}}</td>
+                        <td>{{item.ctime}}</td>
+                    </tr>
+                </tbody>
+                
             </table>
             <div class="base_pagination">
                 <pagination :combination="loadParam"></pagination>

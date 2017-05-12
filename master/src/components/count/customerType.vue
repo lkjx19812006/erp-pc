@@ -87,9 +87,10 @@
                         <thead>
                             <tr>
                                 <th style="min-width:240px;text-align: center;">客户类型</th>
-                                <th style="min-width:280px;text-align: center;">新增用户</th>
-                                <th style="min-width:280px;text-align: center;">成交用户</th>
-                                <th style="min-width:320px;text-align: center;">活跃用户</th>
+                                <th style="min-width:220px;text-align: center;">新增用户</th>
+                                <th style="min-width:220px;text-align: center;">成交用户</th>
+                                <th style="min-width:220px;text-align: center;">活跃用户</th>
+                                <th style="min-width:220px;text-align: center;">用户总数</th>
                             </tr>
                         </thead>
                         <tbody v-if="param.name=='业务员'">
@@ -98,6 +99,7 @@
                                 <td>{{item.addNumber}}</td>
                                 <td>{{item.activeNumber}}</td>
                                 <td>{{item.transactionNumber}}</td>
+                                <td>{{item.totalNumber}}</td>
                             </tr>
                         </tbody>
                         <tbody v-if="param.name=='部门'">
@@ -106,6 +108,7 @@
                                 <td>{{item.addNumber}}</td>
                                 <td>{{item.activeNumber}}</td>
                                 <td>{{item.transactionNumber}}</td>
+                                <td>{{item.totalNumber}}</td>
                             </tr>
                         </tbody>
                         <tbody v-if="param.name=='全部'">
@@ -114,6 +117,7 @@
                                 <td>{{item.addNumber}}</td>
                                 <td>{{item.activeNumber}}</td>
                                 <td>{{item.transactionNumber}}</td>
+                                <td>{{item.totalNumber}}</td>
                             </tr>
                         </tbody>
                     </table>

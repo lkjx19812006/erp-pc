@@ -4,7 +4,7 @@
 	         <span class="detail_num">
 	             <a href="javascript:void(0);" class="person_num" @click="change('num')">人数：{{param.total}}</a>
 	             <a href="javascript:void(0);" class="person_num" @click="change('time')">人次：{{param.total}}</a>&nbsp
-	             <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('newDealDetail')">more>></a>
+	             <!-- <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('newDealDetail')">more>></a> -->
 	         </span>
 	     </h4>
 	        <table class="table table-hover table_color table-striped">
@@ -93,7 +93,7 @@ export default{
 <style scoped>
 .detail_left_top{
     width: 100%;
-    height:400px;
+    height:460px;
     background: #fff;
     margin-bottom: 20px;
     overflow: hidden;

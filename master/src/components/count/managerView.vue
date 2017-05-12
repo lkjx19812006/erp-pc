@@ -143,20 +143,28 @@
                     <table class="table table-hover table_color table-striped">
                         <thead>
                             <tr>
-                                <th style="min-width:240px;text-align: center;">业务员ID</th>
-                                <th style="min-width:240px;text-align: center;">业务员名称</th>
-                                <th style="min-width:240px;text-align：center;">新增用户</th>
-                                <th style="min-width:240px;text-align：center;">活跃用户</th>
-                                <th style="min-width:240px;text-align：center;">成交用户</th>
+                                <th style="min-width:150px;text-align: center;">业务员ID</th>
+                                <th style="min-width:210px;text-align: center;">业务员名称</th>
+                                <th style="min-width:210px;text-align：center;">新增用户</th>
+                                <th style="min-width:210px;text-align：center;">活跃用户</th>
+                                <th style="min-width:210px;text-align：center;">成交用户</th>
+                                <th style="min-width:210px;text-align：center;">用户总数</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="item in getOrgSalemanDetail">
-                                <td><a href="javascript:void(0);">{{item.employeeId}}</a></td>
+                            	<td>{{item.employeeId}}</td>
+                                <td @click="showDepart()">{{item.employeeName}}</td>
+                                <td>{{item.addNumber}}</td>
+                                <td>{{item.transactionNumber}}</td>
+                                <td>{{item.activeNumber}}</td>
+                                <td>{{item.totalNumber}}</td>
+                                <!-- <td><a href="javascript:void(0);">{{item.employeeId}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDepart()">{{item.employeeName}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDetail('newUserDetail')">{{item.addNumber}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDetail('newActiveDetail')">{{item.transactionNumber}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDetail('newDealDetail')">{{item.activeNumber}}</a></td>
+                                <td><a href="javascript:void(0);" @click="showDetail('newDealDetail')">{{item.totalNumber}}</a></td> -->
                             </tr>
                         </tbody>
                     </table>
