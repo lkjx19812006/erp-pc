@@ -1160,3 +1160,31 @@ Vue.filter('textDisplay', function(val, maxLength) { //文本内容显示，超�
 
 
 });
+
+Vue.filter('offerAccept', function(val) { //文本内容显示，超过maxLength长度部分以...表示
+    var val = val;
+    if (val === 0) {
+        return "初始";
+    } else if (val == 1) {
+        return "接受";
+    } else if (val == 2) {
+        return "拒绝";
+    } else {
+        return "跟进中";
+    }
+
+});
+
+Vue.filter('offerType', function(val) { //文本内容显示，超过maxLength长度部分以...表示
+    var val = val;
+    if (val === 0) {
+        return "业务员";
+    } else if (val == 1) {
+        return "客户";
+    } else if (val == 2) {
+        return "库存信息";
+    } else {
+        return "供应意向";
+    }
+
+});

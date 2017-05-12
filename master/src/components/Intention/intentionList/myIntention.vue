@@ -704,7 +704,6 @@ export default {
         newOrder: function(item, sub) {
             this.createOrderParam.show = true;
             this.createOrderParam.sub = sub;
-            console.log(item)
             this.createOrderParam.customer = item.customerId;
             this.createOrderParam.tradeTime = item.tradeTime;
             this.createOrderParam.customerName = item.customerName;
@@ -720,7 +719,6 @@ export default {
             this.createOrderParam.goods[0].location = item.location;
             this.createOrderParam.total = 0;
             this.createOrderParam.callback = this.createback;
-            console.log(this.createOrderParam)
         },
         clientTransfer: function(param) {
             this.intentionParam = param;
