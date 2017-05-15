@@ -24,10 +24,10 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/crm/api/v1/**': {
-                target: 'http://192.168.1.103:8080',
-                // target: 'http://127.0.0.1:8080',
+                //target: 'http://192.168.1.103:8080',
+                //target: 'http://127.0.0.1:8080',
                 //target: 'http://192.168.25.18:8080', //林奇
-                // target: 'http://192.168.25.188:8080', //韦军军
+                target: 'http://192.168.25.188:8080', //韦军军
                 changeOrigin: true
             }
         },

@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="editpage-input" style="clear:both;padding-top:15px">
                                     <label class="editlabel">过期时间</label>
-                                    <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" style="height:36px">
+                                    <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" @change="changeDuedate()" style="height:36px">
                                     </mz-datepicker>
                                     <button type="button" class="btn btn-default" style="margin-top:-6px" height="24" width="24" @click="reset('duedate')">清空</button>
                                 </div>
@@ -143,25 +143,25 @@
                             <div class="editpageleft">
                                 <div class="editpage-input">
                                     <label class="editlabel">省</label>
-                                    <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                                    <input type="text" v-if="!country.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
                                     <input type="text" v-show="false" v-model="province.cname">
-                                    <div v-if="country.cname" type="text" class="edit-input">
+                                    <div v-if="country.id" type="text" class="edit-input">
                                         <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省" label="cname">
                                         </v-select>
                                     </div>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">市</label>
-                                    <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                                    <div v-if="province.cname" type="text" class="edit-input">
+                                    <input type="text" v-if="!province.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                                    <div v-if="province.id" type="text" class="edit-input">
                                         <v-select :debounce="250" :value.sync="city" :on-change="selectDistrict" :options="initCitylist" placeholder="市" label="cname">
                                         </v-select>
                                     </div>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">区</label>
-                                    <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
-                                    <div v-if="city.cname" type="text" class="edit-input">
+                                    <input type="text" v-if="!city.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
+                                    <div v-if="city.id" type="text" class="edit-input">
                                         <v-select :debounce="250" :value.sync="district" :options="initDistrictlist" placeholder="区" label="cname">
                                         </v-select>
                                     </div>
@@ -423,15 +423,20 @@ export default {
             },
             tag: ['真空包装', '瓦楞纸箱', '编织袋', '积压包', '其它'],
             country: {
+                id: '',
                 cname: '',
+
             },
             province: {
-                cname: ''
+                id: '',
+                cname: '',
             },
             city: {
+                id: '',
                 cname: ''
             },
             district: {
+                id: '',
                 cname: ''
             },
             countryParam: {
@@ -524,28 +529,30 @@ export default {
                 this.empNameParam.employeeId = this.param.employeeId;
             }
         },
+        changeDuedate: function() {
+            console.log("changeDuedate");
+        },
         callback: function() {
             this.param.show = false;
             this.tipParam.show = false;
         },
         createOrUpdateIntention: function() {
             this.param.pics = this.setPics(this.param.images);
-            if (this.param.flag == 0) {
-                this.param.country = this.country.cname;
-                this.param.province = this.province.cname;
-                this.param.city = this.city.cname;
-                if (this.district.cname) {
-                    this.param.district = this.district.cname;
+            if (this.param.flag == 0) { //如果是新建意向
+                this.param.country = this.country.id;
+                this.param.province = this.province.id;
+                this.param.city = this.city.id;
+                if (this.district.id) {
+                    this.param.district = this.district.id;
                 } else {
                     this.param.district = '';
                 }
                 //this.tipParam.name = '新建意向成功';
                 this.param.show = false;
                 this.param.callback = this.param.callback;
-
                 this.createIntentionInfo(this.param);
             }
-            if (this.param.flag == 1) {
+            if (this.param.flag == 1) { //如果是修改意向
                 this.param.country = this.country.cname;
                 this.param.province = this.province.cname;
                 this.param.city = this.city.cname;
@@ -567,6 +574,7 @@ export default {
 
         },
         selectProvince: function() {
+            console.log("selectProvince");
             this.province = '';
             this.city = '';
             this.district = '';
@@ -576,6 +584,7 @@ export default {
 
         },
         selectCity: function() {
+            console.log("selectCity");
             this.city = '';
             this.district = '';
             if (this.province != '' && this.province != null) {
@@ -584,6 +593,7 @@ export default {
 
         },
         selectDistrict: function() {
+            console.log("selectDistrict");
             this.district = '';
             if (this.city != '' && this.city != null) {
                 this.getDistrictList(this.city);
@@ -678,6 +688,10 @@ export default {
             this.param.customerName = customer.customerName;
             this.param.customerId = customer.customerId;
             this.param.customerPhone = customer.customerPhone;
+        },
+        pickTime: function(time) {
+            this.param.duedate = time;
+            this.param.arriveTime = time;
         }
 
     },
@@ -706,6 +720,8 @@ export default {
                 day = '0' + day;
             }
             this.param.duedate = year + "-" + month + "-" + day + " 00:00:00";
+            //同时把到港时间设置一下
+            this.param.arriveTime = this.param.duedate;
         }
 
         if (this.param.breedId) {
@@ -714,14 +730,20 @@ export default {
             this.getBreedDetail(this.breedParam);
         }
         if (this.param.country) {
+            //以前是中文名，现在统一改成ID了
             this.countryParam.country = this.param.country;
             this.countryParam.province = this.param.province;
             this.countryParam.city = this.param.city;
             this.countryParam.district = this.param.district;
-            this.country.cname = this.param.country;
-            this.province.cname = this.param.province;
-            this.city.cname = this.param.city;
-            this.district.cname = this.param.district;
+            //需要重新修正
+            this.country.id = this.param.country;
+            //this.country.id = this.param.country;
+            this.province.id = this.param.province;
+            //this.province.id = this.param.province;
+            this.city.id = this.param.city;
+            //this.city.id = this.param.city;
+            this.district.id = this.param.district;
+            //this.district.id = this.param.district;
         }
         this.getCountryList(this.countryParam);
         this.getUnitList();

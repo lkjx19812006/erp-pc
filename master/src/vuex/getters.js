@@ -283,8 +283,10 @@ export const initIndentOfferList = (state) => {
     return JSON.parse(JSON.stringify(state.table.indentOfferList));
 }
 export const initMyIndentOfferList = (state) => {
-    console.log(state.table.myIndentOfferList);
     return JSON.parse(JSON.stringify(state.table.myIndentOfferList));
+}
+export const initAllIndentOfferList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.allIndentOfferList));
 }
 
 /*--采购报价信息--*/

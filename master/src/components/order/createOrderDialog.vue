@@ -149,7 +149,7 @@
                             </div>
                             <div class="editpage-input col-md-8">
                                 <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">{{$t('static.enter_address')}}</span></label>
-                                <input type="text" class="form-control edit-input" style="width:95%" v-model="param.consigneeAddr" v-validate:addr="['required']" value="{{param.consigneeAdd}}" />
+                                <input type="text" class="form-control edit-input" style="width:95%" v-model="param.consigneeAddr" v-validate:addr="['required']" value="{{param.consigneeAddr}}" />
                             </div>
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.postcodes')}} <span class="system_danger" v-if="$validation.code.postcode">{{$t('static.enter_code')}}</span></label>

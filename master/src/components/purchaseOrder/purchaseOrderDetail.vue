@@ -220,7 +220,7 @@
                                                 正在跟进
                                             </button>
                                         </div>
-                                        <button type="button" class="btn btn-primary" style="width:75px" @click="resetCondition(3)">
+                                        <button type="button" class="btn btn-primary" style="width:75px" @click="resetCondition()">
                                             清空条件
                                         </button>
                                     </div>
@@ -353,7 +353,6 @@ export default {
                 show: false,
                 org: false,
                 orgId: "",
-                //单个业务员搜索
                 employeeId: '',
                 employeeName: '',
 
@@ -572,7 +571,6 @@ export default {
             this.indentOfferParam.breedName = "";
             this.indentOfferParam.accept = "";
             this.selectSearch(this.indentOfferParam);
-
         },
         enfoldment: function(param) {
 

@@ -912,7 +912,7 @@ export const getAllCountDetail = ({ dispatch }, param) => { //获取部门业务
 
 export const getOrgSalemanData = ({ dispatch }, param) => { //获取部门业务员详情
     var body = {}
-    if(param){
+    if (param) {
         if (param.startTime) {
             body.startTime = param.startTime
         }
@@ -926,7 +926,7 @@ export const getOrgSalemanData = ({ dispatch }, param) => { //获取部门业务
             body.type = param.type
         }
     }
-    
+
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getOrgEmployeeCustomerStatistics',
@@ -949,7 +949,7 @@ export const getAllOrgData = ({ dispatch }, param) => { //获取全部部门详�
         var body = {
             queryType: 'all'
         }
-        if(param){
+        if (param) {
             if (param.startTime) {
                 body.startTime = param.startTime
             }
@@ -3333,14 +3333,15 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
         param.total = res.json().result.total;
         if (param.country) {
             for (var i in res.json().result) {
-                if (res.json().result[i].cname == param.country) {
+                //有的地方国家传的ID，有的地方国家传的中文名
+                if (res.json().result[i].cname == param.country || res.json().result[i].id == param.country) {
                     const object = {
                         id: res.json().result[i].id,
                         province: param.province,
                         city: param.city,
                         loading: false
                     }
-                    console.log(object);
+
                     return getProvinceList({ dispatch }, object);
                 }
             }
@@ -3377,7 +3378,7 @@ export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
         param.total = res.json().result.total;
         if (param.province) {
             for (var i in res.json().result) {
-                if (res.json().result[i].cname == param.province) {
+                if (res.json().result[i].cname == param.province || res.json().result[i].id == param.province) {
                     const object = {
                         id: res.json().result[i].id,
                         city: param.city,
@@ -3416,7 +3417,7 @@ export const getCityList = ({ dispatch }, param) => { //获取市的列表
         param.total = res.json().result.total;
         if (param.city) {
             for (var i in res.json().result) {
-                if (res.json().result[i].cname == param.city) {
+                if (res.json().result[i].cname == param.city || res.json().result[i].id == param.city) {
                     const object = {
                         id: res.json().result[i].id,
                         loading: false
@@ -6519,7 +6520,7 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
         var result = res.json().result;
         let list = result.list;
         param.total = result.total;
-        param.all = param.pages;
+        param.all = result.pages;
         list.key = param.key;
         dispatch(types.INDENT_OFFER_DATA, list);
 
@@ -8087,6 +8088,9 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         "sampleAmount": param.sampleAmount,
         "breedId": param.breedId,
         "country": param.country,
+        "transportType": param.transportType, //运输类型，1/2 空运/海运
+        "transportNo": param.transportNo, //航班号
+        "arriveTime": param.arriveTime, //到达时间
         "quality": param.quality,
         "price": param.price,
         "province": param.province,

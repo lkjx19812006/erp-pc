@@ -129,7 +129,7 @@
                          sampleNumber:0,
                          sampleUnit:'',
                          sampleAmount:0,
-                         country:'中国',
+                         country:7,
                          province:'',
                          city:'',
                          district:'',
@@ -294,6 +294,9 @@
                                                testReportPics:item.testReportPics,
                                                testReportImages:'',
                                                duedate:item.duedate,
+                                               arriveTime:item.arriveTime,
+                                               transportNo:item.transportNo,
+                                               transportType:item.transportType,
                                                description: item.description
                                                })"><img src="/static/images/edit.png" height="18" width="28" alt="编辑" />
                             </a>
@@ -769,6 +772,7 @@ export default {
         },
         modifyIntention: function(param) {
             this.createParam = param;
+            console.log(param);
             this.createParam.callback = this.modifyback;
         },
         modifyback: function(title) {
