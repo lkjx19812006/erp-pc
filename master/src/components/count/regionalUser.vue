@@ -20,6 +20,9 @@
                 <div class="line_chart" v-if="param.name=='全部'">
                     <div class="linechart" v-echarts="getAllRegionalchart.options" :loading="getAllRegionalchart.load"></div>
                 </div>
+                <div class="line_chart" v-if="param.name=='我的品种统计'">
+                    <div class="linechart" v-echarts="initBreedRegionalchart.options" :loading="initBreedRegionalchart.load"></div>
+                </div>
             </div>            
             <!-- 用户详情 -->
             <div class="user_detail">
@@ -77,12 +80,14 @@ import {
     getOrgProvinceDetail,
     getAllProvinceDetail,
     getOrgRegionalchart,
-    getAllRegionalchart
+    getAllRegionalchart,
+    initBreedRegionalchart
 } from '../../vuex/getters'
 import {
 	freshRegionalCharts,
 	freshOrgRegionalCharts,
-	freshAllRegionalCharts
+	freshAllRegionalCharts,
+	freshBreedRegionalCharts
 } from '../../vuex/actions'
 
 export default {
@@ -118,12 +123,14 @@ export default {
             getAllRegionalchart,
             getProvinceDetail,
             getOrgProvinceDetail,
-            getAllProvinceDetail
+            getAllProvinceDetail,
+            initBreedRegionalchart
         },
         actions: {
         	freshRegionalCharts,
         	freshOrgRegionalCharts,
-        	freshAllRegionalCharts
+        	freshAllRegionalCharts,
+        	freshBreedRegionalCharts
         }
     },
     events: {
@@ -145,6 +152,9 @@ export default {
     	}
     	if(this.param.name == '全部'){
     		this.freshAllRegionalCharts()
+    	}
+    	if(this.param.name == '我的品种统计'){
+    		this.freshBreedRegionalCharts()
     	}
     	//this.$dispatch('freshCharts',this.provinceDetail)
     	

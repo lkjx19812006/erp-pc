@@ -302,7 +302,9 @@ export default {
   max-height: 647px;
   overflow-y: auto;
 }
-
+.actColor {
+  background-color: #ccc
+}
 .employee_message_view {
   position: relative;
   border: 1px solid #ddd;

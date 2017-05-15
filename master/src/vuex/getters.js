@@ -555,6 +555,30 @@ export const getColchart = (state) => { //获取柱状图
     return option
 }
 
+export const initBreedLinesChart = (state) => { //获取我的品种统计折线图
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.breedLinesChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.breedLinesChartLoading))
+    }
+    return option
+}
+
+export const initBreedRegionalchart = (state) => { //获取我的品种统计区域图
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.breedRegionalChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.breedRegionalChartLoading))
+    }
+    return option
+}
+
+export const initBreedBarChart = (state) => { //获取我的品种统计柱状图
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.breedBarChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.breedBarChartLoading))
+    }
+    return option
+}
+
 export const getRegionalchart = (state) => { //区域客户中国地图数据
     const option = {
         options: JSON.parse(JSON.stringify(state.echarts.regionalChartOption)),

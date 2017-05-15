@@ -124,7 +124,7 @@
                         </dd>
                         <dt class="left transfer marg_top" style="margin-left: 10px">客户类型：</dt>
                         <dd class="left margin_right">
-                            <select class="form-control edit-input" placeholder="按回车键搜索" v-model="searchParam.type"  @change="selectType()">
+                            <select class="form-control edit-input" placeholder="按回车键搜索" v-model="searchParam.type">
                                     <option value='0'>产地</option>
                                     <option value='1'>药厂</option>
                                     <option value='2'>药商</option>
@@ -312,8 +312,6 @@ export default {
                 console.log(this.loadParam)
 
             }else if(data=='year'){
-                // this.loadParam.yearMonth='';
-                // this.loadParam.month='';
                 var date = new Date()
             	var year = date.getFullYear()
                 this.loadParam.year=[year+'-01-01 00:00:00',(year+1)+'-01-01 00:00:00'];
