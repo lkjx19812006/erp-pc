@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="editpage-input" style="clear:both;padding-top:15px">
                                     <label class="editlabel">过期时间</label>
-                                    <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" @change="changeDuedate()" style="height:36px">
+                                    <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" style="height:36px">
                                     </mz-datepicker>
                                     <button type="button" class="btn btn-default" style="margin-top:-6px" height="24" width="24" @click="reset('duedate')">清空</button>
                                 </div>
@@ -529,9 +529,7 @@ export default {
                 this.empNameParam.employeeId = this.param.employeeId;
             }
         },
-        changeDuedate: function() {
-            console.log("changeDuedate");
-        },
+
         callback: function() {
             this.param.show = false;
             this.tipParam.show = false;
@@ -553,10 +551,10 @@ export default {
                 this.createIntentionInfo(this.param);
             }
             if (this.param.flag == 1) { //如果是修改意向
-                this.param.country = this.country.cname;
-                this.param.province = this.province.cname;
-                this.param.city = this.city.cname;
-                this.param.district = this.district.cname;
+                this.param.country = this.country.id;
+                this.param.province = this.province.id;
+                this.param.city = this.city.id;
+                this.param.district = this.district.id;
                 //this.tipParam.name = '修改意向成功';
                 this.param.show = false;
                 this.param.callback = this.param.callback;
@@ -574,7 +572,7 @@ export default {
 
         },
         selectProvince: function() {
-            console.log("selectProvince");
+
             this.province = '';
             this.city = '';
             this.district = '';
@@ -584,7 +582,7 @@ export default {
 
         },
         selectCity: function() {
-            console.log("selectCity");
+
             this.city = '';
             this.district = '';
             if (this.province != '' && this.province != null) {
@@ -593,7 +591,7 @@ export default {
 
         },
         selectDistrict: function() {
-            console.log("selectDistrict");
+
             this.district = '';
             if (this.city != '' && this.city != null) {
                 this.getDistrictList(this.city);
@@ -737,13 +735,14 @@ export default {
             this.countryParam.district = this.param.district;
             //需要重新修正
             this.country.id = this.param.country;
-            //this.country.id = this.param.country;
+            this.country.cname = this.param.countryName;
             this.province.id = this.param.province;
-            //this.province.id = this.param.province;
+            this.province.cname = this.param.provinceName;
             this.city.id = this.param.city;
-            //this.city.id = this.param.city;
+            this.city.cname = this.param.cityName;
             this.district.id = this.param.district;
-            //this.district.id = this.param.district;
+            this.district.cname = this.param.districtName;
+
         }
         this.getCountryList(this.countryParam);
         this.getUnitList();
