@@ -924,7 +924,7 @@ export const getOrgCountDetail = ({ dispatch }, param) => { //获取部门昨日
     });
 }
 
-export const getAllCountDetail = ({ dispatch },param) => { //获取部门业务员详情
+export const getAllCountDetail = ({ dispatch }, param) => { //获取部门业务员详情
     var body = {
         page: param.cur,
         pageSize: '7',
@@ -6498,7 +6498,7 @@ export const getIntentionDetail = ({ dispatch }, param, extraParam) => { //意�
         }
 
         if (param.getOffers) {
-            console.log(result.offers);
+
             param.getOffers(param.index, result);
         }
 
@@ -6558,6 +6558,7 @@ export const getOffersByIntentionId = ({ dispatch }, param) => { //根据意向I
 
 export const getOffersByIndentId = ({ dispatch }, param) => { //根据意向ID获取报价
     param.loading = true;
+    let url = "/crm/api/v1" + param.link;
     const body = {
         indentId: param.id,
     };
@@ -6572,7 +6573,7 @@ export const getOffersByIndentId = ({ dispatch }, param) => { //根据意向ID�
     }
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/intention/offer/queryByIndentId',
+        url: url,
         emulateHTTP: false,
         body: body,
         emulateJSON: false,
@@ -6584,6 +6585,48 @@ export const getOffersByIndentId = ({ dispatch }, param) => { //根据意向ID�
         param.loading = false;
         var result = res.json().result;
         let list = result.list;
+        list.key = param.key;
+        dispatch(types.INDENT_OFFER_DATA, list);
+
+    }, (res) => {
+        param.loading = false;
+
+    })
+}
+
+export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的（采购单下）报价列表
+    param.loading = true;
+    let url = "/crm/api/v1" + param.link;
+    const body = {
+        page: param.cur,
+        pageSize: 15
+    };
+    if (param.breedId) {
+        body.breedId = param.breedId;
+    }
+    if (param.offerEmployee) {
+        body.offerEmployee = param.offerEmployee;
+    }
+    if (param.accept) {
+        body.accept = param.accept;
+    }
+    Vue.http({
+        method: 'POST',
+        url: url,
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        var result = res.json().result;
+        let list = result.list;
+        param.total = result.total;
+        param.all = param.pages;
+        list.key = param.key;
         dispatch(types.INDENT_OFFER_DATA, list);
 
     }, (res) => {

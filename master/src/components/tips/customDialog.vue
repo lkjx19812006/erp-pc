@@ -5,7 +5,9 @@
         <div class="model-header">
             <h4>{{param.title}}</h4>
             <div class="model-tips clearfix">
-                <!-- <label class="left" style="font-size: 14px;font-weight: 100">{{param.title}}</label> -->
+                <!-- <span v-for="item in param.quickText">
+                    <label style="cursor:pointer" class="quick_edit" @click="addText(item.text)">{{item.text}}&nbsp;&nbsp;</label>
+                </span> -->
                 <textarea v-model='param.comments' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5"></textarea>
             </div>
             <div class="model-footer">
@@ -26,7 +28,12 @@ export default {
         }
     },
     methods: {
+        addText: function(text) {
+            if (this.param.comments.split(',').indexOf(text) == -1) {
+                this.param.comments += text + ',';
+            }
 
+        },
     },
     created() {
 
