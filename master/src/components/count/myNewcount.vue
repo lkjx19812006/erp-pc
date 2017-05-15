@@ -143,7 +143,6 @@
                 this.freshRegionalCharts(data)
             },
             freshCus:function(data){
-                console.log("哈哈")
                 this.getCusTypeData(data)
             }
         }

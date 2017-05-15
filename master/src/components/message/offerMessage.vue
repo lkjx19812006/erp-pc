@@ -89,6 +89,9 @@ export default {
   margin-bottom: 10px;
 }
 
+.actColor {
+  background-color: #ccc
+}
 .message_view_left {
   color: #333;
   font-size: 15px;

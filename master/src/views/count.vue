@@ -43,8 +43,23 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==10">
         <all-newcount></all-newcount>
     </div>
+     <!-- 我的品种统计（新） -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==11">
+        <my-breedcount></my-breedcount>
+    </div>
+     <!-- 部门品种统计（新） -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==12">
+        <org-breedcount></org-breedcount>
+    </div>
+     <!-- 全部品种统计（新） -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==13">
+        <all-breedcount></all-breedcount>
+    </div>
 </template>
 <script>
+import allBreedcount from '../components/count/allBreedCount'
+import orgBreedcount from '../components/count/orgBreedCount'
+import myBreedcount from '../components/count/myBreedCount'
 import personalCount from '../components/count/myCount'
 import managerView from '../components/count/managerView'
 import allNewcount from '../components/count/allNewCount'
@@ -60,6 +75,9 @@ import orgManage from '../components/count/orgManage'
 export default {
     components: {
         personalCount,
+        orgBreedcount,
+        myBreedcount,
+        allBreedcount,
         orgCount,
         allOrgcount,
         allNewcount,

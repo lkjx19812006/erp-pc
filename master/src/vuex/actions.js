@@ -252,6 +252,47 @@ export const freshLinesCharts = ({ dispatch }, getCharList) => {
     }, (res) => {
         console.log('fail');
     });
+}
+
+export const freshBreedLines = ({ dispatch }, getCharList) => {//我的品种统计折线图
+    if (getCharList) getCharList.load = true;
+    var startTime, endTime
+    if (getCharList.timeType == 'month') {
+        startTime = getCharList.year[0]
+        endTime = getCharList.year[1]
+    }
+    if (getCharList.timeType == 'day') {
+
+        startTime = getCharList.monthArr[0]
+        endTime = getCharList.monthArr[1]
+    }
+    var body = {
+        dateType: getCharList.timeType,
+        startTime: startTime,
+        endTime: endTime,
+    }
+    if (getCharList.type) {
+        body.type = getCharList.type
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/productCount/getEmployeeBreedStatistics',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        if (res.json().result == null) {
+            console.log("没有数据")
+            return
+        }
+        dispatch(types.CHANGE_BREEDLINESCHARTS, res.json().result.list);
+    }, (res) => {
+        console.log('fail');
+    });
 };
 
 export const getNewUserId = ({ dispatch }, param) => { //获取新增用户详情的id
@@ -389,7 +430,7 @@ export const getActiveUser = ({ dispatch }, param) => { //获取活跃用户详�
         url = '/crm/api/v1/indent/getListByIds'
         body = {
             page: param.cur,
-            pageSize: '7',
+            pageSize: '16',
             idsStr: param.data.indentTimesDetail
         }
     }
@@ -980,7 +1021,7 @@ export const getAllOrgData = ({ dispatch }, param) => { //获取全部部门详�
             console.log('fail');
         });
     }
-    //我的统计柱状图
+//我的统计柱状图
 export const freshColCharts = ({ dispatch }, param) => {
     var date = new Date();
     var year = date.getFullYear()
@@ -1024,6 +1065,46 @@ export const freshColCharts = ({ dispatch }, param) => {
     })
 };
 
+export const freshBreedBarCharts = ({ dispatch }, param) => {//我的品种统计柱状图
+    var date = new Date();
+    var year = date.getFullYear()
+    var month = date.getMonth() / 1 + 1
+    var day = date.getDate() - 1
+    if (month < 10) {
+        month = '0' + month
+    }
+    var maxDay = (day / 1 + 1)
+    if (day < 10) {
+        day = '0' + day
+    }
+    if (maxDay < 10) {
+        maxDay = "0" + day
+    }
+    var time = [year + '-' + month + '-' + day + ' 00:00:00', year + '-' + month + '-' + maxDay + ' 00:00:00', ]
+
+    var body = {
+        startTime: time[0],
+        endTime: time[1],
+        queryDetail: true
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/productCount/getEmployeeBreedStatistics',//暂未更新
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+
+    }).then((res) => {
+        dispatch(types.CHANGE_BREEDBARCHARTS, res.json().result.list)
+        //param.callback_yes(res.json().result.list[0].addNumberDetail)
+    }, (res) => {
+        console.log('fail')
+    })
+};
 
 //我的统计区域图
 export const freshRegionalCharts = ({ dispatch }, param) => {
@@ -1093,6 +1174,31 @@ export const freshAllRegionalCharts = ({ dispatch }, param) => {
         param = res.json().result.list
         dispatch(types.ALL_REGIONAL_DETAIL, res.json().result.list)
         dispatch(types.ALL_PROVINCE_DETAIL, res.json().result.list)
+    }, (res) => {
+        console.log('fail')
+    })
+};
+
+//我的品种统计区域图
+export const freshBreedRegionalCharts = ({ dispatch }, param) => {
+    var body = {
+        queryType: 'all'
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/count/getEmployeeCustomerNumberByProvinces',//暂未更新
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json())
+        param = res.json().result.list
+        dispatch(types.BREED_REGIONAL_DETAIL, res.json().result.list)
+        //dispatch(types.ALL_PROVINCE_DETAIL, res.json().result.list)
     }, (res) => {
         console.log('fail')
     })
