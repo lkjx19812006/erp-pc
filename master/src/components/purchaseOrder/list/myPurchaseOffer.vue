@@ -1,8 +1,46 @@
 <template>
+    <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
+    <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
+    <custom-dialog :param="offerAcceptParam" v-if="offerAcceptParam.show"></custom-dialog>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
+                <dl class="clear left transfer">
+                    <div class="left" v-if="param.offerEmployee">
+                        <dt class="left transfer marg_top">报价业务员：</dt>
+                        <dd class="left margin_right">
+                            <input type="text" class="form-control" v-model="loadParam.offerEmployeeName" placeholder="按回车键搜索" @click="selectEmployee()" readonly="readonly">
+                        </dd>
+                    </div>
+                    <div class="left" v-if="param.breedId">
+                        <dt class="left transfer marg_top">品种：</dt>
+                        <dd class="left margin_right">
+                            <input type="text" class="form-control" v-model="loadParam.breedName" placeholder="按回车键搜索" @click="breedSearch()" readonly="readonly">
+                        </dd>
+                    </div>
+                    <div class="btn-group" style="margin-left:10px" v-if="param.accept">
+                        <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.accept===''}" @click="clickAccept('')">
+                            全部
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='0'}" @click="clickAccept('0')">
+                            初始
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='1'}" @click="clickAccept('1')">
+                            已接受
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='2'}" @click="clickAccept('2')">
+                            已拒绝
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='3'}" @click="clickAccept('3')">
+                            正在跟进
+                        </button>
+                    </div>
+                </dl>
+                <button type="button" class="btn btn-primary right" style="width:75px" @click="resetCondition()">
+                    清空条件
+                </button>
             </div>
         </div>
         <!--中间列表-->
@@ -13,10 +51,80 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
+                        <th>报价时间</th>
+                        <th>报价类型</th>
+                        <th>供应商名称</th>
+                        <th>报价业务员</th>
+                        <th>品种</th>
+                        <th>规格</th>
+                        <th>产地</th>
+                        <th>数量</th>
+                        <th>价格</th>
+                        <th>备注</th>
+                        <th>是否采纳</th>
+                        <th>原因</th>
+                        <th v-if="param.init=='initMyIndentOfferList'">处理报价</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initMyIndentOfferList">
+                    <tr v-show="param.init=='initMyIndentOfferList'" v-for="item in initMyIndentOfferList">
+                        <td>{{item.otime | date}}</td>
+                        <td>{{item.source | offerType}}</td>
+                        <td>{{item.offerCustomerName}}</td>
+                        <td>{{item.offerEmployeeName}}</td>
+                        <td>{{item.breedName}}</td>
+                        <td>{{item.spec}}</td>
+                        <td>{{item.location}}</td>
+                        <td>{{item.number}}{{item.unit | Unit}}</td>
+                        <td>{{item.price}}</td>
+                        <td>
+                            <Poptip placement="left" trigger="hover">
+                                <span>{{item.description | textDisplay '5'}}</span>
+                                <div class="api" slot="content">
+                                    {{item.description}}
+                                </div>
+                            </Poptip>
+                        </td>
+                        <td>{{item.accept | offerAccept}}</td>
+                        <td>
+                            <Poptip placement="left" trigger="hover">
+                                <span>{{item.comments | textDisplay '5'}}</span>
+                                <div class="api" slot="content">
+                                    {{item.comments}}
+                                </div>
+                            </Poptip>
+                        </td>
+                        <td>
+                            <a @click="offerAccept(item)">处理</a>
+                        </td>
+                    </tr>
+                    <tr v-show="param.init=='initAllIndentOfferList'" v-for="item in initAllIndentOfferList">
+                        <td>{{item.otime | date}}</td>
+                        <td>{{item.source | offerType}}</td>
+                        <td>{{item.offerCustomerName}}</td>
+                        <td>{{item.offerEmployeeName}}</td>
+                        <td>{{item.breedName}}</td>
+                        <td>{{item.spec}}</td>
+                        <td>{{item.location}}</td>
+                        <td>{{item.number}}{{item.unit | Unit}}</td>
+                        <td>{{item.price}}</td>
+                        <td>
+                            <Poptip placement="left" trigger="hover">
+                                <span>{{item.description | textDisplay '5'}}</span>
+                                <div class="api" slot="content">
+                                    {{item.description}}
+                                </div>
+                            </Poptip>
+                        </td>
+                        <td>{{item.accept | offerAccept}}</td>
+                        <td>
+                            <Poptip placement="left" trigger="hover">
+                                <span>{{item.comments | textDisplay '5'}}</span>
+                                <div class="api" slot="content">
+                                    {{item.comments}}
+                                </div>
+                            </Poptip>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -26,29 +134,46 @@
     </mglist-model>
 </template>
 <script>
+import employeeModel from '../../clientRelate/searchEmpInfo'
+import breedsearchModel from '../../intention/breedsearch'
+import tipsdialogModel from '../../tips/tipDialog'
+import customDialog from '../../tips/customDialog'
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import common from '../../../common/common'
 import mglistModel from '../../mguan/mgListComponent.vue'
 import {
-    initMyIndentOfferList
+    initMyIndentOfferList,
+    initAllIndentOfferList
 } from '../../../vuex/getters'
 import {
-    getIndentOffers
+    getIndentOffers,
+    handleOfferAccept
 } from '../../../vuex/actions'
 export default {
     components: {
+        employeeModel,
+        breedsearchModel,
+        tipsdialogModel,
+        customDialog,
         pagination,
         mglistModel
     },
     vuex: {
         getters: {
-            initMyIndentOfferList
+            initMyIndentOfferList,
+            initAllIndentOfferList
         },
         actions: {
-            getIndentOffers
+            getIndentOffers,
+            handleOfferAccept
         }
+    },
+    props: {
+        param: {
+
+        },
     },
     data() {
         return {
@@ -60,29 +185,137 @@ export default {
                 cur: 1,
                 all: 7,
                 total: "",
-                link: '/intention/offer/queryMyOffer',
-                key: 'myIndentOfferList',
+                init: '', //初始化列表数据
+                link: '',
+                key: '',
                 offerEmployee: "",
                 offerEmployeeName: "",
                 breedId: "",
                 breedName: "",
-                accept: ""
+                accept: "",
+
+            },
+            breedSearchParam: {
+                show: false
+            },
+            employeeParam: {
+                show: false,
+                org: false,
+                orgId: "",
+                //单个业务员搜索
+                employeeId: '',
+                employeeName: '',
+
+            },
+            offerAcceptParam: {
+                id: "",
+                accept: "",
+                comments: "",
+                callback: this.acceptOfferBack,
+                title: "处理报价",
+                show: false,
+                items: [{
+                    name: "取消",
+                    handle: this.acceptCancel,
+                    style: "btn-warning"
+                }, {
+                    name: "接受",
+                    handle: this.acceptOffer,
+
+                }, {
+                    name: "不接受",
+                    handle: this.refuseOffer,
+
+                }, {
+                    name: "继续跟进",
+                    handle: this.trackOffer,
+                }]
+
+            },
+            tipsParam: {
+                show: false,
+                name: '',
+                alert: true
             },
 
         }
     },
     methods: {
-
+        clickAccept: function(accept) {
+            this.loadParam.accept = accept;
+            this.selectSearch();
+        },
+        breedSearch: function() {
+            this.breedSearchParam.show = true;
+        },
+        selectEmployee: function() {
+            this.employeeParam.show = true;
+        },
+        selectSearch: function() {
+            this.getIndentOffers(this.loadParam);
+        },
+        resetCondition: function() {
+            this.loadParam.offerEmployee = "";
+            this.loadParam.offerEmployeeName = "";
+            this.loadParam.breedId = "";
+            this.loadParam.breedName = "";
+            this.loadParam.accept = "";
+            this.selectSearch(this.loadParam);
+        },
+        offerAccept: function(item) {
+            this.offerAcceptParam.comments = "";
+            this.offerAcceptParam.id = item.id;
+            this.offerAcceptParam.show = true;
+        },
+        //取消
+        acceptCancel: function() {
+            this.offerAcceptParam.show = false;
+        },
+        //接受
+        acceptOffer: function() {
+            this.offerAcceptParam.accept = 1;
+            this.handleOfferAccept(this.offerAcceptParam);
+        },
+        //拒绝
+        refuseOffer: function() {
+            this.offerAcceptParam.accept = 2;
+            this.handleOfferAccept(this.offerAcceptParam);
+        },
+        //跟进
+        trackOffer: function() {
+            this.offerAcceptParam.accept = 3;
+            this.handleOfferAccept(this.offerAcceptParam);
+        },
+        //成功后回调
+        acceptOfferBack: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.offerAcceptParam.show = false;
+            this.selectSearch();
+        }
 
     },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getIndentOffers(this.loadParam);
-        }
+        },
+        breed: function(breed) {
+            this.loadParam.breedId = breed.breedId;
+            this.loadParam.breedName = breed.breedName;
+            this.selectSearch();
+        },
+        a: function(employee) {
+            this.loadParam.offerEmployee = employee.employeeId;
+            this.loadParam.offerEmployeeName = employee.employeeName;
+            this.selectSearch();
+        },
     },
     created() {
+        this.loadParam.link = this.param.link;
+        this.loadParam.key = this.param.key;
         this.getIndentOffers(this.loadParam);
+
         //changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.myIntentionParam);
 
     },
@@ -136,8 +369,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 136px;
-    min-width: 136px;
+    width: 130px;
+    min-width: 130px;
 }
 
 .service-nav {
@@ -149,7 +382,7 @@ dl {
 }
 
 .api {
-    max-width: 400px;
+    max-width: 800px;
     color: #3399ff;
     white-space: normal;
 }

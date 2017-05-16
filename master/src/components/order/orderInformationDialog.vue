@@ -122,7 +122,7 @@
                             </div>
                             <div class="editpage-input col-md-8" v-if="param.type==1">
                                 <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">{{$t('static.enter_address')}}</span></label>
-                                <input type="text" class="form-control edit-input" v-model="param.consigneeAddr" v-validate:addr="['required']" value="{{param.consigneeAdd}}" />
+                                <input type="text" class="form-control edit-input" v-model="param.consigneeAddr" v-validate:addr="['required']" value="{{param.consigneeAddr}}" />
                             </div>
                             <div class="editpage-input col-md-8" v-if="param.type==0">
                                 <label class="editlabel">{{$t('static.detailed_address')}}</label>
@@ -602,7 +602,6 @@ export default {
             this.param.goods[this.param.goods.length - 1].sourceType = this.breedInfo.sourceType;
             this.param.goods[this.param.goods.length - 1].orderId = this.breedInfo.orderId;
 
-            console.log(this.param.goods[this.param.goods.length - 1]);
             this.breedInfo.status = 0;
             this.addParam.show = false;
             this.altogether += (parseFloat(this.param.goods[this.param.goods.length - 1].price) * parseFloat(this.param.goods[this.param.goods.length - 1].number) * 100) / 100;

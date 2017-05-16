@@ -715,7 +715,7 @@ export default {
                 preSell: 0,
                 visit: 0,
                 validate: 1,
-                country: '中国',
+                country: 7,
                 province: '',
                 city: '',
                 district: '',

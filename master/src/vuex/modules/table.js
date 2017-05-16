@@ -946,6 +946,7 @@ const state = {
     purchaseDetail: { "intentionList": { arr: [], show: false } },
     indentOfferList: [],
     myIndentOfferList: [],
+    allIndentOfferList: [],
     purchaseOfferDetail: {},
     locationList: {
         provinceList: [
@@ -1968,7 +1969,7 @@ const mutations = {
     [PURCHASE_DETAIL](state, data) { //采购单详情
         state.purchaseDetail = data;
     },
-    [INDENT_OFFER_DATA](state, data) { //采购单详情
+    [INDENT_OFFER_DATA](state, data) { //采购单报价列表
         state[data.key] = data;
     },
 

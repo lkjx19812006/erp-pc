@@ -26,7 +26,11 @@
         </div>
         <!-- 我收到的报价 -->
         <div class="myOrder" v-if="$route.path.split('=')[1]==6">
-            <my-purchase-offer></my-purchase-offer>
+            <my-purchase-offer :param="mpoParam"></my-purchase-offer>
+        </div>
+        <!-- 我收到的报价 -->
+        <div class="myOrder" v-if="$route.path.split('=')[1]==7">
+            <all-purchase-offer :param="apoParam"></all-purchase-offer>
         </div>
     </div>
 </template>
@@ -36,6 +40,7 @@ import orgPurchase from '../components/purchaseOrder/list/orgPurchaseOrder.vue'
 import allPurchase from '../components/purchaseOrder/list/allPurchaseOrder.vue'
 import purchaseOffer from '../components/purchaseOrder/list/purchaseOffer.vue'
 import myPurchaseOffer from '../components/purchaseOrder/list/myPurchaseOffer.vue'
+import allPurchaseOffer from '../components/purchaseOrder/list/myPurchaseOffer.vue'
 import myOffer from '../components/Intention/intentionList/myOffer.vue'
 import orgOffer from '../components/Intention/intentionList/orgOffer.vue'
 export default {
@@ -45,9 +50,36 @@ export default {
         allPurchase,
         purchaseOffer,
         myPurchaseOffer,
+        allPurchaseOffer,
         myOffer,
         orgOffer
+    },
+    data() {
+        return {
+            mpoParam: {
+                //控制我收到的报价的搜索条件是否显示
+                breedId: true,
+                offerEmployee: true,
+                accept: true,
+                //设置接口路径（link）,返回列表名（key）,getter中的返回列表
+                link: '/intention/offer/queryMyOffer',
+                key: 'myIndentOfferList',
+                init: 'initMyIndentOfferList'
+            },
+            apoParam: {
+                //控制我收到的报价的搜索条件是否显示
+                breedId: true,
+                offerEmployee: true,
+                accept: true,
+                //设置接口路径（link）,返回列表名（key）,getter中的返回列表
+                link: '/intention/offer/queryAllOffer',
+                key: 'allIndentOfferList',
+                init: 'initAllIndentOfferList'
+            },
+
+        }
     }
+
 }
 </script>
 <style scoped>
