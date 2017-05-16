@@ -9,6 +9,7 @@
     <deliver-model :param="deliverParam" v-if="deliverParam.show"></deliver-model>
     <p class="employee_right_title clear">
       <span class="left">{{$t('static.order_message')}}</span>
+      <span class="left btn-danger unread" v-if="loadparam.messageLen!=0">{{loadparam.messageLen}}</span>
     </p>
     <div class="refreshBtn">
       <button class="btn btn-primary right" @click="refresh()">{{$t('static.refresh')}}</button>
@@ -82,6 +83,7 @@ export default {
   props: ['loadparam', 'backloglist'],
   data() {
     return {
+      messageLen:0,
       title: '',
       selectIndex: null,
       orderDetailParam: {
@@ -292,6 +294,12 @@ export default {
 .employee_right_title {
   color: #333;
   font-size: 18px;
+}
+.unread{
+  font-size: 12px;
+  border-radius: 8px;
+  margin-left: 10px;
+  padding:0 5px
 }
 
 .employee_right_message {

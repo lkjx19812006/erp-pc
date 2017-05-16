@@ -5,6 +5,7 @@
       <div class="col-md-4 col-xs-12 employee_right_wrap">
         <p class="employee_right_title clear">
           <span class="left">{{$t('static.Notifications')}}</span>
+          <span class="left btn-danger unread" v-if="noticeParam.total!=0&&noticeParam.type=='0'">{{noticeParam.total}}</span>
           <div class="btn-group">
             <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': noticeParam.type===0}" @click="selectType(0)">
               {{$t('static.Notifications_today')}}
@@ -90,7 +91,8 @@ export default {
         size: '15px',
         cur: 1,
         all: 7,
-        total: 0
+        total: 0,
+        messageLen:0
       },
       noticeParam: {
         loading: true,
@@ -280,7 +282,12 @@ export default {
   text-align: center;
   background-position: 5px;
 }
-
+.unread{
+  font-size: 12px;
+  border-radius: 8px;
+  margin-left: 10px;
+  padding:0 5px
+}
 .checkbox_unselect {
   background-image: url(/static/images/unselect.png);
   display: inline-block;

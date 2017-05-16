@@ -155,7 +155,10 @@ import {
     ALL_PROVINCE_DETAIL,
     CUSTYPE_DETAIL,
     ORG_CUSTYPE_DETAIL,
-    ALL_CUSTYPE_DETAIL
+    ALL_CUSTYPE_DETAIL,
+    CHANGE_ADDBREEDDETAIL,
+    CHANGE_DEALBREEDDETAIL,
+    YESTODAY_BREED_DETAIL
 } from '../mutation-types'
 
 
@@ -1052,6 +1055,9 @@ const state = {
     cusTypeDetail: [],
     orgCusTypeDetail: [],
     allCusTypeDetail: [],
+    addBreedDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    dealBreedDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    yestodayDealBreed: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
 }
 
 const mutations = {
@@ -2400,6 +2406,18 @@ const mutations = {
     //全部类型详情
     [ALL_CUSTYPE_DETAIL](state, data) {
         state.allCusTypeDetail = data
+    },
+    //我的品种统计新增详情
+    [CHANGE_ADDBREEDDETAIL](state,data){
+        state.addBreedDetail = data
+    },
+    //我的品种统计成交详情
+    [CHANGE_DEALBREEDDETAIL](state,data){
+        state.dealBreedDetail = data
+    },
+    //我的品种统计昨日成交详情
+    [YESTODAY_BREED_DETAIL](state,data){
+        state.yestodayDealBreed = data
     }
 }
 

@@ -293,6 +293,88 @@ export const freshBreedLines = ({ dispatch }, getCharList) => { //我的品种�
     }, (res) => {
         console.log('fail');
     });
+}
+
+export const freshOrgBreedLines = ({ dispatch }, getCharList) => { //部门品种统计折线图
+    if (getCharList) getCharList.load = true;
+    var startTime, endTime
+    if (getCharList.timeType == 'month') {
+        startTime = getCharList.year[0]
+        endTime = getCharList.year[1]
+    }
+    if (getCharList.timeType == 'day') {
+
+        startTime = getCharList.monthArr[0]
+        endTime = getCharList.monthArr[1]
+    }
+    var body = {
+        dateType: getCharList.timeType,
+        startTime: startTime,
+        endTime: endTime,
+    }
+    if (getCharList.type) {
+        body.type = getCharList.type
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/productCount/getEmployeeBreedStatistics', //暂未更新
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        if (res.json().result == null) {
+            console.log("没有数据")
+            return
+        }
+        dispatch(types.CHANGE_ORGBREEDLINESCHARTS, res.json().result.list);
+    }, (res) => {
+        console.log('fail');
+    });
+};
+
+export const freshAllBreedLines = ({ dispatch }, getCharList) => { //全部品种统计折线图
+    if (getCharList) getCharList.load = true;
+    var startTime, endTime
+    if (getCharList.timeType == 'month') {
+        startTime = getCharList.year[0]
+        endTime = getCharList.year[1]
+    }
+    if (getCharList.timeType == 'day') {
+
+        startTime = getCharList.monthArr[0]
+        endTime = getCharList.monthArr[1]
+    }
+    var body = {
+        dateType: getCharList.timeType,
+        startTime: startTime,
+        endTime: endTime,
+    }
+    if (getCharList.type) {
+        body.type = getCharList.type
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/productCount/getEmployeeBreedStatistics', //暂未更新
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        if (res.json().result == null) {
+            console.log("没有数据")
+            return
+        }
+        dispatch(types.CHANGE_ALLBREEDLINESCHARTS, res.json().result.list);
+    }, (res) => {
+        console.log('fail');
+    });
 };
 
 export const getNewUserId = ({ dispatch }, param) => { //获取新增用户详情的id
@@ -322,7 +404,6 @@ export const getNewUserId = ({ dispatch }, param) => { //获取新增用户详�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log(res.json())
         param.callback(res.json().result)
     }, (res) => {
         console.log('fail');
@@ -351,8 +432,6 @@ export const getNewUser = ({ dispatch }, param) => { //获取新增用户详情�
         dispatch(types.NEW_USER_DETAIL, data)
         param.total = res.json().result.total
         param.all = res.json().result.pages
-        console.log(res.json())
-
     }, (res) => {
         console.log('fail');
     });
@@ -360,7 +439,6 @@ export const getNewUser = ({ dispatch }, param) => { //获取新增用户详情�
 
 export const getDealUser = ({ dispatch }, param) => { //获取成交用户详情的数据
     var body, url
-    console.log(param)
     if (param.showType == 'num') {
         url = '/crm/api/v1/customer/getListByIds'
         body = {
@@ -392,8 +470,6 @@ export const getDealUser = ({ dispatch }, param) => { //获取成交用户详情
         dispatch(types.NEW_DEAL_DETAIL, data)
         param.total = res.json().result.total
         param.all = res.json().result.pages
-        console.log(res.json())
-
     }, (res) => {
         console.log('fail');
     });
@@ -401,7 +477,6 @@ export const getDealUser = ({ dispatch }, param) => { //获取成交用户详情
 
 export const getActiveUser = ({ dispatch }, param) => { //获取活跃用户详情的数据
     var body, url
-    console.log(param)
     if (param.showType == 'time' && param.activeType == '报价') { //报价
         url = '/crm/api/v1/intention/getOfferListByIds'
         body = {
@@ -434,14 +509,6 @@ export const getActiveUser = ({ dispatch }, param) => { //获取活跃用户详�
             idsStr: param.data.indentTimesDetail
         }
     }
-    /*if(param.showType == 'time'&&param.activeType=='1'){
-        url = '/crm/api/v1//order/getListByIds'
-        body = {
-            page:param.cur,
-            pageSize:'7',
-            id:param.data.orderTimesDetail
-        }
-    }*/
     Vue.http({
         method: 'POST',
         url: url,
@@ -457,13 +524,96 @@ export const getActiveUser = ({ dispatch }, param) => { //获取活跃用户详�
         dispatch(types.NEW_ACTIVE_DETAIL, data)
         param.total = res.json().result.total
         param.all = res.json().result.pages
-        console.log(res.json())
-
     }, (res) => {
         console.log('fail');
     });
 }
 
+export const getBreedDetailId = ({ dispatch }, param) => { //获取品种详情的id
+    var body = {}
+    if (param) {
+        if (param.startTime) {
+            body.startTime = param.startTime
+        }
+        if (param.endTime) {
+            body.endTime = param.endTime
+        }
+        if (param.provinceId) {
+            body.provinceId = param.provinceId.id
+        }
+        if (param.type) {
+            body.type = param.type
+        }
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/productCount/getEmployeeBreedDetailStatistics', //暂未更新
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json())
+        param.callback(res.json().result)
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getAddBreedData = ({ dispatch }, param) => { //获取我的品种统计新增品种详情的数据
+    var body = {
+        page: param.cur,
+        pageSize: '7',
+        ids: param.data
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/productCount/getProductListByIds', //暂未更新
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var data = res.json().result.list
+        dispatch(types.CHANGE_ADDBREEDDETAIL, data)
+        param.total = res.json().result.total
+        param.all = res.json().result.pages
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getDealBreedData = ({ dispatch }, param) => { //获取我的品种统计成交品种详情的数据
+    var body = {
+        page: param.cur,
+        pageSize: '7',
+        ids: param.data
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/productCount/queryOrderListById', //暂未更新
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var data = res.json().result.list
+        dispatch(types.CHANGE_DEALBREEDDETAIL, data)
+        param.total = res.json().result.total
+        param.all = res.json().result.pages
+    }, (res) => {
+        console.log('fail');
+    });
+}
 
 export const getYestodayData = ({ dispatch }, param) => { //获取昨日新增
     var body = {
@@ -491,6 +641,7 @@ export const getYestodayData = ({ dispatch }, param) => { //获取昨日新增
         console.log('fail')
     })
 }
+
 
 export const getCusTypeData = ({ dispatch }, getCharList) => { //获取个人客户类型折线图   
     if (getCharList) getCharList.load = true;
@@ -534,24 +685,6 @@ export const getCusTypeData = ({ dispatch }, getCharList) => { //获取个人客
 }
 
 export const getCusTypeList = ({ dispatch }, getCharList) => { //获取个人客户类型详情  
-    /* if (getCharList) getCharList.load = true;
-     var startTime,endTime
-     if(getCharList.timeType=='month'){
-         startTime = getCharList.year[0]
-         endTime = getCharList.year[1]
-     }
-     if(getCharList.timeType=='day'){
-         startTime = getCharList.monthArr[0]
-         endTime = getCharList.monthArr[1]
-     }
-     var body = {
-         dateType:getCharList.timeType,
-         startTime:startTime,
-         endTime:endTime,
-     }
-     if(getCharList.type){
-         body.type = getCharList.type
-     }*/
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerNumberByTypesCount',
@@ -563,32 +696,12 @@ export const getCusTypeList = ({ dispatch }, getCharList) => { //获取个人客
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        //console.log(param)
-        console.log(res.json())
         dispatch(types.CUSTYPE_DETAIL, res.json().result.list)
     }, (res) => {
         console.log('fail')
     })
 }
 export const getOrgCusTypeList = ({ dispatch }, getCharList) => { //获取部门客户类型详情  
-    /* if (getCharList) getCharList.load = true;
-     var startTime,endTime
-     if(getCharList.timeType=='month'){
-         startTime = getCharList.year[0]
-         endTime = getCharList.year[1]
-     }
-     if(getCharList.timeType=='day'){
-         startTime = getCharList.monthArr[0]
-         endTime = getCharList.monthArr[1]
-     }
-     var body = {
-         dateType:getCharList.timeType,
-         startTime:startTime,
-         endTime:endTime,
-     }
-     if(getCharList.type){
-         body.type = getCharList.type
-     }*/
     var body = {
         queryType: 'org'
     }
@@ -612,24 +725,6 @@ export const getOrgCusTypeList = ({ dispatch }, getCharList) => { //获取部门
 }
 
 export const getAllCusTypeList = ({ dispatch }, getCharList) => { //获取部门客户类型详情  
-    /* if (getCharList) getCharList.load = true;
-     var startTime,endTime
-     if(getCharList.timeType=='month'){
-         startTime = getCharList.year[0]
-         endTime = getCharList.year[1]
-     }
-     if(getCharList.timeType=='day'){
-         startTime = getCharList.monthArr[0]
-         endTime = getCharList.monthArr[1]
-     }
-     var body = {
-         dateType:getCharList.timeType,
-         startTime:startTime,
-         endTime:endTime,
-     }
-     if(getCharList.type){
-         body.type = getCharList.type
-     }*/
     var body = {
         queryType: 'all'
     }
@@ -1027,7 +1122,6 @@ export const freshColCharts = ({ dispatch }, param) => {
     var year = date.getFullYear()
     var month = date.getMonth() / 1 + 1
     var day = date.getDate() - 1
-    console.log(day)
     if (month < 10) {
         month = '0' + month
     }
@@ -1089,7 +1183,7 @@ export const freshBreedBarCharts = ({ dispatch }, param) => { //我的品种统�
     }
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/productCount/getEmployeeBreedStatistics', //暂未更新
+        url: '/crm/api/v1/productCount/getEmployeeBreedStatistics',
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -1099,12 +1193,38 @@ export const freshBreedBarCharts = ({ dispatch }, param) => { //我的品种统�
         }
 
     }).then((res) => {
-        dispatch(types.CHANGE_BREEDBARCHARTS, res.json().result.list)
-            //param.callback_yes(res.json().result.list[0].addNumberDetail)
+        dispatch(types.CHANGE_BREEDBARCHARTS, res.json().result.list);
+        param.callback_yes(res.json().result.list[0].addNumberDetail);
     }, (res) => {
         console.log('fail')
     })
 };
+
+export const getYestodayBreedData = ({ dispatch }, param) => { //获取我的品种统计昨日成交
+    var body = {
+        page: param.cur,
+        pageSize: '7',
+        ids: param.data
+    };
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/productCount/queryOrderListById',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var data = res.json().result
+        dispatch(types.YESTODAY_BREED_DETAIL, res.json().result.list)
+        param.total = data.total
+        param.all = data.pages
+    }, (res) => {
+        console.log('fail')
+    })
+}
 
 //我的统计区域图
 export const freshRegionalCharts = ({ dispatch }, param) => {
@@ -1120,7 +1240,6 @@ export const freshRegionalCharts = ({ dispatch }, param) => {
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log(res.json())
         param = res.json().result.list
         dispatch(types.CHANGE_REGIONALCHARTS, res.json().result.list)
         dispatch(types.PROVINCE_DETAIL, res.json().result.list)
@@ -1204,6 +1323,59 @@ export const freshBreedRegionalCharts = ({ dispatch }, param) => {
     })
 };
 
+
+
+//部门品种统计区域图
+export const freshOrgBreedRegionalCharts = ({ dispatch }, param) => {
+    var body = {
+        queryType: 'all'
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/count/getEmployeeCustomerNumberByProvinces', //暂未更新
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json())
+        param = res.json().result.list
+        dispatch(types.ORGBREED_REGIONAL_DETAIL, res.json().result.list)
+            //dispatch(types.ALL_PROVINCE_DETAIL, res.json().result.list)
+    }, (res) => {
+        console.log('fail')
+    })
+};
+
+
+//全部品种统计区域图
+export const freshAllBreedRegionalCharts = ({ dispatch }, param) => {
+    var body = {
+        queryType: 'all'
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/count/getEmployeeCustomerNumberByProvinces', //暂未更新
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json())
+        param = res.json().result.list
+        dispatch(types.ALLBREED_REGIONAL_DETAIL, res.json().result.list)
+            //dispatch(types.ALL_PROVINCE_DETAIL, res.json().result.list)
+    }, (res) => {
+        console.log('fail')
+    })
+};
+
 //折线图
 export const freshLinecharts = ({ dispatch }, getLinechart) => {
     if (getLinechart) getLinechart.load = true;
@@ -1244,7 +1416,8 @@ export const getBacklogList = ({ dispatch }, param) => {
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
-        //localStorage.BacklogParam = JSON.stringify(param);
+        param.messageLen = res.json().result.length
+            //localStorage.BacklogParam = JSON.stringify(param);
 
     }, (res) => {
         console.log('fail');

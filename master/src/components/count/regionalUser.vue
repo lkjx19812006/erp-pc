@@ -1,7 +1,7 @@
 <template>
     <div class="box" style="max-height: 100%;overflow: auto;">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">{{param.name}}客户总览</div>
+            <div class="my_enterprise col-xs-1">{{param.name}}总览</div>
             <div class="btn btn-primary right" @click="toBackPage()">{{$t('static.back')}}</div>
         </div>
         <div class="user_all">
@@ -10,7 +10,7 @@
             </div>
             <!-- 折线图 -->
             <div class="line_today">
-                <h4 class="detail_title bg-info">用户总览</h4>               
+                <h4 class="detail_title bg-info">总览</h4>               
                 <div class="line_chart" v-if="param.name=='业务员'">
                     <div class="linechart" v-echarts="getRegionalchart.options" :loading="getRegionalchart.load"></div>
                 </div>
@@ -22,6 +22,12 @@
                 </div>
                 <div class="line_chart" v-if="param.name=='我的品种统计'">
                     <div class="linechart" v-echarts="initBreedRegionalchart.options" :loading="initBreedRegionalchart.load"></div>
+                </div>
+                <div class="line_chart" v-if="param.name=='部门品种统计'">
+                    <div class="linechart" v-echarts="initOrgBreedRegionalchart.options" :loading="initOrgBreedRegionalchart.load"></div>
+                </div>
+                <div class="line_chart" v-if="param.name=='全部品种统计'">
+                    <div class="linechart" v-echarts="initAllBreedRegionalchart.options" :loading="initAllBreedRegionalchart.load"></div>
                 </div>
             </div>            
             <!-- 用户详情 -->
@@ -37,9 +43,9 @@
                         <thead>
                             <tr>
                                 <th style="min-width:240px;text-align: center;">省份</th>
-                                <th style="min-width:280px;text-align: center;">新增用户</th>
-                                <th style="min-width:280px;text-align: center;">成交用户</th>
-                                <th style="min-width:320px;text-align: center;">活跃用户</th>
+                                <th style="min-width:280px;text-align: center;">新增</th>
+                                <th style="min-width:280px;text-align: center;">成交</th>
+                                <th style="min-width:320px;text-align: center;">活跃</th>
                             </tr>
                         </thead>
                         <tbody v-if="param.name=='业务员'">
@@ -81,13 +87,17 @@ import {
     getAllProvinceDetail,
     getOrgRegionalchart,
     getAllRegionalchart,
-    initBreedRegionalchart
+    initBreedRegionalchart,
+    initOrgBreedRegionalchart,
+    initAllBreedRegionalchart
 } from '../../vuex/getters'
 import {
 	freshRegionalCharts,
 	freshOrgRegionalCharts,
 	freshAllRegionalCharts,
-	freshBreedRegionalCharts
+	freshBreedRegionalCharts,
+	freshOrgBreedRegionalCharts,
+	freshAllBreedRegionalCharts
 } from '../../vuex/actions'
 
 export default {
@@ -124,13 +134,17 @@ export default {
             getProvinceDetail,
             getOrgProvinceDetail,
             getAllProvinceDetail,
-            initBreedRegionalchart
+            initBreedRegionalchart,
+            initOrgBreedRegionalchart,
+            initAllBreedRegionalchart
         },
         actions: {
         	freshRegionalCharts,
         	freshOrgRegionalCharts,
         	freshAllRegionalCharts,
-        	freshBreedRegionalCharts
+        	freshBreedRegionalCharts,
+        	freshOrgBreedRegionalCharts,
+        	freshAllBreedRegionalCharts
         }
     },
     events: {
@@ -155,6 +169,12 @@ export default {
     	}
     	if(this.param.name == '我的品种统计'){
     		this.freshBreedRegionalCharts()
+    	}
+    	if(this.param.name == '部门品种统计'){
+    		this.freshOrgBreedRegionalCharts()
+    	}
+    	if(this.param.name == '全部品种统计'){
+    		this.freshAllBreedRegionalCharts()
     	}
     	//this.$dispatch('freshCharts',this.provinceDetail)
     	

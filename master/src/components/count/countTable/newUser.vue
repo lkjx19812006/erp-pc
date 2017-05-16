@@ -66,7 +66,7 @@ export default{
         },
 	},
 	created:function(){
-		console.log(this.param)
+
 	}
 }
 </script>

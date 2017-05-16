@@ -14,7 +14,11 @@
             </div>
             <!-- 今日新增 -->
             <div class="bar_today">
-                <h4 class="detail_title bg-info">昨日统计
+            	<!-- 顶部筛选 -->
+                <div class="search">
+                    <search-some></search-some>
+                </div>
+                <h4 class="detail_title bg-info">成交品种统计
                     <span class="detail_num">
                         <a href="javascript:void(0);" class="person_num">{{yestodayParam.total}}人</a>&nbsp
                         <!-- <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('userTodayDetail')">more>></a> -->
@@ -25,29 +29,6 @@
                     <div class="barchart" v-echarts="initBreedBarChart.options" :loading="initBreedBarChart.load"></div>
                 </div>
                 
-                <div class="today_list_right">
-                    <table class="table table-hover table_color table-striped">
-                        <thead>
-                            <tr>
-                                <th style="min-width:150px;text-align: center;">品种</th>
-                                <th style="min-width:200px;text-align: center;">订单号</th>
-                                <th style="min-width:150px;text-align: center;">成交时间</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="item in getYesTodayDetail">
-                                <td><a href="javascript:void(0);">{{item.name}}</a></td>
-                                <td>{{item.phone}}</td>
-                                <td>{{item.address}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!--底部分页-->
-                    <div class="pages">
-                        <pagination :combination="loadParam" slot="page"></pagination>
-                    </div>
-                   
-                </div>
             </div>
             <!-- 用户详情 -->
             <div class="user_detail">
@@ -57,11 +38,11 @@
                 </div>
                 <!-- 左侧 -->
                 <div class="user_detail_left">
-					<new-addbreed></new-addbreed>
+					<new-addbreed :param="addBreedParam"></new-addbreed>
                 </div>
                 <!-- 右侧 -->
                 <div class="user_detail_right">
-					<new-dealbreed></new-dealbreed>
+					<new-dealbreed :param="dealBreedParam"></new-dealbreed>
                 </div>
             </div>
         </div>
@@ -79,12 +60,17 @@ import {
     getColchart,
     getLineschart,
     getYear,
-    initBreedBarChart
+    initBreedBarChart,
+    initYesTodayBreed
 } from '../../vuex/getters'
 import {
     freshLinesCharts,
     freshColCharts,
-    freshBreedBarCharts
+    freshBreedBarCharts,
+    getAddBreedData,
+    getBreedDetailId,
+    getDealBreedData,
+    getYestodayBreedData
 } from '../../vuex/actions'
 
 export default {
@@ -108,7 +94,9 @@ export default {
                 total: 0,
                 id:7,//国家id
                 salemanId:'',
+                callback_yes:this.callback_yes,
                 callback:this.callback,
+                data:[],
                 name:'我的品种统计'
             },
             yestodayParam:{
@@ -117,13 +105,20 @@ export default {
                 total:0,
                 data:[]
             },
-            dealPageParam:{
+            addBreedParam:{
                 cur: 1,
                 all: 4,
                 total: 0,
                 data:[],
-                showType:'num',
-                name:'成交用户',
+                name:'新增品种',
+                search:{} 
+            },
+            dealBreedParam:{
+                cur: 1,
+                all: 4,
+                total: 0,
+                data:[],
+                name:'成交品种',
                 search:{} 
             },
             showParam:{
@@ -135,16 +130,27 @@ export default {
     vuex: {
         getters: {
         	getColchart,
-        	initBreedBarChart
+        	initBreedBarChart,
+        	initYesTodayBreed
         },
         actions: {
         	freshColCharts,
         	freshBreedBarCharts,
+        	getAddBreedData,
+        	getBreedDetailId,
+        	getDealBreedData,
+        	getYestodayBreedData
         }
     },
     events: {
     	search:function(data){
-    		this.searchCus(data)
+    		if(data.searchType=='新增'){
+    			console.log('hahah')
+    			//this.searchCus(data)
+    		}
+    		if(data.searchType=='成交'){
+
+    		}
     	},
         showD:function(data){
             this.showDetail(data)
@@ -162,17 +168,30 @@ export default {
         }
     },
     methods:{
-
-        searchCus:function(){
-            this.getNewUserId(this.searchParam)
-            this.getNewUser(this.newPageParam)
-            this.getDealUser(this.dealPageParam)
-            this.getActiveUser(this.activePageParam)
-        }
+        searchCus:function(data){
+            this.getBreedDetailId(data)
+            this.getBreedDetailId(this.addBreedParam)
+            this.getAddBreedData(this.dealBreedParam)
+        },
+        callback_yes:function(data){
+	    	this.loadParam.data = data
+	    	this.getYestodayBreedData(this.loadParam)
+	    	//this.addBreedParam.data = 
+	    	//this.getAddBreedData(this.addBreedParam)
+	    	//this.getDealBreedData(this.dealBreedParam)
+    	},
+    	callback:function(data){
+    		this.addBreedParam.data = data.addNumberDetail
+    		this.dealBreedParam.data = data.transactionNumberDetail
+    		this.getAddBreedData(this.addBreedParam)
+    		this.getDealBreedData(this.dealBreedParam)
+    	}
     },
+
     created() {
     	console.log(this.initBreedBarChart)
-    	this.freshBreedBarCharts()
+    	this.getBreedDetailId(this.loadParam)
+    	this.freshBreedBarCharts(this.loadParam)   	
     },
     computed:{
 
@@ -228,11 +247,10 @@ export default {
     border-radius: 10px;
 }
 .bar_chart_left{
-    width: 600px;
+    width: 120px;
     height: 370px;
     text-align: center;
     float:left;
-    border-right:1px solid #ccc;;
 }
 .today_list_right{
     width: 580px;
@@ -247,7 +265,7 @@ export default {
 }
 .barchart {
     width: 100%;
-    width: 580px;
+    width: 1200px;
     height:370px;
     min-height: 100%;
 }

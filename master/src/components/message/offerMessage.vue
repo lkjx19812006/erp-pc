@@ -2,6 +2,7 @@
   <div>
     <p class="employee_right_title clear">
       <span class="left">{{$t('static.offer_message')}}</span>
+      <span class="left btn-danger unread" v-if="loadparam.total!=0">{{loadparam.total}}</span>
     </p>
     <div class="refreshBtn">
       <button class="btn btn-primary right" @click="refresh()">{{$t('static.refresh')}}</button>
@@ -79,7 +80,12 @@ export default {
   max-height: 647px;
   overflow-y: auto;
 }
-
+.unread{
+  font-size: 12px;
+  border-radius: 8px;
+  margin-left: 10px;
+  padding:0 5px
+}
 .employee_message_view {
   position: relative;
   border: 1px solid #ddd;

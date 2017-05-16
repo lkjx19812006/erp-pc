@@ -57,11 +57,7 @@
                 </div>
                 <!-- 左侧 -->
                 <div class="user_detail_left">
-					<new-addbreed></new-addbreed>
-                </div>
-                <!-- 右侧 -->
-                <div class="user_detail_right">
-					<new-dealbreed></new-dealbreed>
+					
                 </div>
             </div>
         </div>
@@ -71,8 +67,6 @@
 import pagination from '../pagination'
 import searchSome from '../count/countTable/searchSome'
 import linesCharts from '../count/countTable/linesCharts'
-import newDealbreed from '../count/countTable/newDealBreed'
-import newAddbreed from '../count/countTable/newAddBreed'
 import vSelect from '../tools/vueSelect/components/Select'
 import regionalUser from "../count/regionalUser.vue"
 import {
@@ -93,8 +87,6 @@ export default {
         linesCharts,
         searchSome,
         vSelect,
-        newDealbreed,
-        newAddbreed,
         regionalUser
     },
     props:['param'],
@@ -109,7 +101,7 @@ export default {
                 id:7,//国家id
                 salemanId:'',
                 callback:this.callback,
-                name:'我的品种统计'
+                name:'部门品种统计'
             },
             yestodayParam:{
                 cur:1,
@@ -162,7 +154,9 @@ export default {
         }
     },
     methods:{
-
+    	callback:function(){
+    		
+    	},
         searchCus:function(){
             this.getNewUserId(this.searchParam)
             this.getNewUser(this.newPageParam)
@@ -189,16 +183,7 @@ export default {
 .user_all{
     overflow: auto;
 }
-.mz-datepicker{    
-    width: 180px !important;
-}
-.show_type{
-    width: 100%;
-    height:40px;
-    line-height: 30px;
-    padding-top: 5px;
-    font-size:14px;
-}
+
 .line_today{
     width: 1200px;
     margin: 0 auto;
@@ -206,19 +191,8 @@ export default {
     overflow: hidden;
     border-radius: 10px;
 }
-.line_chart {
-    width: 1200px;
-    height: 380px;
-    text-align: center;
-    margin: 0 auto;
-    background-color:#fff;
-}
-.linechart {
-    width: 100%;
-    width: 1200px;
-    height:380px;
-    min-height: 100%;
-}
+
+
 .bar_today{
     width:1200px;
     margin: 30px auto;
@@ -291,22 +265,6 @@ export default {
 }
 .person_num:hover{
     text-decoration: underline;
-}
-.detail_left_top{
-    width: 100%;
-    height:400px;
-    background: #fff;
-    margin-bottom: 20px;
-    overflow: hidden;
-    border-radius: 10px;
-}
-.user_detail_right{
-    float: right;
-    height:800px;
-    width:580px;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
 }
 
 </style>

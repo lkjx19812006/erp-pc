@@ -571,10 +571,43 @@ export const initBreedLinesChart = (state) => { //获取我的品种统计折线
     return option
 }
 
+export const initOrgBreedLinesChart = (state) => { //获取部门品种统计折线图
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.orgBreedLinesChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.orgBreedLinesChartLoading))
+    }
+    return option
+}
+
+
+export const initAllBreedLinesChart = (state) => { //获取全部品种统计折线图
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.allBreedLinesChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.allBreedLinesChartLoading))
+    }
+    return option
+}
+
 export const initBreedRegionalchart = (state) => { //获取我的品种统计区域图
     const option = {
         options: JSON.parse(JSON.stringify(state.echarts.breedRegionalChartOption)),
         load: JSON.parse(JSON.stringify(state.echarts.breedRegionalChartLoading))
+    }
+    return option
+}
+
+export const initOrgBreedRegionalchart = (state) => { //获取部门品种统计区域图
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.orgBreedRegionalChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.orgBreedRegionalChartLoading))
+    }
+    return option
+}
+
+export const initAllBreedRegionalchart = (state) => { //获取全部品种统计区域图
+    const option = {
+        options: JSON.parse(JSON.stringify(state.echarts.allBreedRegionalChartOption)),
+        load: JSON.parse(JSON.stringify(state.echarts.allBreedRegionalChartLoading))
     }
     return option
 }
@@ -661,7 +694,7 @@ export const getOrgRegionalchart = (state) => { //部门区域数据
     return option
 }
 
-export const getAllRegionalchart = (state) => { //部门区域数据
+export const getAllRegionalchart = (state) => { //全部区域数据
     const option = {
         options: JSON.parse(JSON.stringify(state.echarts.allRegionalChartOption)),
         load: JSON.parse(JSON.stringify(state.echarts.allRegionalChartLoading))
@@ -670,7 +703,6 @@ export const getAllRegionalchart = (state) => { //部门区域数据
 }
 
 export const getYear = (state) => { //获取年份
-
     return JSON.parse(JSON.stringify(state.table.yearNum));
 }
 
@@ -689,6 +721,10 @@ export const getActiveUserDetail = (state) => { //获取活跃用户
 
 export const getYesTodayDetail = (state) => { //获取业务员昨日统计用户
     return JSON.parse(JSON.stringify(state.table.yestodayDetail))
+}
+
+export const initYesTodayBreed = (state) => { //初始化我的品种统计昨日成交品种
+    return JSON.parse(JSON.stringify(state.table.yestodayDealBreed))
 }
 
 export const getCusTypeDetail = (state) => { //获取业务员客户类型详情
@@ -729,4 +765,12 @@ export const getOrgProvinceDetail = (state) => { //获取部门省用户
 
 export const getAllProvinceDetail = (state) => { //获取部门省用户
     return JSON.parse(JSON.stringify(state.table.allProvinceDetail))
+}
+
+export const initAddBreedDetail = (state) => { //初始化我的品种统计新增品种详情
+    return JSON.parse(JSON.stringify(state.table.addBreedDetail))
+}
+
+export const initDealBreedDetail = (state) => { //初始化我的品种统计成交品种详情
+    return JSON.parse(JSON.stringify(state.table.dealBreedDetail))
 }
