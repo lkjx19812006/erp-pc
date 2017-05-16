@@ -368,6 +368,7 @@ export default {
             this.getActiveUser(this.activePageParam)
         },
         callback_yes:function(data){
+            console.log(data)
             this.yestodayParam.data = data
             this.getYestodayData(this.yestodayParam)
         }

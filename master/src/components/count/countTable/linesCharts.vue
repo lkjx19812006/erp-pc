@@ -57,20 +57,24 @@
             <div class="linechart" v-echarts="initBreedLinesChart.options" :loading="initBreedLinesChart.load"></div>
         </div>
         <div class="line_chart" v-if="param.name=='部门品种统计'">
-            <div class="linechart" v-echarts="initBreedLinesChart.options" :loading="initBreedLinesChart.load"></div>
+            <div class="linechart" v-echarts="initOrgBreedLinesChart.options" :loading="initOrgBreedLinesChart.load"></div>
         </div>
         <div class="line_chart" v-if="param.name=='全部品种统计'">
-            <div class="linechart" v-echarts="initBreedLinesChart.options" :loading="initBreedLinesChart.load"></div>
+            <div class="linechart" v-echarts="initAllBreedLinesChart.options" :loading="initAllBreedLinesChart.load"></div>
         </div>
     </div>
 </template>
 <script>
 import {
     initBreedLinesChart,
+    initOrgBreedLinesChart,
+    initAllBreedLinesChart,
     getYear,
 } from '../../../vuex/getters'
 import {
-    freshBreedLines
+    freshBreedLines,
+    freshOrgBreedLines,
+    freshAllBreedLines
 } from '../../../vuex/actions'
 
 export default {
@@ -95,10 +99,14 @@ export default {
     vuex: {
         getters: {
             initBreedLinesChart,
+            initOrgBreedLinesChart,
+            initAllBreedLinesChart,
             getYear
         },
         actions: {
             freshBreedLines,
+            freshOrgBreedLines,
+            freshAllBreedLines
         }
     },
     events: {
@@ -114,9 +122,21 @@ export default {
                 if(this.param.name=='我的品种统计'){
 		    		this.freshBreedLines(this.loadParam)
 		    	}
+		    	if(this.param.name=='部门品种统计'){
+		    		this.freshOrgBreedLines(this.loadParam)
+		    	}
+		    	if(this.param.name=='全部品种统计'){
+		    		this.freshAllBreedLines(this.loadParam)
+		    	}
             }else{
                 if(this.param.name=='我的品种统计'){
 		    		this.freshBreedLines(this.loadParam)
+		    	}
+		    	if(this.param.name=='部门品种统计'){
+		    		this.freshOrgBreedLines(this.loadParam)
+		    	}
+		    	if(this.param.name=='全部品种统计'){
+		    		this.freshAllBreedLines(this.loadParam)
 		    	}
             }            
         },
@@ -138,6 +158,12 @@ export default {
                 if(this.param.name=='我的品种统计'){
 		    		this.freshBreedLines(this.loadParam)
 		    	}
+		    	if(this.param.name=='部门品种统计'){
+		    		this.freshOrgBreedLines(this.loadParam)
+		    	}
+		    	if(this.param.name=='全部品种统计'){
+		    		this.freshAllBreedLines(this.loadParam)
+		    	}
             }else if(data=='year'){
                 var date = new Date()
                 var year = date.getFullYear()
@@ -145,6 +171,12 @@ export default {
                 this.loadParam.timeType = 'month'
                 if(this.param.name=='我的品种统计'){
 		    		this.freshBreedLines(this.loadParam)
+		    	}
+		    	if(this.param.name=='部门品种统计'){
+		    		this.freshOrgBreedLines(this.loadParam)
+		    	}
+		    	if(this.param.name=='全部品种统计'){
+		    		this.freshAllBreedLines(this.loadParam)
 		    	}               
             }
         },
@@ -160,6 +192,12 @@ export default {
     created() {
     	if(this.param.name=='我的品种统计'){
     		this.freshBreedLines(this.loadParam)
+    	}
+    	if(this.param.name=='部门品种统计'){
+    		this.freshOrgBreedLines(this.loadParam)
+    	}
+    	if(this.param.name=='全部品种统计'){
+    		this.freshAllBreedLines(this.loadParam)
     	}
         
     },

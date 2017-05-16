@@ -4,40 +4,59 @@
 		<table class="table table-hover table_color table-bordered table-striped ">
 			<thead>
 				<tr>
-					<td style="width: 146px">品种名称</td>
-					<td style="width: 148px">品种详情</td>
-					<td style="width: 146px">区域</td>
+					<td style="width: 146px">品种名称</td>					
+					<td style="width: 148px">报价次数</td>
+					<td style="width: 146px">产地</td>
 					<td style="width: 148px">时间</td>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>1</td>
-					<td>2</td>
-					<td>3</td>
-					<td>4</td>
+				<tr v-for="item in initAddBreedDetail">
+					<td>{{item.breedName}}</td>
+					<td>{{item.offerTotal}}</td>
+					<td>{{item.location}}</td>
+					<td>{{item.ctime | time}}</td>
 				</tr>
 			</tbody>
 		</table>
 		<div class="pages">
-			<pagination :combination="loadParam" slot="page"></pagination>
+			<pagination :combination="param" slot="page"></pagination>
 		</div>
 	</div>
 </template>
 
 <script>
 import pagination from '../../pagination'
+import {initAddBreedDetail} from '../../../vuex/getters'
+import {} from '../../../vuex/actions'
 export default{
 	components:{
 		pagination
 	},
+	vuex:{
+		getters:{
+			initAddBreedDetail,
+		},
+		action:{
+
+		}
+	},
+	props:['param'],
 	data(){
 		return {
 			loadParam:{
 				cur:1,
 				all:1,
-				total:3
+				total:3,
 			}
+		}
+	},
+	created:function(){
+
+	},
+	filters:{
+		time:function(data){
+			return data?data.substring(0,19):data
 		}
 	}
 }
