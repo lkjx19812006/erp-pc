@@ -44,7 +44,6 @@
                         <!-- 报价图片 -->
                         <div class="clearfix">
                             <div class="client-detailInfo col-md-9 col-xs-12">
-                                <div class="editlabel">报价图片:</div>
                                 <img v-for="item in initIntentionOfferDetail.offerFiles" :src="item" width="140px;" class="left" @click="clickBig(item)" />
                             </div>
                         </div>
@@ -81,8 +80,8 @@
                         <h4 class="section_title">意向信息</h4>
                         <div class="panel panel-default" style="border:none">
                             <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                <label class="col-md-3 col-sm-4 col-xs-6">客户姓名：{{initIntentionOfferDetail.intention.customerName}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">客户电话：{{initIntentionOfferDetail.intention.customerPhone}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">客户ID：{{initIntentionOfferDetail.intention.customerId}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">客户归属业务员：{{initIntentionOfferDetail.intention.employeeName}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">意向类型：{{initIntentionOfferDetail.intention.type | intentionType initIntentionOfferDetail.intention.especial initIntentionOfferDetail.intention.preSell}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">品种：{{initIntentionOfferDetail.intention.breedName}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">规格：{{initIntentionOfferDetail.intention.spec}}</label>

@@ -8407,6 +8407,7 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         "district": param.district,
         "location": param.location,
         "number": param.number,
+        "moq": param.moq,
         "quality": param.quality,
         "duedate": param.duedate,
         "images": param.images,
@@ -8477,6 +8478,7 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
         "district": param.district,
         "location": param.location,
         "number": param.number,
+        "moq": param.moq,
         "quality": param.quality,
         "duedate": param.duedate,
         "images": param.images, //产品图片

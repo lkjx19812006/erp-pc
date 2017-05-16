@@ -25,7 +25,7 @@
                         <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.accept===''}" @click="clickAccept('')">
                             全部
                         </button>
-                        <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='0'}" @click="clickAccept('0')">
+                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='0'}" @click="clickAccept('0')">
                             未处理
                         </button>
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='1'}" @click="clickAccept('1')">
@@ -54,7 +54,8 @@
                     <tr>
                         <th>报价时间</th>
                         <th>报价类型</th>
-                        <th>供应商名称</th>
+                        <th v-if="param.init=='initAllIndentOfferList'">供应商名称</th>
+                        <th>发布意向的客户</th>
                         <th>报价业务员</th>
                         <th>品种</th>
                         <th>规格</th>
@@ -71,7 +72,7 @@
                     <tr v-show="param.init=='initMyIndentOfferList'" v-for="item in initMyIndentOfferList">
                         <td>{{item.otime | date}}</td>
                         <td>{{item.source | offerType}}</td>
-                        <td>{{item.offerCustomerName}}</td>
+                        <td>{{item.buyCustomerName}}</td>
                         <td>{{item.offerEmployeeName}}</td>
                         <td><a @click="clickDetail(item.id)">{{item.breedName}}</a></td>
                         <td>{{item.spec}}</td>
@@ -103,8 +104,9 @@
                         <td>{{item.otime | date}}</td>
                         <td>{{item.source | offerType}}</td>
                         <td>{{item.offerCustomerName}}</td>
+                        <td>{{item.buyCustomerName}}</td>
                         <td>{{item.offerEmployeeName}}</td>
-                        <td>{{item.breedName}}</td>
+                        <td><a @click="clickDetail(item.id)">{{item.breedName}}</a></td>
                         <td>{{item.spec}}</td>
                         <td>{{item.location}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
@@ -195,7 +197,7 @@ export default {
                 offerEmployeeName: "",
                 breedId: "",
                 breedName: "",
-                accept: "0",
+                accept: "",
 
             },
             detailParam: {
@@ -248,7 +250,7 @@ export default {
             this.loadParam.offerEmployeeName = "";
             this.loadParam.breedId = "";
             this.loadParam.breedName = "";
-            this.loadParam.accept = "0";
+            this.loadParam.accept = "";
             this.selectSearch(this.loadParam);
         },
         clickDetail: function(id) {

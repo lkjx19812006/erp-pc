@@ -109,6 +109,16 @@
                                         <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}</option>
                                     </select>
                                 </div>
+                                <div class="editpage-input" style="float:left;width:50%">
+                                    <label class="editlabel" for="system">起订量</label>
+                                    <input type="number" v-model="param.moq" class="form-control edit-input" />
+                                </div>
+                                <div class="editpage-input" style="float:right;width:50%">
+                                    <label class="editlabel">单位</label>
+                                    <select v-model="param.unit" class="form-control edit-input" disabled="disabled">
+                                        <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}</option>
+                                    </select>
+                                </div>
                                 <div class="editpage-input" style="clear:both;padding-top:15px">
                                     <label class="editlabel">过期时间</label>
                                     <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" style="height:36px">

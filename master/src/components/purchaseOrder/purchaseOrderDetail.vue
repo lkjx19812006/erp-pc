@@ -6,6 +6,7 @@
         <offer-accept :param="offerAcceptParam" v-if="offerAcceptParam.show"></offer-accept>
         <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
+        <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
         <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con" v-show="param.show">
             <div @click.stop="param.show=false" class="top-title">
@@ -207,7 +208,7 @@
                                             <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept===''}" @click="clickAccept('')">
                                                 全部
                                             </button>
-                                            <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='0'}" @click="clickAccept('0')">
+                                            <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='0'}" @click="clickAccept('0')">
                                                 未处理
                                             </button>
                                             <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='1'}" @click="clickAccept('1')">
@@ -259,7 +260,7 @@
                                                         </td>
                                                         <td>{{item.offerCustomerName}}</td>
                                                         <td>{{item.offerEmployeeName}}</td>
-                                                        <td>{{item.breedName}}</td>
+                                                        <td><a @click="clickOfferDetail(item.id)">{{item.breedName}}</a></td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.location}}</td>
                                                         <td>{{item.number}}{{item.unit | Unit}}</td>
@@ -307,6 +308,7 @@ import breedsearchModel from '../intention/breedsearch'
 import tipsdialogModel from '../tips/tipDialog'
 import auditDialog from '../tips/auditDialog'
 import offerAccept from '../purchaseOrder/offerAccept'
+import detailModel from '../intention/offerDetail'
 import pressImage from '../../components/imagePress'
 import filter from '../../filters/filters.js'
 import {
@@ -333,6 +335,7 @@ export default {
         tipsdialogModel,
         pressImage,
         auditDialog,
+        detailModel,
         offerAccept,
         filter,
     },
@@ -411,6 +414,12 @@ export default {
 
             },
             intentionOrOffer: 0, //0(意向列表)1(报价列表)
+            detailParam: {
+                show: false,
+                loading: true,
+                link: "/intention/offers/",
+                id: "",
+            },
 
         }
     },
@@ -608,7 +617,11 @@ export default {
             this.tipsParam.name = name;
             this.offerAcceptParam.show = false;
             this.getOffersByIndentId(this.indentOfferParam);
-        }
+        },
+        clickOfferDetail: function(id) {
+            this.detailParam.show = true;
+            this.detailParam.id = id;
+        },
 
     },
     events: {
@@ -637,18 +650,18 @@ export default {
 <style scoped>
 .top-title {
     position: fixed;
-    z-index: 1088;
+    z-index: 1081;
     width: 60%;
     right: 0;
     left: 0;
 }
 
 .modal {
-    z-index: 1082;
+    z-index: 1081;
 }
 
 .modal_con {
-    z-index: 1082;
+    z-index: 1081;
     width: 60%;
 }
 
