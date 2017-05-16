@@ -1164,7 +1164,7 @@ Vue.filter('textDisplay', function(val, maxLength) { //文本内容显示，超�
 Vue.filter('offerAccept', function(val) { //文本内容显示，超过maxLength长度部分以...表示
     var val = val;
     if (val === 0) {
-        return "初始";
+        return "未处理";
     } else if (val == 1) {
         return "已接受";
     } else if (val == 2) {

@@ -32,7 +32,9 @@ export default {
     },
     methods: {
         addText: function(text) {
-            if (this.param.comments.split(',').indexOf(text) == -1) {
+            if (this.param.editType = "replace") { //替换（单选）
+                this.param.comments = text;
+            } else if (this.param.comments.split(',').indexOf(text) == -1) { //拼接
                 this.param.comments += text + ',';
             }
 

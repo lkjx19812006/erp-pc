@@ -26,12 +26,24 @@
                     <div class="col-md-12">
                         <!-- 报价信息 -->
                         <div class="clear section_title">
-                            <h4 class="pull-left">报价信息</h4>
+                            <h4 class="pull-left">报价信息
+                                <span v-if="initIntentionOfferDetail.offer.accept==0" class="warning">({{initIntentionOfferDetail.offer.accept | offerAccept}})</span>
+                                <span v-if="initIntentionOfferDetail.offer.accept==1" class="success">({{initIntentionOfferDetail.offer.accept | offerAccept}})</span>
+                                <span v-if="initIntentionOfferDetail.offer.accept==2 ||initIntentionOfferDetail.offer.accept==3" class="error">
+                                ({{initIntentionOfferDetail.offer.accept | offerAccept}}：
+                                    <Poptip placement="top" trigger="hover">
+                                        <span>{{initIntentionOfferDetail.offer.comments | textDisplay '20'}}</span>
+                                        <div class="api" slot="content">
+                                            {{initIntentionOfferDetail.offer.comments}}
+                                        </div>
+                                    </Poptip>)
+                                </span>
+                            </h4>
                             <button type="botton" class="btn btn-primary pull-right" @click="offerAccept(initIntentionOfferDetail.offer)">处理报价</button>
                         </div>
                         <!-- 报价图片 -->
                         <div class="clearfix">
-                            <div class="client-detailInfo col-md-9 col-xs-12" style="max-height:200px;overflow-y: auto;">
+                            <div class="client-detailInfo col-md-9 col-xs-12">
                                 <div class="editlabel">报价图片:</div>
                                 <img v-for="item in initIntentionOfferDetail.offerFiles" :src="item" width="140px;" class="left" @click="clickBig(item)" />
                             </div>
@@ -277,5 +289,21 @@ section article {
     color: #3399ff;
     max-width: 500px;
     white-space: normal;
+}
+
+.success {
+    color: #00cc66;
+}
+
+.warning {
+    color: #ff9900;
+}
+
+.error {
+    color: #ff3300;
+}
+
+.normal {
+    color: #657180;
 }
 </style>

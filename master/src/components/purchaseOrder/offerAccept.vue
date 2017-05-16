@@ -23,6 +23,7 @@ export default {
                 title: "处理报价",
                 show: true,
                 showText: true,
+                editType: "replace", //编辑方式,replace替换，link拼接
                 //快速编辑文本
                 quickText: [{
                     title: "未采用",

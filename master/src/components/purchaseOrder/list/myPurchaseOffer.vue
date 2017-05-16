@@ -26,7 +26,7 @@
                             全部
                         </button>
                         <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='0'}" @click="clickAccept('0')">
-                            初始
+                            未处理
                         </button>
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='1'}" @click="clickAccept('1')">
                             已接受
@@ -35,7 +35,7 @@
                             已拒绝
                         </button>
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='3'}" @click="clickAccept('3')">
-                            正在跟进
+                            待采用
                         </button>
                     </div>
                 </dl>
@@ -195,7 +195,7 @@ export default {
                 offerEmployeeName: "",
                 breedId: "",
                 breedName: "",
-                accept: "",
+                accept: "0",
 
             },
             detailParam: {
@@ -248,7 +248,7 @@ export default {
             this.loadParam.offerEmployeeName = "";
             this.loadParam.breedId = "";
             this.loadParam.breedName = "";
-            this.loadParam.accept = "";
+            this.loadParam.accept = "0";
             this.selectSearch(this.loadParam);
         },
         clickDetail: function(id) {

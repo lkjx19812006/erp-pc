@@ -208,7 +208,7 @@
                                                 全部
                                             </button>
                                             <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='0'}" @click="clickAccept('0')">
-                                                初始
+                                                未处理
                                             </button>
                                             <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='1'}" @click="clickAccept('1')">
                                                 已接受
@@ -217,7 +217,7 @@
                                                 已拒绝
                                             </button>
                                             <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='3'}" @click="clickAccept('3')">
-                                                正在跟进
+                                                待采用
                                             </button>
                                         </div>
                                         <button type="button" class="btn btn-primary" style="width:75px" @click="resetCondition()">

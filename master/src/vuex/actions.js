@@ -2159,16 +2159,18 @@ export const orgOrderAudit = ({ dispatch }, param) => { //订单申请审核（�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        param.callback(res.json().msg);
         param.show = false;
         param.description = "";
         data.index = param.index;
         data.key = param.key;
         data.validate = 1;
-
         if (res.json().code == 200) {
             dispatch(types.ORG_ORDER_AUDIT, data);
         }
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
+
 
     }, (res) => {
         console.log('fail');
@@ -2193,7 +2195,7 @@ export const orderApplyAuditAgain = ({ dispatch }, param) => { //订单重新申
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        param.callback(res.json().msg);
+
         param.show = false;
         param.description = "";
         data.index = param.index;
@@ -2202,6 +2204,9 @@ export const orderApplyAuditAgain = ({ dispatch }, param) => { //订单重新申
         console.log(res.json().result)
         if (res.json().code == 200) {
             dispatch(types.ORG_ORDER_AUDIT, data);
+        }
+        if (param.callback) {
+            param.callback(res.json().msg);
         }
 
     }, (res) => {
