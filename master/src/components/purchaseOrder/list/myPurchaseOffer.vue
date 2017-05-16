@@ -1,8 +1,9 @@
 <template>
     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
     <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
-    <custom-dialog :param="offerAcceptParam" v-if="offerAcceptParam.show"></custom-dialog>
+    <offer-accept :param="offerAcceptParam" v-if="offerAcceptParam.show"></offer-accept>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+    <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
@@ -72,7 +73,7 @@
                         <td>{{item.source | offerType}}</td>
                         <td>{{item.offerCustomerName}}</td>
                         <td>{{item.offerEmployeeName}}</td>
-                        <td>{{item.breedName}}</td>
+                        <td><a @click="clickDetail(item.id)">{{item.breedName}}</a></td>
                         <td>{{item.spec}}</td>
                         <td>{{item.location}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
@@ -136,8 +137,9 @@
 <script>
 import employeeModel from '../../clientRelate/searchEmpInfo'
 import breedsearchModel from '../../intention/breedsearch'
+import detailModel from '../../intention/offerDetail'
 import tipsdialogModel from '../../tips/tipDialog'
-import customDialog from '../../tips/customDialog'
+import offerAccept from '../../purchaseOrder/offerAccept'
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
@@ -156,7 +158,8 @@ export default {
         employeeModel,
         breedsearchModel,
         tipsdialogModel,
-        customDialog,
+        offerAccept,
+        detailModel,
         pagination,
         mglistModel
     },
@@ -195,6 +198,12 @@ export default {
                 accept: "",
 
             },
+            detailParam: {
+                show: false,
+                loading: true,
+                link: "/intention/offers/",
+                id: "",
+            },
             breedSearchParam: {
                 show: false
             },
@@ -209,28 +218,8 @@ export default {
             },
             offerAcceptParam: {
                 id: "",
-                accept: "",
-                comments: "",
                 callback: this.acceptOfferBack,
-                title: "处理报价",
-                show: false,
-                items: [{
-                    name: "取消",
-                    handle: this.acceptCancel,
-                    style: "btn-warning"
-                }, {
-                    name: "接受",
-                    handle: this.acceptOffer,
-
-                }, {
-                    name: "不接受",
-                    handle: this.refuseOffer,
-
-                }, {
-                    name: "继续跟进",
-                    handle: this.trackOffer,
-                }]
-
+                show: false
             },
             tipsParam: {
                 show: false,
@@ -262,30 +251,15 @@ export default {
             this.loadParam.accept = "";
             this.selectSearch(this.loadParam);
         },
+        clickDetail: function(id) {
+            this.detailParam.show = true;
+            this.detailParam.id = id;
+        },
         offerAccept: function(item) {
-            this.offerAcceptParam.comments = "";
             this.offerAcceptParam.id = item.id;
             this.offerAcceptParam.show = true;
         },
-        //取消
-        acceptCancel: function() {
-            this.offerAcceptParam.show = false;
-        },
-        //接受
-        acceptOffer: function() {
-            this.offerAcceptParam.accept = 1;
-            this.handleOfferAccept(this.offerAcceptParam);
-        },
-        //拒绝
-        refuseOffer: function() {
-            this.offerAcceptParam.accept = 2;
-            this.handleOfferAccept(this.offerAcceptParam);
-        },
-        //跟进
-        trackOffer: function() {
-            this.offerAcceptParam.accept = 3;
-            this.handleOfferAccept(this.offerAcceptParam);
-        },
+
         //成功后回调
         acceptOfferBack: function(name) {
             this.tipsParam.show = true;

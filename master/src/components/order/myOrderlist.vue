@@ -615,7 +615,6 @@ export default {
                 this.auditParam.title = this.$t('static.reapply');
             }
             this.auditParam.callback = this.applyBack;
-            localtion.reload(); //提交审核后自动刷新
         },
         cancelOrder: function(id, index) {
             this.cancelParam.id = id;
@@ -648,7 +647,7 @@ export default {
         },
         newOrder: function() {
             //新建订单时将一些之前填入的信息请空
-            
+
             this.createParam.goods = [];
             this.createParam.total = "";
             this.createParam.cost = "";

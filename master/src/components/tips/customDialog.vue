@@ -5,9 +5,12 @@
         <div class="model-header">
             <h4>{{param.title}}</h4>
             <div class="model-tips clearfix">
-                <!-- <span v-for="item in param.quickText">
-                    <label style="cursor:pointer" class="quick_edit" @click="addText(item.text)">{{item.text}}&nbsp;&nbsp;</label>
-                </span> -->
+                <div v-show="param.showText" v-for="item in param.quickText">
+                    <div>
+                        <label>{{item.title}}:</label>
+                        <span v-for="text in item.texts" style="cursor:pointer" class="quick_edit" @click="addText(text)">{{text}}&nbsp;&nbsp;</span>
+                    </div>
+                </div>
                 <textarea v-model='param.comments' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5"></textarea>
             </div>
             <div class="model-footer">
@@ -53,6 +56,10 @@ export default {
     display: block;
 }
 
+.model-tips {
+    padding: 20px 10px;
+}
+
 .big-font {
     font-size: 36px;
 }
@@ -72,5 +79,15 @@ export default {
 
 .btn {
     margin-left: 10px;
+}
+
+label {
+    font-size: 14px;
+    color: #3399ff;
+}
+
+span {
+    font-size: 12px;
+    color: #3399ff;
 }
 </style>

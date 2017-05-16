@@ -1166,16 +1166,16 @@ Vue.filter('offerAccept', function(val) { //文本内容显示，超过maxLength
     if (val === 0) {
         return "初始";
     } else if (val == 1) {
-        return "接受";
+        return "已接受";
     } else if (val == 2) {
-        return "拒绝";
+        return "未采用";
     } else {
-        return "跟进中";
+        return "待采用";
     }
 
 });
 
-Vue.filter('offerType', function(val) { //文本内容显示，超过maxLength长度部分以...表示
+Vue.filter('offerType', function(val) { //报价类型
     var val = val;
     if (val === 0) {
         return "业务员";
@@ -1185,6 +1185,24 @@ Vue.filter('offerType', function(val) { //文本内容显示，超过maxLength�
         return "库存信息";
     } else {
         return "供应意向";
+    }
+
+});
+
+Vue.filter('intentionType', function(type, especial, preSell) { //意向类型
+
+    if (type === 1 && especial === 1 && preSell === 1) {
+        return "预售资源";
+    } else if (type === 1 && especial === 1) {
+        return "低价资源";
+    } else if (type === 1 && especial === 0) {
+        return "普通供应";
+    } else if (type === 0 && especial === 1) {
+        return "紧急求购";
+    } else if (type === 0 && especial === 0) {
+        return "普通求购";
+    } else {
+        return "其他";
     }
 
 });

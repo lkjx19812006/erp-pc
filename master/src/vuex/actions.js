@@ -254,7 +254,7 @@ export const freshLinesCharts = ({ dispatch }, getCharList) => {
     });
 }
 
-export const freshBreedLines = ({ dispatch }, getCharList) => {//我的品种统计折线图
+export const freshBreedLines = ({ dispatch }, getCharList) => { //我的品种统计折线图
     if (getCharList) getCharList.load = true;
     var startTime, endTime
     if (getCharList.timeType == 'month') {
@@ -1021,7 +1021,7 @@ export const getAllOrgData = ({ dispatch }, param) => { //获取全部部门详�
             console.log('fail');
         });
     }
-//我的统计柱状图
+    //我的统计柱状图
 export const freshColCharts = ({ dispatch }, param) => {
     var date = new Date();
     var year = date.getFullYear()
@@ -1065,7 +1065,7 @@ export const freshColCharts = ({ dispatch }, param) => {
     })
 };
 
-export const freshBreedBarCharts = ({ dispatch }, param) => {//我的品种统计柱状图
+export const freshBreedBarCharts = ({ dispatch }, param) => { //我的品种统计柱状图
     var date = new Date();
     var year = date.getFullYear()
     var month = date.getMonth() / 1 + 1
@@ -1089,7 +1089,7 @@ export const freshBreedBarCharts = ({ dispatch }, param) => {//我的品种统�
     }
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/productCount/getEmployeeBreedStatistics',//暂未更新
+        url: '/crm/api/v1/productCount/getEmployeeBreedStatistics', //暂未更新
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -1100,7 +1100,7 @@ export const freshBreedBarCharts = ({ dispatch }, param) => {//我的品种统�
 
     }).then((res) => {
         dispatch(types.CHANGE_BREEDBARCHARTS, res.json().result.list)
-        //param.callback_yes(res.json().result.list[0].addNumberDetail)
+            //param.callback_yes(res.json().result.list[0].addNumberDetail)
     }, (res) => {
         console.log('fail')
     })
@@ -1186,7 +1186,7 @@ export const freshBreedRegionalCharts = ({ dispatch }, param) => {
     }
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/count/getEmployeeCustomerNumberByProvinces',//暂未更新
+        url: '/crm/api/v1/count/getEmployeeCustomerNumberByProvinces', //暂未更新
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -1198,7 +1198,7 @@ export const freshBreedRegionalCharts = ({ dispatch }, param) => {
         console.log(res.json())
         param = res.json().result.list
         dispatch(types.BREED_REGIONAL_DETAIL, res.json().result.list)
-        //dispatch(types.ALL_PROVINCE_DETAIL, res.json().result.list)
+            //dispatch(types.ALL_PROVINCE_DETAIL, res.json().result.list)
     }, (res) => {
         console.log('fail')
     })
@@ -6595,7 +6595,7 @@ export const getOffersByIndentId = ({ dispatch }, param) => { //根据意向ID�
     })
 }
 
-export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的（采购单下）报价列表
+export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的（全部的、采购单下）报价列表
     param.loading = true;
     let url = "/crm/api/v1" + param.link;
     const body = {
@@ -6635,6 +6635,30 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
 
     })
 }
+
+export const getOfferDetail = ({ dispatch }, param) => { //报价详情
+    param.loading = true;
+    let url = "/crm/api/v1" + param.link + param.id;
+    const body = {
+        id: param.id
+    };
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        param.loading = false;
+        var result = res.json().result;
+        dispatch(types.INTENTION_OFFER_DETAIL, result);
+    }, (res) => {
+        param.loading = false;
+
+    })
+}
+
 
 export const handleOfferAccept = ({ dispatch }, param) => { //根据意向ID获取报价
     param.loading = true;
@@ -8075,7 +8099,7 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
     if (param.leavedate) {
         param.leavedate = param.leavedate.split(' ')[0] + ' 00:00:00';
     }
-    const data1 = {
+    const data = {
         "name": param.name,
         "ename": param.ename,
         "no": param.no,
@@ -8097,7 +8121,7 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
         method: "POST",
         url: apiUrl.clientList + param.url,
         emulateHTTP: true,
-        body: data1,
+        body: data,
         emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest",

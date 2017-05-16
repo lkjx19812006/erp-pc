@@ -3,7 +3,7 @@
         <cart-model :param="orderParam" v-if="orderParam.show"></cart-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-        <custom-dialog :param="offerAcceptParam" v-if="offerAcceptParam.show"></custom-dialog>
+        <offer-accept :param="offerAcceptParam" v-if="offerAcceptParam.show"></offer-accept>
         <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
         <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
@@ -306,7 +306,7 @@ import employeeModel from '../clientRelate/searchEmpInfo'
 import breedsearchModel from '../intention/breedsearch'
 import tipsdialogModel from '../tips/tipDialog'
 import auditDialog from '../tips/auditDialog'
-import customDialog from '../tips/customDialog'
+import offerAccept from '../purchaseOrder/offerAccept'
 import pressImage from '../../components/imagePress'
 import filter from '../../filters/filters.js'
 import {
@@ -333,7 +333,7 @@ export default {
         tipsdialogModel,
         pressImage,
         auditDialog,
-        customDialog,
+        offerAccept,
         filter,
     },
     props: ['param'],
@@ -406,28 +406,8 @@ export default {
             },
             offerAcceptParam: {
                 id: "",
-                accept: "",
-                comments: "",
                 callback: this.acceptOfferBack,
-                title: "处理报价",
-                show: false,
-                items: [{
-                    name: "取消",
-                    handle: this.acceptCancel,
-                    style: "btn-warning"
-                }, {
-                    name: "接受",
-                    handle: this.acceptOffer,
-
-                }, {
-                    name: "不接受",
-                    handle: this.refuseOffer,
-
-                }, {
-                    name: "继续跟进",
-                    handle: this.trackOffer,
-
-                }]
+                show: false
 
             },
             intentionOrOffer: 0, //0(意向列表)1(报价列表)
@@ -618,29 +598,10 @@ export default {
             this.auditParam.index = index
         },
         offerAccept: function(item) {
-            this.offerAcceptParam.comments = "";
             this.offerAcceptParam.id = item.id;
             this.offerAcceptParam.show = true;
         },
-        //取消
-        acceptCancel: function() {
-            this.offerAcceptParam.show = false;
-        },
-        //接受
-        acceptOffer: function() {
-            this.offerAcceptParam.accept = 1;
-            this.handleOfferAccept(this.offerAcceptParam);
-        },
-        //拒绝
-        refuseOffer: function() {
-            this.offerAcceptParam.accept = 2;
-            this.handleOfferAccept(this.offerAcceptParam);
-        },
-        //跟进
-        trackOffer: function() {
-            this.offerAcceptParam.accept = 3;
-            this.handleOfferAccept(this.offerAcceptParam);
-        },
+
         //成功后回调
         acceptOfferBack: function(name) {
             this.tipsParam.show = true;
