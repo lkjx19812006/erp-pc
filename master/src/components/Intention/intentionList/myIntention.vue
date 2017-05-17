@@ -778,24 +778,23 @@ export default {
         },
         modifyIntention: function(param) {
             this.createParam = param;
-            console.log(param);
             this.createParam.callback = this.modifyback;
         },
         modifyback: function(title) {
-            this.getIntentionList(this.loadParam);
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
+            this.getIntentionList(this.loadParam);
         },
         createIntention: function(param) {
             this.createParam = param;
             this.createParam.callback = this.createback;
         },
         createback: function(title) {
-            this.getIntentionList(this.loadParam);
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
+            this.getIntentionList(this.loadParam);
         },
         applyAudit: function(index, id) {
             this.auditParam.indexs = [];

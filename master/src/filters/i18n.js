@@ -51,8 +51,8 @@ var locales = {
             type: '类型',
             special: '特殊的',
             client_name: '客户名称',
-            client_id:'客户ID',
-            loginClient_id:'注册客户ID',
+            client_id: '客户ID',
+            loginClient_id: '注册客户ID',
             supplier_name: '供应商名称',
             client_phone: '客户联系方式',
             client_email: '邮箱',
@@ -183,6 +183,7 @@ var locales = {
             file_path: '预览',
             file_origin: '文件来源',
             inquiry_again: '再次询价',
+            quote_again: '再次报价',
             upload: '上传',
             specification: '规格',
             certificate: '资质证书',
@@ -566,7 +567,7 @@ var locales = {
             Enter_search: '按回车键搜索',
             upload_clients: 'excel导入客户',
             two_decimal: '至多两位小数',
-            offer_message:'报价消息'
+            offer_message: '报价消息'
         }
     },
     en: {
@@ -628,7 +629,7 @@ var locales = {
             consignee: 'Consignee',
             client_name: 'Company name',
             client_id: 'Company ID',
-            loginClient_id:'LoginClientID',
+            loginClient_id: 'LoginClientID',
             supplier_name: 'Vendor name',
             client_phone: 'Contact person phone',
             client_email: 'Email',
@@ -1126,7 +1127,7 @@ var locales = {
             Enter_search: 'Click enter to search',
             upload_clients: 'upload clients by .xlsx',
             two_decimal: 'at most two decimal places',
-            offer_message:'Quote message'
+            offer_message: 'Quote message'
         }
     }
 }

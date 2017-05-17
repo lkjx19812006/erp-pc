@@ -2334,12 +2334,12 @@ export const orgOrderAudit = ({ dispatch }, param) => { //订单申请审核（�
     }).then((res) => {
         param.show = false;
         param.description = "";
-        data.index = param.index;
+        /*data.index = param.index;
         data.key = param.key;
         data.validate = 1;
         if (res.json().code == 200) {
             dispatch(types.ORG_ORDER_AUDIT, data);
-        }
+        }*/
         if (param.callback) {
             param.callback(res.json().msg);
         }
@@ -2371,13 +2371,12 @@ export const orderApplyAuditAgain = ({ dispatch }, param) => { //订单重新申
 
         param.show = false;
         param.description = "";
-        data.index = param.index;
+        /*data.index = param.index;
         data.key = param.key;
         data.validate = 1;
-        console.log(res.json().result)
         if (res.json().code == 200) {
             dispatch(types.ORG_ORDER_AUDIT, data);
-        }
+        }*/
         if (param.callback) {
             param.callback(res.json().msg);
         }
@@ -2413,13 +2412,13 @@ export const orderOrgAudit = ({ dispatch }, param) => { //订单部门主管审�
         param.callback(res.json().msg);
         param.show = false;
         param.description = "";
-        data.index = param.index;
+        /*data.index = param.index;
         data.key = param.key;
         data.validate = param.validate;
         data.logistics = res.json().result.logistics;
         if (res.json().code == 200) {
             dispatch(types.ORG_ORDER_AUDIT, data);
-        }
+        }*/
 
     }, (res) => {
         console.log('fail');
@@ -2502,7 +2501,7 @@ export const logisticsInfo = ({ dispatch }, param) => { //物流查看详情
     })
 }
 export const createOrder = ({ dispatch }, data) => { //创建订单
-    console.log(data);
+
     if (data.city == null || data.city == '' || !data.city) {
         data.city = '';
     }
@@ -5400,8 +5399,20 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
     if (param.supplier) {
         data.supplier = param.supplier;
     }
+    if (param.country) {
+        data.country = param.country;
+    } else {
+        data.country = -1;
+    }
+    if (param.province) {
+        data.province = param.province;
+    } else {
+        data.province = -1;
+    }
     if (param.city) {
         data.city = param.city;
+    } else {
+        data.city = -1;
     }
     if (param.cityName) {
         data.cityName = param.cityName;
@@ -5911,6 +5922,7 @@ export const createRemark = ({ dispatch }, param) => { //新增客户备注
 export const createProduct = ({ dispatch }, param) => { //新增客户产品
     const data = {
         /*"type": param.type,*/
+        "cType": param.cType,
         "name": param.breedName, //默认产品名就是品种名
         "breedId": param.breedId,
         /*"quality": param.quality,*/
@@ -6452,7 +6464,7 @@ export const createOrderByPurchase = ({ dispatch }, param) => { //采购单报�
         console.log("success");
         param.show = false;
         if (param.callback) {
-            param.callback(res.json().msg + "，稍后将跳转到我的订单页面");
+            param.callback(res.json().msg);
         }
 
 
@@ -8430,10 +8442,11 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         }
     }).then((res) => {
         console.log('修改成功!!!!')
-
         param.show = false;
         param.ctime = param.ctime;
-        //param.callback(res.json().msg);
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
         if (res.json().code == 200) {
             dispatch(types.UPDATA_INTENTION_DATA, param);
         }

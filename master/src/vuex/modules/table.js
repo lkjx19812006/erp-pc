@@ -1129,7 +1129,6 @@ const mutations = {
     },
     [ORG_ORDER_AUDIT](state, data) { //审核部门订单(个人)
         state.basicBaseList[data.key][data.index].validate = data.validate;
-        console.log(state.basicBaseList[data.key][data.index].validate)
         state.basicBaseList[data.key][data.index].logistics = data.logistics;
     },
     [BATCH_ORG_ORDER](state, data) { // 批量审核部门订单
@@ -1200,7 +1199,6 @@ const mutations = {
 
     },
     [ORDER_ADD_DATA](state, data) { //创建订单
-        console.log(data)
         if (data.key == 'intentionDetail') {
             console.log('意向详情采纳报价');
             state.basicBaseList.intentionDetail.offers.arr[data.index].orderTime++;
@@ -1211,7 +1209,6 @@ const mutations = {
             state.basicBaseList[data.key][data.index].orderTime++;
         }
         if (data.key == 'myOrderList') {
-            console.log(data)
             state.basicBaseList[data.key].unshift({
                 "type": data.type,
                 "sourceType": data.sourceType,
@@ -2252,10 +2249,9 @@ const mutations = {
             "onSell": 0
         };*/
         data.onSell = 0;
-        console.log(data);
         if (data.key == "myIntentionList") {
             console.log("意向列表页添加意向");
-            state.basicBaseList.myIntentionList.unshift(data);
+            //state.basicBaseList.myIntentionList.unshift(data);
         }
         if (data.key == "user") {
             console.log("会员详情页添加意向");
@@ -2408,15 +2404,15 @@ const mutations = {
         state.allCusTypeDetail = data
     },
     //我的品种统计新增详情
-    [CHANGE_ADDBREEDDETAIL](state,data){
+    [CHANGE_ADDBREEDDETAIL](state, data) {
         state.addBreedDetail = data
     },
     //我的品种统计成交详情
-    [CHANGE_DEALBREEDDETAIL](state,data){
+    [CHANGE_DEALBREEDDETAIL](state, data) {
         state.dealBreedDetail = data
     },
     //我的品种统计昨日成交详情
-    [YESTODAY_BREED_DETAIL](state,data){
+    [YESTODAY_BREED_DETAIL](state, data) {
         state.yestodayDealBreed = data
     }
 }

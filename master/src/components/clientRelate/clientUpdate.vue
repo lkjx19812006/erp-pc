@@ -50,15 +50,15 @@
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">{{$t('static.province')}}</label>
-                                <input type="text" v-if="!country.cname" class="form-control edit-input" placeholder="请先选择一个国家" disabled="disabled" v-model='param.provinceName' value="{{param.provinceName}}" />
-                                <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname" v-if="country.cname">
+                                <input type="text" v-if="!country.id" class="form-control edit-input" placeholder="请先选择一个国家" disabled="disabled" v-model='province.cname' value="{{param.provinceName}}" />
+                                <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname" v-if="country.id">
                                 </v-select>
                                 <!-- <input type="text" v-model='param.province' class="form-control edit-input" value="{{param.province}}" /> -->
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">{{$t('static.city')}}</label>
-                                <input type="text" v-if="!province.cname" class="form-control edit-input" placeholder="请先选择一个省" v-model='param.cityName' value="{{param.cityName}}" />
-                                <v-select :debounce="250" :value.sync="city" :options="initCitylist" placeholder="市/City" label="cname" v-if="province.cname">
+                                <input type="text" v-if="!province.id" class="form-control edit-input" placeholder="请先选择一个省" disabled="disabled" v-model='city.cname' />
+                                <v-select :debounce="250" :value.sync="city" :options="initCitylist" placeholder="市/City" label="cname" v-if="province.id">
                                 </v-select>
                                 <!-- <input type="text" v-model='param.city' class="form-control edit-input" value="{{param.city}}" /> -->
                             </div>
@@ -170,14 +170,17 @@ export default {
                 orgName: ''
             },
             province: {
-                cname: ''
+                cname: '',
+                id: ''
             },
             city: {
-                cname: ''
+                cname: '',
+                id: ''
             },
             country: {
                 cname: '',
                 cnameEn: '',
+                id: ''
             },
             countryParam: {
                 loading: false,
@@ -232,17 +235,13 @@ export default {
         selectProvince: function() {
             this.province = '';
             this.city = '';
-
-            this.param.province = this.province.cname;
-            this.param.city = this.city.cname;
             if (this.country != '' && this.country != null) {
                 this.getProvinceList(this.country);
             }
+
         },
         selectCity: function() {
             this.city = '';
-
-            this.param.city = this.city.cname;
             if (this.province != '' && this.province != null) {
                 this.getCityList(this.province);
             }
@@ -301,8 +300,16 @@ export default {
     created() {
         if (this.param.country) {
             this.country.cnameEn = this.param.countryName;
+            this.country.id = this.param.country;
             this.province.cname = this.param.provinceName;
+            this.province.id = this.param.province;
             this.city.cname = this.param.cityName;
+            this.city.id = this.param.id;
+            //联动
+            this.countryParam.country = this.param.country;
+            this.countryParam.province = this.param.province;
+            this.countryParam.city = this.param.city;
+
         }
         this.getCountryList(this.countryParam);
         this.getUserTypeList(this.countryParam);

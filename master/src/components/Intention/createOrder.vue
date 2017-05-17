@@ -45,8 +45,6 @@
                                         <a>{{$t('static.edit')}}</a>
                                     </td>
                                     <td v-else>{{$t('static.edit')}}</td>
-                                    <!-- <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
-                                <td v-else>{{$t('static.del')}}</td> -->
                                 </tr>
                             </tbody>
                         </table>
@@ -71,12 +69,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="editpage-input col-md-6">
-                                        <label class="editlabel">{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
-                                        <select v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}">
-                                            <option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}</option>
-                                        </select>
-                                    </div> -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.price')}}<span class="system_danger" v-if="$inner.price.required">{{$t('static.required')}}</span></label>
                                         <div style="clear:both;height:36px;">
@@ -469,6 +461,12 @@ export default {
             this.updateParam.show = false;
         },
         changeTotal: function() {
+            if (!this.param.incidentals) {
+                this.param.incidentals = 0;
+            }
+            if (!this.param.preferential) {
+                this.param.preferential = 0;
+            }
             this.param.total = (parseFloat(this.param.goods[0].price * this.param.goods[0].number) * 100 + parseFloat(this.param.incidentals) * 100 - parseFloat(this.param.preferential) * 100) / 100;
             this.param.cost = (parseFloat(this.param.goods[0].costPrice * this.param.goods[0].number) * 100) / 100;
         },

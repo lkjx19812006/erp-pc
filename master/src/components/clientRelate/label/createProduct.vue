@@ -49,6 +49,13 @@
                                     </input-select>
                                 </div>
                             </div>
+                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                <label class="editlabel">产品供需：</label>
+                                <select v-model="param.cType" class="form-control">
+                                    <option value="0">客户供应</option>
+                                    <option value="1">客户求购</option>
+                                </select>
+                            </div>
                             <!-- <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">产品质量</label>
                                 <input type="text" class="form-control" v-model="param.quality" value="{{param.quality}}" />

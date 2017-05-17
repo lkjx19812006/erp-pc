@@ -555,9 +555,7 @@ export default {
                 } else {
                     this.param.district = '';
                 }
-                //this.tipParam.name = '新建意向成功';
                 this.param.show = false;
-                this.param.callback = this.param.callback;
                 this.createIntentionInfo(this.param);
             }
             if (this.param.flag == 1) { //如果是修改意向
@@ -565,12 +563,10 @@ export default {
                 this.param.province = this.province.id;
                 this.param.city = this.city.id;
                 this.param.district = this.district.id;
-                //this.tipParam.name = '修改意向成功';
                 this.param.show = false;
-                this.param.callback = this.param.callback;
                 this.editintentInfo(this.param);
             }
-            this.param.callback = this.param.callback;
+
         },
         reset: function(type) {
             if (type == "duedate") {

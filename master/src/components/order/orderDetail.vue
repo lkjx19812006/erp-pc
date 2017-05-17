@@ -144,14 +144,14 @@
                                     </div>
                                 </div>
                                 <!-- 采销对应 -->
-                                <div class="panel panel-default">
+                                <div v-if="initOrderDetail.type==0&&initOrderDetail.intl===0" class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
                                                 key:'linkOrder'
                                             })">
                                             <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
                                             <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initLinkOrder.arr.length!==null">
-                                              采销对应（{{initLinkOrder.arr.length}}）
+                                              对应销售订单（{{initLinkOrder.arr.length}}）
                                             </a>
                                         </h4>
                                     </div>
@@ -159,6 +159,7 @@
                                         <div class="panel-body panel-set">
                                             <table class="table  contactSet">
                                                 <thead>
+                                                    <th>销售订单ID</th>
                                                     <th>品种</th>
                                                     <th>数量</th>
                                                     <th>
@@ -168,6 +169,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initLinkOrder.arr">
+                                                        <th></th>
                                                         <td>{{item.breedName}}</td>
                                                         <td>{{item.number}}{{item.unit | Unit}}</td>
                                                         <td>
@@ -198,12 +200,17 @@
                                         <div class="panel-body panel-set">
                                             <table class="table  contactSet">
                                                 <thead>
+                                                    <th>采购订单ID</th>
                                                     <th>品种</th>
                                                     <th>数量</th>
                                                     <th>采购业务员</th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.orderLinkList.arr">
+                                                        <td>
+                                                            <span v-if="item.buyId!=''">{{item.buyId}}</span>
+                                                            <span v-else>未生成采购订单</span>
+                                                        </td>
                                                         <td>{{item.breedName}}</td>
                                                         <td>{{item.number}}{{item.unit | Unit}}</td>
                                                         <td>{{item.buyEmployeeName}}</td>

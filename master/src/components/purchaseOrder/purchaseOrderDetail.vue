@@ -592,12 +592,14 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
             let _this = this;
-            setTimeout(function() {
-                _this.$router.go({ //成功后跳转到我的订单页面
-                    path: 'order?id=0'
-                });
-            }, 500);
-
+            if (name == "success") {
+                this.tipsParam.name = name + "，稍后将跳转到我的订单页面";
+                setTimeout(function() {
+                    _this.$router.go({ //成功后跳转到我的订单页面
+                        path: 'order?id=0'
+                    });
+                }, 500);
+            }
         },
         editDes: function(index, sub, offer) {
             this.auditParam.show = true;
