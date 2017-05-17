@@ -181,8 +181,18 @@ Vue.filter('orderDescript', function(val) {
     var val = val;
     if (val == null) {
         return '无';
+    } else if (val == 0) {
+        return this.$t('static.after_making_the_order');
+    } else if (val == 10) {
+        return this.$t('static.after_making_the_order');
     } else if (val == 20) {
         return this.$t('static.signing_contract');
+    } else if (val == 30) {
+        return this.$t('static.signing_contract');
+    } else if (val == 40) {
+        return this.$t('static.signing_contract');
+    } else if (val == 50) {
+        return this.$t('static.after_delivery');
     } else if (val == 60) {
         return this.$t('static.confirm_receipt');
     } else if (val == 70) {

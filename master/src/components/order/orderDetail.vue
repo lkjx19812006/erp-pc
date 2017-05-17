@@ -251,10 +251,10 @@
                                                     <tr v-for="item in initOrderDetail.stages.arr">
                                                         <td v-if="item.type==0">{{$t('static.paid')}}</td>
                                                         <td v-if="item.type==1">{{$t('static.income')}}</td>
-                                                        <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}}
+                                                        <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}} {{$t('static.immediately_pay')}} {{item.amount}} {{initOrderDetail.currency | Currency}}
                                                             <!-- （{{$t('static.order_amount')}} {{item.ratio | advanced}}） -->
                                                         </td>
-                                                        <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}} {{$t('static.ins')}} {{item.extra}} {{$t('static.day')}}
+                                                        <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}} {{item.extra}} {{$t('static.day')}} {{$t('static.immediately_pay')}} {{item.amount}} {{initOrderDetail.currency | Currency}}
                                                             <!-- （{{$t('static.order_amount')}} {{item.ratio | advanced}}） -->
                                                         </td>
                                                         <td>{{item.comment}}</td>
@@ -460,7 +460,7 @@
                                               bizType:'order_contract',
                                               orderContractList:'',
                                               titles:'上传合同'
-                                              })" 
+                                              })"
                                               v-if="initOrderDetail.contractList.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&(initOrderDetail.orderStatus<20||initOrderDetail.orderStatus==70)&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
                                       <button v-else></button>
                                   </h4>
@@ -690,7 +690,7 @@
       <div class="top-title">
           <span class="glyphicon glyphicon-remove-circle" @click="param.show=false"></span>
       </div>
-     
+
      </div> -->
 </template>
 <script>
@@ -870,7 +870,7 @@ export default {
                 for (let k = 0; k < orderLinkList.length; k++) {
                     if (orderLinkList[k].sellGoodsId == goods[i].id) {
                         // 待报价条目所处的状态,0初始，1添加，2编辑,在actions中处理
-                        //orderLinkList[k].flag = 0; 
+                        //orderLinkList[k].flag = 0;
                         if (orderLinkList[k].id) {
                             this.purchaseParam.orderLinkBack.push(orderLinkList[k]);
                         }
