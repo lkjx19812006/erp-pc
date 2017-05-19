@@ -1871,7 +1871,7 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
             url += '&orderNo=' + param[key];
         }
         if (key == 'id' && param[key] !== '') {
-            url += 'id=' + param[key];
+            url += '&id=' + param[key];
         }
         if (key == 'startTime' && param[key] !== '') {
             url += '&startTime=' + param[key];
