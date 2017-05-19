@@ -24,6 +24,8 @@ import {
     CHANGE_ALLCOLCHARTS,
     CHANGE_BREEDLINESCHARTS,
     CHANGE_BREEDBARCHARTS,
+    CHANGE_ORGBREEDBARCHARTS,
+    CHANGE_ALLBREEDBARCHARTS,
     BREED_REGIONAL_DETAIL,
     ORGBREED_REGIONAL_DETAIL,
     ALLBREED_REGIONAL_DETAIL,
@@ -1293,7 +1295,7 @@ const state = {
             trigger: 'item',
             formatter: function(params) {  
                 var res = params.name+'<br/>';  
-                var myseries = options.series;  
+                var myseries = option.series;  
                 for (var i = 0; i < myseries.length; i++) {  
                     res+= myseries[i].name;  
                     for(var j=0;j<myseries[i].data.length;j++){  
@@ -1308,11 +1310,11 @@ const state = {
         legend: {
             orient: 'vertical',
             left: 'left',
-            data:['新增用户','活跃用户','成交用户']
+            data:['新增品种','品种总数']
         },
         visualMap: {
             min: 0,
-            max: 200,
+            max: 100,
             left: 'left',
             top: 'bottom',
             text: ['高','低'],           // 文本，默认为数值文本
@@ -1331,7 +1333,7 @@ const state = {
         },
         series: [
             {
-                name: '新增用户',
+                name: '新增品种',
                 type: 'map',
                 mapType: 'china',
                 roam: false,
@@ -1381,56 +1383,7 @@ const state = {
                 ]
             },
             {
-                name: '活跃用户',
-                type: 'map',
-                mapType: 'china',
-                label: {
-                    normal: {
-                        show: true
-                    },
-                    emphasis: {
-                        show: true
-                    }
-                },
-                data:[
-                    {name: '北京',value: randomData() },
-                    {name: '天津',value: randomData() },
-                    {name: '上海',value: randomData() },
-                    {name: '重庆',value: randomData() },
-                    {name: '河北',value: randomData() },
-                    {name: '河南',value: randomData() },
-                    {name: '云南',value: randomData() },
-                    {name: '辽宁',value: randomData() },
-                    {name: '黑龙江',value: randomData() },
-                    {name: '湖南',value: randomData() },
-                    {name: '安徽',value: randomData() },
-                    {name: '山东',value: randomData() },
-                    {name: '新疆',value: randomData() },
-                    {name: '江苏',value: randomData() },
-                    {name: '浙江',value: randomData() },
-                    {name: '江西',value: randomData() },
-                    {name: '湖北',value: randomData() },
-                    {name: '广西',value: randomData() },
-                    {name: '甘肃',value: randomData() },
-                    {name: '山西',value: randomData() },
-                    {name: '内蒙古',value: randomData() },
-                    {name: '陕西',value: randomData() },
-                    {name: '吉林',value: randomData() },
-                    {name: '福建',value: randomData() },
-                    {name: '贵州',value: randomData() },
-                    {name: '广东',value: randomData() },
-                    {name: '青海',value: randomData() },
-                    {name: '西藏',value: randomData() },
-                    {name: '四川',value: randomData() },
-                    {name: '宁夏',value: randomData() },
-                    {name: '海南',value: randomData() },
-                    {name: '台湾',value: randomData() },
-                    {name: '香港',value: randomData() },
-                    {name: '澳门',value: randomData() }
-                ]
-            },
-            {
-                name: '成交用户',
+                name: '品种总数',
                 type: 'map',
                 mapType: 'china',
                 label: {
@@ -1491,7 +1444,7 @@ const state = {
             trigger: 'item',
             formatter: function(params) {  
                 var res = params.name+'<br/>';  
-                var myseries = options.series;  
+                var myseries = option.series;  
                 for (var i = 0; i < myseries.length; i++) {  
                     res+= myseries[i].name;  
                     for(var j=0;j<myseries[i].data.length;j++){  
@@ -1506,11 +1459,11 @@ const state = {
         legend: {
             orient: 'vertical',
             left: 'left',
-            data:['新增用户','活跃用户','成交用户']
+            data:['新增品种','品种总数']
         },
         visualMap: {
             min: 0,
-            max: 200,
+            max: 100,
             left: 'left',
             top: 'bottom',
             text: ['高','低'],           // 文本，默认为数值文本
@@ -1529,7 +1482,7 @@ const state = {
         },
         series: [
             {
-                name: '新增用户',
+                name: '新增品种',
                 type: 'map',
                 mapType: 'china',
                 roam: false,
@@ -1579,7 +1532,7 @@ const state = {
                 ]
             },
             {
-                name: '活跃用户',
+                name: '品种总数',
                 type: 'map',
                 mapType: 'china',
                 label: {
@@ -1627,55 +1580,7 @@ const state = {
                     {name: '澳门',value: randomData() }
                 ]
             },
-            {
-                name: '成交用户',
-                type: 'map',
-                mapType: 'china',
-                label: {
-                    normal: {
-                        show: true
-                    },
-                    emphasis: {
-                        show: true
-                    }
-                },
-                data:[
-                    {name: '北京',value: randomData() },
-                    {name: '天津',value: randomData() },
-                    {name: '上海',value: randomData() },
-                    {name: '重庆',value: randomData() },
-                    {name: '河北',value: randomData() },
-                    {name: '河南',value: randomData() },
-                    {name: '云南',value: randomData() },
-                    {name: '辽宁',value: randomData() },
-                    {name: '黑龙江',value: randomData() },
-                    {name: '湖南',value: randomData() },
-                    {name: '安徽',value: randomData() },
-                    {name: '山东',value: randomData() },
-                    {name: '新疆',value: randomData() },
-                    {name: '江苏',value: randomData() },
-                    {name: '浙江',value: randomData() },
-                    {name: '江西',value: randomData() },
-                    {name: '湖北',value: randomData() },
-                    {name: '广西',value: randomData() },
-                    {name: '甘肃',value: randomData() },
-                    {name: '山西',value: randomData() },
-                    {name: '内蒙古',value: randomData() },
-                    {name: '陕西',value: randomData() },
-                    {name: '吉林',value: randomData() },
-                    {name: '福建',value: randomData() },
-                    {name: '贵州',value: randomData() },
-                    {name: '广东',value: randomData() },
-                    {name: '青海',value: randomData() },
-                    {name: '西藏',value: randomData() },
-                    {name: '四川',value: randomData() },
-                    {name: '宁夏',value: randomData() },
-                    {name: '海南',value: randomData() },
-                    {name: '台湾',value: randomData() },
-                    {name: '香港',value: randomData() },
-                    {name: '澳门',value: randomData() }
-                ]
-            }
+            
         ]
     },orgBreedRegionalChartLoading: false,
 
@@ -1689,7 +1594,7 @@ const state = {
             trigger: 'item',
             formatter: function(params) {  
                 var res = params.name+'<br/>';  
-                var myseries = options.series;  
+                var myseries = option.series;  
                 for (var i = 0; i < myseries.length; i++) {  
                     res+= myseries[i].name;  
                     for(var j=0;j<myseries[i].data.length;j++){  
@@ -1704,11 +1609,11 @@ const state = {
         legend: {
             orient: 'vertical',
             left: 'left',
-            data:['新增用户','活跃用户','成交用户']
+            data:['新增品种','品种总数']
         },
         visualMap: {
             min: 0,
-            max: 200,
+            max: 100,
             left: 'left',
             top: 'bottom',
             text: ['高','低'],           // 文本，默认为数值文本
@@ -1727,7 +1632,7 @@ const state = {
         },
         series: [
             {
-                name: '新增用户',
+                name: '新增品种',
                 type: 'map',
                 mapType: 'china',
                 roam: false,
@@ -1777,56 +1682,7 @@ const state = {
                 ]
             },
             {
-                name: '活跃用户',
-                type: 'map',
-                mapType: 'china',
-                label: {
-                    normal: {
-                        show: true
-                    },
-                    emphasis: {
-                        show: true
-                    }
-                },
-                data:[
-                    {name: '北京',value: randomData() },
-                    {name: '天津',value: randomData() },
-                    {name: '上海',value: randomData() },
-                    {name: '重庆',value: randomData() },
-                    {name: '河北',value: randomData() },
-                    {name: '河南',value: randomData() },
-                    {name: '云南',value: randomData() },
-                    {name: '辽宁',value: randomData() },
-                    {name: '黑龙江',value: randomData() },
-                    {name: '湖南',value: randomData() },
-                    {name: '安徽',value: randomData() },
-                    {name: '山东',value: randomData() },
-                    {name: '新疆',value: randomData() },
-                    {name: '江苏',value: randomData() },
-                    {name: '浙江',value: randomData() },
-                    {name: '江西',value: randomData() },
-                    {name: '湖北',value: randomData() },
-                    {name: '广西',value: randomData() },
-                    {name: '甘肃',value: randomData() },
-                    {name: '山西',value: randomData() },
-                    {name: '内蒙古',value: randomData() },
-                    {name: '陕西',value: randomData() },
-                    {name: '吉林',value: randomData() },
-                    {name: '福建',value: randomData() },
-                    {name: '贵州',value: randomData() },
-                    {name: '广东',value: randomData() },
-                    {name: '青海',value: randomData() },
-                    {name: '西藏',value: randomData() },
-                    {name: '四川',value: randomData() },
-                    {name: '宁夏',value: randomData() },
-                    {name: '海南',value: randomData() },
-                    {name: '台湾',value: randomData() },
-                    {name: '香港',value: randomData() },
-                    {name: '澳门',value: randomData() }
-                ]
-            },
-            {
-                name: '成交用户',
+                name: '品种总数',
                 type: 'map',
                 mapType: 'china',
                 label: {
@@ -1874,6 +1730,7 @@ const state = {
                     {name: '澳门',value: randomData() }
                 ]
             }
+            
         ]
     },allBreedRegionalChartLoading: false,
 
@@ -1947,7 +1804,7 @@ const state = {
             {
                 type:'bar',
                 barWidth: '60px',
-                data:[10, 52, 200],
+                data:[0, 0, 0],
                 itemStyle: {
                     normal: {
                         color: function(params) {
@@ -1991,6 +1848,132 @@ const state = {
         xAxis : [
             {
                 type : 'category',
+                data :  ['服务器错误','服务器错误','服务器错误'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                type:'bar',
+                barWidth: '60px',
+                data:[13, 14,15],
+                itemStyle: {
+                    normal: {
+                        color: function(params) {
+                            var colorList = [
+                                '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                               '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                               '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                            ]; 
+                            if(params.dataIndex>colorList.length){
+                                return colorList[params.dataIndex-colorList.length]
+                            }                            
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{c}'
+                    }
+                }
+               
+            }
+             
+        ]
+      },breedBarChartLoading:false,
+
+      orgBreedBarChartOption:{//部门品种统计柱状图
+        title: {
+            text: ''
+        },
+        tooltip : {
+            trigger: 'item',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data :  ['人参','枸杞','黑灵芝'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                type:'bar',
+                barWidth: '60px',
+                data:[10, 52],
+                itemStyle: {
+                    normal: {
+                        color: function(params) {
+                           var colorList = [
+                                '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                               '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                               '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                            ]; 
+                            if(params.dataIndex>colorList.length){
+                                return colorList[params.dataIndex-colorList.length]
+                            }                            
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{c}'
+                    }
+                }
+               
+            }
+             
+        ]
+      },orgBreedBarChartLoading:false,
+
+      allBreedBarChartOption:{//全部品种统计柱状图
+        title: {
+            text: ''
+        },
+        tooltip : {
+            trigger: 'item',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
                 data :  ['人参','枸杞','黑灵芝'],
                 axisTick: {
                     alignWithLabel: true
@@ -2011,9 +1994,13 @@ const state = {
                     normal: {
                         color: function(params) {
                             var colorList = [
-                                '#91c7ae','#c23531', '#2f4554', '#61a0a8',
-                                '#d48265'
-                            ];
+                                '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                               '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                               '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                            ]; 
+                            if(params.dataIndex>colorList.length){
+                                return colorList[params.dataIndex-colorList.length]
+                            }                            
                             return colorList[params.dataIndex]
                         }
                     }
@@ -2029,7 +2016,8 @@ const state = {
             }
              
         ]
-      },breedBarChartLoading:false,
+      },allBreedBarChartLoading:false,
+
 
       orgColChartOption:{//部门客户柱状图
         title: {
@@ -2066,7 +2054,7 @@ const state = {
             {
                 type:'bar',
                 barWidth: '60px',
-                data:[10, 52, 150],
+                data:[0, 0, 0],
                 itemStyle: {
                     normal: {
                         color: function(params) {
@@ -2125,7 +2113,7 @@ const state = {
             {
                 type:'bar',
                 barWidth: '60px',
-                data:[10, 52, 150],
+                data:[0, 0, 0],
                 itemStyle: {
                     normal: {
                         color: function(params) {
@@ -2326,10 +2314,10 @@ const mutations = {
         for(var i = 0;i<=33;i++){
             state.breedRegionalChartOption.series[0].data[i].value = data[i].addNumber
             state.breedRegionalChartOption.series[0].data[i].name = data[i].provinceName
-            state.breedRegionalChartOption.series[1].data[i].value = data[i].activeNumber
+            state.breedRegionalChartOption.series[1].data[i].value = data[i].totalNumber
             state.breedRegionalChartOption.series[1].data[i].name = data[i].provinceName
-            state.breedRegionalChartOption.series[2].data[i].value = data[i].transactionNumber 
-            state.breedRegionalChartOption.series[2].data[i].name = data[i].provinceName           
+            // state.breedRegionalChartOption.series[2].data[i].value = data[i].transactionNumber 
+            // state.breedRegionalChartOption.series[2].data[i].name = data[i].provinceName           
         }
         state.breedRegionalChartLoading = false;
     },
@@ -2338,10 +2326,10 @@ const mutations = {
         for(var i = 0;i<=33;i++){
             state.orgBreedRegionalChartOption.series[0].data[i].value = data[i].addNumber
             state.orgBreedRegionalChartOption.series[0].data[i].name = data[i].provinceName
-            state.orgBreedRegionalChartOption.series[1].data[i].value = data[i].activeNumber
+            state.orgBreedRegionalChartOption.series[1].data[i].value = data[i].totalNumber
             state.orgBreedRegionalChartOption.series[1].data[i].name = data[i].provinceName
-            state.orgBreedRegionalChartOption.series[2].data[i].value = data[i].transactionNumber 
-            state.orgBreedRegionalChartOption.series[2].data[i].name = data[i].provinceName           
+            // state.orgBreedRegionalChartOption.series[2].data[i].value = data[i].transactionNumber 
+            // state.orgBreedRegionalChartOption.series[2].data[i].name = data[i].provinceName           
         }
         state.orgBreedRegionalChartLoading = false;
     },
@@ -2350,10 +2338,10 @@ const mutations = {
         for(var i = 0;i<=33;i++){
             state.allBreedRegionalChartOption.series[0].data[i].value = data[i].addNumber
             state.allBreedRegionalChartOption.series[0].data[i].name = data[i].provinceName
-            state.allBreedRegionalChartOption.series[1].data[i].value = data[i].activeNumber
+            state.allBreedRegionalChartOption.series[1].data[i].value = data[i].totalNumber
             state.allBreedRegionalChartOption.series[1].data[i].name = data[i].provinceName
-            state.allBreedRegionalChartOption.series[2].data[i].value = data[i].transactionNumber 
-            state.allBreedRegionalChartOption.series[2].data[i].name = data[i].provinceName           
+            // state.allBreedRegionalChartOption.series[2].data[i].value = data[i].transactionNumber 
+            // state.allBreedRegionalChartOption.series[2].data[i].name = data[i].provinceName           
         }
         state.allBreedRegionalChartLoading = false;
     },
@@ -2409,7 +2397,6 @@ const mutations = {
     },
 
     [CHANGE_ORGCUSTYPECHARTS](state,data){//部门统计的客户类型折线图
-        console.log(data)
         state.orgCustypeChartOption.xAxis[0].data=[];
         state.orgCustypeChartOption.series[0].data=[];
         state.orgCustypeChartOption.series[1].data =[];
@@ -2460,7 +2447,6 @@ const mutations = {
     },
 
     [CHANGE_ALLCUSTYPECHARTS](state,data){ //全部统计的客户类型折线图
-        console.log(data)
         state.allCustypeChartOption.xAxis[0].data=[];
         state.allCustypeChartOption.series[0].data=[];
         state.allCustypeChartOption.series[1].data =[];
@@ -2516,13 +2502,13 @@ const mutations = {
     },
 
     [CHANGE_COLCHARTS](state,data) {//我的统计柱状图
-        console.log(data)
         state.ColChartOption.series[0].data=[];
         state.ColChartOption.series[0].data[0] = data[0].addNumber
         state.ColChartOption.series[0].data[1] = data[0].activeNumber
         state.ColChartOption.series[0].data[2] = data[0].transactionNumber
         //state.ColChartOption.series[0].data[3] = data[0].customerTotal
         state.ColChartLoading=false;
+        
     },
     [CHANGE_ORGCOLCHARTS](state,data) {//部门统计的柱状图
         //state.linesChartOption.xAxis.data = data
@@ -2541,13 +2527,33 @@ const mutations = {
         //state.allColChartOption.series[0].data[3] = data.customerTotal
         state.allColChartLoading=false;
     },
-    [CHANGE_BREEDBARCHARTS](state,data) {//我的品种统计
+    [CHANGE_BREEDBARCHARTS](state,data) {//我的品种统计柱状图
+        state.breedBarChartOption.xAxis[0].data=[];
         state.breedBarChartOption.series[0].data=[];
-        state.breedBarChartOption.series[0].data[0] = data.addNumber
-        state.breedBarChartOption.series[0].data[1] = data.transactionNumber
-        //state.allColChartOption.series[0].data[3] = data.customerTotal
+        for(var i = 0;i<data.length;i++){
+            state.breedBarChartOption.xAxis[0].data.push(data[i].breedName);
+            state.breedBarChartOption.series[0].data.push(data[i].transactionNumber)
+        }
         state.BreedBarChartLoading=false;
-    }
+    },
+    [CHANGE_ORGBREEDBARCHARTS](state,data) {//部门品种统计柱状图
+        state.orgBreedBarChartOption.xAxis[0].data=[];
+        state.orgBreedBarChartOption.series[0].data=[];
+        for(var i = 0;i<data.length;i++){
+            state.orgBreedBarChartOption.xAxis[0].data.push(data[i].breedName);
+            state.orgBreedBarChartOption.series[0].data.push(data[i].transactionNumber)
+        }
+        state.orgBreedBarChartLoading=false;
+    },
+    [CHANGE_ALLBREEDBARCHARTS](state,data) {//全部品种统计柱状图
+        state.allBreedBarChartOption.xAxis[0].data=[];
+        state.allBreedBarChartOption.series[0].data=[];
+        for(var i = 0;i<data.length;i++){
+            state.allBreedBarChartOption.xAxis[0].data.push(data[i].breedName);
+            state.allBreedBarChartOption.series[0].data.push(data[i].transactionNumber)
+        }
+        state.allBreedBarChartLoading=false;
+    },
 }
 
 

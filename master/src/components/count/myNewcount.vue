@@ -58,7 +58,8 @@
                     customerType:false
                 },
                 showParam:{
-                    name:'业务员'
+                    name:'业务员',
+                    countType:'客户统计'
                 }
 			}
 		},

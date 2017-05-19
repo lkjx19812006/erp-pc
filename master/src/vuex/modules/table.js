@@ -154,12 +154,20 @@ import {
     ALL_YESTODAY_DETAIL,
     ALL_ORG_DETAIL,
     ALL_PROVINCE_DETAIL,
+    BREED_PROVINCE_DETAIL,
+    ORGBREED_PROVINCE_DETAIL,
+    ALLBREED_PROVINCE_DETAIL,
     CUSTYPE_DETAIL,
     ORG_CUSTYPE_DETAIL,
     ALL_CUSTYPE_DETAIL,
     CHANGE_ADDBREEDDETAIL,
     CHANGE_DEALBREEDDETAIL,
-    YESTODAY_BREED_DETAIL
+    YESTODAY_BREED_DETAIL,
+    ORGYESTODAY_BREED_DETAIL,
+    ALLYESTODAY_BREED_DETAIL,
+    CHANGE_ORGADDBREEDDETAIL,
+    CHANGE_ALLADDBREEDDETAIL,
+    CHANGE_BREEDORDER_DETAIL
 } from '../mutation-types'
 
 
@@ -1046,20 +1054,28 @@ const state = {
     newUserDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
     newDealDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
     newActiveDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
-    yestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
-    orgYestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
-    allYestodayDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    yestodayDetail: [{ name: "" }, { name: "" }, { name: "" }, { name: "" }],
+    orgYestodayDetail: [{ name: "" }, { name: "" }, { name: "" }, { name: "" }],
+    allYestodayDetail: [{ name: "" }, { name: "" }, { name: "" }, { name: "" }],
     orgSalemanDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
     allOrgDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
     provinceDetail: [],
     orgProvinceDetail: [],
     allProvinceDetail: [],
+    breedProvinceDetail: [],
+    orgBreedProvinceDetail: [],
+    allBreedProvinceDetail: [],
     cusTypeDetail: [],
     orgCusTypeDetail: [],
     allCusTypeDetail: [],
+    breedOrderDetail: [],
     addBreedDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
     dealBreedDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
     yestodayDealBreed: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    orgYestodayDealBreed: [{ breedName: "部门成交测试" }, { breedName: "部门成交测试" }, { breedName: "部门成交测试" }, { breedName: "部门成交测试" }],
+    allYestodayDealBreed: [{ breedName: "全部成交测试" }, { breedName: "全部成交测试" }, { breedName: "全部成交测试" }, { breedName: "全部成交测试" }],
+    orgAddBreedDetail: [{ breedName: "部门新增测试" }, { breedName: "部门新增测试" }, { breedName: "部门新增测试" }, { breedName: "部门新增测试" }],
+    allAddBreedDetail: [{ breedName: "全部新增测试" }, { breedName: "全部新增测试" }, { breedName: "全部新增测试" }, { breedName: "全部新增测试" }],
 }
 
 const mutations = {
@@ -2396,6 +2412,18 @@ const mutations = {
     [ALL_PROVINCE_DETAIL](state, data) {
         state.allProvinceDetail = data
     },
+     //我的品种统计省份详情
+    [BREED_PROVINCE_DETAIL](state, data) {
+        state.breedProvinceDetail = data
+    },
+     //部门品种统计省份详情
+    [ORGBREED_PROVINCE_DETAIL](state, data) {
+        state.orgBreedProvinceDetail = data
+    },
+     //全部品种统计省份详情
+    [ALLBREED_PROVINCE_DETAIL](state, data) {
+        state.allBreedProvinceDetail = data
+    },
     //个人类型详情
     [CUSTYPE_DETAIL](state, data) {
         state.cusTypeDetail = data
@@ -2412,6 +2440,14 @@ const mutations = {
     [CHANGE_ADDBREEDDETAIL](state, data) {
         state.addBreedDetail = data
     },
+    //部门品种统计新增详情
+    [CHANGE_ORGADDBREEDDETAIL](state,data){
+        state.orgAddBreedDetail = data
+    },
+    //全部品种统计新增详情
+    [CHANGE_ALLADDBREEDDETAIL](state,data){
+        state.allAddBreedDetail = data
+    },
     //我的品种统计成交详情
     [CHANGE_DEALBREEDDETAIL](state, data) {
         state.dealBreedDetail = data
@@ -2419,6 +2455,18 @@ const mutations = {
     //我的品种统计昨日成交详情
     [YESTODAY_BREED_DETAIL](state, data) {
         state.yestodayDealBreed = data
+    },
+     //部门品种统计昨日成交详情
+    [ORGYESTODAY_BREED_DETAIL](state,data){
+        state.orgYestodayDealBreed = data
+    },
+     //全部品种统计昨日成交详情
+    [ALLYESTODAY_BREED_DETAIL](state,data){
+        state.allYestodayDealBreed = data
+    },
+    //品种统计订单详情
+    [CHANGE_BREEDORDER_DETAIL](state,data){
+        state.breedOrderDetail = data
     }
 }
 

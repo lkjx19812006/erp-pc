@@ -41,7 +41,8 @@ export default{
                 customerType:false
             },
             showParam:{
-            	name:'部门'
+            	name:'部门',
+                countType:'客户统计'
             }
 		}
 	},

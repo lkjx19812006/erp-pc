@@ -41,7 +41,8 @@ export default{
                 customerType:false
             },
             showParam:{
-            	name:'全部'
+            	name:'全部',
+                countType:'客户统计'
             }
 		}
 	},

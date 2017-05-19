@@ -84,6 +84,7 @@
     margin: 130px auto;
     z-index: 1096;
     padding: 0 5px;
+    top:0;
   }
   .top-title{
     width: 500px;

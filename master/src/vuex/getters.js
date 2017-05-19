@@ -618,11 +618,29 @@ export const initAllBreedRegionalchart = (state) => { //获取全部品种统计
 
 export const initBreedBarChart = (state) => { //获取我的品种统计柱状图
     const option = {
-        options: JSON.parse(JSON.stringify(state.echarts.breedBarChartOption)),
-        load: JSON.parse(JSON.stringify(state.echarts.breedBarChartLoading))
+        options: state.echarts.breedBarChartOption,
+        load: state.echarts.breedBarChartLoading
     }
     return option
 }
+
+export const initOrgBreedBarChart = (state) => { //获取部门品种统计柱状图
+    const option = {
+        options: state.echarts.orgBreedBarChartOption,
+        load: state.echarts.orgBreedBarChartLoading
+    }
+    return option
+}
+
+export const initAllBreedBarChart = (state) => { //获取全部品种统计柱状图
+    const option = {
+        options: state.echarts.allBreedBarChartOption,
+        load: state.echarts.allBreedBarChartLoading
+    }
+    return option
+}
+
+
 
 export const getRegionalchart = (state) => { //区域客户中国地图数据
     const option = {
@@ -657,7 +675,7 @@ export const getOrgColchart = (state) => { //获取部门柱状图
     return option
 }
 
-export const getAllColchart = (state) => { //获取部门柱状图
+export const getAllColchart = (state) => { //获取全部柱状图
     const option = {
         options: JSON.parse(JSON.stringify(state.echarts.allColChartOption)),
         load: JSON.parse(JSON.stringify(state.echarts.allColChartOption))
@@ -731,6 +749,14 @@ export const initYesTodayBreed = (state) => { //初始化我的品种统计昨�
     return JSON.parse(JSON.stringify(state.table.yestodayDealBreed))
 }
 
+export const initOrgYesTodayBreed = (state) => { //初始化部门品种统计昨日成交品种
+    return JSON.parse(JSON.stringify(state.table.orgYestodayDealBreed))
+}
+
+export const initAllYesTodayBreed = (state) => { //初始化全部品种统计昨日成交品种
+    return JSON.parse(JSON.stringify(state.table.allYestodayDealBreed))
+}
+
 export const getCusTypeDetail = (state) => { //获取业务员客户类型详情
     return JSON.parse(JSON.stringify(state.table.cusTypeDetail))
 }
@@ -771,10 +797,35 @@ export const getAllProvinceDetail = (state) => { //获取部门省用户
     return JSON.parse(JSON.stringify(state.table.allProvinceDetail))
 }
 
+export const initBreedProvinceDetail = (state) => { //初始化我的品种统计省份详情
+    return JSON.parse(JSON.stringify(state.table.breedProvinceDetail))
+}
+
+export const initOrgBreedProvinceDetail = (state) => { //初始化部门品种统计省份详情
+    return JSON.parse(JSON.stringify(state.table.orgBreedProvinceDetail))
+}
+
+export const initAllBreedProvinceDetail = (state) => { //初始化全部品种统计省份详情
+    return JSON.parse(JSON.stringify(state.table.allBreedProvinceDetail))
+}
+
 export const initAddBreedDetail = (state) => { //初始化我的品种统计新增品种详情
     return JSON.parse(JSON.stringify(state.table.addBreedDetail))
 }
 
+export const initOrgAddBreedDetail = (state) => { //初始化部门品种统计新增品种详情
+    return JSON.parse(JSON.stringify(state.table.orgAddBreedDetail))
+}
+
+export const initAllAddBreedDetail = (state) => { //初始化全部品种统计新增品种详情
+    return JSON.parse(JSON.stringify(state.table.allAddBreedDetail))
+}
+
 export const initDealBreedDetail = (state) => { //初始化我的品种统计成交品种详情
     return JSON.parse(JSON.stringify(state.table.dealBreedDetail))
+}
+
+
+export const initBreedOrderDetail = (state) => { //初始化我的品种统计成交订单详情
+    return JSON.parse(JSON.stringify(state.table.breedOrderDetail))
 }
