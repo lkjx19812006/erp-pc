@@ -11,23 +11,23 @@
 	            <mz-datepicker :time.sync="searchParam.endTime" format="yyyy-MM-dd HH:mm:ss">
 	            </mz-datepicker>
 	        </div>
-	        <dt class="left transfer marg_top" style="margin-left: 10px">品种类型：</dt>
+	        <dt class="left transfer marg_top" style="margin-left: 10px">产品类别：</dt>
 	        <dd class="left margin_right">
 	            <select class="form-control edit-input" placeholder="按回车键搜索" v-model="searchParam.type">
-	                    <option value='0'>求购</option>
-	                    <option value='1'>供应</option>
+	                    <option value='1'>客户需求</option>
+	                    <option value='0'>客户供应</option>
 	            </select>
 	        </dd>
-	        <dt class="left transfer marg_top" style="margin-left: 20px" v-if="searchParam.searchType=='新增'">区域:</dt>
-	        <dd class="left margin_right" v-if="searchParam.searchType=='新增'">
+	        <dt class="left transfer marg_top" style="margin-left: 20px">区域:</dt>
+	        <dd class="left margin_right">
 	            <div  type="text" class="edit-input">
 	                <v-select :debounce="250" :value.sync="searchParam.provinceId"  :options="initProvince" placeholder="省/Province" label="cname">
 	                </v-select>
 	            </div>
 	        </dd>
-	        <button class="btn btn-default tosearch" style="margin-left: 10px" @click="searchCus()">搜索{{searchParam.searchType}}</button>
-	        <button class="btn btn-link change" style="margin-left: 10px" @click="changeType()">点击切换搜索</button>
-	        <button class="btn btn-default btn-warning regional" @click="showDetail()">查看区域品种</button>
+	        <button class="btn btn-default tosearch btn-warning" style="margin-left: 10px" @click="searchCus()">搜索</button>
+	        <button class="btn btn-default tosearch btn-warning" style="right: 160px" @click="resetSearch()">清空搜索</button>
+	        <button class="btn btn-default btn-info regional" @click="showDetail()">查看区域品种</button>
 	    </dl>
 	</div>
 </template>
@@ -48,17 +48,16 @@ export default{
 			getProvinceList
 		}
 	},
+	props:['param'],
 	data(){
-		return {
-			
+		return {			
 			searchParam:{
-				searchType:'新增',
 				id:'7',
 	            startTime:'',
 	            endTime:'',
 	            provinceId:'',
 	            type:'',
-	            callback:this.callback
+	            callback:this.param.callback
         	},
         	province: {
                 id: '',
@@ -71,16 +70,15 @@ export default{
 		searchCus:function(){
 			this.$dispatch('search',this.searchParam)			
 		},
-		changeType:function(){
-			if(this.searchParam.searchType=='新增'){
-				this.searchParam.searchType = '成交'
-				this.searchParam.provinceId = ''
-			}else{
-				this.searchParam.searchType = '新增'
-			}
-		},
 		showDetail:function(data){
 			this.$dispatch('showDetail',data)
+		},
+		resetSearch:function(){
+			this.searchParam.startTime = ''
+			this.searchParam.endTime = ''
+			this.searchParam.provinceId = ''
+			this.searchParam.type = ''
+			this.$dispatch('search',this.searchParam)	
 		}
 	},
 	created:function(){
@@ -89,22 +87,18 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
 .search{
 	width: 100%;
 	position: relative;
 }
 .regional{
 	position: absolute;
-	right: 20px;
-}
-.change{
-	position: absolute;
-	right: 180px;
+	right: 30px;
 }
 .tosearch{
 	position: absolute;
-	right: 280px;
+	right: 250px;
 }
 .mz-datepicker{
 	width: 180px!important

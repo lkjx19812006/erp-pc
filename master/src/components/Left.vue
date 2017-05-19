@@ -15,9 +15,9 @@
                 </div>
                 <div class="bshow" v-if="$route.path.split('?')[0]==item.url.split('?')[0]" transition="expand_trans">
                     <dl class="bshow_dl" clear>
-                        <dd class="clear" v-if="sub.type===0" v-for="sub in item.subcategory" v-link="sub.url" transition="item" @click="init_data(sub.id,sub)">
-                            <i class="fold_line"></i>
-                            <div class="fold_content">
+                        <dd class="clear" v-for="sub in item.subcategory" v-link="sub.url" transition="item" @click="init_data(sub.id,sub)">
+                            <i class="fold_line" v-if="sub.type===0"></i>
+                            <div class="fold_content" v-if="sub.type===0">
                                 <div class="bleft">
                                     <img v-bind:src="sub.icon" height="15" width="15">
                                 </div>

@@ -284,10 +284,10 @@ export default {
         }
     },
     events: {
-        // fresh: function(input) {
-        //     this.newPageParam.cur = input;
-        //     this.getNewUser(this.newPageParam)
-        // },
+        fresh: function(input) {
+            this.newPageParam.cur = input;
+            this.getNewUser(this.newPageParam)
+        },
         showD:function(data){
             this.showDetail(data)
         },

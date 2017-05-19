@@ -4,14 +4,30 @@
 		<table class="table table-hover table_color table-bordered table-striped ">
 			<thead>
 				<tr>
-					<td style="width: 146px">品种名称</td>					
-					<td style="width: 148px">报价次数</td>
-					<td style="width: 146px">产地</td>
-					<td style="width: 148px">时间</td>
+					<td style="width: 300px">品种名称</td>					
+					<td style="width: 300px">报价次数</td>
+					<td style="width: 300px">产地</td>
+					<td style="width: 300px">时间</td>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody v-if="param.name=='我的品种统计'">
 				<tr v-for="item in initAddBreedDetail">
+					<td>{{item.breedName}}</td>
+					<td>{{item.offerTotal}}</td>
+					<td>{{item.location}}</td>
+					<td>{{item.ctime | time}}</td>
+				</tr>
+			</tbody>
+			<tbody v-if="param.name=='部门品种统计'">
+				<tr v-for="item in initOrgAddBreedDetail">
+					<td>{{item.breedName}}</td>
+					<td>{{item.offerTotal}}</td>
+					<td>{{item.location}}</td>
+					<td>{{item.ctime | time}}</td>
+				</tr>
+			</tbody>
+			<tbody v-if="param.name=='全部品种统计'">
+				<tr v-for="item in initAllAddBreedDetail">
 					<td>{{item.breedName}}</td>
 					<td>{{item.offerTotal}}</td>
 					<td>{{item.location}}</td>
@@ -27,8 +43,16 @@
 
 <script>
 import pagination from '../../pagination'
-import {initAddBreedDetail} from '../../../vuex/getters'
-import {} from '../../../vuex/actions'
+import {
+	initAddBreedDetail,
+	initOrgAddBreedDetail,
+	initAllAddBreedDetail
+} from '../../../vuex/getters'
+import {
+	getAddBreedData,
+	getOrgAddBreedData,
+	getAllAddBreedData
+} from '../../../vuex/actions'
 export default{
 	components:{
 		pagination
@@ -36,9 +60,13 @@ export default{
 	vuex:{
 		getters:{
 			initAddBreedDetail,
+			initOrgAddBreedDetail,
+			initAllAddBreedDetail
 		},
-		action:{
-
+		actions:{
+			getAddBreedData,
+			getOrgAddBreedData,
+			getAllAddBreedData
 		}
 	},
 	props:['param'],
@@ -52,7 +80,24 @@ export default{
 		}
 	},
 	created:function(){
-
+		
+	},
+	events:{
+		fresh: function(input) {
+			if(this.param.name == '我的品种统计'){
+				this.param.cur = input;
+	            this.getAddBreedData(this.param)
+			}
+			if(this.param.name == '部门品种统计'){
+				this.param.cur = input;
+	            this.getOrgAddBreedData(this.param)
+			}
+			if(this.param.name == '全部品种统计'){
+				this.param.cur = input;
+	            this.getAllAddBreedData(this.param)
+			}
+            
+        },
 	},
 	filters:{
 		time:function(data){
@@ -69,8 +114,8 @@ export default{
 }
 .pages{
 	position: absolute;
-	bottom: 40px;
-	left:10%
+	bottom: 20px;
+	left:20%
 }
 .detail_title{
     padding-left:20px;

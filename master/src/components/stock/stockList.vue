@@ -1,4 +1,5 @@
 <template>
+    <picture-model :param="pictureParam" v-if='pictureParam.show'></picture-model>
 	<order-data :param="orderData" v-if="orderData.show"></order-data>
 	<stock-cart :param="cartData" v-if="cartData.show&&cartData.leng"></stock-cart>
 	<breed-search :param='loadParam' v-if='loadParam.show'></breed-search>
@@ -11,7 +12,7 @@
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">药品名称：</dt>
+                    <dt class="left transfer marg_top">药材名称：</dt>
                     <dd class="left margin_right">
                         <input type="text" class="form-control" v-model="loadParam.breedName" readonly="readonly" placeholder="按回车键搜索" @keyup.enter="selectSearch()" @click='openBreedSearch()'/>
                     </dd>
@@ -83,8 +84,8 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th></th>
-                        <th style="min-width:150px;text-align: center;">药材名称</th>
+                        <th style="min-width:100px;text-align: center;">药材名称</th>
+                        <th style="min-width:100px;text-align: center;">药材图片</th>
                         <th style="min-width:150px;text-align: center;">入库时间</th>
                         <th style="min-width:120px;text-align: center;">联系业务员</th>
                         <th style="min-width:120px;text-align: center;">规格</th>
@@ -93,23 +94,19 @@
                         <th style="min-width:120px;text-align: center;">库存可用量</th>
                         <th style="min-width:120px;text-align: center;">库存单位</th>
                         <th style="min-width:150px;text-align: center;">仓库名称</th> 
-                        <th style="min-width:150px;text-align: center;">库存类型</th>                    
+                        <th style="min-width:120px;text-align: center;">库存类型</th>                    
                         <th style="min-width:300px;text-align: center;">操作</th>
                     </tr>
                 </thead>
-                <tr>
-                    <th>
-                        <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
-                    </th>
-                    <th style="color:#fa6705;font-size: 14px">全选</th>
-                    <th colspan="13"></th>
-                </tr>
                 <tbody>
                     <tr v-for="item in initStockList">
-                        <td @click.stop="">
-                            <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
-                        </td>
                         <td>{{item.breedName}}</td>
+                        <td>
+                            <span v-for="img in item.imageArray">
+                                <img :src="img" style="width: 60px;height:60px;border:none" v-if='item.imageArray.length' @click="showBig(img)"/>
+                            </span>
+                            
+                        </td>
                         <td>{{item.ctime | timeFilter}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.specAttribute | specFilter_a}}</td>
@@ -156,6 +153,7 @@ import pagination from '../pagination'
 import orderData from '../stock/orderData'
 import stockCart from '../stock/stockCart'
 import createStock from '../stock/createNewStock'
+import pictureModel from '../tips/pictureDialog'
 import filter from '../../filters/filters'
 import {getStockList , importStock, deleteStockInfo} from '../../vuex/actions'
 import {initStockList,initLogin} from '../../vuex/getters'
@@ -169,7 +167,8 @@ export default {
 		importExcel,
 		createStock,
 		deletestockModel,
-        tipsdialogModel
+        tipsdialogModel,
+        pictureModel
 	},
 	vuex:{
 		actions:{
@@ -267,6 +266,10 @@ export default {
 			breedSearchParam:{
 				show:false
 			},
+            pictureParam: {
+                show: false,
+                img: ''
+            },
 			checked:false
 		}
 	},
@@ -274,34 +277,12 @@ export default {
 		selectSearch:function(){
 			this.getStockList(this.loadParam)
 		},
+        showBig:function(img){
+            this.pictureParam.show = true
+            this.pictureParam.img = img
+        },
 		openBreedSearch:function(){
 			this.loadParam.show = true
-		},
-		checkedAll:function(){
-			this.checked = !this.checked;
-			if (this.checked) {
-                this.$store.state.table.stockList.forEach(function(item) {
-                    item.checked = true;
-                })
-            } else {
-                this.$store.state.table.stockList.forEach(function(item) {
-                    item.checked = false;
-                })
-            }
-		},
-		onlyselected:function($index){
-			let _this = this;
-			this.$store.state.table.stockList[$index].checked = !this.$store.state.table.stockList[$index].checked
-			if (!this.$store.state.table.stockList[$index].checked) {
-                _this.checked = false;
-            } else {
-                _this.checked = true;
-                this.$store.state.table.stockList.forEach(function(item) {
-                    if (!item.checked) {
-                        _this.checked = false;
-                    }
-                })
-            }
 		},
 		excelImport:function(){//导入库存
 			this.importParam.success = 0;
@@ -337,7 +318,7 @@ export default {
 			this.$store.state.table.stockCartList = [];
 			this.cartData.leng=0
 		},
-		watachStock:function(){ //
+		watchStock:function(){ //
 			this.$store.state.table.stockCartList = [];
 			this.cartData.leng=0
 		},
@@ -390,18 +371,14 @@ export default {
 	created(){
 		this.getStockList(this.loadParam)
         console.log(this.initLogin.id)
-		this.watachStock()
+		this.watchStock()
 	},
 	ready() {
         common('tab', 'table_box', 1);
     },
 	watch:{
-	 	'$route':"watchStock" //监听路由变化，当离开此页面的时候清空购物车
+	 	'$route':'watchStock' //监听路由变化，当离开此页面的时候清空购物车
 	},
-    beforeRouteLeave:function(to,from,next){
-        console.log("路由变化")
-        this.watachStock()
-    },
 	events:{
 		'addOrderDetail':function(msg){
 			console.log(msg)

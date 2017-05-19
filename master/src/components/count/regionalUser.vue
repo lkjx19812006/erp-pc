@@ -10,7 +10,21 @@
             </div>
             <!-- 折线图 -->
             <div class="line_today">
-                <h4 class="detail_title bg-info">总览</h4>               
+                <h4 class="detail_title bg-info">总览
+                <div class="timePick">
+                	<div class="left">
+			            <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
+			            <mz-datepicker :time.sync="searchParam.startTime" format="yyyy-MM-dd HH:mm:ss">
+			            </mz-datepicker>
+			        </div>
+			        <div class="left">
+			            <dt class="left marg_top">~~</dt>
+			            <mz-datepicker :time.sync="searchParam.endTime" format="yyyy-MM-dd HH:mm:ss">
+			            </mz-datepicker>
+	        		</div>
+	        		<button class="btn btn-default" style="margin-left:10px" @click="search()">搜索</button>
+                </div>					
+                </h4>               
                 <div class="line_chart" v-if="param.name=='业务员'">
                     <div class="linechart" v-echarts="getRegionalchart.options" :loading="getRegionalchart.load"></div>
                 </div>
@@ -41,11 +55,19 @@
                     </h4>
                     <table class="table table-hover table_color table-striped">
                         <thead>
-                            <tr>
+                            <tr v-if="param.countType=='客户统计'">
                                 <th style="min-width:240px;text-align: center;">省份</th>
                                 <th style="min-width:280px;text-align: center;">新增</th>
                                 <th style="min-width:280px;text-align: center;">成交</th>
                                 <th style="min-width:320px;text-align: center;">活跃</th>
+                                <th style="min-width:320px;text-align: center;">品种总数</th>
+                            </tr>
+                             <tr v-if="param.countType=='品种统计'">
+                                <th style="min-width:400px;text-align: center;">省份</th>
+                                <th style="min-width:400px;text-align: center;">新增</th>
+                           <!--      <th style="min-width:280px;text-align: center;" >成交</th>
+                                <th style="min-width:320px;text-align: center;" >活跃</th> -->
+                                <th style="min-width:400px;text-align: center;" >品种总数</th>
                             </tr>
                         </thead>
                         <tbody v-if="param.name=='业务员'">
@@ -72,6 +94,30 @@
                                 <td>{{item.activeNumber}}</td>
                             </tr>
                         </tbody>
+                        <tbody v-if="param.name=='我的品种统计'">
+                            <tr v-for="item in initBreedProvinceDetail">
+                                <td>{{item.provinceName}}</td>
+                                <td>{{item.addNumber}}</td>
+                                <!-- <td>{{item.transactionNumber}}</td> -->
+                                <td>{{item.totalNumber}}</td>
+                            </tr>
+                        </tbody>
+                        <tbody v-if="param.name=='部门品种统计'">
+                            <tr v-for="item in initOrgBreedProvinceDetail">
+                                <td>{{item.provinceName}}</td>
+                                <td>{{item.addNumber}}</td>
+                                <!-- <td>{{item.transactionNumber}}</td> -->
+                                <td>{{item.totalNumber}}</td>
+                            </tr>
+                        </tbody>
+                        <tbody v-if="param.name=='全部品种统计'">
+                            <tr v-for="item in initAllBreedProvinceDetail">
+                                <td>{{item.provinceName}}</td>
+                                <td>{{item.addNumber}}</td>
+                                <!-- <td>{{item.transactionNumber}}</td> -->
+                                <td>{{item.totalNumber}}</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -89,7 +135,10 @@ import {
     getAllRegionalchart,
     initBreedRegionalchart,
     initOrgBreedRegionalchart,
-    initAllBreedRegionalchart
+    initAllBreedRegionalchart,
+    initBreedProvinceDetail,
+    initOrgBreedProvinceDetail,
+    initAllBreedProvinceDetail
 } from '../../vuex/getters'
 import {
 	freshRegionalCharts,
@@ -117,13 +166,12 @@ export default {
                 total: 0,
                 name:"regionalUser"
             },
-            provinceDetail:[]
+            provinceDetail:[],
+            searchParam:{
+            	startTime:'',
+            	endTime:''
+            }
                 
-        }
-    },
-    methods: {
-        clickChange: function(currentView) {
-
         }
     },
     vuex: {
@@ -136,7 +184,10 @@ export default {
             getAllProvinceDetail,
             initBreedRegionalchart,
             initOrgBreedRegionalchart,
-            initAllBreedRegionalchart
+            initAllBreedRegionalchart,
+            initBreedProvinceDetail,
+            initOrgBreedProvinceDetail,
+            initAllBreedProvinceDetail
         },
         actions: {
         	freshRegionalCharts,
@@ -155,6 +206,26 @@ export default {
     methods:{
     	toBackPage:function(){
     		this.$dispatch('back',this.loadParam.name)
+    	},
+    	search:function(){
+    		if(this.param.name == '业务员'){
+				this.freshRegionalCharts(this.searchParam)
+	    	}
+	    	if(this.param.name == '部门'){
+	    		this.freshOrgRegionalCharts(this.searchParam)
+	    	}
+	    	if(this.param.name == '全部'){
+	    		this.freshAllRegionalCharts(this.searchParam)
+	    	}
+	    	if(this.param.name == '我的品种统计'){
+	    		this.freshBreedRegionalCharts(this.searchParam)
+	    	}
+	    	if(this.param.name == '部门品种统计'){
+	    		this.freshOrgBreedRegionalCharts(this.searchParam)
+	    	}
+	    	if(this.param.name == '全部品种统计'){
+	    		this.freshAllBreedRegionalCharts(this.searchParam)
+	    	}
     	}
     },
     created() {
@@ -186,6 +257,13 @@ export default {
     background-color:#f0f0f0
 }
 .user_all{
+}
+.timePick{
+	float:right;
+	font-size:14px;
+}
+.mz-datepicker{
+	width:180px!important
 }
 .show_type{
     width: 100%;

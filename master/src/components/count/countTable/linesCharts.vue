@@ -1,7 +1,7 @@
 <template>
     <div class="lines">
     <!-- 折线图 -->
-        <h4 class="detail_title">用户总览
+        <h4 class="detail_title">品种总览
             <span class="detail_num ">
                 <div class="show_type">
                     <div class="btn-group">
