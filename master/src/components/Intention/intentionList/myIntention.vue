@@ -669,7 +669,7 @@ export default {
                 this.tipsParam.name = '请先选择意向';
                 this.tipsParam.show = true;
             } else {
-                console.log('上下架');
+
                 this.intentionUpAndDown(this.tipsParam);
             }
 

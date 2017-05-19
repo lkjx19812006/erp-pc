@@ -12,6 +12,7 @@
         <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
         <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
         <supply-model :param="supplyParam" v-if="supplyParam.show"></supply-model>
+        <outer-offer-model :param="outerOfferParam" v-if="outerOfferParam.show"></outer-offer-model>
         <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con modal_overall" v-show="param.show">
             <div class="top-title">
@@ -189,11 +190,11 @@
                                                     <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
                                                     <th>{{$t('static.inquiry_state')}}</th>
+                                                    <th>外部意向上下架状态</th>
                                                     <!-- <th colspan="4">操作</th> -->
                                                     <th></th>
                                                     <th></th>
-                                                    <!-- <th></th>
-                                                    <th></th> -->
+                                                    <th></th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initIntlIntentionDetail.items.arr">
@@ -246,15 +247,16 @@
                                                                 {{$t('static.quo_complete')}}
                                                             </div>
                                                         </td>
-                                                        <!-- 寻求外部报价 -->
-                                                        <!-- <td>
-                                                            <button class="btn btn-info btn-xs">寻求外部报价</button>
-                                                        </td> -->
-                                                        <!-- 查看外部报价 -->
-                                                        <!-- <td>
-                                                            <button class="btn btn-info btn-xs">查看关联意向</button>
-                                                        </td> -->
-                                                        <!-- 报价 -->
+                                                        <td>
+                                                            <span v-if="!item.externalIntentionId">未生成外部意向</span>
+                                                            <span v-else>{{item.externalIntentionOnSell | onsell}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <!-- 寻求外部报价，如果已经寻求过外部报价，就不能再寻求了 -->
+                                                            <button v-if="!item.externalIntentionId&&item.inquire!=3" class="btn btn-info btn-xs" @click="askOuterOffer(item.id)">寻求外部报价</button>
+                                                            <!-- 查看外部报价 -->
+                                                            <button v-if="item.externalIntentionId" class="btn btn-orange btn-xs" @click="selectOuterOffer(item)">查看外部报价</button>
+                                                        </td>
                                                         <td>
                                                             <a v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&item.inquire !=3" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
                                                             </a>
@@ -308,11 +310,11 @@
                                                     <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
                                                     <th>{{$t('static.inquiry_state')}}</th>
+                                                    <th>外部意向上下架状态</th>
                                                     <!-- <th colspan="4">操作</th> -->
                                                     <th></th>
                                                     <th></th>
-                                                    <!-- <th></th>
-                                                    <th></th> -->
+                                                    <th></th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initIntlIntentionDetail.extractive.arr">
@@ -371,14 +373,16 @@
                                                                 {{$t('static.quo_complete')}}
                                                             </div>
                                                         </td>
-                                                        <!-- 寻求外部报价 -->
-                                                        <!-- <td>
-                                                            <button class="btn btn-info btn-xs">寻求外部报价</button>
-                                                        </td> -->
-                                                        <!-- 查看外部报价 -->
-                                                        <!-- <td>
-                                                            <button class="btn btn-info btn-xs">查看关联意向</button>
-                                                        </td> -->
+                                                        <td>
+                                                            <span v-if="!item.externalIntentionId">未生成外部意向</span>
+                                                            <span v-else>{{item.externalIntentionOnSell | onsell}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <!-- 寻求外部报价，如果已经寻求过外部报价，就不能再寻求了 -->
+                                                            <button v-if="!item.externalIntentionId&&item.inquire!=3" class="btn btn-info btn-xs" @click="askOuterOffer(item.id)">寻求外部报价</button>
+                                                            <!-- 查看外部报价 -->
+                                                            <button v-if="item.externalIntentionId" class="btn btn-orange btn-xs" @click="selectOuterOffer(item)">查看外部报价</button>
+                                                        </td>
                                                         <!-- 报价 -->
                                                         <td>
                                                             <a v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&item.inquire !=3" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
@@ -572,6 +576,8 @@ import uploadfilesModel from './uploadFiles'
 import delfileModel from '../tips/tipDialog'
 import tipsModel from '../../components/tips/tipDialog'
 import supplyModel from '../../components/clientRelate/clientDetail'
+import outerOfferModel from './outerOfferList'
+
 import {
     initIntlIntentionDetail,
     initLogin,
@@ -584,7 +590,9 @@ import {
     delIntlIntentionFiles,
     getCurrencyList,
     intlIntentionConfirmOffer,
-    intlIntentionSaveLast
+    intlIntentionSaveLast,
+    requestOuterOffer,
+    intentionUpAndDown
 } from '../../vuex/actions'
 export default {
     components: {
@@ -600,7 +608,8 @@ export default {
         delfileModel,
         pictureModel,
         tipsModel,
-        supplyModel
+        supplyModel,
+        outerOfferModel
     },
     data() {
         return {
@@ -737,7 +746,18 @@ export default {
             },
             itemOfferConfirm: false, //原材料报价确认标记
             otherOfferConfirm: false, //其他报价确认标记
-            extractiveOfferConfirm: false //提取物报价确认标记
+            extractiveOfferConfirm: false, //提取物报价确认标记
+            askOuterOfferParam: { //寻求外部报价(条目生成对应的国内意向)
+                id: "",
+                link: "/intlIntention/setIntentionByIntlIntentionItem",
+                callback: this.saveLastDialog //复用
+            },
+            outerOfferParam: { //查看外部报价
+                id: "",
+                item: "", //存放这个条目的全部信息，采购报价要用
+                show: false,
+                link: "/intlIntention/selectAllIntlOffer"
+            }
 
         }
     },
@@ -755,7 +775,9 @@ export default {
             delIntlIntentionFiles,
             getCurrencyList,
             intlIntentionConfirmOffer,
-            intlIntentionSaveLast
+            intlIntentionSaveLast,
+            requestOuterOffer,
+            intentionUpAndDown
         }
     },
     methods: {
@@ -767,7 +789,6 @@ export default {
                     for (let j = 0; j < menus[i].subcategory.length; j++) {
 
                         if (menus[i].subcategory[j].id == 120) {
-                            console.log("120");
                             this.itemOfferConfirm = true;
                             continue;
                         }
@@ -820,7 +841,7 @@ export default {
         },
         //编辑原材料报价
         editOffer: function(item, index) {
-            console.log(item);
+
             this.editOfferParam.id = item.offerId; //?报价ID？？？没有
             this.editOfferParam.intentionId = item.intentionId;
             this.editOfferParam.inquireId = item.inquireId;
@@ -963,6 +984,17 @@ export default {
             this.tipsParam.alert = true;
             this.getIntlIntentionDetail(this.param);
         },
+        //寻求外部报价（根据条目生成国内意向）
+        askOuterOffer: function(id) {
+            this.askOuterOfferParam.id = id;
+            this.requestOuterOffer(this.askOuterOfferParam);
+        },
+        //查询外部报价
+        selectOuterOffer: function(item) {
+            this.outerOfferParam.id = item.id;
+            this.outerOfferParam.item = item;
+            this.outerOfferParam.show = true;
+        },
 
     },
     created() {
@@ -1094,6 +1126,6 @@ section article {
 .btn-orange {
     background-color: #fa6705;
     color: #fff;
-    font-size: 18px;
+    font-size: 13px;
 }
 </style>

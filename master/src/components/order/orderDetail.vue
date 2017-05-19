@@ -169,7 +169,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initLinkOrder.arr">
-                                                        <th></th>
+                                                        <th>{{item.sellId}}</th>
                                                         <td>{{item.breedName}}</td>
                                                         <td>{{item.number}}{{item.unit | Unit}}</td>
                                                         <td>

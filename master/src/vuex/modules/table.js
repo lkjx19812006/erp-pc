@@ -92,6 +92,7 @@ import {
     INTLINTENTION_DETAIL_DATA,
     INQUIRE_DATA,
     ITEM_INQUIRE,
+    OUTER_OFFER_DATA,
     INTLINTENTION_INQUIRE_LIST_DATA,
     INTLINTENTION_INQUIRE_DETAIL_DATA,
     ITEM_HISTORY_DATA,
@@ -675,6 +676,7 @@ const state = {
         intlIntentionDetail: {},
         intlIntentionInquireDetail: {},
         itemHistory: {},
+        outerOfferList: [],
         employeeList: [{
             "id": 6,
             "name": "lm",
@@ -2264,7 +2266,7 @@ const mutations = {
 
     },
     [INTENTION_UP_DOWN](state, data) {
-        console.log(data.indexs);
+
         for (let i = 0; i < data.indexs.length; i++) {
             let k = data.indexs[i];
             state.basicBaseList[data.key][k].onSell = data.onSell;
@@ -2282,6 +2284,9 @@ const mutations = {
     },
     [ITEM_HISTORY_DATA](state, data) {
         state.basicBaseList.itemHistory = data;
+    },
+    [OUTER_OFFER_DATA](state, data) {
+        state.basicBaseList.outerOfferList = data;
     },
 
     [INTENTION_OFFER_DETAIL](state, data) {
