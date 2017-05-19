@@ -254,7 +254,7 @@ export const freshLinesCharts = ({ dispatch }, getCharList) => {
     });
 }
 
-export const freshBreedLines = ({ dispatch }, getCharList) => {//我的品种统计折线图
+export const freshBreedLines = ({ dispatch }, getCharList) => { //我的品种统计折线图
     if (getCharList) getCharList.load = true;
     var startTime, endTime
     if (getCharList.timeType == 'month') {
@@ -295,7 +295,7 @@ export const freshBreedLines = ({ dispatch }, getCharList) => {//我的品种统
     });
 }
 
-export const freshOrgBreedLines = ({ dispatch }, getCharList) => {//部门品种统计折线图
+export const freshOrgBreedLines = ({ dispatch }, getCharList) => { //部门品种统计折线图
     if (getCharList) getCharList.load = true;
     var startTime, endTime
     if (getCharList.timeType == 'month') {
@@ -318,7 +318,7 @@ export const freshOrgBreedLines = ({ dispatch }, getCharList) => {//部门品种
     }
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/productCount/getBreedStatistics',//暂未更新
+        url: '/crm/api/v1/productCount/getBreedStatistics',
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -337,7 +337,7 @@ export const freshOrgBreedLines = ({ dispatch }, getCharList) => {//部门品种
     });
 };
 
-export const freshAllBreedLines = ({ dispatch }, getCharList) => {//全部品种统计折线图
+export const freshAllBreedLines = ({ dispatch }, getCharList) => { //全部品种统计折线图
     if (getCharList) getCharList.load = true;
     var startTime, endTime
     if (getCharList.timeType == 'month') {
@@ -360,7 +360,7 @@ export const freshAllBreedLines = ({ dispatch }, getCharList) => {//全部品种
     }
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/productCount/getBreedStatistics',//暂未更新
+        url: '/crm/api/v1/productCount/getBreedStatistics',
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -533,7 +533,7 @@ export const getActiveUser = ({ dispatch }, param) => { //获取活跃用户详�
 
 export const getBreedDetailId = ({ dispatch }, param) => { //获取我的品种详情的id
     var body = {}
-    if(param){
+    if (param) {
         if (param.startTime) {
             body.startTime = param.startTime
         }
@@ -546,10 +546,10 @@ export const getBreedDetailId = ({ dispatch }, param) => { //获取我的品种�
         if (param.type) {
             body.type = param.type
         }
-    }   
+    }
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/productCount/getAddBreedDetail',//暂未更新
+        url: '/crm/api/v1/productCount/getAddBreedDetail',
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -565,8 +565,6 @@ export const getBreedDetailId = ({ dispatch }, param) => { //获取我的品种�
 }
 
 export const getOrgBreedDetailId = ({ dispatch }, param) => { //获取部门品种详情的id
-
-    console.log(param)
     var body = {
         queryType:'org'
     }
@@ -622,7 +620,7 @@ export const getAllBreedDetailId = ({ dispatch }, param) => { //获取全部品�
     }   
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/productCount/getAddBreedDetail',//暂未更新
+        url: '/crm/api/v1/productCount/getAddBreedDetail',
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -650,7 +648,7 @@ export const getAddBreedData = ({ dispatch }, param) => { //获取我的品种�
     }
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/productCount/getProductListByIds',//暂未更新
+        url: '/crm/api/v1/productCount/getProductListByIds', //暂未更新
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -769,7 +767,7 @@ export const getDealBreedData = ({ dispatch }, param) => { //获取我的品种�
     }
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/productCount/queryOrderListById',//暂未更新
+        url: '/crm/api/v1/productCount/queryOrderListById', //暂未更新
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -1288,7 +1286,7 @@ export const getAllOrgData = ({ dispatch }, param) => { //获取全部部门详�
             console.log('fail');
         });
     }
-//我的统计柱状图
+    //我的统计柱状图
 export const freshColCharts = ({ dispatch }, param) => {
     Date.prototype.toLocaleString = function() {
        return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
@@ -1334,7 +1332,6 @@ export const freshBreedBarCharts = ({ dispatch }, param) => {//我的品种统�
     var myDate = new Date(); //获取今天日期
     var oldDateMs = myDate.setDate(myDate.getDate() - 7);    
     var oldDate = new Date(oldDateMs).toLocaleString()
-
     var body = {
         startTime: oldDate,
         endTime: newDate.toLocaleString(),
@@ -1572,7 +1569,7 @@ export const freshBreedRegionalCharts = ({ dispatch }, param) => {
     }
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/productCount/getBreedNumberByProvinces',//暂未更新
+        url: '/crm/api/v1/productCount/getBreedNumberByProvinces',
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -1602,7 +1599,7 @@ export const freshOrgBreedRegionalCharts = ({ dispatch }, param) => {
     }
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/productCount/getBreedNumberByProvinces',//暂未更新
+        url: '/crm/api/v1/productCount/getBreedNumberByProvinces',
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -1630,7 +1627,7 @@ export const freshAllBreedRegionalCharts = ({ dispatch }, param) => {
     }
     Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/productCount/getBreedNumberByProvinces',//暂未更新
+        url: '/crm/api/v1/productCount/getBreedNumberByProvinces',
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -1687,7 +1684,7 @@ export const getBacklogList = ({ dispatch }, param) => {
         param.total = res.json().result.total;
         param.loading = false;
         param.messageLen = res.json().result.length
-        //localStorage.BacklogParam = JSON.stringify(param);
+            //localStorage.BacklogParam = JSON.stringify(param);
 
     }, (res) => {
         console.log('fail');
@@ -2602,16 +2599,18 @@ export const orgOrderAudit = ({ dispatch }, param) => { //订单申请审核（�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        param.callback(res.json().msg);
         param.show = false;
         param.description = "";
-        data.index = param.index;
+        /*data.index = param.index;
         data.key = param.key;
         data.validate = 1;
-
         if (res.json().code == 200) {
             dispatch(types.ORG_ORDER_AUDIT, data);
+        }*/
+        if (param.callback) {
+            param.callback(res.json().msg);
         }
+
 
     }, (res) => {
         console.log('fail');
@@ -2636,15 +2635,17 @@ export const orderApplyAuditAgain = ({ dispatch }, param) => { //订单重新申
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        param.callback(res.json().msg);
+
         param.show = false;
         param.description = "";
-        data.index = param.index;
+        /*data.index = param.index;
         data.key = param.key;
         data.validate = 1;
-        console.log(res.json().result)
         if (res.json().code == 200) {
             dispatch(types.ORG_ORDER_AUDIT, data);
+        }*/
+        if (param.callback) {
+            param.callback(res.json().msg);
         }
 
     }, (res) => {
@@ -2678,13 +2679,13 @@ export const orderOrgAudit = ({ dispatch }, param) => { //订单部门主管审�
         param.callback(res.json().msg);
         param.show = false;
         param.description = "";
-        data.index = param.index;
+        /*data.index = param.index;
         data.key = param.key;
         data.validate = param.validate;
         data.logistics = res.json().result.logistics;
         if (res.json().code == 200) {
             dispatch(types.ORG_ORDER_AUDIT, data);
-        }
+        }*/
 
     }, (res) => {
         console.log('fail');
@@ -2767,7 +2768,7 @@ export const logisticsInfo = ({ dispatch }, param) => { //物流查看详情
     })
 }
 export const createOrder = ({ dispatch }, data) => { //创建订单
-    console.log(data);
+
     if (data.city == null || data.city == '' || !data.city) {
         data.city = '';
     }
@@ -5665,8 +5666,20 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
     if (param.supplier) {
         data.supplier = param.supplier;
     }
+    if (param.country) {
+        data.country = param.country;
+    } else {
+        data.country = -1;
+    }
+    if (param.province) {
+        data.province = param.province;
+    } else {
+        data.province = -1;
+    }
     if (param.city) {
         data.city = param.city;
+    } else {
+        data.city = -1;
     }
     if (param.cityName) {
         data.cityName = param.cityName;
@@ -6176,6 +6189,7 @@ export const createRemark = ({ dispatch }, param) => { //新增客户备注
 export const createProduct = ({ dispatch }, param) => { //新增客户产品
     const data = {
         /*"type": param.type,*/
+        "cType": param.cType,
         "name": param.breedName, //默认产品名就是品种名
         "breedId": param.breedId,
         /*"quality": param.quality,*/
@@ -6717,7 +6731,7 @@ export const createOrderByPurchase = ({ dispatch }, param) => { //采购单报�
         console.log("success");
         param.show = false;
         if (param.callback) {
-            param.callback(res.json().msg + "，稍后将跳转到我的订单页面");
+            param.callback(res.json().msg);
         }
 
 
@@ -7038,7 +7052,7 @@ export const getOffersByIndentId = ({ dispatch }, param) => { //根据意向ID�
     })
 }
 
-export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的（采购单下）报价列表
+export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的（全部的、采购单下）报价列表
     param.loading = true;
     let url = "/crm/api/v1" + param.link;
     const body = {
@@ -7078,6 +7092,30 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
 
     })
 }
+
+export const getOfferDetail = ({ dispatch }, param) => { //报价详情
+    param.loading = true;
+    let url = "/crm/api/v1" + param.link + param.id;
+    const body = {
+        id: param.id
+    };
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        param.loading = false;
+        var result = res.json().result;
+        dispatch(types.INTENTION_OFFER_DETAIL, result);
+    }, (res) => {
+        param.loading = false;
+
+    })
+}
+
 
 export const handleOfferAccept = ({ dispatch }, param) => { //根据意向ID获取报价
     param.loading = true;
@@ -8518,7 +8556,7 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
     if (param.leavedate) {
         param.leavedate = param.leavedate.split(' ')[0] + ' 00:00:00';
     }
-    const data1 = {
+    const data = {
         "name": param.name,
         "ename": param.ename,
         "no": param.no,
@@ -8540,7 +8578,7 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
         method: "POST",
         url: apiUrl.clientList + param.url,
         emulateHTTP: true,
-        body: data1,
+        body: data,
         emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -8648,6 +8686,7 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         "district": param.district,
         "location": param.location,
         "number": param.number,
+        "moq": param.moq,
         "quality": param.quality,
         "duedate": param.duedate,
         "images": param.images,
@@ -8670,10 +8709,11 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         }
     }).then((res) => {
         console.log('修改成功!!!!')
-
         param.show = false;
         param.ctime = param.ctime;
-        //param.callback(res.json().msg);
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
         if (res.json().code == 200) {
             dispatch(types.UPDATA_INTENTION_DATA, param);
         }
@@ -8718,6 +8758,7 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
         "district": param.district,
         "location": param.location,
         "number": param.number,
+        "moq": param.moq,
         "quality": param.quality,
         "duedate": param.duedate,
         "images": param.images, //产品图片

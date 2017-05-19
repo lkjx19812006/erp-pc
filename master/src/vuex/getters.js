@@ -360,6 +360,14 @@ export const initIntentionDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionDetail));
 }
 
+/*--报价详情--*/
+export const initIntentionOfferDetail = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionOfferDetail));
+}
+
+
+
+
 /*--国际意向详情--*/
 export const initIntlIntentionDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionDetail));

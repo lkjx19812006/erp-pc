@@ -675,155 +675,14 @@ const state = {
         ],
         msgList: [],
         preSellMsgList: [],
-        intentionDetail: {
-            "id": "1008",
-            "chanceId": "",
-            "userId": "",
-            "customerId": "36485",
-            "customerName": "刘振领",
-            "customerPhone": "17756736988",
-            "type": 1,
-            "especial": 1,
-            "breedId": 2246,
-            "breedName": "红枣",
-            "qualification": null,
-            "quality": "各种规格，保证质量，量大从优",
-            "location": "新疆",
-            "spec": "选货",
-            "number": 10000,
-            "numberDesc": "",
-            "price": null,
-            "origPrice": null,
-            "priceDesc": "",
-            "unit": "63",
-            "province": null,
-            "city": null,
-            "district": null,
-            "address": "安徽",
-            "pubdate": null,
-            "duedate": null,
-            "advance": 0.000000,
-            "invoic": 0,
-            "visit": 0,
-            "pack": null,
-            "intl": 0,
-            "country": "中国",
-            "sampling": 0,
-            "cFlagsPath": "",
-            "sampleNumber": 0,
-            "sampleUnit": null,
-            "sampleAmount": null,
-            "onSell": 3,
-            "shelveTime": "2016-06-17 17:23",
-            "unshelveTime": null,
-            "employee": null,
-            "offer": 0,
-            "offerFalse": 0,
-            "offerNumber": 0,
-            "offerVprice": null,
-            "offerTotal": 0.000000,
-            "status": 1,
-            "validate": 1,
-            "description": "买包子",
-            "updater": "100014",
-            "utime": "2016-07-12 19:38",
-            "creater": "100014",
-            "ctime": "2016-06-17 17:22",
-            "pics": [],
-            "ids": null,
-            "images": null,
-            "offers": { arr: [], show: false },
-            "msgs": { arr: [], show: false },
-            "trackings": { arr: [], show: false }
+        intentionDetail: {},
+        intentionOfferDetail: {
+            offer: {},
+            intention: {},
         },
-        intlIntentionDetail: {
-            "id": "5820437488e8b3568d9dd494",
-            "userId": null,
-            "customerId": "844",
-            "customerName": "王建军中药材农民合作社",
-            "customerPhone": null,
-            "customerEmail": "1",
-            "type": 1,
-            "especial": 0,
-            "names": ",丁香,三颗针,人工牛黄",
-            "number": null,
-            "country": "中国",
-            "province": "河北",
-            "city": "秦皇岛",
-            "district": "青龙满族自治县",
-            "address": "1",
-            "pubdate": null,
-            "duedate": "2016-11-18 00:00",
-            "advance": 1.000000,
-            "pack": "12",
-            "intl": 1,
-            "cFlagsPath": null,
-            "employee": null,
-            "employeeName": null,
-            "inquire": 0,
-            "inquireType": "FOB&CIF",
-            "inquireTime": 1,
-            "offerTime": 1,
-            "validate": 0,
-            "status": 1,
-            "description": null,
-            "inType": 3,
-            "updater": null,
-            "utime": "2016-11-08 14:48",
-            "creater": null,
-            "ctime": "2016-11-07 17:03",
-            "extractive": { "arr": [], show: false },
-            "items": { "arr": [], show: false },
-            "inquires": { arr: [], show: false },
-            "files": { arr: [], show: false },
-            "offerFiles": { "arr": [], show: false },
-            "offers": { "arr": [], show: false }
-        },
-        intlIntentionInquireDetail: {
-            "id": "5820437488e8b3568d9dd494",
-            "userId": null,
-            "customerId": "844",
-            "customerName": "王建军中药材农民合作社",
-            "customerPhone": null,
-            "customerEmail": "1",
-            "type": 1,
-            "especial": 0,
-            "names": ",丁香,三颗针,人工牛黄",
-            "number": null,
-            "country": "中国",
-            "province": "河北",
-            "city": "秦皇岛",
-            "district": "青龙满族自治县",
-            "address": "1",
-            "pubdate": null,
-            "duedate": "2016-11-18 00:00",
-            "advance": 1.000000,
-            "pack": "12",
-            "intl": 1,
-            "cFlagsPath": null,
-            "employee": null,
-            "employeeName": null,
-            "inquire": 0,
-            "inquireType": "FOB&CIF",
-            "inquireTime": 1,
-            "offerTime": 1,
-            "validate": 0,
-            "status": 1,
-            "description": null,
-            "inType": 3,
-            "updater": null,
-            "utime": "2016-11-08 14:48",
-            "creater": null,
-            "ctime": "2016-11-07 17:03",
-            "otherOffers": { "arr": [], show: false },
-            "inquires": { arr: [], show: false },
-            "files": { arr: [], show: false },
-            "offerFiles": { "arr": [], show: false },
-            "offers": { "arr": [], show: false }
-        },
-        itemHistory: {
-
-        },
+        intlIntentionDetail: {},
+        intlIntentionInquireDetail: {},
+        itemHistory: {},
         employeeList: [{
             "id": 6,
             "name": "lm",
@@ -1286,7 +1145,6 @@ const mutations = {
     },
     [ORG_ORDER_AUDIT](state, data) { //审核部门订单(个人)
         state.basicBaseList[data.key][data.index].validate = data.validate;
-        console.log(state.basicBaseList[data.key][data.index].validate)
         state.basicBaseList[data.key][data.index].logistics = data.logistics;
     },
     [BATCH_ORG_ORDER](state, data) { // 批量审核部门订单
@@ -1357,7 +1215,6 @@ const mutations = {
 
     },
     [ORDER_ADD_DATA](state, data) { //创建订单
-        console.log(data)
         if (data.key == 'intentionDetail') {
             console.log('意向详情采纳报价');
             state.basicBaseList.intentionDetail.offers.arr[data.index].orderTime++;
@@ -1368,7 +1225,6 @@ const mutations = {
             state.basicBaseList[data.key][data.index].orderTime++;
         }
         if (data.key == 'myOrderList') {
-            console.log(data)
             state.basicBaseList[data.key].unshift({
                 "type": data.type,
                 "sourceType": data.sourceType,
@@ -2310,7 +2166,7 @@ const mutations = {
     },
 
     [ADD_INTLINTENTION_DATA](state, data) { //新增国际意向
-        console.log(data)
+
         state.basicBaseList.myIntlIntentionList.unshift({
             'customerId': data.customerId,
             'customerName': data.customerName,
@@ -2355,19 +2211,12 @@ const mutations = {
      },*/
 
     [INQUIRE_DATA](state, data) { //国际意向询价
-
-        console.log("国际意向(再)询价或取消报价");
-        console.log(data);
         state.basicBaseList[data.key][data.index].inquire = data.inquire;
         state.basicBaseList[data.key][data.index].inquireTime = data.inquireTime;
         state.basicBaseList[data.key][data.index].inquireType = data.inquireType;
     },
 
     [ITEM_INQUIRE](state, data) { //条目再询价
-
-        console.log("条目再询价");
-        console.log(data);
-
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].again = 1;
     },
 
@@ -2416,10 +2265,9 @@ const mutations = {
             "onSell": 0
         };*/
         data.onSell = 0;
-        console.log(data);
         if (data.key == "myIntentionList") {
             console.log("意向列表页添加意向");
-            state.basicBaseList.myIntentionList.unshift(data);
+            //state.basicBaseList.myIntentionList.unshift(data);
         }
         if (data.key == "user") {
             console.log("会员详情页添加意向");
@@ -2452,9 +2300,9 @@ const mutations = {
         state.basicBaseList.itemHistory = data;
     },
 
-    /*[INTENTION_OFFER_DETAIL](state,data){
-        state.basicBaseList.intentionDetail = data;
-    },*/
+    [INTENTION_OFFER_DETAIL](state, data) {
+        state.basicBaseList.intentionOfferDetail = data;
+    },
     [PROVINCE_LIST](state, data) {
         state.locationList.provinceList = data;
     },
@@ -2584,7 +2432,7 @@ const mutations = {
         state.allCusTypeDetail = data
     },
     //我的品种统计新增详情
-    [CHANGE_ADDBREEDDETAIL](state,data){
+    [CHANGE_ADDBREEDDETAIL](state, data) {
         state.addBreedDetail = data
     },
     //部门品种统计新增详情
@@ -2596,11 +2444,11 @@ const mutations = {
         state.allAddBreedDetail = data
     },
     //我的品种统计成交详情
-    [CHANGE_DEALBREEDDETAIL](state,data){
+    [CHANGE_DEALBREEDDETAIL](state, data) {
         state.dealBreedDetail = data
     },
     //我的品种统计昨日成交详情
-    [YESTODAY_BREED_DETAIL](state,data){
+    [YESTODAY_BREED_DETAIL](state, data) {
         state.yestodayDealBreed = data
     },
      //部门品种统计昨日成交详情

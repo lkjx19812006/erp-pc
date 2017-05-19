@@ -73,23 +73,6 @@
                         <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.orderTime}}次</td>
-                        <!-- <td>{{item.userName}}</td>
-                        <td>{{item.userPhone}}</td>
-                        <td>{{item.customerName}}</td>
-                        <td>{{item.customerPhone}}</td>
-                        <td>{{item.breedName}}</td>
-                        <td>{{item.location}}</td>
-                        <td>{{item.price}}</td>
-                        <td>{{item.number}}</td>
-                        <td>{{item.total}}</td>
-                        <td>{{item.incidentals}}</td>
-                        <td>{{item.incidentalsDesc}}</td>
-                        <td>{{item.comments}}</td>
-                        <td>
-                           <div v-if="item.orderTime==0">未采纳</div>
-                           <div v-else>已采纳</div>
-                        </td> 
-                  -->
                         <td>
                             <a class="operate" @click.stop="adopt(item,$index)" v-if="item.orderTime==0"><img src="/static/images/adopt.png" alt="我要采纳" title="我要采纳" />
                             </a>

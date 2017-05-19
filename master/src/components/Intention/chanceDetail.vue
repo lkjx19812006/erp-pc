@@ -30,9 +30,20 @@
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
-                                <div class="client-detailInfo col-md-9 col-xs-12" style="max-height:200px;overflow-y: auto;">
-                                    <div class="editlabel">图片:</div>
-                                    <img v-for="item in initIntentionDetail.pics" :src="item.url" width="140px;" class="left" @click="clickBig(item.url)" />
+                                <div class="client-detailInfo col-md-9 col-xs-12" style="max-height:300px;overflow-y: auto;">
+                                    <span class="left">
+                                        <label>品种图片：</label>
+                                        <img v-for="item in initIntentionDetail.pics" :src="item.url" width="140px;" class="left" @click="clickBig(item.url)" />
+                                    </span>
+                                    <span v-if="initIntentionDetail.importQualityPics.length>0" class="left">
+                                        <label>进口资质：</label>
+                                        <img v-for="item in initIntentionDetail.importQualityPics" :src="item.url" width="140px;" class="left" @click="clickBig(item.url)" />
+                                        
+                                    </span>
+                                    <span v-if="initIntentionDetail.testReportPics.length>0" class="left">
+                                        <label >检测报告：</label>
+                                        <img v-for="item in initIntentionDetail.testReportPics" :src="item.url" width="140px;" class="left" @click="clickBig(item.url)" />
+                                    </span>
                                 </div>
                             </div>
                             <div class="clearfix">

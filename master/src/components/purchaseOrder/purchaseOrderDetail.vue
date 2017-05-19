@@ -3,9 +3,10 @@
         <cart-model :param="orderParam" v-if="orderParam.show"></cart-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-        <custom-dialog :param="offerAcceptParam" v-if="offerAcceptParam.show"></custom-dialog>
+        <offer-accept :param="offerAcceptParam" v-if="offerAcceptParam.show"></offer-accept>
         <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
+        <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
         <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con" v-show="param.show">
             <div @click.stop="param.show=false" class="top-title">
@@ -207,8 +208,8 @@
                                             <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept===''}" @click="clickAccept('')">
                                                 全部
                                             </button>
-                                            <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='0'}" @click="clickAccept('0')">
-                                                初始
+                                            <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='0'}" @click="clickAccept('0')">
+                                                未处理
                                             </button>
                                             <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='1'}" @click="clickAccept('1')">
                                                 已接受
@@ -217,7 +218,7 @@
                                                 已拒绝
                                             </button>
                                             <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='3'}" @click="clickAccept('3')">
-                                                正在跟进
+                                                待采用
                                             </button>
                                         </div>
                                         <button type="button" class="btn btn-primary" style="width:75px" @click="resetCondition()">
@@ -259,7 +260,7 @@
                                                         </td>
                                                         <td>{{item.offerCustomerName}}</td>
                                                         <td>{{item.offerEmployeeName}}</td>
-                                                        <td>{{item.breedName}}</td>
+                                                        <td><a @click="clickOfferDetail(item.id)">{{item.breedName}}</a></td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.location}}</td>
                                                         <td>{{item.number}}{{item.unit | Unit}}</td>
@@ -306,7 +307,8 @@ import employeeModel from '../clientRelate/searchEmpInfo'
 import breedsearchModel from '../intention/breedsearch'
 import tipsdialogModel from '../tips/tipDialog'
 import auditDialog from '../tips/auditDialog'
-import customDialog from '../tips/customDialog'
+import offerAccept from '../purchaseOrder/offerAccept'
+import detailModel from '../intention/offerDetail'
 import pressImage from '../../components/imagePress'
 import filter from '../../filters/filters.js'
 import {
@@ -333,7 +335,8 @@ export default {
         tipsdialogModel,
         pressImage,
         auditDialog,
-        customDialog,
+        detailModel,
+        offerAccept,
         filter,
     },
     props: ['param'],
@@ -406,31 +409,17 @@ export default {
             },
             offerAcceptParam: {
                 id: "",
-                accept: "",
-                comments: "",
                 callback: this.acceptOfferBack,
-                title: "处理报价",
-                show: false,
-                items: [{
-                    name: "取消",
-                    handle: this.acceptCancel,
-                    style: "btn-warning"
-                }, {
-                    name: "接受",
-                    handle: this.acceptOffer,
-
-                }, {
-                    name: "不接受",
-                    handle: this.refuseOffer,
-
-                }, {
-                    name: "继续跟进",
-                    handle: this.trackOffer,
-
-                }]
+                show: false
 
             },
             intentionOrOffer: 0, //0(意向列表)1(报价列表)
+            detailParam: {
+                show: false,
+                loading: true,
+                link: "/intention/offers/",
+                id: "",
+            },
 
         }
     },
@@ -603,12 +592,14 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
             let _this = this;
-            setTimeout(function() {
-                _this.$router.go({ //成功后跳转到我的订单页面
-                    path: 'order?id=0'
-                });
-            }, 500);
-
+            if (name == "success") {
+                this.tipsParam.name = name + "，稍后将跳转到我的订单页面";
+                setTimeout(function() {
+                    _this.$router.go({ //成功后跳转到我的订单页面
+                        path: 'order?id=0'
+                    });
+                }, 500);
+            }
         },
         editDes: function(index, sub, offer) {
             this.auditParam.show = true;
@@ -618,36 +609,21 @@ export default {
             this.auditParam.index = index
         },
         offerAccept: function(item) {
-            this.offerAcceptParam.comments = "";
             this.offerAcceptParam.id = item.id;
             this.offerAcceptParam.show = true;
         },
-        //取消
-        acceptCancel: function() {
-            this.offerAcceptParam.show = false;
-        },
-        //接受
-        acceptOffer: function() {
-            this.offerAcceptParam.accept = 1;
-            this.handleOfferAccept(this.offerAcceptParam);
-        },
-        //拒绝
-        refuseOffer: function() {
-            this.offerAcceptParam.accept = 2;
-            this.handleOfferAccept(this.offerAcceptParam);
-        },
-        //跟进
-        trackOffer: function() {
-            this.offerAcceptParam.accept = 3;
-            this.handleOfferAccept(this.offerAcceptParam);
-        },
+
         //成功后回调
         acceptOfferBack: function(name) {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
             this.offerAcceptParam.show = false;
             this.getOffersByIndentId(this.indentOfferParam);
-        }
+        },
+        clickOfferDetail: function(id) {
+            this.detailParam.show = true;
+            this.detailParam.id = id;
+        },
 
     },
     events: {
@@ -676,18 +652,18 @@ export default {
 <style scoped>
 .top-title {
     position: fixed;
-    z-index: 1088;
+    z-index: 1081;
     width: 60%;
     right: 0;
     left: 0;
 }
 
 .modal {
-    z-index: 1082;
+    z-index: 1081;
 }
 
 .modal_con {
-    z-index: 1082;
+    z-index: 1081;
     width: 60%;
 }
 

@@ -144,14 +144,14 @@
                                     </div>
                                 </div>
                                 <!-- 采销对应 -->
-                                <div class="panel panel-default">
+                                <div v-if="initOrderDetail.type==0&&initOrderDetail.intl===0" class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
                                                 key:'linkOrder'
                                             })">
                                             <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
                                             <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initLinkOrder.arr.length!==null">
-                                              采销对应（{{initLinkOrder.arr.length}}）
+                                              对应销售订单（{{initLinkOrder.arr.length}}）
                                             </a>
                                         </h4>
                                     </div>
@@ -159,6 +159,7 @@
                                         <div class="panel-body panel-set">
                                             <table class="table  contactSet">
                                                 <thead>
+                                                    <th>销售订单ID</th>
                                                     <th>品种</th>
                                                     <th>数量</th>
                                                     <th>
@@ -168,6 +169,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initLinkOrder.arr">
+                                                        <th></th>
                                                         <td>{{item.breedName}}</td>
                                                         <td>{{item.number}}{{item.unit | Unit}}</td>
                                                         <td>
@@ -198,12 +200,17 @@
                                         <div class="panel-body panel-set">
                                             <table class="table  contactSet">
                                                 <thead>
+                                                    <th>采购订单ID</th>
                                                     <th>品种</th>
                                                     <th>数量</th>
                                                     <th>采购业务员</th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.orderLinkList.arr">
+                                                        <td>
+                                                            <span v-if="item.buyId!=''">{{item.buyId}}</span>
+                                                            <span v-else>未生成采购订单</span>
+                                                        </td>
                                                         <td>{{item.breedName}}</td>
                                                         <td>{{item.number}}{{item.unit | Unit}}</td>
                                                         <td>{{item.buyEmployeeName}}</td>
@@ -251,10 +258,10 @@
                                                     <tr v-for="item in initOrderDetail.stages.arr">
                                                         <td v-if="item.type==0">{{$t('static.paid')}}</td>
                                                         <td v-if="item.type==1">{{$t('static.income')}}</td>
-                                                        <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}}
+                                                        <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}} {{$t('static.immediately_pay')}} {{item.amount}} {{initOrderDetail.currency | Currency}}
                                                             <!-- （{{$t('static.order_amount')}} {{item.ratio | advanced}}） -->
                                                         </td>
-                                                        <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}} {{item.amount}} {{initOrderDetail.currency | Currency}} {{$t('static.immediately_pay')}} {{$t('static.ins')}} {{item.extra}} {{$t('static.day')}}
+                                                        <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}} {{item.extra}} {{$t('static.day')}} {{$t('static.immediately_pay')}} {{item.amount}} {{initOrderDetail.currency | Currency}}
                                                             <!-- （{{$t('static.order_amount')}} {{item.ratio | advanced}}） -->
                                                         </td>
                                                         <td>{{item.comment}}</td>
@@ -460,7 +467,7 @@
                                               bizType:'order_contract',
                                               orderContractList:'',
                                               titles:'上传合同'
-                                              })" 
+                                              })"
                                               v-if="initOrderDetail.contractList.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&(initOrderDetail.orderStatus<20||initOrderDetail.orderStatus==70)&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
                                       <button v-else></button>
                                   </h4>
@@ -690,7 +697,7 @@
       <div class="top-title">
           <span class="glyphicon glyphicon-remove-circle" @click="param.show=false"></span>
       </div>
-     
+
      </div> -->
 </template>
 <script>
@@ -870,7 +877,7 @@ export default {
                 for (let k = 0; k < orderLinkList.length; k++) {
                     if (orderLinkList[k].sellGoodsId == goods[i].id) {
                         // 待报价条目所处的状态,0初始，1添加，2编辑,在actions中处理
-                        //orderLinkList[k].flag = 0; 
+                        //orderLinkList[k].flag = 0;
                         if (orderLinkList[k].id) {
                             this.purchaseParam.orderLinkBack.push(orderLinkList[k]);
                         }

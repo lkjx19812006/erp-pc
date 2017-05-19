@@ -189,9 +189,11 @@
                                                     <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
                                                     <th>{{$t('static.inquiry_state')}}</th>
-                                                    <!-- <th>{{$t('static.quote_again')}}</th> -->
+                                                    <!-- <th colspan="4">操作</th> -->
                                                     <th></th>
                                                     <th></th>
+                                                    <!-- <th></th>
+                                                    <th></th> -->
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initIntlIntentionDetail.items.arr">
@@ -244,7 +246,15 @@
                                                                 {{$t('static.quo_complete')}}
                                                             </div>
                                                         </td>
-                                                        <!-- 报价，当 -->
+                                                        <!-- 寻求外部报价 -->
+                                                        <!-- <td>
+                                                            <button class="btn btn-info btn-xs">寻求外部报价</button>
+                                                        </td> -->
+                                                        <!-- 查看外部报价 -->
+                                                        <!-- <td>
+                                                            <button class="btn btn-info btn-xs">查看关联意向</button>
+                                                        </td> -->
+                                                        <!-- 报价 -->
                                                         <td>
                                                             <a v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&item.inquire !=3" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
                                                             </a>
@@ -298,8 +308,11 @@
                                                     <th>{{$t('static.quote_again')}}</th>
                                                     <th>{{$t('static.quatiton_time')}}</th>
                                                     <th>{{$t('static.inquiry_state')}}</th>
+                                                    <!-- <th colspan="4">操作</th> -->
                                                     <th></th>
                                                     <th></th>
+                                                    <!-- <th></th>
+                                                    <th></th> -->
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initIntlIntentionDetail.extractive.arr">
@@ -358,7 +371,15 @@
                                                                 {{$t('static.quo_complete')}}
                                                             </div>
                                                         </td>
-                                                        <!-- <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> -->
+                                                        <!-- 寻求外部报价 -->
+                                                        <!-- <td>
+                                                            <button class="btn btn-info btn-xs">寻求外部报价</button>
+                                                        </td> -->
+                                                        <!-- 查看外部报价 -->
+                                                        <!-- <td>
+                                                            <button class="btn btn-info btn-xs">查看关联意向</button>
+                                                        </td> -->
+                                                        <!-- 报价 -->
                                                         <td>
                                                             <a v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&item.inquire !=3" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
                                                             </a>

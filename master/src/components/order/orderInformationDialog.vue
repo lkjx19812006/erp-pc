@@ -23,14 +23,6 @@
                                 <option value="1">{{$t('static.sell')}}</option>
                             </select>
                         </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">{{$t('static.order_status')}}</label>
-                            <select class="form-control edit-input" v-model="param.orderStatus">
-                                <option value="0">{{$t('static.create_order')}}</option>
-                                <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
-                                <option value="70">{{$t('static.order_over')}}</option>
-                            </select>
-                        </div>
                         <!-- 销售订单时的发货人，为公司员工 -->
                         <div class="editpage-input col-md-6" v-show="param.type==1">
                             <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>

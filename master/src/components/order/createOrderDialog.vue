@@ -39,14 +39,6 @@
                                 <option value="1">{{$t('static.sell')}}</option>
                             </select>
                         </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">{{$t('static.order_status')}}</label>
-                            <select class="form-control edit-input" v-model="param.orderStatus">
-                                <option value="0" selected>{{$t('static.create_order')}}</option>
-                                <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
-                                <option value="70">{{$t('static.order_over')}}</option>
-                            </select>
-                        </div>
                         <!-- 是否样品单： -->
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.sample_order')}}：<span class="system_danger" v-if="$validation.sample.required">{{$t('static.required')}}</span>
@@ -55,7 +47,6 @@
                             <select class="form-control edit-input" v-model="param.sample">
                                 <option selected="selected" disabled="disabled" style='display: none' value=''></option>
                                 <option value="1">{{$t('static.yes')}}</option>
-                                <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
                                 <option value="0">{{$t('static.no')}}</option>
                             </select>
                         </div>
