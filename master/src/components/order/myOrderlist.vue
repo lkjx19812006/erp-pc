@@ -58,6 +58,12 @@
                             </div>
                         </dl>
                         <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">{{$t('static.order_no')}}：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.no" @keyup.enter="selectSearch()" />
+                            </dd>
+                        </dl>
+                        <dl class="clear left transfer">
                             <dt class="left transfer marg_top">是否样品：</dt>
                             <dd class="left">
                                 <select class="form-control" v-model="loadParam.sample" @change="selectSearch()">
@@ -110,6 +116,12 @@
                                 <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
                                 </mz-datepicker>
                             </div>
+                        </dl>
+                        <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">{{$t('static.order')}}ID：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.id" @keyup.enter="selectSearch()" />
+                            </dd>
                         </dl>
                         <button type="button" class="new_btn" @click="resetTime()">{{$t('static.clear_all')}}</button>
                         <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
@@ -425,6 +437,8 @@ export default {
                 consignee: '',
                 link: '/order/myList',
                 key: 'myOrderList',
+                id: '',
+                no: '',
                 employee: this.initLogin.id,
                 org: this.initLogin.orgId,
                 consignee: '',
@@ -820,6 +834,7 @@ export default {
             this.loadParam.customerName = "";
             this.loadParam.orderStatus = "";
             this.loadParam.dataStatus = "";
+            this.loadParam.id = "";
             this.loadParam.no = "";
             this.loadParam.mode = "";
             this.loadParam.validate = "";

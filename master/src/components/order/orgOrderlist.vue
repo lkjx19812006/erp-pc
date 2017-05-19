@@ -17,6 +17,22 @@
                 <div class="clear">
                     <div class="clear left">
                         <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">{{$t('static.order_no')}}：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.no" @keyup.enter="selectSearch()" />
+                            </dd>
+                        </dl>
+                        <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">{{$t('static.order')}}ID：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.id" @keyup.enter="selectSearch()" />
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="clear">
+                    <div class="clear left">
+                        <dl class="clear left transfer">
                             <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
                             <dd class="left">
                                 <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
@@ -421,6 +437,7 @@ export default {
                 payWay: '',
                 clients: '',
                 dataStatus: '',
+                id: '',
                 no: '',
                 ctime: '',
                 ftime: '',
@@ -544,6 +561,12 @@ export default {
             if (this.loadParam.validate) {
                 url += "&validate=" + this.loadParam.validate;
             }
+            if (this.loadParam.id) {
+                url += "&id=" + this.loadParam.id;
+            }
+            if (this.loadParam.no) {
+                url += "&no=" + this.loadParam.no;
+            }
             return url;
         }
     },
@@ -593,6 +616,7 @@ export default {
             this.loadParam.orderStatus = "";
             this.loadParam.dataStatus = "";
             this.loadParam.no = "";
+            this.loadParam.id = "";
             this.loadParam.mode = "";
             this.loadParam.validate = "";
             this.loadParam.type = "";

@@ -13,6 +13,22 @@
         <mglist-model>
             <!-- 头部搜索 -->
             <div slot="top">
+                <div class="clear">
+                    <div class="clear left">
+                        <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">{{$t('static.order_no')}}：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.no" @keyup.enter="selectSearch()" />
+                            </dd>
+                        </dl>
+                        <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">{{$t('static.order')}}ID：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.id" @keyup.enter="selectSearch()" />
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
                 <div class="clear left">
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
@@ -504,6 +520,7 @@ export default {
             this.loadParam.orderStatus = "";
             this.loadParam.dataStatus = "";
             this.loadParam.no = "";
+            this.loadParam.id = "";
             this.loadParam.mode = "";
             this.loadParam.validate = "";
             this.loadParam.type = "";
