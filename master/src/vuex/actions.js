@@ -2610,8 +2610,6 @@ export const orgOrderAudit = ({ dispatch }, param) => { //订单申请审核（�
         if (param.callback) {
             param.callback(res.json().msg);
         }
-
-
     }, (res) => {
         console.log('fail');
     })
@@ -7602,7 +7600,6 @@ export const againIntentionInquire = ({ dispatch }, param) => { //再次询价�
 
 }
 
-
 export const intInquiryPass = ({ dispatch }, param) => { //国际询价中的部门询价 再次询价申请审核是否通过
     const data = {
         id: param.id,
@@ -7625,7 +7622,53 @@ export const intInquiryPass = ({ dispatch }, param) => { //国际询价中的部
     }, (res) => {
         console.log('fail');
     })
+}
 
+export const requestOuterOffer = ({ dispatch }, param) => { //国际意向条目寻求外部报价
+    var url = apiUrl.clientList + param.link + "?id=" + param.id;
+    const data = {};
+    Vue.http({
+        method: "POST",
+        url: url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
+
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const getOuterOffer = ({ dispatch }, param) => { //查询国际意向条目的外部报价
+    var url = apiUrl.clientList + param.link + "?id=" + param.id;
+    const data = {};
+    Vue.http({
+        method: "POST",
+        url: url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        let outerOfferList = res.json().result.intentionOfferList;
+        if (res.json().code == 200) {
+            dispatch(types.OUTER_OFFER_DATA, outerOfferList);
+        }
+    }, (res) => {
+        console.log('fail');
+    })
 }
 
 export const createIntlIntention = ({ dispatch }, param) => { //新增国际意向
@@ -7921,8 +7964,10 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
         number: param.number,
         unit: param.unit,
         total: param.total,
-        comment: param.comment
+        comment: param.comment,
+        intentionOfferId: param.intentionOfferId
     }
+
 
     Vue.http({
         method: "POST",
@@ -8801,12 +8846,10 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
 }
 
 export const intentionUpAndDown = ({ dispatch }, param) => { //意向上下架
-    console.log(param);
     const updatedata = {
         ids: param.ids,
         onSell: param.onSell
     }
-
     Vue.http({
         method: 'PUT',
         url: apiUrl.clientList + '/intention/upAndDowns',
@@ -8818,9 +8861,12 @@ export const intentionUpAndDown = ({ dispatch }, param) => { //意向上下架
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('修改成功');
-        console.log(param);
-        dispatch(types.INTENTION_UP_DOWN, param);
+        if (param.callback) {
+            console.log(res.json());
+            param.callback(res.json().msg);
+        } else {
+            dispatch(types.INTENTION_UP_DOWN, param);
+        }
         param.show = true;
     }, (res) => {
         console.log('fail');

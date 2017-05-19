@@ -10,7 +10,7 @@
             </div>
             <validator name="validation">
                 <form novalidate>
-                    <div class="edit-model">  
+                    <div class="edit-model">
                         <div>
                             <h4 style="text-align: left;font-size: 14px;">{{$t('static.install_detail')}}<label class="stageTotal">(总金额：{{param.total}})</label><span class="system_danger">{{$t('static.install_tips')}}</span></h4>
                             <table class="table table-hover table_color table-striped ">
@@ -51,7 +51,9 @@
                                         <div class="editpage-input col-md-6">
                                             <label class="editlabel">{{$t('static.paid_time')}} <span class="system_danger" v-if="$inner.status.required">{{$t('static.required')}}</span></label>
                                             <select v-model="breedInfo.orderStatus" class="form-control edit-input" v-validate:status="{required:true}">
+                                                <option value="0">{{$t('static.after_making_the_order')}}</option>
                                                 <option value="20">{{$t('static.signing_contract')}}</option>
+                                                <option value="50">{{$t('static.after_delivery')}}</option>
                                                 <option value="60">{{$t('static.confirm_receipt')}}</option>
                                             </select>
                                         </div>
@@ -157,10 +159,10 @@ export default {
                 orderStatus: '',
                 comment: '',
                 extra: '',
-                type:null,
-                validate:null,
-                orderId:null,
-                creater:''
+                type: null,
+                validate: null,
+                orderId: null,
+                creater: ''
             },
             tag: ['定金', '预付款', '首笔款'],
             addParam: {
@@ -237,11 +239,11 @@ export default {
             this.param.show = false;
         },
         // 关闭按钮 
-        cancleBtn:function(){
+        cancleBtn: function() {
             this.param.show = false;
-            for(var i = 0; i<this.param.stages.length;i++){
-                if(this.param.stages[i].amount === ''){
-                   this.param.stages.splice(i,1);
+            for (var i = 0; i < this.param.stages.length; i++) {
+                if (this.param.stages[i].amount === '') {
+                    this.param.stages.splice(i, 1);
                 }
             }
         },
@@ -272,11 +274,11 @@ export default {
             this.param.stages[stagesLength].validate = this.breedInfo.validate;
             this.param.stages[stagesLength].orderId = this.breedInfo.orderId;
             this.param.stages[stagesLength].creater = this.breedInfo.creater;
-            this.breedInfo.status = 0; 
+            this.breedInfo.status = 0;
             this.addParam.show = false;
             this.sum += parseFloat(this.breedInfo.amount) * 100;
             this.scale += parseInt(this.breedInfo.ratio * 10);
-            
+
         },
         showAddBreed: function() {
             this.sum = 0;
@@ -306,7 +308,7 @@ export default {
             }
             console.log(this.param.stages)
         },
-        confirm:function() {
+        confirm: function() {
             this.param.show = false;
             this.param.callback = this.param.callback;
             console.log(this.param.stages)
@@ -319,14 +321,14 @@ export default {
                 this.sum += parseFloat(this.param.stages[i].amount) * 100;
                 this.scale += parseInt(this.param.stages[i].ratio * 10);
             }
-            
+
             this.breedInfo.type = this.param.stages[0].type;
             this.breedInfo.validate = this.param.stages[0].validate;
             this.breedInfo.orderId = this.param.stages[0].orderId;
             this.breedInfo.creater = this.param.stages[0].creater;
         }
-        
-        
+
+
     }
 }
 </script>

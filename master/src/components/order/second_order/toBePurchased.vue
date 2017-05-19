@@ -36,6 +36,7 @@
                                                 <tr>
                                                     <th>数量</th>
                                                     <th>采购员</th>
+                                                    <th>采购订单ID</th>
                                                     <th colspan="2"><a @click="showAdd($index,item)">+</a></th>
                                                 </tr>
                                             </thead>
@@ -51,10 +52,20 @@
                                                         <input v-else class="form-control" type="text" v-model="purchase.buyEmployeeName" readonly="readonly" @click="selectEmployee($parent.$index,$index)">
                                                     </td>
                                                     <td>
+                                                        <span v-if="purchase.buyId">{{purchase.buyId}}</span>
+                                                        <span v-if="!purchase.buyId">采购员还没有采购</span>
+                                                    </td>
+                                                    <!--  -->
+                                                    <td v-if="!purchase.buyId">
                                                         <a v-if="purchase.flag===0" @click="showEdit($parent.$index,$index)">编辑</a>
                                                         <a v-else @click="saveSingle($parent.$index,$index)">保存</a>
                                                     </td>
-                                                    <td><a @click="deletePurchase($parent.$index,$index)">删除</a></td>
+                                                    <td v-if="!purchase.buyId">
+                                                        <a @click="deletePurchase($parent.$index,$index)">删除</a>
+                                                    </td>
+                                                    <td v-if="purchase.buyId" colspan="2">
+                                                        <span class="system_danger">已生成采购订单，无法再编辑</span>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>

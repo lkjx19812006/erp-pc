@@ -380,8 +380,12 @@ export const initIntlIntentionInquireDetail = (state) => {
 
 /*--国际意向条目历史报价记录--*/
 export const initItemHistory = (state) => {
-    console.log('getters');
     return JSON.parse(JSON.stringify(state.table.basicBaseList.itemHistory));
+}
+
+/*--国际意向条目的外部报价--*/
+export const initOuterOfferList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.outerOfferList));
 }
 
 /*---会员信息---*/
@@ -820,6 +824,7 @@ export const initAllAddBreedDetail = (state) => { //初始化全部品种统计�
 export const initDealBreedDetail = (state) => { //初始化我的品种统计成交品种详情
     return JSON.parse(JSON.stringify(state.table.dealBreedDetail))
 }
+
 
 export const initBreedOrderDetail = (state) => { //初始化我的品种统计成交订单详情
     return JSON.parse(JSON.stringify(state.table.breedOrderDetail))

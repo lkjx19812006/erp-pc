@@ -193,11 +193,11 @@ export default {
             this.supplierParam.show = true;
         },
         selectleft: function(item) {
-            console.log(this.initCurrencylist[item - 1].rate)
+
             this.countleft = this.initCurrencylist[item - 1].rate;
         },
         selectCurrency: function(item) {
-            console.log(this.initCurrencylist[item - 1].rate)
+
             this.countright = this.initCurrencylist[item - 1].rate;
         },
         changeTotal: function() {
@@ -210,7 +210,6 @@ export default {
     },
     events: {
         supplier: function(item) {
-            console.log(item);
             this.supplierParam.supplierName = item.supplierName;
             this.supplierParam.origPrice = item.origPrice;
             this.supplierParam.supplier = item.supplier;
