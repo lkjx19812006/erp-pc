@@ -308,7 +308,6 @@ const state = {
             {
                 name: '品种总数',
                 type:'line',
-                showSymbol:false,
                 data: [10, 15, 4, 11, 3, 13, 14, 17, 18, 20, 12, 14],
                 
             },
@@ -358,7 +357,6 @@ const state = {
             {
                 name: '品种总数',
                 type:'line',
-                showSymbol:false,
                 data: [10, 15, 4, 11, 3, 13, 14, 17, 18, 20, 12, 14],
                 
             },
@@ -408,7 +406,6 @@ const state = {
             {
                 name: '品种总数',
                 type:'line',
-                showSymbol:false,
                 data: [10, 15, 4, 11, 3, 13, 14, 17, 18, 20, 12, 14],
                 
             },
@@ -1116,7 +1113,7 @@ const state = {
         },
         visualMap: {
             min: 0,
-            max: 200,
+            max: 1000,
             left: 'left',
             top: 'bottom',
             text: ['高','低'],           // 文本，默认为数值文本
@@ -2166,7 +2163,7 @@ const mutations = {
         state.linesChartLoading=false;
     },
 
-    [CHANGE_BREEDLINESCHARTS](state, data) {     
+    [CHANGE_BREEDLINESCHARTS](state, data) {     //我的品种统计折线图
         state.breedLinesChartOption.xAxis[0].data=[];
         state.breedLinesChartOption.series[0].data=[];
         state.breedLinesChartOption.series[1].data =[];
@@ -2199,7 +2196,7 @@ const mutations = {
                   
           state.orgBreedLinesChartOption.series[0].data.push(data[i].addNumber)
           state.orgBreedLinesChartOption.series[1].data.push(data[i].transactionNumber)
-          state.orgBreedLinesChartOption.series[2].data.push(data[i].customerTotal)  
+          state.orgBreedLinesChartOption.series[2].data.push(data[i].totalNumber)  
         }
         state.orgBreedLinesChartLoading=false;
     },
@@ -2218,7 +2215,7 @@ const mutations = {
                   
           state.allBreedLinesChartOption.series[0].data.push(data[i].addNumber)
           state.allBreedLinesChartOption.series[1].data.push(data[i].transactionNumber)
-          state.allBreedLinesChartOption.series[2].data.push(data[i].customerTotal)  
+          state.allBreedLinesChartOption.series[2].data.push(data[i].totalNumber)  
         }
         state.allBreedLinesChartLoading=false;
     },
@@ -2502,7 +2499,6 @@ const mutations = {
         
     },
     [CHANGE_ORGCOLCHARTS](state,data) {//部门统计的柱状图
-        //state.linesChartOption.xAxis.data = data
         state.orgColChartOption.series[0].data=[];
         state.orgColChartOption.series[0].data[0] = data.addNumber
         state.orgColChartOption.series[0].data[1] = data.activeNumber

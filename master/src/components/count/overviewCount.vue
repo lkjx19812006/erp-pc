@@ -200,7 +200,7 @@ export default {
                 loading: true,
                 show: false,
                 cur: 1,
-                all: 4,
+                all: 0,
                 total: 0,
                 id:7,//国家id
                 type:'',

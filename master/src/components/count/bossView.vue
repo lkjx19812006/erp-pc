@@ -230,7 +230,7 @@ export default {
             },
             orgData:{
             	cur:1,
-            	all:4,
+            	all:0,
             	total:0,
             	data:[],
             },

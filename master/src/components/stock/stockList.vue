@@ -289,7 +289,6 @@ export default {
             this.importParam.mFile = "";
             this.importParam.result = "";
             this.importParam.show = true;
-            console.log(this.importStock)
 		},
 		addToCart:function($index,data){
 			this.orderData.show=true;
@@ -370,7 +369,6 @@ export default {
 	},
 	created(){
 		this.getStockList(this.loadParam)
-        console.log(this.initLogin.id)
 		this.watchStock()
 	},
 	ready() {

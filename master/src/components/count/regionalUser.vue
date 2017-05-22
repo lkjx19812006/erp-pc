@@ -13,12 +13,12 @@
                 <h4 class="detail_title bg-info">总览
                 <div class="timePick">
                 	<div class="left">
-			            <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
+			            <dt class="left transfer marg_top" style="margin-top:15px">{{$t('static.start_end')}}：</dt>
 			            <mz-datepicker :time.sync="searchParam.startTime" format="yyyy-MM-dd HH:mm:ss">
 			            </mz-datepicker>
 			        </div>
 			        <div class="left">
-			            <dt class="left marg_top">~~</dt>
+			            <dt class="left marg_top" style="margin-top:15px">~~</dt>
 			            <mz-datepicker :time.sync="searchParam.endTime" format="yyyy-MM-dd HH:mm:ss">
 			            </mz-datepicker>
 	        		</div>

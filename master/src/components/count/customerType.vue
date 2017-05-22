@@ -78,10 +78,19 @@
             <div class="user_detail">
                 <div class="user_detail_right">
                     <h4 class="detail_title bg-info">客户类型
-                        <!-- <span class="detail_num">
-                            <a href="javascript:void(0);" class="person_num">人数：60</a>
-                            <a href="javascript:void(0);" class="person_num">人次：60</a>&nbsp
-                        </span> -->
+                        <div class="timePick">
+                            <div class="left">
+                                <dt class="left transfer marg_top" style="margin-top:15px;">{{$t('static.start_end')}}：</dt>
+                                <mz-datepicker :time.sync="searchParam.startTime" format="yyyy-MM-dd HH:mm:ss">
+                                </mz-datepicker>
+                            </div>
+                            <div class="left">
+                                <dt class="left marg_top" style="margin-top:15px;">~~</dt>
+                                <mz-datepicker :time.sync="searchParam.endTime" format="yyyy-MM-dd HH:mm:ss">
+                                </mz-datepicker>
+                            </div>
+                            <button class="btn btn-default" style="margin-left:10px" @click="search()">搜索</button>
+                        </div>  
                     </h4>
                     <table class="table table-hover table_color table-striped">
                         <thead>
@@ -160,7 +169,7 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
-                all: 4,
+                all: 0,
                 total: 0,
                 name:"customerType",
                 type:'新增',
@@ -172,28 +181,10 @@ export default {
                 salemanId:'',
                 callback:this.callback
             },
-            todayData:[
-                {
-                    name:"产地",
-                    phone:'活跃',
-                    address:'四川雅安'
-                },
-                {
-                    name:"药厂",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"药商",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                },
-                {
-                    name:"服务商",
-                    phone:'15821955110',
-                    address:'四川雅安'
-                }
-            ],
+            searchParam:{
+                startTime:'',
+                endTime:''
+            }
         }
     },
     vuex: {
@@ -218,6 +209,17 @@ export default {
     events: {
     },
     methods:{
+        search:function(){             
+            if(this.param.name=='业务员'){
+                this.getCusTypeList(this.searchParam)
+            }
+            if(this.param.name=='部门'){
+                this.getOrgCusTypeList(this.searchParam)
+            }
+            if(this.param.name=='全部'){
+                this.getAllCusTypeList(this.searchParam)
+            }
+        },
     	toBackPage:function(){
     		this.$dispatch('back',this.loadParam.name)
     	},
@@ -355,6 +357,10 @@ export default {
 .user_all{
     overflow: auto;
 }
+.timePick{
+    float:right;
+    font-size:14px;
+}
 .show_type{
     width: 100%;
     height:40px;
@@ -431,7 +437,7 @@ export default {
 .user_detail_right{
     background: #fff;
     border-radius: 10px;
-    overflow: hidden;
+    padding-bottom: 20px;
 }
 
 </style>
