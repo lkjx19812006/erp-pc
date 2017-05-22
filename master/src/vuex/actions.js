@@ -829,9 +829,6 @@ export const getCusTypeData = ({ dispatch }, getCharList) => { //获取个人客
         startTime: startTime,
         endTime: endTime,
     }
-    if (getCharList.type) {
-        body.type = getCharList.type
-    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerNumberByTypes',
@@ -854,12 +851,17 @@ export const getCusTypeData = ({ dispatch }, getCharList) => { //获取个人客
     })
 }
 
-export const getCusTypeList = ({ dispatch }, getCharList) => { //获取个人客户类型详情  
+export const getCusTypeList = ({ dispatch }, getCharList) => { //获取个人客户类型详情
+    var body={} 
+    if(getCharList){
+        body.startTime =getCharList.startTime,
+        body.endTime=getCharList.endTime
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerNumberByTypesCount',
         emulateHTTP: true,
-        body: {},
+        body: body,
         emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -875,6 +877,10 @@ export const getOrgCusTypeList = ({ dispatch }, getCharList) => { //获取部门
     var body = {
         queryType: 'org'
     }
+    if(getCharList){
+        body.startTime =getCharList.startTime,
+        body.endTime=getCharList.endTime
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerNumberByTypesCount',
@@ -886,8 +892,6 @@ export const getOrgCusTypeList = ({ dispatch }, getCharList) => { //获取部门
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        //console.log(param)
-        console.log(res.json())
         dispatch(types.ORG_CUSTYPE_DETAIL, res.json().result.list)
     }, (res) => {
         console.log('fail')
@@ -897,6 +901,10 @@ export const getOrgCusTypeList = ({ dispatch }, getCharList) => { //获取部门
 export const getAllCusTypeList = ({ dispatch }, getCharList) => { //获取部门客户类型详情  
     var body = {
         queryType: 'all'
+    } 
+    if(getCharList){
+        body.startTime =getCharList.startTime,
+        body.endTime=getCharList.endTime
     }
     Vue.http({
         method: 'POST',
@@ -933,9 +941,6 @@ export const getOrgCusTypeData = ({ dispatch }, getCharList) => { //获取部门
         startTime: startTime,
         endTime: endTime,
         queryType: 'org'
-    }
-    if (getCharList.type) {
-        body.type = getCharList.type
     }
     Vue.http({
         method: 'POST',
@@ -975,9 +980,6 @@ export const getAllCusTypeData = ({ dispatch }, getCharList) => { //获取全部
         startTime: startTime,
         endTime: endTime,
         queryType: 'all'
-    }
-    if (getCharList.type) {
-        body.type = getCharList.type
     }
     Vue.http({
         method: 'POST',
@@ -1077,26 +1079,16 @@ export const freshAllCount = ({ dispatch }, getCharList) => { //获取全部客�
 
 //部门统计柱状图
 export const freshOrgColCharts = ({ dispatch }, param) => {
-    var date = new Date();
-    var year = date.getFullYear()
-    var month = date.getMonth() / 1 + 1
-    var day = date.getDate() - 1
-    console.log(day)
-    if (month < 10) {
-        month = '0' + month
-    }
-    var maxDay = (day / 1 + 1)
-    if (day < 10) {
-        day = '0' + day
-    }
-    if (maxDay < 10) {
-        maxDay = "0" + day
-    }
-    var time = [year + '-' + month + '-' + day + ' 00:00:00', year + '-' + month + '-' + maxDay + ' 00:00:00', ]
-
+    Date.prototype.toLocaleString = function() {
+       return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
+    };
+    var newDate = new Date()
+    var myDate = new Date(); //获取今天日期
+    var oldDateMs = myDate.setDate(myDate.getDate() - 1);    
+    var oldDate = new Date(oldDateMs).toLocaleString()    
     var body = {
-        startTime: time[0],
-        endTime: time[1],
+        startTime: oldDate,
+        endTime: newDate.toLocaleString(),
         queryDetail: true
     }
     Vue.http({
@@ -1110,9 +1102,11 @@ export const freshOrgColCharts = ({ dispatch }, param) => {
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('哈哈')
-        dispatch(types.CHANGE_ORGCOLCHARTS, res.json().result.list[0])
-        param.callback(res.json().result.list[0].addNumberDetail)
+        if(res.json().result.list[0]){
+            dispatch(types.CHANGE_ORGCOLCHARTS, res.json().result.list[0])
+            param.callback(res.json().result.list[0].addNumberDetail)
+        }
+       
     }, (res) => {
         console.log('fail')
     })
@@ -1120,26 +1114,16 @@ export const freshOrgColCharts = ({ dispatch }, param) => {
 
 //全部统计柱状图
 export const freshAllColCharts = ({ dispatch }, param) => {
-    var date = new Date();
-    var year = date.getFullYear()
-    var month = date.getMonth() / 1 + 1
-    var day = date.getDate() - 1
-    console.log(day)
-    if (month < 10) {
-        month = '0' + month
-    }
-    var maxDay = (day / 1 + 1)
-    if (day < 10) {
-        day = '0' + day
-    }
-    if (maxDay < 10) {
-        maxDay = "0" + day
-    }
-    var time = [year + '-' + month + '-' + day + ' 00:00:00', year + '-' + month + '-' + maxDay + ' 00:00:00', ]
-
+    Date.prototype.toLocaleString = function() {
+       return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
+    };
+    var newDate = new Date()
+    var myDate = new Date(); //获取今天日期
+    var oldDateMs = myDate.setDate(myDate.getDate() - 1);//获取前一天时间的毫秒数（跨月会自动计算）    
+    var oldDate = new Date(oldDateMs).toLocaleString()    
     var body = {
-        startTime: time[0],
-        endTime: time[1],
+        startTime: oldDate,
+        endTime: newDate.toLocaleString(),
         queryDetail: true
     }
     Vue.http({
@@ -1153,9 +1137,10 @@ export const freshAllColCharts = ({ dispatch }, param) => {
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('哈哈')
-        dispatch(types.CHANGE_ALLCOLCHARTS, res.json().result.list[0])
-        param.callback(res.json().result.list[0].addNumberDetail)
+        if(res.json().result.list[0]){
+            dispatch(types.CHANGE_ALLCOLCHARTS, res.json().result.list[0])
+            param.callback(res.json().result.list[0].addNumberDetail)
+        }       
     }, (res) => {
 
         console.log('fail')
@@ -1244,7 +1229,6 @@ export const getOrgSalemanData = ({ dispatch }, param) => { //获取部门业务
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log(res.json())
         dispatch(types.ORG_SALEMAN_DETAIL, res.json().result.list)
     }, (res) => {
         console.log('fail');
@@ -1280,7 +1264,6 @@ export const getAllOrgData = ({ dispatch }, param) => { //获取全部部门详�
                 'Content-Type': 'application/json;charset=UTF-8'
             }
         }).then((res) => {
-            console.log(res.json())
             dispatch(types.ALL_ORG_DETAIL, res.json().result.list)
         }, (res) => {
             console.log('fail');
@@ -1294,8 +1277,7 @@ export const freshColCharts = ({ dispatch }, param) => {
     var newDate = new Date()
     var myDate = new Date(); //获取今天日期
     var oldDateMs = myDate.setDate(myDate.getDate() - 1);    
-    var oldDate = new Date(oldDateMs).toLocaleString()
-    
+    var oldDate = new Date(oldDateMs).toLocaleString()    
     var body = {
         startTime: oldDate,
         endTime: newDate.toLocaleString(),
@@ -1311,13 +1293,11 @@ export const freshColCharts = ({ dispatch }, param) => {
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
-
     }).then((res) => {
         if(res.json().result.list.length!=0){
             dispatch(types.CHANGE_COLCHARTS, res.json().result.list)
             param.callback_yes(res.json().result.list[0].addNumberDetail)
-        }
-        
+        }        
     }, (res) => {
         console.log('fail')
     })

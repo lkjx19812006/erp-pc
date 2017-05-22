@@ -71,7 +71,12 @@
             </div>
             <!-- 今日新增 -->
             <div class="bar_today">
-                <h4 class="detail_title bg-info">昨日新增<span class="detail_num"><a href="javascript:void(0);" class="person_num">{{orgData.total}}人</a>&nbsp<a href="javascript:void(0);" class="btn btn-link" @click="showDetail('userTodayDetail')">more>></a></span></h4>
+                <h4 class="detail_title bg-info">昨日新增
+                    <span class="detail_num">
+                        <a href="javascript:void(0);" class="person_num">{{orgData.total}}人</a>&nbsp
+                        <!-- <a href="javascript:void(0);" class="btn btn-link" @click="showDetail('userTodayDetail')">more>></a> -->
+                    </span>
+                </h4>
                 <!-- 柱状图 -->
                 <div class="bar_chart_left">
                     <div class="barchart" v-echarts="getOrgColchart.options" :loading="getOrgColchart.load"></div>
@@ -223,7 +228,7 @@ export default {
             },
             orgData:{
             	cur:1,
-            	all:4,
+            	all:0,
             	total:0,
             	data:[],
             },
