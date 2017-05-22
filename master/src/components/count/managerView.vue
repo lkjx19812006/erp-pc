@@ -161,8 +161,8 @@
                             	<td>{{item.employeeId}}</td>
                                 <td @click="showDepart()">{{item.employeeName}}</td>
                                 <td>{{item.addNumber}}</td>
-                                <td>{{item.transactionNumber}}</td>
                                 <td>{{item.activeNumber}}</td>
+                                <td>{{item.transactionNumber}}</td>
                                 <td>{{item.totalNumber}}</td>
                                 <!-- <td><a href="javascript:void(0);">{{item.employeeId}}</a></td>
                                 <td><a href="javascript:void(0);" @click="showDepart()">{{item.employeeName}}</a></td>

@@ -162,8 +162,8 @@
                                 <td>{{item.org}}</td>
                                 <td @click="showDepart()">{{item.name}}</td>
                                 <td >{{item.addNumber}}</td>
-                                <td>{{item.transactionNumber}}</td>
                                 <td>{{item.activeNumber}}</td>
+                                <td>{{item.transactionNumber}}</td>
                                 <td>{{item.totalNumber}}</td>
 
                                 <!-- <td><a href="javascript:void(0);">{{item.org}}</a></td>

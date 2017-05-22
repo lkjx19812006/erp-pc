@@ -18,7 +18,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <span class="navbar-brand navbar-name">{{param.customerName}}</span>
+                        <span class="navbar-brand navbar-name" @click="asdf()">{{param.customerName}}</span>
                     </div>
                 </div>
             </nav>
@@ -130,8 +130,8 @@
                                             <tbody>
                                                 <tr v-for="item in initIntentionDetail.offers.arr">
                                                     <!-- <td><img :src="item.path" /></td> -->
-                                                    <td>{{item.userName}}</td>
-                                                    <td>{{item.userPhone}}</td>
+                                                    <td>{{item.customerName}}</td>
+                                                    <td>{{item.customerPhone}}</td>
                                                     <td>{{item.price}}</td>
                                                     <td>{{item.number}}</td>
                                                     <td>{{item.unit}}</td>
@@ -347,7 +347,9 @@ export default {
                 id: '',
                 sub: '',
                 url: '/intention/deleteLabel/',
-                key: 'labels'
+                key: 'labels',
+                headline:'basicBaseList',
+                sign:'intentionDetail'
             },
             orderParam: {
                 show: false,
@@ -509,10 +511,13 @@ export default {
             this.delLabelParam.id = item.id;
             this.delLabelParam.sub = index;
             this.addrDel(this.delLabelParam);
+        },
+        asdf:function(){
+            console.log(this.initIntentionDetail)
         }
     },
     created() {
-        this.getIntentionDetail(this.param);
+        this.getIntentionDetail(this.param);       
     },
     filter: (filter, {})
 }
