@@ -42,7 +42,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="item in initAllYesTodayBreed.slice(pageData.start,pageData.end)">
+                                <tr v-for="item in initAllYesTodayBreed.slice(loadParam.start,loadParam.end)">
                                     <td>{{item.breedName}}</td>
                                     <td>{{item.transactionNumber}}</td>
                                     <td>{{item.orgName}}</td>
@@ -118,6 +118,8 @@ export default {
                 salemanId:'',
                 callback:this.callback,
                 data:[],
+                start:0,
+                end:10,
                 name:'全部品种统计',
                 countType:'品种统计'
             },
@@ -151,10 +153,6 @@ export default {
                 all:1,
                 total:0
             },
-            pageData:{
-                start:0,
-                end:10
-            }
         }
     },
     vuex: {
@@ -195,8 +193,8 @@ export default {
             this.showParam.regional = false
         },
         fresh:function(input){
-            this.pageData.start = 10*(input-1)
-            this.pageData.end = 10*input
+            this.loadParam.start = 10*(input-1)
+            this.loadParam.end = 10*input
         }
     },
     methods:{

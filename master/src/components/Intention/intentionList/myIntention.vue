@@ -473,7 +473,7 @@ export default {
             createOrderParam: {
                 show: false,
                 sub: '',
-                key: 'intentionDetail',
+                key: 'myIntentionList',
                 type: '',
                 customer: '',
                 customerName: '',
@@ -728,6 +728,15 @@ export default {
             this.createOrderParam.goods[0].location = item.location;
             this.createOrderParam.total = 0;
             this.createOrderParam.callback = this.createback;
+            this.createOrderParam.consignee=''
+            this.createOrderParam.consigneePhone=''
+            this.createOrderParam.consigner=''
+            this.createOrderParam.incidentals=0
+            this.createOrderParam.preferential=0
+            this.createOrderParam.incidentalsDesc=''
+            this.createOrderParam.preferentialDesc=''
+            this.createOrderParam.consigneeAddr=''
+            this.createOrderParam.comments=''
         },
         clientTransfer: function(param) {
             this.intentionParam = param;

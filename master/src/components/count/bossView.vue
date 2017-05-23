@@ -138,7 +138,8 @@
                             </select>
                         </dd>
                         <button class="btn btn-default" style="margin-left: 10px" @click="searchCus()">搜索</button>
-                        <button class="btn btn-default btn-warning" style="margin-left: 50px" @click="showDetail('regionalUser')">查看区域用户</button>
+                        <button class="btn btn-default" style="margin-left: 10px" @click="resetSearch()">清空</button>
+                        <button class="btn btn-default btn-warning" @click="showDetail('regionalUser')">查看区域用户</button>
                         <button class="btn btn-default btn-warning" @click="showDetail('customerType')">查看客户类型</button>
                     </dl>   
                     
@@ -265,7 +266,8 @@ export default {
     },
     events: {
         fresh: function(input) {
-         
+            this.orgData.cur = input
+            this.getAllCountDetail(this.orgData)
         },
     },
     methods:{
@@ -298,6 +300,13 @@ export default {
         },
         searchCus:function(){
         	this.getAllOrgData(this.searchParam)
+        },
+        resetSearch:function(){
+            this.searchParam.startTime = ''
+            this.searchParam.endTime = ''
+            this.searchParam.provinceId = ''
+            this.searchParam.type = ''
+            this.getAllOrgData(this.searchParam)
         },
         selectTime:function(data){ //切换年月显示
             
