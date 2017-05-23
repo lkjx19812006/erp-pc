@@ -1343,7 +1343,9 @@ export const freshBreedBarCharts = ({ dispatch }, param) => { //我的品种统�
         var data = res.json().result.list
         dispatch(types.CHANGE_BREEDBARCHARTS, data)
         dispatch(types.YESTODAY_BREED_DETAIL, data)
-
+        param.start = 0
+        param.end = 10
+        param.cur = 1
         param.total = data.length
         param.all = Math.ceil(data.length / 10)
     }, (res) => {
@@ -1397,6 +1399,9 @@ export const freshOrgBreedBarCharts = ({ dispatch }, param) => { //部门品种�
         var data = res.json().result.list
         dispatch(types.CHANGE_ORGBREEDBARCHARTS, data)
         dispatch(types.ORGYESTODAY_BREED_DETAIL, data)
+        param.start = 0
+        param.end = 10
+        param.cur = 1
         param.total = data.length
         param.all = Math.ceil(data.length / 10)
     }, (res) => {
@@ -1449,6 +1454,9 @@ export const freshAllBreedBarCharts = ({ dispatch }, param) => { //全部品种�
         var data = res.json().result.list
         dispatch(types.CHANGE_ALLBREEDBARCHARTS, data)
         dispatch(types.ALLYESTODAY_BREED_DETAIL, data)
+        param.start = 0
+        param.end = 10
+        param.cur = 1
         param.total = data.length
         param.all = Math.ceil(data.length / 10)
     }, (res) => {

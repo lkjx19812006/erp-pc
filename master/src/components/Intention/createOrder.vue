@@ -476,7 +476,6 @@ export default {
             this.param.city = this.city.cname;
             this.param.district = this.district.cname;
             console.log(this.param);
-            this.param.callback = this.param.callback;
             this.createOrder(this.param);
         },
         selectEmployee: function(id, name) {
