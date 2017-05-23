@@ -385,6 +385,15 @@ export default {
         }
     },
     created() {
+        Date.prototype.toLocaleString = function() {
+           return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
+        };
+        var newDate = new Date()
+        var myDate = new Date(); //获取今天日期
+        var oldDateMs = myDate.setDate(myDate.getDate() - 7);    
+        var oldDate = new Date(oldDateMs).toLocaleString()  
+        this.searchParam.startTime = oldDate 
+        this.searchParam.endTime = newDate.toLocaleString()
         this.getProvinceList(this.loadParam)
         this.freshLinesCharts(this.loadParam)
         this.getNewUserId(this.searchParam)

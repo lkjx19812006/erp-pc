@@ -18,12 +18,27 @@ Vue.filter('telstate', function(val) {
     }
 });
 
+function isJSON(str) {
+    if (typeof str == 'string') {
+        try {
+            JSON.parse(str);
+            return true;
+        } catch(e) {
+            console.log(e);
+            return false;
+        }
+    }
+    console.log('It is not a string!')    
+}
+
 Vue.filter('specFilter_a',function(data){//过滤规格
-    if(data){
+    if(data&&isJSON(data)){
         data = JSON.parse(data)
         for(var key in data){
             return data[key]['规格']
         }
+    }else{
+        return data
     }    
 })
 
