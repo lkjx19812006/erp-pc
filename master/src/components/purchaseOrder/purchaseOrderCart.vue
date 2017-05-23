@@ -24,12 +24,16 @@
                             <thead>
                                 <th>品种</th>
                                 <th>单价</th>
+                                <th>产地</th>
+                                <th>规格</th>
                                 <th>数量</th>
                             </thead>
                             <tbody>
                                 <tr v-for="item in param.goods">
                                     <td>{{item.breedName}}</td>
                                     <td>{{item.price}}元</td>
+                                    <td>{{item.location}}</td>
+                                    <td>{{item.spec}}</td>
                                     <td>{{item.number}}/{{item.unit | unit}}</td>
                                 </tr>
                             </tbody>
@@ -223,6 +227,7 @@ export default {
     filter: (filter, {}),
     created() {
         this.getProvinceList(this.countryParam);
+        console.log(this.param.goods)
     }
 }
 </script>

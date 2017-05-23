@@ -6905,7 +6905,6 @@ export const getIntentionDetail = ({ dispatch }, param, extraParam) => { //æ„å
         }
     }).then((res) => {
         var result = res.json().result;
-
         var arr = result.offers;
         result.offers = null;
         result.offers = {

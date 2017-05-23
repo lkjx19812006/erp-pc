@@ -73,7 +73,7 @@
                         <tbody v-if="param.name=='业务员'">
                             <tr v-for="item in getProvinceDetail">
                                 <td>{{item.provinceName}}</td>
-                                <td>{{item.activeNumber}}</td>
+                                <td>{{item.addNumber}}</td>
                                 <td>{{item.transactionNumber}}</td>
                                 <td>{{item.activeNumber}}</td>
                             </tr>
@@ -81,7 +81,7 @@
                         <tbody v-if="param.name=='部门'">
                             <tr v-for="item in getOrgProvinceDetail">
                                 <td>{{item.provinceName}}</td>
-                                <td>{{item.activeNumber}}</td>
+                                <td>{{item.addNumber}}</td>
                                 <td>{{item.transactionNumber}}</td>
                                 <td>{{item.activeNumber}}</td>
                             </tr>
@@ -89,7 +89,7 @@
                         <tbody v-if="param.name=='全部'">
                             <tr v-for="item in getAllProvinceDetail">
                                 <td>{{item.provinceName}}</td>
-                                <td>{{item.activeNumber}}</td>
+                                <td>{{item.addNumber}}</td>
                                 <td>{{item.transactionNumber}}</td>
                                 <td>{{item.activeNumber}}</td>
                             </tr>

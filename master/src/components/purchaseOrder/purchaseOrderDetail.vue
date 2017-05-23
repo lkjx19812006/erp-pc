@@ -518,7 +518,9 @@ export default {
                             breedId: offer.breedId,
                             number: offer.number,
                             price: offer.price,
-                            unit: offer.unit
+                            unit: offer.unit,
+                            spec:offer.spec,
+                            location:offer.location
                         }
                         return;
                     }
@@ -531,7 +533,9 @@ export default {
                         breedId: offer.breedId,
                         number: offer.number,
                         price: offer.price,
-                        unit: offer.unit
+                        unit: offer.unit,
+                        spec:offer.spec,
+                        location:offer.location
                     });
                 }
             }

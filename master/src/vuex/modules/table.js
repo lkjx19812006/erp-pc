@@ -676,7 +676,19 @@ const state = {
         ],
         msgList: [],
         preSellMsgList: [],
-        intentionDetail: {},
+        intentionDetail: {
+            msgs:{
+                arr:[]
+            },
+            trackings:{
+                arr:[]
+            },
+            importQualityPics:[],
+            testReportPics:[],
+            labels:{
+                arr:[]
+            }
+        },
         intentionOfferDetail: {
             offer: {},
             intention: {},
@@ -1464,10 +1476,12 @@ const mutations = {
 
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
-
-        /*if(data.key=='labels'||data.key=='locals'||data.key=='specs'||data.key=='alias'||data.key=='units'){*/
-        state[data.headline][data.key].arr.splice(data.sub, 1);
-
+        if(data.sign=='intentionDetail'){
+            state.basicBaseList.intentionDetail.labels.splice(data.sub, 1);
+        }else{
+            state[data.headline][data.key].arr.splice(data.sub, 1);
+        }
+               
     },
     [DELETE_SHOW_STATUE](state, data) { //删除枚举
         state.systemBaseList.enumlist.splice(data.sub, 1);
@@ -2225,47 +2239,6 @@ const mutations = {
 
 
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
-        /*var temp = {
-            "id": data.id,
-            "type": data.type,
-            "especial": data.especial,
-            "customerName": data.customerName,
-            "customerId": data.customerId,
-            "customerPhone": data.customerPhone,
-            "breedName": data.breedName,
-            "qualification": data.qualification,
-            "spec": data.spec,
-            "address": data.address,
-            "advance": data.advance,
-            "invoic": data.invoic,
-            'visit': data.visit,
-            "intl": data.intl,
-            "unit": data.unit,
-            "pack": data.pack,
-            "sampling": data.sampling,
-            "sampleNumber": data.sampleNumber,
-            "sampleUnit": data.sampleUnit,
-            "sampleAmount": data.sampleAmount,
-            "breedId": data.breedId,
-            "country": data.country,
-            "quality": data.quality,
-            "price": data.price,
-            "province": data.province,
-            "city": data.city,
-            "district": data.district,
-            "location": data.location,
-            "number": data.number,
-            "quality": data.quality,
-            "ctime": data.ctime,
-            "show": false,
-            "duedate": data.duedate,
-            "images": data.images,
-            "audit": data.audit,
-            "checked": data.checked,
-            "validate": data.validate,
-            "loading": true,
-            "onSell": 0
-        };*/
         data.onSell = 0;
         if (data.key == "myIntentionList") {
             console.log("意向列表页添加意向");
