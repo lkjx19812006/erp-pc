@@ -503,6 +503,7 @@ export default {
             this.getClientList(this.loadParam)
         },
         removeSupplier: function(id) {
+            this.auditParam.callback = this.callback;
             this.auditParam.customerIds = [];
             this.auditParam.customerIds.push(id);
             this.auditParam.show = true;

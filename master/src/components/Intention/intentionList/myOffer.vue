@@ -71,7 +71,14 @@
                         </td>
                         <td>{{item.price}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
-                        <td>{{item.description}}</td>
+                        <td>
+                            <Poptip placement="top" trigger="hover">
+                                <span>{{item.description | textDisplay '8'}}</span>
+                                <div class="api" slot="content">
+                                    {{item.description}}
+                                </div>
+                            </Poptip>
+                        </td>
                         <td>{{item.orderTime}}次</td>
                         <td>
                             <a class="operate" @click.stop="adopt(item,$index)" v-if="item.orderTime==0"><img src="/static/images/adopt.png" alt="我要采纳" title="我要采纳" />
@@ -275,10 +282,19 @@ export default {
             }
             this.orderParam.callback = this.adoptback;
         },
-        adoptback: function(title) {
-            this.tipsParam.name = title;
+        adoptback: function(name) {
+            this.tipsParam.name = name;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
+            let _this = this;
+            if (name == "success") {
+                this.tipsParam.name = name + "，稍后将跳转到我的订单页面";
+                setTimeout(function() {
+                    _this.$router.go({ //成功后跳转到我的订单页面
+                        path: 'order?id=0'
+                    });
+                }, 500);
+            }
         },
 
     },
@@ -351,5 +367,12 @@ export default {
 #table_box table td {
     width: 170px;
     min-width: 170px;
+}
+
+.api {
+    min-width: 200px;
+    max-width: 400px;
+    white-space: normal;
+    color: #3399ff;
 }
 </style>

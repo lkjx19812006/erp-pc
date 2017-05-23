@@ -69,7 +69,14 @@
                         </td>
                         <td>{{item.price}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
-                        <td>{{item.description}}</td>
+                        <td>
+                            <Poptip placement="left" trigger="hover">
+                                <span>{{item.description | textDisplay '8'}}</span>
+                                <div class="api" slot="content">
+                                    {{item.description}}
+                                </div>
+                            </Poptip>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -336,5 +343,12 @@ export default {
 #table_box table td {
     width: 213px;
     min-width: 213px;
+}
+
+.api {
+    min-width: 200px;
+    max-width: 400px;
+    white-space: normal;
+    color: #3399ff;
 }
 </style>
