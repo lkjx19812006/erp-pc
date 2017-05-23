@@ -17,6 +17,25 @@ Vue.filter('telstate', function(val) {
         return '' + val;
     }
 });
+
+Vue.filter('specFilter_a',function(data){//过滤规格
+    if(data){
+        data = JSON.parse(data)
+        for(var key in data){
+            return data[key]['规格']
+        }
+    }    
+})
+
+Vue.filter('specFilter_b',function(data){//过滤片形
+    if(data){
+        data = JSON.parse(data)
+        for(var key in data){
+            return data[key]['片型']
+        }
+    }    
+})
+
 Vue.filter('Sample', function(val) { //是否样品
     var val = val;
     if (val == 0) {

@@ -400,24 +400,6 @@ export default {
         }
 	},
 	filters:{
-		specFilter_a:function(data){
-			if(data){
-				data = JSON.parse(data)
-				for(var key in data){
-					return data[key]['规格']
-				}
-			}
-			
-		},
-		specFilter_b:function(data){
-			if(data){
-				data = JSON.parse(data)
-				for(var key in data){
-					return data[key]['片型']
-				}
-			}
-			
-		},
 		timeFilter:function(data){
 			Date.prototype.toLocaleString = function(){
 				var month = this.getMonth()+1;
