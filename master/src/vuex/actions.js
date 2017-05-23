@@ -379,9 +379,9 @@ export const freshAllBreedLines = ({ dispatch }, getCharList) => { //全部品�
     });
 };
 
-export const getNewUserId = ({ dispatch }, param) => { //获取新增用户详情的id
-    var body = {}
-
+export const getNewUserId = ({ dispatch }, param) => { //获取新增用户详情的id  
+    var body = {
+    }
     if (param.startTime) {
         body.startTime = param.startTime
     }
@@ -1203,19 +1203,17 @@ export const getAllCountDetail = ({ dispatch }, param) => { //获取部门业务
 
 export const getOrgSalemanData = ({ dispatch }, param) => { //获取部门业务员详情
     var body = {}
-    if (param) {
-        if (param.startTime) {
-            body.startTime = param.startTime
-        }
-        if (param.endTime) {
-            body.endTime = param.endTime
-        }
-        if (param.provinceId) {
-            body.provinceId = param.provinceId.id
-        }
-        if (param.type) {
-            body.type = param.type
-        }
+    if (param.startTime) {
+        body.startTime = param.startTime
+    }
+    if (param.endTime) {
+        body.endTime = param.endTime
+    }
+    if (param.provinceId) {
+        body.provinceId = param.provinceId.id
+    }
+    if (param.type) {
+        body.type = param.type
     }
 
     Vue.http({
@@ -1239,20 +1237,20 @@ export const getAllOrgData = ({ dispatch }, param) => { //获取全部部门详�
         var body = {
             queryType: 'all'
         }
-        if (param) {
-            if (param.startTime) {
-                body.startTime = param.startTime
-            }
-            if (param.endTime) {
-                body.endTime = param.endTime
-            }
-            if (param.provinceId) {
-                body.provinceId = param.provinceId.id
-            }
-            if (param.type) {
-                body.type = param.type
-            }
+
+        if (param.startTime) {
+            body.startTime = param.startTime
         }
+        if (param.endTime) {
+            body.endTime = param.endTime
+        }
+        if (param.provinceId) {
+            body.provinceId = param.provinceId.id
+        }
+        if (param.type) {
+            body.type = param.type
+        }
+
         Vue.http({
             method: 'POST',
             url: '/crm/api/v1/count/getCustomerNumberGroupByOrg',

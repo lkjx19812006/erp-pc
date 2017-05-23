@@ -354,10 +354,19 @@ export default {
         }
     },
     created() {
+        Date.prototype.toLocaleString = function() {
+           return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
+        };
+        var newDate = new Date()
+        var myDate = new Date(); //获取今天日期
+        var oldDateMs = myDate.setDate(myDate.getDate() - 7);    
+        var oldDate = new Date(oldDateMs).toLocaleString()  
+        this.searchParam.startTime = oldDate 
+        this.searchParam.endTime = newDate.toLocaleString()
     	this.freshAllCount(this.loadParam)
         this.freshAllColCharts(this.loadParam)
         this.getProvinceList(this.loadParam)
-        this.getAllOrgData()
+        this.getAllOrgData(this.searchParam)
     },
     computed:{
         setYear:function(){//计算当前年份过滤年份数组显示的年份
