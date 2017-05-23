@@ -11,6 +11,7 @@
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
     <sendapply-model :param="sampleOrderParam" v-if="sampleOrderParam.send"></sendapply-model>
+    <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
@@ -171,6 +172,7 @@
                         <th>主要联系人</th>
                         <th>联系方式</th>
                         <th>手机归属地</th>
+                        <th>意向图片</th>
                         <th>意向商品</th>
                         <th>商品产地</th>
                         <th>商品规格</th>
@@ -233,6 +235,17 @@
                         <td>{{item.mainContact}}</td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
+                        <td width="200px">
+                            <li v-for="pic in item.pics" class="pull-left">
+                                <img src="{{pic.url}}" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                            </li>
+                            <li v-for="pic in item.testReportPics" class="pull-left">
+                                <img src="{{pic.url}}" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                            </li>
+                            <li v-for="pic in item.importQualityPics" class="pull-left">
+                                <img src="{{pic.url}}" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                            </li>
+                        </td>
                         <td>{{item.breedName}}</td>
                         <td>{{item.location}}</td>
                         <td>{{item.spec}}</td>
@@ -354,6 +367,7 @@ import createorderModel from '../createOrder'
 import sendapplyModel from '../sendSampleapply'
 //import inputSelect from '../../tools/vueSelect/components/inputselect'
 import inputSelect from '../../tools/vueSelect/components/multiSelect'
+import pictureModel from '../../tips/pictureDialog'
 import commonArray from '../../tools/commonArray'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
@@ -382,6 +396,7 @@ export default {
         tipsdialogModel,
         deletebreedModel,
         createintentModel,
+        pictureModel,
         supdemModel,
         searchModel,
         breedsearchModel,
@@ -560,7 +575,11 @@ export default {
             },
             breedSearchParam: {
                 show: false
-            }
+            },
+            pictureParam: {
+                show: false,
+                img: ''
+            },
         }
     },
     methods: {
@@ -584,6 +603,7 @@ export default {
             }*/
 
         },
+
         eventClick: function(sub) {
             if (this.$store.state.table.basicBaseList.myIntentionList[sub].show) {
                 this.$store.state.table.basicBaseList.myIntentionList[sub].show = !this.$store.state.table.basicBaseList.myIntentionList[sub].show;
@@ -619,6 +639,10 @@ export default {
                     item.checked = false;
                 })
             }
+        },
+        clickBig: function(img) {
+            this.pictureParam.show = true;
+            this.pictureParam.img = img;
         },
         breedSearch: function() {
             this.breedSearchParam.show = true;
@@ -728,15 +752,15 @@ export default {
             this.createOrderParam.goods[0].location = item.location;
             this.createOrderParam.total = 0;
             this.createOrderParam.callback = this.createback;
-            this.createOrderParam.consignee=''
-            this.createOrderParam.consigneePhone=''
-            this.createOrderParam.consigner=''
-            this.createOrderParam.incidentals=0
-            this.createOrderParam.preferential=0
-            this.createOrderParam.incidentalsDesc=''
-            this.createOrderParam.preferentialDesc=''
-            this.createOrderParam.consigneeAddr=''
-            this.createOrderParam.comments=''
+            this.createOrderParam.consignee = ''
+            this.createOrderParam.consigneePhone = ''
+            this.createOrderParam.consigner = ''
+            this.createOrderParam.incidentals = 0
+            this.createOrderParam.preferential = 0
+            this.createOrderParam.incidentalsDesc = ''
+            this.createOrderParam.preferentialDesc = ''
+            this.createOrderParam.consigneeAddr = ''
+            this.createOrderParam.comments = ''
         },
         clientTransfer: function(param) {
             this.intentionParam = param;

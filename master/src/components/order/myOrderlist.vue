@@ -609,7 +609,8 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
-            this.getEmpolyeeOrder(this.loadParam);
+            //0.1s后重新请求列表数据
+            setTimeout(this.selectSearch, 100);
         },
         cancelBack: function(title) {
             this.tipsParam.show = true;

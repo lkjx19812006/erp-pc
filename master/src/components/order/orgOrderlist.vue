@@ -636,7 +636,8 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
-            this.selectSearch();
+            //0.1s后重新请求列表数据
+            setTimeout(this.selectSearch, 100);
         },
         orderCheck: function(id, index) {
             this.auditParam.id = id;
