@@ -452,7 +452,6 @@ export default {
                 this.param.countryName = this.country.cnameEn;
             }
             this.param.show = false;
-            this.param.callback = this.param.callback;
             this.saveCreate(this.param, this.tipsParam);
         },
         chechCallback: function(title) {

@@ -1113,7 +1113,7 @@ const mutations = {
         } else if (data.link == '/order/transferToEmployee') {
             //state.basicBaseList.orderList.shift(data.id)
 
-            state.basicBaseList.userOrderList.splice(data.itemSub, 1);
+            //state.basicBaseList.userOrderList.splice(data.itemSub, 1);
 
         } else {
             state.basicBaseList.orderList = data;
@@ -2412,15 +2412,15 @@ const mutations = {
     [ALL_PROVINCE_DETAIL](state, data) {
         state.allProvinceDetail = data
     },
-     //我的品种统计省份详情
+    //我的品种统计省份详情
     [BREED_PROVINCE_DETAIL](state, data) {
         state.breedProvinceDetail = data
     },
-     //部门品种统计省份详情
+    //部门品种统计省份详情
     [ORGBREED_PROVINCE_DETAIL](state, data) {
         state.orgBreedProvinceDetail = data
     },
-     //全部品种统计省份详情
+    //全部品种统计省份详情
     [ALLBREED_PROVINCE_DETAIL](state, data) {
         state.allBreedProvinceDetail = data
     },
@@ -2441,11 +2441,11 @@ const mutations = {
         state.addBreedDetail = data
     },
     //部门品种统计新增详情
-    [CHANGE_ORGADDBREEDDETAIL](state,data){
+    [CHANGE_ORGADDBREEDDETAIL](state, data) {
         state.orgAddBreedDetail = data
     },
     //全部品种统计新增详情
-    [CHANGE_ALLADDBREEDDETAIL](state,data){
+    [CHANGE_ALLADDBREEDDETAIL](state, data) {
         state.allAddBreedDetail = data
     },
     //我的品种统计成交详情
@@ -2456,16 +2456,16 @@ const mutations = {
     [YESTODAY_BREED_DETAIL](state, data) {
         state.yestodayDealBreed = data
     },
-     //部门品种统计昨日成交详情
-    [ORGYESTODAY_BREED_DETAIL](state,data){
+    //部门品种统计昨日成交详情
+    [ORGYESTODAY_BREED_DETAIL](state, data) {
         state.orgYestodayDealBreed = data
     },
-     //全部品种统计昨日成交详情
-    [ALLYESTODAY_BREED_DETAIL](state,data){
+    //全部品种统计昨日成交详情
+    [ALLYESTODAY_BREED_DETAIL](state, data) {
         state.allYestodayDealBreed = data
     },
     //品种统计订单详情
-    [CHANGE_BREEDORDER_DETAIL](state,data){
+    [CHANGE_BREEDORDER_DETAIL](state, data) {
         state.breedOrderDetail = data
     }
 }

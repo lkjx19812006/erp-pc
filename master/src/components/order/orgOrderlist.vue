@@ -717,13 +717,13 @@ export default {
             this.transferParam.callback = this.transferCallback;
             this.transferParam.show = true;
             this.transferParam.itemSub = itemSub;
-
         },
         transferCallback: function(name) {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
             this.tipsParam.alert = true;
-            this.selectSearch();
+            //由于划转订单，在后台是异步操作，会有些许延迟，所以这里设置在0.1s或重新请求列表数据
+            setTimeout(this.selectSearch, 100);
         }
     },
     filter: (filter, {}),

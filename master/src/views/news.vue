@@ -382,7 +382,7 @@ export default {
                 loading: true,
                 show: false,
                 fullname: '',
-                id:'',
+                id: '',
                 source: '',
                 bizMain: '',
                 bizType: '',
@@ -621,6 +621,7 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
+            this.selectSearch();
         },
         createIntention: function() {
             this.intentionParam = {
