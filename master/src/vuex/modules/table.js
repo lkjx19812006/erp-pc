@@ -1070,7 +1070,7 @@ const state = {
     orgYestodayDetail: [],
     allYestodayDetail: [],
     orgSalemanDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
-    allOrgDetail: [{ name: "测试" }, { name: "测试" }, { name: "测试" }, { name: "测试" }],
+    allOrgDetail: [{ name: "3" }, { name: "2" }, { name: "1" }, { name: "4" }],
     provinceDetail: [],
     orgProvinceDetail: [],
     allProvinceDetail: [],

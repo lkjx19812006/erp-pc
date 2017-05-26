@@ -129,16 +129,19 @@ export default {
     height: 100%;
     position: fixed;
     width: 200px;
-    /*  overflow-x: hidden !important;
-   overflow-y: auto !important; */
     white-space: nowrap;
     z-index: 999;
+    overflow: auto!important;
 }
 
 .left:hover {
     overflow: auto;
 }
 
+::-webkit-scrollbar {  
+    width:13px;
+    height: 10px;   
+}  
 .left_close {
     width: 50px;
     height: 100%;
@@ -158,6 +161,7 @@ export default {
 .left_menu {
     font-size: 12px;
     padding: 0 10px;
+    overflow: hidden;
 }
 
 .left_menu li {

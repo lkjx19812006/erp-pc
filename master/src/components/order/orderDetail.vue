@@ -102,7 +102,7 @@
                                                     <tr v-for="item in initOrderDetail.goods.arr">
                                                         <td>{{item.breedName}}</td>
                                                         <td>{{item.location}}</td>
-                                                        <td>{{item.spec}}</td>
+                                                        <td>{{item.spec | specFilter_a}}</td>
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.price}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>

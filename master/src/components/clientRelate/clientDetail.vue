@@ -851,6 +851,35 @@
                                         </div>
                                     </div>
                                 </div>
+                            <!-- 划转记录 -->
+                            <div class="panel panel-default" v-cloak>
+                                <div class="panel-heading">
+                                    <h4 class="panel-title clearfix"  @click="showTransfer()">
+                                        <img class="pull-left" src="/static/images/remark.png" height="27" width="27"  />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                            划转记录（{{transferData.list.length}}）
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse" v-show="transferData.show&&transferData.list.length!=0">
+                                    <div class="panel-body panel-set">
+                                        <table class="table contactSet">
+                                            <thead>
+                                                <th>划转时间</th>
+                                                <th>划转到</th>
+                                                <th>备注</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="item in transferData.list">
+                                                    <td>{{item.ctime}}</td>
+                                                    <td>{{item.employeeName}}</td>
+                                                    <td>{{item.remark}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -899,7 +928,8 @@ import {
     uploadFiles,
     deleteInfo,
     customerTransferBlacklist,
-    createOrder
+    createOrder,
+    getCustomerTransfer
 } from '../../vuex/actions'
 export default {
     components: {
@@ -992,6 +1022,10 @@ export default {
             show: true,
             orderParam: {
                 show: false
+            },
+            transferData:{
+                show:false,
+                list:[]
             }
         }
     },
@@ -1017,7 +1051,8 @@ export default {
             uploadFiles,
             deleteInfo,
             customerTransferBlacklist,
-            createOrder
+            createOrder,
+            getCustomerTransfer
         }
     },
     methods: {
@@ -1026,6 +1061,9 @@ export default {
                 this.$store.state.table.clientDetail[param.crete].show = false
             }
             this.$store.state.table.clientDetail[param.crete].show = !this.$store.state.table.clientDetail[param.crete].show;
+        },
+        showTransfer:function(){
+            this.transferData.show = !this.transferData.show
         },
         clickBig: function(img) {
             this.pictureParam.show = true;
@@ -1235,6 +1273,7 @@ export default {
     },
     created() {
         this.getClientDetail(this.param);
+        this.getCustomerTransfer(this.param,this.transferData)
     }
 }
 </script>

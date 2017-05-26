@@ -9,11 +9,11 @@
 	                    <table class="table table-hover table_color table-striped " v-cloak id="tab">
 			                <thead>
 			                    <tr>			    
-			                        <th>药材名称</th>
-			                        <th>规格/片形</th>
-			                        <th>产地</th>
-			                        <th>库存可用量</th>
-			                        <th>库存单位</th>                   
+			                        <th style="width: 100px;">药材名称</th>
+			                        <th style="width: 100px;">规格/片形</th>
+			                        <th style="width: 100px;">产地</th>
+			                        <th style="width: 100px;">库存可用量</th>
+			                        <th style="width: 100px;">库存单位</th>                   
 			                    </tr>
 			                </thead>
 

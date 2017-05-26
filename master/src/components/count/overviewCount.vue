@@ -255,6 +255,7 @@ export default {
                 endTime:'',
                 provinceId:'',
                 type:'',
+                isSearch:true,//判断是否是搜索还是清空，如果是清空则只传endTime等于今天的时间，来重置服务器缓存
                 callback:this.callback
             },
             colCharts:{
@@ -347,6 +348,7 @@ export default {
             }
         },
         searchCus:function(){
+            this.searchParam.isSearch = true
             this.getNewUserId(this.searchParam)
             this.getNewUser(this.newPageParam)
             this.getDealUser(this.dealPageParam)
@@ -357,6 +359,7 @@ export default {
             this.searchParam.endTime = ''
             this.searchParam.provinceId = ''
             this.searchParam.type = ''
+            this.searchParam.isSearch = false
             this.getNewUserId(this.searchParam)
             this.getNewUser(this.newPageParam)
             this.getDealUser(this.dealPageParam)
@@ -386,7 +389,7 @@ export default {
     },
     created() {
         Date.prototype.toLocaleString = function() {
-           return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
+            return this.getFullYear() + "-" + ((this.getMonth() + 1)<10?('0'+(this.getMonth() + 1)):(this.getMonth() + 1)) + "-" + (this.getDate()<10?('0'+this.getDate()):this.getDate()) + " " + "00:00:00"
         };
         var newDate = new Date()
         var myDate = new Date(); //获取今天日期

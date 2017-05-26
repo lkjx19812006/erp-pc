@@ -104,7 +104,7 @@
                         </thead>
                         <tbody v-if="param.name=='业务员'">
                             <tr v-for="item in getCusTypeDetail">
-                                <td><a href="javascript:void(0);">{{item.name}}</a></td>
+                                <td>{{item.name | typeName}}</td>
                                 <td>{{item.addNumber}}</td>
                                 <td>{{item.activeNumber}}</td>
                                 <td>{{item.transactionNumber}}</td>
@@ -113,7 +113,7 @@
                         </tbody>
                         <tbody v-if="param.name=='部门'">
                             <tr v-for="item in getOrgCusTypeDetail">
-                                <td><a href="javascript:void(0);">{{item.name}}</a></td>
+                                <td>{{item.name | typeName}}</a></td>
                                 <td>{{item.addNumber}}</td>
                                 <td>{{item.activeNumber}}</td>
                                 <td>{{item.transactionNumber}}</td>
@@ -122,7 +122,7 @@
                         </tbody>
                         <tbody v-if="param.name=='全部'">
                             <tr v-for="item in getAllCusTypeDetail">
-                                <td><a href="javascript:void(0);">{{item.name}}</a></td>
+                                <td>{{item.name | typeName}}</a></td>
                                 <td>{{item.addNumber}}</td>
                                 <td>{{item.activeNumber}}</td>
                                 <td>{{item.transactionNumber}}</td>
@@ -327,6 +327,24 @@ export default {
             for(var i=0;i<=this.getYear.length;i++){
                 if(this.getYear[i]>=nowYear){
                     return this.getYear.slice(0,i+1)
+                }
+            }
+        }
+    },
+    filters:{
+        typeName:function(num){
+            if(num){
+                if(num=='0'){
+                    return '产地'
+                }
+                if(num=='1'){
+                    return '药厂'
+                }
+                if(num=='2'){
+                    return '药商'
+                }
+                if(num=='3'){
+                    return '服务商'
                 }
             }
         }

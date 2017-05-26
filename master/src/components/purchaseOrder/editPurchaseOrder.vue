@@ -78,8 +78,8 @@
                                     <th>单位</th>
                                     <th>产地</th>
                                     <th>规格</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th>操作</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -145,6 +145,17 @@
                                         <label class="editlabel">{{$t('static.quality')}}</label>
                                         <input type="text" v-model="intentionInfo.quality" class="form-control edit-input" />
                                     </div> -->
+                                    <!-- 期望价格 -->
+                                    <div class="editpage-input col-md-6">
+                                        <label class="editlabel">价格
+                                            <span class="system_danger" v-if="$inner.price.required">采购价</span>
+                                            <span class="system_danger" v-if="$inner.price.min">价格不能小于0</span>
+                                        </label>
+                                        <input type="number" v-model="intentionInfo.price" class="form-control edit-input" v-validate:price="{
+                                            required:true,
+                                            min:0
+                                            }"/>
+                                    </div>
                                     <!-- 规格 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.specification')}}</label>
