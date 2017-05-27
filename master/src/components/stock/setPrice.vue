@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in param.ladderPrice">
+                <tr v-for="item in param.ladderPriceList">
                     <td><span class="sortNum">{{$index+1}}</span></td>
                     <td><input type="number" class="form-control" v-model="item.minNumber" v-validate:number="{'required':true}"/></td>
                     <td><input type="number" class="form-control" v-model="item.ladder" v-validate:price="{'required':true}"/></td>
@@ -26,7 +26,7 @@
             </tbody>
         </table>
 		<div>
-			<button class="btn btn-default btn-warning right" style="margin:0px 10px" @click="setPrice()" :disabled="$validation.invalid||param.ladderPrice.length==0">确定</button>
+			<button class="btn btn-default btn-warning right" style="margin:0px 10px" @click="setPrice()" :disabled="$validation.invalid">确定</button>
 			<button class="btn btn-default btn-warning right"  @click="close()">取消</button>
 		</div>
 		</validator>
@@ -72,16 +72,15 @@
 				this.param.show = false
 			},
 			setPrice:function(){
-				console.log(this.mock)
 				this.setLadderPrice(this.param)
 				this.param.show = false
-				this.$dispatch("freshList")
+				//this.$dispatch("freshList")
 			},
 			addPrice:function(){
-				this.param.ladderPrice.push({"ladder":'',"minNumber":''})
+				this.param.ladderPriceList.push({"ladder":'',"minNumber":''})
 			},
 			deletePrice:function($index){
-				this.param.ladderPrice.splice($index,1)
+				this.param.ladderPriceList.splice($index,1)
 			}
 		},
 		filter:(filter,{})

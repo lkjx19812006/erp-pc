@@ -108,7 +108,7 @@
                         <td>{{item.offer}}</td>
                         <td>{{item.inquire | inquire}}</td>
                         <td style="text-align: left">
-                            <button v-if="item.inquire==0" class="btn btn-primary btn-apply" @click.stop="deletePurchase(item.id,$index)">删除</button>
+                            <button v-if="item.inquire==0" class="btn btn-danger btn-xs" @click.stop="deletePurchase(item.id,$index)">删除</button>
                         </td>
                     </tr>
                 </tbody>

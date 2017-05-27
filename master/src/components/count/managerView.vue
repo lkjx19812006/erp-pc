@@ -151,14 +151,26 @@
                             <tr>
                                 <th style="min-width:150px;text-align: center;">业务员ID</th>
                                 <th style="min-width:210px;text-align: center;">业务员名称</th>
-                                <th style="min-width:210px;text-align：center;">新增用户</th>
-                                <th style="min-width:210px;text-align：center;">活跃用户</th>
-                                <th style="min-width:210px;text-align：center;">成交用户</th>
+                                <th style="min-width:210px;text-align：center;" @click="sortBy('add')">
+                                    <a href="javascript:void(0)">新增用户</a>
+                                    <span v-if="sortData.down" class="sort">↓</span>
+                                    <span v-else class="sort">↑</span>
+                                </th>
+                                <th style="min-width:210px;text-align：center;" @click="sortBy('act')">                              
+                                    <a href="javascript:void(0)">活跃用户</a>
+                                    <span v-if="sortData.down" class="sort">↓</span>
+                                    <span v-else class="sort">↑</span>
+                                </th>
+                                <th style="min-width:210px;text-align：center;" @click="sortBy('deal')">                                
+                                    <a href="javascript:void(0)">成交用户</a>
+                                    <span v-if="sortData.down" class="sort">↓</span>
+                                    <span v-else class="sort">↑</span>
+                                </th>
                                 <th style="min-width:210px;text-align：center;">用户总数</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in getOrgSalemanDetail">
+                            <tr v-for="item in getOrgSalemanDetail | orderBy sortData.sortType sortData.num">
                             	<td>{{item.employeeId}}</td>
                                 <td @click="showDepart()">{{item.employeeName}}</td>
                                 <td>{{item.addNumber}}</td>
@@ -241,6 +253,11 @@ export default {
                 isSearch:true,
                 callback:this.callback
             },
+            sortData:{
+                down:true,
+                num:1,
+                sortType:''
+            }
         }
     },
     vuex: {
@@ -350,6 +367,20 @@ export default {
         	this.orgData.data = data
         	this.getOrgCountDetail(this.orgData)
         	
+        },
+        sortBy:function(data){
+            if(data=="add"){
+                this.sortData.sortType = 'addNumber'
+            }
+            if(data=="act"){
+                this.sortData.sortType = 'activeNumber'
+            }
+            if(data=="deal"){
+                this.sortData.sortType = 'transactionNumber'
+            }
+            this.sortData.down=!this.sortData.down
+            this.sortData.num = this.sortData.num*-1
+
         }
     },
     created() {
@@ -505,5 +536,8 @@ export default {
     border-radius: 10px;
     overflow: hidden;
 }
-
+.sort{
+    color:red;
+    font-weight: bold;
+}
 </style>

@@ -99,7 +99,9 @@ export default {
 	border:1px solid #ccc
 }
 .tip-title{
-	font-size:12px;text-align: left
+	font-size:12px;
+	text-align: left;
+	font-weight: bold
 }
 .good-num{
 	margin-bottom: 30px;height: 50px
@@ -108,7 +110,10 @@ export default {
 	height: 50px
 }
 .error-tip{
-	font-size: 12px;text-align: right;color:red;padding-right:80px
+	font-size: 12px;
+	text-align: right;
+	color:#d9534f;
+	padding-right:80px
 }
 .del_modal_con {
     z-index: 1102;

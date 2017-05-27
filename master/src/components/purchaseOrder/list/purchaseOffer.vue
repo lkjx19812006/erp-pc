@@ -72,7 +72,7 @@
                         <td>{{item.comment}}</td>
                         <td>{{item.inquire | inquire}}</td>
                         <td>
-                            <button class="btn btn-primary btn-apply" @click.stop="detailClick(item.id,item.customerId)">报价</button>
+                            <button class="btn btn-success btn-xs" @click.stop="detailClick(item.id,item.customerId)">报价</button>
                         </td>
                     </tr>
                 </tbody>

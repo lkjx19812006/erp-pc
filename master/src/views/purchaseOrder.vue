@@ -28,7 +28,7 @@
         <div class="myOrder" v-if="$route.path.split('=')[1]==6">
             <my-purchase-offer :param="mpoParam"></my-purchase-offer>
         </div>
-        <!-- 我收到的报价 -->
+        <!-- 收到的全部报价 -->
         <div class="myOrder" v-if="$route.path.split('=')[1]==7">
             <all-purchase-offer :param="apoParam"></all-purchase-offer>
         </div>
