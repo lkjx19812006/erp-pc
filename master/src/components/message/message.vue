@@ -4,6 +4,7 @@
         <receivedetail-model :param="detailParam" v-if="detailParam.show"></receivedetail-model>
         <record-model :param="recordParam" v-if="recordParam.show"></record-model>
         <resend-model :param="resendParam" v-if="resendParam.show"></resend-model>
+        <cancel-detail-model :param="cancelDetailParam" v-if="cancelDetailParam.show"></cancel-detail-model>
         <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
         <send-detail :param="sendDetailParam" v-if="sendDetailParam.show"></send-detail>
         <deliver-model :param="deliverParam" v-if="deliverParam.show"></deliver-model>
@@ -81,6 +82,7 @@ import sendDetail from '../order/second_order/orderSendDetail'
 import deliverModel from '../order/orderStatus'
 import receivedetailModel from '../order/second_order/orderReceiveDetail'
 import resendModel from '../order/second_order/afterResendPage'
+import cancelDetailModel from '../order/orderDetailByCancel'
 import cancelModel from '../order/cancelAudit'
 import cancelReapplyModel from '../order/cancelReapply'
 import cancelReceiptModel from '../order/cancelReceipt'
@@ -101,7 +103,8 @@ export default {
         resendModel,
         cancelModel,
         cancelReapplyModel,
-        cancelReceiptModel
+        cancelReceiptModel,
+        cancelDetailModel
     },
     props: ['loadparam', 'backloglist'],
     data() {
@@ -144,6 +147,12 @@ export default {
                 id: '',
                 show: false,
                 url: '',
+                loading: true
+            },
+            cancelDetailParam: {
+                id: '',
+                show: false,
+                key: 'orderDetail',
                 loading: true
             },
             auditParam: {
@@ -234,6 +243,10 @@ export default {
             this.detailParam.id = id;
             this.detailParam.url = '/order/quality/after/sales/details/';
             this.detailParam.show = true;
+        },
+        showOrderCancelDetail: function(id) {
+            this.cancelDetailParam.id = id; //这个ID是取消订单的ID，不是订单ID
+            this.cancelDetailParam.show = true;
         },
         orderSend: function(id) {
             this.sendDetailParam.id = id;

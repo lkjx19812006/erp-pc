@@ -118,8 +118,11 @@
                             <td>
                                 <span v-if="item.pr==0&&item.type==0">{{$t('static.not_paid')}}</span>
                                 <span v-if="item.pr==0&&item.type==1">{{$t('static.not_receive')}}</span>
-                                <span v-if="item.pr==1&&item.type==0" style="background:green;color:#fff;">
+                                <span v-if="item.pr==1&&item.type==0&&item.bizType!='order_cancel_refund'" style="background:green;color:#fff;">
                                     {{$t('static.confirm_paid')}}
+                                </span>
+                                <span v-if="item.pr==1&&item.type==0&&item.bizType=='order_cancel_refund'" style="background:green;color:#fff;">
+                                    已确认退款
                                 </span>
                                 <span v-if="item.pr==1&&item.type==1&&item.bizType=='order'" style="background:green;color:#fff;">
                                     {{$t('static.confirm_recipt')}}

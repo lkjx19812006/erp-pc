@@ -1084,14 +1084,7 @@ export const freshAllCount = ({ dispatch }, getCharList) => { //获取全部客�
 }
 
 //部门统计柱状图
-export const freshOrgColCharts = ({ dispatch }, param) => { << << << < HEAD
-    Date.prototype.toLocaleString = function() {
-        return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
-    }; === === =
-    // Date.prototype.toLocaleString = function() {
-    //     return this.getFullYear() + "-" + ((this.getMonth() + 1)<10?('0'+(this.getMonth() + 1)):(this.getMonth() + 1)) + "-" + (this.getDate()<10?('0'+this.getDate()):this.getDate()) + " " + "00:00:00"
-    // };
-    >>> >>> > dbf1ac65ff15628f3eb3d8a5b2439f6f43e665fc
+export const freshOrgColCharts = ({ dispatch }, param) => {
     var newDate = new Date()
     var myDate = new Date(); //获取今天日期
     var oldDateMs = myDate.setDate(myDate.getDate() - 1);
@@ -1123,14 +1116,7 @@ export const freshOrgColCharts = ({ dispatch }, param) => { << << << < HEAD
 }
 
 //全部统计柱状图
-export const freshAllColCharts = ({ dispatch }, param) => { << << << < HEAD
-    Date.prototype.toLocaleString = function() {
-        return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
-    }; === === =
-    // Date.prototype.toLocaleString = function() {
-    //      return this.getFullYear() + "-" + ((this.getMonth() + 1)<10?('0'+(this.getMonth() + 1)):(this.getMonth() + 1)) + "-" + (this.getDate()<10?('0'+this.getDate()):this.getDate()) + " " + "00:00:00"
-    //  };
-    >>> >>> > dbf1ac65ff15628f3eb3d8a5b2439f6f43e665fc
+export const freshAllColCharts = ({ dispatch }, param) => {
     var newDate = new Date()
     var myDate = new Date(); //获取今天日期
     var oldDateMs = myDate.setDate(myDate.getDate() - 1); //获取前一天时间的毫秒数（跨月会自动计算）    
@@ -3726,6 +3712,114 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
         console.log('fail');
     })
 }
+
+export const getOrderDetailByOrderCancel = ({ dispatch }, param) => { //根据订单取消的ID获取订单详情
+    param.loading = true;
+    let body = {
+        id: param.id
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + '/order/flow/cancel/details',
+        emulateJSON: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var orderDetail = res.json().result;
+        if (param.key == 'orderDetail') {
+            var goods = orderDetail.goods;
+            if (!goods) {
+                goods = [];
+            }
+            orderDetail.goods = {};
+            orderDetail.goods.arr = goods;
+            orderDetail.goods.show = true;
+            orderDetail.goods.total = 0;
+            for (var i in orderDetail.goods.arr) {
+                orderDetail.goods.arr[i].show = false;
+                orderDetail.goods.total += orderDetail.goods.arr[i].amount * 100;
+            }
+            orderDetail.goods.total = orderDetail.goods.total / 100;
+            var payPics = orderDetail.payPics;
+            if (!payPics) {
+                payPics = [];
+            }
+            orderDetail.payPics = {};
+            orderDetail.payPics.arr = payPics;
+            orderDetail.payPics.show = true;
+            payPics.url = [];
+            for (var i in orderDetail.payPics.arr) {
+                orderDetail.payPics.arr[i].show = false;
+                if (orderDetail.payPics.arr[i].url) {
+                    var img = orderDetail.payPics.arr[i].url;
+                    var file = img.split(',');
+                    payPics.url = payPics.url.concat(file);
+                }
+
+            }
+
+            var sendPics = orderDetail.sendPics;
+            orderDetail.sendPics = {};
+            orderDetail.sendPics.arr = sendPics;
+            orderDetail.sendPics.show = true;
+            for (var i in orderDetail.sendPics.arr) {
+                orderDetail.sendPics.arr[i].show = false;
+            }
+
+            var attachFiles = orderDetail.attachFiles;
+            orderDetail.attachFiles = {};
+            orderDetail.attachFiles.arr = attachFiles;
+            orderDetail.attachFiles.show = true;
+            for (var i in orderDetail.attachFiles.arr) {
+                orderDetail.attachFiles.arr[i].show = false;
+            }
+
+            var logisticses = orderDetail.logisticses;
+            orderDetail.logisticses = {};
+            orderDetail.logisticses.arr = logisticses;
+            orderDetail.logisticses.show = true;
+            for (var i in orderDetail.logisticses.arr) {
+                orderDetail.logisticses.arr[i].show = false;
+            }
+
+            var contractList = orderDetail.contractList;
+            orderDetail.contractList = {};
+            orderDetail.contractList.arr = contractList;
+            orderDetail.contractList.show = true;
+            for (var i in orderDetail.contractList.arr) {
+                orderDetail.contractList.arr[i].show = false;
+            }
+
+            var stages = orderDetail.stages;
+            orderDetail.stages = {};
+            orderDetail.stages.arr = stages;
+            orderDetail.stages.show = true;
+            for (var i in orderDetail.stages.arr) {
+                orderDetail.stages.arr[i].show = false;
+            }
+
+            var orderLinkList = orderDetail.orderLinkList;
+            orderDetail.orderLinkList = {};
+            orderDetail.orderLinkList.arr = orderLinkList;
+            orderDetail.orderLinkList.show = true;
+            for (var i in orderDetail.orderLinkList.arr) {
+                orderDetail.orderLinkList.arr[i].flag = 0;
+                orderDetail.orderLinkList.arr[i].show = false;
+            }
+        }
+
+        param.loading = false;
+        dispatch(types.ORDER_DETAIL_DATA, orderDetail);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
 
 export const getLinkOrder = ({ dispatch }, param) => { //获取关联订单（采销对应）
     const body = {

@@ -4,10 +4,13 @@
         <orderdetail-model :param="orderDetailParam" v-if="orderDetailParam.show"></orderdetail-model>
         <senddetail-model :param="sendDetailParam" v-if="sendDetailParam.show"></senddetail-model>
         <receivedetail-model :param="receiveDetailParam" v-if="receiveDetailParam.show"></receivedetail-model>
+        <cancel-detail-model :param="cancelDetailParam" v-if="cancelDetailParam.show"></cancel-detail-model>
         <record-model :param="recordParam" v-if="recordParam.show"></record-model>
         <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
         <deliver-model :param="deliverParam" v-if="deliverParam.show"></deliver-model>
         <cancel-model :param="cancelFlowParam" v-if="cancelFlowParam.show"></cancel-model>
+        <cancel-reapply-model :param="cancelReapplyParam" v-if="cancelReapplyParam.show"></cancel-reapply-model>
+        <cancel-receipt-model :param="cancelReceiptParam" v-if="cancelReceiptParam.show"></cancel-receipt-model>
         <tip-model :param="tipParam" v-if="tipParam.show"></tip-model>
         <mglist-model>
             <!-- 头部搜索 -->
@@ -113,6 +116,8 @@
                                 <div v-if="item.taskKey=='after_sales_resend'">{{$t('static.reapply_delivery')}}</div>
                                 <!-- 订单取消 -->
                                 <div v-if="item.taskKey=='order_cancel_governor_validate'">{{$t('static.management_approval')}}</div>
+                                <div v-if="item.taskKey=='order_cancel_reapply'">{{$t('static.salesman')}}</div>
+                                <div v-if="item.taskKey=='order_cancel_receipt'">{{$t('static.salesman')}} {{$t('static.receive')}}</div>
                             </td>
                             <td>{{item.taskDesc}}</td>
                             <td>{{item.date}}</td>
@@ -140,7 +145,9 @@
                                     <a v-if="item.taskKey=='after_sales_disputed_handle'" @click="showAudit(item)">{{$t('static.objection_handl')}}</a>
                                 </div>
                                 <div v-if="item.bizType=='order_cancel'&&loadParam.link=='/order/toDoOrderList'">
-                                    <a v-if="item.taskKey=='order_cancel_governor_validate'" @click="cancelOrderByFlow(item)">审核</a>
+                                    <a v-if="item.taskKey=='order_cancel_governor_validate'" @click="cancelOrderByFlow(item)">{{$t('static.review')}}</a>
+                                    <a v-if="item.taskKey=='order_cancel_reapply'" @click="cancelOrderReapply(item)">{{$t('static.reapply')}}</a>
+                                    <a v-if="item.taskKey=='order_cancel_receipt'" @click="cancelOrderReceipt(item)">{{$t('static.receive')}}</a>
                                 </div>
                             </td>
                         </tr>
@@ -165,7 +172,10 @@ import languageModel from '../tools/language.vue'
 import recordModel from '../record/record'
 import deliverModel from '../order/orderStatus'
 import auditModel from '../tips/auditDialog'
-import cancelModel from '../order/cancelAudit'
+import cancelModel from './cancelAudit'
+import cancelReapplyModel from './cancelReapply'
+import cancelReceiptModel from './cancelReceipt'
+import cancelDetailModel from './orderDetailByCancel'
 import tipModel from '../tips/tipDialog'
 import {
     getList,
@@ -193,6 +203,9 @@ export default {
         recordModel,
         deliverModel,
         cancelModel,
+        cancelReapplyModel,
+        cancelReceiptModel,
+        cancelDetailModel,
         auditModel,
         tipModel
     },
@@ -275,6 +288,24 @@ export default {
                 callback: this.cancelBack
 
             },
+            cancelReapplyParam: {
+                show: false,
+                id: '', //取消订单记录的ID号（非订单ID）
+                taskKey: '',
+                callback: this.cancelReapplyBack
+            },
+            cancelReceiptParam: {
+                show: false,
+                id: '',
+                taskKey: '',
+                callback: this.cancelReceiptBack
+            },
+            cancelDetailParam: {
+                id: '',
+                show: false,
+                key: 'orderDetail',
+                loading: true
+            },
             tipParam: {
                 show: false,
                 alert: true,
@@ -340,6 +371,11 @@ export default {
                 this.receiveDetailParam.show = true;
                 this.receiveDetailParam.url = '/order/quality/after/sales/details/';
             }
+            if (type == "order_cancel") {
+                this.cancelDetailParam.id = id; //这个ID是取消订单的ID，不是订单ID
+                this.cancelDetailParam.show = true;
+            }
+
 
         },
         showAudit: function(item) { //订单
@@ -423,6 +459,30 @@ export default {
             this.tipParam.show = true;
             this.tipParam.name = name;
             this.cancelFlowParam.show = false;
+            this.selectSearch();
+        },
+        //重新申请取消订单
+        cancelOrderReapply: function(item) {
+            this.cancelReapplyParam.id = item.bizId;
+            this.cancelReapplyParam.taskKey = item.taskKey;
+            this.cancelReapplyParam.show = true;
+        },
+        cancelReapplyBack: function(name) {
+            this.tipParam.show = true;
+            this.tipParam.name = name;
+            this.cancelReapplyParam.show = false;
+            this.selectSearch();
+        },
+        //取消订单收货
+        cancelOrderReceipt: function(item) {
+            this.cancelReceiptParam.id = item.bizId;
+            this.cancelReceiptParam.taskKey = item.taskKey;
+            this.cancelReceiptParam.show = true;
+        },
+        cancelReceiptBack: function(name) {
+            this.tipParam.show = true;
+            this.tipParam.name = name;
+            this.cancelReceiptParam.show = false;
             this.selectSearch();
         },
 

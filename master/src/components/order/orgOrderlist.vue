@@ -329,9 +329,9 @@
                                     取消订单
                                 </button> -->
                                 <!-- 审核取消订单,当取消状态是1时，需要部门主管审核 -->
-                                <button class="btn btn-warning btn-apply" v-if="item.cancel==1" @click="">
+                                <!-- <button class="btn btn-warning btn-apply" v-if="item.cancel==1" @click="">
                                     审核取消订单
-                                </button>
+                                </button> -->
                                 <!-- 订单划转到任意一个业务员 -->
                                 <button class="btn btn-warning btn-apply" v-if="(item.orderStatus==0||item.orderStatus==10)&&item.validate==0" @click="transferToEmployee(item,$index)">
                                     划转

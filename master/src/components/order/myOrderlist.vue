@@ -201,15 +201,17 @@
                                 </Poptip>
                             </td>
                             <td v-if="this.language=='zh_CN'">
-                                <div>{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</div>
-                                <div v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</div>
-                                <div v-if="item.orderStatus==0" style="background:#fa6705;color:#fff">{{$t('static.create_order')}}</div>
+                                <span>{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</span>
+                                <span v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</span>
+                                <span v-if="item.orderStatus==0" style="background:#fa6705;color:#fff">{{$t('static.create_order')}}</span>
+                                <span v-if="item.cancel==1" style="color:red">(正在取消)</span>
                             </td>
                             <!-- <td v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</td> -->
                             <td v-if="this.language=='en'">
                                 <div>{{item.orderStatus | Enassess item.type item.logistics item.verifierName item.taskKey}}</div>
                                 <div v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</div>
                                 <div v-if="item.orderStatus==0" style="background:#fa6705;color:#fff;">{{$t('static.create_order')}}</div>
+                                <span v-if="item.cancel==1" style="color:red">(正在取消)</span>
                             </td>
                             <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
                             <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
@@ -282,24 +284,13 @@
                                         取消订单
                                     </button>
                                     <!-- 预售订单处于1阶段时，需要走流程 -->
-                                    <button class="btn btn-primary btn-base" v-if="item.validate<=0&&item.pre==1&&item.type==1&&item.cancel==0" @click="cancelOrderByFlow(item.id, 0)">
+                                    <button class="btn btn-primary btn-base" v-if="item.validate<=0&&item.pre==1&&item.type==1&&item.cancel==0" @click="cancelOrderByFlow(item.id)">
                                         申请取消订单
                                     </button>
                                     <!-- 所有订单处于3阶段时，需要走流程 -->
-                                    <button class="btn btn-primary btn-base" v-if="item.validate==2&&item.cancel==0" @click="cancelOrderByFlow(item.id, 0)">
+                                    <button class="btn btn-primary btn-base" v-if="item.validate==2&&item.cancel==0" @click="cancelOrderByFlow(item.id)">
                                         申请取消订单
                                     </button>
-                                    <!-- 重新申请和确认取消在任务中拿到 -->
-                                    <!-- <button class="btn btn-info btn-base" v-if="item.validate<=0&&item.pre==1&&item.type==1&&item.cancel==-2" @click="cancelOrderByFlow(item.id, 1)">
-                                        重新申请取消订单
-                                    </button>
-                                    <button class="btn btn-info btn-base" v-if="item.validate==2&&item.cancel==-2" @click="cancelOrderByFlow(item.id, 1)">
-                                        重新申请取消订单
-                                    </button> -->
-                                    <!-- 主管同意后，可以取消订单 -->
-                                    <!-- <button class="btn btn-warning btn-apply" v-if="item.cancel==2" @click="cancelOrderByFlow(item.id, 2)">
-                                        流程取消订单
-                                    </button> -->
                                 </div>
                                 <div v-if="item.validate==2">
                                     <button class="btn btn-danger" @click="clickOn({
@@ -681,16 +672,7 @@ export default {
             this.cancelParam.show = true;
         },
         cancelOrderByFlow: function(orderId, cancel) { //cancel表示是订单取消的哪个阶段，0/1/2，申请取消/重新申请取消/取消
-            if (cancel == 1) {
-                this.cancelFlowParam.validate = 2;
-                this.cancelFlowParam.link = "/order/flow/cancel/reapply";
-            } else if (cancel == 2) {
-                this.cancelFlowParam.validate = 2;
-                this.cancelFlowParam.link = "/order/flow/cancel/receipt";
-            } else {
-                this.cancelFlowParam.validate = "";
-                this.cancelFlowParam.link = "/order/flow/cancel/request";
-            }
+
             this.cancelFlowParam.orderId = orderId;
             this.cancelFlowParam.show = true;
         },
