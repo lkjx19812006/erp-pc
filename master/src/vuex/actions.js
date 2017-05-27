@@ -379,8 +379,13 @@ export const freshAllBreedLines = ({ dispatch }, getCharList) => { //全部品�
     });
 };
 
-export const getNewUserId = ({ dispatch }, param) => { //获取新增用户详情的id  
+
+export const getNewUserId = ({ dispatch }, param) => { //获取新增用户详情的id
+    Date.prototype.toLocaleString = function() {
+        return this.getFullYear() + "-" + ((this.getMonth() + 1) < 10 ? ('0' + (this.getMonth() + 1)) : (this.getMonth() + 1)) + "-" + (this.getDate() < 10 ? ('0' + this.getDate()) : this.getDate()) + " " + "00:00:00"
+    };
     var body = {}
+
     if (param.startTime) {
         body.startTime = param.startTime
     }
@@ -393,7 +398,9 @@ export const getNewUserId = ({ dispatch }, param) => { //获取新增用户详�
     if (param.type) {
         body.type = param.type
     }
-
+    if (!param.isSearch) {
+        body.endTime = new Date().toLocaleString()
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/getEmployeeCustomerDetailStatistics',
@@ -1077,10 +1084,14 @@ export const freshAllCount = ({ dispatch }, getCharList) => { //获取全部客�
 }
 
 //部门统计柱状图
-export const freshOrgColCharts = ({ dispatch }, param) => {
+export const freshOrgColCharts = ({ dispatch }, param) => { << << << < HEAD
     Date.prototype.toLocaleString = function() {
         return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
-    };
+    }; === === =
+    // Date.prototype.toLocaleString = function() {
+    //     return this.getFullYear() + "-" + ((this.getMonth() + 1)<10?('0'+(this.getMonth() + 1)):(this.getMonth() + 1)) + "-" + (this.getDate()<10?('0'+this.getDate()):this.getDate()) + " " + "00:00:00"
+    // };
+    >>> >>> > dbf1ac65ff15628f3eb3d8a5b2439f6f43e665fc
     var newDate = new Date()
     var myDate = new Date(); //获取今天日期
     var oldDateMs = myDate.setDate(myDate.getDate() - 1);
@@ -1112,10 +1123,14 @@ export const freshOrgColCharts = ({ dispatch }, param) => {
 }
 
 //全部统计柱状图
-export const freshAllColCharts = ({ dispatch }, param) => {
+export const freshAllColCharts = ({ dispatch }, param) => { << << << < HEAD
     Date.prototype.toLocaleString = function() {
         return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
-    };
+    }; === === =
+    // Date.prototype.toLocaleString = function() {
+    //      return this.getFullYear() + "-" + ((this.getMonth() + 1)<10?('0'+(this.getMonth() + 1)):(this.getMonth() + 1)) + "-" + (this.getDate()<10?('0'+this.getDate()):this.getDate()) + " " + "00:00:00"
+    //  };
+    >>> >>> > dbf1ac65ff15628f3eb3d8a5b2439f6f43e665fc
     var newDate = new Date()
     var myDate = new Date(); //获取今天日期
     var oldDateMs = myDate.setDate(myDate.getDate() - 1); //获取前一天时间的毫秒数（跨月会自动计算）    
@@ -1201,6 +1216,9 @@ export const getAllCountDetail = ({ dispatch }, param) => { //获取部门业务
 }
 
 export const getOrgSalemanData = ({ dispatch }, param) => { //获取部门业务员详情
+    // Date.prototype.toLocaleString = function() {
+    //     return this.getFullYear() + "-" + ((this.getMonth() + 1)<10?('0'+(this.getMonth() + 1)):(this.getMonth() + 1)) + "-" + (this.getDate()<10?('0'+this.getDate()):this.getDate()) + " " + "00:00:00"
+    // };
     var body = {}
     if (param.startTime) {
         body.startTime = param.startTime
@@ -1213,6 +1231,9 @@ export const getOrgSalemanData = ({ dispatch }, param) => { //获取部门业务
     }
     if (param.type) {
         body.type = param.type
+    }
+    if (!param.isSearch) {
+        body.endTime = new Date().toLocaleString()
     }
 
     Vue.http({
@@ -1249,7 +1270,9 @@ export const getAllOrgData = ({ dispatch }, param) => { //获取全部部门详�
         if (param.type) {
             body.type = param.type
         }
-
+        if (!param.isSearch) {
+            body.endTime = new Date().toLocaleString()
+        }
         Vue.http({
             method: 'POST',
             url: '/crm/api/v1/count/getCustomerNumberGroupByOrg',
@@ -1268,9 +1291,9 @@ export const getAllOrgData = ({ dispatch }, param) => { //获取全部部门详�
     }
     //我的统计柱状图
 export const freshColCharts = ({ dispatch }, param) => {
-    Date.prototype.toLocaleString = function() {
-        return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
-    };
+    // Date.prototype.toLocaleString = function() {
+    //     return this.getFullYear() + "-" + ((this.getMonth() + 1)<10?('0'+(this.getMonth() + 1)):(this.getMonth() + 1)) + "-" + (this.getDate()<10?('0'+this.getDate()):this.getDate()) + " " + "00:00:00"
+    // };
     var newDate = new Date()
     var myDate = new Date(); //获取今天日期
     var oldDateMs = myDate.setDate(myDate.getDate() - 1);
@@ -1301,9 +1324,9 @@ export const freshColCharts = ({ dispatch }, param) => {
 };
 
 export const freshBreedBarCharts = ({ dispatch }, param) => { //我的品种统计柱状图
-    Date.prototype.toLocaleString = function() {
-        return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
-    };
+    // Date.prototype.toLocaleString = function() {
+    //      return this.getFullYear() + "-" + ((this.getMonth() + 1)<10?('0'+(this.getMonth() + 1)):(this.getMonth() + 1)) + "-" + (this.getDate()<10?('0'+this.getDate()):this.getDate()) + " " + "00:00:00"
+    //  };
 
     var newDate = new Date()
     var myDate = new Date(); //获取今天日期
@@ -1352,7 +1375,7 @@ export const freshBreedBarCharts = ({ dispatch }, param) => { //我的品种统�
 
 export const freshOrgBreedBarCharts = ({ dispatch }, param) => { //部门品种统计柱状图
     Date.prototype.toLocaleString = function() {
-        return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
+        return this.getFullYear() + "-" + ((this.getMonth() + 1) < 10 ? ('0' + (this.getMonth() + 1)) : (this.getMonth() + 1)) + "-" + (this.getDate() < 10 ? ('0' + this.getDate()) : this.getDate()) + " " + "00:00:00"
     };
     console.log(param);
     var newDate = new Date()
@@ -1366,21 +1389,20 @@ export const freshOrgBreedBarCharts = ({ dispatch }, param) => { //部门品种�
         queryDetail: true,
         queryType: 'org'
     }
-    if (param) {
-        if (param.startTime) {
-            body.startTime = param.startTime
-        }
-        if (param.endTime) {
-            body.endTime = param.endTime
-        }
-        if (param.type) {
-            body.type = param.type
-        }
-        if (param.empId) {
-            body.employeeId = param.empId
-            body.queryType = 'employee'
-        }
+    if (param.startTime) {
+        body.startTime = param.startTime
     }
+    if (param.endTime) {
+        body.endTime = param.endTime
+    }
+    if (param.type) {
+        body.type = param.type
+    }
+    if (param.empId) {
+        body.employeeId = param.empId
+        body.queryType = 'employee'
+    }
+
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/productCount/getDealCountByBreed',
@@ -1407,9 +1429,9 @@ export const freshOrgBreedBarCharts = ({ dispatch }, param) => { //部门品种�
 };
 
 export const freshAllBreedBarCharts = ({ dispatch }, param) => { //全部品种统计柱状图
-    Date.prototype.toLocaleString = function() {
-        return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
-    };
+    // Date.prototype.toLocaleString = function() {
+    //      return this.getFullYear() + "-" + ((this.getMonth() + 1)<10?('0'+(this.getMonth() + 1)):(this.getMonth() + 1)) + "-" + (this.getDate()<10?('0'+this.getDate()):this.getDate()) + " " + "00:00:00"
+    //  };
     var newDate = new Date()
     var myDate = new Date(); //获取今天日期
     var oldDateMs = myDate.setDate(myDate.getDate() - 7);
@@ -6126,6 +6148,31 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         console.log('fail');
     })
 }
+
+export const getCustomerTransfer = ({ dispatch }, param, data) => { //客户详情里面划转记录
+    var body = {
+        customer: param.id
+    }
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + '/customer/queryCustomerTransfer',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json())
+        data.list = res.json().result
+            //param.id = res.json().result.id;
+            //dispatch(types.CUSTOMER_CONTACT_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 export const createCustomer = ({ dispatch }, param) => { //新增客户相关联系人
     console.log(param.main)
     const data1 = {
@@ -11204,4 +11251,33 @@ export const deleteStockInfo = ({ dispatch }, param) => { //删除库存信息
     }, (res) => {
         console.log('fail');
     });
+}
+
+export const setLadderPrice = ({ dispatch }, param) => { //删除库存信息
+    var ladder = {};
+    var ladderPice = param.ladderPrice
+    for (var i = 0; i < ladderPice.length; i++) {
+        ladder[ladderPice[i].minNumber] = ladderPice[i].ladder
+    }
+    var ladderStr = '"' + JSON.stringify(ladder) + '"'
+    console.log(ladderStr)
+    var body = {
+            id: param.id
+        }
+        /*Vue.http({
+            method: 'POST',
+            url: '/crm/api/v1/stock/deleteStock',
+            body: body,
+            emulateHTTP: false,
+            emulateJSON: false,
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        }).then((res) => {
+            console.log('删除成功')
+            dispatch(types.DELETE_STOCK_DATA, param);
+        }, (res) => {
+            console.log('fail');
+        });*/
 }

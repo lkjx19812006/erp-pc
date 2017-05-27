@@ -240,6 +240,7 @@ export default {
                 endTime:'',
                 provinceId:'',
                 type:'',
+                isSearch:true,
                 callback:this.callback
             },
         }
@@ -299,9 +300,11 @@ export default {
             }           
         },
         searchCus:function(){
+            this.searchParam.isSearch = true
         	this.getAllOrgData(this.searchParam)
         },
         resetSearch:function(){
+            this.searchParam.isSearch = false
             this.searchParam.startTime = ''
             this.searchParam.endTime = ''
             this.searchParam.provinceId = ''
@@ -355,7 +358,7 @@ export default {
     },
     created() {
         Date.prototype.toLocaleString = function() {
-           return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
+            return this.getFullYear() + "-" + ((this.getMonth() + 1)<10?('0'+(this.getMonth() + 1)):(this.getMonth() + 1)) + "-" + (this.getDate()<10?('0'+this.getDate()):this.getDate()) + " " + "00:00:00"
         };
         var newDate = new Date()
         var myDate = new Date(); //获取今天日期

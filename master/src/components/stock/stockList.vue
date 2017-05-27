@@ -1,5 +1,6 @@
 <template>
     <picture-model :param="pictureParam" v-if='pictureParam.show'></picture-model>
+    <set-price :param="priceParam" v-if="priceParam.show"></set-price>
 	<order-data :param="orderData" v-if="orderData.show"></order-data>
 	<stock-cart :param="cartData" v-if="cartData.show&&cartData.leng"></stock-cart>
 	<breed-search :param='loadParam' v-if='loadParam.show'></breed-search>
@@ -86,13 +87,14 @@
                     <tr>
                         <th style="min-width:100px;text-align: center;">药材名称</th>
                         <th style="min-width:100px;text-align: center;">药材图片</th>
-                        <th style="min-width:150px;text-align: center;">入库时间</th>
+                        <th style="min-width:100px;text-align: center;">入库时间</th>
                         <th style="min-width:120px;text-align: center;">联系业务员</th>
                         <th style="min-width:120px;text-align: center;">规格</th>
-                        <th style="min-width:120px;text-align: center;">片型</th>
-                        <th style="min-width:150px;text-align: center;">产地</th>
+                        <th style="min-width:100px;text-align: center;">片型</th>
+                        <th style="min-width:100px;text-align: center;">产地</th>
                         <th style="min-width:120px;text-align: center;">库存可用量</th>
                         <th style="min-width:120px;text-align: center;">库存单位</th>
+                        <th style="min-width:120px;text-align: center;">阶梯价格</th>
                         <th style="min-width:150px;text-align: center;">仓库名称</th> 
                         <th style="min-width:120px;text-align: center;">库存类型</th>                    
                         <th style="min-width:300px;text-align: center;">操作</th>
@@ -114,9 +116,17 @@
                         <td>{{item.location}}</td>
                         <td>{{item.usableNum}}</td>
                         <td>{{item.unitId | Unit}}</td>
+                        <td>
+                            <p v-for="pri in item.ladderPrice">
+                                <span>起订量:{{pri.minNumber}}</span>
+                                <span>价格:{{pri.ladder}}</span>
+                            </p>
+                        </td>
                         <td>{{item.depotName}}</td>
                         <td>{{item.depotType}}</td>
-                       	<td><button class="btn btn-default" @click="addToCart($index,{
+                       	<td>
+                            <button class="btn btn-default" @click="setPrice(item)">设置价格</button>
+                            <button class="btn btn-default" @click="addToCart($index,{
                        			breedName:item.breedName,
                        			id:item.id,
                        			specAttribute:item.specAttribute,
@@ -149,6 +159,7 @@ import breedSearch from '../../components/Intention/breedsearch.vue'
 import tipsdialogModel from '../tips/tipDialog'
 import changeMenu from '../../components/tools/tabs/tabs.js'
 import common from '../../common/common'
+import setPrice from '../stock/setPrice'
 import pagination from '../pagination'
 import orderData from '../stock/orderData'
 import stockCart from '../stock/stockCart'
@@ -168,7 +179,8 @@ export default {
 		createStock,
 		deletestockModel,
         tipsdialogModel,
-        pictureModel
+        pictureModel,
+        setPrice
 	},
 	vuex:{
 		actions:{
@@ -270,6 +282,16 @@ export default {
                 show: false,
                 img: ''
             },
+            priceParam:{
+                show: false,
+                id:'',
+                breedName:'',
+                location:'',
+                usableNum:'',
+                unitId:'',
+                ladderPrice:[],
+                callback:this.getStockList               
+            },
 			checked:false
 		}
 	},
@@ -365,7 +387,27 @@ export default {
 		deleteStock:function(data){
 			this.deleteParam.show = true
 			this.deleteParam = data
-		}
+		},
+        times:function(data){
+            var month = new Date(data).getMonth()+1;
+            var date = new Date(data).getDate()
+            if(month<=9){
+                month = '0'+ month
+            }
+            if(date<=9){
+                date = '0'+ date
+            }
+            return new Date(data).getFullYear() + "-" + month + "-" + date
+        },
+        setPrice:function(item){
+            this.priceParam.show = true
+            this.priceParam.breedName = item.breedName
+            this.priceParam.id = item.id
+            this.priceParam.location = item.location
+            this.priceParam.usableNum = item.usableNum
+            this.priceParam.unitId = item.unitId
+            //this.priceParam.ladderPrice = item.ladderPrice
+        }
 	},
 	created(){
 		this.getStockList(this.loadParam)
@@ -381,12 +423,9 @@ export default {
 		'addOrderDetail':function(msg){
 			console.log(msg)
 			this.orderData.priceAndNumber = msg;
-			//console.log(this.orderData)
 			var product = this.deepCopy(this.orderData); //将每次添加到购物车的数据深拷贝，加到购物车列表里面
 			this.$store.state.table.stockCartList.push(product)
-			console.log(this.$store.state.table.stockCartList)
 			this.cartData.goods = this.$store.state.table.stockCartList
-			//console.log(this.$store.state.table.stockCartList.length)
 			this.cartData.leng = this.$store.state.table.stockCartList.length
 		},
 		breed: function(breed) {
@@ -397,22 +436,14 @@ export default {
         },
         fresh:function(page){
         	this.getStockList(this.loadParam)
+        },
+        freshList(){
+           this.getStockList(this.loadParam)
         }
 	},
 	filters:{
 		timeFilter:function(data){
-			Date.prototype.toLocaleString = function(){
-				var month = this.getMonth()+1;
-				var date = this.getDate()
-				if(month<=9){
-					month = '0'+ month
-				}
-				if(date<=9){
-					date = '0'+ date
-				}
-          		return this.getFullYear() + "-" + month + "-" + date
-    		};
-			return new Date(data).toLocaleString()
+            return this.times(data)
 		}
 	},
 	filter: (filter, {})

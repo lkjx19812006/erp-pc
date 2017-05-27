@@ -121,7 +121,7 @@ export default {
                 countType:'品种统计',
                 empolyeeName:'',
                 start:0,
-                end:10
+                end:10,
             },
             addBreedParam:{
                 cur: 1,
@@ -175,6 +175,7 @@ export default {
     		this.loadParam.type = data.type
     		this.loadParam.empId = data.empId
     		this.loadParam.orgId = data.orgId
+            this.loadParam.isSearch = data.isSearch
     		this.freshOrgBreedBarCharts(this.loadParam)
     	},
         change:function(data){
