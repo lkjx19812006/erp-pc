@@ -1,6 +1,6 @@
 <template>
     <picture-model :param="pictureParam" v-if='pictureParam.show'></picture-model>
-    <set-price :param="priceParam" v-if="priceParam.show"></set-price>
+    <setprice-model :param="priceParam" v-if="priceParam.show"></setprice-model>
 	<order-data :param="orderData" v-if="orderData.show"></order-data>
 	<stock-cart :param="cartData" v-if="cartData.show&&cartData.leng"></stock-cart>
 	<breed-search :param='loadParam' v-if='loadParam.show'></breed-search>
@@ -117,7 +117,7 @@
                         <td>{{item.usableNum}}</td>
                         <td>{{item.unitId | Unit}}</td>
                         <td>
-                            <p v-for="pri in item.ladderPrice">
+                            <p v-for="pri in item.ladderPriceList">
                                 <span>起订量:{{pri.minNumber}}</span>
                                 <span>价格:{{pri.ladder}}</span>
                             </p>
@@ -125,8 +125,7 @@
                         <td>{{item.depotName}}</td>
                         <td>{{item.depotType}}</td>
                        	<td>
-                            <button class="btn btn-default" @click="setPrice(item)">设置价格</button>
-                            <button class="btn btn-default" @click="addToCart($index,{
+                            <button class="btn btn-xs btn-success" @click="addToCart($index,{
                        			breedName:item.breedName,
                        			id:item.id,
                        			specAttribute:item.specAttribute,
@@ -134,8 +133,9 @@
                        			usableNum:item.usableNum,
                        			unitId:item.unitId
                        		})">加入购物车</button>
-							<button class="btn btn-default" v-if="item.depotType=='社会库存'&&this.initLogin.id==item.employee" @click="updataStock(item)">编辑</button>
-							<button class="btn btn-default" v-if="item.depotType=='社会库存'&&this.initLogin.id==item.employee" @click="deleteStock({
+                            <button class="btn btn-primary btn-xs" @click="setPrice(item)" v-if="this.initLogin.safeCode.indexOf('P547-F562,')!=-1">设置价格</button>
+							<button class="btn btn-info btn-xs" v-if="item.depotType=='社会库存'&&this.initLogin.id==item.employee" @click="updataStock(item)">编辑</button>
+							<button class="btn btn-danger btn-xs" v-if="item.depotType=='社会库存'&&this.initLogin.id==item.employee" @click="deleteStock({
 											id:item.id,
                                             sub:$index,
                                             show:true,
@@ -159,7 +159,7 @@ import breedSearch from '../../components/Intention/breedsearch.vue'
 import tipsdialogModel from '../tips/tipDialog'
 import changeMenu from '../../components/tools/tabs/tabs.js'
 import common from '../../common/common'
-import setPrice from '../stock/setPrice'
+import setpriceModel from '../stock/setPrice'
 import pagination from '../pagination'
 import orderData from '../stock/orderData'
 import stockCart from '../stock/stockCart'
@@ -180,7 +180,7 @@ export default {
 		deletestockModel,
         tipsdialogModel,
         pictureModel,
-        setPrice
+        setpriceModel
 	},
 	vuex:{
 		actions:{
@@ -289,8 +289,10 @@ export default {
                 location:'',
                 usableNum:'',
                 unitId:'',
-                ladderPrice:[],
-                callback:this.getStockList               
+                ladderPriceList:[],
+                freshData:{},
+                callback:this.getStockList,
+                priceCallback:this.callback_price               
             },
 			checked:false
 		}
@@ -339,6 +341,10 @@ export default {
 			this.$store.state.table.stockCartList = [];
 			this.cartData.leng=0
 		},
+        callback_price:function(name){
+            this.tipsParam.name = name
+            this.tipsParam.show = true
+        },
 		watchStock:function(){ //
 			this.$store.state.table.stockCartList = [];
 			this.cartData.leng=0
@@ -400,18 +406,21 @@ export default {
             return new Date(data).getFullYear() + "-" + month + "-" + date
         },
         setPrice:function(item){
+            console.log(this.initLogin.safeCode)
             this.priceParam.show = true
+            this.priceParam.freshData = this.loadParam
             this.priceParam.breedName = item.breedName
             this.priceParam.id = item.id
             this.priceParam.location = item.location
             this.priceParam.usableNum = item.usableNum
             this.priceParam.unitId = item.unitId
-            //this.priceParam.ladderPrice = item.ladderPrice
+            this.priceParam.ladderPriceList = item.ladderPriceList
         }
 	},
 	created(){
 		this.getStockList(this.loadParam)
 		this.watchStock()
+
 	},
 	ready() {
         common('tab', 'table_box', 1);

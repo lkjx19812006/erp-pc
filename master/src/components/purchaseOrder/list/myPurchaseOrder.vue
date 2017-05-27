@@ -76,7 +76,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th style="min-width:60px"></th>
                         <th>采购单类型</th>
                         <th>客户名称</th>
                         <th>客户手机</th>
@@ -86,13 +86,13 @@
                         <th>采购单来源</th>
                         <th>采购内容描述</th>
                         <th>备注</th>
-                        <th>收到报价数</th>
+                        <th style="min-width:80px">收到报价数</th>
                         <th>询价状态</th>
                         <th style="min-width:200px;text-align: left;">操作</th>
                     </tr>
                 </thead>
                 <tr>
-                    <th>
+                    <th style="min-width:60px">
                         <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
                     </th>
                     <th style="color:#fa6705;font-size: 14px">全选</th>
@@ -100,7 +100,7 @@
                 </tr>
                 <tbody>
                     <tr v-for="item in initMyPurchaseList">
-                        <td @click.stop="">
+                        <td @click.stop="" style="min-width:60px">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
                         </td>
                         <td>{{item.type | indentType}}</td>
@@ -121,13 +121,14 @@
                             </Poptip>
                         </td>
                         <td>{{item.comment}}</td>
-                        <td>{{item.offer}}</td>
+                        <td style="min-width:80px">{{item.offer}}</td>
                         <td>{{item.inquire | inquire}}</td>
                         <td style="text-align: left">
-                            <button v-if="item.inquire==0" class="btn btn-primary btn-edit" @click.stop="editPurchase(item,$index)">编辑</button>
-                            <button v-if="item.inquire==0" class="btn btn-primary btn-apply" @click.stop="deletePurchase(item.id,$index)">删除</button>
-                            <button v-if="item.inquire==0" class="btn btn-primary btn-edit" @click.stop="singleInquire(item.id,$index)">询价</button>
-                            <button v-if="item.inquire==1||item.inquire==2" class="btn btn-primary btn-edit" @click.stop="cancelInquire(item.id,$index)">终止询价</button>
+                            <button v-if="item.inquire==0" class="btn btn-info btn-xs" @click.stop="editPurchase(item,$index)">编辑</button>
+                            <button v-if="item.inquire==0" class="btn btn-danger btn-xs" @click.stop="deletePurchase(item.id,$index)">删除</button>
+                            <button v-if="item.inquire==0" class="btn btn-success btn-xs" @click.stop="singleInquire(item.id,$index)">询价</button>
+                            <button v-if="item.inquire==1||item.inquire==2" class="btn btn-danger btn-xs" @click.stop="cancelInquire(item.id,$index)">终止询价</button>
+                            <button v-else v-if="item.inquire!=0" class="btn btn-primary btn-xs"  @click.stop="singleInquire(item.id,$index)">恢复询价</button>
                         </td>
                     </tr>
                 </tbody>

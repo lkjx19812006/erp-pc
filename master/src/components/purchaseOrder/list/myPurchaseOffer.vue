@@ -97,7 +97,7 @@
                             </Poptip>
                         </td>
                         <td>
-                            <a @click="offerAccept(item)">处理</a>
+                            <button class="btn btn-success btn-xs" @click="offerAccept(item)">处理</button>
                         </td>
                     </tr>
                     <tr v-show="param.init=='initAllIndentOfferList'" v-for="item in initAllIndentOfferList">

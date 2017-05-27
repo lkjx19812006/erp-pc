@@ -93,8 +93,10 @@ export const login = ({ dispatch }, data) => { //登录
             document.cookie = "name=" + compile(res.json().result.name) + ";expires=" + expire;
             document.cookie = "time=" + lastTime + ";expires=" + expire;
             document.cookie = "privilege=" + res.json().result.privilege + ";expires=" + expire;
+            document.cookie = "safeCode=" + (res.json().result.functions.join()+',') + ";expires=" + expire;
             var result = res.json().result;
             result.time = lastTime;
+            //var safeCode = result.functions[3]?result.functions[3]:''
             var loginInfo = {
                 id: result.id,
                 name: result.name,
@@ -102,8 +104,9 @@ export const login = ({ dispatch }, data) => { //登录
                 orgId: result.orgid,
                 time: result.time,
                 privilege: result.privilege,
+                safeCode:result.functions.join()+','
             }
-
+            console.log(result)
             dispatch(types.LOGIN_DATA, loginInfo);
             dispatch(types.INIT_LIST, result);
             //本地存储左侧菜单
@@ -11174,19 +11177,20 @@ export const deleteStockInfo = ({ dispatch }, param) => { //删除库存信息
 }
 
 export const setLadderPrice = ({ dispatch }, param) => { //删除库存信息
+    console.log(param)
     var ladder = {};
-    var ladderPice = param.ladderPrice
-    for(var i= 0; i<ladderPice.length;i++){
-        ladder[ladderPice[i].minNumber] = ladderPice[i].ladder
+    var list = param.ladderPriceList
+    for(var i= 0; i<list.length;i++){
+        ladder[list[i].minNumber] = list[i].ladder
     }
-    var ladderStr = '"'+JSON.stringify(ladder)+'"'
-    console.log(ladderStr)
+    var ladderStr = JSON.stringify(ladder)
     var body = {
-        id: param.id
+        id: param.id,
+        ladderPrice:ladderStr
     }
-    /*Vue.http({
+    Vue.http({
         method: 'POST',
-        url: '/crm/api/v1/stock/deleteStock',
+        url: '/crm/api/v1/stock/ladderPrice',
         body: body,
         emulateHTTP: false,
         emulateJSON: false,
@@ -11195,9 +11199,11 @@ export const setLadderPrice = ({ dispatch }, param) => { //删除库存信息
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('删除成功')
-        dispatch(types.DELETE_STOCK_DATA, param);
+        console.log('添加成功')
+        console.log(param)
+        param.callback(param.freshData)
+        param.priceCallback(res.json().msg)
     }, (res) => {
         console.log('fail');
-    });*/
+    });
 }
