@@ -107,17 +107,29 @@
                                 <label class="editlabel" v-if="param.type==0">{{$t('static.send_person')}} {{$t('static.cellphone')}}</label>
                                 <input type="text" class="form-control edit-input" v-model="param.consigneePhone" value="{{param.consigneePhone}}" />
                             </div>
+                            <!-- 为了兼容国际并且可以选择地址，国家需要分为两种处理方式，1.直接填写，用cnameEn字段，2选择用cname字段 -->
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.country')}}</label>
-                                <div type="text" class="edit-input">
+                                <!-- 如果cnameEn存在或者cname不存在，显示cnameEn，因为这样不确定是否国际，并且认为这是新建地址 -->
+                                <div v-if="country.cnameEn||!country.cname" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="country" :on-change="selectProvince" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
                                     </v-select>
                                 </div>
+                                <!-- 如果cnameEn不存在并且cname存在，认为这是选择地址，而且是国内的（暂时这么认为，因为创建地址的时候用的是cname）-->
+                                <div v-if="!country.cnameEn&&country.cname" type="text" class="edit-input">
+                                    <v-select :debounce="250" :value.sync="country" :on-change="selectProvince" :options="initCountrylist" placeholder="国家/Country" label="cname">
+                                    </v-select>
+                                </div>
                             </div>
+                            <!-- 判断省是否显示，应该用country的cnameEn和cname字段共同决定 -->
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.province')}}</label>
-                                <input type="text" v-if="!country.cnameEn" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_country_first')}}" />
+                                <input type="text" v-if="!country.cnameEn&&!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_country_first')}}" />
                                 <div v-if="country.cnameEn" type="text" class="edit-input">
+                                    <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
+                                    </v-select>
+                                </div>
+                                <div v-if="!country.cnameEn&&country.cname" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
                                     </v-select>
                                 </div>
@@ -649,6 +661,9 @@ export default {
         },
         selectConsignee: function() {
             this.createOrSelect = 1;
+            if (this.param.customer) {
+                this.consigneeParam.customerId = this.param.customer;
+            }
             this.consigneeParam.show = true;
         },
         selectSupplier: function() {
@@ -813,7 +828,11 @@ export default {
                 return;
             }
             this.resetParam();
-            this.param.country = this.country.cnameEn;
+            if (this.country.cnameEn || !this.country.cname) {
+                this.param.country = this.country.cnameEn;
+            } else {
+                this.param.country = this.country.cname;
+            }
             this.param.province = this.province.cname;
             this.param.city = this.city.cname;
             this.param.district = this.district.cname;
@@ -887,7 +906,9 @@ export default {
         address: function(address) {
             this.param.consignee = address.contactName;
             this.param.consigneePhone = address.contactPhone;
+            //选择地址时，清空country.cnameEn
             this.country.cname = address.country;
+            this.country.cnameEn = "";
             this.province.cname = address.province;
             this.city.cname = address.city;
             this.district.cname = address.district;

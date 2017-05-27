@@ -380,8 +380,7 @@ export const freshAllBreedLines = ({ dispatch }, getCharList) => { //全部品�
 };
 
 export const getNewUserId = ({ dispatch }, param) => { //获取新增用户详情的id  
-    var body = {
-    }
+    var body = {}
     if (param.startTime) {
         body.startTime = param.startTime
     }
@@ -852,10 +851,10 @@ export const getCusTypeData = ({ dispatch }, getCharList) => { //获取个人客
 }
 
 export const getCusTypeList = ({ dispatch }, getCharList) => { //获取个人客户类型详情
-    var body={} 
-    if(getCharList){
-        body.startTime =getCharList.startTime,
-        body.endTime=getCharList.endTime
+    var body = {}
+    if (getCharList) {
+        body.startTime = getCharList.startTime,
+            body.endTime = getCharList.endTime
     }
     Vue.http({
         method: 'POST',
@@ -877,9 +876,9 @@ export const getOrgCusTypeList = ({ dispatch }, getCharList) => { //获取部门
     var body = {
         queryType: 'org'
     }
-    if(getCharList){
-        body.startTime =getCharList.startTime,
-        body.endTime=getCharList.endTime
+    if (getCharList) {
+        body.startTime = getCharList.startTime,
+            body.endTime = getCharList.endTime
     }
     Vue.http({
         method: 'POST',
@@ -901,10 +900,10 @@ export const getOrgCusTypeList = ({ dispatch }, getCharList) => { //获取部门
 export const getAllCusTypeList = ({ dispatch }, getCharList) => { //获取部门客户类型详情  
     var body = {
         queryType: 'all'
-    } 
-    if(getCharList){
-        body.startTime =getCharList.startTime,
-        body.endTime=getCharList.endTime
+    }
+    if (getCharList) {
+        body.startTime = getCharList.startTime,
+            body.endTime = getCharList.endTime
     }
     Vue.http({
         method: 'POST',
@@ -1080,12 +1079,12 @@ export const freshAllCount = ({ dispatch }, getCharList) => { //获取全部客�
 //部门统计柱状图
 export const freshOrgColCharts = ({ dispatch }, param) => {
     Date.prototype.toLocaleString = function() {
-       return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
+        return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
     };
     var newDate = new Date()
     var myDate = new Date(); //获取今天日期
-    var oldDateMs = myDate.setDate(myDate.getDate() - 1);    
-    var oldDate = new Date(oldDateMs).toLocaleString()    
+    var oldDateMs = myDate.setDate(myDate.getDate() - 1);
+    var oldDate = new Date(oldDateMs).toLocaleString()
     var body = {
         startTime: oldDate,
         endTime: newDate.toLocaleString(),
@@ -1102,11 +1101,11 @@ export const freshOrgColCharts = ({ dispatch }, param) => {
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        if(res.json().result.list[0]){
+        if (res.json().result.list[0]) {
             dispatch(types.CHANGE_ORGCOLCHARTS, res.json().result.list[0])
             param.callback(res.json().result.list[0].addNumberDetail)
         }
-       
+
     }, (res) => {
         console.log('fail')
     })
@@ -1115,12 +1114,12 @@ export const freshOrgColCharts = ({ dispatch }, param) => {
 //全部统计柱状图
 export const freshAllColCharts = ({ dispatch }, param) => {
     Date.prototype.toLocaleString = function() {
-       return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
+        return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + "00:00:00"
     };
     var newDate = new Date()
     var myDate = new Date(); //获取今天日期
-    var oldDateMs = myDate.setDate(myDate.getDate() - 1);//获取前一天时间的毫秒数（跨月会自动计算）    
-    var oldDate = new Date(oldDateMs).toLocaleString()    
+    var oldDateMs = myDate.setDate(myDate.getDate() - 1); //获取前一天时间的毫秒数（跨月会自动计算）    
+    var oldDate = new Date(oldDateMs).toLocaleString()
     var body = {
         startTime: oldDate,
         endTime: newDate.toLocaleString(),
@@ -1137,10 +1136,10 @@ export const freshAllColCharts = ({ dispatch }, param) => {
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        if(res.json().result.list[0]){
+        if (res.json().result.list[0]) {
             dispatch(types.CHANGE_ALLCOLCHARTS, res.json().result.list[0])
             param.callback(res.json().result.list[0].addNumberDetail)
-        }       
+        }
     }, (res) => {
 
         console.log('fail')
@@ -1274,8 +1273,8 @@ export const freshColCharts = ({ dispatch }, param) => {
     };
     var newDate = new Date()
     var myDate = new Date(); //获取今天日期
-    var oldDateMs = myDate.setDate(myDate.getDate() - 1);    
-    var oldDate = new Date(oldDateMs).toLocaleString()    
+    var oldDateMs = myDate.setDate(myDate.getDate() - 1);
+    var oldDate = new Date(oldDateMs).toLocaleString()
     var body = {
         startTime: oldDate,
         endTime: newDate.toLocaleString(),
@@ -1295,7 +1294,7 @@ export const freshColCharts = ({ dispatch }, param) => {
         if (res.json().result.list.length != 0) {
             dispatch(types.CHANGE_COLCHARTS, res.json().result.list)
             param.callback_yes(res.json().result.list[0].addNumberDetail)
-        }        
+        }
     }, (res) => {
         console.log('fail')
     })
@@ -3444,7 +3443,7 @@ export const orderReceive = ({ dispatch }, param) => { //订单收货流程
  *如果在部门订单列表页取消，就只需要一个参数
  */
 export const orderCancle = ({ dispatch }, param, data) => {
-    console.log(param)
+
     const body = {
         orderId: param.id,
         cancleCauses: param.cancleCauses
@@ -3472,6 +3471,75 @@ export const orderCancle = ({ dispatch }, param, data) => {
         status.key = param.key;
         dispatch(types.ORDER_STATUS, status);
     }, (res) => {
+        console.log('fail');
+    })
+}
+
+/*订单取消申请，走取消流程
+ */
+export const orderCancleApply = ({ dispatch }, param) => {
+    const body = {
+        orderId: param.orderId,
+        cancleCauses: param.cancleCauses
+    }
+    if (param.validate) {
+        body.validate = param.validate;
+    }
+    if (param.id) {
+        body.id = param.id;
+    }
+    if (param.taskKey) {
+        body.taskKey = param.taskKey;
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateJSON: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        if (param.cancelBack) {
+            param.cancelBack(res.json().msg);
+        }
+        param.show = false;
+
+    }, (res) => {
+        param.show = false;
+        console.log('fail');
+    })
+}
+
+/*订单取消审核，走取消流程
+ */
+export const orderCancleFlow = ({ dispatch }, param) => {
+    const body = {
+        id: param.id,
+        cancleCauses: param.cancleCauses,
+        validate: param.validate,
+        taskKey: param.taskKey
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateJSON: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
+        param.show = false;
+    }, (res) => {
+        param.show = false;
         console.log('fail');
     })
 }
@@ -5532,6 +5600,7 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         "number": data.number,
         "category": data.category,
         "principal": data.principal,
+        "legalPerson": data.legalPerson,
         "bizScope": data.bizScope,
         "province": data.province,
         "address": data.address,
@@ -5632,7 +5701,6 @@ export const deleteInfo = ({ dispatch }, param) => { //删除客户、药材信�
     });
 }
 export const alterInfo = ({ dispatch }, param) => { //修改客户信息
-    console.log(param);
     var data = {
         name: param.name,
         type: param.type,
@@ -5641,12 +5709,15 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         classifyDesc: param.classify,
         classify: param.classify,
         principal: param.principal,
+        legalPerson: param.legalPerson,
         bizScope: param.bizScope,
         mainPhone: param.mainPhone,
         email: param.email,
         province: param.province,
         country: param.country,
         address: param.address,
+        number: param.number,
+        website: param.website,
         comments: param.comments,
         tel: param.tel,
         id: param.id,

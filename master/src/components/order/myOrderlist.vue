@@ -11,6 +11,7 @@
         <reapply-model :param="reapplyParam" v-if="reapplyParam.show"></reapply-model>
         <contract-model :param="contractParam" v-if="contractParam.show"></contract-model>
         <cancel-model :param="cancelParam" v-if="cancelParam.show"></cancel-model>
+        <cancel-model :param="cancelFlowParam" v-if="cancelFlowParam.show"></cancel-model>
         <saleapply-model :param="applicationParam" v-if="applicationParam.show"></saleapply-model>
         <language-model v-show="false"></language-model>
         <mglist-model>
@@ -268,9 +269,38 @@
                                         },item.goods)">{{$t('static.edit')}}
                                 </button>
                                 <!-- 取消订单,在订单状态为20和70或者新建的订单还未申请审核可以取消，并说明原因 -->
-                                <button class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70||(item.orderStatus==0&&item.validate==0)" @click="cancelOrder(item.id,$index)">
+                                <!-- <button class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70||(item.orderStatus==0&&item.validate==0)" @click="cancelOrder(item.id,$index)">
                                     取消订单
-                                </button>
+                                </button> -->
+                                <!-- 新的取消订单流程，分三个阶段
+                                    1.未申请审核或审核不通过阶段（validate<=0)，
+                                    2.申请审核阶段（validate=1），不能取消
+                                    3.审核完成后，validate=2 -->
+                                <div>
+                                    <!-- 普通订单（非预售）处于1阶段时，可以直接取消 -->
+                                    <button class="btn btn-warning btn-apply" v-if="item.validate<=0&&(item.pre!=1||(item.pre==1&&item.type==0))" @click="cancelOrder(item.id,$index)">
+                                        取消订单
+                                    </button>
+                                    <!-- 预售订单处于1阶段时，需要走流程 -->
+                                    <button class="btn btn-primary btn-base" v-if="item.validate<=0&&item.pre==1&&item.type==1&&item.cancel==0" @click="cancelOrderByFlow(item.id, 0)">
+                                        申请取消订单
+                                    </button>
+                                    <!-- 所有订单处于3阶段时，需要走流程 -->
+                                    <button class="btn btn-primary btn-base" v-if="item.validate==2&&item.cancel==0" @click="cancelOrderByFlow(item.id, 0)">
+                                        申请取消订单
+                                    </button>
+                                    <!-- 重新申请和确认取消在任务中拿到 -->
+                                    <!-- <button class="btn btn-info btn-base" v-if="item.validate<=0&&item.pre==1&&item.type==1&&item.cancel==-2" @click="cancelOrderByFlow(item.id, 1)">
+                                        重新申请取消订单
+                                    </button>
+                                    <button class="btn btn-info btn-base" v-if="item.validate==2&&item.cancel==-2" @click="cancelOrderByFlow(item.id, 1)">
+                                        重新申请取消订单
+                                    </button> -->
+                                    <!-- 主管同意后，可以取消订单 -->
+                                    <!-- <button class="btn btn-warning btn-apply" v-if="item.cancel==2" @click="cancelOrderByFlow(item.id, 2)">
+                                        流程取消订单
+                                    </button> -->
+                                </div>
                                 <div v-if="item.validate==2">
                                     <button class="btn btn-danger" @click="clickOn({
                                                 show:true,
@@ -403,7 +433,8 @@ import {
     getOrderDetail,
     applyContract,
     afterSalesApply,
-    orderCancle
+    orderCancle,
+    orderCancleApply
 } from '../../vuex/actions'
 export default {
     components: {
@@ -564,14 +595,26 @@ export default {
                 callback: '',
                 logistics: ''
             },
+            //直接取消
             cancelParam: {
                 show: false,
                 index: '',
                 id: '',
                 cancleCauses: '',
                 link: '/order/cancle',
-                key: 'orgOrderList',
+                key: 'myOrderList',
                 callback: this.orderCancle, //cancelMsg.vue中会执行此方法
+                cancelBack: this.cancelBack //取消成功后会调用此方法(action中执行)
+            },
+            //走流程申请取消
+            cancelFlowParam: {
+                show: false,
+                id: '', //取消订单记录的ID号（非订单ID）
+                validate: '', //取消订单记录的审核状态
+                orderId: '',
+                cancleCauses: '',
+                link: '/order/flow/cancel/request',
+                callback: this.orderCancleApply,
                 cancelBack: this.cancelBack //取消成功后会调用此方法(action中执行)
             }
         }
@@ -590,7 +633,8 @@ export default {
             getOrderDetail,
             applyContract,
             afterSalesApply,
-            orderCancle
+            orderCancle,
+            orderCancleApply
         }
     },
     methods: {
@@ -635,6 +679,20 @@ export default {
             this.cancelParam.id = id;
             this.cancelParam.index = index;
             this.cancelParam.show = true;
+        },
+        cancelOrderByFlow: function(orderId, cancel) { //cancel表示是订单取消的哪个阶段，0/1/2，申请取消/重新申请取消/取消
+            if (cancel == 1) {
+                this.cancelFlowParam.validate = 2;
+                this.cancelFlowParam.link = "/order/flow/cancel/reapply";
+            } else if (cancel == 2) {
+                this.cancelFlowParam.validate = 2;
+                this.cancelFlowParam.link = "/order/flow/cancel/receipt";
+            } else {
+                this.cancelFlowParam.validate = "";
+                this.cancelFlowParam.link = "/order/flow/cancel/request";
+            }
+            this.cancelFlowParam.orderId = orderId;
+            this.cancelFlowParam.show = true;
         },
         onlyselected: function(index) {
             const _self = this;
@@ -923,6 +981,10 @@ export default {
 
 .order_pagination {
     text-align: center;
+}
+
+.btn-base {
+    padding: 1px 5px !important;
 }
 
 .api {

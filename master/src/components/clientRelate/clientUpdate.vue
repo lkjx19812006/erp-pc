@@ -60,11 +60,15 @@
                                 <input type="text" v-if="!province.id" class="form-control edit-input" placeholder="请先选择一个省" disabled="disabled" v-model='city.cname' />
                                 <v-select :debounce="250" :value.sync="city" :options="initCitylist" placeholder="市/City" label="cname" v-if="province.id">
                                 </v-select>
-                                <!-- <input type="text" v-model='param.city' class="form-control edit-input" value="{{param.city}}" /> -->
+                            </div>
+                            <!-- 邮编 -->
+                            <div class="editpage-input">
+                                <label class="editlabel">{{$t('static.postcodes')}}</label>
+                                <input type="text" v-model='param.number' class="form-control edit-input" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">{{$t('static.business_scope')}}</label>
-                                <input type="text" v-model='param.bizScope' class="form-control edit-input" value="{{param.bizScope}}" />
+                                <input type="text" v-model='param.bizScope' class="form-control edit-input" />
                             </div>
                         </div>
                         <div class="editpageright">
@@ -76,14 +80,7 @@
                                     <option value="3">{{$t("static.purchaser_and_supplier")}}</option>
                                 </select>
                             </div>
-                            <!-- <div class="editpage-input" v-if="param.key=='myCustomerList'">
-                          <label>{{$t('static.deparment')}}</label>
-                          <input v-if="param.employeeName" type="text" class="form-control edit-input" readonly="readonly"
-                                 v-model="param.employeeName" @click="selectParam.show=true"/>
-                          <input v-if="!param.employeeName" type="text" class="form-control edit-input" readonly="readonly" v-model="param.orgName" @click="selectParam.show=true"/>
-                        
-                        </div>
-                         -->
+                            <!-- 负责人 -->
                             <div class="editpage-input">
                                 <label class="editlabel">{{$t('static.principals')}}</label>
                                 <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />
@@ -91,11 +88,11 @@
                             <!-- 客户手机 -->
                             <div class="editpage-input" v-if="this.language=='zh_CN'">
                                 <label class="editlabel" for="system">{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.mainphone.phone">{{$t('static.validate_cellphone')}}</span></label>
-                                <input type="text" v-model="param.mainPhone" class="form-control edit-input" v-validate:mainphone="['phone']" debounce="500" value="{{param.mainPhone}}" />
+                                <input type="text" v-model="param.mainPhone" class="form-control edit-input" v-validate:mainphone="['phone']" debounce="500" />
                             </div>
                             <div class="editpage-input" v-if="this.language=='en'">
                                 <label class="editlabel" for="system">{{$t('static.cellphone')}}</label>
-                                <input type="text" v-model="param.mainPhone" class="form-control edit-input" debounce="500" value="{{param.mainPhone}}" />
+                                <input type="text" v-model="param.mainPhone" class="form-control edit-input" debounce="500" />
                             </div>
                             <!-- 客户电话 -->
                             <div class="editpage-input">
@@ -109,7 +106,12 @@
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">{{$t('static.detailed_address')}}</label>
-                                <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
+                                <input type="text" v-model='param.address' class="form-control edit-input" />
+                            </div>
+                            <!-- 网站 -->
+                            <div class="editpage-input">
+                                <label>{{$t('static.website')}}</label>
+                                <input type="text" class="form-control edit-input" v-model="param.website" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">{{$t('static.credit_rating')}}</label>
@@ -304,7 +306,7 @@ export default {
             this.province.cname = this.param.provinceName;
             this.province.id = this.param.province;
             this.city.cname = this.param.cityName;
-            this.city.id = this.param.id;
+            this.city.id = this.param.city;
             //联动
             this.countryParam.country = this.param.country;
             this.countryParam.province = this.param.province;

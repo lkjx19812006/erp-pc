@@ -7,6 +7,7 @@
         <record-model :param="recordParam" v-if="recordParam.show"></record-model>
         <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
         <deliver-model :param="deliverParam" v-if="deliverParam.show"></deliver-model>
+        <cancel-model :param="cancelFlowParam" v-if="cancelFlowParam.show"></cancel-model>
         <tip-model :param="tipParam" v-if="tipParam.show"></tip-model>
         <mglist-model>
             <!-- 头部搜索 -->
@@ -84,6 +85,7 @@
                                 <div v-if="item.bizType=='order_send'">{{$t('static.delivery_review')}}</div>
                                 <div v-if="item.bizType=='order_supplementary_contract'">{{$t('static.contract_review')}}</div>
                                 <div v-if="item.bizType=='order_after_sales'">{{$t('static.aftersales')}}</div>
+                                <div v-if="item.bizType=='order_cancel'">订单取消</div>
                             </td>
                             <td>
                                 <!-- 订单审核 -->
@@ -109,6 +111,8 @@
                                 <div v-if="item.taskKey=='after_sales_disputed_handle'">{{$t('static.receive')}}{{$t('static.objection_handl')}}</div>
                                 <div v-if="item.taskKey=='after_sales_refund'">{{$t('static.reutrned')}}{{$t('static.refund')}}</div>
                                 <div v-if="item.taskKey=='after_sales_resend'">{{$t('static.reapply_delivery')}}</div>
+                                <!-- 订单取消 -->
+                                <div v-if="item.taskKey=='order_cancel_governor_validate'">{{$t('static.management_approval')}}</div>
                             </td>
                             <td>{{item.taskDesc}}</td>
                             <td>{{item.date}}</td>
@@ -135,6 +139,9 @@
                                     <a v-if="item.taskKey=='after_sales_employee_handle'" @click="showAudit(item)">{{$t('static.reapply')}}</a>
                                     <a v-if="item.taskKey=='after_sales_disputed_handle'" @click="showAudit(item)">{{$t('static.objection_handl')}}</a>
                                 </div>
+                                <div v-if="item.bizType=='order_cancel'&&loadParam.link=='/order/toDoOrderList'">
+                                    <a v-if="item.taskKey=='order_cancel_governor_validate'" @click="cancelOrderByFlow(item)">审核</a>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -158,6 +165,7 @@ import languageModel from '../tools/language.vue'
 import recordModel from '../record/record'
 import deliverModel from '../order/orderStatus'
 import auditModel from '../tips/auditDialog'
+import cancelModel from '../order/cancelAudit'
 import tipModel from '../tips/tipDialog'
 import {
     getList,
@@ -184,6 +192,7 @@ export default {
         languageModel,
         recordModel,
         deliverModel,
+        cancelModel,
         auditModel,
         tipModel
     },
@@ -258,6 +267,13 @@ export default {
                 orderStatus: '',
                 contact: '',
                 sendoff: false
+            },
+            cancelFlowParam: {
+                show: false,
+                id: '', //取消订单记录的ID号（非订单ID）
+                taskKey: '',
+                callback: this.cancelBack
+
             },
             tipParam: {
                 show: false,
@@ -397,7 +413,18 @@ export default {
             //审核完成后刷新页面
             this.getToDoOrderList(this.loadParam);
         },
-
+        //取消订单
+        cancelOrderByFlow: function(item) {
+            this.cancelFlowParam.id = item.bizId;
+            this.cancelFlowParam.taskKey = item.taskKey;
+            this.cancelFlowParam.show = true;
+        },
+        cancelBack: function(name) {
+            this.tipParam.show = true;
+            this.tipParam.name = name;
+            this.cancelFlowParam.show = false;
+            this.selectSearch();
+        },
 
     },
 

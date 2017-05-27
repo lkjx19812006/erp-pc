@@ -3,14 +3,12 @@
 </template>
 <script>
 import customDialog from '../tips/customDialog'
-import popup from '../tips/popup'
 import {
     handleOfferAccept
 } from '../../vuex/actions'
 export default {
     props: ['param'],
     components: {
-        popup,
         customDialog
     },
     data() {

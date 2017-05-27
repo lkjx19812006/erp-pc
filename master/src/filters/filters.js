@@ -23,32 +23,32 @@ function isJSON(str) {
         try {
             JSON.parse(str);
             return true;
-        } catch(e) {
+        } catch (e) {
             console.log(e);
             return false;
         }
     }
-    console.log('It is not a string!')    
+    console.log('It is not a string!')
 }
 
-Vue.filter('specFilter_a',function(data){//过滤规格
-    if(data&&isJSON(data)){
+Vue.filter('specFilter_a', function(data) { //过滤规格
+    if (data && isJSON(data)) {
         data = JSON.parse(data)
-        for(var key in data){
+        for (var key in data) {
             return data[key]['规格']
         }
-    }else{
+    } else {
         return data
-    }    
+    }
 })
 
-Vue.filter('specFilter_b',function(data){//过滤片形
-    if(data){
+Vue.filter('specFilter_b', function(data) { //过滤片形
+    if (data) {
         data = JSON.parse(data)
-        for(var key in data){
+        for (var key in data) {
             return data[key]['片型']
         }
-    }    
+    }
 })
 
 Vue.filter('Sample', function(val) { //是否样品
@@ -82,9 +82,11 @@ Vue.filter('bizType', function(val, bizType, type) {
     } else if (val == 'order' && type == 1) {
         return '收款订单';
     } else if (bizType == 'order_after_sales_refund') {
-        return '售后退款订单'
+        return '售后退款订单';
     } else if (bizType == 'order_refund') {
-        return '补充合同退款订单'
+        return '补充合同退款订单';
+    } else if (bizType == 'order_cancel_refund') {
+        return '取消订单退款';
     } else {
         return val;
     }
@@ -101,6 +103,8 @@ Vue.filter('enbizType', function(val, bizType, type) {
         return 'Refund for aftersales changes'
     } else if (bizType == 'order_refund') {
         return 'Refund for order changes'
+    } else if (bizType == 'order_cancel_refund') {
+        return 'Refund for order cancel';
     } else {
         return val;
     }

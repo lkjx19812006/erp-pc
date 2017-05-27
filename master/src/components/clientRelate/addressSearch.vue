@@ -1,7 +1,7 @@
 <template>
     <div>
         <createaddr-model :param="addressParam" v-if="addressParam.show"></createaddr-model>
-        <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+        <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
         <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
         <div class="container modal_con" v-show="param.show">
             <div @click="param.show = false" class="top-title">
@@ -13,7 +13,6 @@
                     <div class="cover_loading">
                         <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
                     </div>
-        
                     <table class="table table-hover table_head table-striped " v-cloak>
                         <thead>
                             <tr>
@@ -25,8 +24,8 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in initAddressList" @click="serviceselected($index,item)">
-                               <td >
-                                   <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"></label>
+                                <td>
+                                    <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"></label>
                                 </td>
                                 <td>{{item.contactName}}</td>
                                 <td>{{item.contactPhone}}</td>
@@ -53,7 +52,7 @@
                          link:createAddress,
                          url:'/customer/insertAddress',
                          key:'addresses'
-                         })">{{$t('static.add_addr')}}</div>   
+                         })">{{$t('static.add_addr')}}</div>
                     </div>
                 </div>
             </div>
@@ -63,15 +62,15 @@
 <script>
 import createaddrModel from './createAddrInfo'
 import {
-   initAddressList
+    initAddressList
 } from '../../vuex/getters'
 import {
     getAddrInfo,
     createAddress,
 } from '../../vuex/actions'
-export default{
-    props:['param'],
-    data(){
+export default {
+    props: ['param'],
+    data() {
         return {
             loadParam: {
                 loading: true,
@@ -79,82 +78,89 @@ export default{
                 size: '15px',
                 cur: 1,
                 all: 7,
-                total:0,
-                name:'',
-                mobile:'',
-                orgId:''
+                total: 0,
+                name: '',
+                mobile: '',
+                orgId: ''
             },
-            selectOrgParam:{
-                show:false,
-                orgId:'',
-                orgName:'',
-                callback:this.callback,
+            selectOrgParam: {
+                show: false,
+                orgId: '',
+                orgName: '',
+                callback: this.callback,
             },
-            addressParam:{
-                show:false
+            addressParam: {
+                show: false
             },
-            checked:false,
-            show:true
+            checked: false,
+            show: true
         }
     },
-    components:{
+    components: {
         createaddrModel
     },
-    vuex:{
-        getters:{
-           initAddressList
+    vuex: {
+        getters: {
+            initAddressList
         },
-        actions:{
-           getAddrInfo,
-           createAddress,
+        actions: {
+            getAddrInfo,
+            createAddress,
         }
     },
-    methods:{
-        serviceselected:function(index,item){
-            this.param.show=false;
-            this.$dispatch('address',item);
+    methods: {
+        serviceselected: function(index, item) {
+            this.param.show = false;
+            this.$dispatch('address', item);
         },
-        showCreateAddress:function(address){
+        showCreateAddress: function(address) {
             this.addressParam = address;
         }
-        
+
     },
     events: {
-        
+
     },
-    created(){
+    created() {
+        console.log(this.param);
         this.getAddrInfo(this.param);
     }
 }
 </script>
 <style scoped>
-.modal{
+.modal {
     z-index: 1086;
 }
-.modal_con{
+
+.modal_con {
     z-index: 1086;
 }
-.change_trans{
+
+.change_trans {
     margin-top: 20px;
 }
-.con_trans{
+
+.con_trans {
     margin-top: 40px;
 }
+
 .top-title {
-    left:0;
+    left: 0;
     right: 0;
-    width:800px;
+    width: 800px;
 }
-.tans_tab{
+
+.tans_tab {
     height: 40px;
     line-height: 40px;
     border-bottom: 1px solid #fa6705;
     text-align: left;
 }
-.tans_tab > .tabs{
+
+.tans_tab > .tabs {
     width: 100px;
     display: inline-block;
-    font-size:16px;
+    font-size: 16px;
     text-align: center;
     background-color: #f5f5f5;
     color: #333;
@@ -163,13 +169,15 @@ export default{
     border-bottom: 1px solid #fa6705;
     cursor: pointer;
 }
-.tans_tab .tabs_active{
+
+.tans_tab .tabs_active {
     background-color: #fff;
     color: #fa6705;
     border: 1px solid #fa6705;
     border-bottom: 0;
 }
-.checkbox_unselect{
+
+.checkbox_unselect {
     background-image: url(/static/images/unselect.png);
     display: inline-block;
     background-repeat: no-repeat;
@@ -180,7 +188,8 @@ export default{
     text-align: center;
     background-position: 5px;
 }
-.checkbox_select{
+
+.checkbox_select {
     background-image: url(/static/images/selected.png);
     display: inline-block;
     background-repeat: no-repeat;
@@ -191,24 +200,30 @@ export default{
     text-align: center;
     background-position: 5px;
 }
-.trans_service{
+
+.trans_service {
     margin-top: 20px;
 }
-.trans_service .col-xs-8{
+
+.trans_service .col-xs-8 {
     margin-bottom: 20px;
 }
-.table{
+
+.table {
     margin-bottom: 5px;
 }
-.table_head>thead>tr{
+
+.table_head>thead>tr {
     background-color: #f5f5f5;
     color: #333;
     font-size: 18px;
 }
-.base_pagination{
+
+.base_pagination {
     margin-top: 0;
 }
-.table{
+
+.table {
     display: table
 }
 </style>

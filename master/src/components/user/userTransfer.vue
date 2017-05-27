@@ -56,13 +56,6 @@
                                     <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.tel.tel">{{$t('static.validate_telephone')}}</span></label>
                                     <input type="text" class="form-control edit-input" v-validate:tel="['tel']" v-model="param.tel" />
                                 </div>
-                                <!-- <div  class="client-detailInfo   col-md-6">
-                <label class="editlabel">{{$t('static.type')}}</label>
-                <select class="form-control" v-model="param.type">
-                  <option value='0,个人' selected>{{$t('static.personal')}}</option>
-                  <option value='1,企业'>{{$t('static.enterprise')}}</option>
-                </select>
-              </div> -->
                                 <!-- 法人 -->
                                 <div class="client-detailInfo  col-md-6">
                                     <label>{{$t('static.legal')}} </label>

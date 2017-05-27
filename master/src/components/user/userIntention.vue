@@ -54,16 +54,16 @@
                         </div>
                         <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                             <label class="editlabel">药材图片</label>
-                            <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                            <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" boxid="box1" style="float:left;margin-left:5%;width:20%"></press-image>
                         </div>
                         <!-- 当为预售资源时，进口资质和检测报告需要上传 -->
                         <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                             <label class="editlabel">进口资质</label>
-                            <press-image :value.sync="param.importQualityImages" :type.sync="type" :param="importQualityParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                            <press-image :value.sync="param.importQualityImages" :type.sync="type" :param="importQualityParam" boxid="box2" style="float:left;margin-left:5%;width:20%"></press-image>
                         </div>
                         <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                             <label class="editlabel">检测报告</label>
-                            <press-image :value.sync="param.testReportImages" :type.sync="type" :param="testReportParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                            <press-image :value.sync="param.testReportImages" :type.sync="type" :param="testReportParam" boxid="box3" style="float:left;margin-left:5%;width:20%"></press-image>
                         </div>
                         <div class="editpage">
                             <div class="editpageleft">
