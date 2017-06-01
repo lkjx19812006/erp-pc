@@ -71,13 +71,13 @@
                         <div class="clearfix">
                             <!-- 客户选择（销售）/供应商选择（采购） -->
                             <div class="editpage-input col-md-4">
-                                <label class="editlabel" v-show="param.type==0">{{$t('static.supplier_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.required')}}</span></label>
-                                <label class="editlabel" v-show="param.type==1">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.required')}}</span></label>
+                                <label class="editlabel" v-show="param.type==0">{{$t('static.supplier_name')}} <span class="jinggao" v-if="$validation.custname.required">{{$t('static.required')}}</span></label>
+                                <label class="editlabel" v-show="param.type==1">{{$t('static.client_name')}} <span class="jinggao" v-if="$validation.custname.required">{{$t('static.required')}}</span></label>
                                 <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customerName}}" v-validate:custname="['required']" readonly="true" @click="searchCustomer()" />
                             </div>
                             <!-- 是否国际 -->
                             <div class="editpage-input col-md-4">
-                                <label class="editlabel">{{$t('static.international')}} <span class="system_danger" v-if="$validation.intl.required">{{$t('static.required')}}</span>
+                                <label class="editlabel">{{$t('static.international')}} <span class="jinggao" v-if="$validation.intl.required">{{$t('static.required')}}</span>
                                 </label>
                                 <input type="text" class="form-control edit-input" v-model="param.intl" v-validate:intl="{required:true}" v-show="false" />
                                 <select type="text" class="form-control edit-input" v-model="param.intl" @change="selectBizType()">
@@ -109,7 +109,7 @@
                             </div>
                             <!-- 为了兼容国际并且可以选择地址，国家需要分为两种处理方式，1.直接填写，用cnameEn字段，2选择用cname字段 -->
                             <div class="editpage-input col-md-4">
-                                <label class="editlabel">{{$t('static.country')}}</label>
+                                <label class="editlabel">{{$t('static.country')}}{{country.id}}</label>
                                 <!-- 如果cnameEn存在或者cname不存在，显示cnameEn，因为这样不确定是否国际，并且认为这是新建地址 -->
                                 <div v-if="country.cnameEn||!country.cname" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="country" :on-change="selectProvince" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
@@ -123,7 +123,7 @@
                             </div>
                             <!-- 判断省是否显示，应该用country的cnameEn和cname字段共同决定 -->
                             <div class="editpage-input col-md-4">
-                                <label class="editlabel">{{$t('static.province')}}</label>
+                                <label class="editlabel">{{$t('static.province')}}{{province.id}}</label>
                                 <input type="text" v-if="!country.cnameEn&&!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_country_first')}}" />
                                 <div v-if="country.cnameEn" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
@@ -294,13 +294,14 @@
                                             <input-select :prevalue="breedInfo.location" :value.sync="breedInfo.location" :options="initBreedDetail.locals.arr" placeholder="产地/Origin" label="name">
                                             </input-select>
                                         </div> -->
-                                        <label class="editlabel">{{$t('static.origin')}}</label>
+                                        <label class="editlabel">{{$t('static.origin')}}<span class="jinggao" v-if="$inner.locals.required">{{$t('static.required')}}</span> </label>
+                                        <input type="text" v-show="false" v-model="breedInfo.location" v-validate:locals="{required:true}"/>
                                         <breed-location :param="breedInfo" :show="breedParam" :widparam="'285'"></breed-location>
                                     </div>
                                     <!-- 发货地 -->
                                     <div class="editpage-input col-md-6">
-                                        <label class="editlabel">发货地</label>
-                                       <!--  <input type="text" v-if="false" v-model="">     -->                  
+                                        <label class="editlabel">发货地 <span class="jinggao" v-if="$inner.lcoals.required">{{$t('static.required')}}</span> </label>
+                                        <input type="text" v-show="false" v-model="breedInfo.provinceId" v-validate:lcoals="{required:true}"/>                     
                                         <div  type="text" class="edit-input">
                                             <v-select :debounce="250" :value.sync="breedInfo.provinceId"  :options="initProvince" placeholder="省/Province" label="cname">
                                             </v-select>
@@ -852,6 +853,7 @@ export default {
                 return;
             }
             this.resetParam();
+            console.log(this.country)
             this.param.country = this.country.id;
             this.param.province = this.province.id;
             this.param.city = this.city.id;
@@ -964,7 +966,8 @@ export default {
             this.countryParam.province = this.param.province;
             this.countryParam.city = this.param.city;
             this.countryParam.district = this.param.district;
-            this.country.cname = this.param.country;
+            this.country.cname = this.param.country.name;
+            this.country.id = this.param.country.id;
             this.province.cname = this.param.province;
             this.city.cname = this.param.city;
             this.district.cname = this.param.district;
