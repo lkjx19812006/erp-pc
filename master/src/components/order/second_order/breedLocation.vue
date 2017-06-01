@@ -1,7 +1,7 @@
 <template>
     <div>
-    	<i-select :model.sync="param.location" style="width:200px">
-        	<i-option v-for="item in initBreedDetail.locals.arr" :value="item.locationId" :key="item">{{ item.name }}</i-option>
+    	<i-select :model.sync="param.location" :style="{width:widparam+'px'}" size="large">
+        	<i-option v-for="item in initBreedDetail.locals.arr" :value="item.locationId">{{ item.name }}</i-option>
     	</i-select>
     	<button class="btn btn-defalut" @click="addNew()" v-if="!addData.ifShow" :disabled="!show.id">新增</button>
     	<button class="btn btn-defalut" @click="confirm()" v-else :disabled="!show.id || !param.province">提交</button>
@@ -28,7 +28,7 @@
 				}
 			}
 		},
-		props:['param','show'],
+		props:['param','show','widparam'],
 		vuex:{
 			getters:{
 				initBreedDetail,
@@ -52,9 +52,9 @@
 </script>
 
 <style scoped>
-	.ivu-select{
+/*	.ivu-select{
 		width:284px!important
-	}
+	}*/
 	.edit-input {
 	    height: 36px;
 	    width: 75%;
@@ -64,7 +64,9 @@
 	    -moz-border-radius: 5px;
 	    -ms-border-radius: 5px;
 	}
-
+	.ivu-select-dropdown{
+		position: absolute!important
+	}
 	.edit-input:focus {
 	    border-color: #fa6705;
 	}

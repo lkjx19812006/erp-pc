@@ -295,7 +295,7 @@
                                             </input-select>
                                         </div> -->
                                         <label class="editlabel">{{$t('static.origin')}}</label>
-                                        <breed-location :param="breedInfo" :show="breedParam"></breed-location>
+                                        <breed-location :param="breedInfo" :show="breedParam" :widparam="'285'"></breed-location>
                                     </div>
                                     <!-- 发货地 -->
                                     <div class="editpage-input col-md-6">
