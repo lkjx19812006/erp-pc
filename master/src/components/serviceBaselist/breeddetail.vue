@@ -200,7 +200,8 @@ export default {
                 show: false,
                 title: '',
                 namelist: '',
-                link: ''
+                link: '',
+                province:''
             },
             breedlistParam: {
                 show: false,

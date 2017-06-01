@@ -1,5 +1,6 @@
 <template>
     <div>
+        <editorder-model :param="editParam" v-if="editParam.show"></editorder-model>
         <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
         <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
         <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
@@ -70,6 +71,7 @@
                                         <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.comments}}</mg-label>
                                     </ul>
                                 </div>
+                                <!-- 商品订单列表 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
@@ -95,8 +97,9 @@
                                                     <th v-if="initOrderDetail.type == 1">销售价格</th>
                                                     <th v-if="initOrderDetail.type == 0">采购价格</th>
                                                     <th v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==0">{{$t('static.cost_price')}}</th>
-                                                    <!-- <th v-if="this.initLogin.orgId !=='11'">{{$t('static.cost')}}{{$t('static.total')}}</th>
-                                                    <th>{{$t('static.total')}}</th> -->
+                                                    <th v-if="initOrderDetail.orderStatus==60">药典合格</th>
+                                                    <th v-if="initOrderDetail.orderStatus==60">内控合格</th>
+                                                    <th v-if="initOrderDetail.orderStatus==60&&initOrderDetail.sample==1">是否成交</th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.goods.arr">
@@ -106,11 +109,16 @@
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.price}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
-                                                        <!-- <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==0"></td> -->
                                                         <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==0">{{item.costPrice}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
-                                                        <!-- <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==1"></td> -->
-                                                        <!-- <td v-if="this.initLogin.orgId !=='11'">{{item.cost}}</td>
-                                                        <td>{{item.amount}} （{{initOrderDetail.currency | Currency}}）</td> -->
+                                                        <td v-if="initOrderDetail.orderStatus==60">
+                                                            <a href="javascript:void(0);" @click="editQa(item,initOrderDetail.sample,'qaStandard')">{{item.qaStandard | qaFilter}}</a>
+                                                        </td>
+                                                        <td v-if="initOrderDetail.orderStatus==60">
+                                                            <a href="javascript:void(0);" @click="editQa(item,initOrderDetail.sample,'qaSelf')">{{item.qaSelf | qaFilter}}</a>
+                                                        </td>
+                                                        <td v-if="initOrderDetail.orderStatus==60&&initOrderDetail.sample==1">
+                                                            <a href="javascript:void(0);" @click="editQa(item,initOrderDetail.sample,'sample')">{{item.sampleTraded | isDeal}}</a>                                                       
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -701,6 +709,7 @@
      </div> -->
 </template>
 <script>
+import editorderModel from './second_order/editOrderQa'
 import trackingModel from '../order/ordergoods'
 import credenceModel from '../order/createcredence'
 import disposeModel from '../order/orderStatus'
@@ -733,6 +742,7 @@ import {
 } from '../../vuex/actions'
 export default {
     components: {
+        editorderModel,
         trackingModel,
         credenceModel,
         disposeModel,
@@ -826,6 +836,11 @@ export default {
                 orderLinkBack: [], //备份初始的待采购信息（id）
                 list: [], //goods和orderLinkList重组后的信息
                 callback: this.callback
+            },
+            editParam:{
+                show:false,
+                key:"orderDetail",
+                callback:this.getOrderDetail
             }
         }
     },
@@ -975,6 +990,18 @@ export default {
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.getOrderDetail(this.param);
+        },
+        editQa:function(item,data,type){
+            console.log(this.initOrderDetail)
+            this.editParam.show = true
+            this.editParam.breedName = item.breedName
+            this.editParam.qa_standard = item.qaStandard
+            this.editParam.qa_self = item.qaSelf
+            this.editParam.sample_traded = item.sampleTraded
+            this.editParam.sample = data
+            this.editParam.ids = item.id
+            this.editParam.type = type
+            this.editParam.id = this.initOrderDetail.id
         }
     },
     filter: (filter, {}),

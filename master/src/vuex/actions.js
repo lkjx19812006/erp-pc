@@ -4594,7 +4594,6 @@ export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
             breed[i].show = false;
             breed[i].checked = false;
         }
-        console.log(breed)
         dispatch(types.BREED_DATA, breed);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
@@ -4660,7 +4659,7 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
 export const createSpec = ({ dispatch }, param, id) => { //新增药材相关
     console.log(param.url)
     const data1 = {
-        name: param.name,
+        locationId: param.province.id,
         breedId: id
     }
     Vue.http({
@@ -11176,7 +11175,7 @@ export const deleteStockInfo = ({ dispatch }, param) => { //删除库存信息
     });
 }
 
-export const setLadderPrice = ({ dispatch }, param) => { //删除库存信息
+export const setLadderPrice = ({ dispatch }, param) => { //设置库存阶梯价格
     console.log(param)
     var ladder = {};
     var list = param.ladderPriceList
@@ -11200,9 +11199,96 @@ export const setLadderPrice = ({ dispatch }, param) => { //删除库存信息
         }
     }).then((res) => {
         console.log('添加成功')
-        console.log(param)
         param.callback(param.freshData)
         param.priceCallback(res.json().msg)
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const setQaStandard = ({ dispatch }, param) => { //设置药典是否合格
+    var body = {
+        id: param.ids,
+        qa_standard:param.qa_standard
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/order/orderGoodsQaStandard',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(param)
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const setQaSelf = ({ dispatch }, param) => { //设置内控是否合格
+    var body = {
+        id: param.ids,
+        qa_self:param.qa_self
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/order/orderGoodsQaSelf',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(param)
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const setSampleTraded = ({ dispatch }, param) => { //设置样品是否转为大货订单
+    var body = {
+        id: param.ids,
+        sample_traded:param.sample_traded
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/order/orderGoodsSampleTraded',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(param)
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const addBreedLocation = ({ dispatch }, param,breedId) => { //新增品种的产地
+    var body = {
+        locationId: param,
+        breedId:breedId
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/breed/local/',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        dispatch('ADD_BREED_LOCAL',res.json().result)
     }, (res) => {
         console.log('fail');
     });

@@ -22,9 +22,13 @@
                         <div class="" v-cloak v-if="param.judge=='locals'">
                             <div class="editpage-input">
                                 <label class="editlabel">{{param.namelist}} <span class="system_danger" v-if="$validation.location.required">请输入{{param.namelist}}</span></label>
-                                <input type="text" class="form-control edit-input" v-model="param.name" v-validate:location="['required']" v-show="false" />
+                                <!-- <input type="text" class="form-control edit-input" v-model="param.name" v-validate:location="['required']" v-show="false" />
                                 <input-select :prevalue="param.name" :value.sync="param.name" :options="province" placeholder="省">
-                                </input-select>
+                                </input-select> -->
+                                <div  type="text" class="edit-input-new">
+                                    <v-select :debounce="250" :value.sync="param.province"  :options="initProvince" placeholder="省/Province" label="cname">
+                                    </v-select>
+                                </div>
                             </div>
                         </div>
                         <div class="editpage" v-cloak v-if="param.judge=='alias'">
@@ -173,7 +177,15 @@ export default {
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
 }
-
+.edit-input-new {
+    height: 36px;
+    width: 75%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+}
 .dropdown-menu {
     z-index: 999
 }

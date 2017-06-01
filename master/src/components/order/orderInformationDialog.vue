@@ -719,10 +719,10 @@ export default {
             if (this.param.intl == 1) {}
         },
         confirm: function() {
-            this.param.country = this.country.cnameEn;
-            this.param.province = this.province.cname;
-            this.param.city = this.city.cname;
-            this.param.district = this.district.cname;
+            this.param.country = this.country.id;
+            this.param.province = this.province.id;
+            this.param.city = this.city.id;
+            this.param.district = this.district.id;
             this.param.show = false;
             var temp = [];
             for (var i = 0; i < this.param.goodsBack.length; i++) {
