@@ -5712,10 +5712,10 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         "type": data.type,
         "tel": data.tel,
         "scale": data.scale,
-        "nature": data.nature,
+        /*"nature": data.nature,
         "advance": data.advance,
         "capitalReturnDays": data.capitalReturnDays,
-        "typeDesc": data.typeDesc,
+        "typeDesc": data.typeDesc,*/
         "classify": data.classify,
         "email": data.email,
         "userId": data.userId,
@@ -5829,10 +5829,10 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         type: param.type,
         category: param.category,
         typeDesc: param.typeDesc,
-        scale: param.scale,
+        /*scale: param.scale,
         nature: param.nature,
         advance: param.advance,
-        capitalReturnDays: param.capitalReturnDays,
+        capitalReturnDays: param.capitalReturnDays,*/
         classifyDesc: param.classify,
         classify: param.classify,
         principal: param.principal,
@@ -10433,10 +10433,13 @@ export const getBankBranchList = ({ dispatch }, param) => { //获取银行支行
     var url = apiUrl.clientList + '/sys/enum/getBankSubbranchs' + '?name=' + param.name + '&page=' + param.cur + '&pageSize=15';
     for (var seach in param) {
         if (seach == 'province' && param[seach] !== '') {
-            url += '&province=' + param.province
+            url += '&province=' + param.province;
         }
         if (seach == 'city' && param[seach] !== '') {
-            url += '&city=' + param.city
+            url += '&city=' + param.city;
+        }
+        if (seach == 'district' && param[seach] !== '') {
+            url += '&district=' + param.district;
         }
     }
     Vue.http({
