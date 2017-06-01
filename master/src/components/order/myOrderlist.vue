@@ -316,18 +316,18 @@
                                     })" v-if="(item.orderStatus==20||item.orderStatus==30)&&item.type==1">{{$t('static.apply_income')}}
                                     </button>
                                     <!-- 销售订单发货流程start-->
-                                    <button class="btn btn-danger btn-xs" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0" >{{$t('static.apply_send')}}
+                                    <button class="btn btn-danger btn-xs" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0">{{$t('static.apply_send')}}
                                     </button>
                                     <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.logistics==1&&item.taskKey=='order_send_governor_validate'" style="color:#333;">{{$t('static.management_approval')}}</a>
-                                    <button class="btn btn-danger btn-xs" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee" >{{$t('static.reapply_delivery')}}
+                                    <button class="btn btn-danger btn-xs" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee">{{$t('static.reapply_delivery')}}
                                     </button>
                                     <!-- 发货 -->
-                                    <button class="btn btn-warning btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.verifier==item.employee" >{{$t('static.shipped')}}
+                                    <button class="btn btn-warning btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.verifier==item.employee">{{$t('static.shipped')}}
                                     </button>
                                     <!-- 销售订单发货流程end -->
                                     <button class="btn btn-success btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==0&&(item.logistics==3||item.logistics==2)">{{$t('static.quality_satisfied')}}
                                     </button>
-                                    <button class="btn btn-success btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70&&item.type==0" >{{$t('static.order_over')}}
+                                    <button class="btn btn-success btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70&&item.type==0">{{$t('static.order_over')}}
                                     </button>
                                     <button class="btn btn-success btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==60&&item.type==1&&(item.logistics==3||item.logistics==2)">{{$t('static.quality_satisfied')}}
                                     </button>
@@ -357,16 +357,16 @@
                                             link:afterSalesApply,
                                             titles:this.$t('static.apply_sales'),
                                             images:''
-                                          })" v-if="item.orderStatus==60&&(item.logistics==3||item.logistics==2)" >{{$t('static.apply_sales')}}
+                                          })" v-if="item.orderStatus==60&&(item.logistics==3||item.logistics==2)">{{$t('static.apply_sales')}}
                                     </button>
                                     <!-- <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==2" style="background:#fff;color:#eea236;padding:1px 5px;">确认收货
                                         </button> -->
-                                    <button class="btn btn-danger btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1" >{{$t('static.pending_payment')}}</button>
-                                    <button class="btn btn-danger btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0" >{{$t('static.receive')}}
+                                    <button class="btn btn-danger btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1">{{$t('static.pending_payment')}}</button>
+                                    <button class="btn btn-danger btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0">{{$t('static.receive')}}
                                     </button>
-                                    <button class="btn btn-danger btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0" >{{$t('static.pending_shipped')}}
+                                    <button class="btn btn-danger btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0">{{$t('static.pending_shipped')}}
                                     </button>
-                                    <button class="btn btn-primary btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1" >{{$t('static.receive')}}
+                                    <button class="btn btn-primary btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1">{{$t('static.receive')}}
                                     </button>
                                     <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==0">
                                         <img src="/static/images/{{$t('static.img_handle')}}.png" title="订单待处理" alt="订单待处理" />
@@ -381,7 +381,6 @@
                                 <!-- 申请审核,当订单开始取消后，不能再申请 -->
                                 <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)&&item.cancel==0">{{$t('static.review_application')}}</button>
                                 <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2&&(item.orderStatus==0||item.orderStatus==70)&&item.cancel==0">{{$t('static.reapply')}}</button>
-
                             </td>
                         </tr>
                     </tbody>

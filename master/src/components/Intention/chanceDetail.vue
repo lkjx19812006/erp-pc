@@ -18,7 +18,10 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <span class="navbar-brand navbar-name" @click="asdf()">{{param.customerName}}</span>
+                        <span class="navbar-brand navbar-name">
+                        {{initIntentionDetail.type | intentionType initIntentionDetail.especial initIntentionDetail.preSell}}
+                        {{initIntentionDetail.breedName}}
+                        </span>
                     </div>
                 </div>
             </nav>
@@ -26,12 +29,37 @@
         <section>
             <div class="client-section clearfix">
                 <div class="col-md-12">
-                    <h4 class="section_title">详情</h4>
+                    <h4 class="section_title">详情：
+                    {{initIntentionDetail.onSell | onsell}}
+                    <span v-if="initIntentionDetail.onSell==2">
+                        <Poptip placement="top" trigger="hover">
+                            <span>({{initIntentionDetail.shelveTime | date}})</span>
+                            <div class="api" slot="content">
+                                上架时间
+                            </div>
+                        </Poptip>
+                    </span>
+                    <span v-if="initIntentionDetail.onSell==4">
+                        <Poptip placement="top" trigger="hover">
+                            <span>({{initIntentionDetail.unshelveTime | date}})</span>
+                            <div class="api" slot="content">
+                                下架时间
+                            </div>
+                        </Poptip>
+                    </span>,
+                    <Poptip placement="top" trigger="hover">
+                        <span>{{initIntentionDetail.pubdate | date}}~{{initIntentionDetail.duedate | date}}</span>
+                        <div class="api" slot="content">
+                            发布时间~过期时间
+                        </div>
+                    </Poptip>
+
+                    </h4>
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
                                 <div class="client-detailInfo col-md-9 col-xs-12" style="max-height:300px;overflow-y: auto;">
-                                    <span class="left">
+                                    <span v-if="initIntentionDetail.pics.length>0" class="left">
                                         <label>品种图片：</label>
                                         <img v-for="item in initIntentionDetail.pics" :src="item.url" width="140px;" class="left" @click="clickBig(item.url)" />
                                     </span>
@@ -50,44 +78,44 @@
                                 <label class="editlabel">意向信息:</label>
                             </div>
                             <div class="clearfix">
-                                
-                                <mg-label title="类型" v-if="initIntentionDetail.type==0&&param.especial==1">紧急求购</mg-label>
-                                <mg-label title="类型" v-if="initIntentionDetail.type==1&&param.especial==1">低价资源</mg-label>
-                                <mg-label title="类型" v-if="initIntentionDetail.especial==0">普通</mg-label>
-                                <mg-label title="品种名称">{{initIntentionDetail.breedName}}</mg-label>
-                                <mg-label title="数量">{{initIntentionDetail.number}}</mg-label>
+                                <mg-label title="数量">{{initIntentionDetail.number}}{{initIntentionDetail.unit | Unit}}</mg-label>
                                 <mg-label title="价格">{{initIntentionDetail.price}}元/{{initIntentionDetail.unit | Unit}}</mg-label>
                                 <mg-label title="规格要求">{{initIntentionDetail.spec}}</mg-label>
                                 <mg-label title="产地要求">{{initIntentionDetail.location}}</mg-label>
                                 <mg-label title="质量要求">{{initIntentionDetail.quality}}</mg-label>
-                                <mg-label title="样品信息" v-if="initIntentionDetail.sampling==0">不提供样品</mg-label>
-                                <mg-label title="样品信息" v-if="initIntentionDetail.sampling==1">一份样品{{initIntentionDetail.sampleNumber}}{{initIntentionDetail.sampleUnit| Unit}}，总共{{initIntentionDetail.sampleAmount}}元</mg-label>
-                                
-                                
-                                <mg-label title="报价人数" v-if="param.type===0">{{initIntentionDetail.offerNumber}}</mg-label>
-                                <mg-label title="报价平均价格" v-if="param.type===0">{{initIntentionDetail.offerVprice}}元/{{initIntentionDetail.unit | Unit}}</mg-label>
-                                <mg-label title="供货总量" v-if="param.type===0">{{initIntentionDetail.offerTotal}}{{initIntentionDetail.unit|Unit}}</mg-label>
-                                <mg-label title="上下架">{{initIntentionDetail.onSell | onsell}}<span v-if="initIntentionDetail.onSell==2">({{initIntentionDetail.shelveTime}})</span>
-                                    <span v-if="initIntentionDetail.onSell==4">({{initIntentionDetail.unshelveTime}})</span>
-                                </mg-label>
-                                <mg-label title="发布时间">{{initIntentionDetail.pubdate}}</mg-label>
-                                <mg-label title="过期时间">{{initIntentionDetail.duedate}}</mg-label>
-                                <mg-label title="备注说明">{{initIntentionDetail.validate | intentionAudit}}({{initIntentionDetail.description}})</mg-label>
-                                
+                                <div class="client-detailInfo col-md-12 col-xs-12">
+                                    <label style="display:inline;font-size:14px;">备注说明：</label>
+                                    <span style="font-size:14px;">{{initIntentionDetail.validate | intentionAudit}}({{initIntentionDetail.description}})</span>
+                                </div>
                             </div>
                             <div class="clearfix">
-                                <label class="editlabel">客户信息:</label>
+                                <label class="editlabel">
+                                    客户信息：
+                                    <span style="font-weight:400">
+                                        {{initIntentionDetail.customerName}}({{initIntentionDetail.customerPhone}})
+                                    </span>
+                                </label>
                             </div>
                             <div class="clearfix">
-                                <mg-label title="姓名">{{initIntentionDetail.customerName}}</mg-label>
-                                <mg-label title="客户手机号">{{initIntentionDetail.customerPhone}}</mg-label>
+                                <label class="editlabel">
+                                    交收信息：
+                                    <span style="font-weight:400">
+                                        {{initIntentionDetail.provinceName}} {{initIntentionDetail.cityName}} {{initIntentionDetail.districtName}} {{initIntentionDetail.address}}
+                                    </span>
+                                </label>
                             </div>
-                            <div class="clearfix">
-                                <label class="editlabel">地址信息:</label>
+                            <div class="clearfix" v-if="initIntentionDetail.sampling==1">
+                                <label class="editlabel">
+                                    样品信息：
+                                    <span style="font-weight:400">
+                                        一份样品{{initIntentionDetail.sampleNumber}}{{initIntentionDetail.sampleUnit| Unit}}，总共{{initIntentionDetail.sampleAmount}}元
+                                    </span>
+                                </label>
                             </div>
-                            <div class="clearfix">
-                                <mg-label title="国家">{{initIntentionDetail.countryName}}</mg-label>
-                                <mg-label title="交收地(省/市/区)">{{initIntentionDetail.provinceName}} {{initIntentionDetail.cityName}} {{initIntentionDetail.districtName}} {{initIntentionDetail.address}}</mg-label>
+                            <div class="clearfix" v-if="param.type===0">
+                                <label class="editlabel">
+                                    报价信息：<span style="font-weight:400">共{{initIntentionDetail.offerNumber}}人报价，报价平均价格{{initIntentionDetail.offerVprice}}元/{{initIntentionDetail.unit | Unit}}，供货总量为{{initIntentionDetail.offerTotal}}{{initIntentionDetail.unit|Unit}}</span>
+                                </label>
                             </div>
                             <div class="clearfix">
                                 <label class="editlabel">其他信息:</label>
@@ -367,8 +395,8 @@ export default {
                 sub: '',
                 url: '/intention/deleteLabel/',
                 key: 'labels',
-                headline:'basicBaseList',
-                sign:'intentionDetail'
+                headline: 'basicBaseList',
+                sign: 'intentionDetail'
             },
             orderParam: {
                 show: false,
@@ -531,12 +559,10 @@ export default {
             this.delLabelParam.sub = index;
             this.addrDel(this.delLabelParam);
         },
-        asdf:function(){
-            console.log(this.initIntentionDetail)
-        }
+
     },
     created() {
-        this.getIntentionDetail(this.param);       
+        this.getIntentionDetail(this.param);
     },
     filter: (filter, {})
 }
@@ -659,6 +685,11 @@ section {
 
 .editlabel {
     font-size: 14px;
+    margin-bottom: 10px;
     display: block;
+}
+
+.api {
+    color: #3399ff;
 }
 </style>

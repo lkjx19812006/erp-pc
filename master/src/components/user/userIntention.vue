@@ -142,7 +142,7 @@
                                         </input-select>
                                     </div> -->
                                     <div v-if="breedParam.id">
-                                        <breed-location :param="param" :show="breedParam"></breed-location>
+                                        <breed-location :param="param" :show="breedParam" :widparam="'270'"></breed-location>
                                     </div>
                                 </div>
                             </div>
