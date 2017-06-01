@@ -30,8 +30,20 @@
                                     <tr v-for="item in param.stages">
                                         <td>{{item.amount}}</td>
                                         <!--  <td>{{item.ratio}}</td> -->
-                                        <td v-if="item.orderStatus==20">{{$t('static.signing_contract')}}</td>
-                                        <td v-if="item.orderStatus==60">{{$t('static.confirm_receipt')}}</td>
+                                        <td>
+                                            <span v-if="item.orderStatus==0">
+                                                {{$t('static.after_making_the_order')}}
+                                            </span>
+                                            <span v-if="item.orderStatus==20">
+                                                {{$t('static.signing_contract')}}
+                                            </span>
+                                            <span v-if="item.orderStatus==50">
+                                                {{$t('static.after_delivery')}}
+                                            </span>
+                                            <span v-if="item.orderStatus==60">
+                                                {{$t('static.confirm_receipt')}}
+                                            </span>
+                                        </td>
                                         <td>{{item.extra}}天</td>
                                         <td>{{item.description}}</td>
                                         <td>{{item.comment}}</td>

@@ -4,7 +4,7 @@
     <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container del_modal_con" v-show="param.show">
         <div class="model-header">
-            <h4>{{param.title}}111</h4>
+            <h4>{{param.title}}</h4>
             <slot></slot>
         </div>
     </div>

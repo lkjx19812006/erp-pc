@@ -1,6 +1,5 @@
 <template>
     <div>
-        <editorder-model :param="editParam" v-if="editParam.show"></editorder-model>
         <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
         <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
         <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
@@ -71,7 +70,6 @@
                                         <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.comments}}</mg-label>
                                     </ul>
                                 </div>
-                                <!-- 商品订单列表 -->
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
@@ -97,9 +95,8 @@
                                                     <th v-if="initOrderDetail.type == 1">销售价格</th>
                                                     <th v-if="initOrderDetail.type == 0">采购价格</th>
                                                     <th v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==0">{{$t('static.cost_price')}}</th>
-                                                    <th v-if="initOrderDetail.orderStatus==60">药典合格</th>
-                                                    <th v-if="initOrderDetail.orderStatus==60">内控合格</th>
-                                                    <th v-if="initOrderDetail.orderStatus==60&&initOrderDetail.sample==1">是否成交</th>
+                                                    <!-- <th v-if="this.initLogin.orgId !=='11'">{{$t('static.cost')}}{{$t('static.total')}}</th>
+                                                    <th>{{$t('static.total')}}</th> -->
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.goods.arr">
@@ -109,16 +106,11 @@
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.price}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
+                                                        <!-- <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==0"></td> -->
                                                         <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==0">{{item.costPrice}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
-                                                        <td v-if="initOrderDetail.orderStatus==60">
-                                                            <a href="javascript:void(0);" @click="editQa(item,initOrderDetail.sample,'qaStandard')">{{item.qaStandard | qaFilter}}</a>
-                                                        </td>
-                                                        <td v-if="initOrderDetail.orderStatus==60">
-                                                            <a href="javascript:void(0);" @click="editQa(item,initOrderDetail.sample,'qaSelf')">{{item.qaSelf | qaFilter}}</a>
-                                                        </td>
-                                                        <td v-if="initOrderDetail.orderStatus==60&&initOrderDetail.sample==1">
-                                                            <a href="javascript:void(0);" @click="editQa(item,initOrderDetail.sample,'sample')">{{item.sampleTraded | isDeal}}</a>                                                       
-                                                        </td>
+                                                        <!-- <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==1"></td> -->
+                                                        <!-- <td v-if="this.initLogin.orgId !=='11'">{{item.cost}}</td>
+                                                        <td>{{item.amount}} （{{initOrderDetail.currency | Currency}}）</td> -->
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -145,45 +137,6 @@
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.price}}（{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
                                                         <td>{{item.amount}}（{{initOrderDetail.currency | Currency}}）</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- 采销对应 -->
-                                <div v-if="initOrderDetail.type==0&&initOrderDetail.intl===0" class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title clearfix" @click="enfoldment({
-                                                key:'linkOrder'
-                                            })">
-                                            <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
-                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initLinkOrder.arr.length!==null">
-                                              对应销售订单（{{initLinkOrder.arr.length}}）
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div class="panel-collapse" v-if="initLinkOrder.arr.length&&initLinkOrder.show" v-cloak>
-                                        <div class="panel-body panel-set">
-                                            <table class="table  contactSet">
-                                                <thead>
-                                                    <th>销售订单ID</th>
-                                                    <th>品种</th>
-                                                    <th>数量</th>
-                                                    <th>
-                                                        <span v-if="initOrderDetail.type == 1">采购业务员</span>
-                                                        <span v-else>销售业务员</span>
-                                                    </th>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="item in initLinkOrder.arr">
-                                                        <th>{{item.sellId}}</th>
-                                                        <td>{{item.breedName}}</td>
-                                                        <td>{{item.number}}{{item.unit | Unit}}</td>
-                                                        <td>
-                                                            <span v-if="initOrderDetail.type == 1">{{item.buyEmployeeName}}</span>
-                                                            <span v-else>{{item.sellEmployeeName}}</span>
-                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -367,29 +320,6 @@
                                                                 })">
                                                                 {{$t('static.apply_payment')}}</button>
                                                             </a>
-                                                            <!-- 申请付款 -->
-                                                            <!-- <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==1&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
-                                                                  show:true,
-                                                                  sub:$index,
-                                                                  bizId:item.orderId,
-                                                                  bizSubId:item.id,
-                                                                  validate:item.validate,
-                                                                  type:item.type,
-                                                                  payWay:'',
-                                                                  payName:'',
-                                                                  paySubName:'',
-                                                                  currency:initOrderDetail.currency,
-                                                                  payUserName:'',
-                                                                  payNumber:'',
-                                                                  comment:'',
-                                                                  image_f:'',
-                                                                  image_s:'',
-                                                                  image_t:'',
-                                                                  images:'',
-                                                                  url:'/fund/createByOrderStages',
-                                                                  titles:this.$t('static.review_application'),
-                                                                  link:paymentAudit
-                                                                })">{{$t('static.apply_payment')}}</button> -->
                                                             <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                                   show:true,
                                                                   sub:$index,
@@ -697,16 +627,8 @@
             </section>
         </shadow-model>
     </div>
-    <!-- <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
-  <div class="container modal_con" v-show="param.show" >
-      <div class="top-title">
-          <span class="glyphicon glyphicon-remove-circle" @click="param.show=false"></span>
-      </div>
-
-     </div> -->
 </template>
 <script>
-import editorderModel from './second_order/editOrderQa'
 import trackingModel from '../order/ordergoods'
 import credenceModel from '../order/createcredence'
 import disposeModel from '../order/orderStatus'
@@ -729,7 +651,8 @@ import {
 } from '../../vuex/getters'
 import {
     getOrderDetail,
-    getLinkOrder,
+    getOrderDetailByOrderCancel,
+
     uploadDocument,
     dividedPayment,
     paymentAudit,
@@ -739,7 +662,6 @@ import {
 } from '../../vuex/actions'
 export default {
     components: {
-        editorderModel,
         trackingModel,
         credenceModel,
         disposeModel,
@@ -833,11 +755,6 @@ export default {
                 orderLinkBack: [], //备份初始的待采购信息（id）
                 list: [], //goods和orderLinkList重组后的信息
                 callback: this.callback
-            },
-            editParam:{
-                show:false,
-                key:"orderDetail",
-                callback:this.getOrderDetail
             }
         }
     },
@@ -850,7 +767,8 @@ export default {
         },
         actions: {
             getOrderDetail,
-            getLinkOrder,
+            getOrderDetailByOrderCancel,
+
             uploadDocument,
             dividedPayment,
             paymentAudit,
@@ -910,13 +828,11 @@ export default {
             this.purchaseParam.show = true;
         },
         applyInfo: function(item) {
-
             this.auditParam = item;
             this.auditParam.callback = this.callback;
             if (item.titles == '重新申请审核' || item.titles == '重新申请支付') {
                 this.getMyFundList(item);
                 if (this.initMyFundList != '' && this.initMyFundList[0]) {
-
                     item.amount = this.initMyFundList[0].amount;
                     item.payName = this.initMyFundList[0].payName;
                     item.payUserName = this.initMyFundList[0].payUserName;
@@ -951,7 +867,6 @@ export default {
             this.divideParam.callback = this.callback;
         },
         createChance: function(item, index) {
-
             item.show = !item.show;
             item.index = index;
             this.trackingParam = item;
@@ -963,7 +878,6 @@ export default {
         },
         createcredence: function(initOrderDetail) {
             this.credenceParam = initOrderDetail;
-
             this.credenceParam.creCallback = this.pictureCallback;
         },
         clickBig: function(img) {
@@ -972,7 +886,6 @@ export default {
         },
         pendingOrder: function(initOrderDetail) {
             this.disposeParam = initOrderDetail;
-            /*this.disposeParam = this.param;*/
             this.disposeParam.show = true;
 
         },
@@ -980,25 +893,13 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
-            this.getOrderDetail(this.param);
+            this.getOrderDetailByOrderCancel(this.param);
         },
         pictureCallback: function(title) {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
-            this.getOrderDetail(this.param);
-        },
-        editQa:function(item,data,type){
-            console.log(this.initOrderDetail)
-            this.editParam.show = true
-            this.editParam.breedName = item.breedName
-            this.editParam.qa_standard = item.qaStandard
-            this.editParam.qa_self = item.qaSelf
-            this.editParam.sample_traded = item.sampleTraded
-            this.editParam.sample = data
-            this.editParam.ids = item.id
-            this.editParam.type = type
-            this.editParam.id = this.initOrderDetail.id
+            this.getOrderDetailByOrderCancel(this.param);
         }
     },
     filter: (filter, {}),
@@ -1006,8 +907,7 @@ export default {
 
     },
     created() {
-        this.getOrderDetail(this.param);
-        this.getLinkOrder(this.param);
+        this.getOrderDetailByOrderCancel(this.param);
     }
 }
 </script>
@@ -1079,20 +979,6 @@ section article {
 .table>thead>tr>th {
     text-align: center;
 }
-
-
-/* .downloadbtn{
-    display: inline-block;
-    border:1px solid #ccc;
-    background-color:#fff;
-    color:#333;
-    padding: 6px 12px;
-    border-radius: 5px;
-    font-size:13px;
-    margin-bottom: 0px;
-    cursor: pointer;
-    user-select: none;
-} */
 
 .edit-detail {
     border: 1px solid #ddd;

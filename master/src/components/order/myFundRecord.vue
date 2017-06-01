@@ -104,74 +104,87 @@
                             <td>{{item.payNumber}}</td>
                             <td>{{item.ctime}}</td>
                             <td>{{item.comment}}</td>
-                            <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
-                            <td v-if="item.validate==1">
-                                <div style="background:#483D8B;color:#fff;">{{$t('static.approving')}}</div>
-                            </td>
-                            <td v-if="item.validate==2">
-                                <div style="background:green;color:#fff;">{{$t('static.approved')}}</div>
-                            </td>
-                            <td v-if="item.validate==3">
-                                <div style="background:red;color:#fff;">{{$t('static.unapproved')}}</div>
-                            </td>
-                            <td v-if="item.pr==0&&item.type==0">{{$t('static.not_paid')}}</td>
-                            <td v-if="item.pr==0&&item.type==1">{{$t('static.not_receive')}}</td>
-                            <td v-if="item.pr==1&&item.type==0">
-                                <div style="background:green;color:#fff;">{{$t('static.confirm_paid')}}</div>
-                            </td>
-                            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order'">
-                                <div style="background:green;color:#fff;">{{$t('static.confirm_recipt')}}</div>
-                            </td>
-                            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_refund'">
-                                <div style="background:green;color:#fff;">{{$t('static.confirm_paid')}}</div>
-                            </td>
-                            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_after_sales_refund'">
-                                <div style="background:green;color:#fff;">{{$t('static.confirm_refund')}}</div>
+                            <td>
+                                <span v-if="item.validate==0">{{$t('static.wait_approval')}}</span>
+                                <span v-if="item.validate==1" style="background:#483D8B;color:#fff;">
+                                    {{$t('static.approving')}}
+                                </span>
+                                <span v-if="item.validate==2" style="background:green;color:#fff;">
+                                    {{$t('static.approved')}}
+                                </span>
+                                <span v-if="item.validate==3" style="background:red;color:#fff;">
+                                    {{$t('static.unapproved')}}
+                                </span>
                             </td>
                             <td>
+                                <span v-if="item.pr==0&&item.type==0">{{$t('static.not_paid')}}</span>
+                                <span v-if="item.pr==0&&item.type==1">{{$t('static.not_receive')}}</span>
+                                <span v-if="item.pr==1&&item.type==0&&item.bizType!='order_cancel_refund'" style="background:green;color:#fff;">
+                                    {{$t('static.confirm_paid')}}
+                                </span>
+                                <span v-if="item.pr==1&&item.type==0&&item.bizType=='order_cancel_refund'" style="background:green;color:#fff;">
+                                    已确认退款
+                                </span>
+                                <span v-if="item.pr==1&&item.type==1&&item.bizType=='order'" style="background:green;color:#fff;">
+                                    {{$t('static.confirm_recipt')}}
+                                </span>
+                                <span v-if="item.pr==1&&item.type==1&&item.bizType=='order_refund'" style="background:green;color:#fff;">
+                                    {{$t('static.confirm_paid')}}
+                                </span>
+                                <span v-if="item.pr==1&&item.type==1&&item.bizType=='order_after_sales_refund'" style="background:green;color:#fff;">
+                                    {{$t('static.confirm_refund')}}
+                                </span>
+                            </td>
+                            <td>
+                                <!-- 确认收款 -->
                                 <button class="btn btn-default btn-cut" v-if="item.type==0&&item.pr==0&&item.validate==2" @click="applyInfo({
-                            show:true,
-                            sub:$index,
-                            id:item.id,
-                            image_f:'',
-                            image_s:'',
-                            image_t:'',
-                            images:'',
-                            url:'/fund/proceedsConfirm',
-                            titles:this.$t('static.confirm_income'),
-                            link:paymentConfirm
-                            })">{{$t('static.confirm_income')}}</button>
+                                        show:true,
+                                        sub:$index,
+                                        id:item.id,
+                                        image_f:'',
+                                        image_s:'',
+                                        image_t:'',
+                                        images:'',
+                                        url:'/fund/proceedsConfirm',
+                                        titles:this.$t('static.confirm_income'),
+                                        link:paymentConfirm
+                                        })">{{$t('static.confirm_income')}}
+                                </button>
+                                <!-- 编辑 -->
                                 <a class="operate" v-if="item.validate==0" @click="editClick({
-                            show:true,
-                            sub:$index,
-                            id:item.id,
-                            validate:item.validate,
-                            amount:item.amount,
-                            type:item.type,
-                            payWay:item.payWay,
-                            payName:item.payName,
-                            paySubName:item.paySubName,
-                            payUserName:item.payUserName,
-                            payNumber:item.payNumber,
-                            comment:item.comment,
-                            url:'/fund/',
-                            titles:this.$t('static.edit'),
-                            link:editPayment
-                        })"><img src="/static/images/{{$t('static.img_edit')}}.png" /></a>
+                                        show:true,
+                                        sub:$index,
+                                        id:item.id,
+                                        validate:item.validate,
+                                        amount:item.amount,
+                                        type:item.type,
+                                        payWay:item.payWay,
+                                        payName:item.payName,
+                                        paySubName:item.paySubName,
+                                        payUserName:item.payUserName,
+                                        payNumber:item.payNumber,
+                                        comment:item.comment,
+                                        url:'/fund/',
+                                        titles:this.$t('static.edit'),
+                                        link:editPayment
+                                    })"><img src="/static/images/{{$t('static.img_edit')}}.png" />
+                                </a>
+                                <!-- 申请审核 -->
                                 <button class="btn btn-success" v-if="item.validate==0" @click="applyInfo({
-                          show:true,
-                          sub:$index,
-                          id:item.id,
-                          name:item.payName,
-                          comment:item.comment,
-                          image_f:'',
-                          image_s:'',
-                          image_t:'',
-                          images:'',
-                          url:'/fund/validate/request',
-                          titles:this.$t('static.review_application'),
-                          link:paymentConfirm
-                      })" style="padding:1px 4px;background:#fff;color:#398439;margin-top:-22px;">{{$t('static.review_application')}}</button>
+                                          show:true,
+                                          sub:$index,
+                                          id:item.id,
+                                          name:item.payName,
+                                          comment:item.comment,
+                                          image_f:'',
+                                          image_s:'',
+                                          image_t:'',
+                                          images:'',
+                                          url:'/fund/validate/request',
+                                          titles:this.$t('static.review_application'),
+                                          link:paymentConfirm
+                                    })" style="padding:1px 4px;background:#fff;color:#398439;margin-top:-22px;">{{$t('static.review_application')}}
+                                </button>
                                 <a class="operate btn-gray" v-if="item.validate==1&&item.pr==0">{{$t('static.un_finance')}}</a>
                             </td>
                         </tr>
@@ -284,7 +297,6 @@ export default {
             this.getMyFundList(this.loadParam);
         },
         applyInfo: function(item) {
-            console.log(item)
             if (item.name == '') {
                 this.tipsParam.show = true;
                 this.tipsParam.name = this.$t('static.complete_information');

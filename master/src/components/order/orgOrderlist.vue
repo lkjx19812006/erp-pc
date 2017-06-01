@@ -325,9 +325,13 @@
                    </td> -->
                             <td>
                                 <!-- 取消订单,在订单状态为20和70或者新建的订单还未申请审核可以取消，并说明原因 -->
-                                <button class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70||(item.orderStatus==0&&item.validate==0)" @click="cancelOrder(item.id,$index)">
+                                <!-- <button class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70||(item.orderStatus==0&&item.validate==0)" @click="cancelOrder(item.id,$index)">
                                     取消订单
-                                </button>
+                                </button> -->
+                                <!-- 审核取消订单,当取消状态是1时，需要部门主管审核 -->
+                                <!-- <button class="btn btn-warning btn-apply" v-if="item.cancel==1" @click="">
+                                    审核取消订单
+                                </button> -->
                                 <!-- 订单划转到任意一个业务员 -->
                                 <button class="btn btn-warning btn-apply" v-if="(item.orderStatus==0||item.orderStatus==10)&&item.validate==0" @click="transferToEmployee(item,$index)">
                                     划转
@@ -636,7 +640,8 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
-            this.selectSearch();
+            //0.1s后重新请求列表数据
+            setTimeout(this.selectSearch, 100);
         },
         orderCheck: function(id, index) {
             this.auditParam.id = id;

@@ -13,7 +13,7 @@
                 <span></span>
             </div>
         </div>
-        <form id="box">
+        <form id="{{boxid}}">
             <input type="file" @change="previewImg" class="input_image" name="photo" accept="{{type}}">
             <img v-bind:src="image" class="image_show" v-if="imageShow&&!showurl">
             <img src="../../../../static/images/default_image.png" class="image_show" v-if="imageShow&&showurl">
@@ -56,7 +56,7 @@ export default {
                     showurl: '../../../../static/images/default_image.png',
                     fileName: ''
                 },
-                box: document.getElementById("box")
+
             }
         },
         props: {
@@ -64,6 +64,10 @@ export default {
                 default: null,
                 qiniu: '',
                 files: []
+            },
+            boxid: {
+                type: String,
+                default: "box"
             },
             value: '',
             showurl: '',
@@ -93,7 +97,7 @@ export default {
                     } else {
                         _self.type = 'other';
                     }
-                    console.log(file)
+
                     _self.fileName = file.name;
                     if (file.type.split('/')[0] == 'image') {
                         let reader = new FileReader();
@@ -135,7 +139,7 @@ export default {
                         let param = new FormData();
                         param.append("qiniu", _self.param.qiniu);
                         param.append("mFile", file);
-                        console.log(file);
+
                         _self.upload(param, file, '');
                     }
                     return 1;
@@ -182,7 +186,10 @@ export default {
             },
             delFile: function(index) {
                 this.files.splice(index, 1);
-                box.reset(); //重置表单
+                let box = document.getElementById(this.boxid);
+                if (box.reset) {
+                    box.reset(); //重置表单
+                }
                 if (this.files.length == 0) {
                     this.value = "";
                 }
@@ -197,7 +204,6 @@ export default {
                 this.$dispatch("getFiles", this.files);
             },
             upload: function(data, file, url) {
-                console.log(data);
                 this.loadParam.loading = true;
                 var _self = this;
                 this.$http({

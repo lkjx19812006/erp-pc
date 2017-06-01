@@ -134,7 +134,15 @@
                             <td>{{item.currency | Currency}}</td>
                             <td>{{item.consignee}}</td>
                             <td>{{item.consigneePhone}}</td>
-                            <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
+                            <!-- APP订单consigneeAddr字段包含了（省市区） -->
+                            <td>
+                                <Poptip placement="top" trigger="hover">
+                                    <span>{{item.consigneeAddr | textDisplay '5'}}</span>
+                                    <div class="api" slot="content">
+                                        {{item.consigneeAddr}}
+                                    </div>
+                                </Poptip>
+                            </td>
                             <td v-if="this.language=='zh_CN'">{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</td>
                             <td v-if="this.language=='en'">{{item.orderStatus | Enassess item.type item.logistics item.verifierName item.taskKey}}</td>
                             <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
@@ -377,5 +385,9 @@ export default {
 
 .order_pagination {
     text-align: center;
+}
+
+.api {
+    color: #3399ff;
 }
 </style>
