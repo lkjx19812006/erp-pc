@@ -245,13 +245,17 @@
                                         customerPhone:item.consigneePhone,
                                         zipCode:item.zipCode,
                                         country:item.country,
+                                        countryName:item.countryName,
                                         province:item.province,
+                                        provinceName:item.provinceName,
                                         city:item.city,
+                                        cityName:item.cityName,
                                         employee:item.employee,
                                         customerName:item.customerName,
                                         org:item.org,
                                         tradeTime:item.tradeTime,
                                         district:item.district,
+                                        districtName:item.districtName,
                                         orderStatus:item.orderStatus,
                                         consigneeAddr:item.consigneeAddr,
                                         comments:item.comments,
@@ -280,7 +284,7 @@
                                     3.审核完成后，validate=2 -->
                                 <div>
                                     <!-- 普通订单（非预售）处于1阶段时，可以直接取消 -->
-                                    <button class="btn btn-warning btn-apply" v-if="item.validate<=0&&(item.pre!=1||(item.pre==1&&item.type==0))" @click="cancelOrder(item.id,$index)">
+                                    <button class="btn btn-danger btn-xs" v-if="item.validate<=0&&(item.pre!=1||(item.pre==1&&item.type==0))" @click="cancelOrder(item.id,$index)">
                                         取消订单
                                     </button>
                                     <!-- 预售订单处于1阶段时，需要走流程 -->
@@ -502,7 +506,10 @@ export default {
                 consigner: '', //发货人,(销售订单时，是业务员ID，采购订单时，是""，不填)
                 consignerName: '', //发货人名
                 zipCode: '',
-                country: '中国',
+                country: {
+                    name:'中国',
+                    id:'7'
+                },
                 province: '',
                 city: '',
                 employee: this.initLogin.id,

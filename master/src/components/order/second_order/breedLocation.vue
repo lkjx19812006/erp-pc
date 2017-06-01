@@ -1,7 +1,7 @@
 <template>
     <div>
     	<i-select :model.sync="param.location" :style="{width:widparam+'px'}" size="large">
-        	<i-option v-for="item in initBreedDetail.locals.arr" :value="item.locationId">{{ item.name }}</i-option>
+        	<i-option v-for="item in initBreedDetail.locals.arr" :value="item.locationId" track-by="$index">{{ item.name }}</i-option>
     	</i-select>
     	<button class="btn btn-defalut" @click="addNew()" v-if="!addData.ifShow" :disabled="!show.id">新增</button>
     	<button class="btn btn-defalut" @click="confirm()" v-else :disabled="!show.id || !param.province">提交</button>
@@ -25,7 +25,8 @@
 				addData:{
 					ifShow:false,
 					addInfo:'新增'
-				}
+				},
+
 			}
 		},
 		props:['param','show','widparam'],
@@ -44,8 +45,10 @@
 
 			},
 			confirm:function(){
+				console.log(this.initBreedDetail)
 				this.addBreedLocation(this.param.province.id,this.show.id)
 				this.addData.ifShow= false
+				console.log(this.initBreedDetail)
 			}
 		}
 	}
