@@ -47,11 +47,10 @@
                                 </div>
                             </div>
                             <div class="clearfix">
-                                <label class="editlabel">基本信息:</label>
+                                <label class="editlabel">意向信息:</label>
                             </div>
                             <div class="clearfix">
-                                <mg-label title="姓名">{{initIntentionDetail.customerName}}</mg-label>
-                                <mg-label title="客户手机号">{{initIntentionDetail.customerPhone}}</mg-label>
+                                
                                 <mg-label title="类型" v-if="initIntentionDetail.type==0&&param.especial==1">紧急求购</mg-label>
                                 <mg-label title="类型" v-if="initIntentionDetail.type==1&&param.especial==1">低价资源</mg-label>
                                 <mg-label title="类型" v-if="initIntentionDetail.especial==0">普通</mg-label>
@@ -63,11 +62,8 @@
                                 <mg-label title="质量要求">{{initIntentionDetail.quality}}</mg-label>
                                 <mg-label title="样品信息" v-if="initIntentionDetail.sampling==0">不提供样品</mg-label>
                                 <mg-label title="样品信息" v-if="initIntentionDetail.sampling==1">一份样品{{initIntentionDetail.sampleNumber}}{{initIntentionDetail.sampleUnit| Unit}}，总共{{initIntentionDetail.sampleAmount}}元</mg-label>
-                                <mg-label title="国家">{{initIntentionDetail.country}}</mg-label>
-                                <mg-label title="交收地(省/市/区)">{{initIntentionDetail.province}} {{initIntentionDetail.city}} {{initIntentionDetail.district}} {{initIntentionDetail.address}}</mg-label>
-                                <mg-label title="预付比例">{{initIntentionDetail.advance | advanced}}</mg-label>
-                                <mg-label title="发票说明">{{initIntentionDetail.invoic | invoicstate}}</mg-label>
-                                <mg-label title="看货说明">{{initIntentionDetail.visit | visitstate}}</mg-label>
+                                
+                                
                                 <mg-label title="报价人数" v-if="param.type===0">{{initIntentionDetail.offerNumber}}</mg-label>
                                 <mg-label title="报价平均价格" v-if="param.type===0">{{initIntentionDetail.offerVprice}}元/{{initIntentionDetail.unit | Unit}}</mg-label>
                                 <mg-label title="供货总量" v-if="param.type===0">{{initIntentionDetail.offerTotal}}{{initIntentionDetail.unit|Unit}}</mg-label>
@@ -77,6 +73,29 @@
                                 <mg-label title="发布时间">{{initIntentionDetail.pubdate}}</mg-label>
                                 <mg-label title="过期时间">{{initIntentionDetail.duedate}}</mg-label>
                                 <mg-label title="备注说明">{{initIntentionDetail.validate | intentionAudit}}({{initIntentionDetail.description}})</mg-label>
+                                
+                            </div>
+                            <div class="clearfix">
+                                <label class="editlabel">客户信息:</label>
+                            </div>
+                            <div class="clearfix">
+                                <mg-label title="姓名">{{initIntentionDetail.customerName}}</mg-label>
+                                <mg-label title="客户手机号">{{initIntentionDetail.customerPhone}}</mg-label>
+                            </div>
+                            <div class="clearfix">
+                                <label class="editlabel">地址信息:</label>
+                            </div>
+                            <div class="clearfix">
+                                <mg-label title="国家">{{initIntentionDetail.countryName}}</mg-label>
+                                <mg-label title="交收地(省/市/区)">{{initIntentionDetail.provinceName}} {{initIntentionDetail.cityName}} {{initIntentionDetail.districtName}} {{initIntentionDetail.address}}</mg-label>
+                            </div>
+                            <div class="clearfix">
+                                <label class="editlabel">其他信息:</label>
+                            </div>
+                            <div class="clearfix">
+                                <mg-label title="预付比例">{{initIntentionDetail.advance | advanced}}</mg-label>
+                                <mg-label title="发票说明">{{initIntentionDetail.invoic | invoicstate}}</mg-label>
+                                <mg-label title="看货说明">{{initIntentionDetail.visit | visitstate}}</mg-label>
                                 <mg-label title="来源">{{initIntentionDetail.source | intentionSource}}</mg-label>
                                 <mg-label title="归属业务员">{{initIntentionDetail.employeeName}}</mg-label>
                                 <div class="client-detailInfo col-md-12 col-xs-12">

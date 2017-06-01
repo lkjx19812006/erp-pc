@@ -37,16 +37,16 @@
                                 </select>
                             </div>
                             <!-- 客户规模 -->
-                            <!-- <div class="editpage-input col-md-6" style="padding-left:0">
+                            <div class="editpage-input col-md-6" style="padding-left:0">
                                 <label class="editlabel">{{$t('static.client_scale')}}</label>
                                 <select class="form-control edit-input" v-model="param.scale">
                                     <option value="0">小型</option>
                                     <option value="1">中型</option>
                                     <option value="2">大型</option>
                                 </select>
-                            </div> -->
+                            </div>
                             <!-- 客户性质 -->
-                            <!-- <div class="editpage-input col-md-6" style="padding-left:0">
+                            <div class="editpage-input col-md-6" style="padding-left:0">
                                 <label class="editlabel">{{$t('static.client_nature')}}</label>
                                 <select class="form-control edit-input" v-model="param.nature">
                                     <option value="0">个体户</option>
@@ -54,9 +54,9 @@
                                     <option value="2">国企</option>
                                     <option value="3">上市公司</option>
                                 </select>
-                            </div> -->
+                            </div>
                             <!-- 预付比例,padding-top是为了修正margin-top失效的 -->
-                            <!-- <div class="editpage-input" style="clear:both;padding-top:15px">
+                            <div class="editpage-input" style="clear:both;padding-top:15px">
                                 <label class="editlabel">{{$t('static.pre_payment')}}</label>
                                 <select class="form-control edit-input" v-model="param.advance">
                                     <option value=0>0</option>
@@ -71,7 +71,7 @@
                                     <option value=0.9>90%</option>
                                     <option value=1>100%</option>
                                 </select>
-                            </div> -->
+                            </div>
                             <!-- 法人 -->
                             <div class="editpage-input">
                                 <label class="editlabel">{{$t('static.legal')}} </label>
@@ -126,10 +126,10 @@
                                 <input type="text" v-model="param.mainPhone" class="form-control edit-input" debounce="500" />
                             </div>
                             <!-- 回款天数 -->
-                            <!-- <div class="editpage-input">
+                            <div class="editpage-input">
                                 <label>{{$t('static.capital_return_days')}}</label>
                                 <input type="number" class="form-control edit-input" v-model="param.capitalReturnDays" />
-                            </div> -->
+                            </div>
                             <!-- 负责人 -->
                             <div class="editpage-input">
                                 <label class="editlabel">{{$t('static.principals')}}</label>

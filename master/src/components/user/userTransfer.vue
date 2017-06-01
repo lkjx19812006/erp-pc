@@ -52,16 +52,16 @@
                                     <input type="text" class="form-control edit-input" debounce="500" v-model="contacts[0].phone" />
                                 </div>
                                 <!-- 客户规模 -->
-                                <!-- <div class="client-detailInfo  col-md-3">
+                                <div class="client-detailInfo  col-md-3">
                                     <label class="editlabel">{{$t('static.client_scale')}}</label>
                                     <select class="form-control edit-input" v-model="param.scale">
                                         <option value="0">小型</option>
                                         <option value="1">中型</option>
                                         <option value="2">大型</option>
                                     </select>
-                                </div> -->
+                                </div>
                                 <!-- 客户性质 -->
-                                <!-- <div class="client-detailInfo  col-md-3">
+                                <div class="client-detailInfo  col-md-3">
                                     <label class="editlabel">{{$t('static.client_nature')}}</label>
                                     <select class="form-control edit-input" v-model="param.nature">
                                         <option value="0">个体户</option>
@@ -69,9 +69,9 @@
                                         <option value="2">国企</option>
                                         <option value="3">上市公司</option>
                                     </select>
-                                </div> -->
+                                </div>
                                 <!-- 预付比例 -->
-                                <!-- <div class="client-detailInfo  col-md-6">
+                                <div class="client-detailInfo  col-md-6">
                                     <label class="editlabel">{{$t('static.pre_payment')}}</label>
                                     <select class="form-control edit-input" v-model="param.advance">
                                         <option value=0>0</option>
@@ -86,12 +86,12 @@
                                         <option value=0.9>90%</option>
                                         <option value=1>100%</option>
                                     </select>
-                                </div> -->
+                                </div>
                                 <!-- 回款天数 -->
-                                <!-- <div class="client-detailInfo  col-md-6">
+                                <div class="client-detailInfo  col-md-6">
                                     <label>{{$t('static.capital_return_days')}}</label>
                                     <input type="number" class="form-control edit-input" v-model="param.capitalReturnDays" />
-                                </div> -->
+                                </div>
                                 <!-- 客户电话 -->
                                 <div class="client-detailInfo  col-md-6">
                                     <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.tel.tel">{{$t('static.validate_telephone')}}</span></label>
