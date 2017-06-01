@@ -167,7 +167,8 @@ import {
     ALLYESTODAY_BREED_DETAIL,
     CHANGE_ORGADDBREEDDETAIL,
     CHANGE_ALLADDBREEDDETAIL,
-    CHANGE_BREEDORDER_DETAIL
+    CHANGE_BREEDORDER_DETAIL,
+    ADD_BREED_LOCAL
 } from '../mutation-types'
 
 
@@ -1422,6 +1423,10 @@ const mutations = {
 
     [BREED_DETAIL_DATA](state, data) { //药材列表
         state.breedDetail = data;
+    },
+
+    [ADD_BREED_LOCAL](state, data) { //新增药品产地
+        state.breedDetail.locals.arr.push(data)
     },
 
     [ADD_BREED_DATA](state, data) { //新增药材

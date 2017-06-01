@@ -54,7 +54,7 @@ Vue.filter('Sample', function(val) { //是否样品
     var val = val;
     if (val == 0) {
         return this.$t('static.no');
-    } else if (val == 0) {
+    } else if (val == 1) {
         return this.$t('static.yes');
     } else {
         return val;
@@ -1281,3 +1281,27 @@ Vue.filter('intentionType', function(type, especial, preSell) { //意向类型
     }
 
 });
+
+Vue.filter("qaFilter",function(data){
+    if(data=="-1"){
+        return "未知"
+    }
+    if(data=="0"){
+        return "不合格"
+    }
+    if(data=='1'){
+        return "合格"
+    }
+})
+
+Vue.filter("isDeal",function(data){
+    if(data=="-1"){
+        return "未知"
+    }
+    if(data=="0"){
+        return "未成交"
+    }
+    if(data=='1'){
+        return "已成交"
+    }
+})
