@@ -19,6 +19,9 @@
             <div class="client-section clearfix" @click.stop="">
                 <h4 class="section_title">{{$t('static.details')}}</h4>
                 <ul class="clearfix" style="margin-top:20px;font-size: 13px">
+                    <li class="col-md-12">订单ID：
+                        <label>{{initFundDetail.bizId}}</label>
+                    </li>
                     <li class="col-md-4" v-if="this.language=='zh_CN'">{{$t('static.payment_type')}}：
                         <label>{{initFundDetail.bizType | bizType initFundDetail.bizType initFundDetail.type }}</li>
                     <li class="col-md-4" v-if="this.language=='en'">{{$t('static.payment_type')}}：

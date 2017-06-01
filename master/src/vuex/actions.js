@@ -5711,6 +5711,10 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         "name": data.name,
         "type": data.type,
         "tel": data.tel,
+        "scale": data.scale,
+        "nature": data.nature,
+        "advance": data.advance,
+        "capitalReturnDays": data.capitalReturnDays,
         "typeDesc": data.typeDesc,
         "classify": data.classify,
         "email": data.email,
@@ -5825,6 +5829,10 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         type: param.type,
         category: param.category,
         typeDesc: param.typeDesc,
+        scale: param.scale,
+        nature: param.nature,
+        advance: param.advance,
+        capitalReturnDays: param.capitalReturnDays,
         classifyDesc: param.classify,
         classify: param.classify,
         principal: param.principal,
@@ -5901,8 +5909,6 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
     })
 }
 export const updateContact = ({ dispatch }, param) => { //修改客户联系人
-    console.log(param);
-
     const updatedata = {
         id: param.id,
         name: param.name,

@@ -36,6 +36,42 @@
                                     <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerTypeEn}}</option>
                                 </select>
                             </div>
+                            <!-- 客户规模 -->
+                            <div class="editpage-input col-md-6" style="padding-left:0">
+                                <label class="editlabel">{{$t('static.client_scale')}}</label>
+                                <select class="form-control edit-input" v-model="param.scale">
+                                    <option value="0">小型</option>
+                                    <option value="1">中型</option>
+                                    <option value="2">大型</option>
+                                </select>
+                            </div>
+                            <!-- 客户性质 -->
+                            <div class="editpage-input col-md-6" style="padding-left:0">
+                                <label class="editlabel">{{$t('static.client_nature')}}</label>
+                                <select class="form-control edit-input" v-model="param.nature">
+                                    <option value="0">个体户</option>
+                                    <option value="1">民企</option>
+                                    <option value="2">国企</option>
+                                    <option value="3">上市公司</option>
+                                </select>
+                            </div>
+                            <!-- 预付比例,padding-top是为了修正margin-top失效的 -->
+                            <div class="editpage-input" style="clear:both;padding-top:15px">
+                                <label class="editlabel">{{$t('static.pre_payment')}}</label>
+                                <select class="form-control edit-input" v-model="param.advance">
+                                    <option value=0>0</option>
+                                    <option value=0.1>10%</option>
+                                    <option value=0.2>20%</option>
+                                    <option value=0.3>30%</option>
+                                    <option value=0.4>40%</option>
+                                    <option value=0.5>50%</option>
+                                    <option value=0.6>60%</option>
+                                    <option value=0.7>70%</option>
+                                    <option value=0.8>80%</option>
+                                    <option value=0.9>90%</option>
+                                    <option value=1>100%</option>
+                                </select>
+                            </div>
                             <!-- 法人 -->
                             <div class="editpage-input">
                                 <label class="editlabel">{{$t('static.legal')}} </label>
@@ -80,11 +116,6 @@
                                     <option value="3">{{$t("static.purchaser_and_supplier")}}</option>
                                 </select>
                             </div>
-                            <!-- 负责人 -->
-                            <div class="editpage-input">
-                                <label class="editlabel">{{$t('static.principals')}}</label>
-                                <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />
-                            </div>
                             <!-- 客户手机 -->
                             <div class="editpage-input" v-if="this.language=='zh_CN'">
                                 <label class="editlabel" for="system">{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.mainphone.phone">{{$t('static.validate_cellphone')}}</span></label>
@@ -93,6 +124,16 @@
                             <div class="editpage-input" v-if="this.language=='en'">
                                 <label class="editlabel" for="system">{{$t('static.cellphone')}}</label>
                                 <input type="text" v-model="param.mainPhone" class="form-control edit-input" debounce="500" />
+                            </div>
+                            <!-- 回款天数 -->
+                            <div class="editpage-input">
+                                <label>{{$t('static.capital_return_days')}}</label>
+                                <input type="number" class="form-control edit-input" v-model="param.capitalReturnDays" />
+                            </div>
+                            <!-- 负责人 -->
+                            <div class="editpage-input">
+                                <label class="editlabel">{{$t('static.principals')}}</label>
+                                <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />
                             </div>
                             <!-- 客户电话 -->
                             <div class="editpage-input">
@@ -277,6 +318,7 @@ export default {
             this.tipsParam.alert = true;
         },
         confirm: function() {
+            console.log("搞飞机？");
             this.param.country = this.country.id;
             this.param.countryName = this.country.cnameEn;
             this.param.province = this.province.id;
@@ -377,7 +419,6 @@ export default {
 
 .edit-input {
     height: 36px;
-    line-height: 36px;
     width: 90%;
     border: 1px solid #ddd;
     border-radius: 5px;

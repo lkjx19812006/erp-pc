@@ -603,6 +603,34 @@ Vue.filter('classify', function(val) { //客户分类
     }
 })
 
+Vue.filter('customerScale', function(val) { //客户规模
+    var val = val;
+    if (val == 0) {
+        return '小型';
+    } else if (val == 1) {
+        return '中型';
+    } else if (val == 2) {
+        return '大型';
+    } else {
+        return '未知';
+    }
+})
+
+Vue.filter('customerNature', function(val) { //客户性质
+    var val = val;
+    if (val == 0) {
+        return '个体户';
+    } else if (val == 1) {
+        return '民企';
+    } else if (val == 2) {
+        return '国企';
+    } else if (val == 3) {
+        return '上市公司';
+    } else {
+        return '未知';
+    }
+})
+
 Vue.filter('enumlist', function(val) { //国家
     var val = val;
     var obj = {
