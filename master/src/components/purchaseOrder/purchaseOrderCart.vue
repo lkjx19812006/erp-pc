@@ -208,9 +208,9 @@ export default {
         },
         createOrder: function() {
             this.param.intentionOfferList = [];
-            this.param.province = this.province.cname;
-            this.param.city = this.city.cname;
-            this.param.district = this.district.cname;
+            this.param.province = this.province.id;
+            this.param.city = this.city.id;
+            this.param.district = this.district.id;
             let goods = this.param.goods;
             for (let i = 0; i < goods.length; i++) {
                 this.param.intentionOfferList.push({
@@ -227,7 +227,7 @@ export default {
     filter: (filter, {}),
     created() {
         this.getProvinceList(this.countryParam);
-        console.log(this.param.goods)
+
     }
 }
 </script>

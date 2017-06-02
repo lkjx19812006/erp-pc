@@ -202,6 +202,10 @@
                                                 type:item.type,
                                                 typeDesc:item.typeDesc,
                                                 classifyDesc:item.classifyDesc,
+                                                scale:item.scale,
+                                                nature:item.nature,
+                                                advance:item.advance,
+                                                capitalReturnDays:item.capitalReturnDays,
                                                 classify:item.classify,
                                                 category:item.category,
                                                 principal:item.principal,
@@ -303,7 +307,7 @@ export default {
                 link: '/customer/',
                 key: 'allCustomerList',
                 name: '',
-                id:'',
+                id: '',
                 phone: '',
                 employeeId: '',
                 employeeName: '',
@@ -586,10 +590,10 @@ export default {
         common('tab', 'table_box', 1);
     },
     filters: {
-        timeFilters:function(mytime){
-           // debugger;
-            return mytime?mytime.substring(0,10):'';
-        }    
+        timeFilters: function(mytime) {
+            // debugger;
+            return mytime ? mytime.substring(0, 10) : '';
+        }
     }
 }
 </script>

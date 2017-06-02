@@ -31,7 +31,7 @@
                                     <tr v-for="item in param.items">
                                         <td>{{item.breedName}}</td>
                                         <td>{{item.quality}}</td>
-                                        <td>{{item.location}}</td>
+                                        <td>{{item.location | province}}</td>
                                         <td>{{item.spec}}</td>
                                         <td>{{item.number}}</td>
                                         <td>{{item.cunit}}</td>
@@ -76,12 +76,15 @@
                                                 </input-select>
                                             </div>
                                         </div>
-                                        <div class="editpage-input col-md-6">
+                                        <div class="editpage-input col-md-6" style="text-align:left">
                                             <label class="editlabel">{{$t('static.origin')}}</label>
                                             <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                                            <div type="text" class="edit-input" v-if="breedParam.id">
+                                            <!-- <div type="text" class="edit-input" v-if="breedParam.id">
                                                 <input-select :prevalue="breedInfo.location" :value.sync="breedInfo.location" :options="initBreedDetail.locals.arr" placeholder="产地" label="name">
                                                 </input-select>
+                                            </div> -->
+                                            <div v-if="breedParam.id">
+                                                <breed-location :param="breedInfo" :show="breedParam" :widparam="'270'"></breed-location>
                                             </div>
                                         </div>
                                         <div class="client-detailInfo  col-md-12">
@@ -108,7 +111,7 @@
                             <h4 style="text-align: left;">客户信息</h4>
                             <div class="client-detailInfo col-md-6 col-xs-12">
                                 <label class="editlabel">客户名称 <span class="system_danger" v-if="$validation.customer.required">请输入客户名称</span></label>
-                                <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customerName}}" @click="searchCustomer(param.customerName,param.customer,param.customerPhone)" v-validate:customer="['required']" />
+                                <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customerName}}" @click="searchCustomer(param.customerName,param.customer,param.customerPhone)" v-validate:customer="['required']" readonly="readonly" />
                             </div>
                             <div class="client-detailInfo  col-md-6 col-xs-12">
                                 <label class="editlabel">客户电话</label>
@@ -123,9 +126,9 @@
                                 <input type="text" class="form-control edit-input" v-model="param.consigneePhone" value="{{param.consigneePhone}}" />
                             </div>
                             <!-- <div class="client-detailInfo  col-md-6 col-xs-12">
-	                        <label class="editlabel">收货地址 <span class="system_danger" v-if="$validation.address.required">必填项</span></label></label>
-	                        <input type="text" class="form-control edit-input" v-model="param.address" value="{{param.address}}" v-validate:address="['required']" />
-	                    </div> -->
+                            <label class="editlabel">收货地址 <span class="system_danger" v-if="$validation.address.required">必填项</span></label></label>
+                            <input type="text" class="form-control edit-input" v-model="param.address" value="{{param.address}}" v-validate:address="['required']" />
+                        </div> -->
                             <div class="client-detailInfo  col-md-6 col-xs-12">
                                 <label class="editlabel">合计总额 <span class="system_danger" v-if="$validation.total.required">必填项</span></label>
                                 </label>
@@ -192,6 +195,7 @@ import pagination from '../pagination'
 import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import searchbreedModel from './breedsearch'
+import breedLocation from '../order/second_order/breedLocation'
 import searchcustomerModel from '../Intention/clientname'
 import {
     initCustomerlist,
@@ -279,6 +283,7 @@ export default {
     components: {
         pagination,
         searchbreedModel,
+        breedLocation,
         vSelect,
         inputSelect,
         searchcustomerModel
@@ -305,7 +310,7 @@ export default {
     },
     methods: {
         selectProvince: function() {
-            console.log('selectProvince');
+
             this.province = '';
             this.city = '';
             this.district = '';
@@ -363,16 +368,20 @@ export default {
         showModifyBreed: function(index) {
             this.breedInfo.status = 2;
             this.updateParam.index = index;
-            this.breedInfo.breedId = this.param.items[index].breedId,
-                this.breedInfo.breedName = this.param.items[index].breedName,
-                this.breedInfo.quality = this.param.items[index].quality,
-                this.breedInfo.location = this.param.items[index].location,
-                this.breedInfo.spec = this.param.items[index].spec,
-                this.breedInfo.number = this.param.items[index].number,
-                this.breedInfo.cunit = this.param.items[index].cunit,
-                this.breedInfo.unit = this.param.items[index].unit,
-                this.breedInfo.description = this.param.items[index].description,
-                this.updateParam.show = true;
+            this.breedInfo.breedId = this.param.items[index].breedId;
+            this.breedInfo.breedName = this.param.items[index].breedName;
+            this.breedInfo.quality = this.param.items[index].quality;
+            this.breedInfo.location = this.param.items[index].location;
+            this.breedInfo.spec = this.param.items[index].spec;
+            this.breedInfo.number = this.param.items[index].number;
+            this.breedInfo.cunit = this.param.items[index].cunit;
+            this.breedInfo.unit = this.param.items[index].unit;
+            this.breedInfo.description = this.param.items[index].description;
+            //编辑时需要再查一次产地
+            this.breedParam.id = this.param.items[index].breedId;
+            this.breedParam.breedName = this.param.items[index].breedName;
+            this.getBreedDetail(this.breedParam);
+            this.updateParam.show = true;
         },
         deleteBreed: function(index) {
             this.param.items.splice(index, 1);
@@ -413,7 +422,7 @@ export default {
             this.param.items[this.param.items.length - 1].cunit = this.breedInfo.cunit.split(',')[1];
             this.param.items[this.param.items.length - 1].unit = this.breedInfo.cunit.split(',')[0];
             /*this.param.items[this.param.items.length-1].sourceType = this.breedInfo.sourceType;*/
-            console.log(this.param.items[this.param.items.length - 1]);
+
             this.breedInfo.status = 0;
             this.addParam.show = false;
         },
@@ -440,29 +449,33 @@ export default {
                     description: '',
                     unit: ''
                 });
+                //新增时将breedParam清空
+                this.breedParam.id = "";
+                this.breedParam.breedName = "";
                 this.addParam.show = true;
             }
 
         },
         confirm: function(param) {
-            this.param.country = this.country.cname;
-            this.param.province = this.province.cname;
-            this.param.city = this.city.cname;
-            this.param.district = this.district.cname;
+            this.param.country = this.country.id;
+            this.param.province = this.province.id;
+            this.param.city = this.city.id;
+            this.param.district = this.district.id;
             this.param.send = false;
-            console.log(this.param);
+
             this.param.callback = this.param.callback;
             this.createSample(this.param);
         }
     },
     events: {
         breed: function(breed) {
-            console.log(breed)
+
             this.breedInfo.breedName = breed.breedName;
             this.breedInfo.breedId = breed.breedId;
             this.breedParam.breedName = breed.breedName;
             this.breedParam.id = breed.breedId;
-            console.log(this.breedParam.id)
+            this.getBreedDetail(this.breedParam);
+
         },
         customer: function(customer) {
             this.param.customerName = customer.customerName;
@@ -481,7 +494,7 @@ export default {
             this.breedParam.breedName = this.param.brredName;
             this.breedParam.id = this.param.breedId;
             this.getBreedDetail(this.breedParam);
-            console.log(this.breedParam)
+
         }
         if (this.param.country) {
             this.countryParam.country = this.param.country;
@@ -493,7 +506,7 @@ export default {
             this.city.cname = this.param.city;
             this.district.cname = this.param.district;
         }
-        console.log(this.param)
+
     }
 }
 </script>

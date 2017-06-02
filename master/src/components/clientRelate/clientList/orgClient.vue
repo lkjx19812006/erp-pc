@@ -205,6 +205,10 @@
                                                 name:item.name,
                                                 type:item.type,
                                                 typeDesc:item.typeDesc,
+                                                scale:item.scale,
+                                                nature:item.nature,
+                                                advance:item.advance,
+                                                capitalReturnDays:item.capitalReturnDays,
                                                 classifyDesc:item.classifyDesc,
                                                 classify:item.classify,
                                                 category:item.category,
@@ -316,7 +320,7 @@ export default {
                 link: '/customer/orgDistributed',
                 key: 'orgCustomerList',
                 name: '',
-                id:'',
+                id: '',
                 phone: '',
                 employeeId: '',
                 employeeName: '',
@@ -622,10 +626,10 @@ export default {
         common('tab', 'table_box', 1);
     },
     filters: {
-        timeFilters:function(mytime){
-           // debugger;
-            return mytime?mytime.substring(0,10):'';
-        }    
+        timeFilters: function(mytime) {
+            // debugger;
+            return mytime ? mytime.substring(0, 10) : '';
+        }
     }
 }
 </script>
