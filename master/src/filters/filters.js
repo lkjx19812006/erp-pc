@@ -1092,11 +1092,9 @@ Vue.filter('Unit', function(val) { //国际意向单位
     if (val == 114) {
         return '40高柜（GP40HQ）';
     }
-    if (val == 10000) {
-        return '未设置（Not set）';
-    } else {
-        return val;
-    }
+
+    return val;
+
 
 })
 

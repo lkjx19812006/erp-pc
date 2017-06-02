@@ -88,7 +88,7 @@
                                     <td>{{item.number}}</td>
                                     <td>{{item.price}}</td>
                                     <td>{{item.unit | Unit}}</td>
-                                    <td>{{item.location}}</td>
+                                    <td>{{item.location | province}}</td>
                                     <td>{{item.spec}}</td>
                                     <td v-if="intentionInfo.status==0" @click="showModifyIntention($index)"><a>{{$t('static.edit')}}</a></td>
                                     <td v-else>{{$t('static.edit')}}</td>
@@ -128,7 +128,7 @@
                                         </div>
                                     </div>
                                     <!-- 价格  -->
-                                   <!--  <div class="editpage-input col-md-6">
+                                    <!--  <div class="editpage-input col-md-6">
                                        <label class="editlabel">{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
                                        <div style="clear:both;height:36px;">
                                            <div class="left" style="width:45%;">
@@ -147,14 +147,12 @@
                                     </div> -->
                                     <!-- 期望价格 -->
                                     <div class="editpage-input col-md-6">
-                                        <label class="editlabel">价格
-                                            <span class="system_danger" v-if="$inner.price.required">采购价</span>
+                                        <label class="editlabel">中标价格
                                             <span class="system_danger" v-if="$inner.price.min">价格不能小于0</span>
                                         </label>
                                         <input type="number" v-model="intentionInfo.price" class="form-control edit-input" v-validate:price="{
-                                            required:true,
                                             min:0
-                                            }"/>
+                                            }" />
                                     </div>
                                     <!-- 规格 -->
                                     <div class="editpage-input col-md-6">
@@ -168,10 +166,9 @@
                                     <!-- 产地 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.origin')}}</label>
-                                        <input type="text" v-show="!intentionInfo.breedId" v-model="intentionInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                                        <div type="text" class="edit-input" v-if="intentionInfo.breedId">
-                                            <input-select :prevalue="intentionInfo.location" :value.sync="intentionInfo.location" :options="initBreedDetail.locals.arr" placeholder="产地/Origin" label="name">
-                                            </input-select>
+                                        <input type="text" v-show="!breedParam.id" v-model="intentionInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                                        <div v-if="breedParam.id">
+                                            <breed-location :param="intentionInfo" :show="breedParam" :widparam="'270'"></breed-location>
                                         </div>
                                     </div>
                                     <div class="col-md-12" style="margin-top:10px;text-align:right">
@@ -207,6 +204,7 @@ import searchbreedModel from '../Intention/breedsearch'
 import consigneeModel from '../clientRelate/addressSearch'
 import searchemgModel from '../order/second_order/allEmployee'
 import supplierDialog from '../order/second_order/selectAllSupplier.vue'
+import breedLocation from '../order/second_order/breedLocation'
 import {
     initCountrylist,
     initProvince,
@@ -236,6 +234,7 @@ export default {
         vSelect,
         inputSelect,
         pressImage,
+        breedLocation
 
     },
     props: ['param'],
@@ -374,6 +373,9 @@ export default {
                     price: '',
 
                 });
+                //新增时将breedParam清空
+                this.breedParam.id = "";
+                this.breedParam.breedName = "";
                 this.addParam.show = true;
             }
 
@@ -415,7 +417,10 @@ export default {
             this.intentionInfo.number = this.param.intentionList[index].number;
             this.intentionInfo.unit = this.param.intentionList[index].unit;
             this.intentionInfo.price = this.param.intentionList[index].price;
-
+            //编辑时需要再查一次产地
+            this.breedParam.id = this.param.intentionList[index].breedId;
+            this.breedParam.breedName = this.param.intentionList[index].breedName;
+            this.getBreedDetail(this.breedParam);
             this.updateParam.show = true;
 
         },
@@ -493,6 +498,7 @@ export default {
                 this.breedParam.breedName = breed.breedName;
                 this.breedParam.id = breed.breedId;
             }
+            this.getBreedDetail(this.breedParam);
         }
 
     },

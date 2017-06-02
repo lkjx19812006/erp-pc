@@ -100,7 +100,7 @@
                                     <td>{{item.number}}</td>
                                     <td>{{item.price}}</td>
                                     <td>{{item.unit | Unit}}</td>
-                                    <td>{{item.location}}</td>
+                                    <td>{{item.location | province}}</td>
                                     <td>{{item.spec}}</td>
                                     <td>{{item.quality}}</td>
                                     <td>{{item.mainStandard}}</td>
@@ -166,9 +166,12 @@
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.origin')}}</label>
                                         <input type="text" v-show="!breedParam.id" v-model="intentionInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                                        <div type="text" class="edit-input" v-if="breedParam.id">
+                                        <!-- <div type="text" class="edit-input" v-if="breedParam.id">
                                             <input-select :prevalue="intentionInfo.location" :value.sync="intentionInfo.location" :options="initBreedDetail.locals.arr" placeholder="产地/Origin" label="name">
                                             </input-select>
+                                        </div> -->
+                                        <div v-if="breedParam.id">
+                                            <breed-location :param="intentionInfo" :show="breedParam" :widparam="'270'"></breed-location>
                                         </div>
                                     </div>
                                     <!-- 质量要求 -->
@@ -178,14 +181,12 @@
                                     </div>
                                     <!-- 期望价格 -->
                                     <div class="editpage-input col-md-6">
-                                        <label class="editlabel">价格
-                                            <span class="system_danger" v-if="$inner.price.required">采购价</span>
+                                        <label class="editlabel">中标价格
                                             <span class="system_danger" v-if="$inner.price.min">价格不能小于0</span>
                                         </label>
                                         <input type="number" v-model="intentionInfo.price" class="form-control edit-input" v-validate:price="{
-                                            required:true,
                                             min:0
-                                            }"/>
+                                            }" />
                                     </div>
                                     <!-- 竞争性指标 -->
                                     <div class="editpage-input col-md-6">
@@ -226,6 +227,7 @@ import searchbreedModel from '../Intention/breedsearch'
 import consigneeModel from '../clientRelate/addressSearch'
 import searchemgModel from '../order/second_order/allEmployee'
 import supplierDialog from '../order/second_order/selectAllSupplier.vue'
+import breedLocation from '../order/second_order/breedLocation'
 import {
     initCountrylist,
     initProvince,
@@ -252,6 +254,7 @@ export default {
     components: {
         searchcustomerModel,
         searchbreedModel,
+        breedLocation,
         vSelect,
         inputSelect,
         pressImage,
@@ -398,6 +401,9 @@ export default {
                     quality: '',
                     mainStandard: ''
                 });
+                //新增时将breedParam清空
+                this.breedParam.id = "";
+                this.breedParam.breedName = "";
                 this.addParam.show = true;
             }
 
@@ -443,7 +449,10 @@ export default {
             this.intentionInfo.price = this.param.intentionList[index].price;
             this.intentionInfo.quality = this.param.intentionList[index].quality;
             this.intentionInfo.mainStandard = this.param.intentionList[index].mainStandard;
-
+            //编辑时需要再查一次产地
+            this.breedParam.id = this.param.intentionList[index].breedId;
+            this.breedParam.breedName = this.param.intentionList[index].breedName;
+            this.getBreedDetail(this.breedParam);
             this.updateParam.show = true;
 
         },
@@ -506,6 +515,7 @@ export default {
                 this.breedParam.breedName = breed.breedName;
                 this.breedParam.id = breed.breedId;
             }
+            this.getBreedDetail(this.breedParam);
         },
         customer: function(customer) {
             this.param.customerId = customer.customerId;

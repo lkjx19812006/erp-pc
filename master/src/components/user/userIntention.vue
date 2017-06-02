@@ -137,10 +137,6 @@
                                     <label class="editlabel">产地<span class="system_danger" v-if="$validation.location.required">产地不能为空</span></label>
                                     <input type="text" v-model="param.location" v-show="false" class="form-control edit-input" v-validate:location="{required:true}" />
                                     <input type="text" v-model="param.location" v-show="!breedParam.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                                    <!-- <div type="text" class="edit-input" v-if="breedParam.id">
-                                        <input-select :prevalue="param.location" :value.sync="param.location" :options="initBreedDetail.locals.arr" placeholder="产地" label="name">
-                                        </input-select>
-                                    </div> -->
                                     <div v-if="breedParam.id">
                                         <breed-location :param="param" :show="breedParam" :widparam="'270'"></breed-location>
                                     </div>
