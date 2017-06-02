@@ -265,23 +265,50 @@ const state = {
         "orgId": uncompile(getCookie('orgId')),
         "time": getCookie('time'),
         "privilege": getCookie('privilege'),
-        "safeCode":getCookie('safeCode')
+        "safeCode": getCookie('safeCode')
     },
     systemBaseList: {
-        enumlist: [
-            { "id": 0, "code": "022112", "type": "1", "desc": "123456789011", "status": "0" },
-            { "id": 1, "code": "1112", "type": "2", "desc": "1234567890", "status": "1" },
-            { "id": 2, "code": "34445", "type": "3", "desc": "1234567890", "status": "0" },
-            { "id": 3, "code": "45555", "type": "2", "desc": "1234567890", "status": "1" },
-            { "id": 4, "code": "4fff5", "type": "5", "desc": "1234567890", "status": "1" }
-        ],
+        enumlist: [],
         countryList: [],
         cityList: [],
         districtList: [],
-        locationlist: [
-            { "twoNumber": 0, "cname": "中国1", "level": "2122", "icon": "1111", "iso": "22222" },
-            { "twoNumber": 1, "cname": "上海1", "level": "222", "icon": "1111", "iso": "22222" },
-            { "twoNumber": 2, "cname": "河南1", "level": "222", "icon": "1111", "iso": "22222" }
+        locationlist: [],
+        CNProvince: [
+            { "id": "247", "cname": "北京" },
+            { "id": "248", "cname": "天津" },
+            { "id": "249", "cname": "河北" },
+            { "id": "250", "cname": "山西" },
+            { "id": "251", "cname": "内蒙古" },
+            { "id": "252", "cname": "辽宁" },
+            { "id": "253", "cname": "吉林" },
+            { "id": "254", "cname": "黑龙江" },
+            { "id": "255", "cname": "上海" },
+            { "id": "256", "cname": "江苏" },
+            { "id": "257", "cname": "浙江" },
+            { "id": "258", "cname": "安徽" },
+            { "id": "259", "cname": "福建" },
+            { "id": "260", "cname": "江西" },
+            { "id": "261", "cname": "山东" },
+            { "id": "262", "cname": "河南" },
+            { "id": "263", "cname": "湖北" },
+            { "id": "264", "cname": "湖南" },
+            { "id": "265", "cname": "广东" },
+            { "id": "266", "cname": "广西" },
+            { "id": "267", "cname": "海南" },
+            { "id": "268", "cname": "重庆" },
+            { "id": "269", "cname": "四川" },
+            { "id": "270", "cname": "贵州" },
+            { "id": "271", "cname": "云南" },
+            { "id": "272", "cname": "西藏" },
+            { "id": "273", "cname": "陕西" },
+            { "id": "274", "cname": "甘肃" },
+            { "id": "275", "cname": "青海" },
+            { "id": "276", "cname": "宁夏" },
+            { "id": "277", "cname": "新疆" },
+            { "id": "278", "cname": "台湾" },
+            { "id": "279", "cname": "香港" },
+            { "id": "280", "cname": "澳门" },
+
         ],
     },
 
@@ -679,16 +706,16 @@ const state = {
         msgList: [],
         preSellMsgList: [],
         intentionDetail: {
-            msgs:{
-                arr:[]
+            msgs: {
+                arr: []
             },
-            trackings:{
-                arr:[]
+            trackings: {
+                arr: []
             },
-            importQualityPics:[],
-            testReportPics:[],
-            labels:{
-                arr:[]
+            importQualityPics: [],
+            testReportPics: [],
+            labels: {
+                arr: []
             }
         },
         intentionOfferDetail: {
@@ -1482,12 +1509,12 @@ const mutations = {
 
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
-        if(data.sign=='intentionDetail'){
+        if (data.sign == 'intentionDetail') {
             state.basicBaseList.intentionDetail.labels.splice(data.sub, 1);
-        }else{
+        } else {
             state[data.headline][data.key].arr.splice(data.sub, 1);
         }
-               
+
     },
     [DELETE_SHOW_STATUE](state, data) { //删除枚举
         state.systemBaseList.enumlist.splice(data.sub, 1);

@@ -7,7 +7,7 @@
         <button class="btn btn-defalut" @click="addNew()" v-if="!addData.ifShow" :disabled="!show.id">新增</button>
         <button class="btn btn-defalut" @click="confirm()" v-else :disabled="!show.id || !provinceParam.id">提交</button>
         <div type="text" class="edit-input" v-show="addData.ifShow">
-            <v-select :debounce="250" :value.sync="provinceParam" :options="initProvince" placeholder="省/Province" label="cname">
+            <v-select :debounce="250" :value.sync="provinceParam" :options="initCNProvince" placeholder="省/Province" label="cname">
             </v-select>
         </div>
     </div>
@@ -15,10 +15,11 @@
 <script>
 import {
     initBreedDetail,
-    initProvince
+    initCNProvince
 } from '../../../vuex/getters'
 import {
-    addBreedLocation
+    addBreedLocation,
+
 } from '../../../vuex/actions'
 import vSelect from '../../tools/vueSelect/components/Select'
 export default {
@@ -34,17 +35,20 @@ export default {
             provinceParam: {
                 id: "",
                 cname: ""
-            }
+            },
+
+
         }
     },
     props: ['param', 'show', 'widparam'],
     vuex: {
         getters: {
             initBreedDetail,
-            initProvince
+            initCNProvince
         },
         actions: {
-            addBreedLocation
+            addBreedLocation,
+
         }
     },
     methods: {
@@ -56,6 +60,7 @@ export default {
             this.addData.ifShow = false
         }
     }
+
 }
 </script>
 <style scoped>

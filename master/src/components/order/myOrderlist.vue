@@ -196,7 +196,7 @@
                                 <Poptip placement="top" trigger="hover">
                                     <span>{{item.consigneeAddr | textDisplay '5'}}</span>
                                     <div class="api" slot="content">
-                                        {{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}
+                                        {{item.countryName}} {{item.provinceName}} {{item.cityName}} {{item.districtName}} {{item.consigneeAddr}}
                                     </div>
                                 </Poptip>
                             </td>
@@ -507,8 +507,8 @@ export default {
                 consignerName: '', //发货人名
                 zipCode: '',
                 country: {
-                    name:'中国',
-                    id:'7'
+                    name: '中国',
+                    id: '7'
                 },
                 province: '',
                 city: '',

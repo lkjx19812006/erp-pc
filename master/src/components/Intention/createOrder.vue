@@ -39,7 +39,7 @@
                                     <td>{{param.goods[0].price}}</td>
                                     <td>{{param.goods[0].costPrice}}</td>
                                     <td>{{param.goods[0].quality}}</td>
-                                    <td>{{param.goods[0].location}}</td>
+                                    <td>{{param.goods[0].location | province}}</td>
                                     <td>{{param.goods[0].spec}}</td>
                                     <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed()">
                                         <a>{{$t('static.edit')}}</a>
@@ -55,6 +55,7 @@
                                         <label class="editlabel">{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
                                         <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" readonly="true" />
                                     </div>
+                                    <!-- 数量和单位 -->
                                     <div class="editpage-input col-md-6">
                                         <div style="clear:both;height:36px;">
                                             <div class="left" style="width:45%;">
@@ -63,12 +64,13 @@
                                             </div>
                                             <div class="left" style="width:45%;">
                                                 <label class="editlabel">{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
-                                                <select v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}">
-                                                    <option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}</option>
+                                                <select v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}">
+                                                    <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- 价格和单位 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.price')}}<span class="system_danger" v-if="$inner.price.required">{{$t('static.required')}}</span></label>
                                         <div style="clear:both;height:36px;">
@@ -76,8 +78,8 @@
                                                 <input type="number" v-model="breedInfo.price" class="form-control edit-input" v-validate:price="{required:true}" />
                                             </div>
                                             <div class="left" style="width:45%;">
-                                                <select class="form-control edit-input" v-model="breedInfo.cunit" disabled="true">
-                                                    <option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}</option>
+                                                <select class="form-control edit-input" v-model="breedInfo.unit" disabled="true">
+                                                    <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -89,8 +91,8 @@
                                                 <input type="number" v-model="breedInfo.costPrice" class="form-control edit-input" v-validate:cost="{required:true}" />
                                             </div>
                                             <div class="left" style="width:45%;">
-                                                <select class="form-control edit-input" v-model="breedInfo.cunit" disabled="true">
-                                                    <option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}({{item.ename}})</option>
+                                                <select class="form-control edit-input" v-model="breedInfo.unit" disabled="true">
+                                                    <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}({{item.ename}})</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -105,7 +107,7 @@
                                     </div>
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.origin')}}</label>
-                                        <input type="text" v-model="breedInfo.location" class="form-control edit-input" />
+                                        <!-- <input type="text" v-model="breedInfo.location" class="form-control edit-input" /> -->
                                         <breed-location :param="breedInfo" :show="breedParam" :widparam="'270'"></breed-location>
                                     </div>
                                     <div class="pull-right col-md-6" style="margin-top:10px;text-align:right">
@@ -294,7 +296,6 @@ export default {
                 location: '',
                 spec: '',
                 number: '',
-                cunit: '',
                 unit: '',
                 costPrice: '',
                 price: '',
@@ -443,9 +444,7 @@ export default {
                 this.breedInfo.location = this.param.goods[0].location,
                 this.breedInfo.spec = this.param.goods[0].spec,
                 this.breedInfo.number = this.param.goods[0].number,
-                this.breedInfo.cunit = this.param.goods[0].cunit,
                 this.breedInfo.unit = this.param.goods[0].unit,
-                this.breedInfo.cunit = this.param.goods[0].unit,
                 this.breedInfo.price = this.param.goods[0].price,
                 this.breedInfo.costPrice = this.param.goods[0].costPrice,
                 this.breedInfo.title = this.param.goods[0].title,
@@ -462,7 +461,7 @@ export default {
                 this.param.goods[0].location = this.breedInfo.location,
                 this.param.goods[0].spec = this.breedInfo.spec,
                 this.param.goods[0].number = this.breedInfo.number,
-                this.param.goods[0].unit = this.breedInfo.cunit.split(',')[0],
+                this.param.goods[0].unit = this.breedInfo.unit,
                 this.param.goods[0].price = this.breedInfo.price,
                 this.param.goods[0].costPrice = this.breedInfo.costPrice,
                 this.param.goods[0].title = this.breedInfo.breedName,
@@ -480,10 +479,10 @@ export default {
             this.param.cost = (parseFloat(this.param.goods[0].costPrice * this.param.goods[0].number) * 100) / 100;
         },
         confirm: function() {
-            this.param.country = this.country.cname;
-            this.param.province = this.province.cname;
-            this.param.city = this.city.cname;
-            this.param.district = this.district.cname;
+            this.param.country = this.country.id;
+            this.param.province = this.province.id;
+            this.param.city = this.city.id;
+            this.param.district = this.district.id;
             this.createOrder(this.param);
         },
         selectEmployee: function(id, name) {
@@ -512,13 +511,11 @@ export default {
     },
     events: {
         selectEmpOrOrg: function(employee) {
-            console.log(employee)
             this.employeeParam.consigner = employee.employeeId;
             this.employeeParam.consignerName = employee.employeeName;
             this.param.consigner = this.employeeParam.consigner;
         },
         supplier: function(item) {
-            console.log(item)
             this.supplierParam.customer = item.customer;
             this.supplierParam.customerName = item.customerName;
             this.supplierParam.supplierName = item.customerName;

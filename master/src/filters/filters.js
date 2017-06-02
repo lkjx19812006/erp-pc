@@ -1282,134 +1282,134 @@ Vue.filter('intentionType', function(type, especial, preSell) { //意向类型
 
 });
 
-Vue.filter("qaFilter",function(data){
-    if(data=="-1"){
+Vue.filter("qaFilter", function(data) {
+    if (data == "-1") {
         return "未知"
     }
-    if(data=="0"){
+    if (data == "0") {
         return "不合格"
     }
-    if(data=='1'){
+    if (data == '1') {
         return "合格"
     }
 })
 
-Vue.filter("isDeal",function(data){
-    if(data=="-1"){
+Vue.filter("isDeal", function(data) {
+    if (data == "-1") {
         return "未知"
     }
-    if(data=="0"){
+    if (data == "0") {
         return "未成交"
     }
-    if(data=='1'){
+    if (data == '1') {
         return "已成交"
     }
 })
 
-Vue.filter('province',function(id){
-    if(id==-1){
+Vue.filter('province', function(id) { //中国的省
+    if (id == -1) {
         return '未知'
     }
-    if(id==247){
+    if (id == 247) {
         return '北京'
     }
-    if(id==248){
+    if (id == 248) {
         return '天津'
     }
-    if(id==249){
-        return '河北'    
+    if (id == 249) {
+        return '河北'
     }
-    if(id==250){
+    if (id == 250) {
         return '山西'
     }
-    if(id==251){
+    if (id == 251) {
         return '内蒙古'
     }
-    if(id==252){
+    if (id == 252) {
         return '辽宁'
     }
-    if(id==253){
+    if (id == 253) {
         return '吉林'
     }
-    if(id==254){
+    if (id == 254) {
         return '黑龙江'
     }
-    if(id==255){
+    if (id == 255) {
         return '上海'
     }
-    if(id==256){
+    if (id == 256) {
         return '江苏'
     }
-    if(id==257){
+    if (id == 257) {
         return '浙江'
     }
-    if(id==258){
+    if (id == 258) {
         return '安徽'
     }
-    if(id==259){
+    if (id == 259) {
         return '福建'
     }
-    if(id==260){
+    if (id == 260) {
         return '江西'
     }
-    if(id==261){
+    if (id == 261) {
         return '山东'
     }
-    if(id==262){
+    if (id == 262) {
         return '河南'
     }
-    if(id==263){
+    if (id == 263) {
         return '湖北'
     }
-    if(id==264){
+    if (id == 264) {
         return '湖南'
     }
-    if(id==265){
+    if (id == 265) {
         return '广东'
     }
-    if(id==266){
+    if (id == 266) {
         return '广西'
     }
-    if(id==267){
+    if (id == 267) {
         return '海南'
     }
-    if(id==268){
+    if (id == 268) {
         return '重庆'
     }
-    if(id==269){
+    if (id == 269) {
         return '四川'
     }
-    if(id==270){
+    if (id == 270) {
         return '贵州'
     }
-    if(id==271){
+    if (id == 271) {
         return '云南'
     }
-    if(id==272){
+    if (id == 272) {
         return '西藏'
     }
-    if(id==273){
+    if (id == 273) {
         return '陕西'
     }
-    if(id==274){
+    if (id == 274) {
         return '甘肃'
     }
-    if(id==275){
+    if (id == 275) {
         return '青海'
     }
-    if(id==276){
+    if (id == 276) {
         return '宁夏'
     }
-    if(id==277){
+    if (id == 277) {
         return '新疆'
     }
-    if(id==278){
+    if (id == 278) {
         return '台湾'
     }
-    if(id==279){
+    if (id == 279) {
         return '香港'
     }
-    if(id==280){
+    if (id == 280) {
         return '澳门'
     }
 

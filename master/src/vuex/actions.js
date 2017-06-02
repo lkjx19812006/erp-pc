@@ -11392,7 +11392,7 @@ export const setLadderPrice = ({ dispatch }, param) => { //删除库存信息
 export const setQaStandard = ({ dispatch }, param) => { //设置药典是否合格
     var body = {
         id: param.ids,
-        qa_standard:param.qa_standard
+        qa_standard: param.qa_standard
     }
     Vue.http({
         method: 'POST',
@@ -11414,7 +11414,7 @@ export const setQaStandard = ({ dispatch }, param) => { //设置药典是否合�
 export const setQaSelf = ({ dispatch }, param) => { //设置内控是否合格
     var body = {
         id: param.ids,
-        qa_self:param.qa_self
+        qa_self: param.qa_self
     }
     Vue.http({
         method: 'POST',
@@ -11436,7 +11436,7 @@ export const setQaSelf = ({ dispatch }, param) => { //设置内控是否合格
 export const setSampleTraded = ({ dispatch }, param) => { //设置样品是否转为大货订单
     var body = {
         id: param.ids,
-        sample_traded:param.sample_traded
+        sample_traded: param.sample_traded
     }
     Vue.http({
         method: 'POST',
@@ -11455,10 +11455,10 @@ export const setSampleTraded = ({ dispatch }, param) => { //设置样品是否�
     });
 }
 
-export const addBreedLocation = ({ dispatch }, param,breedId) => { //新增品种的产地
+export const addBreedLocation = ({ dispatch }, param, breedId) => { //新增品种的产地
     var body = {
         locationId: param,
-        breedId:breedId
+        breedId: breedId
     }
     Vue.http({
         method: 'POST',
@@ -11471,7 +11471,8 @@ export const addBreedLocation = ({ dispatch }, param,breedId) => { //新增品�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        dispatch('ADD_BREED_LOCAL',res.json().result)
+        console.log(res.json().result)
+        dispatch('ADD_BREED_LOCAL', res.json().result)
     }, (res) => {
         console.log('fail');
     });
