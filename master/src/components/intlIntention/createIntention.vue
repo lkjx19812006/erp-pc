@@ -637,7 +637,7 @@ export default {
             /*this.breedParam.breedName = breed.breedName;*/
             this.breedParam.id = breed.breedId;
             //this.breedParam.loading=true;
-            //this.getBreedDetail(this.breedParam);
+            this.getBreedDetail(this.breedParam);
         },
         customer:function(customer){
             console.log(customer);

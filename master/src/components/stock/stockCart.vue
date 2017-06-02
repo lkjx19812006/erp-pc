@@ -223,9 +223,9 @@ export default {
         },
         createOrder: function() {
             this.param.stockCartList = [];
-            this.param.province = this.province.cname;
-            this.param.city = this.city.cname;
-            this.param.district = this.district.cname;
+            this.param.province = this.province.id;
+            this.param.city = this.city.id;
+            this.param.district = this.district.id;
             let goods = this.param.goods;
             for (let i = 0; i < goods.length; i++) {
                 this.param.stockCartList.push({                    
