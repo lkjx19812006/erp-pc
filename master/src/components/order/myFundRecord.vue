@@ -148,7 +148,7 @@
                                         url:'/fund/proceedsConfirm',
                                         titles:this.$t('static.confirm_income'),
                                         link:paymentConfirm
-                                        })">{{$t('static.confirm_income')}}
+                                        })">{{$t('static.confirm_accept')}}
                                 </button>
                                 <!-- 编辑 -->
                                 <a class="operate" v-if="item.validate==0" @click="editClick({

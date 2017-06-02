@@ -19,10 +19,14 @@
 	                    <img src="/static/images/search.png" height="24" width="24">
 	                    <input type="text" class="search_input" v-model="loadParam.province" placeholder="支行所在省"  @keyup.enter="employNameSearch()">
 	                </div>
-	                 <div class="name_search clearfix">
+	                <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
 	                    <input type="text" class="search_input" v-model="loadParam.city" placeholder="支行所在市"  @keyup.enter="employNameSearch()">
 	                </div>
+                    <div class="name_search clearfix">
+                        <img src="/static/images/search.png" height="24" width="24">
+                        <input type="text" class="search_input" v-model="loadParam.district" placeholder="支行所在区"  @keyup.enter="employNameSearch()">
+                    </div>
 	                <button class="new_btn" @click="employNameSearch()">{{$t('static.search')}}</button>
 	                <button class="new_btn transfer" @click="reset()">{{$t('static.clear_all')}}</button>
 	            </div>
@@ -33,16 +37,18 @@
 	                        <th>银行支行名称</th>
 	                        <th>{{$t('static.province')}}</th>
                             <th>{{$t('static.city')}}</th>
+                            <th>{{$t('static.area')}}</th>
 	                    </tr>
 	                </thead>
 	                <tbody>
 	                    <tr v-for="item in initBankBranchList" @click="serviceselected($index,item.id,item.subName)"> 
 	                    	<td>
-	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   ></label>
+	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"></label>
 	                        </td>
 	                        <td>{{item.subName}}</td>
 	                        <td>{{item.province}}</td>
                             <td>{{item.city}}</td>
+                            <td>{{item.district}}</td>
 	                    </tr>
 	                </tbody>
 	            </table>
@@ -74,6 +80,7 @@ export default{
                 name:this.param.name,
                 province:'',
                 city:'',
+                district:'',
                 total:0
             },
 		}
@@ -110,9 +117,10 @@ export default{
             this.getBankBranchList(this.loadParam);
         },
         reset:function(){
-        	this.loadParam.name='';
+        	//this.loadParam.name='';
             this.loadParam.province='';
             this.loadParam.city='';
+            this.loadParam.district='';
             this.getBankBranchList(this.loadParam);
         }
 	},
@@ -124,7 +132,6 @@ export default{
     },
 	created(){
 		this.getBankBranchList(this.loadParam);
-		console.log(this.param)
 	}
 }
 </script>
@@ -214,5 +221,8 @@ export default{
 }
 table{
 	display: table;
+}
+.name_search{
+    margin-right:0;
 }
 </style>

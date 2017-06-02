@@ -72,6 +72,10 @@
                                     <ul class="clearfix" style="font-size: 14px;padding:5px 0">
                                         <mg-label :title="$t('static.name')">{{initClientDetail.name}}</mg-label>
                                         <mg-label :title="$t('static.type')">{{initClientDetail.type |customerType}}</mg-label>
+                                        <mg-label :title="$t('static.client_scale')">{{initClientDetail.scale |customerScale}}</mg-label>
+                                        <mg-label :title="$t('static.client_nature')">{{initClientDetail.nature |customerNature}}</mg-label>
+                                        <mg-label :title="$t('static.pre_payment')">{{initClientDetail.advance}}</mg-label>
+                                        <mg-label :title="$t('static.capital_return_days')">{{initClientDetail.capitalReturnDays}}</mg-label>
                                         <mg-label :title="$t('static.whether_supplier')" v-if="initClientDetail.supplier==0">{{$t('static.no')}}</mg-label>
                                         <mg-label :title="$t('static.whether_supplier')" v-if="initClientDetail.supplier==1">{{$t('static.yes')}}</mg-label>
                                         <mg-label :title="$t('static.classification')">{{initClientDetail.classify | classify}}</mg-label>
@@ -851,34 +855,34 @@
                                         </div>
                                     </div>
                                 </div>
-                            <!-- 划转记录 -->
-                            <div class="panel panel-default" v-cloak>
-                                <div class="panel-heading">
-                                    <h4 class="panel-title clearfix"  @click="showTransfer()">
+                                <!-- 划转记录 -->
+                                <div class="panel panel-default" v-cloak>
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title clearfix" @click="showTransfer()">
                                         <img class="pull-left" src="/static/images/remark.png" height="27" width="27"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                             划转记录（{{transferData.list.length}}）
                                         </a>
                                     </h4>
-                                </div>
-                                <div class="panel-collapse" v-show="transferData.show&&transferData.list.length!=0">
-                                    <div class="panel-body panel-set">
-                                        <table class="table contactSet">
-                                            <thead>
-                                                <th>划转时间</th>
-                                                <th>划转到</th>
-                                                <th>备注</th>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="item in transferData.list">
-                                                    <td>{{item.ctime}}</td>
-                                                    <td>{{item.employeeName}}</td>
-                                                    <td>{{item.remark}}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
                                     </div>
-                                </div>
+                                    <div class="panel-collapse" v-show="transferData.show&&transferData.list.length!=0">
+                                        <div class="panel-body panel-set">
+                                            <table class="table contactSet">
+                                                <thead>
+                                                    <th>划转时间</th>
+                                                    <th>划转到</th>
+                                                    <th>备注</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="item in transferData.list">
+                                                        <td>{{item.ctime}}</td>
+                                                        <td>{{item.employeeName}}</td>
+                                                        <td>{{item.remark}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </article>
@@ -1023,9 +1027,9 @@ export default {
             orderParam: {
                 show: false
             },
-            transferData:{
-                show:false,
-                list:[]
+            transferData: {
+                show: false,
+                list: []
             }
         }
     },
@@ -1062,7 +1066,7 @@ export default {
             }
             this.$store.state.table.clientDetail[param.crete].show = !this.$store.state.table.clientDetail[param.crete].show;
         },
-        showTransfer:function(){
+        showTransfer: function() {
             this.transferData.show = !this.transferData.show
         },
         clickBig: function(img) {
@@ -1273,7 +1277,7 @@ export default {
     },
     created() {
         this.getClientDetail(this.param);
-        this.getCustomerTransfer(this.param,this.transferData)
+        this.getCustomerTransfer(this.param, this.transferData)
     }
 }
 </script>
