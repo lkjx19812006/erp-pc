@@ -45,10 +45,8 @@
 
 			},
 			confirm:function(){
-				console.log(this.initBreedDetail)
 				this.addBreedLocation(this.param.province.id,this.show.id)
 				this.addData.ifShow= false
-				console.log(this.initBreedDetail)
 			}
 		}
 	}

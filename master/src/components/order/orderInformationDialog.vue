@@ -158,7 +158,7 @@
                                     <td>{{item.quality}}</td>
                                     <td>{{item.number}}</td>
                                     <td>{{item.spec | specFilter_a}}</td>
-                                    <td>{{item.locationName}}</td>
+                                    <td>{{item.location | province}}</td>
                                     <td v-show="false">{{item.orderId}}</td>
                                     <td v-if="breedInfo.status==0" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
                                     <td v-else>{{$t('static.edit')}}</td>

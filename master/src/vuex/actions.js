@@ -11462,7 +11462,6 @@ export const addBreedLocation = ({ dispatch }, param,breedId) => { //新增品�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log(res.json().result)
         dispatch('ADD_BREED_LOCAL',res.json().result)
     }, (res) => {
         console.log('fail');

@@ -192,7 +192,7 @@
                                     <td>{{item.quality}}</td>
                                     <td>{{item.number}}</td>
                                     <td>{{item.spec}}</td>
-                                    <td>{{item.location}}</td>
+                                    <td>{{item.location | province}}</td>
                                     <td v-if="breedInfo.status==0" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
                                     <td v-else>{{$t('static.edit')}}</td>
                                     <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
