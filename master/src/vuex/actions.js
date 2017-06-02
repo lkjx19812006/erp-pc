@@ -4675,7 +4675,6 @@ export const getBreedData = ({ dispatch }, param) => { //药材
     });
 }
 export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情(根据ID或者根据name)
-
     var url = apiUrl.breedList;
     if (param.id) {
         url += "/details/" + param.id;
@@ -6990,7 +6989,7 @@ export const createOrderByStock = ({ dispatch }, param) => { //库存列表页�
         console.log("success");
         param.show = false;
         if (param.callback) {
-            param.callback(res.json().msg + "，稍后将跳转到我的订单页面");
+            param.callback(res.json().msg );
         }
 
     }, (res) => {

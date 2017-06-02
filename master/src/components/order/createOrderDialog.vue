@@ -303,7 +303,7 @@
                                         <label class="editlabel">发货地 <span class="jinggao" v-if="$inner.lcoals.required">{{$t('static.required')}}</span> </label>
                                         <input type="text" v-show="false" v-model="breedInfo.provinceId" v-validate:lcoals="{required:true}" />
                                         <div type="text" class="edit-input">
-                                            <v-select :debounce="250" :value.sync="breedInfo.provinceId" :options="initProvince" placeholder="省/Province" label="cname">
+                                            <v-select :debounce="250" :value.sync="breedInfo.provinceId" :options="initCNProvince" placeholder="省/Province" label="cname">
                                             </v-select>
                                         </div>
                                     </div>
@@ -397,7 +397,8 @@ import {
     initCurrencylist,
     initUnitlist,
     initEmployeeList,
-    initLogin
+    initLogin,
+    initCNProvince
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -542,7 +543,8 @@ export default {
             initCurrencylist,
             initUnitlist,
             initEmployeeList,
-            initLogin
+            initLogin,
+            initCNProvince
         },
         actions: {
             getCountryList,
@@ -753,6 +755,8 @@ export default {
             this.breedInfo.price = this.param.goods[index].price;
             this.breedInfo.costPrice = this.param.goods[index].costPrice;
             this.breedInfo.sourceType = this.param.goods[index].sourceType;
+            this.breedParam.id = this.breedInfo.breedId 
+            this.getBreedDetail(this.breedParam)
             this.updateParam.show = true;
             this.altogether -= parseFloat(this.breedInfo.number) * parseFloat(this.breedInfo.price);
             this.costmoney -= parseFloat(this.breedInfo.number) * parseFloat(this.breedInfo.costPrice);
@@ -771,6 +775,7 @@ export default {
                 this.breedInfo.price = '';
                 this.breedInfo.provinceId = '';
                 this.breedInfo.costPrice = 0;
+                this.breedParam.id=''
                 if (this.param.type == 0) {
                     this.breedInfo.costPrice = 0;
                 }

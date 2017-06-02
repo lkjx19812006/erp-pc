@@ -274,7 +274,7 @@
                                         <label class="editlabel">发货地 <span class="jinggao" v-if="$inner.lcoals.required">{{$t('static.required')}}</span> </label>
                                         <input type="text" v-show="false" v-model="breedInfo.provinceId" v-validate:lcoals="{required:true}"/>                     
                                         <div  type="text" class="edit-input">
-                                            <v-select :debounce="250" :value.sync="breedInfo.provinceId"  :options="initProvince" placeholder="省/Province" label="cname">
+                                            <v-select :debounce="250" :value.sync="breedInfo.provinceId"  :options="initCNProvince" placeholder="省/Province" label="cname">
                                             </v-select>
                                         </div>
                                     </div>
@@ -364,7 +364,8 @@ import {
     initBreedDetail,
     initCurrencylist,
     initUnitlist,
-    initLogin
+    initLogin,
+    initCNProvince
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -484,7 +485,8 @@ export default {
             initBreedDetail,
             initCurrencylist,
             initUnitlist,
-            initLogin
+            initLogin,
+            initCNProvince
         },
         actions: {
             getCountryList,

@@ -34,40 +34,57 @@
                             <div class="panel-group">
                                 <div class="panel panel-default" style="border:none">
                                     <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                        <mg-label :title="$t('static.order_no')">{{initOrderDetail.no}}</mg-label>
-                                        <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link==''">{{$t('static.sell')}}</mg-label>
-                                        <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link!==''">{{$t('static.sell')}}<a slot="" @click="linkDetail({
-                                            show:true,
-                                            id:initOrderDetail.link,
-                                            loading:true,
-                                            key:'orderDetail',
-                                            contact:'/order/myList'
-                                            })">（{{$t('static.purchase')}}{{$t('static.details')}}）</a></mg-label>
-                                        <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link==''">{{$t('static.purchase')}}</mg-label>
-                                        <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link!==''">{{$t('static.purchase')}}<a slot="" @click="linkDetail({
-                                            show:true,
-                                            id:initOrderDetail.link,
-                                            loading:true,
-                                            key:'orderDetail',
-                                            contact:'/order/myList'
-                                            })">（{{$t('static.sell')}}{{$t('static.details')}}）</a></mg-label>
-                                        <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
-                                        <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
-                                        <mg-label :title="$t('static.consignee_phone')">{{initOrderDetail.consigneePhone}}</mg-label>
-                                        <mg-label :title="$t('static.country')">{{initOrderDetail.countryName}}</mg-label>
-                                        <!-- <mg-label :title="$t('static.province')+$t('static.city')+$t('static.area')">{{initOrderDetail.province}} {{initOrderDetail.city}} {{initOrderDetail.district}}</mg-label> -->
-                                        <mg-label :title="$t('static.detailed_address')">{{initOrderDetail.consigneeAddr}}</mg-label>
-                                        <mg-label :title="$t('static.sample_order')">{{initOrderDetail.sample | Sample}}</mg-label>
-                                        <mg-label :title="$t('static.transcation_amount')" style="color:red">{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</mg-label>
-                                        <mg-label :title="$t('static.sundry_fees')+$t('static.fee_explain')">{{initOrderDetail.incidentals}}<span v-if="initOrderDetail.incidentalsDesc!=''">（{{initOrderDetail.incidentalsDesc}}）</span></mg-label>
-                                        <mg-label :title="$t('static.preferential')+$t('static.discount_note')">{{initOrderDetail.preferential}}<span v-if="initOrderDetail.preferentialDesc!=''">（{{initOrderDetail.preferentialDesc}}）</span></mg-label>
-                                        <mg-label :title="$t('static.paid')">{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
-                                        <mg-label :title="$t('static.wait_payment')">{{initOrderDetail.unpaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
-                                        <mg-label :title="$t('static.transcation')">{{initOrderDetail.ctime}}</mg-label>
-                                        <!-- 新增 订单性质 -->
-                                        <mg-label :title="$t('static.trading_patterns')" style="color:red" v-if="initOrderDetail.orderStatus ==0||initOrderDetail.orderStatus ==70">{{initOrderDetail.orderStatus | orderstatus}}</mg-label>
-                                        <!-- 新增 订单状态 -->
-                                        <mg-label :title="$t('static.order_status')">{{initOrderDetail.orderStatus | orderstatus}}</mg-label>
+                                        <div class="clearfix">
+                                            <p class="btn btn-primary btn-xs">订单信息</p>
+                                        </div>
+                                        <div  class="clearfix">
+                                            <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
+                                            <mg-label :title="$t('static.order_no')">{{initOrderDetail.no}}</mg-label>
+                                            <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link==''">{{$t('static.sell')}}</mg-label>
+                                            <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link!==''">{{$t('static.sell')}}<a slot="" @click="linkDetail({
+                                                show:true,
+                                                id:initOrderDetail.link,
+                                                loading:true,
+                                                key:'orderDetail',
+                                                contact:'/order/myList'
+                                                })">（{{$t('static.purchase')}}{{$t('static.details')}}）</a></mg-label>
+                                            <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link==''">{{$t('static.purchase')}}</mg-label>
+                                            <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link!==''">{{$t('static.purchase')}}<a slot="" @click="linkDetail({
+                                                show:true,
+                                                id:initOrderDetail.link,
+                                                loading:true,
+                                                key:'orderDetail',
+                                                contact:'/order/myList'
+                                                })">（{{$t('static.sell')}}{{$t('static.details')}}）</a></mg-label>
+                                            <mg-label :title="$t('static.sample_order')">{{initOrderDetail.sample | Sample}}</mg-label>
+                                            <!-- 新增 订单性质 -->
+                                            <mg-label :title="$t('static.trading_patterns')" style="color:red" v-if="initOrderDetail.orderStatus ==0||initOrderDetail.orderStatus ==70">{{initOrderDetail.orderStatus | orderstatus}}</mg-label>
+                                            <!-- 新增 订单状态 -->
+                                            <mg-label :title="$t('static.order_status')">{{initOrderDetail.orderStatus | orderstatus}}</mg-label>
+                                            <!-- 成交时间 -->
+                                            <mg-label :title="$t('static.transcation')">{{initOrderDetail.ctime}}</mg-label>
+                                        </div>
+                                        <hr style="height:10px;border-color:#ccc"/>
+                                        <div class="clearfix">
+                                            <p class="btn btn-primary btn-xs">收货信息</p>
+                                        </div>
+                                        <div class="clearfix">
+                                            <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
+                                            <mg-label :title="$t('static.consignee_phone')">{{initOrderDetail.consigneePhone}}</mg-label>
+                                            <mg-label :title="$t('static.country')">{{initOrderDetail.countryName}}</mg-label>
+                                            <mg-label :title="$t('static.detailed_address')">{{initOrderDetail.consigneeAddr}}</mg-label>
+                                        </div>
+                                        <hr style="height:10px;border-color:#ccc"/>
+                                        <div class="clearfix">
+                                            <p class="btn btn-primary btn-xs">成交信息</p>
+                                        </div>
+                                        <div class="clearfix">
+                                            <mg-label :title="$t('static.transcation_amount')" style="color:red">{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</mg-label>
+                                            <mg-label :title="$t('static.wait_payment')">{{initOrderDetail.unpaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
+                                            <mg-label :title="$t('static.sundry_fees')+$t('static.fee_explain')">{{initOrderDetail.incidentals}}<span v-if="initOrderDetail.incidentalsDesc!=''">（{{initOrderDetail.incidentalsDesc}}）</span></mg-label>
+                                            <mg-label :title="$t('static.preferential')+$t('static.discount_note')">{{initOrderDetail.preferential}}<span v-if="initOrderDetail.preferentialDesc!=''">（{{initOrderDetail.preferentialDesc}}）</span></mg-label>
+                                            <mg-label :title="$t('static.paid')">{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>   
+                                        </div>                                       
                                         <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.comments}}</mg-label>
                                     </ul>
                                 </div>

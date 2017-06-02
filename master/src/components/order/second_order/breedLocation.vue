@@ -1,6 +1,6 @@
 <template>
     <div>
-        <i-select :model.sync="param.location" :style="{width:widparam+'px'}" size="large">
+        <i-select :model.sync="param.location" :style="{width:widparam+'px'}" size="large" :disabled="!show.id">
             <i-option v-for="item in initBreedDetail.locals.arr" :value="item.locationId" track-by="$index">{{ item.name }}</i-option>
         </i-select>
         <!-- 这里的show表示当前是否选中了一个品种，用到的是其属性id，表示品种存在 -->
