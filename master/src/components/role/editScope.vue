@@ -22,6 +22,10 @@
                                     <label>英文名称</label>
                                     <input type="text" class="form-control edit-input" v-model="param.ename" />
                                 </div>
+                                <div class="client-detailInfo  col-md-6 col-xs-12">
+                                    <label>安全码</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.safecode" />
+                                </div>
                                 <div class="client-detailInfo  col-md-6 col-xs-12" v-if="param.type==0">
                                     <label>父级页面 </label>
                                     <input type="text" class="form-control edit-input" @click="clickParent(parentParam.pid,parentParam.name,param.type,param.sys)" v-model="parentParam.name" />

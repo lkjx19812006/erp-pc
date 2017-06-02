@@ -133,7 +133,7 @@
                        			usableNum:item.usableNum,
                        			unitId:item.unitId
                        		})">加入购物车</button>
-                            <button class="btn btn-primary btn-xs" @click="setPrice(item)" v-if="this.initLogin.safeCode.indexOf('P547-F562,')!=-1">设置价格</button>
+                            <button class="btn btn-primary btn-xs" @click="setPrice(item)" v-if="this.initLogin.safeCode.indexOf('P547-F558,')!=-1">设置价格</button>
 							<button class="btn btn-info btn-xs" v-if="item.depotType=='社会库存'&&this.initLogin.id==item.employee" @click="updataStock(item)">编辑</button>
 							<button class="btn btn-danger btn-xs" v-if="item.depotType=='社会库存'&&this.initLogin.id==item.employee" @click="deleteStock({
 											id:item.id,
