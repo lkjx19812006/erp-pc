@@ -109,7 +109,7 @@
                             </div>
                             <!-- 为了兼容国际并且可以选择地址，国家需要分为两种处理方式，1.直接填写，用cnameEn字段，2选择用cname字段 -->
                             <div class="editpage-input col-md-4">
-                                <label class="editlabel">{{$t('static.country')}}{{country.id}}</label>
+                                <label class="editlabel">{{$t('static.country')}}</label>
                                 <!-- 如果cnameEn存在或者cname不存在，显示cnameEn，因为这样不确定是否国际，并且认为这是新建地址 -->
                                 <div v-if="country.cnameEn||!country.cname" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="country" :on-change="selectProvince" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
@@ -123,7 +123,7 @@
                             </div>
                             <!-- 判断省是否显示，应该用country的cnameEn和cname字段共同决定 -->
                             <div class="editpage-input col-md-4">
-                                <label class="editlabel">{{$t('static.province')}}{{province.id}}</label>
+                                <label class="editlabel">{{$t('static.province')}}</label>
                                 <input type="text" v-if="!country.cnameEn&&!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_country_first')}}" />
                                 <div v-if="country.cnameEn" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
@@ -235,9 +235,9 @@
                                     <!-- 价格,必填至多两位小数 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">
-                                            <span v-if="param.type==0">{{$t('static.purchase')}}</span> 
+                                            <span v-if="param.type==0">{{$t('static.purchase')}}</span>
                                             <span>{{$t('static.price')}}</span>
-                                            <span class="jinggao" v-if="$inner.pack0.required">{{$t('static.required')}}</span> 
+                                            <span class="jinggao" v-if="$inner.pack0.required">{{$t('static.required')}}</span>
                                             <span class="jinggao" v-if="!$inner.pack0.required&&$inner.pack0.money">
                                                 {{$t('static.two_decimal')}}
                                             </span>
@@ -295,15 +295,15 @@
                                             </input-select>
                                         </div> -->
                                         <label class="editlabel">{{$t('static.origin')}}<span class="jinggao" v-if="$inner.locals.required">{{$t('static.required')}}</span> </label>
-                                        <input type="text" v-show="false" v-model="breedInfo.location" v-validate:locals="{required:true}"/>
+                                        <input type="text" v-show="false" v-model="breedInfo.location" v-validate:locals="{required:true}" />
                                         <breed-location :param="breedInfo" :show="breedParam" :widparam="'285'"></breed-location>
                                     </div>
                                     <!-- 发货地 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">发货地 <span class="jinggao" v-if="$inner.lcoals.required">{{$t('static.required')}}</span> </label>
-                                        <input type="text" v-show="false" v-model="breedInfo.provinceId" v-validate:lcoals="{required:true}"/>                     
-                                        <div  type="text" class="edit-input">
-                                            <v-select :debounce="250" :value.sync="breedInfo.provinceId"  :options="initProvince" placeholder="省/Province" label="cname">
+                                        <input type="text" v-show="false" v-model="breedInfo.provinceId" v-validate:lcoals="{required:true}" />
+                                        <div type="text" class="edit-input">
+                                            <v-select :debounce="250" :value.sync="breedInfo.provinceId" :options="initProvince" placeholder="省/Province" label="cname">
                                             </v-select>
                                         </div>
                                     </div>
@@ -474,8 +474,8 @@ export default {
                 unit: '',
                 unitName: '',
                 price: '',
-                provinceId:'',//选择发货地
-                province:''//品种新增产地
+                provinceId: '', //选择发货地
+                province: '' //品种新增产地
             },
             addParam: {
                 show: false,
@@ -1077,14 +1077,16 @@ export default {
     margin-top: 0px;
     width: 950px;
 }
-.jinggao{
+
+.jinggao {
     color: red;
     display: inline-block;
     margin-bottom: 0;
     font-weight: 100;
     font-size: 12px;
-    height:10px;
+    height: 10px;
 }
+
 .edit_footer button {
     margin-left: 15px;
 }

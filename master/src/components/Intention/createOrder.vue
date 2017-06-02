@@ -53,7 +53,7 @@
                                 <div class="clearfix">
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
-                                        <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" @click="searchBreed()" readonly="true" />
+                                        <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" readonly="true" />
                                     </div>
                                     <div class="editpage-input col-md-6">
                                         <div style="clear:both;height:36px;">
@@ -106,6 +106,7 @@
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.origin')}}</label>
                                         <input type="text" v-model="breedInfo.location" class="form-control edit-input" />
+                                        <breed-location :param="breedInfo" :show="breedParam" :widparam="'270'"></breed-location>
                                     </div>
                                     <div class="pull-right col-md-6" style="margin-top:10px;text-align:right">
                                         <button type="button" class="btn btn-confirm">
@@ -246,12 +247,13 @@ import pressImage from '../../components/imagePress'
 import searchemgModel from '../order/second_order/allEmployee'
 import searchcustomerModel from '../Intention/clientname'
 import supplierDialog from '../order/second_order/selectAllSupplier'
+import breedLocation from '../order/second_order/breedLocation'
 import {
     initCountrylist,
     initProvince,
     initCitylist,
     initDistrictlist,
-    initUnitlist
+    initUnitlist,
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -259,7 +261,8 @@ import {
     getCityList,
     getDistrictList,
     createOrder,
-    getUnitList
+    getUnitList,
+    getBreedDetail
 } from '../../vuex/actions'
 export default {
     components: {
@@ -268,7 +271,8 @@ export default {
         searchemgModel,
         inputSelect,
         searchcustomerModel,
-        supplierDialog
+        supplierDialog,
+        breedLocation
     },
     props: ['param'],
     data() {
@@ -295,6 +299,10 @@ export default {
                 costPrice: '',
                 price: '',
                 id: ''
+            },
+            breedParam: {
+                id: "",
+                breedName: ""
             },
             empNameParam: {
                 show: false,
@@ -343,7 +351,7 @@ export default {
             initProvince,
             initCitylist,
             initDistrictlist,
-            initUnitlist
+            initUnitlist,
         },
         actions: {
             getCountryList,
@@ -351,7 +359,8 @@ export default {
             getCityList,
             getDistrictList,
             createOrder,
-            getUnitList
+            getUnitList,
+            getBreedDetail
         }
     },
     methods: {
@@ -532,6 +541,12 @@ export default {
     created() {
         this.getCountryList(this.countryParam);
         this.getUnitList();
+        if (this.param.goods[0].breedId) {
+            this.breedParam.id = this.param.goods[0].breedId;
+            this.breedParam.breedName = this.param.goods[0].breedName;
+            this.getBreedDetail(this.breedParam);
+        }
+
         this.param.total = (parseFloat(this.param.goods[0].price * this.param.goods[0].number) * 100 + parseFloat(this.param.incidentals) * 100 - parseFloat(this.param.preferential) * 100) / 100;
         this.param.cost = (parseFloat(this.param.goods[0].costPrice * this.param.goods[0].number) * 100) / 100;
         if (this.param.customerName) {

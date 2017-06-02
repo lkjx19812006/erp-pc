@@ -81,7 +81,7 @@
                                 <mg-label title="数量">{{initIntentionDetail.number}}{{initIntentionDetail.unit | Unit}}</mg-label>
                                 <mg-label title="价格">{{initIntentionDetail.price}}元/{{initIntentionDetail.unit | Unit}}</mg-label>
                                 <mg-label title="规格要求">{{initIntentionDetail.spec}}</mg-label>
-                                <mg-label title="产地要求">{{initIntentionDetail.location}}</mg-label>
+                                <mg-label title="产地要求">{{initIntentionDetail.locationName}}</mg-label>
                                 <mg-label title="质量要求">{{initIntentionDetail.quality}}</mg-label>
                                 <div class="client-detailInfo col-md-12 col-xs-12">
                                     <label style="display:inline;font-size:14px;">备注说明：</label>

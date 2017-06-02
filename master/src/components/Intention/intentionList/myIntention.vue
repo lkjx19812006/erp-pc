@@ -247,7 +247,7 @@
                             </li>
                         </td>
                         <td>{{item.breedName}}</td>
-                        <td>{{item.location}}</td>
+                        <td>{{item.locationName}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.duedateDesc}}</td>
