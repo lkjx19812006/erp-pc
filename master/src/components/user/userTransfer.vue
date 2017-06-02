@@ -70,27 +70,15 @@
                                         <option value="3">上市公司</option>
                                     </select>
                                 </div>
-                                <!-- 预付比例 -->
+                                <!-- 付款方式 -->
                                 <div class="client-detailInfo  col-md-6">
-                                    <label class="editlabel">{{$t('static.pre_payment')}}</label>
-                                    <select class="form-control edit-input" v-model="param.advance">
-                                        <option value=0>0</option>
-                                        <option value=0.1>10%</option>
-                                        <option value=0.2>20%</option>
-                                        <option value=0.3>30%</option>
-                                        <option value=0.4>40%</option>
-                                        <option value=0.5>50%</option>
-                                        <option value=0.6>60%</option>
-                                        <option value=0.7>70%</option>
-                                        <option value=0.8>80%</option>
-                                        <option value=0.9>90%</option>
-                                        <option value=1>100%</option>
-                                    </select>
-                                </div>
-                                <!-- 回款天数 -->
-                                <div class="client-detailInfo  col-md-6">
-                                    <label>{{$t('static.capital_return_days')}}</label>
-                                    <input type="number" class="form-control edit-input" v-model="param.capitalReturnDays" />
+                                    <label class="editlabel">付款方式</label>
+                                    <span>预付
+                                    <!-- 预付比例 -->
+                                    <Input-number :max="100" :min="0" :value.sync="advance" size="large"></Input-number>%，
+                                    <!-- 回款天数 -->
+                                    <Input-number :max="365" :min="0" :value.sync="param.capitalReturnDays" size="large"></Input-number>天回款
+                                    </span>
                                 </div>
                                 <!-- 客户电话 -->
                                 <div class="client-detailInfo  col-md-6">
@@ -104,7 +92,7 @@
                                 </div>
                                 <!-- 负责人 -->
                                 <div class="client-detailInfo  col-md-6">
-                                    <label class="editlabel">{{$t('static.principals')}} </span>
+                                    <label class="editlabel">{{$t('static.principals')}}</span>
                                     </label>
                                     <input type="text" id="principal" class="form-control edit-input" v-model="param.principal" />
                                 </div>
@@ -318,9 +306,10 @@ export default {
                 cname: ''
             },
             country: {
-                /*          cname: '',*/
+                //cname: '',
                 cnameEn: ''
             },
+            advance: '' // 用于存放param.advance*100后的值
 
         }
     },
@@ -485,7 +474,13 @@ export default {
                 this.param.country = this.country.id;
                 this.param.countryName = this.country.cnameEn;
             }
+            if (this.advance) { //保存时，如果this.advance存在并且不为0
+                this.param.advance = this.advance / 100;
+            } else {
+                this.param.advance = 0;
+            }
             this.param.show = false;
+
             this.saveCreate(this.param, this.tipsParam);
         },
         chechCallback: function(title) {
@@ -493,7 +488,8 @@ export default {
             this.tipsParam.remain = false;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
-        }
+        },
+
     },
     watch: {
         'contacts[0].phone': 'checkCustomer'
@@ -518,7 +514,11 @@ export default {
         } else {
             this.getCountrys();
         }
-
+        if (this.param.advance) { //如果预付比例存在，并且不为0
+            this.advance = this.param.advance * 100;
+        } else {
+            this.advance = 0;
+        }
         if (this.param.contact) {
             this.contacts[0].name = this.param.contact.name;
             this.contacts[0].position = this.param.contact.position;

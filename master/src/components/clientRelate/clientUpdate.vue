@@ -55,22 +55,10 @@
                                     <option value="3">上市公司</option>
                                 </select>
                             </div>
-                            <!-- 预付比例,padding-top是为了修正margin-top失效的 -->
+                            <!-- 负责人 -->
                             <div class="editpage-input" style="clear:both;padding-top:15px">
-                                <label class="editlabel">{{$t('static.pre_payment')}}</label>
-                                <select class="form-control edit-input" v-model="param.advance">
-                                    <option value=0>0</option>
-                                    <option value=0.1>10%</option>
-                                    <option value=0.2>20%</option>
-                                    <option value=0.3>30%</option>
-                                    <option value=0.4>40%</option>
-                                    <option value=0.5>50%</option>
-                                    <option value=0.6>60%</option>
-                                    <option value=0.7>70%</option>
-                                    <option value=0.8>80%</option>
-                                    <option value=0.9>90%</option>
-                                    <option value=1>100%</option>
-                                </select>
+                                <label class="editlabel">{{$t('static.principals')}}</label>
+                                <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />
                             </div>
                             <!-- 法人 -->
                             <div class="editpage-input">
@@ -125,15 +113,15 @@
                                 <label class="editlabel" for="system">{{$t('static.cellphone')}}</label>
                                 <input type="text" v-model="param.mainPhone" class="form-control edit-input" debounce="500" />
                             </div>
-                            <!-- 回款天数 -->
+                            <!-- 付款方式 -->
                             <div class="editpage-input">
-                                <label>{{$t('static.capital_return_days')}}</label>
-                                <input type="number" class="form-control edit-input" v-model="param.capitalReturnDays" />
-                            </div>
-                            <!-- 负责人 -->
-                            <div class="editpage-input">
-                                <label class="editlabel">{{$t('static.principals')}}</label>
-                                <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />
+                                <label class="editlabel">付款方式</label>
+                                <span>预付
+                                    <!-- 预付比例 -->
+                                    <Input-number :max="100" :min="0" :value.sync="advance" size="large"></Input-number>%，
+                                    <!-- 回款天数 -->
+                                    <Input-number :max="365" :min="0" :value.sync="param.capitalReturnDays" size="large"></Input-number>天回款
+                                    </span>
                             </div>
                             <!-- 客户电话 -->
                             <div class="editpage-input">
@@ -257,7 +245,9 @@ export default {
                 alert: true,
                 name: ''
             },
-            checkCustomer: {}
+            checkCustomer: {},
+            advance: ''
+
         }
     },
     vuex: {
@@ -325,6 +315,11 @@ export default {
             this.param.provinceName = this.province.cname;
             this.param.city = this.city.id;
             this.param.cityName = this.city.cname;
+            if (this.advance) { //保存时，如果this.advance存在并且不为0
+                this.param.advance = this.advance / 100;
+            } else {
+                this.param.advance = 0;
+            }
             this.param.show = false;
             this.param.callback = this.param.callback;
             this.param.link(this.param);
@@ -355,8 +350,14 @@ export default {
             this.countryParam.city = this.param.city;
 
         }
+        if (this.param.advance) { //如果预付比例存在，并且不为0
+            this.advance = this.param.advance * 100;
+        } else {
+            this.advance = 0;
+        }
         this.getCountryList(this.countryParam);
         this.getUserTypeList(this.countryParam);
+
         if (localStorage.lang) {
             this.language = localStorage.lang;
         } else {
