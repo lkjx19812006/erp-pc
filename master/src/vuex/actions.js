@@ -9367,6 +9367,9 @@ export const baseUpdateData = ({ dispatch }, param) => { //修改权限
     if (param.link == '/sys/menu/' && param.url) {
         data.url = param.url;
     }
+    if (param.link == '/sys/menu/' && param.safecode) {
+        data.safecode = param.safecode;
+    }
     if (param.link == '/sys/menu/' && param.icon) {
         if (param.icon.indexOf("static") > 0) {
             data.icon = param.icon;

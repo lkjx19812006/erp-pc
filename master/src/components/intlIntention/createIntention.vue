@@ -47,7 +47,7 @@
                              <td>{{item.breedName}}</td>
                              <td>{{item.quality}}</td>
                              <td>{{item.qualification}}</td>
-                             <td>{{item.location}}</td>
+                             <td>{{item.location | province}}</td>
                              <td>{{item.spec}}</td>
                              <td>{{item.number}}</td>
                              <td>{{item.unit | Unit}}</td>
@@ -504,6 +504,7 @@ export default {
               this.breedInfo.number='';
               this.breedInfo.unit='';
               this.breedInfo.pack='';
+              this.breedParam.id=''
               this.param.items.push({
                   breedId:'',
                   breedName:'',
@@ -551,7 +552,7 @@ export default {
           this.breedInfo.unit=this.param.items[index].unit;
           this.breedInfo.pack=this.param.items[index].pack;
           this.breedParam.id = this.breedInfo.breedId;
-          console.log(this.param.items[index])
+          this.getBreedDetail(this.breedParam)
           this.updateParam.show = true;
       },
       modifyBreed:function(){

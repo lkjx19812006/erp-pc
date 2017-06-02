@@ -46,6 +46,7 @@
                                     show:true,
                                     cname:item.cname,
                                     ename:item.ename,
+                                    safecode:item.safecode,
                                     sys:item.sys,
                                     pid:item.pid,
                                     remark:item.remark,

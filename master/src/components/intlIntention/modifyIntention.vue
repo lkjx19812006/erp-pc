@@ -60,7 +60,7 @@
                                     <td>{{item.breedName}}</td>
                                     <td>{{item.quality}}</td>
                                     <td>{{item.qualification}}</td>
-                                    <td>{{item.location}}</td>
+                                    <td>{{item.location | province}}</td>
                                     <td>{{item.spec}}</td>
                                     <td>{{item.number}}</td>
                                     <td>{{item.unit | Unit}}</td>
@@ -119,11 +119,12 @@
                                     </div>
                                     <div class="editpage-input">
                                         <label class="editlabel">{{$t('static.origin')}}</label>
-                                        <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                                        <!-- <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
                                         <div type="text" class="edit-input" v-if="breedParam.id">
                                             <input-select :prevalue="breedInfo.location" :value.sync="breedInfo.location" :options="initBreedDetail.locals.arr" placeholder="产地/Origin" label="name">
                                             </input-select>
-                                        </div>
+                                        </div> -->
+                                        <breed-location :param="breedInfo" :show="breedParam" :widparam="'280'"></breed-location>
                                     </div>
                                     <div class="editpage-input">
                                         <label class="editlabel">{{$t('static.packaging')}}</label>
@@ -253,6 +254,7 @@ import searchcustomerModel from '../Intention/clientname'
 import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipdialogModel from '../tips/tipDialog'
+import breedLocation from '../order/second_order/breedLocation'
 import pressImage from '../imagePress'
 import {
     initCountrylist,
@@ -281,7 +283,8 @@ export default {
         vSelect,
         inputSelect,
         tipdialogModel,
-        pressImage
+        pressImage,
+        breedLocation
     },
     props: ['param'],
     data() {
@@ -433,6 +436,7 @@ export default {
                 this.breedInfo.number = '';
                 this.breedInfo.unit = '';
                 this.breedInfo.pack = '';
+                this.breedParam.id=''
                 this.param.items.push({
                     breedId: '',
                     breedName: '',
@@ -477,15 +481,16 @@ export default {
             this.updateParam.index = index;
             this.breedInfo.breedId = this.param.items[index].breedId;
             this.breedInfo.breedName = this.param.items[index].breedName,
-                this.breedInfo.qualification = this.param.items[index].qualification,
-                this.breedInfo.quality = this.param.items[index].quality,
-                this.breedInfo.location = this.param.items[index].location,
-                this.breedInfo.spec = this.param.items[index].spec,
-                this.breedInfo.number = this.param.items[index].number,
-                this.breedInfo.unit = this.param.items[index].unit,
-                this.breedInfo.pack = this.param.items[index].pack,
-                this.breedInfo.description = this.param.items[index].description,
-                this.breedParam.id = this.breedInfo.breedId;
+            this.breedInfo.qualification = this.param.items[index].qualification,
+            this.breedInfo.quality = this.param.items[index].quality,
+            this.breedInfo.location = this.param.items[index].location,
+            this.breedInfo.spec = this.param.items[index].spec,
+            this.breedInfo.number = this.param.items[index].number,
+            this.breedInfo.unit = this.param.items[index].unit,
+            this.breedInfo.pack = this.param.items[index].pack,
+            this.breedInfo.description = this.param.items[index].description,
+            this.breedParam.id = this.breedInfo.breedId;
+            this.getBreedDetail(this.breedParam)
             this.updateParam.show = true;
             this.breedInfo.type = type;
 
@@ -588,10 +593,9 @@ export default {
                 this.breedInfo.breedName = breed.eName;
             }
             this.breedInfo.breedId = breed.breedId;
-
             this.breedParam.id = breed.breedId;
             //this.breedParam.loading=true;
-            //this.getBreedDetail(this.breedParam);
+            this.getBreedDetail(this.breedParam);
         },
         customer: function(customer) {
             console.log(customer);
