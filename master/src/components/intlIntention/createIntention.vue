@@ -106,11 +106,12 @@
                 </div>
                 <div class="editpage-input">
                     <label class="editlabel">{{$t('static.origin')}}</label>
-                    <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                    <!-- <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
                     <div type="text" class="edit-input" v-if="breedParam.id">
                         <input-select :prevalue="breedInfo.location" :value.sync="breedInfo.location" :options="initBreedDetail.locals.arr" placeholder="产地/Origin" label="name">
                         </input-select>
-                    </div>
+                    </div> -->
+                    <breed-location :param="breedInfo" :show="breedParam" :widparam="'260'"></breed-location>
                 </div>
                 <div class="editpage-input">
                     <label class="editlabel">{{$t('static.packaging')}}</label>
@@ -314,6 +315,7 @@ import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipdialogModel from '../tips/tipDialog'
 import pressImage from '../imagePress'
+import breedLocation from '../order/second_order/breedLocation'
 import {
     initCountrylist,
     initProvince,
@@ -341,7 +343,8 @@ export default {
         vSelect,
         inputSelect,
         tipdialogModel,
-        pressImage
+        pressImage,
+        breedLocation
     },
     props: ['param'],
     data() {
