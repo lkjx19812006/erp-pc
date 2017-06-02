@@ -1307,9 +1307,6 @@ Vue.filter("isDeal",function(data){
 })
 
 Vue.filter('province',function(id){
-    if(id==-1){
-        return '未知'
-    }
     if(id==247){
         return '北京'
     }
@@ -1412,5 +1409,5 @@ Vue.filter('province',function(id){
     if(id==280){
         return '澳门'
     }
-
+    return "未知"
 })
