@@ -2206,7 +2206,6 @@ const mutations = {
             }
         } else {
             console.log("意向列表页修改意向");
-            console.log(data.ctime)
             for (var i in state.basicBaseList[data.key][data.sub]) {
                 state.basicBaseList[data.key][data.sub][i] = data[i];
             }

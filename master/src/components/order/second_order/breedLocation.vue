@@ -64,9 +64,9 @@ export default {
 }
 </script>
 <style scoped>
-/*	.ivu-select{
-		width:284px!important
-	}*/
+/*  .ivu-select{
+        width:284px!important
+    }*/
 
 .edit-input {
     height: 36px;
@@ -79,7 +79,7 @@ export default {
 }
 
 .ivu-select-dropdown {
-    position: absolute!important
+    position: absolute!important;
 }
 
 .edit-input:focus {

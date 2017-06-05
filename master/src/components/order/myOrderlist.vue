@@ -9,6 +9,7 @@
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <applysend-model :param="applyParam" v-if="applyParam.show"></applysend-model>
         <reapply-model :param="reapplyParam" v-if="reapplyParam.show"></reapply-model>
+        <record-model :param="recordParam" v-if="recordParam.show"></record-model>
         <contract-model :param="contractParam" v-if="contractParam.show"></contract-model>
         <cancel-model :param="cancelParam" v-if="cancelParam.show"></cancel-model>
         <cancel-model :param="cancelFlowParam" v-if="cancelFlowParam.show"></cancel-model>
@@ -156,6 +157,7 @@
                             <th>{{$t('static.order_status')}}</th>
                             <th>{{$t('static.order_source')}}</th>
                             <th>{{$t('static.review_status')}}</th>
+                            <th>{{$t('static.comment')}}</th>
                             <th style="min-width: 105px;">{{$t('static.handle')}}</th>
                         </tr>
                     </thead>
@@ -225,6 +227,14 @@
                             </td>
                             <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                             <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
+                            <td>
+                                <Poptip placement="left" trigger="hover">
+                                    <span>{{item.comments | textDisplay '5'}}</span>
+                                    <div class="api" slot="content">
+                                        {{item.comments}}
+                                    </div>
+                                </Poptip>
+                            </td>
                             <td>
                                 <button class="btn btn-primary btn-xs" v-if="(item.validate==0||item.validate==-2)&&item.orderStatus!==-1" @click="updateOrder({
                                         show:true,
@@ -385,6 +395,7 @@
                                 <!-- 申请审核,当订单开始取消后，不能再申请 -->
                                 <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)&&item.cancel==0">{{$t('static.review_application')}}</button>
                                 <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2&&(item.orderStatus==0||item.orderStatus==70)&&item.cancel==0">{{$t('static.reapply')}}</button>
+                                <button class="btn btn-warning btn-xs" @click="showRecord(item)" v-if="item.validate!=0">审核记录</button>
                             </td>
                         </tr>
                     </tbody>
@@ -401,7 +412,6 @@ import filter from '../../filters/filters'
 import editorderModel from '../order/orderInformationDialog'
 import createorderModel from '../order/createOrderDialog'
 import detailModel from '../order/orderDetail'
-/*import searchModel from '../order/orderSearch'*/
 import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import disposeModel from '../order/orderStatus'
 import tipsdialogModel from '../tips/tipDialog'
@@ -415,6 +425,7 @@ import mglistModel from '../mguan/mgListComponent.vue'
 import languageModel from '../tools/language.vue'
 import contractModel from '../order/second_order/contractItems'
 import saleapplyModel from '../order/second_order/afterSalesApply'
+import recordModel from '../record/record'
 import {
     getList,
     initMyOrderlist,
@@ -448,7 +459,8 @@ export default {
         contractModel,
         saleapplyModel,
         languageModel,
-        cancelModel
+        cancelModel,
+        recordModel
     },
     data() {
         return {
@@ -593,6 +605,13 @@ export default {
                 callback: '',
                 logistics: ''
             },
+            recordParam: {
+                loading: true,
+                link: '/flow/flowRecord',
+                bizType: 'order_validate',
+                bizId: '',
+                show: false,
+            },
             //直接取消
             cancelParam: {
                 show: false,
@@ -672,6 +691,11 @@ export default {
                 this.auditParam.title = this.$t('static.reapply');
             }
             this.auditParam.callback = this.applyBack;
+        },
+        //查看审核记录
+        showRecord: function(item) {
+            this.recordParam.bizId = item.id;
+            this.recordParam.show = true;
         },
         cancelOrder: function(id, index) {
             this.cancelParam.id = id;
@@ -964,8 +988,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 95px;
-    min-width: 94px;
+    width: 90px;
+    min-width: 90px;
 }
 
 .order_pagination {

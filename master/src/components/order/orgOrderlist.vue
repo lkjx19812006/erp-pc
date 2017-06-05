@@ -171,6 +171,7 @@
                             <th>{{$t('static.order_status')}}</th>
                             <th>{{$t('static.order_source')}}</th>
                             <th>{{$t('static.review_status')}}</th>
+                            <th>{{$t('static.comment')}}</th>
                             <th>{{$t('static.handle')}}</th>
                         </tr>
                     </thead>
@@ -254,6 +255,14 @@
                             </td>
                             <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                             <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
+                            <td>
+                                <Poptip placement="left" trigger="hover">
+                                    <span>{{item.comments | textDisplay '5'}}</span>
+                                    <div class="api" slot="content">
+                                        {{item.comments}}
+                                    </div>
+                                </Poptip>
+                            </td>
                             <!--  <td @click="editClick($index)">
                        <img height="24" width="24" src="/static/images/default_arrow.png" />
                        <div class="component_action" v-show="item.show">
@@ -814,8 +823,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 95px;
-    min-width: 94px;
+    width: 90px;
+    min-width: 90px;
 }
 
 .base_pagination {
