@@ -1,12 +1,10 @@
 <template>
     <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
-    <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
     <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
     <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
-    <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
     <onsell-model :param="onSellParam" v-if="onSellParam.show"></onsell-model>
     <mglist-model>
@@ -227,13 +225,11 @@
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import chancedetailModel from '../../Intention/chanceDetail'
-import transferintentModel from '../../Intention/transferIntent'
 import intentionauditModel from '../../user/intentionAudit'
 import tipsdialogModel from '../../tipsDialog'
 import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
-import searchModel from '../intentionSearch'
 import breedsearchModel from '../breedsearch'
 import onsellModel from '../../../components/tips/auditDialog'
 //import inputSelect from '../../tools/vueSelect/components/inputselect'
@@ -258,13 +254,11 @@ export default {
     components: {
         pagination,
         chancedetailModel,
-        transferintentModel,
         intentionauditModel,
         tipsdialogModel,
         deletebreedModel,
         createintentModel,
         supdemModel,
-        searchModel,
         breedsearchModel,
         onsellModel,
         inputSelect,
@@ -324,11 +318,6 @@ export default {
             },
             chanceParam: {
                 show: false
-            },
-            intentionParam: {
-                show: false,
-                id: '',
-                name: '意向'
             },
             intentionAuditParam: {
                 show: false,
@@ -530,7 +519,6 @@ export default {
 
         },
         allowDown: function() {
-
             this.tipsParam.onSell = 4;
             this.tipsParam.name = '意向下架成功';
             this.intentionUpAndDown(this.tipsParam);
@@ -540,30 +528,8 @@ export default {
             this.tipsParam.name = '拒绝下架';
             this.intentionUpAndDown(this.tipsParam);
         },
-        clientTransfer: function(param) {
-            this.intentionParam = param;
-
-            for (var i in this.initOrgIntentionList) {
-                if (this.initOrgIntentionList[i].checked) {
-                    if (this.initOrgIntentionList[i].checked == true) {
-                        this.intentionParam.id = this.initOrgIntentionList[i].id;
-                        this.intentionParam = this.initOrgIntentionList[i];
-                        this.intentionParam.show = true;
-                    }
-                } else if (this.intentionParam.id == "" && !this.initOrgIntentionList[i].checked) {
-                    this.tipsParam.show = true;
-                    this.tipsParam.name = '请先选择业务机会';
-                    this.intentionParam.show = false;
-                }
-            }
-        },
         searchIntention: function() {
             this.getIntentionList(this.loadParam);
-        },
-        search: function() {
-            this.loadParam.loading = false;
-            this.loadParam.show = true;
-
         },
         resetCondition: function() {
             this.loadParam.type = '';

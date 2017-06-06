@@ -1,7 +1,6 @@
 <template>
     <div>
         <editorder-model :param="editParam" v-if="editParam.show"></editorder-model>
-        <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
         <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
         <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
         <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
@@ -724,7 +723,6 @@
 </template>
 <script>
 import editorderModel from './second_order/editOrderQa'
-import trackingModel from '../order/ordergoods'
 import credenceModel from '../order/createcredence'
 import disposeModel from '../order/orderStatus'
 import pictureModel from '../tips/pictureDialog'
@@ -757,7 +755,6 @@ import {
 export default {
     components: {
         editorderModel,
-        trackingModel,
         credenceModel,
         disposeModel,
         pictureModel,
@@ -775,9 +772,6 @@ export default {
     props: ['param'],
     data() {
         return {
-            trackingParam: {
-                show: false
-            },
             sourceType: {
                 0: 'PC',
                 1: 'android',
@@ -966,13 +960,6 @@ export default {
             this.divideParam.total = total;
             this.divideParam.stages = stages.arr;
             this.divideParam.callback = this.callback;
-        },
-        createChance: function(item, index) {
-
-            item.show = !item.show;
-            item.index = index;
-            this.trackingParam = item;
-            this.trackingParam.show = true;
         },
         linkDetail: function(detail) { //关联采购详情
             this.param.id = detail.id;

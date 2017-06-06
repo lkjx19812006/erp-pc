@@ -87,9 +87,8 @@
                                     <label style="display:inline;font-size:14px;">备注说明：</label>
                                     <span style="font-size:14px;">{{initIntentionDetail.validate | intentionAudit}}({{initIntentionDetail.description}})</span>
                                 </div>
-
                             </div>
-                            <hr style="height:10px;border-color:#ccc"/>
+                            <hr style="height:10px;border-color:#ccc" />
                             <div class="clearfix">
                                 <label class="editlabel">
                                     <p class="btn btn-primary btn-xs">客户信息</p>
@@ -98,16 +97,16 @@
                                     </span>
                                 </label>
                             </div>
-                            <hr style="height:10px;border-color:#ccc"/>
+                            <hr style="height:10px;border-color:#ccc" />
                             <div class="clearfix">
                                 <label class="editlabel">
-                                <p class="btn btn-primary btn-xs">交收信息</p>                                    
+                                    <p class="btn btn-primary btn-xs">交收信息</p>
                                     <span style="font-weight:400">
                                         {{initIntentionDetail.provinceName}} {{initIntentionDetail.cityName}} {{initIntentionDetail.districtName}} {{initIntentionDetail.address}}
                                     </span>
                                 </label>
                             </div>
-                            <hr style="height:10px;border-color:#ccc"/>
+                            <hr style="height:10px;border-color:#ccc" />
                             <div class="clearfix" v-if="initIntentionDetail.sampling==1">
                                 <label class="editlabel">
                                     <p class="btn btn-primary btn-xs">样品信息</p>
@@ -115,16 +114,15 @@
                                         一份样品{{initIntentionDetail.sampleNumber}}{{initIntentionDetail.sampleUnit| Unit}}，总共{{initIntentionDetail.sampleAmount}}元
                                     </span>
                                 </label>
-                                <hr style="height:10px;border-color:#ccc"/>
+                                <hr style="height:10px;border-color:#ccc" />
                             </div>
-                            
                             <div class="clearfix" v-if="param.type===0">
                                 <label class="editlabel">
                                     <p class="btn btn-primary btn-xs">报价信息</p>
                                     <span style="font-weight:400">共{{initIntentionDetail.offerNumber}}人报价，报价平均价格{{initIntentionDetail.offerVprice}}元/{{initIntentionDetail.unit | Unit}}，供货总量为{{initIntentionDetail.offerTotal}}{{initIntentionDetail.unit|Unit}}</span>
                                 </label>
                             </div>
-                            <hr style="height:10px;border-color:#ccc"/>
+                            <hr style="height:10px;border-color:#ccc" />
                             <div class="clearfix">
                                 <p class="btn btn-primary btn-xs">其他信息</p>
                             </div>
@@ -602,9 +600,11 @@ section {
     top: 20px;
     right: 40px;
 }
-.b_title{
-    color:#337ab7
+
+.b_title {
+    color: #337ab7
 }
+
 .files_action {
     position: absolute;
     top: 18px;

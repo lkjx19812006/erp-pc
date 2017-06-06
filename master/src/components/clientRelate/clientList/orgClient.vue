@@ -164,6 +164,13 @@
                         <th>{{$t("static.operation")}}</th>
                     </tr>
                 </thead>
+                <tr>
+                    <th>
+                        <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
+                    </th>
+                    <th style="color:#fa6705;font-size: 14px">全选</th>
+                    <th colspan="15"></th>
+                </tr>
                 <tbody>
                     <tr>
                     </tr>

@@ -54,7 +54,7 @@
                                 <label class="col-md-3 col-sm-4 col-xs-6">供应商名称：{{initIntentionOfferDetail.offer.offerCustomerName}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">品种：{{initIntentionOfferDetail.offer.breedName}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">规格：{{initIntentionOfferDetail.offer.spec}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">产地：{{initIntentionOfferDetail.offer.location}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">产地：{{initIntentionOfferDetail.offer.location | province}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">数量：{{initIntentionOfferDetail.offer.number}}{{initIntentionOfferDetail.offer.unit | Unit}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">价格：{{initIntentionOfferDetail.offer.price}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">备注：
@@ -85,7 +85,7 @@
                                 <label class="col-md-3 col-sm-4 col-xs-6">意向类型：{{initIntentionOfferDetail.intention.type | intentionType initIntentionOfferDetail.intention.especial initIntentionOfferDetail.intention.preSell}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">品种：{{initIntentionOfferDetail.intention.breedName}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">规格：{{initIntentionOfferDetail.intention.spec}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">产地：{{initIntentionOfferDetail.intention.location}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">产地：{{initIntentionOfferDetail.intention.location | province}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">数量：{{initIntentionOfferDetail.intention.number}}{{initIntentionOfferDetail.intention.unit | Unit}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">价格：{{initIntentionOfferDetail.intention.price}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">上下架：{{initIntentionOfferDetail.intention.onSell | onsell}}
