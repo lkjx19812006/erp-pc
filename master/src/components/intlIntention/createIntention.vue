@@ -260,7 +260,7 @@
         <div class="editpageright">
             <!-- 国内的省（国外的市） -->
             <div class="editpage-input">
-                <label class="editlabel">{{$t('static.city')}}<span class="system_danger" v-if="$validation.province.required">{{$t('static.choose_province')}}</span></label>
+                <label class="editlabel">{{$t('static.city')}}<span class="system_danger" v-if="$validation.province.required">{{$t('static.choose_city')}}</span></label>
                 <input type="text" v-show="false" v-model="province.cnameEn" v-validate:province="['required']">
                 <input type="text" v-if="!country.cnameEn" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_country_first')}}" />
                 <div type="text" class="edit-input" v-if="country.cnameEn">
