@@ -168,7 +168,11 @@ import {
     CHANGE_ORGADDBREEDDETAIL,
     CHANGE_ALLADDBREEDDETAIL,
     CHANGE_BREEDORDER_DETAIL,
-    ADD_BREED_LOCAL
+    ADD_BREED_LOCAL,
+    SELECT_SAMPLECOUNT,
+    SELECT_MAINORDERCOUNT,
+    SELECT_SAMPLEDETAIL,
+    SELECT_MAINORDERDETAIL
 } from '../mutation-types'
 
 
@@ -1117,6 +1121,10 @@ const state = {
     allYestodayDealBreed: [{ breedName: "全部成交测试" }, { breedName: "全部成交测试" }, { breedName: "全部成交测试" }, { breedName: "全部成交测试" }],
     orgAddBreedDetail: [{ breedName: "部门新增测试" }, { breedName: "部门新增测试" }, { breedName: "部门新增测试" }, { breedName: "部门新增测试" }],
     allAddBreedDetail: [{ breedName: "全部新增测试" }, { breedName: "全部新增测试" }, { breedName: "全部新增测试" }, { breedName: "全部新增测试" }],
+    sampleCountList:[],
+    mianOrderCountList:[],
+    sampleCountDetail:[],
+    mianOrderCountDetail:[]
 }
 
 const mutations = {
@@ -2473,6 +2481,22 @@ const mutations = {
     //品种统计订单详情
     [CHANGE_BREEDORDER_DETAIL](state, data) {
         state.breedOrderDetail = data
+    },
+    //样品订单统计
+    [SELECT_SAMPLECOUNT](state,data){
+        state.sampleCountList = data
+    },
+    //样品订单详细
+    [SELECT_SAMPLEDETAIL](state,data){
+        state.sampleCountDetail=data
+    },
+    //大货订单统计
+    [SELECT_MAINORDERCOUNT](state,data){
+        state.mianOrderCountList = data
+    },
+    //大货订单详情
+    [SELECT_MAINORDERDETAIL](state,data){
+        state.mianOrderCountDetail = data
     }
 }
 

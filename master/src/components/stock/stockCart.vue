@@ -34,7 +34,7 @@
                                     <td>{{item.breedName}}</td>
                                     <td>{{item.priceAndNumber.breedPrice}}元</td>
                                     <td>{{item.priceAndNumber.breedNum}}/{{item.unitId | unit}}</td>
-                                    <td><a @click='deleteCart($index)'>移除购物车</a></td>
+                                    <td><a @click='deleteCart($index)'>移出</a></td>
                                 </tr>
                             </tbody>
                         </table>

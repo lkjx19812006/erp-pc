@@ -76,7 +76,7 @@
                         <td>{{item.offerEmployeeName}}</td>
                         <td><a @click="clickDetail(item.id)">{{item.breedName}}</a></td>
                         <td>{{item.spec}}</td>
-                        <td>{{item.location}}</td>
+                        <td>{{item.location | province}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.price}}</td>
                         <td>
@@ -108,7 +108,7 @@
                         <td>{{item.offerEmployeeName}}</td>
                         <td><a @click="clickDetail(item.id)">{{item.breedName}}</a></td>
                         <td>{{item.spec}}</td>
-                        <td>{{item.location}}</td>
+                        <td>{{item.location | province}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.price}}</td>
                         <td>

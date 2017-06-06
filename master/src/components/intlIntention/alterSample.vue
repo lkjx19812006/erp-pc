@@ -30,7 +30,7 @@
 			                	<tr v-for="item in param.items">
 				                	<td>{{item.breedName}}</td>
 				                	<td>{{item.quality}}</td>
-				                	<td>{{item.location}}</td>
+				                	<td>{{item.location | province}}</td>
 				                	<td>{{item.spec}}</td>
 				                	<td>{{item.number}}</td>
 				                	<td>{{item.eunit}}</td>
@@ -84,7 +84,7 @@
 	                                        
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.origin')}}</label>
-	                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input"  disabled="disabled" placeholder="请先选择一个品种"/>
+	                                     <!-- <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input"  disabled="disabled" placeholder="请先选择一个品种"/>
 	                                     <div type="text" class="edit-input" v-if="breedParam.id">
 	                                         <input-select
 	                                           :prevalue="breedInfo.location"
@@ -94,7 +94,8 @@
 	                                           label="name"
 	                                         >
 	                                         </input-select>
-	                                     </div>
+	                                     </div> -->
+	                                     <breed-location :param="breedInfo" :show="breedParam" :widparam="'260'"></breed-location>
 	                                </div>
 	                                <div class="client-detailInfo  col-md-12">
 				                        <label class="editlabel">说明</label></label>
@@ -216,6 +217,7 @@ import pagination from '../pagination'
 import vSelect from   '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import searchbreedModel  from '../Intention/breedsearch'
+import breedLocation from '../order/second_order/breedLocation'
 import searchcustomerModel  from '../Intention/clientname'
 import {
     initCustomerlist,
@@ -307,7 +309,8 @@ export default{
 		searchbreedModel,
 		vSelect,
 		inputSelect,
-		searchcustomerModel
+		searchcustomerModel,
+		breedLocation
 	},
 	vuex:{
 		getters:{
@@ -385,6 +388,8 @@ export default{
           this.breedInfo.eunit=this.param.items[index].eunit,
           this.breedInfo.cunit=this.param.items[index].cunit,
           this.breedInfo.description=this.param.items[index].description,
+          this.breedParam.id = this.breedInfo.breedId
+          this.getBreedDetail(this.breedParam)
           this.updateParam.show = true;
         },
         deleteBreed:function(index){
@@ -459,6 +464,7 @@ export default{
                   description:'',
                   status:1
               });
+              this.breedParam.id=''
               this.addParam.show = true;
           }  
           
@@ -504,6 +510,7 @@ export default{
           	} 
             this.breedInfo.breedId = breed.breedId;
             this.breedParam.id = breed.breedId;
+            this.getBreedDetail(this.breedParam)
             console.log(this.breedParam)
         },
         customer:function(customer){

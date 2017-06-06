@@ -112,7 +112,7 @@
                          preSell:0,
                          validate:0,
                          qualification:'',
-                         quality:'',
+                         quality:[],
                          spec:'',
                          number:'',
                          moq:'',

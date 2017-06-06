@@ -832,3 +832,19 @@ export const initDealBreedDetail = (state) => { //初始化我的品种统计成
 export const initBreedOrderDetail = (state) => { //初始化我的品种统计成交订单详情
     return JSON.parse(JSON.stringify(state.table.breedOrderDetail))
 }
+
+export const initSampleCountList = (state)=>{ //初始化样品订单统计
+    return JSON.parse(JSON.stringify(state.table.sampleCountList))
+}
+
+export const initSampleCountDetail = (state)=>{ //初始化样品订单统计详情
+    return JSON.parse(JSON.stringify(state.table.sampleCountDetail))
+}
+
+export const initMainOrderCountList = (state)=>{ //初始化大货订单统计
+    return JSON.parse(JSON.stringify(state.table.mianOrderCountList))
+}
+
+export const initMainOrderCountDetail = (state)=>{ //初始化大货订单统计详情
+    return JSON.parse(JSON.stringify(state.table.mianOrderCountDetail))
+}

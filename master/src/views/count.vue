@@ -51,9 +51,13 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==12">
         <org-breedcount></org-breedcount>
     </div>
-     <!-- 全部品种统计（新） -->
+    <!-- 全部品种统计（新） -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==13">
         <all-breedcount></all-breedcount>
+    </div>
+    <!-- 订单信息统计（新） -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==14">
+        <new-order-count></new-order-count>
     </div>
 </template>
 <script>
@@ -72,6 +76,7 @@ import allCount from '../components/count/allClientCount'
 import clientOverview from '../components/count/clientOverview'
 import allorderCount from '../components/count/allOrderCount'
 import orgManage from '../components/count/orgManage'
+import newOrderCount from '../components/count/newOrderCount'
 export default {
     components: {
         personalCount,
@@ -88,7 +93,8 @@ export default {
         clientOverview,
         allorderCount,
         orgManage,
-        myNewcount
+        myNewcount,
+        newOrderCount
     }
 }
 </script>

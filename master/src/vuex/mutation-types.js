@@ -278,3 +278,7 @@ export const CHANGE_ALLADDBREEDDETAIL = 'CHANGE_ALLADDBREEDDETAIL' //全部品�
 export const CHANGE_BREEDORDER_DETAIL = 'CHANGE_BREEDORDER_DETAIL' //品种订单详情
 
 export const ADD_BREED_LOCAL = 'ADD_BREED_LOCAL'//新增品种产地
+export const SELECT_SAMPLECOUNT = 'SELECT_SAMPLECOUNT' //样品订单统计
+export const SELECT_SAMPLEDETAIL = 'SELECT_SAMPLEDETAIL' //样品订单统计详情
+export const SELECT_MAINORDERCOUNT = 'SELECT_MAINORDERCOUNT' //大货订单统计
+export const SELECT_MAINORDERDETAIL = 'SELECT_MAINORDERDETAIL' //大货订单统计详情

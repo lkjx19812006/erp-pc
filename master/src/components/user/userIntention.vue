@@ -78,8 +78,15 @@
                                     <input type="number" v-model='param.price' v-validate:price="['money']" class="form-control edit-input" value="{{param.price}}" style="display:-webkit-inline-box" /><span v-show="param.unit">元/{{param.unit | Unit}}</span>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">质量要求</label>
-                                    <input type="text" v-model="param.quality" class="form-control edit-input" value="{{param.quality}}" />
+                                    <label class="editlabel">质量要求
+                                        <span class="system_danger" v-if="$validation.quality.required">必填项</span>
+                                    </label>
+                                    <input type="text"v-model="param.quality" class="form-control edit-input" value="{{param.quality}}" v-validate:quality="{required:true}">
+                                        
+                                    </input>
+                                    <!-- <i-select :model.sync="param.quality" filterable multiple style="width: 321px">
+                                        <i-option v-for="item in qualityList" :value="item.title">{{item.title}}</i-option>
+                                    </i-select> -->
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">包装</label>
@@ -501,6 +508,7 @@ export default {
                 qiniu: false,
                 files: []
             },
+            qualityList:[{title:"符合药典"},{title:"硫不超标"},{title:"无虫蛀"},{title:"无霉"},{title:"无变色"},{title:"无走油"},{title:"干度好"},{title:"杂质少"},{title:"含量够"}]
         }
     },
     vuex: {

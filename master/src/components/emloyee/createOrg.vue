@@ -52,6 +52,21 @@
                                     <option value="0">无用</option>
                                 </select>
                             </div>
+                            <div class="client-detailInfo  pull-left col-md-6 col-xs-12" v-if="param.distinct=='editparten'">
+                                <label style="display:inline;font-size:14px;">管辖省份：</label>
+                                    <Tag color="blue" v-for="($index,item) in proArr" track-by="$index" closable @on-close="deleteLabel($index)">{{item.cname}}</Tag>
+                                    <i-button icon="ios-plus-empty" type="dashed" size="small" @click="newlabel()">
+                                        <span v-if="!pro.show">展开</span>
+                                        <span v-else>收起</span>
+                                        添加
+                                    </i-button>
+                                <div v-if="pro.show">
+                                    <i-select :model.sync="pro.data" style="width:200px" >
+                                        <i-option v-for="item in initCNProvince" :value="item.id" @click="check(item)">{{ item.cname }}</i-option>
+                                    </i-select>
+                                </div>
+                                    
+                            </div>
                         </div>
                     </section>
                 </div>
@@ -68,7 +83,8 @@
 <script>
 import orgsearchModel from  '../emloyee/searchorg'
 import {
-    initOrgDetail
+    initOrgDetail,
+    initCNProvince
 } from '../../vuex/getters'
 import {
     getOrgDetail,
@@ -97,13 +113,19 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 id:this.param.id
+            },
+            proArr:[{cname:'上海',id:''},{cname:'江苏',id:''}],
+            pro:{
+                show:false,
+                data:''
             }
            
         }
     },
      vuex: {
         getters:{
-            initOrgDetail
+            initOrgDetail,
+            initCNProvince
         },
         actions: {
             getOrgDetail,
@@ -150,6 +172,15 @@ export default {
         selectOrg:function(){
             this.orgNameParam.show=true;
             this.param.pid = this.orgNameParam.orgid;
+        },
+        newlabel:function(){
+            this.pro.show = !this.pro.show 
+        },
+        check:function(item){
+            this.proArr.push(item)
+        },
+        deleteLabel:function($index){
+            this.proArr.splice($index,1)
         }
     },
     events:{

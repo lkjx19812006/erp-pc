@@ -334,7 +334,8 @@ export default {
                 level: '',
                 name: '',
                 pid: '',
-                status: ''
+                status: '',
+                procinceIds:''
             },
             orgParam: {
                 show: false,
@@ -428,6 +429,7 @@ export default {
             this.complierParam.name = '';
             this.complierParam.pid = '';
             this.complierParam.status = '';
+            this.complierParam.provinceIds = ''
             this.complierParam.callback = this.callback;
         },
         editOrg: function() { //编辑部门
@@ -439,6 +441,7 @@ export default {
                 this.complierParam.level = this.initOrgDetail.level;
                 this.complierParam.pid = this.initOrgDetail.pid;
                 this.complierParam.status = this.initOrgDetail.status;
+                this.complierParam.provinceIds = this.initOrgDetail.provinceIds;
                 this.complierParam.show = true;
                 this.complierParam.distinct = 'editparten';
                 this.complierParam.title = '编辑部门';

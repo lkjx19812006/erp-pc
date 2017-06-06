@@ -21,7 +21,7 @@
 			                    <tr>
 			                        <td>{{param.breedName}}</td>
 			                        <td>{{param.specAttribute | specFilter}}</td>
-			                        <td>{{param.location}}</td>
+			                        <td>{{param.locationName}}</td>
 			                        <td>{{param.usableNum}}</td>
 			                        <td>{{param.unitId | Unit}}</td>
 			                    </tr>

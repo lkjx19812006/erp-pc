@@ -181,7 +181,7 @@
                                                         <!-- 意向信息 -->
                                                         <td v-if="!item.purchaseOffer">{{item.breedName}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.number}}{{item.unit | Unit}}</td>
-                                                        <td v-if="!item.purchaseOffer">{{item.location}}</td>
+                                                        <td v-if="!item.purchaseOffer">{{item.location | province}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.spec}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.quality}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.mainStandard}}</td>

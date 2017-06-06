@@ -37,8 +37,8 @@
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:20px">
-                    <button type="button" class="btn btn-default margin_right" height="24" width="24" @click="selectSearch()">搜索</button>
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+                    <button type="button" class="btn btn-default btn-primary margin_right" height="24" width="24" @click="selectSearch()">搜索</button>
+                    <button type="button" class="btn btn-default btn-warning" height="24" width="24" @click="resetCondition()">清空条件</button>
                 </dl>
                <!--  <dd class="pull-right" style="margin-right:10px">
                    <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
@@ -46,15 +46,14 @@
                 <dd class="pull-right" style="margin-right:200px">
                 	<button type='button' class='btn btn-default cartbtn' :class={cartbtnAct:cartData.leng} height="24" width="24" @click="showCartList()">购物车({{cartData.leng}})</button>
                 	<!-- 库存模板下载 -->
-                	<button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn">
-                        <a href="http://erp.yaocaimaimai.net/local/template/Resource_template.xlsx">
-                            EXCEL库存模板下载
-                        </a>
-                    </button>
+                    <a href="http://erp.yaocaimaimai.net/local/template/Resource_template.xlsx" class="btn btn-default btn-info">
+                        EXCEL库存模板下载
+                    </a>
+
                 	<!-- EXCEL导入客户 -->
                     <button type="button" class="btn btn-primary" @click="excelImport()">excel导入社会库存</button>
 					<!-- 新建社会库存 -->
-                    <button type="button" class="btn btn-default" @click="createStock({
+                    <button type="button" class="btn btn-default btn-success" @click="createStock({
                                             show:true,
                                             flag:0,                                            
                                             breedName:'',
@@ -113,7 +112,7 @@
                         <td>{{item.employeeName}}</td>
                         <td>{{item.specAttribute | specFilter_a}}</td>
                         <td>{{item.specAttribute | specFilter_b}}</td>
-                        <td>{{item.location}}</td>
+                        <td>{{item.locationName}}</td>
                         <td>{{item.usableNum}}</td>
                         <td>{{item.unitId | Unit}}</td>
                         <td>
@@ -129,7 +128,7 @@
                        			breedName:item.breedName,
                        			id:item.id,
                        			specAttribute:item.specAttribute,
-                       			location:item.location,
+                       			locationName:item.locationName,
                        			usableNum:item.usableNum,
                        			unitId:item.unitId
                        		})">加入购物车</button>
@@ -232,7 +231,7 @@ export default {
 				id:'',
                 breedName:'',
                 specAttribute:'',
-                location:'',
+                locationName:'',
                 usableNum:'',
                 unitId:'',
                 callback:this.callback ,
@@ -319,11 +318,10 @@ export default {
 			this.orderData.breedName = data.breedName;
 			this.orderData.id = data.id;
 			this.orderData.specAttribute = data.specAttribute;
-			this.orderData.location = data.location;
+			this.orderData.locationName = data.locationName;
 			this.orderData.usableNum = data.usableNum;
 			this.orderData.unitId = data.unitId;
 			this.orderData.index = $index;
-			console.log(this.$store.state.table.stockCartList)
 		},
 		showCartList:function(){
 			this.cartData.show=true
