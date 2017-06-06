@@ -5,7 +5,6 @@
         <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
-        <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
         <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
         <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
         <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
@@ -214,7 +213,7 @@
                             <td>{{item.customerPhone}}</td>
                             <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                             <td>{{item.breedName}}</td>
-                            <td>{{item.location}}</td>
+                            <td>{{item.locationName}}</td>
                             <td>{{item.price}}元/{{item.unit | Unit}}</td>
                             <td>{{item.spec}}</td>
                             <td>{{item.number}}{{item.unit | Unit}}</td>
@@ -349,7 +348,6 @@ import transferintentModel from '../../Intention/transferIntent'
 import intentionauditModel from '../../user/intentionAudit'
 import tipsdialogModel from '../../tips/tipDialog'
 import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
-import editintentModel from '../../Intention/Editintention'
 import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
 import transferModel from '../../user/userTransfer'
@@ -381,7 +379,6 @@ export default {
         intentionauditModel,
         tipsdialogModel,
         deletebreedModel,
-        editintentModel,
         createintentModel,
         supdemModel,
         transferModel,
@@ -471,9 +468,7 @@ export default {
             deleteParam: {
                 show: false
             },
-            editParam: {
-                show: false
-            },
+
             createParam: {
                 show: false
             },

@@ -4,7 +4,6 @@
     <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
-    <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
     <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
     <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
@@ -232,7 +231,6 @@ import transferintentModel from '../../Intention/transferIntent'
 import intentionauditModel from '../../user/intentionAudit'
 import tipsdialogModel from '../../tipsDialog'
 import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
-import editintentModel from '../../Intention/Editintention'
 import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
 import searchModel from '../intentionSearch'
@@ -264,7 +262,6 @@ export default {
         intentionauditModel,
         tipsdialogModel,
         deletebreedModel,
-        editintentModel,
         createintentModel,
         supdemModel,
         searchModel,
@@ -350,9 +347,6 @@ export default {
                 onSell: 0
             },
             deleteParam: {
-                show: false
-            },
-            editParam: {
                 show: false
             },
             createParam: {

@@ -86,8 +86,8 @@
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.names}}</td>
-                        <td>{{item.country}}</td>
-                        <td>{{item.city}}</td>
+                        <td>{{item.countryName}}</td>
+                        <td>{{item.provinceName}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>

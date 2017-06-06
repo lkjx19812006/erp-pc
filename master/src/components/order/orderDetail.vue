@@ -37,7 +37,7 @@
                                         <div class="clearfix">
                                             <p class="btn btn-primary btn-xs">订单信息</p>
                                         </div>
-                                        <div  class="clearfix">
+                                        <div class="clearfix">
                                             <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
                                             <mg-label :title="$t('static.order_no')">{{initOrderDetail.no}}</mg-label>
                                             <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link==''">{{$t('static.sell')}}</mg-label>
@@ -64,7 +64,7 @@
                                             <!-- 成交时间 -->
                                             <mg-label :title="$t('static.transcation')">{{initOrderDetail.ctime}}</mg-label>
                                         </div>
-                                        <hr style="height:10px;border-color:#ccc"/>
+                                        <hr style="height:10px;border-color:#ccc" />
                                         <div class="clearfix">
                                             <p class="btn btn-primary btn-xs">收货信息</p>
                                         </div>
@@ -74,7 +74,7 @@
                                             <mg-label :title="$t('static.country')">{{initOrderDetail.countryName}}</mg-label>
                                             <mg-label :title="$t('static.detailed_address')">{{initOrderDetail.consigneeAddr}}</mg-label>
                                         </div>
-                                        <hr style="height:10px;border-color:#ccc"/>
+                                        <hr style="height:10px;border-color:#ccc" />
                                         <div class="clearfix">
                                             <p class="btn btn-primary btn-xs">成交信息</p>
                                         </div>
@@ -83,8 +83,8 @@
                                             <mg-label :title="$t('static.wait_payment')">{{initOrderDetail.unpaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
                                             <mg-label :title="$t('static.sundry_fees')+$t('static.fee_explain')">{{initOrderDetail.incidentals}}<span v-if="initOrderDetail.incidentalsDesc!=''">（{{initOrderDetail.incidentalsDesc}}）</span></mg-label>
                                             <mg-label :title="$t('static.preferential')+$t('static.discount_note')">{{initOrderDetail.preferential}}<span v-if="initOrderDetail.preferentialDesc!=''">（{{initOrderDetail.preferentialDesc}}）</span></mg-label>
-                                            <mg-label :title="$t('static.paid')">{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>   
-                                        </div>                                       
+                                            <mg-label :title="$t('static.paid')">{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
+                                        </div>
                                         <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.comments}}</mg-label>
                                     </ul>
                                 </div>
@@ -134,7 +134,7 @@
                                                             <a href="javascript:void(0);" @click="editQa(item,initOrderDetail.sample,'qaSelf')">{{item.qaSelf | qaFilter}}</a>
                                                         </td>
                                                         <td v-if="initOrderDetail.orderStatus==60&&initOrderDetail.sample==1">
-                                                            <a href="javascript:void(0);" @click="editQa(item,initOrderDetail.sample,'sample')">{{item.sampleTraded | isDeal}}</a>                                                       
+                                                            <a href="javascript:void(0);" @click="editQa(item,initOrderDetail.sample,'sample')">{{item.sampleTraded | isDeal}}</a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -156,7 +156,7 @@
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.goods.arr">
                                                         <td>{{item.breedName}}</td>
-                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.locationName}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.quality}}</td>
@@ -851,10 +851,10 @@ export default {
                 list: [], //goods和orderLinkList重组后的信息
                 callback: this.callback
             },
-            editParam:{
-                show:false,
-                key:"orderDetail",
-                callback:this.getOrderDetail
+            editParam: {
+                show: false,
+                key: "orderDetail",
+                callback: this.getOrderDetail
             }
         }
     },
@@ -1005,7 +1005,7 @@ export default {
             this.tipsParam.alert = true;
             this.getOrderDetail(this.param);
         },
-        editQa:function(item,data,type){
+        editQa: function(item, data, type) {
             console.log(this.initOrderDetail)
             this.editParam.show = true
             this.editParam.breedName = item.breedName

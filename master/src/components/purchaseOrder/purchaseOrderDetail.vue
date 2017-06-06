@@ -151,7 +151,7 @@
                                                                         <td>{{offer.offerOrgName}}</td>
                                                                         <td>{{offer.breedName}}</td>
                                                                         <td>{{offer.spec}}</td>
-                                                                        <td>{{offer.location}}</td>
+                                                                        <td>{{offer.location | province}}</td>
                                                                         <td>{{offer.number}}{{offer.unit | Unit}}</td>
                                                                         <td>{{offer.price}}</td>
                                                                         <td>
@@ -181,7 +181,7 @@
                                                         <!-- 意向信息 -->
                                                         <td v-if="!item.purchaseOffer">{{item.breedName}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.number}}{{item.unit | Unit}}</td>
-                                                        <td v-if="!item.purchaseOffer">{{item.location}}</td>
+                                                        <td v-if="!item.purchaseOffer">{{item.location | province}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.spec}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.quality}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.mainStandard}}</td>
@@ -262,7 +262,7 @@
                                                         <td>{{item.offerEmployeeName}}</td>
                                                         <td><a @click="clickOfferDetail(item.id)">{{item.breedName}}</a></td>
                                                         <td>{{item.spec}}</td>
-                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.location | province}}</td>
                                                         <td>{{item.number}}{{item.unit | Unit}}</td>
                                                         <td>{{item.price}}</td>
                                                         <td>
@@ -519,8 +519,8 @@ export default {
                             number: offer.number,
                             price: offer.price,
                             unit: offer.unit,
-                            spec:offer.spec,
-                            location:offer.location
+                            spec: offer.spec,
+                            location: offer.location
                         }
                         return;
                     }
@@ -534,8 +534,8 @@ export default {
                         number: offer.number,
                         price: offer.price,
                         unit: offer.unit,
-                        spec:offer.spec,
-                        location:offer.location
+                        spec: offer.spec,
+                        location: offer.location
                     });
                 }
             }

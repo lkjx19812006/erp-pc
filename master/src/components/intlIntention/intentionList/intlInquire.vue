@@ -77,8 +77,8 @@
                         <td class="underline" @click="clickOn(item,$index)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
-                        <td>{{item.country}}</td>
-                        <td>{{item.city}}</td>
+                        <td>{{item.countryName}}</td>
+                        <td>{{item.provinceName}}</td>
                         <td>{{item.source}}</td>
                         <td>{{item.ctime}}</td>
                         <td v-if="item.inquire==0">

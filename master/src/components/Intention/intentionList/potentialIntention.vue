@@ -190,9 +190,9 @@
                             <td>{{item.spec}}</td>
                             <td>{{item.unit | Unit}}</td>
                             <td>{{item.price}}</td>
-                            <td>{{item.location}}</td>
+                            <td>{{item.locationName}}</td>
                             <td>{{item.number}}</td>
-                            <td>{{item.province}}</td>
+                            <td>{{item.provinceName}}</td>
                             <td>{{item.address}}</td>
                             <td>
                                 <div v-if="item.sampling==0">否</div>

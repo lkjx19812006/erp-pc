@@ -4102,6 +4102,9 @@ export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
         }
     }).then((res) => {
         var obj = res.json().result;
+        obj.forEach(function(item) {
+            item.cnameEn = item.cname + '(' + item.nameEn + ')'; //中英文名字"中国/Chinese"
+        })
         dispatch(types.PROVINCE_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
@@ -6989,7 +6992,7 @@ export const createOrderByStock = ({ dispatch }, param) => { //库存列表页�
         console.log("success");
         param.show = false;
         if (param.callback) {
-            param.callback(res.json().msg );
+            param.callback(res.json().msg);
         }
 
     }, (res) => {
@@ -7892,7 +7895,7 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
         customerEmail: param.customerEmail,
         country: param.country,
         province: param.province,
-        city: param.city,
+        //city: param.city,
         port: param.port,
         district: param.district,
         address: param.address,

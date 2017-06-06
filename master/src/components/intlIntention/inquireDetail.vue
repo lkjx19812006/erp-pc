@@ -48,11 +48,12 @@
                                     </div>
                                     <div class="client-detailInfo col-md-6 col-sm-12 col-xs-12">
                                         <label class="editlabel">{{$t('static.country')}}：</label>
-                                        <span>{{initIntlIntentionDetail.country}}</span>
+                                        <span>{{initIntlIntentionDetail.countryName}}</span>
                                     </div>
+                                    <!-- 国外的市就是国内的省 -->
                                     <div class="client-detailInfo col-md-6 col-sm-12 col-xs-12">
                                         <label class="editlabel">{{$t('static.city')}}：</label>
-                                        <span>{{initIntlIntentionDetail.city}}</span>
+                                        <span>{{initIntlIntentionDetail.provinceName}}</span>
                                     </div>
                                     <div class="client-detailInfo col-md-6 col-sm-12 col-xs-12">
                                         <label class="editlabel">{{$t('static.intention_source')}}：</label>
@@ -199,7 +200,7 @@
                                                 <tbody>
                                                     <tr v-for="item in initIntlIntentionDetail.items.arr">
                                                         <td><a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a></td>
-                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.location | province}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.quality}}</td>
                                                         <td v-if="item.offerOrigPrice!=null">{{item.offerOrigPrice}}（{{item.origCurrency | Currency}}）</td>
@@ -321,7 +322,7 @@
                                                         <td>
                                                             <a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a>
                                                         </td>
-                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.location | province}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.quality}}</td>
                                                         <td>
