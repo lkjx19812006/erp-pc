@@ -386,21 +386,6 @@ export default {
           this.getBreedDetail(this.breedParam)
           this.updateParam.show = true;
         },
-        showModifyBreed: function(index) {
-            this.breedInfo.status = 2;
-            this.updateParam.index = index;
-            this.breedInfo.breedId = this.param.items[index].breedId,
-                this.breedInfo.breedName = this.param.items[index].breedName,
-                this.breedInfo.quality = this.param.items[index].quality,
-                this.breedInfo.location = this.param.items[index].location,
-                this.breedInfo.spec = this.param.items[index].spec,
-                this.breedInfo.number = this.param.items[index].number,
-                this.breedInfo.unit = this.param.items[index].unit,
-                this.breedInfo.eunit = this.param.items[index].eunit,
-                this.breedInfo.cunit = this.param.items[index].cunit,
-                this.breedInfo.description = this.param.items[index].description,
-                this.updateParam.show = true;
-        },
         deleteBreed: function(index) {
             this.param.items.splice(index, 1);
         },
