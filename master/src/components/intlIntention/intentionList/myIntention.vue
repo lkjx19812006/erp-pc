@@ -55,6 +55,7 @@
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
+            <!-- 国外的市对应国内的省，即province字段 -->
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
@@ -88,8 +89,8 @@
                         <td class="underline" @click="clickOn(item.id)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.names}}</td>
-                        <td>{{item.country}}</td>
-                        <td>{{item.city}}</td>
+                        <td>{{item.countryName}}</td>
+                        <td>{{item.provinceName}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
@@ -422,7 +423,6 @@ export default {
             //this.cancelIntlIntentionInquire(this.cancelInquireParam);
         },
         confirmCancelInquire: function() {
-            console.log(this.cancelInquireParam);
             this.cancelIntlIntentionInquire(this.cancelInquireParam);
         },
 
@@ -435,7 +435,6 @@ export default {
             this.chanceParam = initIntentionList
         },
         newOrder: function(item, sub) {
-            console.log(item)
             this.createOrderParam.show = true;
             this.createOrderParam.employee = item.employee;
             this.createOrderParam.id = item.id;
@@ -444,10 +443,12 @@ export default {
             this.createOrderParam.consigneeAddr = item.address;
             this.createOrderParam.customerName = item.customerName;
             this.createOrderParam.customerPhone = item.customerPhone;
-            this.createOrderParam.province = item.province;
+            //这是ID
             this.createOrderParam.country = item.country;
-            this.createOrderParam.district = item.district;
-            this.createOrderParam.city = item.city;
+            this.createOrderParam.province = item.province;
+            //这是中文名
+            this.createOrderParam.countryName = item.countryName;
+            this.createOrderParam.provinceName = item.provinceName;
             this.createOrderParam.tradeTime = item.tradeTime;
             this.createOrderParam.consigner = item.consigner;
             this.createOrderParam.consigneeAddr = item.address;
@@ -480,7 +481,7 @@ export default {
         deleteIntention: function(param) {
             this.deleteParam = param;
         },
-        modifyIntention: function(id, index) {  //编辑按钮
+        modifyIntention: function(id, index) { //编辑按钮
             this.modifyParam.show = true;
             this.modifyParam.id = id;
             this.modifyParam.index = index;

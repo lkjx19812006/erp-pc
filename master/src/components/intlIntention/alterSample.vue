@@ -1,8 +1,8 @@
 <template>
-	<searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
-	<searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
-	<div v-show="param.send"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-	<div class="container modal_con" v-show="param.send">
+    <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
+    <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
+    <div v-show="param.send" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con" v-show="param.send">
         <div @click="param.send = false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -140,26 +140,20 @@
 	                        <label class="editlabel">收货地址 <span class="system_danger" v-if="$validation.address.required">必填项</span></label></label>
 	                        <input type="text" class="form-control edit-input" v-model="param.address" value="{{param.address}}" v-validate:address="['required']" />
 	                    </div> -->
-	                    <div class="client-detailInfo  col-md-6 col-xs-12">
-	                        <label class="editlabel">合计总额 <span class="system_danger" v-if="$validation.total.required">{{$t('static.required')}}</span></label></label>
-	                        <input type="text" class="form-control edit-input" v-model="param.total" value="{{param.total}}" v-validate:total="['required']" />
-	                    </div>
-	                    <div class="client-detailInfo  col-md-6 col-xs-12">
-                              <label class="editlabel">{{$t('static.country')}}<span class="system_danger" v-if="$validation.country.required">{{$t('static.required')}}</span></label>
-                              <input type="text" v-show="false" v-model="country.cnameEn" v-validate:country="['required']">
-                              <div type="text" class="edit-input">
-                                  <v-select
-                                     :debounce="250"
-                                     :value.sync="country"
-                                     :on-change="selectProvince"
-                                     :options="initCountrylist"
-                                     placeholder="国家/Country"
-                                     label="cnameEn"
-                                    >
-                                   </v-select>
-                             </div>
-                          </div>
-	                     <!-- <div class="client-detailInfo  col-md-6 col-xs-12">
+                        <div class="client-detailInfo  col-md-6 col-xs-12">
+                            <label class="editlabel">合计总额 <span class="system_danger" v-if="$validation.total.required">{{$t('static.required')}}</span></label>
+                            </label>
+                            <input type="text" class="form-control edit-input" v-model="param.total" value="{{param.total}}" v-validate:total="['required']" />
+                        </div>
+                        <div class="client-detailInfo  col-md-6 col-xs-12">
+                            <label class="editlabel">{{$t('static.country')}}<span class="system_danger" v-if="$validation.country.required">{{$t('static.required')}}</span></label>
+                            <input type="text" v-show="false" v-model="country.cnameEn" v-validate:country="['required']">
+                            <div type="text" class="edit-input">
+                                <v-select :debounce="250" :value.sync="country" :on-change="selectProvince" :options="initCountrylist" placeholder="国家/Country" label="cnameEn">
+                                </v-select>
+                            </div>
+                        </div>
+                        <!-- <div class="client-detailInfo  col-md-6 col-xs-12">
                                    <label class="editlabel">{{$t('static.province')}}<span class="system_danger" v-if="$validation.province.required">必填项</span></label>
                                    <input type="text" v-show="false" v-model="province.cname" v-validate:province="['required']">
                                    <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
@@ -174,10 +168,10 @@
                                        </v-select>
                                    </div>
                                </div> -->
-                          <div class="client-detailInfo  col-md-6 col-xs-12">
-                              <label class="editlabel">{{$t('static.city')}} <span class="system_danger" v-if="$validation.city.required">{{$t('static.required')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-validate:city="['required']"  v-model="param.city" />
-	                            <!-- <input type="text" v-show="false" v-model="city.cname" v-validate:city="['required']">
+                        <div class="client-detailInfo  col-md-6 col-xs-12">
+                            <label class="editlabel">{{$t('static.city')}} <span class="system_danger" v-if="$validation.city.required">{{$t('static.required')}}</span></label>
+                            <input type="text" class="form-control edit-input" v-validate:city="['required']" v-model="param.city" />
+                            <!-- <input type="text" v-show="false" v-model="city.cname" v-validate:city="['required']">
 	                              <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
 	                              <div v-if="province.cname" type="text" class="edit-input">
 	                                  <v-select
@@ -191,30 +185,30 @@
 	                                  </v-select>
 	                              </div>
                              	 -->
-                          </div>
-                           <div class="client-detailInfo  col-md-6 col-xs-12">
-		                        <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">{{$t('static.required')}}</span></label>
-		                        <input type="text" class="form-control edit-input" v-validate:addr="['required']"  v-model="param.address" value="{{param.address}}"  />
-		                   </div>
-		                    <div class="client-detailInfo  col-md-12">
-		                        <label class="editlabel">{{$t('static.comment')}} </label></label>
-		                        <textarea class="form-control" v-model="param.comments" value="{{param.comments}}" style="resize:none; border:1px solid #ddd;" rows="5"></textarea>
-		                    </div>
-	                </section>
-	                
-	            </div>
-	           	<div class="edit_footer">
-		            <button type="button" class="btn btn-default btn-close" @click="param.send = false">{{$t('static.cancel')}}</button>
-		            <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.items.length>0"  @click="createOrUpdateIntlIntention(param)">{{$t('static.confirm')}}</button>
-		            <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.confirm')}}</button>
-		        </div>
-	        </validator>
-	    </div>
-	</div>
+                        </div>
+                        <div class="client-detailInfo  col-md-6 col-xs-12">
+                            <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">{{$t('static.required')}}</span></label>
+                            <input type="text" class="form-control edit-input" v-validate:addr="['required']" v-model="param.address" value="{{param.address}}" />
+                        </div>
+                        <div class="client-detailInfo  col-md-12">
+                            <label class="editlabel">{{$t('static.comment')}} </label>
+                            </label>
+                            <textarea class="form-control" v-model="param.comments" value="{{param.comments}}" style="resize:none; border:1px solid #ddd;" rows="5"></textarea>
+                        </div>
+                    </section>
+                </div>
+                <div class="edit_footer">
+                    <button type="button" class="btn btn-default btn-close" @click="param.send = false">{{$t('static.cancel')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.items.length>0" @click="createOrUpdateIntlIntention(param)">{{$t('static.confirm')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.confirm')}}</button>
+                </div>
+            </validator>
+        </div>
+    </div>
 </template>
 <script>
 import pagination from '../pagination'
-import vSelect from   '../tools/vueSelect/components/Select'
+import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import searchbreedModel  from '../Intention/breedsearch'
 import breedLocation from '../order/second_order/breedLocation'
@@ -240,67 +234,67 @@ import {
     alterSample,
     getUnitList
 } from '../../vuex/actions'
-export default{
-	props:['param'],
-	data(){
-		return {
-			countryParam:{
-              loading:true,
-              show:false,
-              color: '#5dc596',
-              size: '15px',
-              cur: 1,
-              all: 7
+export default {
+    props: ['param'],
+    data() {
+        return {
+            countryParam: {
+                loading: true,
+                show: false,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7
             },
-			breedParam:{
-                show:false,
-                breedName:'',
-                breedId:'',
-                loading:false,
-                id:'',
-                eName:''
+            breedParam: {
+                show: false,
+                breedName: '',
+                breedId: '',
+                loading: false,
+                id: '',
+                eName: ''
             },
-            breedInfo:{ 
-              status:0,   //自定义状态，表示编辑框的状态，0表示收起(起始)状态，1表示add，2表示update，add或update结束后将status置为0
-              breedId:'',
-              breedName:'',
-              title:'',
-              quality:'',
-              location:'',
-              spec:'',
-              cunit:'',
-              number:'',
-              unit:'',
-              eunit:'',
-              description:'',
-              id:''
+            breedInfo: {
+                status: 0, //自定义状态，表示编辑框的状态，0表示收起(起始)状态，1表示add，2表示update，add或update结束后将status置为0
+                breedId: '',
+                breedName: '',
+                title: '',
+                quality: '',
+                location: '',
+                spec: '',
+                cunit: '',
+                number: '',
+                unit: '',
+                eunit: '',
+                description: '',
+                id: ''
             },
-            addParam:{
-              show:false,
-              length:0
+            addParam: {
+                show: false,
+                length: 0
             },
-            updateParam:{
-              show:false,
-              index:0
+            updateParam: {
+                show: false,
+                index: 0
             },
-            empNameParam:{
-                show:false,
-                customer:'',
-                customerName:'',
-                customerPhone:''
+            empNameParam: {
+                show: false,
+                customer: '',
+                customerName: '',
+                customerPhone: ''
             },
-            country:{
-              cnameEn:'',
-              id:''
+            country: {
+                cnameEn: '',
+                id: ''
             },
-            province:{
-              cname:'',
+            province: {
+                cname: '',
             },
-            city:{
-              cname:'',
+            city: {
+                cname: '',
             },
-            district:{
-              cname:'',
+            district: {
+                cname: '',
             }
 		}
 	},
@@ -333,45 +327,45 @@ export default{
             getSampleDetail,
             alterSample,
             getUnitList
-		}
-	},
-	methods:{
-		selectProvince:function(){
+        }
+    },
+    methods: {
+        selectProvince: function() {
             console.log('selectProvince');
             this.province = '';
             this.city = '';
             this.district = '';
-            if(this.country!=''&&this.country!=null){
-              this.getProvinceList(this.country);
+            if (this.country != '' && this.country != null) {
+                this.getProvinceList(this.country);
             }
         },
 
-        selectCity:function(){
+        selectCity: function() {
             this.city = '';
             this.district = '';
-            if(this.province!=''&&this.province!=null){
-              this.getCityList(this.province);
+            if (this.province != '' && this.province != null) {
+                this.getCityList(this.province);
             }
 
         },
-        selectDistrict:function(){
+        selectDistrict: function() {
             this.district = '';
-            if(this.city!=''&&this.city!=null){
-              this.getDistrictList(this.city);
+            if (this.city != '' && this.city != null) {
+                this.getDistrictList(this.city);
             }
         },
-		employNameSearch: function() {
+        employNameSearch: function() {
             this.getClientList(this.loadParam);
         },
-        searchCustomer:function(customerName,customer,customerPhone){
-            this.empNameParam.show=true;
+        searchCustomer: function(customerName, customer, customerPhone) {
+            this.empNameParam.show = true;
         },
-        reset:function(){
-        	this.loadParam.name='';
-            this.loadParam.phone='';
+        reset: function() {
+            this.loadParam.name = '';
+            this.loadParam.phone = '';
         },
-	    searchBreed:function(breedName,breedId){
-            this.breedParam.show=true;
+        searchBreed: function(breedName, breedId) {
+            this.breedParam.show = true;
             /*this.param.breedName = this.breedParam.breedName;
             this.param.breedId = this.breedParam.breedId;*/
      	},
@@ -392,51 +386,66 @@ export default{
           this.getBreedDetail(this.breedParam)
           this.updateParam.show = true;
         },
-        deleteBreed:function(index){
-           this.param.items.splice(index,1);
+        showModifyBreed: function(index) {
+            this.breedInfo.status = 2;
+            this.updateParam.index = index;
+            this.breedInfo.breedId = this.param.items[index].breedId,
+                this.breedInfo.breedName = this.param.items[index].breedName,
+                this.breedInfo.quality = this.param.items[index].quality,
+                this.breedInfo.location = this.param.items[index].location,
+                this.breedInfo.spec = this.param.items[index].spec,
+                this.breedInfo.number = this.param.items[index].number,
+                this.breedInfo.unit = this.param.items[index].unit,
+                this.breedInfo.eunit = this.param.items[index].eunit,
+                this.breedInfo.cunit = this.param.items[index].cunit,
+                this.breedInfo.description = this.param.items[index].description,
+                this.updateParam.show = true;
         },
-        cancelAddBreed:function(){
+        deleteBreed: function(index) {
+            this.param.items.splice(index, 1);
+        },
+        cancelAddBreed: function() {
             this.param.items.pop();
             this.breedInfo.status = 0;
-            this.addParam.show = false; 
+            this.addParam.show = false;
         },
-        cancelModifyBreed:function(){
-          this.breedInfo.status = 0;
-          this.updateParam.show = false; 
+        cancelModifyBreed: function() {
+            this.breedInfo.status = 0;
+            this.updateParam.show = false;
         },
-         modifyBreed:function(){
-          this.param.items[this.updateParam.index].breedId=this.breedInfo.breedId,
-          this.param.items[this.updateParam.index].breedName=this.breedInfo.breedName,
-          this.param.items[this.updateParam.index].quality=this.breedInfo.quality,
-          this.param.items[this.updateParam.index].location=this.breedInfo.location,
-          this.param.items[this.updateParam.index].spec=this.breedInfo.spec,
-          this.param.items[this.updateParam.index].description=this.breedInfo.description,
-          this.param.items[this.updateParam.index].number=this.breedInfo.number,
-          this.param.items[this.updateParam.index].unit=this.breedInfo.eunit.split(',')[0],
-          this.param.items[this.updateParam.index].eunit=this.breedInfo.eunit.split(',')[2],
-          this.param.items[this.updateParam.index].cunit=this.breedInfo.cunit.split(',')[1],
-          /*this.param.items[this.updateParam.index].sourceType=this.breedInfo.sourceType,*/
-          this.param.items[this.updateParam.index].status=1,
-          /*this.param.items[this.updateParam.index].orderId=this.breedInfo.id,*/
-          this.breedInfo.status = 0;
-          this.updateParam.show = false;
+        modifyBreed: function() {
+            this.param.items[this.updateParam.index].breedId = this.breedInfo.breedId,
+                this.param.items[this.updateParam.index].breedName = this.breedInfo.breedName,
+                this.param.items[this.updateParam.index].quality = this.breedInfo.quality,
+                this.param.items[this.updateParam.index].location = this.breedInfo.location,
+                this.param.items[this.updateParam.index].spec = this.breedInfo.spec,
+                this.param.items[this.updateParam.index].description = this.breedInfo.description,
+                this.param.items[this.updateParam.index].number = this.breedInfo.number,
+                this.param.items[this.updateParam.index].unit = this.breedInfo.eunit.split(',')[0],
+                this.param.items[this.updateParam.index].eunit = this.breedInfo.eunit.split(',')[2],
+                this.param.items[this.updateParam.index].cunit = this.breedInfo.cunit.split(',')[1],
+                /*this.param.items[this.updateParam.index].sourceType=this.breedInfo.sourceType,*/
+                this.param.items[this.updateParam.index].status = 1,
+                /*this.param.items[this.updateParam.index].orderId=this.breedInfo.id,*/
+                this.breedInfo.status = 0;
+            this.updateParam.show = false;
         },
-         addBreed:function(){
-          this.param.items[this.param.items.length-1].breedId = this.breedInfo.breedId;
-          this.param.items[this.param.items.length-1].breedName = this.breedInfo.breedName;
-          this.param.items[this.param.items.length-1].quality = this.breedInfo.quality;
-          this.param.items[this.param.items.length-1].location = this.breedInfo.location;
-          this.param.items[this.param.items.length-1].spec = this.breedInfo.spec;
-          this.param.items[this.param.items.length-1].description = this.breedInfo.description;
-          this.param.items[this.param.items.length-1].number = this.breedInfo.number;
-          this.param.items[this.param.items.length-1].unit = this.breedInfo.eunit.split(',')[0];
-          this.param.items[this.param.items.length-1].cunit = this.breedInfo.eunit.split(',')[1];
-          this.param.items[this.param.items.length-1].eunit = this.breedInfo.eunit.split(',')[2];
-          this.param.items[this.param.items.length-1].status = 1;
+        addBreed: function() {
+            this.param.items[this.param.items.length - 1].breedId = this.breedInfo.breedId;
+            this.param.items[this.param.items.length - 1].breedName = this.breedInfo.breedName;
+            this.param.items[this.param.items.length - 1].quality = this.breedInfo.quality;
+            this.param.items[this.param.items.length - 1].location = this.breedInfo.location;
+            this.param.items[this.param.items.length - 1].spec = this.breedInfo.spec;
+            this.param.items[this.param.items.length - 1].description = this.breedInfo.description;
+            this.param.items[this.param.items.length - 1].number = this.breedInfo.number;
+            this.param.items[this.param.items.length - 1].unit = this.breedInfo.eunit.split(',')[0];
+            this.param.items[this.param.items.length - 1].cunit = this.breedInfo.eunit.split(',')[1];
+            this.param.items[this.param.items.length - 1].eunit = this.breedInfo.eunit.split(',')[2];
+            this.param.items[this.param.items.length - 1].status = 1;
 
-          console.log(this.param.items[this.param.items.length-1]);
-          this.breedInfo.status = 0;
-          this.addParam.show = false; 
+            console.log(this.param.items[this.param.items.length - 1]);
+            this.breedInfo.status = 0;
+            this.addParam.show = false;
         },
         showAddBreed:function(){
           if(this.param.items.length == 0||this.param.items[this.param.items.length-1].breedId != ''){
@@ -469,115 +478,122 @@ export default{
           }  
           
         },
-        createOrUpdateIntlIntention:function(item){
-	        this.param.send = false;
-	        this.param.country =this.country.cnameEn;
-	        //将this.param.items补全
-	        console.log(this.param.items.length);
-	        console.log(this.param.itemsBack.length);
-	        var temp=[];   //存放this.param.itemsBack中有，this.param.items中没有的
-	        for(var i=0;i<this.param.itemsBack.length;i++){
-	            var k = 0;
-	            for(var j=0;j<this.param.items.length;j++){
-	              if(this.param.itemsBack[i].id!=this.param.items[j].id){
-	                  k++;
-	              }
-	              if(k==this.param.items.length){
-	                this.param.itemsBack[i].status = 0;
-	                temp.push(this.param.itemsBack[i]);
-	              }
-	            }
-	        }
-	        var _this = this;
-	        console.log(temp);
-	        temp.forEach(function(item){
-	          _this.param.items.push(item);
-	        })
-	        console.log(this.param.items);
-	        this.param.callback=this.param.callback;
-	        this.alterSample(this.param);
-      },
-	},
-	events:{
-        breed:function(breed){
-        	console.log(breed)
-        	if(breed.eName==null||breed.eName==""){
-	            this.breedInfo.breedName = breed.breedName;
-	            this.breedParam.breedName = breed.breedName; 
-          	}else{
-	            this.breedParam.breedName = breed.eName;
-	            this.breedInfo.breedName = breed.eName;
-          	} 
+        createOrUpdateIntlIntention: function(item) {
+            this.param.send = false;
+            this.param.country = this.country.cnameEn;
+            //将this.param.items补全
+            console.log(this.param.items.length);
+            console.log(this.param.itemsBack.length);
+            var temp = []; //存放this.param.itemsBack中有，this.param.items中没有的
+            for (var i = 0; i < this.param.itemsBack.length; i++) {
+                var k = 0;
+                for (var j = 0; j < this.param.items.length; j++) {
+                    if (this.param.itemsBack[i].id != this.param.items[j].id) {
+                        k++;
+                    }
+                    if (k == this.param.items.length) {
+                        this.param.itemsBack[i].status = 0;
+                        temp.push(this.param.itemsBack[i]);
+                    }
+                }
+            }
+            var _this = this;
+            console.log(temp);
+            temp.forEach(function(item) {
+                _this.param.items.push(item);
+            })
+            console.log(this.param.items);
+            this.param.callback = this.param.callback;
+            this.alterSample(this.param);
+        },
+    },
+    events: {
+        breed: function(breed) {
+            console.log(breed)
+            if (breed.eName == null || breed.eName == "") {
+                this.breedInfo.breedName = breed.breedName;
+                this.breedParam.breedName = breed.breedName;
+            } else {
+                this.breedParam.breedName = breed.eName;
+                this.breedInfo.breedName = breed.eName;
+            }
             this.breedInfo.breedId = breed.breedId;
             this.breedParam.id = breed.breedId;
             this.getBreedDetail(this.breedParam)
             console.log(this.breedParam)
         },
-        customer:function(customer){
+        customer: function(customer) {
             this.param.customerName = customer.customerName;
             this.param.customer = customer.customerId;
             this.param.customerPhone = customer.customerPhone;
         }
     },
-	created(){
-        console.log("国家:"+this.param.country);
-		if("employeeId" in this.param){
+    created() {
+        console.log("国家:" + this.param.country);
+        if ("employeeId" in this.param) {
             this.loadParam.employeeId = this.param.employeeId;
         }
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
         this.getSampleDetail(this.param);
         this.getUnitList();
-        if(this.param.breedId){
+        if (this.param.breedId) {
             this.breedParam.breedName = this.param.breedName;
             this.breedParam.id = this.param.breedId;
             this.getBreedDetail(this.breedParam);
             console.log(this.breedParam)
         }
-        if(this.param.country){
-          this.countryParam.country=this.param.country;
-          this.countryParam.province=this.param.province;
-          this.countryParam.city=this.param.city;
-          this.countryParam.district=this.param.district;
-          this.country.cnameEn=this.param.country;
-          this.province.cname=this.param.province;
-          this.city.cname=this.param.city;
-          this.district.cname=this.param.district;
+        if (this.param.country) {
+            this.countryParam.country = this.param.country;
+            this.countryParam.province = this.param.province;
+            this.countryParam.city = this.param.city;
+            this.countryParam.district = this.param.district;
+            this.country.cnameEn = this.param.country;
+            this.province.cname = this.param.province;
+            this.city.cname = this.param.city;
+            this.district.cname = this.param.district;
         }
         console.log(this.param)
-	}
+    }
 }
 </script>
 <style scoped>
-.modal{
-	z-index: 1085;
+.modal {
+    z-index: 1085;
 }
-.modal_con{
-	z-index: 1085;
-	top:60;
+
+.modal_con {
+    z-index: 1085;
+    top: 60;
 }
-.top-title{
-	position: fixed;
-	margin: auto;
-	right: 0;
-	left: 0;
-	width: 800px;
+
+.top-title {
+    position: fixed;
+    margin: auto;
+    right: 0;
+    left: 0;
+    width: 800px;
 }
-.change_trans{
-	margin-top: 20px;
+
+.change_trans {
+    margin-top: 20px;
 }
-.con_trans{
-	margin-top: 40px;
+
+.con_trans {
+    margin-top: 40px;
 }
-.transfer{
-	margin-right: 7px;
+
+.transfer {
+    margin-right: 7px;
 }
-.tans_tab{
-	height: 40px;
-	line-height: 40px;
-	border-bottom: 1px solid #fa6705;
-	text-align: left;
+
+.tans_tab {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #fa6705;
+    text-align: left;
 }
+
 .edit-input {
     height: 36px;
     width: 90%;
@@ -592,25 +608,27 @@ export default{
     border-color: #fa6705;
 }
 
-.tans_tab > .tabs{
-	width: 100px;
-	display: inline-block;
-	font-size:16px;
-	text-align: center;
-	background-color: #f5f5f5;
-	color: #333;
-	float: left;
-	height: 40px;
-	border-bottom: 1px solid #fa6705;
-	cursor: pointer;
+.tans_tab > .tabs {
+    width: 100px;
+    display: inline-block;
+    font-size: 16px;
+    text-align: center;
+    background-color: #f5f5f5;
+    color: #333;
+    float: left;
+    height: 40px;
+    border-bottom: 1px solid #fa6705;
+    cursor: pointer;
 }
-.tans_tab .tabs_active{
-	background-color: #fff;
-	color: #fa6705;
-	border: 1px solid #fa6705;
-	border-bottom: 0;
+
+.tans_tab .tabs_active {
+    background-color: #fff;
+    color: #fa6705;
+    border: 1px solid #fa6705;
+    border-bottom: 0;
 }
-.checkbox_unselect{
+
+.checkbox_unselect {
     background-image: url(/static/images/unselect.png);
     display: inline-block;
     background-repeat: no-repeat;
@@ -621,7 +639,8 @@ export default{
     text-align: center;
     background-position: 5px;
 }
-.checkbox_select{
+
+.checkbox_select {
     background-image: url(/static/images/selected.png);
     display: inline-block;
     background-repeat: no-repeat;
@@ -632,24 +651,30 @@ export default{
     text-align: center;
     background-position: 5px;
 }
-.trans_service{
-	margin-top: 20px;
+
+.trans_service {
+    margin-top: 20px;
 }
-.trans_service .col-xs-8{
-	margin-bottom: 20px;
+
+.trans_service .col-xs-8 {
+    margin-bottom: 20px;
 }
-.table{
-	display: table;
+
+.table {
+    display: table;
 }
-.table_head>thead>tr{
-	background-color: #f5f5f5;
-	color: #333;
-	font-size: 18px;
+
+.table_head>thead>tr {
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 18px;
 }
-.base_pagination{
-	margin-top: 0;
+
+.base_pagination {
+    margin-top: 0;
 }
-.editlabel{
-	text-align: left;
+
+.editlabel {
+    text-align: left;
 }
 </style>

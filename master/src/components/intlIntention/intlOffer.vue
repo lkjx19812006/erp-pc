@@ -1,5 +1,5 @@
 <template>
-    <div  id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
+    <div id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <tipdialog-model :param="tipParam" v-if="tipParam.show"></tipdialog-model>
     <div id="scroll" class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -9,132 +9,114 @@
             <h3>{{$t('static.raw_material_quotation')}}</h3>
         </div>
         <validator name="validation">
-          <div class="edit-model">
-            <!--<div class="cover_loading">-->
-              <!--<pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>-->
-            <!--</div>-->
-            <!-- <div class="cover_loading">
+            <div class="edit-model">
+                <!--<div class="cover_loading">-->
+                <!--<pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>-->
+                <!--</div>-->
+                <!-- <div class="cover_loading">
               <pulse-loader :loading="breedParam.loading" :color="color" :size="size"></pulse-loader>
             </div> -->
-             <section class="editsection" v-cloak>
-                 <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-                 
-                 <table class="table table-hover table_color table-striped ">
-                     <thead>
-                         <tr>
-                           <th>{{$t('static.breed')}}</th> 
-                           <th>{{$t('static.currency')}}</th>
-                           <th>{{$t('static.cost_price')}}</th>
-                           <th>{{$t('static.quoted_price')}}</th>
-                           <th>{{$t('static.unit')}}</th>
-                           <th>{{$t('static.quantity')}}</th> 
-                           <th>{{$t('static.comment')}}</th> 
-                           <th></th> 
-                         </tr>
-                     </thead>
-                     <tbody>
-                         <tr v-for="item in param.items">
-                             <td>{{item.itemName}}</td>
-                             <td>{{item.currency | Currency}}</td>
-                             <td>{{item.origPrice}}</td>
-                             <td>{{item.price}}</td>
-                             <td>{{item.unit}}</td>
-                             <td>{{item.number}}</td>
-                             <td>{{item.comment}}</td>
-                             <td @click="showModifyOffer($index)"><a>{{$t('static.edit')}}</a></td>
-                             
-                             
-                         </tr>
-                     </tbody>
-                 </table>
-                <!--  <div style="padding-left:25%">
+                <section class="editsection" v-cloak>
+                    <input type="hidden" class="form-control edit-input" value="{{param.id}}" />
+                    <table class="table table-hover table_color table-striped ">
+                        <thead>
+                            <tr>
+                                <th>{{$t('static.breed')}}</th>
+                                <th>{{$t('static.currency')}}</th>
+                                <th>{{$t('static.cost_price')}}</th>
+                                <th>{{$t('static.quoted_price')}}</th>
+                                <th>{{$t('static.unit')}}</th>
+                                <th>{{$t('static.quantity')}}</th>
+                                <th>{{$t('static.comment')}}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in param.items">
+                                <td>{{item.itemName}}</td>
+                                <td>{{item.currency | Currency}}</td>
+                                <td>{{item.origPrice}}</td>
+                                <td>{{item.price}}</td>
+                                <td>{{item.unit}}</td>
+                                <td>{{item.number}}</td>
+                                <td>{{item.comment}}</td>
+                                <td @click="showModifyOffer($index)"><a>{{$t('static.edit')}}</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--  <div style="padding-left:25%">
                      <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed()">添加药材信息</div>   
-                 </div>   --> 
-                  
-                 <validator name="inner">   
-                     <div v-if="updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
-                           <div class="editpageleft">
-                              <div class="editpage-input">
-                                   <label class="editlabel">{{$t('static.breed')}}</label>
-                                   <input type="text" v-model="offerInfo.itemName" class="form-control edit-input" disabled="true" />
-                              </div>
-                       
-                              <div class="editpage-input">
-                                   <label class="editlabel" >{{$t('static.cost_price')}}<span class="system_danger" v-if="$inner.origprice.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="offerInfo.origPrice" class="form-control edit-input" v-validate:origprice="{required:true}"/>
-                              </div>
-                       
-                              <div class="editpage-input">
-                                   <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="offerInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}"/>
-                              </div>
-
-                              <div class="editpage-input">
-                                   <label class="editlabel" >{{$t('static.comment')}}<span class="system_danger" v-if="$inner.comment.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="offerInfo.comment" class="form-control edit-input" v-validate:comment="{required:true}" />
-                              </div>
-                              
-                           </div>
-                       
-                           <div class="editpageright">
-                              <div class="editpage-input">
-                                   <label class="editlabel" >{{$t('static.currency')}}<span class="system_danger" v-if="$inner.currency.required">{{$t('static.required')}}</span></label>
-                                   <input v-show="false" type="text" v-model="offerInfo.currency" class="form-control edit-input" v-validate:currency="{required:true}"/>
-                                   <select type="text" class="form-control edit-input" v-model="offerInfo.currency">
-                                     <option value="0">CNY人民币</option>
-                                     <option value="1">USD美元</option>
-                                     <option value="2">EUR欧元</option>
-                                     <option value="3">HKD港币</option>
-                                     <option value="4">GBP英镑</option>
-                                     <option value="5">JPY日元</option>
-                                     <option value="6">KRW韩元</option>
-                                     <option value="7">CAD加元</option>
-                                     <option value="8">AUD澳元</option>
-                                     <option value="9">CHF瑞郎</option>
-                                     <option value="10">SGD新加坡元</option>
-                                     <option value="11">MYR马来西亚币</option>
-                                     <option value="12">IDR印尼</option>
-                                     <option value="13">NZD新西兰</option>
-                                     <option value="14">VND越南</option>
-                                     <option value="15">THB泰铢</option>
-                                     <option value="16">PHP菲律宾</option>
-                                   </select>
-                              </div>
-
-                              <div class="editpage-input">
-                                   <label class="editlabel" >{{$t('static.quoted_price')}}<span class="system_danger" v-if="$inner.price.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="offerInfo.price" class="form-control edit-input" v-validate:price="{required:true}" />
-                              </div>
-                       
-                              <div class="editpage-input">
-                                   <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="offerInfo.number" class="form-control edit-input" v-validate:number="{required:true}"/>
-                              </div>
-                    
-                                            
-                              <div style="margin-top:10px;text-align:right">
-                                  <button type="button" class="btn btn-confirm" @click="updateParam.show=false">
-                                      {{$t('static.cancel')}}
-                                  </button>
-                                  <button type="button" class="btn btn-confirm" v-if="$inner.valid" @click="modifyOffer()">
-                                      {{$t('static.save')}}
-                                  </button>
-                                  <button type="button" class="btn btn-confirm" v-else disabled="disabled">{{$t('static.save')}}</button>
-                                  
-                              </div>
-                              
-                           </div>
-                     </div>  
-                 </validator> 
-
-                 
-
-             </section>
-          </div>
-          <div class="edit_footer">
-              <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-              <button type="button" class="btn  btn-confirm" @click="param.show = false">{{$t('static.confirm')}}</button>
-          </div>
+                 </div>   -->
+                    <validator name="inner">
+                        <div v-if="updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
+                            <div class="editpageleft">
+                                <div class="editpage-input">
+                                    <label class="editlabel">{{$t('static.breed')}}</label>
+                                    <input type="text" v-model="offerInfo.itemName" class="form-control edit-input" disabled="true" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">{{$t('static.cost_price')}}<span class="system_danger" v-if="$inner.origprice.required">{{$t('static.required')}}</span></label>
+                                    <input type="text" v-model="offerInfo.origPrice" class="form-control edit-input" v-validate:origprice="{required:true}" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
+                                    <input type="text" v-model="offerInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">{{$t('static.comment')}}<span class="system_danger" v-if="$inner.comment.required">{{$t('static.required')}}</span></label>
+                                    <input type="text" v-model="offerInfo.comment" class="form-control edit-input" v-validate:comment="{required:true}" />
+                                </div>
+                            </div>
+                            <div class="editpageright">
+                                <div class="editpage-input">
+                                    <label class="editlabel">{{$t('static.currency')}}<span class="system_danger" v-if="$inner.currency.required">{{$t('static.required')}}</span></label>
+                                    <input v-show="false" type="text" v-model="offerInfo.currency" class="form-control edit-input" v-validate:currency="{required:true}" />
+                                    <select type="text" class="form-control edit-input" v-model="offerInfo.currency">
+                                        <option value="0">CNY人民币</option>
+                                        <option value="1">USD美元</option>
+                                        <option value="2">EUR欧元</option>
+                                        <option value="3">HKD港币</option>
+                                        <option value="4">GBP英镑</option>
+                                        <option value="5">JPY日元</option>
+                                        <option value="6">KRW韩元</option>
+                                        <option value="7">CAD加元</option>
+                                        <option value="8">AUD澳元</option>
+                                        <option value="9">CHF瑞郎</option>
+                                        <option value="10">SGD新加坡元</option>
+                                        <option value="11">MYR马来西亚币</option>
+                                        <option value="12">IDR印尼</option>
+                                        <option value="13">NZD新西兰</option>
+                                        <option value="14">VND越南</option>
+                                        <option value="15">THB泰铢</option>
+                                        <option value="16">PHP菲律宾</option>
+                                    </select>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">{{$t('static.quoted_price')}}<span class="system_danger" v-if="$inner.price.required">{{$t('static.required')}}</span></label>
+                                    <input type="text" v-model="offerInfo.price" class="form-control edit-input" v-validate:price="{required:true}" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
+                                    <input type="text" v-model="offerInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                </div>
+                                <div style="margin-top:10px;text-align:right">
+                                    <button type="button" class="btn btn-confirm" @click="updateParam.show=false">
+                                        {{$t('static.cancel')}}
+                                    </button>
+                                    <button type="button" class="btn btn-confirm" v-if="$inner.valid" @click="modifyOffer()">
+                                        {{$t('static.save')}}
+                                    </button>
+                                    <button type="button" class="btn btn-confirm" v-else disabled="disabled">{{$t('static.save')}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </validator>
+                </section>
+            </div>
+            <div class="edit_footer">
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+                <button type="button" class="btn  btn-confirm" @click="param.show = false">{{$t('static.confirm')}}</button>
+            </div>
         </validator>
     </div>
 </template>
@@ -144,11 +126,11 @@ import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipdialogModel from '../tips/tipDialog'
 import pressImage from '../imagePress'
 import {
-    
+
     initIntlIntentionDetail
 } from '../../vuex/getters'
 import {
-    
+
     getIntlIntentionDetail,
     intlIntentionOffer
 } from '../../vuex/actions'
@@ -162,156 +144,159 @@ export default {
     props: ['param'],
     data() {
         return {
-          tipParam:{
-              show:false,
-              name:'',
-              remain:true,
-              callback:this.callback
-          },
-          
-          
-          updateParam:{
-            show:false,
-            index:0
-          },
-          offerInfo:{ 
-              link:'/intlIntention/itemOffer',
-              id:'',
-              intentionId:'',
-              inquireId:'',
-              type:'',
-              currency:'',
-              itemId:'',
-              itemName:'',
-              origPrice:'',
-              price:'',
-              number:'',
-              unit:'',
-              total:'',
-              comment:''
-          },
-          
-          tag:['真空包装','瓦楞纸箱','编织袋','积压包','其它'],
-            
-          imageParam:{
-            url:'/crm/api/v1/file/',
-            qiniu:false
-          },
-          type:"image/*"
+            tipParam: {
+                show: false,
+                name: '',
+                remain: true,
+                callback: this.callback
+            },
+
+
+            updateParam: {
+                show: false,
+                index: 0
+            },
+            offerInfo: {
+                link: '/intlIntention/itemOffer',
+                id: '',
+                intentionId: '',
+                inquireId: '',
+                type: '',
+                currency: '',
+                itemId: '',
+                itemName: '',
+                origPrice: '',
+                price: '',
+                number: '',
+                unit: '',
+                total: '',
+                comment: ''
+            },
+
+            tag: ['真空包装', '瓦楞纸箱', '编织袋', '积压包', '其它'],
+
+            imageParam: {
+                url: '/crm/api/v1/file/',
+                qiniu: false
+            },
+            type: "image/*"
         }
     },
     vuex: {
-       getters: {
-          
-          initIntlIntentionDetail
+        getters: {
+
+            initIntlIntentionDetail
         },
         actions: {
-          
-          getIntlIntentionDetail,
-          intlIntentionOffer
+
+            getIntlIntentionDetail,
+            intlIntentionOffer
         }
     },
     methods: {
-      
-      
-      showModifyOffer:function(index){
-          this.offerInfo.id=this.param.items[index].id,
-          this.offerInfo.intentionId=this.param.items[index].intentionId,
-          this.offerInfo.inquireId=this.param.items[index].inquireId,
-          this.offerInfo.type=this.param.items[index].type,
-          this.offerInfo.currency=this.param.items[index].currency,
-          this.offerInfo.itemId=this.param.items[index].itemId,
-          this.offerInfo.itemName=this.param.items[index].itemName,
-          this.offerInfo.origPrice=this.param.items[index].origPrice,
-          this.offerInfo.price=this.param.items[index].price,
-          this.offerInfo.number=this.param.items[index].number,
-          this.offerInfo.unit=this.param.items[index].unit,
-          this.offerInfo.total=this.param.items[index].total,
-          this.offerInfo.comment=this.param.items[index].comment,
-          this.updateParam.index = index;
-          this.updateParam.show = true;
-      },
-      modifyOffer:function(){
-          var index = this.updateParam.index;
-          this.param.items[index].id=this.offerInfo.id,
-          this.param.items[index].intentionId=this.offerInfo.intentionId,
-          this.param.items[index].inquireId=this.offerInfo.inquireId,
-          this.param.items[index].type=this.offerInfo.type,
-          this.param.items[index].currency=this.offerInfo.currency,
-          this.param.items[index].itemId=this.offerInfo.itemId,
-          this.param.items[index].itemName=this.offerInfo.itemName,
-          this.param.items[index].origPrice=this.offerInfo.origPrice,
-          this.param.items[index].price=this.offerInfo.price,
-          this.param.items[index].number=this.offerInfo.number,
-          this.param.items[index].unit=this.offerInfo.unit,
-          this.param.items[index].total=this.offerInfo.total,
-          this.param.items[index].comment=this.offerInfo.comment, 
-          this.intlIntentionOffer(this.offerInfo);
-          this.updateParam.show = false;
-      },
-      
 
-      cancelModifyBreed:function(){
-  
-          this.updateParam.show = false; 
-      },
-      
-      
-      
+
+        showModifyOffer: function(index) {
+            this.offerInfo.id = this.param.items[index].id,
+                this.offerInfo.intentionId = this.param.items[index].intentionId,
+                this.offerInfo.inquireId = this.param.items[index].inquireId,
+                this.offerInfo.type = this.param.items[index].type,
+                this.offerInfo.currency = this.param.items[index].currency,
+                this.offerInfo.itemId = this.param.items[index].itemId,
+                this.offerInfo.itemName = this.param.items[index].itemName,
+                this.offerInfo.origPrice = this.param.items[index].origPrice,
+                this.offerInfo.price = this.param.items[index].price,
+                this.offerInfo.number = this.param.items[index].number,
+                this.offerInfo.unit = this.param.items[index].unit,
+                this.offerInfo.total = this.param.items[index].total,
+                this.offerInfo.comment = this.param.items[index].comment,
+                this.updateParam.index = index;
+            this.updateParam.show = true;
+        },
+        modifyOffer: function() {
+            var index = this.updateParam.index;
+            this.param.items[index].id = this.offerInfo.id,
+                this.param.items[index].intentionId = this.offerInfo.intentionId,
+                this.param.items[index].inquireId = this.offerInfo.inquireId,
+                this.param.items[index].type = this.offerInfo.type,
+                this.param.items[index].currency = this.offerInfo.currency,
+                this.param.items[index].itemId = this.offerInfo.itemId,
+                this.param.items[index].itemName = this.offerInfo.itemName,
+                this.param.items[index].origPrice = this.offerInfo.origPrice,
+                this.param.items[index].price = this.offerInfo.price,
+                this.param.items[index].number = this.offerInfo.number,
+                this.param.items[index].unit = this.offerInfo.unit,
+                this.param.items[index].total = this.offerInfo.total,
+                this.param.items[index].comment = this.offerInfo.comment,
+                this.intlIntentionOffer(this.offerInfo);
+            this.updateParam.show = false;
+        },
+
+
+        cancelModifyBreed: function() {
+
+            this.updateParam.show = false;
+        },
+
+
+
 
     },
-    events:{
-        
+    events: {
+
     },
-    created(){
-      //在这里要有查询原材料报价的接口
-      this.param.items = [{id:9,
-              intentionId:'58228a6688e87dc057d5e969',
-              inquireId:7,
-              type:0,
-              currency:1,
-              itemId:8,
-              itemName:'一枝黄花',
-              origPrice:1,
-              price:3,
-              number:3,
-              unit:'kg',
-              total:9,
-              comment:'来来来'},
-              {id:10,
-              intentionId:'58228a6688e87dc057d5e969',
-              inquireId:7,
-              type:0,
-              currency:1,
-              itemId:8,
-              itemName:'丁公藤',
-              origPrice:1,
-              price:3,
-              number:3,
-              unit:'kg',
-              total:9,
-              comment:'嘿嘿嘿'}
-            ]
-      
+    created() {
+        //在这里要有查询原材料报价的接口
+        this.param.items = [{
+            id: 9,
+            intentionId: '58228a6688e87dc057d5e969',
+            inquireId: 7,
+            type: 0,
+            currency: 1,
+            itemId: 8,
+            itemName: '一枝黄花',
+            origPrice: 1,
+            price: 3,
+            number: 3,
+            unit: 'kg',
+            total: 9,
+            comment: '来来来'
+        }, {
+            id: 10,
+            intentionId: '58228a6688e87dc057d5e969',
+            inquireId: 7,
+            type: 0,
+            currency: 1,
+            itemId: 8,
+            itemName: '丁公藤',
+            origPrice: 1,
+            price: 3,
+            number: 3,
+            unit: 'kg',
+            total: 9,
+            comment: '嘿嘿嘿'
+        }]
+
     }
 }
 </script>
 <style scoped>
-.modal{
-  z-index: 1083
+.modal {
+    z-index: 1083
 }
-.modal_con{
-  z-index: 1084
+
+.modal_con {
+    z-index: 1084
 }
 
 .edit-model {
-  padding: 10px 30px 80px 30px;
+    padding: 10px 30px 80px 30px;
 }
 
-.top-title{
+.top-title {
     position: absolute;
     top: 0;
-    right:0;
+    right: 0;
 }
 
 .edit-content {
@@ -334,7 +319,6 @@ export default {
     -moz-box-orient: horizontal;
     -ms-box-orient: horizontal;
     box-orient: horizontal;
-
 }
 
 .editpageleft,
@@ -346,14 +330,13 @@ export default {
     width: 50%;
 }
 
-.editpagecenter{
-  -webkit-box-flex: 1;
-  -webkit-flex: auto;
-  -ms-flex: auto;
-  flex: auto;
-  width: 100%;
+.editpagecenter {
+    -webkit-box-flex: 1;
+    -webkit-flex: auto;
+    -ms-flex: auto;
+    flex: auto;
+    width: 100%;
 }
-
 
 .editpage-input {
     margin-top: 15px;
@@ -385,7 +368,7 @@ export default {
     border-top: 1px solid #ddd;
     text-align: right;
     padding: 10px 20px;
-   /*  margin-top: 50px; */
+    /*  margin-top: 50px; */
     position: fixed;
     left: 0;
     right: 0;
@@ -423,7 +406,7 @@ export default {
     display: inline-block;
 }
 
-a{
-    cursor:pointer;
+a {
+    cursor: pointer;
 }
 </style>

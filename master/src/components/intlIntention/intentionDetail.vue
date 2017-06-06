@@ -60,11 +60,12 @@
                                     </div>
                                     <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
                                         <label class="editlabel">{{$t('static.country')}}：</label>
-                                        <span>{{initIntlIntentionDetail.country}}</span>
+                                        <span>{{initIntlIntentionDetail.countryName}}</span>
                                     </div>
+                                    <!-- 国外的市就是国内的省 -->
                                     <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
                                         <label class="editlabel">{{$t('static.city')}}：</label>
-                                        <span>{{initIntlIntentionDetail.city}}</span>
+                                        <span>{{initIntlIntentionDetail.provinceName}}</span>
                                     </div>
                                     <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
                                         <label class="editlabel">{{$t('static.address')}}：</label>
@@ -150,8 +151,6 @@
                                                         <td>{{item.otherTotal}}</td>
                                                         <td>{{item.total}}</td>
                                                         <td>{{item.comment}}</td>
-                                                        <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
-                                                <td @click="otherOffer()" style="cursor:pointer">其他报价</td> -->
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -204,12 +203,12 @@
                                                         <td>
                                                             <a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a>
                                                         </td>
-                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.location | province}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.price}}<span v-if="item.offerEUnit!=''&&item.offerEUnit!==null">（{{item.offerEUnit}}）</span></td>
                                                         <td>{{item.exchangeRate}}</td>
-                                                        <td>{{item.number}}（{{item. | Unit}}）</td>
+                                                        <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.offererName}}</td>
                                                         <td>{{item.offerComment}}</td>
                                                         <td>
@@ -288,7 +287,7 @@
                                                         <td>
                                                             <a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a>
                                                         </td>
-                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.location | province}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.quality}}</td>
                                                         <td>{{item.price}}<span v-if="item.offerEUnit!=''&&item.offerEUnit!==null">（{{item.offerEUnit}}）</span></td>
@@ -488,10 +487,8 @@
 <script>
 import pictureModel from '../tips/pictureDialog'
 import filter from '../../filters/filters'
-import offerModel from './intlOffer'
 import inquireinfoModel from './inquireInfo'
 import itemhistoryModel from './itemHistory'
-import otherofferModel from './otherOffer'
 import inquireagainModel from './inquireAgain'
 import uploadfilesModel from './uploadFiles'
 import delfileModel from '../tips/tipDialog'
@@ -508,10 +505,8 @@ import {
 export default {
     components: {
         filter,
-        offerModel,
         inquireinfoModel,
         itemhistoryModel,
-        otherofferModel,
         inquireagainModel,
         uploadfilesModel,
         delfileModel,
@@ -557,37 +552,7 @@ export default {
                 show: false,
                 name: ''
             },
-            offerParam: {
-                show: false,
-                link: '/intlIntention/itemOffer',
-                id: 9,
-                intentionId: '58228a6688e87dc057d5e969',
-                inquireId: 7,
-                type: 0,
-                currency: 1,
-                itemId: 8,
-                itemName: '一枝黄花',
-                origPrice: 1,
-                price: 3,
-                number: 3,
-                unit: 'kg',
-                total: 9,
-                comment: '来来来'
-            },
-            otherOfferParam: {
-                show: false,
-                link: '/intlIntention/otherOffer',
-                id: 9,
-                intentionId: '58228a6688e87dc057d5e969',
-                inquireId: 7,
-                type: 1,
-                currency: 1,
-                cost: 2,
-                costDesc: '运费+小费',
-                total: 2,
-                comment: '啦啦啦'
 
-            },
             uploadFilesParam: {
                 link: '/intlIntention/files',
                 show: false,
@@ -660,12 +625,7 @@ export default {
             this.delFileParam.index = index;
             this.delFileParam.show = true;
         },
-        offer: function() {
-            this.offerParam.show = true;
-        },
-        otherOffer: function() {
-            this.otherOfferParam.show = true;
-        },
+
         uploadOriginalFiles: function() {
             this.uploadFilesParam.bizId = this.param.id;
             this.uploadFilesParam.category = 0;

@@ -62,6 +62,19 @@
                                     </select>
                                 </div>
                             </div>
+                            <!-- 产地 -->
+                            <div class="editpage-input col-md-12">
+                                <div class="left" style="width:50%">
+                                    <label class="editlabel">产地</label>
+                                    <!-- <input type="text" v-model="param.location" class="form-control edit-input" /> -->
+                                    <breed-location :param="param" :show="breedParam" :widparam="'210'"></breed-location>
+                                </div>
+                                <!-- 规格 -->
+                                <div class="left" style="width:50%">
+                                    <label class="editlabel">规格</label>
+                                    <input type="text" v-model="param.spec" class="form-control edit-input" />
+                                </div>
+                            </div>
                             <!-- 质量要求和报价备注 -->
                             <div class="editpage-input col-md-12">
                                 <div class="left" style="width:50%;">
@@ -71,18 +84,6 @@
                                 <div class="left" style="width:50%;">
                                     <label class="editlabel">报价备注</label>
                                     <input type="text" v-model="param.description" class="form-control edit-input" />
-                                </div>
-                            </div>
-                            <!-- 产地 -->
-                            <div class="editpage-input col-md-12">
-                                <div class="left" style="width:50%">
-                                    <label class="editlabel">产地</label>
-                                    <input type="text" v-model="param.location" class="form-control edit-input" />
-                                </div>
-                                <!-- 规格 -->
-                                <div class="left" style="width:50%">
-                                    <label class="editlabel">规格</label>
-                                    <input type="text" v-model="param.spec" class="form-control edit-input" />
                                 </div>
                             </div>
                         </div>
@@ -106,6 +107,7 @@ import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipsdialogModel from '../tips/tipDialog'
 /*import customerModel from '../Intention/clientname'*/
 import supplierDialog from '../order/second_order/selectAllSupplier.vue'
+import breedLocation from '../order/second_order/breedLocation'
 import {
     initUnitlist,
     initEmployeeList,
@@ -114,7 +116,8 @@ import {
 import {
     getUnitList,
     getEmployeeList,
-    offerPurchaseOrder
+    offerPurchaseOrder,
+    getBreedDetail
 
 } from '../../vuex/actions'
 export default {
@@ -124,7 +127,8 @@ export default {
         vSelect,
         inputSelect,
         pressImage,
-        supplierDialog
+        supplierDialog,
+        breedLocation
     },
     props: ['param'],
     data() {
@@ -143,6 +147,10 @@ export default {
                 url: '/crm/api/v1/file/',
                 qiniu: false,
                 files: []
+            },
+            breedParam: {
+                id: '',
+                breedName: ''
             }
         }
     },
@@ -155,7 +163,8 @@ export default {
         actions: {
             getUnitList,
             getEmployeeList,
-            offerPurchaseOrder
+            offerPurchaseOrder,
+            getBreedDetail
         }
     },
     methods: {
@@ -200,6 +209,12 @@ export default {
     created() {
         //获取单位列表
         this.getUnitList();
+
+        if (this.param.breedId) {
+            this.breedParam.id = this.param.breedId;
+            this.breedParam.breedName = this.param.breedName;
+            this.getBreedDetail(this.breedParam);
+        }
 
     }
 }

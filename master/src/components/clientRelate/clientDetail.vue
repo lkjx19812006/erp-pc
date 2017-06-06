@@ -28,7 +28,7 @@
                     <div class="container-fluid">
                         <div class="navbar-header">
                             <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                            <span class="navbar-brand navbar-name" href="#">{{param.name}}</span>
+                            <span class="navbar-brand navbar-name" href="#">{{param.name}}（{{initClientDetail.ctime | date}}成为我们的客户）</span>
                         </div>
                         <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                             <li>
@@ -69,30 +69,45 @@
                         <article>
                             <div class="panel-group" @click.stop="">
                                 <div class="panel panel-default" style="border:none">
+                                    <div class="clearfix">
+                                        <p class="btn btn-primary btn-xs">基本信息</p>
+                                    </div>
                                     <ul class="clearfix" style="font-size: 14px;padding:5px 0">
                                         <mg-label :title="$t('static.name')">{{initClientDetail.name}}</mg-label>
                                         <mg-label :title="$t('static.type')">{{initClientDetail.type |customerType}}</mg-label>
-                                        <mg-label :title="$t('static.client_scale')">{{initClientDetail.scale |customerScale}}</mg-label>
-                                        <mg-label :title="$t('static.client_nature')">{{initClientDetail.nature |customerNature}}</mg-label>
-                                        <mg-label :title="$t('static.pre_payment')">{{initClientDetail.advance}}</mg-label>
-                                        <mg-label :title="$t('static.capital_return_days')">{{initClientDetail.capitalReturnDays}}</mg-label>
+                                        <mg-label :title="$t('static.client_scale')">{{initClientDetail.scale |customerScale}}{{initClientDetail.nature |customerNature}}</mg-label>
+                                        <mg-label :title="$t('static.payment_method')">预付{{initClientDetail.advance | advanced}},{{initClientDetail.capitalReturnDays}}天回款</mg-label>
                                         <mg-label :title="$t('static.whether_supplier')" v-if="initClientDetail.supplier==0">{{$t('static.no')}}</mg-label>
                                         <mg-label :title="$t('static.whether_supplier')" v-if="initClientDetail.supplier==1">{{$t('static.yes')}}</mg-label>
-                                        <mg-label :title="$t('static.classification')">{{initClientDetail.classify | classify}}</mg-label>
+                                    </ul>
+                                    <hr style="height:10px;border-color:#ccc" />
+                                    <div class="clearfix">
+                                        <p class="btn btn-primary btn-xs">{{$t('static.contact_information')}}</p>
+                                    </div>
+                                    <ul class="clearfix" style="font-size: 14px;padding:5px 0">
                                         <mg-label :title="$t('static.cellphone')">{{initClientDetail.mainPhone}}<span v-if="initClientDetail.phoneProvince!=''||initClientDetail.phoneCity!=''">（{{initClientDetail.phoneProvince}}{{initClientDetail.phoneCity}}）</span></mg-label>
                                         <mg-label :title="$t('static.telephone')">{{initClientDetail.tel}}</mg-label>
                                         <mg-label :title="$t('static.client_email')">{{initClientDetail.email}}</mg-label>
+                                        <mg-label :title="$t('static.website')">{{initClientDetail.website}}</mg-label>
+                                    </ul>
+                                    <hr style="height:10px;border-color:#ccc" />
+                                    <div class="clearfix">
+                                        <p class="btn btn-primary btn-xs">地址信息</p>
+                                    </div>
+                                    <ul class="clearfix" style="font-size: 14px;padding:5px 0">
+                                        <mg-label :title="$t('static.detailed_address')">{{initClientDetail.countryName}}{{initClientDetail.provinceName}}{{initClientDetail.cityName}}{{initClientDetail.address}}</mg-label>
                                         <mg-label :title="$t('static.postcodes')">{{initClientDetail.number}}</mg-label>
+                                    </ul>
+                                    <hr style="height:10px;border-color:#ccc" />
+                                    <div class="clearfix">
+                                        <p class="btn btn-primary btn-xs">其他信息</p>
+                                    </div>
+                                    <ul class="clearfix" style="font-size: 14px;padding:5px 0">
                                         <mg-label :title="$t('static.principals')">{{initClientDetail.principal}}</mg-label>
                                         <mg-label :title="$t('static.legal')">{{initClientDetail.legalPerson}}</mg-label>
-                                        <mg-label :title="$t('static.website')">{{initClientDetail.website}}</mg-label>
-                                        <mg-label :title="$t('static.country')">{{initClientDetail.countryName}}</mg-label>
-                                        <mg-label :title="$t('static.province')+$t('static.city')">{{initClientDetail.provinceName}} {{initClientDetail.cityName}}</mg-label>
-                                        <mg-label :title="$t('static.detailed_address')">{{initClientDetail.address}}</mg-label>
                                         <mg-label :title="$t('static.transaction_num')">{{initClientDetail.orderTotal}}{{initClientDetail.lastOrderTime}}</mg-label>
                                         <mg-label :title="$t('static.client_source')">{{initClientDetail.source | intentionSource}}</mg-label>
                                         <mg-label :title="$t('static.department')+'/'+$t('static.salesman')">{{initClientDetail.orgName}}<span v-if="initClientDetail.employeeName">（{{initClientDetail.employeeName}}）</span></mg-label>
-                                        <mg-label :title="$t('static.create_time')">{{initClientDetail.ctime}}</mg-label>
                                         <mg-label :title="$t('static.blacklist')" v-if="initClientDetail.blacklist==1">{{initClientDetail.name}}</mg-label>
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <label>{{$t('static.business_scope')}}：</label>{{initClientDetail.bizScope}}</div>
@@ -340,7 +355,7 @@
                                                 <tbody>
                                                     <tr v-for="item in initClientDetail.intentions.arr">
                                                         <td>{{item.breedName}}</td>
-                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.location | province}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.number}}</td>
                                                         <td>{{item.price}}元</td>

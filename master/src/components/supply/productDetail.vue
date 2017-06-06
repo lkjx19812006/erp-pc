@@ -124,7 +124,7 @@
                                 <div class="clearfix">
                                     <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                         <label class="editlabel">单位</label>
-                                        <input type="text" class="form-control edit-input" v-model="initProductDetail.unit" value="{{initProductDetail.unit}}" disabled="disabled" />
+                                        <input type="text" class="form-control edit-input" v-model="initProductDetail.unit | Unit" value="{{initProductDetail.unit}}" disabled="disabled" />
                                     </div>
                                     <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                                         <label class="editlabel">检测报告</label>

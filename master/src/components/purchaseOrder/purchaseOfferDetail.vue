@@ -78,7 +78,7 @@
                                                         <td v-if="!item.purchaseOffer">{{item.breedName}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.number}}{{item.unit | Unit}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.price}}元/{{item.unit | Unit}}</td>
-                                                        <td v-if="!item.purchaseOffer">{{item.location}}</td>
+                                                        <td v-if="!item.purchaseOffer">{{item.location | province}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.spec}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.onSell | onsell}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.offerNumber}}</td>
@@ -135,6 +135,7 @@ export default {
                 show: false,
                 link: "/intention/offer",
                 callback: this.callback,
+                breedId: "",
                 breedName: "", //只展示
                 intentionId: "",
                 customerName: "",
@@ -220,6 +221,7 @@ export default {
             this.$store.state.table.purchaseDetail[param.crete].show = !this.$store.state.table.purchaseDetail[param.crete].show;
         },
         offer: function(item) {
+            this.offerParam.breedId = item.breedId;
             this.offerParam.breedName = item.breedName;
             this.offerParam.number = item.number;
             this.offerParam.unit = item.unit;

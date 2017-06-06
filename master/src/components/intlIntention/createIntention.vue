@@ -231,6 +231,7 @@
     </div>
     <div class="editpage">
         <div class="editpageleft">
+            <!-- 国家 -->
             <div class="editpage-input">
                 <label class="editlabel">{{$t('static.country')}}<span class="system_danger" v-if="$validation.country.required">{{$t('static.choose_country')}}</span></label>
                 <input type="text" v-show="false" v-model="country.cnameEn" v-validate:country="['required']">
@@ -248,69 +249,58 @@
                 <input type="text" v-model='param.customerEmail' v-validate:email="['email']" class="form-control edit-input" />
             </div>
             <div class="editpage-input">
-                <label class="editlabel">{{$t('static.intention_source')}}<span class="system_danger" v-if="$validation.source.required">Please select the source</label>
-                         <input type="text" v-show="false" v-model='param.source' v-validate:source="['required']" class="form-control edit-input"  />
-                         <div type="text" class="edit-input" >
-                           <input-select
-                             :prevalue="param.source"
-                             :value.sync="param.source"
-                             :options="source"
-                             placeholder="来源/Source"
-                           >
-                           </input-select>
-                         </div>
-                       </div>
-
-                     </div>
-
-                     <div class="editpageright">
-                       <div class="editpage-input">
-                         <label class="editlabel">{{$t('static.city')}}</label>
-                         <input type="text"  class="form-control edit-input"  placeholder="{{$t('static.choose_city')}}" v-model="param.city" />
-                       </div>
-
-                       <div class="editpage-input">
-                         <label class="editlabel">{{$t('static.detailed_address')}}</label>
-                         <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
-                       </div>
-                      
-                       <div class="editpage-input">
-                         <label class="editlabel">{{$t('static.packaging')}}</label>
-                         <input type="text" v-show="false" v-model='param.pack'  class="form-control edit-input"  />
-                         <div type="text" class="edit-input" >
-                           <input-select
-                             :prevalue="param.pack"
-                             :value.sync="param.pack"
-                             :options="tag"
-                             placeholder="包装/Packaging"
-                           >
-                           </input-select>
-                         </div>
-                       </div>
-
-                       <div class="editpage-input">
-                         <label class="editlabel">{{$t('static.deadline')}}</label>
-                         <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">
-                         </mz-datepicker>
-                         <button type="button" class="btn btn-default" height="24" width="24" @click="reset()">{{$t('static.clear_all')}}</button>
-                       </div>
-
-                     </div>
-                 </div>
-
-             </section>
-          </div>
-          <div class="edit_footer">
-              <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-              <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&$inner.valid&&param.items.length>0&&param.items[param.items.length-1].breedId!=''" @click="createOrUpdateIntlIntention()">{{$t('static.confirm')}}</button>
-              <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.confirm')}}</button>
-          </div>
-        </validator>
+                <label class="editlabel">{{$t('static.intention_source')}}<span class="system_danger" v-if="$validation.source.required">Please select the source</span></label>
+                <input type="text" v-show="false" v-model='param.source' v-validate:source="['required']" class="form-control edit-input" />
+                <div type="text" class="edit-input">
+                    <input-select :prevalue="param.source" :value.sync="param.source" :options="source" placeholder="来源/Source">
+                    </input-select>
+                </div>
+            </div>
+        </div>
+        <div class="editpageright">
+            <!-- 国内的省（国外的市） -->
+            <div class="editpage-input">
+                <label class="editlabel">{{$t('static.city')}}<span class="system_danger" v-if="$validation.province.required">{{$t('static.choose_province')}}</span></label>
+                <input type="text" v-show="false" v-model="province.cnameEn" v-validate:province="['required']">
+                <input type="text" v-if="!country.cnameEn" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_country_first')}}" />
+                <div type="text" class="edit-input" v-if="country.cnameEn">
+                    <v-select :debounce="250" :value.sync="province" :options="initProvince" placeholder="市/city" label="cnameEn">
+                    </v-select>
+                </div>
+            </div>
+            <div class="editpage-input">
+                <label class="editlabel">{{$t('static.detailed_address')}}</label>
+                <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
+            </div>
+            <div class="editpage-input">
+                <label class="editlabel">{{$t('static.packaging')}}</label>
+                <input type="text" v-show="false" v-model='param.pack' class="form-control edit-input" />
+                <div type="text" class="edit-input">
+                    <input-select :prevalue="param.pack" :value.sync="param.pack" :options="tag" placeholder="包装/Packaging">
+                    </input-select>
+                </div>
+            </div>
+            <div class="editpage-input">
+                <label class="editlabel">{{$t('static.deadline')}}</label>
+                <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">
+                </mz-datepicker>
+                <button type="button" class="btn btn-default" height="24" width="24" @click="reset()">{{$t('static.clear_all')}}</button>
+            </div>
+        </div>
+    </div>
+    </section>
+    </div>
+    <div class="edit_footer">
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+        <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&$inner.valid&&param.items.length>0&&param.items[param.items.length-1].breedId!=''" @click="createOrUpdateIntlIntention()">{{$t('static.confirm')}}</button>
+        <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.confirm')}}</button>
+    </div>
+    </validator>
     </div>
 </template>
 <script>
-import searchbreedModel  from '../Intention/breedsearch'
-import searchcustomerModel  from '../Intention/clientname'
+import searchbreedModel from '../Intention/breedsearch'
+import searchcustomerModel from '../Intention/clientname'
 import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipdialogModel from '../tips/tipDialog'
@@ -349,347 +339,347 @@ export default {
     props: ['param'],
     data() {
         return {
-          tipParam:{
-              show:false,
-              name:'',
-              remain:true,
-              callback:this.callback
-          },
-          breedParam:{
-              show:false,
-              loading:false,
-              categoryId:'',
-              breedName:'',
-              breedId:'',
-              id:''
+            tipParam: {
+                show: false,
+                name: '',
+                remain: true,
+                callback: this.callback
+            },
+            breedParam: {
+                show: false,
+                loading: false,
+                categoryId: '',
+                breedName: '',
+                breedId: '',
+                id: ''
 
-          },
-          addParam:{
-            show:false,
-            eShow:false,
-            length:0
-          },
-          updateParam:{
-            eShow:false,
-            show:false,
-            index:0
-          },
-          breedInfo:{ 
-              status:0,   //自定义状态，表示编辑框的状态，0表示收起(起始)状态，1表示add，2表示update，add或update结束后将status置为0
-              type:0,//自定义状态，0表示药材，1表示提取物
-              breedId:'',
-              breedName:'',
-              qualification:'',
-              quality:'',
-              location:'',
-              spec:'',
-              number:'',
-              unit:'',
-              pack:'' ,
-              description:''
-          },
-         
-          empNameParam:{
-            show:false,
-            customerId:'',
-            customerName:'',
-            customerPhone:'',
-            employeeId:''
-          },
-          tag:['真空包装/Vacuum packaging','瓦楞纸箱/Box','编织袋/Woven bag','积压包/Pallets','其它/Other'],
-          source:['facebook','Twitter','linkedin','google','Yahoo','WeChat','QQ','Alibaba initiative inquiry' ,'Alibaba initiative quotation' ,'Customs data','Personal network collection' ,'ERP client resource','Exhibition','others'],
-            country:{
-              cname:'',
-              nameEn:'',
-              cnameEn:''
             },
-            province:{
-              cname:'',
-              nameEn:''
+            addParam: {
+                show: false,
+                eShow: false,
+                length: 0
             },
-            city:{
-              cname:'',
-              nameEn:''
+            updateParam: {
+                eShow: false,
+                show: false,
+                index: 0
             },
-            district:{
-              cname:'',
-              nameEn:''
+            breedInfo: {
+                status: 0, //自定义状态，表示编辑框的状态，0表示收起(起始)状态，1表示add，2表示update，add或update结束后将status置为0
+                type: 0, //自定义状态，0表示药材，1表示提取物
+                breedId: '',
+                breedName: '',
+                qualification: '',
+                quality: '',
+                location: '',
+                spec: '',
+                number: '',
+                unit: '',
+                pack: '',
+                description: ''
             },
-            countryParam:{
-              loading:true,
-              show:false,
-              color: '#5dc596',
-              size: '15px',
-              cur: 1,
-              all: 7
+
+            empNameParam: {
+                show: false,
+                customerId: '',
+                customerName: '',
+                customerPhone: '',
+                employeeId: ''
             },
-            provinceParam:{
-              loading:true,
-              show:false,
-              color: '#5dc596',
-              size: '15px',
-              cur: 1,
-              all: 7,
-              country:''
+            tag: ['真空包装/Vacuum packaging', '瓦楞纸箱/Box', '编织袋/Woven bag', '积压包/Pallets', '其它/Other'],
+            source: ['facebook', 'Twitter', 'linkedin', 'google', 'Yahoo', 'WeChat', 'QQ', 'Alibaba initiative inquiry', 'Alibaba initiative quotation', 'Customs data', 'Personal network collection', 'ERP client resource', 'Exhibition', 'others'],
+            country: {
+                cname: '',
+                nameEn: '',
+                cnameEn: ''
             },
-            cityParam:{
-              loading:true,
-              show:false,
-              color: '#5dc596',
-              size: '15px',
-              cur: 1,
-              all: 7,
-              province:''
+            province: {
+                id: '',
+                cname: '',
+                nameEn: '',
+                cnameEn: ''
             },
-            districtParam:{
-              loading:true,
-              show:false,
-              color: '#5dc596',
-              size: '15px',
-              cur: 1,
-              all: 7,
-              city:''
+            city: {
+                cname: '',
+                nameEn: ''
             },
-          imageParam:{
-            url:'/crm/api/v1/file/',
-            qiniu:false
-          },
-          type:"image/*"
+            district: {
+                cname: '',
+                nameEn: ''
+            },
+            countryParam: {
+                loading: true,
+                show: false,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7
+            },
+            provinceParam: {
+                loading: true,
+                show: false,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7,
+                country: ''
+            },
+            cityParam: {
+                loading: true,
+                show: false,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7,
+                province: ''
+            },
+            districtParam: {
+                loading: true,
+                show: false,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7,
+                city: ''
+            },
+            imageParam: {
+                url: '/crm/api/v1/file/',
+                qiniu: false
+            },
+            type: "image/*"
         }
     },
     vuex: {
-       getters: {
-          initCountrylist,
-          initProvince,
-          initCitylist,
-          initDistrictlist,
-          initBreedDetail,
-          initIntentionDetail,
-          initUnitlist
+        getters: {
+            initCountrylist,
+            initProvince,
+            initCitylist,
+            initDistrictlist,
+            initBreedDetail,
+            initIntentionDetail,
+            initUnitlist
         },
         actions: {
-          createIntlIntention,
-          editintentInfo,
-          getCountryList,
-          getProvinceList,
-          getCityList,
-          getDistrictList,
-          getBreedDetail,
-          getUnitList,
-          getIntentionDetail
+            createIntlIntention,
+            editintentInfo,
+            getCountryList,
+            getProvinceList,
+            getCityList,
+            getDistrictList,
+            getBreedDetail,
+            getUnitList,
+            getIntentionDetail
         }
     },
     methods: {
-      searchBreed:function(){
-          this.breedParam.categoryId = "";
-          this.breedParam.show = true;
-      },
-      searchExtractive:function(){
-          this.breedParam.categoryId = 900;
-          this.breedParam.show = true;
-      },
-      searchCustomer:function(){
-          this.empNameParam.show = true;
-      },
-      showAddBreed:function(type){
-          if(this.param.items.length == 0||this.param.items[this.param.items.length-1].breedId != ''){
-              this.breedInfo.status = 1; 
-              this.breedInfo.type = type;  
-              this.breedInfo.breedId='';
-              this.breedInfo.breedName='';
-              this.breedInfo.qualification='';
-              this.breedInfo.quality='';
-              this.breedInfo.location='';
-              this.breedInfo.spec='';
-              this.breedInfo.number='';
-              this.breedInfo.unit='';
-              this.breedInfo.pack='';
-              this.breedParam.id=''
-              this.param.items.push({
-                  breedId:'',
-                  breedName:'',
-                  qualification:'',
-                  quality:'',
-                  location:'',
-                  spec:'',
-                  number:'',
-                  unit:'',
-                  pack:'',
-                  description:'',
-                  type:type
-              });
+        searchBreed: function() {
+            this.breedParam.categoryId = "";
+            this.breedParam.show = true;
+        },
+        searchExtractive: function() {
+            this.breedParam.categoryId = 900;
+            this.breedParam.show = true;
+        },
+        searchCustomer: function() {
+            this.empNameParam.show = true;
+        },
+        showAddBreed: function(type) {
+            if (this.param.items.length == 0 || this.param.items[this.param.items.length - 1].breedId != '') {
+                this.breedInfo.status = 1;
+                this.breedInfo.type = type;
+                this.breedInfo.breedId = '';
+                this.breedInfo.breedName = '';
+                this.breedInfo.qualification = '';
+                this.breedInfo.quality = '';
+                this.breedInfo.location = '';
+                this.breedInfo.spec = '';
+                this.breedInfo.number = '';
+                this.breedInfo.unit = '';
+                this.breedInfo.pack = '';
+                this.breedParam.id = ''
+                this.param.items.push({
+                    breedId: '',
+                    breedName: '',
+                    qualification: '',
+                    quality: '',
+                    location: '',
+                    spec: '',
+                    number: '',
+                    unit: '',
+                    pack: '',
+                    description: '',
+                    type: type
+                });
 
-              this.addParam.show = true;
-          }  
-      },
+                this.addParam.show = true;
+            }
+        },
 
-      addBreed:function(){
-          this.param.items[this.param.items.length-1].breedId = this.breedInfo.breedId;
-          this.param.items[this.param.items.length-1].breedName = this.breedInfo.breedName;
-          this.param.items[this.param.items.length-1].qualification = this.breedInfo.qualification;
-          this.param.items[this.param.items.length-1].quality = this.breedInfo.quality;
-          this.param.items[this.param.items.length-1].location = this.breedInfo.location;
-          this.param.items[this.param.items.length-1].spec = this.breedInfo.spec;
-          this.param.items[this.param.items.length-1].number = this.breedInfo.number;
-          this.param.items[this.param.items.length-1].unit = this.breedInfo.unit;
-          this.param.items[this.param.items.length-1].pack = this.breedInfo.pack;
-          this.param.items[this.param.items.length-1].description = this.breedInfo.description;
-          this.breedInfo.status = 0;
-          this.addParam.show = false;
-      },
-    
-      showModifyBreed:function(index){
-          this.breedInfo.status = 2;
-          this.updateParam.index = index;
-          this.breedInfo.type = this.param.items[index].type;
-          this.breedInfo.breedId=this.param.items[index].breedId;
-          this.breedInfo.breedName=this.param.items[index].breedName;
-          this.breedInfo.qualification=this.param.items[index].qualification;
-          this.breedInfo.quality=this.param.items[index].quality;
-          this.breedInfo.location=this.param.items[index].location;
-          this.breedInfo.spec=this.param.items[index].spec;
-          this.breedInfo.number=this.param.items[index].number;
-          this.breedInfo.unit=this.param.items[index].unit;
-          this.breedInfo.pack=this.param.items[index].pack;
-          this.breedParam.id = this.breedInfo.breedId;
-          this.getBreedDetail(this.breedParam)
-          this.updateParam.show = true;
-      },
-      modifyBreed:function(){
-          this.param.items[this.updateParam.index].breedId=this.breedInfo.breedId;
-          this.param.items[this.updateParam.index].breedName=this.breedInfo.breedName;
-          this.param.items[this.updateParam.index].qualification=this.breedInfo.qualification;
-          this.param.items[this.updateParam.index].quality=this.breedInfo.quality;
-          this.param.items[this.updateParam.index].location=this.breedInfo.location;
-          this.param.items[this.updateParam.index].spec=this.breedInfo.spec;
-          this.param.items[this.updateParam.index].number=this.breedInfo.number;
-          this.param.items[this.updateParam.index].unit=this.breedInfo.unit;
-          this.param.items[this.updateParam.index].pack=this.breedInfo.pack;
-          this.param.items[this.updateParam.index].description=this.breedInfo.description;
-          this.breedInfo.status = 0;
-          this.updateParam.show = false;
-      },
-      deleteBreed:function(index){
-         this.param.items.splice(index,1);
-      },
+        addBreed: function() {
+            this.param.items[this.param.items.length - 1].breedId = this.breedInfo.breedId;
+            this.param.items[this.param.items.length - 1].breedName = this.breedInfo.breedName;
+            this.param.items[this.param.items.length - 1].qualification = this.breedInfo.qualification;
+            this.param.items[this.param.items.length - 1].quality = this.breedInfo.quality;
+            this.param.items[this.param.items.length - 1].location = this.breedInfo.location;
+            this.param.items[this.param.items.length - 1].spec = this.breedInfo.spec;
+            this.param.items[this.param.items.length - 1].number = this.breedInfo.number;
+            this.param.items[this.param.items.length - 1].unit = this.breedInfo.unit;
+            this.param.items[this.param.items.length - 1].pack = this.breedInfo.pack;
+            this.param.items[this.param.items.length - 1].description = this.breedInfo.description;
+            this.breedInfo.status = 0;
+            this.addParam.show = false;
+        },
 
-      cancelAddBreed:function(){
-          this.param.items.pop();
-          this.breedInfo.status = 0;
-          this.addParam.show = false; 
-      },
-     
-      cancelModifyBreed:function(){
-          this.breedInfo.status = 0;
-          this.updateParam.show = false; 
-      },
-      callback:function(){
-          this.param.show=false;
-          this.tipParam.show=false;
-      },
-      createOrUpdateIntlIntention:function(){
-        this.param.country = this.country.cnameEn;
-        this.param.show = false;
-        this.createIntlIntention(this.param);
-        console.log(this.param);
-        console.log(this.param.items);
-      },
-      reset:function(){
-        console.log(this.param.duedate)
-          this.param.duedate="";
-           console.log(this.param.duedate)
-      },
-      selectProvince:function(){
-        this.province = '';
-        this.city = '';
-        this.district = '';
-        if(this.country!=''&&this.country!=null){
-          this.getProvinceList(this.country);
+        showModifyBreed: function(index) {
+            this.breedInfo.status = 2;
+            this.updateParam.index = index;
+            this.breedInfo.type = this.param.items[index].type;
+            this.breedInfo.breedId = this.param.items[index].breedId;
+            this.breedInfo.breedName = this.param.items[index].breedName;
+            this.breedInfo.qualification = this.param.items[index].qualification;
+            this.breedInfo.quality = this.param.items[index].quality;
+            this.breedInfo.location = this.param.items[index].location;
+            this.breedInfo.spec = this.param.items[index].spec;
+            this.breedInfo.number = this.param.items[index].number;
+            this.breedInfo.unit = this.param.items[index].unit;
+            this.breedInfo.pack = this.param.items[index].pack;
+            this.breedParam.id = this.breedInfo.breedId;
+            this.getBreedDetail(this.breedParam)
+            this.updateParam.show = true;
+        },
+        modifyBreed: function() {
+            this.param.items[this.updateParam.index].breedId = this.breedInfo.breedId;
+            this.param.items[this.updateParam.index].breedName = this.breedInfo.breedName;
+            this.param.items[this.updateParam.index].qualification = this.breedInfo.qualification;
+            this.param.items[this.updateParam.index].quality = this.breedInfo.quality;
+            this.param.items[this.updateParam.index].location = this.breedInfo.location;
+            this.param.items[this.updateParam.index].spec = this.breedInfo.spec;
+            this.param.items[this.updateParam.index].number = this.breedInfo.number;
+            this.param.items[this.updateParam.index].unit = this.breedInfo.unit;
+            this.param.items[this.updateParam.index].pack = this.breedInfo.pack;
+            this.param.items[this.updateParam.index].description = this.breedInfo.description;
+            this.breedInfo.status = 0;
+            this.updateParam.show = false;
+        },
+        deleteBreed: function(index) {
+            this.param.items.splice(index, 1);
+        },
+
+        cancelAddBreed: function() {
+            this.param.items.pop();
+            this.breedInfo.status = 0;
+            this.addParam.show = false;
+        },
+
+        cancelModifyBreed: function() {
+            this.breedInfo.status = 0;
+            this.updateParam.show = false;
+        },
+        callback: function() {
+            this.param.show = false;
+            this.tipParam.show = false;
+        },
+        createOrUpdateIntlIntention: function() {
+            this.param.country = this.country.id;
+            this.param.province = this.province.id;
+            this.param.show = false;
+            this.createIntlIntention(this.param);
+
+        },
+        reset: function() {
+            this.param.duedate = "";
+        },
+        selectProvince: function() {
+            this.province = '';
+            this.city = '';
+            this.district = '';
+            if (this.country != '' && this.country != null) {
+                this.getProvinceList(this.country);
+            }
+
+        },
+        selectCity: function() {
+            this.city = '';
+            this.district = '';
+            if (this.province != '' && this.province != null) {
+                this.getCityList(this.province);
+            }
+
+        },
+        selectDistrict: function() {
+            this.district = '';
+            if (this.city != '' && this.city != null) {
+                this.getDistrictList(this.city);
+            }
+
         }
-
-      },
-      selectCity:function(){
-        this.city = '';
-        this.district = '';
-        if(this.province!=''&&this.province!=null){
-          this.getCityList(this.province);
-        }
-
-      },
-      selectDistrict:function(){
-        this.district = '';
-        if(this.city!=''&&this.city!=null){
-          this.getDistrictList(this.city);
-        }
-
-      }
 
     },
-    events:{
-        breed:function(breed){
-          if(breed.eName==null||breed.eName==""){
-             this.breedInfo.breedName = breed.breedName;
-             this.breedParam.breedName = breed.breedName;
-          }else{
-            this.breedParam.breedName = breed.eName;
-            this.breedInfo.breedName = breed.eName;
-          } 
+    events: {
+        breed: function(breed) {
+            if (breed.eName == null || breed.eName == "") {
+                this.breedInfo.breedName = breed.breedName;
+                this.breedParam.breedName = breed.breedName;
+            } else {
+                this.breedParam.breedName = breed.eName;
+                this.breedInfo.breedName = breed.eName;
+            }
             this.breedInfo.breedId = breed.breedId;
             /*this.breedParam.breedName = breed.breedName;*/
             this.breedParam.id = breed.breedId;
             //this.breedParam.loading=true;
             this.getBreedDetail(this.breedParam);
         },
-        customer:function(customer){
-            console.log(customer);
+        customer: function(customer) {
             this.param.customerName = customer.customerName;
             this.param.customerId = customer.customerId;
             this.param.customerPhone = customer.customerPhone;
             this.param.customerEmail = customer.email;
-            
+
         }
     },
-    created(){
-      if(this.param.breedId){
-        this.breedParam.breedName = this.param.breedName;
-        this.breedParam.id = this.param.breedId;
-        this.getBreedDetail(this.breedParam);
-      }
-      if(this.param.id){
-        this.param.loading=true;
-        this.getIntentionDetail(this.param);
-      }else{
-        this.param.loading=false;
-      }
-      if(this.param.country){
-        this.countryParam.country=this.param.country;
-        this.countryParam.province=this.param.province;
-        this.countryParam.city=this.param.city;
-        this.countryParam.district=this.param.district;
-        this.country.cname=this.param.country;
-        this.province.cname=this.param.province;
-        this.city.cname=this.param.city;
-        this.district.cname=this.param.district;
-      }
-      this.getCountryList(this.countryParam);
-      this.getUnitList();
+    created() {
+        if (this.param.breedId) {
+            this.breedParam.breedName = this.param.breedName;
+            this.breedParam.id = this.param.breedId;
+            this.getBreedDetail(this.breedParam);
+        }
+        if (this.param.id) {
+            this.param.loading = true;
+            this.getIntentionDetail(this.param);
+        } else {
+            this.param.loading = false;
+        }
+        if (this.param.country) {
+            this.countryParam.country = this.param.country;
+            this.countryParam.province = this.param.province;
+            this.countryParam.city = this.param.city;
+            this.countryParam.district = this.param.district;
+            this.country.cname = this.param.country;
+            this.province.cname = this.param.province;
+            this.city.cname = this.param.city;
+            this.district.cname = this.param.district;
+        }
+        this.getCountryList(this.countryParam);
+        this.getUnitList();
     }
 }
 </script>
 <style scoped>
-.modal{
-  z-index: 1083
+.modal {
+    z-index: 1083
 }
-.modal_con{
-  z-index: 1084
+
+.modal_con {
+    z-index: 1084
 }
 
 .edit-model {
-  padding: 10px 30px 80px 30px;
+    padding: 10px 30px 80px 30px;
 }
 
-.top-title{
-    right:0;
+.top-title {
+    right: 0;
     width: 800px;
     left: 0;
 }
@@ -714,7 +704,6 @@ export default {
     -moz-box-orient: horizontal;
     -ms-box-orient: horizontal;
     box-orient: horizontal;
-
 }
 
 .editpageleft,
@@ -726,14 +715,13 @@ export default {
     width: 50%;
 }
 
-.editpagecenter{
-  -webkit-box-flex: 1;
-  -webkit-flex: auto;
-  -ms-flex: auto;
-  flex: auto;
-  width: 100%;
+.editpagecenter {
+    -webkit-box-flex: 1;
+    -webkit-flex: auto;
+    -ms-flex: auto;
+    flex: auto;
+    width: 100%;
 }
-
 
 .editpage-input {
     margin-top: 15px;
@@ -765,7 +753,7 @@ export default {
     border-top: 1px solid #ddd;
     text-align: right;
     padding: 10px 20px;
-   /*  margin-top: 50px; */
+    /*  margin-top: 50px; */
     position: fixed;
     left: 0;
     right: 0;
@@ -802,10 +790,12 @@ export default {
 .editpage-image {
     display: inline-block;
 }
-.table{
-  display: table;
+
+.table {
+    display: table;
 }
-a{
-    cursor:pointer;
+
+a {
+    cursor: pointer;
 }
 </style>

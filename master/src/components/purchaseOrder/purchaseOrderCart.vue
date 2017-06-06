@@ -32,7 +32,7 @@
                                 <tr v-for="item in param.goods">
                                     <td>{{item.breedName}}</td>
                                     <td>{{item.price}}元</td>
-                                    <td>{{item.location}}</td>
+                                    <td>{{item.location | province}}</td>
                                     <td>{{item.spec}}</td>
                                     <td>{{item.number}}/{{item.unit | unit}}</td>
                                 </tr>

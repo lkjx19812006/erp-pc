@@ -431,7 +431,12 @@ Vue.filter('advanced', function(val) { //预付比例
         return 'None';
     } else if (val == 0) {
         return 'None';
-    } else if (val == 1) {
+    } else {
+        val = val * 100;
+        return val + "%";
+    }
+
+    /*else if (val == 1) {
         return '100%';
     } else if (val == 0.1) {
         return '10%';
@@ -451,7 +456,7 @@ Vue.filter('advanced', function(val) { //预付比例
         return '80%';
     } else if (val == 0.9) {
         return '90%';
-    }
+    }*/
 })
 Vue.filter('status', function(val) { //业务机会状态
     var val = val;
@@ -1409,5 +1414,5 @@ Vue.filter('province', function(id) {
         return '澳门'
     }
 
-    return "未知"
+    return "不限"
 })

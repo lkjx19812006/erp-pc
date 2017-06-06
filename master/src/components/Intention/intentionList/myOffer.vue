@@ -216,7 +216,6 @@ export default {
             this.loadParam.show = true;
         },
         offerSearch: function() {
-
             this.getOfferList(this.loadParam);
         },
         resetCondition: function() {

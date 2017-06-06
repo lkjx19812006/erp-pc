@@ -1,15 +1,12 @@
 <template>
     <div>
         <chancedetail-model :param="chanceParam" v-if="chanceParam.show"></chancedetail-model>
-        <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
         <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
-        <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
         <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
         <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
         <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
-        <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
         <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
         <mglist-model>
             <!-- 头部搜索-->
@@ -47,7 +44,6 @@
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
-                        <!-- <button class="new_btn transfer" @click="search()">搜索</button> -->
                         <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
                         <!-- <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button> -->
                     </dl>
@@ -214,7 +210,7 @@
                             <td>{{item.customerPhone}}</td>
                             <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                             <td>{{item.breedName}}</td>
-                            <td>{{item.location}}</td>
+                            <td>{{item.locationName}}</td>
                             <td>{{item.price}}元/{{item.unit | Unit}}</td>
                             <td>{{item.spec}}</td>
                             <td>{{item.number}}{{item.unit | Unit}}</td>
@@ -262,9 +258,13 @@
                                   offer:item.offer,
                                   status:item.status,
                                    country:item.country,
+                                   countryName:item.countryName,
                                    province:item.province,
+                                   provinceName:item.provinceName,
                                    city:item.city,
+                                   cityName:item.cityName,
                                    district:item.district,
+                                   districtName:item.districtName,
                                    address:item.address,
                                    validate:item.validate,
                                    link:editintentInfo,
@@ -341,15 +341,12 @@
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import chancedetailModel from '../../Intention/chanceDetail'
-import transferintentModel from '../../Intention/transferIntent'
 import intentionauditModel from '../../user/intentionAudit'
 import tipsdialogModel from '../../tips/tipDialog'
 import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
-import editintentModel from '../../Intention/Editintention'
 import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
 import transferModel from '../../user/userTransfer'
-import searchModel from '../intentionSearch'
 import breedsearchModel from '../breedsearch'
 //import inputSelect from '../../tools/vueSelect/components/inputselect'
 import inputSelect from '../../tools/vueSelect/components/multiSelect'
@@ -373,15 +370,12 @@ export default {
     components: {
         pagination,
         chancedetailModel,
-        transferintentModel,
         intentionauditModel,
         tipsdialogModel,
         deletebreedModel,
-        editintentModel,
         createintentModel,
         supdemModel,
         transferModel,
-        searchModel,
         breedsearchModel,
         inputSelect,
         mglistModel
@@ -403,7 +397,6 @@ export default {
         return {
             loadParam: {
                 loading: true,
-                show: false,
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
@@ -445,11 +438,6 @@ export default {
             chanceParam: {
                 show: false
             },
-            intentionParam: {
-                show: false,
-                id: '',
-                name: '意向'
-            },
             tipsParam: {
                 show: false,
                 alert: true,
@@ -467,9 +455,7 @@ export default {
             deleteParam: {
                 show: false
             },
-            editParam: {
-                show: false
-            },
+
             createParam: {
                 show: false
             },
@@ -623,11 +609,6 @@ export default {
         },
         searchIntention: function() {
             this.getIntentionList(this.loadParam);
-        },
-        search: function() {
-            this.loadParam.loading = false;
-            this.loadParam.show = true;
-
         },
         resetCondition: function() {
             this.loadParam.type = '';

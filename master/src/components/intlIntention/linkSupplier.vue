@@ -33,7 +33,7 @@
                                 <td>{{item.cName}}</td>
                                 <td>{{item.price}}/{{item.unit}}</td>
                                 <td>{{item.spec}}</td>
-                                <td>{{item.location}}</td>
+                                <td>{{item.location | province}}</td>
                                 <td>{{item.inventory}}</td>
                             </tr>
                         </tbody>

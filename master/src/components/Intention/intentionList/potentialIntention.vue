@@ -1,13 +1,11 @@
 <template>
     <div>
         <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
-        <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
         <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
         <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
         <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
-        <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
         <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
         <mglist-model>
             <!-- 头部搜索-->
@@ -190,9 +188,9 @@
                             <td>{{item.spec}}</td>
                             <td>{{item.unit | Unit}}</td>
                             <td>{{item.price}}</td>
-                            <td>{{item.location | province}}</td>
+                            <td>{{item.locationName}}</td>
                             <td>{{item.number}}</td>
-                            <td>{{item.province | province}}</td>
+                            <td>{{item.provinceName}}</td>
                             <td>{{item.address}}</td>
                             <td>
                                 <div v-if="item.sampling==0">否</div>
@@ -302,13 +300,11 @@
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import chancedetailModel from '../../Intention/chanceDetail'
-import transferintentModel from '../../Intention/transferIntent'
 import createintentModel from '../../user/userIntention'
 import intentionauditModel from '../../user/intentionAudit'
 import tipsdialogModel from '../../tips/tipDialog'
 import supdemModel from '../supplyDemand'
 import transferModel from '../../user/userTransfer'
-import searchModel from '../intentionSearch'
 import breedsearchModel from '../breedsearch'
 //import inputSelect from '../../tools/vueSelect/components/inputselect'
 import inputSelect from '../../tools/vueSelect/components/multiSelect'
@@ -332,11 +328,9 @@ export default {
         chancedetailModel,
         intentionauditModel,
         createintentModel,
-        transferintentModel,
         tipsdialogModel,
         supdemModel,
         transferModel,
-        searchModel,
         breedsearchModel,
         inputSelect,
         mglistModel
@@ -395,11 +389,6 @@ export default {
             },
             chanceParam: {
                 show: false
-            },
-            intentionParam: {
-                show: false,
-                id: '',
-                name: '意向'
             },
             tipsParam: {
                 show: false,
@@ -563,11 +552,6 @@ export default {
         },
         searchIntention: function() {
             this.getIntentionList(this.loadParam);
-        },
-        search: function() {
-            this.loadParam.loading = false;
-            this.loadParam.show = true;
-
         },
         resetCondition: function() {
             this.loadParam.type = '';

@@ -1,12 +1,10 @@
 <template>
     <chancedetail-model :param="chanceParam" v-if="chanceParam.show"></chancedetail-model>
-    <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
     <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
     <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
-    <search-model :param="loadParam" v-if="loadParam.show"></search-model>
     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
@@ -353,14 +351,12 @@
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import chancedetailModel from '../../Intention/chanceDetail'
-import transferintentModel from '../../Intention/transferIntent'
 import intentionauditModel from '../../user/intentionAudit'
 import tipsdialogModel from '../../tipsDialog'
 import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 /*import editintentModel  from  '../../Intention/Editintention'*/
 import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
-import searchModel from '../intentionSearch'
 import breedsearchModel from '../breedsearch'
 import auditDialog from '../../tips/auditDialog'
 import createorderModel from '../createOrder'
@@ -391,14 +387,12 @@ export default {
     components: {
         pagination,
         chancedetailModel,
-        transferintentModel,
         intentionauditModel,
         tipsdialogModel,
         deletebreedModel,
         createintentModel,
         pictureModel,
         supdemModel,
-        searchModel,
         breedsearchModel,
         auditDialog,
         createorderModel,
@@ -427,7 +421,6 @@ export default {
         return {
             loadParam: {
                 loading: true,
-                show: false,
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
@@ -530,11 +523,6 @@ export default {
                     unit: '',
                     number: 0
                 }]
-            },
-            intentionParam: {
-                show: false,
-                id: '',
-                name: '意向'
             },
             intentionAuditParam: {
                 show: false,
@@ -762,28 +750,7 @@ export default {
             this.createOrderParam.consigneeAddr = ''
             this.createOrderParam.comments = ''
         },
-        clientTransfer: function(param) {
-            this.intentionParam = param;
 
-            for (var i in this.initMyIntentionList) {
-                if (this.initMyIntentionList[i].checked) {
-                    if (this.initMyIntentionList[i].checked == true) {
-                        this.intentionParam.id = this.initMyIntentionList[i].id;
-                        this.intentionParam = this.initMyIntentionList[i];
-                        this.intentionParam.show = true;
-                    }
-                } else if (this.intentionParam.id == "" && !this.initMyIntentionList[i].checked) {
-                    this.tipsParam.show = true;
-                    this.tipsParam.name = '请先选择业务机会';
-                    this.intentionParam.show = false;
-                }
-            }
-        },
-        search: function() {
-            this.loadParam.loading = false;
-            this.loadParam.show = true;
-
-        },
         searchIntention: function() {
             this.getIntentionList(this.loadParam);
         },

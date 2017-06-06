@@ -8,10 +8,10 @@
             <h3>匹配{{param.typeName}}信息</h3>
         </div>
         <div>
-          <div class="cover_loading">
+            <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-          </div>
-          <h2 v-if="initSupplyDemandList.length==0" align="center">无对应的{{param.typeName}}信息<h2>
+            </div>
+            <h2 v-if="initSupplyDemandList.length==0" align="center">无对应的{{param.typeName}}信息<h2>
           <table v-if="initSupplyDemandList.length>0" class="table table-hover table_color table-striped " v-cloak >
             <thead>
                 <tr>
@@ -51,7 +51,7 @@
                         <td>{{item.spec}}</td>
                         <td>{{item.unit}}</td>
                         <td>{{item.price}}</td>
-                        <td>{{item.location}}</td>
+                        <td>{{item.location | province}}</td>
                         <td>{{item.number}}</td>
                         <td>{{item.country}}</td>
                         <td>{{item.province}}</td>
@@ -201,4 +201,3 @@ export default {
   display: table;
 }
 </style>
-

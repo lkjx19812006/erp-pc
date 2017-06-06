@@ -127,7 +127,7 @@
                                                             <label v-if="item.validate==0||item.validate==9" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                                                         </td>
                                                         <td>{{item.breedName}}</td>
-                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.location | province}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.number}}</td>
                                                         <td>{{item.price}}元</td>

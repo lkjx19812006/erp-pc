@@ -1,6 +1,5 @@
 <template>
     <div>
-        <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
         <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
         <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
         <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
@@ -131,7 +130,7 @@
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.goods.arr">
                                                         <td>{{item.breedName}}</td>
-                                                        <td>{{item.location}}</td>
+                                                        <td>{{item.location | province}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.quality}}</td>
@@ -629,7 +628,6 @@
     </div>
 </template>
 <script>
-import trackingModel from '../order/ordergoods'
 import credenceModel from '../order/createcredence'
 import disposeModel from '../order/orderStatus'
 import pictureModel from '../tips/pictureDialog'
@@ -662,7 +660,6 @@ import {
 } from '../../vuex/actions'
 export default {
     components: {
-        trackingModel,
         credenceModel,
         disposeModel,
         pictureModel,
@@ -680,9 +677,7 @@ export default {
     props: ['param'],
     data() {
         return {
-            trackingParam: {
-                show: false
-            },
+
             sourceType: {
                 0: 'PC',
                 1: 'android',
@@ -866,12 +861,7 @@ export default {
             this.divideParam.stages = stages.arr;
             this.divideParam.callback = this.callback;
         },
-        createChance: function(item, index) {
-            item.show = !item.show;
-            item.index = index;
-            this.trackingParam = item;
-            this.trackingParam.show = true;
-        },
+
         linkDetail: function(detail) { //关联采购详情
             this.param.id = detail.id;
             this.getOrderDetail(this.param);

@@ -4,7 +4,6 @@
         <alert-model :param="tipParam" v-if="tipParam.show"></alert-model>
         <undeline-model :param="undelinePay" v-if="undelinePay.show"></undeline-model>
         <logistics-model :param="logisticsDetail" v-if="logisticsDetail.show"></logistics-model>
-        <editorder-model :param="editorder" v-if="editorder.show"></editorder-model>
         <contract-model :param="contractParam" v-if="contractParam.show"></contract-model>
         <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
         <saleapply-model :param="applicationParam" v-if="applicationParam.show"></saleapply-model>
@@ -582,7 +581,6 @@ import undelineModel from '../order/uploadPayment'
 import contractModel from '../order/second_order/contractItems'
 import pressImage from '../tools/upload/imagePressMul.vue'
 import logisticsModel from '../order/logisticsDetail'
-import editorderModel from '../order/ordergoods'
 import alertModel from '../tips/tipDialog'
 import pictureModel from '../tips/pictureDialog'
 import saleapplyModel from '../order/second_order/afterSalesApply'
@@ -611,7 +609,6 @@ export default {
         undelineModel,
         pressImage,
         logisticsModel,
-        editorderModel,
         alertModel,
         contractModel,
         pictureModel,
@@ -904,7 +901,7 @@ export default {
         },
         selectImg: function(param) { //将上传的图片分别付给不同的变量
             this.imgType = param;
-            console.log(this.imgType+"哈哈哈")
+            console.log(this.imgType + "哈哈哈")
         },
         deliverCallback: function(title) {
             this.tipParam.show = true;
@@ -914,9 +911,7 @@ export default {
             confirm.callback = this.param.callback;
             this.orderStatu(confirm)
         },
-        orderEdit: function(edit) {
-            this.editorder = edit;
-        },
+
         Viewlogistics: function(logistics) {
             this.logisticsDetail = logistics;
             this.logisticsInfo(this.logisticsDetail)
