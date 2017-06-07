@@ -18,7 +18,7 @@
             <validator name="validation">
                 <div class="edit-model">
                     <div class="clearfix">
-                        <div class="editpage-input col-md-3">
+                        <div class="editpage-input col-md-3" v-if="param.intl!=1">
                             <label class="editlabel">{{$t('static.book')}}</label>
                             <select class="form-control edit-input" v-model="param.pre">
                                 <option value="0">{{$t('static.no')}}</option>
@@ -858,7 +858,6 @@ export default {
                 return;
             }
             this.resetParam();
-            console.log(this.country)
             this.param.country = this.country.id;
             this.param.province = this.province.id;
             this.param.city = this.city.id;
@@ -866,6 +865,10 @@ export default {
             this.param.show = false;
             this.param.consigneeAddr = param.consigneeAddr;
             //如果this.param.addressId = 0,则新增客户地址
+            // if(param.intl == 1){
+            //     this.param.pre = 0
+            //     console.log(param)
+            // }
             this.createOrder(this.param);
 
         },

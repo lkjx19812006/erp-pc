@@ -6713,7 +6713,9 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
                     unit: arr[i].unit,
                     price: arr[i].price,
                     status: 1,
-                    description: arr[i].description
+                    description: arr[i].description,
+                    quality:arr[i].quality,
+                    mainStandard:arr[i].mainStandard,
                 };
                 param.intentionList.push(temp);
                 param.intentionListBack.push(temp);
@@ -6735,6 +6737,7 @@ export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
         customerName: param.customerName,
         customerPhone: param.customerPhone,
         buyDesc: param.buyDesc,
+        comment:param.comment,
         province: param.province,
         city: param.city,
         district: param.district,

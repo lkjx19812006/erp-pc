@@ -78,17 +78,6 @@
                                     <input type="number" v-model='param.price' v-validate:price="['money']" class="form-control edit-input" value="{{param.price}}" style="display:-webkit-inline-box" /><span v-show="param.unit">元/{{param.unit | Unit}}</span>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">质量要求
-                                        <span class="system_danger" v-if="$validation.quality.required">必填项</span>
-                                    </label>
-                                    <input type="text"v-model="param.quality" class="form-control edit-input" value="{{param.quality}}" v-validate:quality="{required:true}">
-                                        
-                                    </input>
-                                    <!-- <i-select :model.sync="param.quality" filterable multiple style="width: 321px">
-                                        <i-option v-for="item in qualityList" :value="item.title">{{item.title}}</i-option>
-                                    </i-select> -->
-                                </div>
-                                <div class="editpage-input">
                                     <label class="editlabel">包装</label>
                                     <input type="text" v-show="false" v-model="param.pack" />
                                     <div type="text" class="edit-input">
@@ -102,6 +91,14 @@
                                         <option value="0">否</option>
                                         <option value="1">会</option>
                                     </select>
+                                </div>
+                                <div class="editpage-input" style="padding-right:80px;">
+                                    <label class="editlabel">质量要求
+                                        <span class="system_danger" v-if="$validation.quality.required">必填项</span>
+                                    </label>
+                                    <input type="text"v-model="param.quality" class="form-control edit-input" value="{{param.quality}}" v-validate:quality="{required:true}" v-show="false">           
+                                    </input>
+                                    <quality-required :param="param"></quality-required>
                                 </div>
                             </div>
                             <div class="editpageright">
@@ -183,13 +180,14 @@
                                     </div>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">详细地址</label>
-                                    <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
+                                    <label class="editlabel">详细地址<span class="system_danger" v-if="$validation.address.required">必填项</span></label>
+                                    <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" v-validate:address="{required:true}"/>
                                 </div>
                                 <!-- 客户备注 -->
-                                <div class="editpage-input col-md-12" style="padding-left: 0px;padding-right: 30px;">
+                                <div class="editpage-input col-md-12" style="padding-left: 0px;padding-right: 80px;">
                                     <label class="editlabel">客户备注</label>
-                                    <textarea class="form-control" v-model="param.description" rows="5"></textarea>
+                                    <!-- <textarea class="form-control" v-model="param.description" rows="5"></textarea> -->
+                                    <mark-info :param="param" :rows="4"></mark-info>
                                 </div>
                             </div>
                             <div class="editpageright">
@@ -232,11 +230,6 @@
                                     </select>
                                 </div>
                                 <div class="editpage-input" v-show="param.sampling==1">
-                                    <!-- <label class="editlabel">样品单位</label>
-                                    <div type="text" class="edit-input">
-                                        <input-select :prevalue="param.sampleUnit" :value.sync="param.sampleUnit" :options="initBreedDetail.units.arr" placeholder="样品单位" label="name">
-                                        </input-select>
-                                    </div> -->
                                     <label class="editlabel">样品单位</label>
                                     <select v-model="param.sampleUnit" class="form-control edit-input">
                                         <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}</option>
@@ -250,6 +243,10 @@
                                     <label class="editlabel">样品总价</label>
                                     <input type="text" v-model='param.sampleAmount' class="form-control edit-input" value="{{param.sampleAmount}}" />
                                 </div>
+                                <!-- <div class="editpage-input">
+                                    <label class="editlabel">选择付款方式</label>
+                                    <pay-type></pay-type>
+                                </div> -->
                             </div>
                         </div>
                         <!-- 预售或者预购 -->
@@ -288,7 +285,8 @@
                                 <!-- 客户备注 -->
                                 <div class="editpage-input col-md-12" style="padding-left: 0px;padding-right: 30px;">
                                     <label class="editlabel">备注</label>
-                                    <textarea class="form-control" v-model="param.description" rows="5"></textarea>
+                                    <textarea class="form-control" v-model="param.description" rows="5" v-show="false"></textarea>
+                                    <mark-info :param="param" :rows="5"></mark-info>
                                 </div>
                             </div>
                             <div class="editpageright">
@@ -331,11 +329,6 @@
                                     </select>
                                 </div>
                                 <div class="editpage-input" v-show="param.sampling==1">
-                                    <!-- <label class="editlabel">样品单位</label>
-                                    <div type="text" class="edit-input">
-                                        <input-select :prevalue="param.sampleUnit" :value.sync="param.sampleUnit" :options="initBreedDetail.units.arr" placeholder="样品单位" label="name">
-                                        </input-select>
-                                    </div> -->
                                     <label class="editlabel">样品单位</label>
                                     <select v-model="param.sampleUnit" class="form-control edit-input">
                                         <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}</option>
@@ -384,6 +377,9 @@ import breedLocation from '../order/second_order/breedLocation'
 import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipdialogModel from '../tips/tipDialog'
+import qualityRequired from './plugins/qualityRequired'
+import payType from './plugins/payType'
+import markInfo from './plugins/markInfo'
 /*import pressImage from '../imagePress'*/
 import pressImage from '../tools/upload/imagePressMul'
 import {
@@ -414,7 +410,10 @@ export default {
         vSelect,
         inputSelect,
         tipdialogModel,
-        pressImage
+        pressImage,
+        qualityRequired,
+        markInfo,
+        payType
     },
     props: ['param'],
     data() {

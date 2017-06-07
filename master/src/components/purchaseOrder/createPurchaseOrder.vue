@@ -65,12 +65,12 @@
                                 </div>
                             </div> -->
                             <div class="editpage-input col-md-8">
-                                <label class="editlabel">详细地址 </label>
-                                <input type="text" class="form-control edit-input" style="width:95%" v-model="param.address" />
+                                <label class="editlabel">详细地址 <span class="system_danger" v-if="$validation.address.required">必填项</span></label>
+                                <input type="text" class="form-control edit-input" style="width:95%" v-model="param.address" v-validate:address="{required:true}"/>
                             </div>
                             <div class="editpage-input col-md-8">
                                 <label class="editlabel">采购备注 </label>
-                                <textarea type="text" class="form-control edit-input" style="width:95%;height:80px" v-model="param.buyDesc"></textarea>
+                                <textarea type="text" class="form-control edit-input" style="width:95%;height:80px" v-model="param.comment"></textarea>
                             </div>
                         </div>
                     </section>
@@ -139,6 +139,15 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- 中标价格 -->
+                                    <div class="editpage-input col-md-6">
+                                        <label class="editlabel">中标价格
+                                            <span class="system_danger" v-if="$inner.price.min">价格不能小于0</span>
+                                        </label>
+                                        <input type="number" v-model="intentionInfo.price" class="form-control edit-input" v-validate:price="{
+                                            min:0
+                                            }" />
+                                    </div>
                                     <!-- 规格 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.specification')}}</label>
@@ -148,20 +157,7 @@
                                             </input-select>
                                         </div>
                                     </div>
-                                    <!-- 价格  -->
-                                    <!-- <div class="editpage-input col-md-6">
-                                        <label class="editlabel">{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
-                                        <div style="clear:both;height:36px;">
-                                            <div class="left" style="width:45%;">
-                                                <input type="number" v-model="intentionInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
-                                            </div>
-                                            <div class="left" style="width:45%;">
-                                                <select class="form-control edit-input" v-model="intentionInfo.unit" disabled="true">
-                                                    <option v-for="item in initUnitlist" value="{{item.id}}">元/{{item.name}}({{item.ename}})</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div> -->
+
                                     <!-- 产地 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">{{$t('static.origin')}}</label>
@@ -175,19 +171,14 @@
                                         </div>
                                     </div>
                                     <!-- 质量要求 -->
-                                    <div class="editpage-input col-md-6">
-                                        <label class="editlabel">质量要求</label>
-                                        <input type="text" v-model="intentionInfo.quality" class="form-control edit-input" />
-                                    </div>
-                                    <!-- 期望价格 -->
-                                    <div class="editpage-input col-md-6">
-                                        <label class="editlabel">中标价格
-                                            <span class="system_danger" v-if="$inner.price.min">价格不能小于0</span>
+                                    <div class="editpage-input col-md-6" style="padding-right:110px">
+                                        <label class="editlabel">质量要求
+                                            <span class="system_danger" v-if="$inner.quality.required">必填项</span>
                                         </label>
-                                        <input type="number" v-model="intentionInfo.price" class="form-control edit-input" v-validate:price="{
-                                            min:0
-                                            }" />
+                                        <input type="text" v-model="intentionInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" v-show="false"/>
+                                        <quality-required :param="intentionInfo"></quality-required>
                                     </div>
+                                    
                                     <!-- 竞争性指标 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">竞争性指标</label>
@@ -221,6 +212,7 @@
 <script>
 import vSelect from '../tools/vueSelect/components/Select'
 import pressImage from '../imagePress'
+import qualityRequired from '../user/plugins/qualityRequired'
 import searchcustomerModel from '../Intention/clientname'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import searchbreedModel from '../Intention/breedsearch'
@@ -258,7 +250,7 @@ export default {
         vSelect,
         inputSelect,
         pressImage,
-
+        qualityRequired
     },
     props: ['param'],
     data() {
@@ -578,7 +570,10 @@ export default {
     flex: auto;
     width: 50%;
 }
-
+.system_danger{
+    display: inline-block;
+    height: 10px!important
+}
 .editpage-input {
     margin-top: 15px;
 }
