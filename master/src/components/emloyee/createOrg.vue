@@ -54,7 +54,7 @@
                             </div>
                             <div class="client-detailInfo  pull-left col-md-6 col-xs-12" v-if="param.distinct=='editparten'">
                                 <label style="display:inline;font-size:14px;">管辖省份：</label>
-                                    <Tag color="blue" v-for="($index,item) in proArr" track-by="$index" closable @on-close="deleteLabel($index)">{{item.cname}}</Tag>
+                                    <Tag color="blue" v-for="($index,item) in idsArr" track-by="$index" closable @on-close="deleteLabel($index)">{{item | province}}</Tag>
                                     <i-button icon="ios-plus-empty" type="dashed" size="small" @click="newlabel()">
                                         <span v-if="!pro.show">展开</span>
                                         <span v-else>收起</span>
@@ -82,6 +82,7 @@
 </template>
 <script>
 import orgsearchModel from  '../emloyee/searchorg'
+import filter from '../../filters/filters'
 import {
     initOrgDetail,
     initCNProvince
@@ -114,12 +115,11 @@ export default {
                 size: '15px',
                 id:this.param.id
             },
-            proArr:[{cname:'上海',id:''},{cname:'江苏',id:''}],
             pro:{
                 show:false,
                 data:''
-            }
-           
+            },
+            idsArr:[]
         }
     },
      vuex: {
@@ -144,10 +144,10 @@ export default {
             console.log(item.checked);
         },
         save:function(){
-            console.log(this.param)
             this.param.show=false;
             if(this.param.distinct=='editparten'){
                 this.param.pid = this.orgNameParam.orgid;
+                this.param.responsibleProvinceId = this.idsArr.join('，')
                 this.alterOrg(this.param);
             }else{
                 this.param.pid = this.orgNameParam.orgid;
@@ -177,10 +177,10 @@ export default {
             this.pro.show = !this.pro.show 
         },
         check:function(item){
-            this.proArr.push(item)
+            this.idsArr.push(item.id)
         },
         deleteLabel:function($index){
-            this.proArr.splice($index,1)
+            this.idsArr.splice($index,1)
         }
     },
     events:{
@@ -191,7 +191,7 @@ export default {
         }
     },
     created(){
-
+        this.idsArr = this.param.responsibleProvinceId.split('，')
     },
     watch:{
         'initOrgDetail':function (to,from){
@@ -205,7 +205,8 @@ export default {
                 this.orgNameParam.orgName = to.pid;
             }  */
         }
-    }
+    },
+    filter: (filter, {})
 }
 </script>
 <style scoped>

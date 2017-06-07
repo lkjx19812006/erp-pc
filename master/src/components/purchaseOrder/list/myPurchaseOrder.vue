@@ -209,6 +209,7 @@ export default {
                 customerName: "",
                 customerPhone: "",
                 buyDesc: "", //采购内容描述
+                comment:'',
                 province: "",
                 city: "",
                 district: "",
@@ -233,6 +234,7 @@ export default {
                 customerId: "",
                 customerName: "",
                 customerPhone: "",
+                comment:'',
                 province: "",
                 city: "",
                 district: "",
@@ -336,10 +338,9 @@ export default {
             this.editParam.city = item.city;
             this.editParam.district = item.district;
             this.editParam.address = item.address;
-            this.editParam.buyDesc = item.buyDesc;
+            this.editParam.comment = item.comment;
             this.editParam.intentionList = [];
             this.editParam.intentionListBack = [];
-
             this.editParam.show = true;
         },
         detailClick: function(id, customerId) {

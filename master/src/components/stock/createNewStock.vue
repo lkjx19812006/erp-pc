@@ -49,7 +49,8 @@
                             	<!-- 产地 -->
                                 <div class="client-detailInfo  col-md-6">
                                     <label class="editlabel" for="system">{{$t('static.origin')}}<span class="system_danger" v-if="$validation.location.required">请输入产地</span></label>
-                                    <input type="text" class="form-control edit-input" debounce="500" v-validate:location="['required']" v-model="param.location" />
+                                    <input type="text" class="form-control edit-input" debounce="500" v-validate:location="['required']" v-model="param.location" v-show="false"/>
+                                    <breed-location :param="param" :show="breedParam" :widparam="'290'"></breed-location>
                                 </div>
                             	<!-- 仓库地 -->
                                 <div class="client-detailInfo  col-md-6">
@@ -136,6 +137,7 @@
 <script>
 //import selectModel from './employeeOrOrg'
 import searchEmpinfo from '../clientRelate/searchEmpinfo'
+import breedLocation from '../order/second_order/breedLocation'
 import breedSearch from '../../components/Intention/breedsearch.vue'
 import tipsModel from '../tips/tipDialog'
 import vSelect from '../tools/vueSelect/components/Select'
@@ -147,11 +149,13 @@ import {
 import {
 	createStockInfo,
 	editStockInfo,
-	getUnitList
+	getUnitList,
+    getBreedDetail
 } from '../../vuex/actions'
 export default {
     components: {
         //selectModel,
+        breedLocation,
         tipsModel,
         vSelect,
         languageModel,
@@ -179,7 +183,10 @@ export default {
                 name: '创建成功',
                 alert: true
             },            
-            loading: false
+            loading: false,
+            breedParam:{
+                id:''
+            }
         }
     },
     vuex: {
@@ -189,7 +196,8 @@ export default {
         actions: {
             createStockInfo,
             editStockInfo,
-            getUnitList
+            getUnitList,
+            getBreedDetail
         }
     },
     methods: {
@@ -229,6 +237,10 @@ export default {
     },
     created:function(){
     	this.getUnitList()
+        this.breedParam.id = this.param.breedId
+        if(this.param.breedId){
+            this.getBreedDetail(this.breedParam)
+        }        
     },
     events:{
     	a:function(res){
@@ -240,7 +252,9 @@ export default {
             this.loadParam.breedId = breed.breedId;
             this.loadParam.breedName = breed.breedName;
             this.param.breedName = breed.breedName;
-            this.param.breedId = breed.breedId;;
+            this.param.breedId = breed.breedId;
+            this.breedParam.id = breed.breedId;
+            this.getBreedDetail(this.breedParam);
         }
     }    
 
