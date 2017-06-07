@@ -268,6 +268,7 @@ var locales = {
             link_types: '关联类型',
             enter_code: '请输入正确的邮编',
             my_orders: '我的订单',
+            book:'预定',
             department_orders: '部门订单',
             all_order: '全部订单',
             pay_order: '采购订单支付',
@@ -573,7 +574,8 @@ var locales = {
             Enter_search: '按回车键搜索',
             upload_clients: 'excel导入客户',
             two_decimal: '至多两位小数',
-            offer_message: '报价消息'
+            offer_message: '报价消息',
+            delivery_addr: '发货地'
         }
     },
     en: {
@@ -657,6 +659,8 @@ var locales = {
             pallets: 'Pallets',
             bag: 'Woven bag',
             box: 'Box',
+            book:'book',
+            delivery_addr:'delivery address',
             packing: 'Vacuum packaging',
             come_to_see_product: 'Come to see product',
             packaging: 'Packaging',

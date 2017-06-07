@@ -19,7 +19,7 @@
                 <div class="edit-model">
                     <div class="clearfix">
                         <div class="editpage-input col-md-3">
-                            <label class="editlabel">预订</label>
+                            <label class="editlabel">{{$t('static.book')}}</label>
                             <select class="form-control edit-input" v-model="param.pre">
                                 <option value="0">{{$t('static.no')}}</option>
                                 <option value="1">{{$t('static.yes')}}</option>
@@ -178,8 +178,8 @@
                                     <th>{{$t('static.specification')}}</th>
                                     <th>{{$t('static.origin')}}</th>
                                     <!-- <th>发货地</th> -->
-                                    <th>操作</th>
-                                    <th>操作</th>
+                                    <th>{{$t('static.handle')}}</th>
+                                    <th>{{$t('static.handle')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -299,8 +299,8 @@
                                         <breed-location :param="breedInfo" :show="breedParam" :widparam="'285'"></breed-location>
                                     </div>
                                     <!-- 发货地 -->
-                                    <div class="editpage-input col-md-6">
-                                        <label class="editlabel">发货地 <span class="jinggao" v-if="$inner.lcoals.required">{{$t('static.required')}}</span> </label>
+                                    <div class="editpage-input col-md-6" v-if="param.intl!=1">
+                                        <label class="editlabel">{{$t('static.delivery_addr')}}<span class="jinggao" v-if="$inner.lcoals.required">{{$t('static.required')}}</span> </label>
                                         <input type="text" v-show="false" v-model="breedInfo.provinceId" v-validate:lcoals="{required:true}" />
                                         <div type="text" class="edit-input">
                                             <v-select :debounce="250" :value.sync="breedInfo.provinceId" :options="initCNProvince" placeholder="省/Province" label="cname">

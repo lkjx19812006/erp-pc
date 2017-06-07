@@ -5652,7 +5652,7 @@ export const alterOrg = ({ dispatch }, param) => { //修改部门信息
         pid: param.pid,
         level: param.level,
         bizType: param.bizType,
-        responsibleProvinceId:param.provinceIds
+        responsibleProvinceId:param.responsibleProvinceId
     }
     Vue.http({
         method: 'PUT',
