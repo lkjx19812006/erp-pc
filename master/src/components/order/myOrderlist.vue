@@ -890,7 +890,14 @@ export default {
         afterSales: function(sales) {
             this.applicationParam = sales;
             this.applicationParam.show = true;
-            this.applicationParam.callback = this.orderBack;
+            this.applicationParam.callback = this.afterSalesBack;
+        },
+        afterSalesBack: function(title) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.applicationParam.show = false;
+            this.getEmpolyeeOrder(this.loadParam);
         },
         orderBack: function(title) {
             this.tipsParam.show = true;

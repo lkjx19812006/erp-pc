@@ -755,7 +755,7 @@ export default {
             this.breedInfo.price = this.param.goods[index].price;
             this.breedInfo.costPrice = this.param.goods[index].costPrice;
             this.breedInfo.sourceType = this.param.goods[index].sourceType;
-            this.breedParam.id = this.breedInfo.breedId 
+            this.breedParam.id = this.breedInfo.breedId
             this.getBreedDetail(this.breedParam)
             this.updateParam.show = true;
             this.altogether -= parseFloat(this.breedInfo.number) * parseFloat(this.breedInfo.price);
@@ -775,7 +775,7 @@ export default {
                 this.breedInfo.price = '';
                 this.breedInfo.provinceId = '';
                 this.breedInfo.costPrice = 0;
-                this.breedParam.id=''
+                this.breedParam.id = ''
                 if (this.param.type == 0) {
                     this.breedInfo.costPrice = 0;
                 }
@@ -818,20 +818,20 @@ export default {
             if ((/\.\d{3,}/).test(this.breedInfo.costPrice)) {
                 this.breedInfo.costPrice = this.breedInfo.costPrice.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/, '$1$2.$3');
             }
-            this.param.goods[this.updateParam.index].breedId = this.breedInfo.breedId,
-                this.param.goods[this.updateParam.index].breedName = this.breedInfo.breedName,
-                this.param.goods[this.updateParam.index].title = this.breedInfo.breedName,
-                this.param.goods[this.updateParam.index].quality = this.breedInfo.quality,
-                this.param.goods[this.updateParam.index].location = this.breedInfo.location,
-                this.param.goods[this.updateParam.index].spec = this.breedInfo.spec,
-                this.param.goods[this.updateParam.index].number = this.breedInfo.number,
-                this.param.goods[this.updateParam.index].unit = this.breedInfo.unit,
-                this.param.goods[this.updateParam.index].price = this.breedInfo.price,
-                this.param.goods[this.updateParam.index].costPrice = this.breedInfo.costPrice,
-                this.param.goods[this.updateParam.index].sourceType = this.breedInfo.sourceType,
-                this.param.goods[this.updateParam.index].ship_addr = this.breedInfo.provinceId.id,
+            this.param.goods[this.updateParam.index].breedId = this.breedInfo.breedId;
+            this.param.goods[this.updateParam.index].breedName = this.breedInfo.breedName;
+            this.param.goods[this.updateParam.index].title = this.breedInfo.breedName;
+            this.param.goods[this.updateParam.index].quality = this.breedInfo.quality;
+            this.param.goods[this.updateParam.index].location = this.breedInfo.location;
+            this.param.goods[this.updateParam.index].spec = this.breedInfo.spec;
+            this.param.goods[this.updateParam.index].number = this.breedInfo.number;
+            this.param.goods[this.updateParam.index].unit = this.breedInfo.unit;
+            this.param.goods[this.updateParam.index].price = this.breedInfo.price;
+            this.param.goods[this.updateParam.index].costPrice = this.breedInfo.costPrice;
+            this.param.goods[this.updateParam.index].sourceType = this.breedInfo.sourceType;
+            this.param.goods[this.updateParam.index].ship_addr = this.breedInfo.provinceId.id;
 
-                this.breedInfo.status = 0;
+            this.breedInfo.status = 0;
             this.updateParam.show = false;
             this.altogether += (parseFloat(this.param.goods[this.updateParam.index].number) * parseFloat(this.param.goods[this.updateParam.index].price) * 100) / 100;
             this.costmoney += (parseFloat(this.param.goods[this.updateParam.index].number) * parseFloat(this.param.goods[this.updateParam.index].costPrice) * 100) / 100;
@@ -858,7 +858,7 @@ export default {
                 return;
             }
             this.resetParam();
-            console.log(this.country)
+
             this.param.country = this.country.id;
             this.param.province = this.province.id;
             this.param.city = this.city.id;
