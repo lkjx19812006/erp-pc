@@ -188,6 +188,7 @@
                             <th>
                                 <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
                             </th>
+                            <th>{{$t('static.client_id')}}</th>
                             <th>{{$t('static.salesman')}}</th>
                             <th>{{$t('static.create_time')}}</th>
                             <th>{{$t('static.recent_contact')}}</th>
@@ -228,6 +229,7 @@
                             <td @click.stop="">
                                 <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                             </td>
+                            <td>{{item.id}}</td>
                             <td>{{item.employeeName}}</td>
                             <!-- 修改时间 -->
                             <td>{{item.ctime | timeFilters}}</td>

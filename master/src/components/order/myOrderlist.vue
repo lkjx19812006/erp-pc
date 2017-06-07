@@ -363,6 +363,7 @@
                                             show:true,
                                             sub:$index,
                                             orderId:item.id,
+                                            id:item.id,
                                             consignee:'',
                                             comment:'',
                                             shipper:'',

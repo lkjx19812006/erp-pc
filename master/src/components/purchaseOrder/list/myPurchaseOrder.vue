@@ -29,11 +29,11 @@
                     </dd>
                     <dt class="left transfer marg_top">已收报价：</dt>
                     <dd class="left margin_right">
-                      <select class="form-control" v-model="loadParam.offer" @change="selectSearch()">
-                        <option value="-1">全部</option>
-                        <option value="1">收到报价</option>
-                        <option value="0">暂无报价</option>
-                      </select>
+                        <select class="form-control" v-model="loadParam.offer" @change="selectSearch()">
+                            <option value="-1">全部</option>
+                            <option value="1">收到报价</option>
+                            <option value="0">暂无报价</option>
+                        </select>
                     </dd>
                     <dt class="left transfer marg_top">采购单来源：</dt>
                     <dd class="left margin_right">
@@ -126,9 +126,9 @@
                         <td style="text-align: left">
                             <button v-if="item.inquire==0" class="btn btn-info btn-xs" @click.stop="editPurchase(item,$index)">编辑</button>
                             <button v-if="item.inquire==0" class="btn btn-danger btn-xs" @click.stop="deletePurchase(item.id,$index)">删除</button>
-                            <button v-if="item.inquire==0" class="btn btn-success btn-xs" @click.stop="singleInquire(item.id,$index)">询价</button>
+                            <button v-if="item.inquire==0" class="btn btn-success btn-xs" @click.stop="singleInquire(item.id,$index)">询价扩散</button>
                             <button v-if="item.inquire==1||item.inquire==2" class="btn btn-danger btn-xs" @click.stop="cancelInquire(item.id,$index)">终止询价</button>
-                            <button v-else v-if="item.inquire!=0" class="btn btn-primary btn-xs"  @click.stop="singleInquire(item.id,$index)">恢复询价</button>
+                            <button v-else v-if="item.inquire!=0" class="btn btn-primary btn-xs" @click.stop="singleInquire(item.id,$index)">恢复询价</button>
                         </td>
                     </tr>
                 </tbody>
