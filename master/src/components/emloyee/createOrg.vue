@@ -105,7 +105,7 @@ export default {
             orgNameParam:{
                 show:false,
                 orgName:'',
-                orgid:'',
+                orgid:this.param.pid,
                 orgcode:'',
                 leaf:true   //只获取叶子节点
             },

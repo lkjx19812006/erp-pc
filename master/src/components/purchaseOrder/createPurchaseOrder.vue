@@ -69,6 +69,11 @@
                                 <input type="text" class="form-control edit-input" style="width:95%" v-model="param.address" v-validate:address="{required:true}"/>
                             </div>
                             <div class="editpage-input col-md-8">
+                                <label class="editlabel">付款方式 <span class="system_danger" v-if="$validation.address.required">必填项</span></label>
+                                <pay-type :width="'95%'" :param="param"></pay-type>
+                            </div>
+                            
+                            <div class="editpage-input col-md-8">
                                 <label class="editlabel">采购备注 </label>
                                 <textarea type="text" class="form-control edit-input" style="width:95%;height:80px" v-model="param.comment"></textarea>
                             </div>
@@ -220,6 +225,7 @@ import consigneeModel from '../clientRelate/addressSearch'
 import searchemgModel from '../order/second_order/allEmployee'
 import supplierDialog from '../order/second_order/selectAllSupplier.vue'
 import breedLocation from '../order/second_order/breedLocation'
+import payType from '../user/plugins/payType'
 import {
     initCountrylist,
     initProvince,
@@ -250,7 +256,8 @@ export default {
         vSelect,
         inputSelect,
         pressImage,
-        qualityRequired
+        qualityRequired,
+        payType
     },
     props: ['param'],
     data() {
@@ -486,7 +493,6 @@ export default {
             this.param.city = this.city.id;
             this.param.district = this.district.id;
             this.param.show = false;
-
             this.createPurchaseOrder(this.param);
         },
 
