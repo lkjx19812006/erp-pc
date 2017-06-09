@@ -11,6 +11,10 @@
         <cancel-model :param="cancelFlowParam" v-if="cancelFlowParam.show"></cancel-model>
         <cancel-reapply-model :param="cancelReapplyParam" v-if="cancelReapplyParam.show"></cancel-reapply-model>
         <cancel-receipt-model :param="cancelReceiptParam" v-if="cancelReceiptParam.show"></cancel-receipt-model>
+        <after-sales-audit-model :param="afterSalesAuditParam" v-if="afterSalesAuditParam.show"></after-sales-audit-model>
+        <after-sales-audit-model :param="afterSalesReceiveParam" v-if="afterSalesReceiveParam.show"></after-sales-audit-model>
+        <after-sales-reapply-model :param="afterSalesReapplyParam" v-if="afterSalesReapplyParam.show"></after-sales-reapply-model>
+        <after-sales-send-model :param="afterSalesSendParam" v-if="afterSalesSendParam.show"></after-sales-send-model>
         <tip-model :param="tipParam" v-if="tipParam.show"></tip-model>
         <mglist-model>
             <!-- 头部搜索 -->
@@ -138,11 +142,19 @@
                                     <a v-if="item.taskKey=='supplementary_contract_employee_handle'" @click="showAudit(item)">{{$t('static.reapply')}}</a>
                                 </div>
                                 <div v-if="item.bizType=='order_after_sales'&&loadParam.link=='/order/toDoOrderList'">
-                                    <a v-if="item.taskKey=='after_sales_governor_validate'" @click="showAudit(item)">{{$t('static.aftersales')}}</a>
-                                    <a v-if="item.taskKey=='after_sales_receipt'" @click="showAudit(item)">{{$t('static.confirm_receipt')}}</a>
-                                    <a v-if="item.taskKey=='after_sales_resend'" @click="showAudit(item)">{{$t('static.reapply_delivery')}}</a>
-                                    <a v-if="item.taskKey=='after_sales_employee_handle'" @click="showAudit(item)">{{$t('static.reapply')}}</a>
-                                    <a v-if="item.taskKey=='after_sales_disputed_handle'" @click="showAudit(item)">{{$t('static.objection_handl')}}</a>
+                                    <!-- <a v-if="item.taskKey=='after_sales_governor_validate'" @click="showAudit(item)">{{$t('static.aftersales')}}</a> -->
+                                    <!-- 售后审核 -->
+                                    <a v-if="item.taskKey=='after_sales_governor_validate'" @click="afterSalesAudit(item)">{{$t('static.aftersales')}}</a>
+                                    <!-- <a v-if="item.taskKey=='after_sales_receipt'" @click="showAudit(item)">{{$t('static.confirm_receipt')}}</a> -->
+                                    <!-- 售后收货 -->
+                                    <a v-if="item.taskKey=='after_sales_receipt'" @click="afterSalesReceive(item)">{{$t('static.confirm_receipt')}}</a>
+                                    <!-- <a v-if="item.taskKey=='after_sales_resend'" @click="showAudit(item)">{{$t('static.reapply_delivery')}}</a> -->
+                                    <!-- 售后发货 -->
+                                    <a v-if="item.taskKey=='after_sales_resend'" @click="afterSalesSend(item)">{{$t('static.reapply_delivery')}}</a>
+                                    <!-- <a v-if="item.taskKey=='after_sales_employee_handle'" @click="showAudit(item)">{{$t('static.reapply')}}</a> -->
+                                    <!-- 售后重新申请 -->
+                                    <a v-if="item.taskKey=='after_sales_employee_handle'" @click="afterSalesReapply(item)">{{$t('static.reapply')}}</a>
+                                    <!-- <a v-if="item.taskKey=='after_sales_disputed_handle'" @click="showAudit(item)">{{$t('static.objection_handl')}}</a> -->
                                 </div>
                                 <div v-if="item.bizType=='order_cancel'&&loadParam.link=='/order/toDoOrderList'">
                                     <a v-if="item.taskKey=='order_cancel_governor_validate'" @click="cancelOrderByFlow(item)">{{$t('static.review')}}</a>
@@ -176,6 +188,9 @@ import cancelModel from './cancelAudit'
 import cancelReapplyModel from './cancelReapply'
 import cancelReceiptModel from './cancelReceipt'
 import cancelDetailModel from './orderDetailByCancel'
+import afterSalesAuditModel from './afterSalesAudit'
+import afterSalesSendModel from './afterSalesSend'
+import afterSalesReapplyModel from './afterSalesReapply'
 import tipModel from '../tips/tipDialog'
 import {
     getList,
@@ -206,6 +221,9 @@ export default {
         cancelReapplyModel,
         cancelReceiptModel,
         cancelDetailModel,
+        afterSalesAuditModel,
+        afterSalesSendModel,
+        afterSalesReapplyModel,
         auditModel,
         tipModel
     },
@@ -305,6 +323,33 @@ export default {
                 show: false,
                 key: 'orderDetail',
                 loading: true
+            },
+            afterSalesAuditParam: {
+                show: false,
+                id: '', //退货订单ID
+                callback: this.afterSalesAuditBack
+
+            },
+            afterSalesReapplyParam: {
+                show: false,
+                id: '', //退后订单ID
+                callback: this.afterSalesReapplyBack
+            },
+            afterSalesReceiveParam: {
+                show: false,
+                id: '', //退货订单ID
+                link: '/order/flow/afterSales/receipt',
+                callback: this.afterSalesReceiveBack
+            },
+            afterSalesSendParam: {
+                show: false,
+                id: '', //退货单ID
+                images: '',
+                logisticsInfo: {
+
+                },
+                link: '/order/flow/afterSales/send',
+                callback: this.callback
             },
             tipParam: {
                 show: false,
@@ -485,6 +530,45 @@ export default {
             this.cancelReceiptParam.show = false;
             this.selectSearch();
         },
+        //售后主管审核,代替之前的接口
+        afterSalesAudit: function(item) {
+            this.afterSalesAuditParam.id = item.bizId;
+            this.afterSalesAuditParam.show = true;
+
+        },
+        afterSalesAuditBack: function(name) {
+            this.tipParam.show = true;
+            this.tipParam.name = name;
+            this.afterSalesAuditParam.show = false;
+            this.selectSearch();
+        },
+        //重新申请售后
+        afterSalesReapply: function(item) {
+            this.afterSalesReapplyParam.id = item.bizId;
+            this.afterSalesReapplyParam.show = true;
+        },
+        afterSalesReapplyBack: function(name) {
+            this.tipParam.show = true;
+            this.tipParam.name = name;
+            this.afterSalesReapplyParam.show = false;
+            this.selectSearch();
+        },
+        //售后（业务员）收货,代替之前的接口
+        afterSalesReceive: function(item) {
+            this.afterSalesReceiveParam.id = item.bizId;
+            this.afterSalesReceiveParam.show = true;
+        },
+        afterSalesReceiveBack: function(name) {
+            this.tipParam.show = true;
+            this.tipParam.name = name;
+            this.afterSalesReceiveParam.show = false;
+            this.selectSearch();
+        },
+        //售后发货（换货）
+        afterSalesSend: function(item) {
+            this.afterSalesSendParam.id = item.bizId;
+            this.afterSalesSendParam.show = true;
+        }
 
     },
 

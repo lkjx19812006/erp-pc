@@ -361,8 +361,11 @@
                                     </button>
                                     <button class="btn btn-danger btn-xs" @click="afterSales({
                                             show:true,
+                                            loading:false,
                                             sub:$index,
+                                            flag:0,
                                             orderId:item.id,
+                                            id:item.id,
                                             consignee:'',
                                             comment:'',
                                             shipper:'',
@@ -889,7 +892,14 @@ export default {
         afterSales: function(sales) {
             this.applicationParam = sales;
             this.applicationParam.show = true;
-            this.applicationParam.callback = this.orderBack;
+            this.applicationParam.callback = this.afterSalesBack;
+        },
+        afterSalesBack: function(title) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.applicationParam.show = false;
+            this.getEmpolyeeOrder(this.loadParam);
         },
         orderBack: function(title) {
             this.tipsParam.show = true;

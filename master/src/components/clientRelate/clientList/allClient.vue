@@ -145,6 +145,7 @@
                         <th>
                             <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
                         </th>
+                        <th>客户ID</th>
                         <th>所属业务员</th>
                         <th>创建时间</th>
                         <th>最近成交时间</th>
@@ -170,6 +171,7 @@
                         <td @click.stop="">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
+                        <td>{{item.id}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.ctime|timeFilters}}</td>
                         <td>{{item.lastOrderTime|timeFilters}}</td>
