@@ -106,6 +106,7 @@
                          breedName:'',
                          breedId:'',
                          type:0,
+                         paymentWay:'',
                          especial:1,
                          preSell:0,
                          validate:0,

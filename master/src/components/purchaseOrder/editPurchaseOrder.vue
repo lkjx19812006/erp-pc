@@ -60,7 +60,7 @@
                             </div>
                             <div class="editpage-input col-md-8">
                                 <label class="editlabel">付款方式 <span class="system_danger" v-if="$validation.address.required">必填项</span></label>
-                                <pay-type :width="'95%'"></pay-type>
+                                <pay-type :width="'95%'" :param="param"></pay-type>
                             </div>
                             <div class="editpage-input col-md-8">
                                 <label class="editlabel">采购备注 </label>

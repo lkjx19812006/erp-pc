@@ -114,6 +114,7 @@
                         <td>{{item.location | province}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.price}}</td>
+                        <td><span class="offer_source">{{item.clients | intentionSource}}</span></td>
                         <td>
                             <Poptip placement="left" trigger="hover">
                                 <span>{{item.description | textDisplay '5'}}</span>
@@ -353,9 +354,11 @@ export default {
 }
 .offer_source{
     display: inline-block;
-    width: 40px;
+    width: 60px;
     line-height: 20px;
-    background: #ccc
+    background: #2d8cf0;
+    border-radius: 3px;
+    color:#fff;
 }
 .service-nav {
     padding: 23px 10px 0px 4px;
