@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="right">
-                    <button class="btn btn-default" @click="createBreed()">{{$t('static.new')}}</button>
+                    <button class="btn btn-default" @click="createBreed()" v-if="this.initLogin.safeCode.indexOf('P37-F565,')!=-1">{{$t('static.new')}}</button>
                     <button class="btn btn-primary" @click="categoryNameSearch()">{{$t('static.refresh')}}</button>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                             <th>拼音</th>
                             <th>英文</th>
                             <th>拉丁文</th>
-                            <th>{{$t('static.handle')}}</th>
+                            <th v-if="this.initLogin.safeCode.indexOf('P37-F565,')!=-1">{{$t('static.handle')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,7 +57,7 @@
                             <td>{{item.pinyin}}</td>
                             <td>{{item.eName}}</td>
                             <td>{{item.lName}}</td>
-                            <td @click="modifyBreed($index,item)">
+                            <td @click="modifyBreed($index,item)" v-if="this.initLogin.safeCode.indexOf('P37-F565,')!=-1">
                                 <a class="operate"><img src="/static/images/edit.png" height="18" width="30" alt="编辑" title="编辑" />
                                     <!-- <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="breed_action" v-show="item.show">
@@ -98,7 +98,8 @@ import tipsModel from '../../components/tips/tipDialog'
 import mglistModel from '../mguan/mgListComponent.vue'
 import {
     initBreedlist,
-    initCategorylist
+    initCategorylist,
+    initLogin
 } from '../../vuex/getters'
 import {
     getBreedData,
@@ -174,7 +175,8 @@ export default {
     vuex: {
         getters: {
             initBreedlist,
-            initCategorylist
+            initCategorylist,
+            initLogin
         },
         actions: {
             getBreedData,

@@ -7,8 +7,11 @@
         <button class="btn btn-default" @click="addNew()" v-if="!addData.ifShow" :disabled="!show.id">新增</button>
         <button class="btn btn-default" @click="confirm()" v-else :disabled="!show.id || !provinceParam.id">提交</button>
         <div type="text" class="edit-input" v-show="addData.ifShow">
-            <v-select :debounce="250" :value.sync="provinceParam" :options="initCNProvince" placeholder="省/Province" label="cname">
-            </v-select>
+            <div style='display: inline-block'>   
+                <v-select :debounce="250" :value.sync="provinceParam" :options="initCNProvince" placeholder="省/Province" label="cname" style="border:none">
+                </v-select>
+            </div>            
+            <button class="btn btn-default" style="margin-top: -30px" @click="cancel()">取消</button>
         </div>
     </div>
 </template>
@@ -58,6 +61,9 @@ export default {
         confirm: function() {
             this.addBreedLocation(this.provinceParam.id, this.show.id)
             this.addData.ifShow = false
+        },
+        cancel(){
+            this.addData.ifShow = false
         }
     }
 
@@ -71,7 +77,6 @@ export default {
 .edit-input {
     height: 36px;
     width: 75%;
-    border: 1px solid #ddd;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;

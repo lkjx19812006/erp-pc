@@ -518,7 +518,7 @@ export default {
     color: #3399ff;
 }
 .bgColor{
-    background: #19be6b!important;
+    background: #2d8cf0!important;
 }
 .bgColor>a{
         color:#fff!important;

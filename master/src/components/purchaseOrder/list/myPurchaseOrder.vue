@@ -52,18 +52,18 @@
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:20px">
-                    <button type="button" class="btn btn-default margin_right" height="24" width="24" @click="selectSearch()">搜索</button>
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+                    <i-button type="primary" icon="ios-search" shape="circle" @click="selectSearch()">搜索</i-button>
+                    <i-button type="warning" shape="circle" @click="resetCondition()">清空条件</i-button>
                 </dl>
                 <dd class="pull-right" style="margin-right:10px">
-                    <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="batchInquire()">批量询价</button>
-                    <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="createPurchase()">新建</button>
+                    <button type="button" class="btn btn-primary" style="margin-right:10px" height="24" width="24" class="new_btn" @click="batchInquire()">批量询价</button>
+                    <button type="button" class="btn btn-success" style="margin-right:10px" height="24" width="24" class="new_btn" @click="createPurchase()">新建</button>
                     <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn">
                         <a href="http://erp.yaocaimaimai.net/local/template/Indent_template.xlsx">
                             EXCEL采购单模板下载
                         </a>
                     </button>
-                    <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="excelImport()">EXCEL导入采购单</button>
+                    <button type="button" class="btn btn-primary" style="margin-right:10px" height="24" width="24" class="new_btn" @click="excelImport()">EXCEL导入采购单</button>
                     <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                 </dd>
             </div>

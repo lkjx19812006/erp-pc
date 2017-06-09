@@ -8941,6 +8941,7 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         "intl": param.intl,
         "unit": param.unit,
         "pack": param.pack,
+        "paymentWay":param.paymentWay,
         "sampling": param.sampling,
         "sampleNumber": param.sampleNumber,
         "sampleAmount": param.sampleAmount,
@@ -8999,6 +9000,7 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
     const data = {
         "userId": param.userId,
         "type": param.type,
+        "paymentWay":param.paymentWay,
         "especial": param.especial,
         "preSell": param.preSell,
         "customerName": param.customerName,

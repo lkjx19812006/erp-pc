@@ -69,7 +69,8 @@
                                 <input type="text" class="form-control edit-input" style="width:95%" v-model="param.address" v-validate:address="{required:true}"/>
                             </div>
                             <div class="editpage-input col-md-8">
-                                <label class="editlabel">付款方式 <span class="system_danger" v-if="$validation.address.required">必填项</span></label>
+                                <label class="editlabel">付款方式 <span class="system_danger" v-if="$validation.paymentWay.required">必填项</span></label>
+                                <input type="text" v-model="param.paymentWay" v-validate:paymentWay='{required:true}' v-show="false"/>
                                 <pay-type :width="'95%'" :param="param"></pay-type>
                             </div>
                             
@@ -155,8 +156,10 @@
                                     </div>
                                     <!-- 规格 -->
                                     <div class="editpage-input col-md-6">
-                                        <label class="editlabel">{{$t('static.specification')}}</label>
-                                        <input type="text" v-show="!breedParam.id" v-model="intentionInfo.spec" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                                        <label class="editlabel">{{$t('static.specification')}}
+                                            <span class="system_danger" v-if="$inner.breed.required">必填项</span>
+                                        </label>
+                                        <input type="text" v-show="!breedParam.id" v-model="intentionInfo.spec" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" v-validate:breed="{required:true}"/>
                                         <div type="text" class="edit-input" v-if="breedParam.id">
                                             <input-select :value.sync="intentionInfo.spec" :prevalue="intentionInfo.spec" :options="initBreedDetail.specs.arr" placeholder="规格/Specification" label="name">
                                             </input-select>

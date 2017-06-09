@@ -57,6 +57,9 @@
                                 <label class="col-md-3 col-sm-4 col-xs-6">产地：{{initIntentionOfferDetail.offer.location | province}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">数量：{{initIntentionOfferDetail.offer.number}}{{initIntentionOfferDetail.offer.unit | Unit}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">价格：{{initIntentionOfferDetail.offer.price}}</label>
+                                <!-- 新增产品信息和价格信息 -->
+                                <label class="col-md-3 col-sm-4 col-xs-6">产品信息：{{initIntentionOfferDetail.offer.quality}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">价格信息：{{initIntentionOfferDetail.offer.priceDescription}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">备注：
                                     <Poptip placement="top" trigger="hover">
                                         <span>{{initIntentionOfferDetail.offer.description | textDisplay '10'}}</span>
@@ -88,6 +91,7 @@
                                 <label class="col-md-3 col-sm-4 col-xs-6">产地：{{initIntentionOfferDetail.intention.location | province}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">数量：{{initIntentionOfferDetail.intention.number}}{{initIntentionOfferDetail.intention.unit | Unit}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">价格：{{initIntentionOfferDetail.intention.price}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">付款方式：{{initIntentionOfferDetail.intention.paymentWay}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">上下架：{{initIntentionOfferDetail.intention.onSell | onsell}}
                                 </label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">发布时间：{{initIntentionOfferDetail.intention.pubdate | date}}

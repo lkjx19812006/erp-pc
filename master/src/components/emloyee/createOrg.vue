@@ -54,7 +54,7 @@
                             </div>
                             <div class="client-detailInfo  pull-left col-md-6 col-xs-12" v-if="param.distinct=='editparten'">
                                 <label style="display:inline;font-size:14px;">管辖省份：</label>
-                                    <Tag color="blue" v-for="($index,item) in idsArr" track-by="$index" closable @on-close="deleteLabel($index)">{{item | province}}</Tag>
+                                    <Tag color="blue" v-for="($index,item) in param.jsonArray" track-by="$index" closable @on-close="deleteLabel($index)">{{item.name}}</Tag>
                                     <i-button icon="ios-plus-empty" type="dashed" size="small" @click="newlabel()">
                                         <span v-if="!pro.show">展开</span>
                                         <span v-else>收起</span>
@@ -147,7 +147,11 @@ export default {
             this.param.show=false;
             if(this.param.distinct=='editparten'){
                 this.param.pid = this.orgNameParam.orgid;
-                this.param.responsibleProvinceId = this.idsArr.join('，')
+                for(var i =0; i<this.param.jsonArray.length;i++){
+                    this.idsArr.push(this.param.jsonArray[i].id)
+                    
+                }
+                this.param.responsibleProvinceId = this.idsArr.join(',')
                 this.alterOrg(this.param);
             }else{
                 this.param.pid = this.orgNameParam.orgid;
@@ -177,10 +181,13 @@ export default {
             this.pro.show = !this.pro.show 
         },
         check:function(item){
-            this.idsArr.push(item.id)
+            var provinceArr={}
+            provinceArr.name = item.cname
+            provinceArr.id = item.id
+            this.param.jsonArray.push(provinceArr)
         },
         deleteLabel:function($index){
-            this.idsArr.splice($index,1)
+            this.param.jsonArray.splice($index,1)
         }
     },
     events:{
@@ -191,7 +198,8 @@ export default {
         }
     },
     created(){
-        this.idsArr = this.param.responsibleProvinceId.split('，')
+        //this.idsArr = this.param.responsibleProvinceId.split('，')
+        console.log(this.param)
     },
     watch:{
         'initOrgDetail':function (to,from){

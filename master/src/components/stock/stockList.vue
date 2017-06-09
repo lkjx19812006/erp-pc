@@ -37,8 +37,10 @@
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="margin-left:20px">
-                    <button type="button" class="btn btn-default btn-primary margin_right" height="24" width="24" @click="selectSearch()">搜索</button>
-                    <button type="button" class="btn btn-default btn-warning" height="24" width="24" @click="resetCondition()">清空条件</button>
+                    <i-button type="primary" icon="ios-search" shape="circle" @click="selectSearch()">搜索</i-button>
+                    <i-button type="warning" shape="circle" @click="resetCondition()">清空条件</i-button>
+                    <!-- <button type="button" class="btn btn-default btn-primary margin_right" height="24" width="24" @click="selectSearch()">搜索</button>
+                    <button type="button" class="btn btn-default btn-warning" height="24" width="24" @click="resetCondition()">清空条件</button> -->
                 </dl>
                 <!--  <dd class="pull-right" style="margin-right:10px">
                    <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>

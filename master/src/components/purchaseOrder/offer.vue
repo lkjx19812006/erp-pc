@@ -65,25 +65,26 @@
                             <!-- 产地 -->
                             <div class="editpage-input col-md-12">
                                 <div class="left" style="width:50%">
-                                    <label class="editlabel">产地</label>
-                                    <!-- <input type="text" v-model="param.location" class="form-control edit-input" /> -->
+                                    <label class="editlabel">产地<span class="system_danger" v-if="$validation.origin.required">{{$t('static.required')}}</span></label>
+                                    <input type="text" v-model="param.location" class="form-control edit-input" v-show="false" v-validate:origin="{required:true}"/>
                                     <breed-location :param="param" :show="breedParam" :widparam="'210'"></breed-location>
                                 </div>
                                 <!-- 规格 -->
                                 <div class="left" style="width:50%">
-                                    <label class="editlabel">规格</label>
-                                    <input type="text" v-model="param.spec" class="form-control edit-input" />
+                                    <label class="editlabel">规格<span class="system_danger" v-if="$validation.spec.required">{{$t('static.required')}}</span></label>
+                                    <input type="text" v-model="param.spec" class="form-control edit-input" v-validate:spec="{required:true}" />
                                 </div>
                             </div>
                             <!-- 质量要求和报价备注 -->
                             <div class="editpage-input col-md-12">
-                                <div class="left" style="width:50%;">
-                                    <label class="editlabel">质量要求</label>
-                                    <input type="text" v-model="param.quality" class="form-control edit-input" />
+                                <div class="left" style="width:50%;padding-right:10px;">
+                                    <label class="editlabel">质量说明</label>
+                                    <input type="text" v-model="param.quality" class="form-control edit-input" v-show="false"/>
+                                    <offerqa-model :param="param" :qualitydata="qualitydata"></offerqa-model>
                                 </div>
                                 <div class="left" style="width:50%;">
                                     <label class="editlabel">报价备注</label>
-                                    <input type="text" v-model="param.description" class="form-control edit-input" />
+                                    <textarea  v-model="param.description" class="form-control" rows="6"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -106,6 +107,7 @@ import pressImage from '../tools/upload/imagePressMul'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipsdialogModel from '../tips/tipDialog'
 /*import customerModel from '../Intention/clientname'*/
+import offerqaModel from './offerQaRequired'
 import supplierDialog from '../order/second_order/selectAllSupplier.vue'
 import breedLocation from '../order/second_order/breedLocation'
 import {
@@ -124,6 +126,7 @@ export default {
     components: {
         /*customerModel,*/
         tipsdialogModel,
+        offerqaModel,
         vSelect,
         inputSelect,
         pressImage,
@@ -151,7 +154,8 @@ export default {
             breedParam: {
                 id: '',
                 breedName: ''
-            }
+            },
+            qualitydata:["产品包交","质量优质","一手货源","含量较高","可以加工"],
         }
     },
     vuex: {
