@@ -74,8 +74,11 @@
                 <tbody>
                     <tr v-for="item in initOrgAfterSales">
                         <td>{{item.ctime | dateTime}}</td>
-                        <td v-if="item.type==0">{{$t('static.replacement')}}</td>
-                        <td v-if="item.type==1">{{$t('static.reutrned')}}</td>
+                        <td>
+                            <span v-if="item.type==0">{{$t('static.replacement')}}</span>
+                            <span v-if="item.type==1">{{$t('static.reutrned')}}</span>
+                            <span v-if="item.type==2">{{$t('static.reutrned')}}&{{$t('static.reutrned')}}</span>
+                        </td>
                         <td><a @click="details({
                     id:item.id,
                     show:true,
