@@ -803,37 +803,19 @@ Vue.filter('orderstatus', function(val) { //订单状态
     }
 })
 
-Vue.filter('salesRecord', function(val, type, task) { //订单退换货
-    var val = val;
-    var type = type;
-    var task = task;
-    if (val == null) {
-        return this.$t('static.wait_approval');
-    } else if (val == 0) {
-        return this.$t('static.wait_approval');
-    } else if (val == 1 && type == 0 && task == 'after_sales_governor_validate') {
-        /*return this.$t('static.dispatch');*/
-        return this.$t('static.management_approval')
-    } else if (val == 1 && type == 0 && task == 'after_sales_receipt') {
-        return this.$t('static.dispatch');
-    } else if (val == 1 && type == 1 && task == 'after_sales_receipt') {
-        return this.$t('static.wait_receipt');
-    } else if (val == 1 && type == 1 && task == 'after_sales_governor_validate') {
-        return this.$t('static.management_approval')
-    } else if (val == 2 && type == 0) {
-        return this.$t('static.replacement') + this.$t('static.success');
-    } else if (val == 2 && type == 1) {
-        return this.$t('static.reutrned') + this.$t('static.success');
-    } else if (val == -2) {
-        return this.$t('static.unapproved');
-    } else if (val == 3) {
-        return this.$t('static.receive');
-    } else if (val == -1 && type == 0) {
-        return this.$t('static.canceled_apply');
-    } else if (val == -1 && type == 1) {
-        return this.$t('static.canceled_apply');
+Vue.filter('salesRecord', function(validate, task) { //订单退换货
+    if (validate == null) {
+        return this.$t('static.awaiting_review');
+    } else if (validate == 0) {
+        return this.$t('static.awaiting_review');
+    } else if (validate == -2) {
+        return this.$t('static.reapply');
+    } else if (validate == 2) {
+        return "售后成功";
+    } else if (validate == 1) {
+        return "售后处理中";
     } else {
-        return val;
+        return;
     }
 })
 

@@ -99,12 +99,27 @@
                             <td>{{item.shipperName}}</td>
                             <td>{{item.comment}}</td>
                             <td>{{item.description}}</td>
-                            <td v-if="item.taskKey=='after_sales_refund'&&item.validate==1">{{$t('static.un_finance')}}</td>
+                            <td>
+                                <span>{{item.validate | salesRecord item.taskKey}}</span>
+                                <span v-if="item.validate==1&&item.taskKey=='after_sales_governor_validate'">
+                                    ({{$t('static.management_approval')}})
+                                </span>
+                                <span v-if="item.validate==1&&item.taskKey=='after_sales_receipt'">
+                                    (待{{item.handlerName}}收货确认)
+                                </span>
+                                <span v-if="item.validate==1&&item.taskKey=='after_sales_resend'">
+                                    (待{{item.handlerName}}发货)
+                                </span>
+                                <span v-if="item.validate==1&&item.taskKey=='after_sales_refund'">
+                                    ({{$t('static.un_finance')}})
+                                </span>
+                            </td>
+                            <!-- <td v-if="item.taskKey=='after_sales_refund'&&item.validate==1">{{$t('static.un_finance')}}</td>
                             <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==0">待{{item.handlerName}}发货</td>
                             <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==2">{{$t('static.sent_confirm')}}</td>
                             <td v-if="item.taskKey!=='after_sales_refund'&&item.taskKey!=='after_sales_resend'">{{item.validate | salesRecord item.type item.taskKey}}
                                 <span v-if="item.validate==1&&item.taskKey=='after_sales_receipt'">（待{{item.handlerName}}收货确认）</span>
-                            </td>
+                            </td> -->
                             <td>
                                 <a class="operate" v-if="item.validate==-2||item.validate==0" @click="editPayment({
                                       titles:'编辑',
