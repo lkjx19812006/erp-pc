@@ -6743,6 +6743,7 @@ export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
         city: param.city,
         district: param.district,
         address: param.address,
+        paymentWay: param.paymentWay,
         intentionList: param.intentionList
     }
 
@@ -6763,6 +6764,9 @@ export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
 
         if (param.callback) {
             param.callback(res.json().msg);
+        }
+        if (param.nowCallback) {
+            param.nowCallback()
         }
     }, (res) => {
         console.log('fail');
@@ -6809,9 +6813,9 @@ export const modifyPurchaseOrder = ({ dispatch }, param) => { //修改采购单
         customerPhone: param.customerPhone,
         address: param.address,
         buyDesc: param.buyDesc,
+        paymentWay: param.paymentWay,
         intentionList: param.intentionList
     }
-
 
     Vue.http({
         method: 'POST',
@@ -11603,6 +11607,7 @@ export const getSampleOrderCount = ({ dispatch }, param, data) => { //样品订�
     }
     if (data) {
         body.breedIds = data
+        body.locationId = data.locationId
     }
     Vue.http({
         method: 'POST',
@@ -11633,6 +11638,7 @@ export const getMainOrderCount = ({ dispatch }, param, data) => { //大货订单
         beginTime: '2015-01-01 00:00:00',
         endTime: new Date().toFormatString()
     }
+
     if (param.startTime) {
         body.beginTime = param.startTime
     }
@@ -11645,7 +11651,8 @@ export const getMainOrderCount = ({ dispatch }, param, data) => { //大货订单
     if (param.orgId) {
         body.orgId = param.orgId
     }
-    if (param.locationId) {
+
+    if (param.location) {
         body.locationId = param.location.id
     }
     if (param.breedId) {
@@ -11655,7 +11662,8 @@ export const getMainOrderCount = ({ dispatch }, param, data) => { //大货订单
         body.sortValue = param.sortNum
     }
     if (data) {
-        body.breedIds = data
+        body.breedIds = data.ids
+        body.locationId = data.locationId
     }
     Vue.http({
         method: 'POST',

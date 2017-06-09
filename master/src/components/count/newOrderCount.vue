@@ -76,44 +76,44 @@
                             <th style="width:250px">产地
                                 <span class="totalNum btn btn-link btn-xs">({{totalMainData.locationNumber}})</span>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==1}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(1)">品种数
                                     <span class="totalNum">({{totalMainData.breedNumber}})</span>
                                 </a>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==2}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(2)">订单数
                                     <span class="totalNum">({{totalMainData.orderNumber}})</span>
                                 </a>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==3}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(3)">金额(元)
                                     <span class="totalNum">({{totalMainData.orderCost}})</span>
                                 </a>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==4}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(4)">毛利率
                                     <span class="totalNum">({{totalMainData.grossProfit}})</span>
                                 </a>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==5}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(5)">退货率
                                     <span class="totalNum">({{totalMainData.recoveryRate}})</span>
                                 </a>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==6}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(6)">厂家数
                                     <span class="totalNum">({{totalMainData.customerNumber}})</span>
                                 </a>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==7}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(7)">发货地数
                                     <span class="totalNum">({{totalMainData.shipAddr}})</span>
                                 </a>
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="banma">
                         <tr v-for="item in initMainOrderCountList" v-cloak>
                             <td><a href="javascript:void(0);" @click="showDetail(item)">{{item.locationName}}</a></td>
                             <td>{{item.breedNumber}}</td>
@@ -130,47 +130,47 @@
                 <table class="table table-hover table_color table-striped " v-cloak id="tab" v-if="loadParam.orderType=='sampleOrder'">
                     <thead>
                         <tr>
-                            <th style="width:250px">产地
+                            <th style="width:250px" >产地
                                 <span class="totalNum btn-link btn btn-xs">({{totalSampleData.locationNumber}})</span>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==1}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(1)">品种数
                                     <span class="totalNum">({{totalSampleData.breedNumber}})</span>
                                 </a>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==2}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(2)">寄样次数
                                     <span class="totalNum">({{totalSampleData.sampleBreedNumber}})</span>
                                 </a>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==3}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(3)">到货率
                                     <span class="totalNum">({{totalSampleData.receiveNumber}})</span>
                                 </a>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==4}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(4)">药典合格率
                                     <span class="totalNum">({{totalSampleData.qaStandardNumber}})</span>
                                 </a>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==5}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(5)">内控合格率
                                     <span class="totalNum">({{totalSampleData.qaSelfNumber}})</span>
                                 </a>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==6}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(6)">品种成交率
                                     <span class="totalNum">({{totalSampleData.tradedNumber}})</span>
                                 </a>
                             </th>
-                            <th style="width:250px">
+                            <th style="width:250px" :class="{'bgColor':loadParam.sortNum==7}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(7)">厂家数
                                     <span class="totalNum">({{totalSampleData.customerNumber}})</span>
                                 </a>
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="banma">
                         <tr v-for="item in initSampleCountList" v-cloak>
                             <td><a href="javascript:void(0);" @click="showDetail(item)">{{item.locationName}}</a></td>
                             <td>{{item.breedNumber}}</td>
@@ -389,13 +389,18 @@ export default {
         showDetail:function(data){
             this.detailParam.show = true
             this.detailParam.location = data.locationName
-            var ids = data.breedIds.join(',')
+            var allIds={
+                ids:'',
+                locationId:''
+            }
+            allIds.ids = data.breedIds.join(',')
+            allIds.locationId = data.locationIds.join('')
             if(this.loadParam.orderType=='mainOrder'){
                 this.detailParam.orderType = 'mainOrder'
-                this.getMainOrderCount(this.loadParam,ids)
+                this.getMainOrderCount(this.loadParam,allIds)
             }else{
                 this.detailParam.orderType = 'sampleOrder'
-                this.getSampleOrderCount(this.loadParam,ids)
+                this.getSampleOrderCount(this.loadParam,allIds)
             }
             
         },
@@ -511,5 +516,17 @@ export default {
 
 .api {
     color: #3399ff;
+}
+.bgColor{
+    background: #19be6b!important;
+}
+.bgColor>a{
+        color:#fff!important;
+}
+.bgColor>a>span{
+        color:#fff!important;
+}
+.banma>tr:nth-child(2n){
+    background: #f5f7f9!important
 }
 </style>

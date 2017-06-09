@@ -30,7 +30,7 @@
 				this.show = !this.show
 			},
 			addInfo:function(item){
-				this.param.description += item+' '
+				this.param.description += item+','
 			}
 		}
 	}

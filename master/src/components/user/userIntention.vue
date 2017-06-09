@@ -243,10 +243,10 @@
                                     <label class="editlabel">样品总价</label>
                                     <input type="text" v-model='param.sampleAmount' class="form-control edit-input" value="{{param.sampleAmount}}" />
                                 </div>
-                                <!-- <div class="editpage-input">
+                                <div class="editpage-input">
                                     <label class="editlabel">选择付款方式</label>
-                                    <pay-type></pay-type>
-                                </div> -->
+                                    <pay-type :width="'90%'" :param='param'></pay-type>
+                                </div>
                             </div>
                         </div>
                         <!-- 预售或者预购 -->

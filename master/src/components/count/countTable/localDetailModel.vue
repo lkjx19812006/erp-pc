@@ -19,7 +19,7 @@
                         <th style="width:250px">厂家数<span class="totalNum">({{param.totalSampleData.customerNumber}})</span></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="banma">
                     <tr v-for="item in initSampleCountDetail" v-cloak>
                         <td>{{item.locationName}}</td>
                         <td>{{item.breedName}}</td>
@@ -46,7 +46,7 @@
                         <th style="width:250px">发货地数<span class="totalNum">({{param.totalMainData.shipAddr}})</span></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="banma">
                     <tr v-for="item in initMainOrderCountDetail" v-cloak>
                         <td>{{item.locationName}}</td>
                         <td>{{item.breedName}}</td>
@@ -141,5 +141,8 @@
     .totalNum{
         color:red;
         font-weight: bold;
+    }
+    .banma>tr:nth-child(2n){
+        background: #f5f7f9!important
     }
 </style>

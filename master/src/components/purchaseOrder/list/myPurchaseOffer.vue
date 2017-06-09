@@ -62,6 +62,7 @@
                         <th>产地</th>
                         <th>数量</th>
                         <th>价格</th>
+                        <th>报价来源</th>
                         <th>备注</th>
                         <th>是否采纳</th>
                         <th>原因</th>
@@ -79,6 +80,7 @@
                         <td>{{item.location | province}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.price}}</td>
+                        <td><span class="offer_source">{{item.clients | intentionSource}}</span></td>
                         <td>
                             <Poptip placement="left" trigger="hover">
                                 <span>{{item.description | textDisplay '5'}}</span>
@@ -87,6 +89,7 @@
                                 </div>
                             </Poptip>
                         </td>
+
                         <td>{{item.accept | offerAccept}}</td>
                         <td>
                             <Poptip placement="left" trigger="hover">
@@ -348,7 +351,12 @@ export default {
     width: 130px;
     min-width: 130px;
 }
-
+.offer_source{
+    display: inline-block;
+    width: 40px;
+    line-height: 20px;
+    background: #ccc
+}
 .service-nav {
     padding: 23px 10px 0px 4px;
 }

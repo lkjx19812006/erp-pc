@@ -215,6 +215,7 @@ export default {
                 district: "",
                 address: "",
                 duedate: "",
+                paymentWay:'',
                 intentionList: [] //意向信息
             },
             importParam: {
@@ -240,6 +241,7 @@ export default {
                 district: "",
                 address: "",
                 buyDesc: "",
+                paymentWay:'',
                 intentionList: [], //意向信息
                 intentionListBack: [] //意向信息副本
             },
@@ -398,7 +400,7 @@ export default {
             this.tipsParam.name = name;
             this.tipsParam.show = true;
             this.getPurchaseOrderList(this.loadParam);
-        }
+        },
 
     },
     events: {
