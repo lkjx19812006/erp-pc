@@ -3224,7 +3224,7 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if (param.images) {
         body.images = param.images;
     }
-    console.log(body)
+
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.url,
@@ -10799,8 +10799,63 @@ export const afterSalesRequest = ({ dispatch }, param) => { //售后申请(新�
     });
 }
 
+export const afterSalesFlow = ({ dispatch }, param) => { //售后（退/换货）审核/收货(新版)
+    const body = {
+        id: param.id,
+        description: param.description,
+        validate: param.validate
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
+
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const afterSalesSend = ({ dispatch }, param) => { //售后（换货）发货(新版)
+    const body = {
+        id: param.id,
+        images: param.images,
+        validate: param.validate,
+        logisticsInfo: param.logisticsInfo
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.show = false;
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
+
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+
 export const contractEdit = ({ dispatch }, param) => { //合同编辑修改
-    console.log(param);
+
     param.images = '';
     if (param.image_f) {
         param.images += param.image_f + ','
@@ -10839,24 +10894,13 @@ export const contractEdit = ({ dispatch }, param) => { //合同编辑修改
     });
 }
 export const afterSalseEdit = ({ dispatch }, param) => { //售后编辑修改
-    console.log(param);
-    param.images = '';
-    if (param.image_f) {
-        param.images += param.image_f + ','
-    }
-    if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t }
-    var ss = param.images;
-    var img = ss.split(","); //字符串转化为数组
-    img.toString();
+
     const body = {
-        orderId: param.orderId,
+        //orderId: param.orderId,
         id: param.id,
         comment: param.comment,
-        shipper: param.shipper,
-        consignee: param.consignee,
-        type: param.type,
-        images: img
+        images: param.images,
+        itemList: param.itemList,
     }
     console.log(body);
     Vue.http({
@@ -10892,13 +10936,27 @@ export const getReceiptDetail = ({ dispatch }, param) => { //合同、售后详�
     }).then((res) => {
         var contract = res.json().result;
         contract.url = param.url;
-        /*contract.img = [];
-var img = res.json().result.images;
-for (var i in img) {
-    var file = img[i].split(',');
-    contract.img = contract.img.concat(file);
-}
-*/
+
+        if (param.goods) { //表示需要编辑这条售后信息
+
+            for (let i = 0; i < contract.itemList.length; i++) {
+                let item = contract.itemList[i];
+                let temp = {
+                    goodsIndex: '',
+                    id: item.goodsId,
+                    itemId: item.id,
+                    breedName: item.breedName,
+                    unit: '',
+                    price: '',
+                    number: item.number,
+                    maxNumber: '',
+                    type: item.type
+                }
+                param.goods.push(temp);
+                param.goodsBack.push(temp);
+
+            }
+        }
         dispatch(types.SALES_DETAIL, contract);
         param.loading = false;
     }, (res) => {

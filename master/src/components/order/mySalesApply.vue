@@ -3,9 +3,9 @@
         <update-model :param="editParam" v-if="editParam.show"></update-model>
         <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
         <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
-        <resend-model :param="resendParam" v-if="resendParam.show"></resend-model>
         <aftersales-model :param="salesParam" v-if="salesParam.show"></aftersales-model>
         <apply-model :param="applyParam" v-if="applyParam.show"></apply-model>
+        <after-sales-reapply-model :param="afterSalesReapplyParam" v-if="afterSalesReapplyParam.show"></after-sales-reapply-model>
         <mglist-model>
             <!-- 头部搜索 -->
             <div slot="top">
@@ -104,24 +104,12 @@
                             </td>
                             <td>
                                 <a class="operate" v-if="item.validate==-2||item.validate==0" @click="editPayment({
-                                      show:true,
-                                      sub:$index,
-                                      id:item.id,
-                                      consignee:item.consignee,
-                                      consigneeName:item.consigneeName,
-                                      validate:item.validate,
-                                      orderId:item.orderId,
-                                      comment:item.comment,
-                                      type:item.type,
-                                      image_f:'',
-                                      image_s:'',
-                                      image_t:'',
-                                      images:'',
-                                      shipper:item.shipper,
-                                      shipperName:item.shipperName,
-                                      url:'/order/quality/after/sales/edit',
                                       titles:'编辑',
-                                      link:afterSalseEdit
+                                      loading:false,
+                                      show:true,
+                                      flag:1,
+                                      id:item.orderId,
+                                      afterSalesId:item.id,
                                   })"><img src="/static/images/{{$t('static.img_edit')}}.png" /></a>
                                 <!-- 申请审核 -->
                                 <button class="btn btn-warning" style="padding:1px 3px;background-color: #fff;color:#eea236;" v-if="item.validate==0" @click="applyFirst({
@@ -133,17 +121,9 @@
                                     titles:this.$t('static.review_application'),
                                     link:contractCheck
                                 })">{{$t('static.review_application')}}</button>
-                                <a class="operate" v-if="item.validate==-2&&item.taskKey=='after_sales_employee_handle'" @click="applyInfo({
-                                    show:true,
-                                    sub:$index,
-                                    id:item.id,
-                                    validate:item.validate,
-                                    comment:'',
-                                    url:'/order/quality/after/sales/restartOrCancel',
-                                    titles:'重新申请审核',
-                                    link:contractCheck
-                                })"><img src="/static/images/{{$t('static.img_reset')}}.png" /></a>
-                                <button class="btn btn-primary" v-if="item.validate==1&&item.taskKey=='after_sales_receipt'" style="background:#fff;color:#2e6da4;padding:2px 5px;" @click="applyInfo({
+                                <!-- 重新申请审核 -->
+                                <a class="operate" v-if="item.validate==-2&&item.taskKey=='after_sales_employee_handle'" @click="afterSalesReapply(item)"><img src="/static/images/{{$t('static.img_reset')}}.png" /></a>
+                                <!-- <button class="btn btn-primary" v-if="item.validate==1&&item.taskKey=='after_sales_receipt'" style="background:#fff;color:#2e6da4;padding:2px 5px;" @click="applyInfo({
                                             show:true,
                                             sub:$index,
                                             id:item.id,
@@ -152,17 +132,7 @@
                                             url:'/order/quality/after/sales/validate',
                                             titles:'确认收货',
                                             link:contractCheck
-                                  })">{{$t('static.confirm_receipt')}}</button>
-                                <button class="btn btn-primary" v-if="item.validate==-2&&item.taskKey=='after_sales_disputed_handle'" style="background:#fff;color:#2e6da4;padding:2px 5px;" @click="applyInfo({
-                                            show:true,
-                                            sub:$index,
-                                            id:item.id,
-                                            description:'',
-                                            url:'/order/quality/after/sales/disputed',
-                                            titles:'售后异议处理',
-                                            link:contractCheck
-                                  })">{{$t('static.objection_handl')}}</button>
-                                <button class="btn btn-primary" v-if="item.taskKey=='after_sales_resend'&&item.handler==initLogin.id&&item.logistics==0" style="background:#fff;color:#2e6da4;padding:2px 5px;" @click="salesResend(item,$index)">{{$t('static.reapply_delivery')}}</button>
+                                  })">{{$t('static.confirm_receipt')}}</button> -->
                             </td>
                         </tr>
                     </tbody>
@@ -181,7 +151,7 @@ import changeMenu from '../../components/tools/tabs/tabs'
 import auditModel from './second_order/financeAudit'
 import tipsModel from '../../components/tips/tipDialog'
 import updateModel from '../../components/order/second_order/afterSalesApply'
-import resendModel from '../order/second_order/afterResendPage'
+import afterSalesReapplyModel from '../order/afterSalesReapply'
 import mglistModel from '../mguan/mgListComponent.vue'
 import aftersalesModel from '../order/second_order/orderReceiveDetail'
 import applyModel from '../../components/tips/tipDialog'
@@ -202,8 +172,8 @@ export default {
         auditModel,
         tipsModel,
         updateModel,
-        resendModel,
         aftersalesModel,
+        afterSalesReapplyModel,
         mglistModel,
         applyModel
     },
@@ -237,32 +207,17 @@ export default {
                 validate: '',
                 total: 0
             },
-            resendParam: {
-                show: false,
-                loading: true,
-                afterSalesId: '',
-                orderId: '',
-                url: '/order/quality/after/sales/resend',
-                titles: '换货后重新发货',
-                validate: '',
-                code: '', //第三方物流查询编码
-                driverName: '',
-                driverPid: '',
-                driverTel: '',
-                logistics: '',
-                name: '',
-                number: '',
-                vehicleNo: '', //车牌号
-                wareAddr: '', //仓库地址
-                wareName: '', //仓库名
-                warehouse: '',
-                way: '', //0/1 第三方/自运
-            },
+
             editParam: {
                 show: false
             },
             applyParam: {
                 show: false
+            },
+            afterSalesReapplyParam: {
+                show: false,
+                id: '', //退后订单ID
+                callback: this.afterSalesReapplyBack
             },
             salesParam: {
                 show: false
@@ -297,15 +252,8 @@ export default {
         details: function(item) {
             this.salesParam = item;
         },
-        salesResend: function(item, sub) { //重新发货
-            this.resendParam.show = true;
-            this.resendParam.afterSalesId = item.id;
-            this.resendParam.orderId = item.orderId;
-            this.resendParam.validate = item.validate;
-            this.resendParam.callback = this.callback;
-        },
+
         applyFirst: function(item) {
-            console.log(item.consignee)
             if (item.consignee == -1) {
                 this.tipsParam.show = true;
                 this.tipsParam.name = '请先完善信息';
@@ -324,11 +272,26 @@ export default {
             this.financeParam = item;
             this.financeParam.callback = this.callback;
         },
+        //重新申请售后
+        afterSalesReapply: function(item) {
+            this.afterSalesReapplyParam.id = item.id;
+            this.afterSalesReapplyParam.show = true;
+        },
+        afterSalesReapplyBack: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.alert = true;
+            this.tipsParam.name = name;
+            this.afterSalesReapplyParam.show = false;
+            this.selectSearch();
+        },
         editPayment: function(update) {
             this.editParam.show = true;
             this.editParam = update;
-            this.editParam.callback = this.callback;
-            console.log(this.editParam)
+            this.editParam.callback = this.editBack;
+        },
+        editBack: function(name) {
+            this.editParam.show = false;
+            this.callback(name);
         },
         callback: function(title) {
             this.tipsParam.show = true;

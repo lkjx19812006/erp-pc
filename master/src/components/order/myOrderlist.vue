@@ -362,6 +362,7 @@
                                     <button class="btn btn-danger btn-xs" @click="afterSales({
                                             show:true,
                                             sub:$index,
+                                            flag:0,
                                             orderId:item.id,
                                             id:item.id,
                                             consignee:'',
