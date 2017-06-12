@@ -77,7 +77,7 @@
                         <td>
                             <span v-if="item.type==0">{{$t('static.replacement')}}</span>
                             <span v-if="item.type==1">{{$t('static.reutrned')}}</span>
-                            <span v-if="item.type==2">{{$t('static.reutrned')}}&{{$t('static.reutrned')}}</span>
+                            <span v-if="item.type==2">{{$t('static.reutrned')}}&{{$t('static.replacement')}}</span>
                         </td>
                         <td><a @click="details({
                     id:item.id,
