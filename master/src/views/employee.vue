@@ -335,8 +335,8 @@ export default {
                 name: '',
                 pid: '',
                 status: '',
-                jsonArray:'',
-                responsibleProvinceId:''
+                jsonArray: '',
+                responsibleProvinceId: ''
             },
             orgParam: {
                 show: false,
@@ -431,7 +431,7 @@ export default {
             this.complierParam.pid = '';
             this.complierParam.status = '';
             this.complierParam.responsibleProvinceId = '',
-            this.complierParam.jsonArray = ''
+                this.complierParam.jsonArray = ''
             this.complierParam.callback = this.callback;
         },
         editOrg: function() { //编辑部门
@@ -519,6 +519,7 @@ export default {
             this.updatePawd(this.passwordParam);
         },
         slectedOne: function() {
+            console.log("selectOne");
             this.getEmployeeList(this.loadParam);
             this.loadParam.id = this.loadParam.orgId;
             this.getOrgDetail(this.loadParam)
@@ -586,13 +587,9 @@ export default {
             this.transferOrg(this.transferParam);
         },
         treeview_click: function(param) {
-            this.loadParam.orgId = "";
             this.loadParam.orgCode = param.code;
-            if (param.children.length == 0) {
-                this.loadParam.orgId = param.value;
-                this.loadParam.orgName = param.label;
-            }
-
+            this.loadParam.orgId = param.value;
+            this.loadParam.orgName = param.label;
         }
     },
     ready() {
