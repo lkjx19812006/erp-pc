@@ -739,9 +739,9 @@ Vue.filter('subtime', function(val) { //将时间的时分秒去掉
     }
     return val;
 })
-Vue.filter('dateTime', function(val) { //较正时间格式
-    var val = val;
-    var now = new Date();
+Vue.filter('dateTime', function(val, accurateTo) { //较正时间格式,accurateTo表示精确到哪一位（天或秒，默认天）
+    var result = "";
+    var now = new Date(val);
     var year = now.getFullYear();
     var month = now.getMonth() + 1;
     var date = now.getDate();
@@ -754,11 +754,16 @@ Vue.filter('dateTime', function(val) { //较正时间格式
     if (date < 10) {
         date = '0' + date;
     }
-    return val = year + "-" + month + "-" + date + "   " + hour + ":" + minute + ":" + second;
+
+    result = year + "-" + month + "-" + date;
+    if (accurateTo == "second") {
+        result = year + "-" + month + "-" + date + "   " + hour + ":" + minute + ":" + second;
+    }
+    return result;
 
     /*val = new Date(parseInt(val)).toLocaleString().substr(0,20);*/
     /*val= new Date(parseInt(val) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");*/
-    return val;
+
 })
 
 Vue.filter('payfee', function(val) { //将金额保留小数点后两位

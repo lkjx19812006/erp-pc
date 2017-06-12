@@ -72,7 +72,7 @@
                                 </tbody>
                             </table>
                             <validator name="inner">
-                                <div v-if="breedInfo.status == 1" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px;height:300px">
+                                <div v-if="breedInfo.status == 1" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px;height:270px">
                                     <div class="col-md-12 clearfix">
                                         <!-- 品种 -->
                                         <div class="editpage-input col-md-6">
