@@ -817,6 +817,8 @@ Vue.filter('salesRecord', function(validate, task) { //订单退换货
         return this.$t('static.reapply');
     } else if (validate == 2) {
         return "售后成功";
+    } else if (validate == 3) {
+        return this.$t('static.condirm_receive');
     } else if (validate == 1) {
         return "售后处理中";
     } else {
