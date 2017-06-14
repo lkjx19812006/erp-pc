@@ -32,6 +32,10 @@
         <div class="myOrder" v-if="$route.path.split('=')[1]==7">
             <all-purchase-offer :param="apoParam"></all-purchase-offer>
         </div>
+        <!-- 不参与记录 -->
+        <div class="myOrder" v-if="$route.path.split('=')[1]==8">
+            <cancel-record :param="apoParam"></cancel-record>
+        </div>
     </div>
 </template>
 <script>
@@ -41,6 +45,7 @@ import allPurchase from '../components/purchaseOrder/list/allPurchaseOrder.vue'
 import purchaseOffer from '../components/purchaseOrder/list/purchaseOffer.vue'
 import myPurchaseOffer from '../components/purchaseOrder/list/myPurchaseOffer.vue'
 import allPurchaseOffer from '../components/purchaseOrder/list/myPurchaseOffer.vue'
+import cancelRecord from '../components/purchaseOrder/list/cancelRecord.vue'
 import myOffer from '../components/Intention/intentionList/myOffer.vue'
 import orgOffer from '../components/Intention/intentionList/orgOffer.vue'
 export default {
@@ -52,7 +57,8 @@ export default {
         myPurchaseOffer,
         allPurchaseOffer,
         myOffer,
-        orgOffer
+        orgOffer,
+        cancelRecord
     },
     data() {
         return {
