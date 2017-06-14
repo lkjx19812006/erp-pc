@@ -121,7 +121,7 @@
                             <td>{{item.sampleOrderNumber}}</td>
                             <td>{{item.sampleBreedNumber}}</td>
                             <td>{{item.orderNumber}}</td>
-                            <td>{{item.breedNumber}}</td>
+                            <td><a href="javascript:void(0);" @click="showDetail(item)">{{item.breedNumber}}</a></td>
                             <td>{{item.orderMoney.toFixed(2) }}</td>
                             <td>{{item.grossProfit.toFixed(2)}}%</td>
                             <td>{{item.recoveryRate.toFixed(2)}}%</td>
