@@ -172,7 +172,12 @@ import {
     SELECT_SAMPLECOUNT,
     SELECT_MAINORDERCOUNT,
     SELECT_SAMPLEDETAIL,
-    SELECT_MAINORDERDETAIL
+    SELECT_MAINORDERDETAIL,
+    CHANGE_BREEDCOUNT,
+    CHANGE_SENDBREEDCOUNT,
+    CHANGE_DEALBREEDCOUNT,
+    CHANGE_CANCELRECORD,
+    CHANGE_BILLLIST
 } from '../mutation-types'
 
 
@@ -1124,7 +1129,12 @@ const state = {
     sampleCountList:[],
     mianOrderCountList:[],
     sampleCountDetail:[],
-    mianOrderCountDetail:[]
+    mianOrderCountDetail:[],
+    breedCountList:[],
+    sendBreedList:[],
+    dealBreedList:[],
+    cancelRecordList:[],
+    billList:[],
 }
 
 const mutations = {
@@ -2496,6 +2506,26 @@ const mutations = {
     //大货订单详情
     [SELECT_MAINORDERDETAIL](state,data){
         state.mianOrderCountDetail = data
+    },
+    //订单信息页面
+    [CHANGE_BREEDCOUNT](state,data){
+        state.breedCountList = data
+    },
+    //寄样详情页面
+    [CHANGE_SENDBREEDCOUNT](state,data){
+        state.sendBreedList = data
+    },
+    //成交详情页面
+    [CHANGE_DEALBREEDCOUNT](state,data){
+        state.dealBreedList = data
+    },
+    //取消报价列表
+    [CHANGE_CANCELRECORD](state,data){
+        state.cancelRecordList = data
+    },
+    //收付费信息统计
+    [CHANGE_BILLLIST](state,data){
+        state.billList = data
     }
 }
 

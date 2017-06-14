@@ -6,54 +6,31 @@
         </h4>
         <div class="table_con">
         <!-- 样品详情 -->
-            <table class="table table-hover table_color table-striped " v-cloak id="tabd" v-if="param.orderType=='sampleOrder'">               
+            <table class="table table-hover table_color table-striped " v-cloak id="tabd">               
                 <thead>
                     <tr>
                         <th style="width:250px">产地</th>
-                        <th style="width:250px">品种名<span class="totalNum">({{param.totalSampleData.breedNumber}})</span></th>
-                        <th style="width:250px">寄样次数<span class="totalNum">({{param.totalSampleData.sampleBreedNumber}})</span></th>
-                        <th style="width:250px">到货率<span class="totalNum">({{param.totalSampleData.receiveNumber}})</span></th>
-                        <th style="width:250px">药典合格率<span class="totalNum">({{param.totalSampleData.qaStandardNumber}})</span></th>
-                        <th style="width:250px">内控合格率<span class="totalNum">({{param.totalSampleData.qaSelfNumber}})</span></th>
-                        <th style="width:250px">品种成交率<span class="totalNum">({{param.totalSampleData.tradedNumber}})</span></th>
-                        <th style="width:250px">厂家数<span class="totalNum">({{param.totalSampleData.customerNumber}})</span></th>
-                    </tr>
-                </thead>
-                <tbody class="banma">
-                    <tr v-for="item in initSampleCountDetail" v-cloak>
-                        <td>{{item.locationName}}</td>
-                        <td>{{item.breedName}}</td>
-                        <td>{{item.sampleBreedNumber}}</td>
-                        <td>{{item.receiveNumber}}%</td>
-                        <td>{{item.qaStandardNumber}}%</td>
-                        <td>{{item.qaSelfNumber}}%</td>
-                        <td>{{item.tradedNumber}}%</td>
-                        <td>{{item.customerNumber}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <!-- 大货详情 -->
-             <table class="table table-hover table_color table-striped " v-cloak id="tab" v-if="param.orderType=='mainOrder'">               
-                <thead>
-                    <tr>
-                        <th style="width:250px">产地</th>
-                        <th style="width:250px">品种（数）<span class="totalNum">({{param.totalMainData.breedNumber}})</span></th>
-                        <th style="width:250px">订单数<span class="totalNum">({{param.totalMainData.orderNumber}})</span></th>
-                        <th style="width:250px">金额（元）<span class="totalNum">({{param.totalMainData.orderMoney}})</span></th>
+                        <th style="width:250px">寄样次数<span class="totalNum">({{param.totalMainData.sampleOrderNumber}})</span></th>
+                        <th style="width:250px">成交品种<span class="totalNum">({{param.totalMainData.sampleBreebNumber}})</span></th>
+                        <th style="width:250px">成交次数<span class="totalNum">({{param.totalMainData.orderNumber}})</span></th>
+                        <th style="width:250px">成交品种数<span class="totalNum">({{param.totalMainData.breedNumber}})</span></th>
+                        <th style="width:250px">成交金额<span class="totalNum">({{param.totalMainData.orderMoney}})</span></th>
                         <th style="width:250px">毛利率<span class="totalNum">({{param.totalMainData.grossProfit}})</span></th>
-                        <th style="width:250px">退货率<span class="totalNum">({{param.totalMainData.recoveryRate}})</span></th>
+                        <th style="width:250px">退货数<span class="totalNum">({{param.totalMainData.recoveryRate}})</span></th>
                         <th style="width:250px">厂家数<span class="totalNum">({{param.totalMainData.customerNumber}})</span></th>
                         <th style="width:250px">发货地数<span class="totalNum">({{param.totalMainData.shipAddr}})</span></th>
                     </tr>
                 </thead>
                 <tbody class="banma">
-                    <tr v-for="item in initMainOrderCountDetail" v-cloak>
+                    <tr v-for="item in initDealBreedList" v-cloak>
                         <td>{{item.locationName}}</td>
+                        <td>{{item.sampleOrderNumber}}</td>
                         <td>{{item.breedName}}</td>
                         <td>{{item.orderNumber}}</td>
+                        <td>{{item.breedNumber}}</td>
                         <td>{{item.orderMoney}}</td>
                         <td>{{item.grossProfit}}</td>
-                        <td>{{item.recoveryRate }}</td>
+                        <td>{{item.recoveryRate}}</td>
                         <td>{{item.customerNumber}}</td>
                         <td>{{item.shipAddr}}</td>
                     </tr>
@@ -67,8 +44,7 @@
     import common from '../../../common/common'
     import {
         initCNProvince,
-        initSampleCountDetail,
-        initMainOrderCountDetail
+        initDealBreedList
     } from '../../../vuex/getters'
     import {
 
@@ -79,8 +55,7 @@
         },
         vuex:{
             getters:{
-                initSampleCountDetail,
-                initMainOrderCountDetail
+                initDealBreedList
             },
             actions:{
 

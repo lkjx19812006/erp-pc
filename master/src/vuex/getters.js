@@ -368,10 +368,6 @@ export const initIntentionDetail = (state) => {
 export const initIntentionOfferDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionOfferDetail));
 }
-
-
-
-
 /*--国际意向详情--*/
 export const initIntlIntentionDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionDetail));
@@ -848,4 +844,24 @@ export const initMainOrderCountList = (state) => { //初始化大货订单统计
 
 export const initMainOrderCountDetail = (state) => { //初始化大货订单统计详情
     return JSON.parse(JSON.stringify(state.table.mianOrderCountDetail))
+}
+
+export const initBreedCountList = (state) => { //初始化品种统计列表
+    return JSON.parse(JSON.stringify(state.table.breedCountList))
+}
+
+export const initSendBreedList = (state) => { //初始化品种统计寄样详情
+    return JSON.parse(JSON.stringify(state.table.sendBreedList))
+}
+
+export const initDealBreedList = (state) => { //初始化大货订单统计详情
+    return JSON.parse(JSON.stringify(state.table.dealBreedList))
+}
+
+export const initCancelRecordList = (state) => { //初始化取消询价列表
+    return JSON.parse(JSON.stringify(state.table.cancelRecordList))
+}
+
+export const initBillList = (state) => {//初始化收付费信息统计列表
+    return JSON.parse(JSON.stringify(state.table.billList))
 }

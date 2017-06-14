@@ -88,7 +88,7 @@
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==3}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(3)">金额(元)
-                                    <span class="totalNum">({{totalMainData.orderCost}})</span>
+                                    <span class="totalNum">({{totalMainData.orderMoney}})</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==4}">
@@ -258,7 +258,7 @@ export default {
                     locationNumber:'',
                     breedNumber:'',
                     orderNumber:'',
-                    orderCost:'',
+                    orderMoney:'',
                     grossProfit:'',
                     recoveryRate:'',
                     customerNumber:'',
@@ -279,7 +279,7 @@ export default {
                 locationNumber:'',
                 breedNumber:'',
                 orderNumber:'',
-                orderCost:'',
+                orderMoney:'',
                 grossProfit:'',
                 recoveryRate:'',
                 customerNumber:'',
@@ -344,7 +344,7 @@ export default {
                 this.totalMainData.locationNumber = data.locationNumber
                 this.totalMainData.breedNumber = data.breedNumber
                 this.totalMainData.orderNumber = data.orderNumber
-                this.totalMainData.orderCost = data.orderCost
+                this.totalMainData.orderMoney = data.orderMoney
                 this.totalMainData.grossProfit = data.grossProfit
                 this.totalMainData.recoveryRate = data.recoveryRate
                 this.totalMainData.customerNumber = data.customerNumber
@@ -367,7 +367,7 @@ export default {
                 this.detailParam.totalMainData.locationNumber = data.locationNumber
                 this.detailParam.totalMainData.breedNumber = data.breedNumber
                 this.detailParam.totalMainData.orderNumber = data.orderNumber
-                this.detailParam.totalMainData.orderCost = data.orderCost
+                this.detailParam.totalMainData.orderMoney = data.orderMoney
                 this.detailParam.totalMainData.grossProfit = data.grossProfit
                 this.detailParam.totalMainData.recoveryRate = data.recoveryRate
                 this.detailParam.totalMainData.customerNumber = data.customerNumber

@@ -11608,7 +11608,7 @@ export const getSampleOrderCount = ({ dispatch }, param, data) => { //样品订�
         body.sortValue = param.sortNum
     }
     if (data) {
-        body.breedIds = data
+        body.breedIds = data.ids
         body.locationId = data.locationId
     }
     Vue.http({
@@ -11686,6 +11686,155 @@ export const getMainOrderCount = ({ dispatch }, param, data) => { //大货订单
             dispatch('SELECT_MAINORDERCOUNT', res.json().result.list)
         }
 
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getBreedCount = ({ dispatch }, param, data) => { //品种信息统计
+    var body = {
+        beginTime: '2015-01-01 00:00:00',
+        endTime: new Date().toFormatString(),
+    }
+
+    if (param.startTime) {
+        body.beginTime = param.startTime
+    }
+    if (param.endTime) {
+        body.endTime = param.endTime
+    }
+    if (param.employeeId) {
+        body.employeeId = param.employeeId
+    }
+    if (param.orgId) {
+        body.orgId = param.orgId
+    }
+
+    if (param.location) {
+        body.locationId = param.location.id
+    }
+    if (param.breedId) {
+        body.breedId = param.breedId
+    }
+    if (param.sortNum) {
+        body.sortValue = param.sortNum
+    }
+    if (data) {
+        body.breedIds = data.ids
+        body.locationId = data.locationId
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/productCount/queryBreedCount',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json())
+        if (data) {
+            param.detailCallback(res.json().result.total)
+            dispatch('CHANGE_SENDBREEDCOUNT', res.json().result.list)
+        } else {
+            param.callback(res.json().result.total)
+            dispatch('CHANGE_BREEDCOUNT', res.json().result.list)
+        }
+
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getCancelRecord = ({ dispatch }, param, data) => { //取消报价统计
+    var body = {
+        page:param.cur,
+        pageSize:15
+    }
+
+    if (param.startTime) {
+        body.startTime = param.startTime
+    }
+    if (param.endTime) {
+        body.endTime = param.endTime
+    }
+    if (param.employeeId) {
+        body.employee = param.employeeId
+    }
+    if (param.breedName) {
+        body.breedName = param.breedName
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/intention/queryNotOfferList',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json())
+        dispatch('CHANGE_CANCELRECORD',res.json().result.list)
+        param.total = res.json().result.total
+        param.all = res.json().result.pages
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getBillList = ({ dispatch }, param, data) => { //收付费信息统计
+    var body = {
+        beginTime: '2015-01-01 00:00:00',
+        endTime: new Date().toFormatString(),
+    }
+
+    if (param.startTime) {
+        body.beginTime = param.startTime
+    }
+    if (param.endTime) {
+        body.endTime = param.endTime
+    }
+    if (param.employeeId) {
+        body.employeeId = param.employeeId
+    }
+    if (param.orgId) {
+        body.orgId = param.orgId
+    }
+
+    if (param.location) {
+        body.locationId = param.location.id
+    }
+    if (param.breedId) {
+        body.breedId = param.breedId
+    }
+    if(param.intl){
+        body.intl = param.intl
+    }
+    if(param.type){
+        body.type = param.type
+    }
+    if (param.sortNum) {
+        body.sortValue = param.sortNum
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/orderCount/queryPayMoneyCount',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        dispatch("CHANGE_BILLLIST",res.json().result.list)
+        param.callback(res.json().result.total)
+        console.log("成功")
     }, (res) => {
         console.log('fail');
     });
