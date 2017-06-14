@@ -11583,7 +11583,7 @@ export const addBreedLocation = ({ dispatch }, param, breedId) => { //新增品�
 
 export const getSampleOrderCount = ({ dispatch }, param, data) => { //样品订单统计
     var body = {
-        beginTime: '2015-01-01 00:00:00',
+        beginTime: '2015-07-07 00:00:00',
         endTime: new Date().toFormatString()
     }
     if (param.startTime) {
@@ -11637,7 +11637,7 @@ export const getSampleOrderCount = ({ dispatch }, param, data) => { //样品订�
 
 export const getMainOrderCount = ({ dispatch }, param, data) => { //大货订单统计
     var body = {
-        beginTime: '2015-01-01 00:00:00',
+        beginTime: '2015-07-07 00:00:00',
         endTime: new Date().toFormatString()
     }
 
@@ -11693,7 +11693,7 @@ export const getMainOrderCount = ({ dispatch }, param, data) => { //大货订单
 
 export const getBreedCount = ({ dispatch }, param, data) => { //品种信息统计
     var body = {
-        beginTime: '2015-01-01 00:00:00',
+        beginTime: '2015-07-07 00:00:00',
         endTime: new Date().toFormatString(),
     }
 
@@ -11789,7 +11789,7 @@ export const getCancelRecord = ({ dispatch }, param, data) => { //取消报价�
 
 export const getBillList = ({ dispatch }, param, data) => { //收付费信息统计
     var body = {
-        beginTime: '2015-01-01 00:00:00',
+        beginTime: '2015-07-07 00:00:00',
         endTime: new Date().toFormatString(),
     }
 
