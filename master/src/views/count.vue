@@ -31,7 +31,7 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==6">
         <allorder-count></allorder-count>
     </div>
-     <!-- 我的统计（新） -->
+    <!-- 我的统计（新） -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==8">
         <my-newcount></my-newcount>
     </div>
@@ -43,11 +43,11 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==10">
         <all-newcount></all-newcount>
     </div>
-     <!-- 我的品种统计（新） -->
+    <!-- 我的品种统计（新） -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==11">
         <my-breedcount></my-breedcount>
     </div>
-     <!-- 部门品种统计（新） -->
+    <!-- 部门品种统计（新） -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==12">
         <org-breedcount></org-breedcount>
     </div>
