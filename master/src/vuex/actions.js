@@ -10952,8 +10952,8 @@ export const getReceiptDetail = ({ dispatch }, param) => { //合同、售后详�
                     id: item.goodsId,
                     itemId: item.id,
                     breedName: item.breedName,
-                    unit: '',
-                    price: '',
+                    unit: item.unit,
+                    price: item.price,
                     number: item.number,
                     maxNumber: '',
                     type: item.type

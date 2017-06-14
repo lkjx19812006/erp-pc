@@ -149,6 +149,7 @@
 </template>
 <script>
 import pressImage from '../../tools/upload/imagePressMul'
+import util from '../../tools/util.js'
 import tipsdialogModel from '../../tips/tipDialog'
 import {
     initOrderDetail,
@@ -226,7 +227,7 @@ export default {
             let goods = this.afterSaleParam.goods;
             for (let i = 0; i < goods.length; i++) {
                 if (goods[i].type == 1) {
-                    total = total + goods[i].number * goods[i].price;
+                    total = util.add(total, util.mul(goods[i].number, goods[i].price));
                 }
             }
             return total;
@@ -386,7 +387,7 @@ export default {
 
                 }
             }
-            console.log(this.afterSaleParam.itemList);
+
             if (this.param.flag == 1) { //表示是修改
                 this.afterSaleParam.url = '/order/quality/after/sales/edit';
                 this.afterSalseEdit(this.afterSaleParam);

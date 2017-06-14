@@ -96,7 +96,7 @@
                                     <label class="editlabel">质量要求
                                         <span class="system_danger" v-if="$validation.quality.required">必填项</span>
                                     </label>
-                                    <input type="text"v-model="param.quality" class="form-control edit-input" value="{{param.quality}}" v-validate:quality="{required:true}" v-show="false">           
+                                    <input type="text" v-model="param.quality" class="form-control edit-input" value="{{param.quality}}" v-validate:quality="{required:true}" v-show="false">
                                     </input>
                                     <quality-required :param="param"></quality-required>
                                 </div>
@@ -181,7 +181,7 @@
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">详细地址<span class="system_danger" v-if="$validation.address.required">必填项</span></label>
-                                    <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" v-validate:address="{required:true}"/>
+                                    <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" v-validate:address="{required:true}" />
                                 </div>
                                 <!-- 客户备注 -->
                                 <div class="editpage-input col-md-12" style="padding-left: 0px;padding-right: 80px;">
@@ -507,7 +507,25 @@ export default {
                 qiniu: false,
                 files: []
             },
-            qualityList:[{title:"符合药典"},{title:"硫不超标"},{title:"无虫蛀"},{title:"无霉"},{title:"无变色"},{title:"无走油"},{title:"干度好"},{title:"杂质少"},{title:"含量够"}]
+            qualityList: [{
+                title: "符合药典"
+            }, {
+                title: "硫不超标"
+            }, {
+                title: "无虫蛀"
+            }, {
+                title: "无霉"
+            }, {
+                title: "无变色"
+            }, {
+                title: "无走油"
+            }, {
+                title: "干度好"
+            }, {
+                title: "杂质少"
+            }, {
+                title: "含量够"
+            }]
         }
     },
     vuex: {

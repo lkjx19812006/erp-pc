@@ -739,9 +739,9 @@ Vue.filter('subtime', function(val) { //将时间的时分秒去掉
     }
     return val;
 })
-Vue.filter('dateTime', function(val) { //较正时间格式
-    var val = val;
-    var now = new Date();
+Vue.filter('dateTime', function(val, accurateTo) { //较正时间格式,accurateTo表示精确到哪一位（天或秒，默认天）
+    var result = "";
+    var now = new Date(val);
     var year = now.getFullYear();
     var month = now.getMonth() + 1;
     var date = now.getDate();
@@ -754,11 +754,16 @@ Vue.filter('dateTime', function(val) { //较正时间格式
     if (date < 10) {
         date = '0' + date;
     }
-    return val = year + "-" + month + "-" + date + "   " + hour + ":" + minute + ":" + second;
+
+    result = year + "-" + month + "-" + date;
+    if (accurateTo == "second") {
+        result = year + "-" + month + "-" + date + "   " + hour + ":" + minute + ":" + second;
+    }
+    return result;
 
     /*val = new Date(parseInt(val)).toLocaleString().substr(0,20);*/
     /*val= new Date(parseInt(val) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");*/
-    return val;
+
 })
 
 Vue.filter('payfee', function(val) { //将金额保留小数点后两位
@@ -803,37 +808,21 @@ Vue.filter('orderstatus', function(val) { //订单状态
     }
 })
 
-Vue.filter('salesRecord', function(val, type, task) { //订单退换货
-    var val = val;
-    var type = type;
-    var task = task;
-    if (val == null) {
-        return this.$t('static.wait_approval');
-    } else if (val == 0) {
-        return this.$t('static.wait_approval');
-    } else if (val == 1 && type == 0 && task == 'after_sales_governor_validate') {
-        /*return this.$t('static.dispatch');*/
-        return this.$t('static.management_approval')
-    } else if (val == 1 && type == 0 && task == 'after_sales_receipt') {
-        return this.$t('static.dispatch');
-    } else if (val == 1 && type == 1 && task == 'after_sales_receipt') {
-        return this.$t('static.wait_receipt');
-    } else if (val == 1 && type == 1 && task == 'after_sales_governor_validate') {
-        return this.$t('static.management_approval')
-    } else if (val == 2 && type == 0) {
-        return this.$t('static.replacement') + this.$t('static.success');
-    } else if (val == 2 && type == 1) {
-        return this.$t('static.reutrned') + this.$t('static.success');
-    } else if (val == -2) {
-        return this.$t('static.unapproved');
-    } else if (val == 3) {
-        return this.$t('static.receive');
-    } else if (val == -1 && type == 0) {
-        return this.$t('static.canceled_apply');
-    } else if (val == -1 && type == 1) {
-        return this.$t('static.canceled_apply');
+Vue.filter('salesRecord', function(validate, task) { //订单退换货
+    if (validate == null) {
+        return this.$t('static.awaiting_review');
+    } else if (validate == 0) {
+        return this.$t('static.awaiting_review');
+    } else if (validate == -2) {
+        return this.$t('static.reapply');
+    } else if (validate == 2) {
+        return "售后成功";
+    } else if (validate == 3) {
+        return this.$t('static.condirm_receive');
+    } else if (validate == 1) {
+        return "售后处理中";
     } else {
-        return val;
+        return;
     }
 })
 

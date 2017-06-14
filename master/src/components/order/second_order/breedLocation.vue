@@ -1,16 +1,16 @@
 <template>
     <div>
-        <i-select :model.sync="param.location" :style="{width:widparam+'px'}" size="large" :disabled="!show.id">
+        <i-select :model.sync="param.location" :style="{width:widparam+'px'}" size="large" :disabled="!show.id" @change="test">
             <i-option v-for="item in initBreedDetail.locals.arr" :value="item.locationId" track-by="$index">{{ item.name }}</i-option>
         </i-select>
         <!-- 这里的show表示当前是否选中了一个品种，用到的是其属性id，表示品种存在 -->
         <button class="btn btn-default" @click="addNew()" v-if="!addData.ifShow" :disabled="!show.id">新增</button>
         <button class="btn btn-default" @click="confirm()" v-else :disabled="!show.id || !provinceParam.id">提交</button>
         <div type="text" class="edit-input" v-show="addData.ifShow">
-            <div style='display: inline-block'>   
+            <div style='display: inline-block'>
                 <v-select :debounce="250" :value.sync="provinceParam" :options="initCNProvince" placeholder="省/Province" label="cname" style="border:none">
                 </v-select>
-            </div>            
+            </div>
             <button class="btn btn-default" style="margin-top: -30px" @click="cancel()">取消</button>
         </div>
     </div>
@@ -62,8 +62,11 @@ export default {
             this.addBreedLocation(this.provinceParam.id, this.show.id)
             this.addData.ifShow = false
         },
-        cancel(){
+        cancel() {
             this.addData.ifShow = false
+        },
+        test: function() {
+            console.log("lilei");
         }
     }
 

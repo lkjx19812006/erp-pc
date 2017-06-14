@@ -48,11 +48,38 @@
                         </li>
                     </ul>
                     <ul class="col-md-12  clearfix">
-                        <li v-for="img in initReceiptDetail.images" class="navbar-img">
-                            <img v-if="img | file" :src="img" alt="图片" height="100px" @click="bigPicture(img)" />
-                            <a v-else href="{{img}}" download="" style="display: inline-block;width: 100px;margin-top: 10%"><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
+                        <li v-for="img in initReceiptDetail.applyImage" class="navbar-img">
+                            <img v-if="img.path | file" :src="img.path" alt="图片" height="100px" @click="bigPicture(img.path)" />
+                            <a v-else href="{{img.path}}" download="" style="display: inline-block;width: 100px;margin-top: 10%"><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                         </li>
                     </ul>
+                </div>
+                <hr style="height:10px;border-color:#ccc" />
+                <div class="clearfix client-section clearfix" @click.stop="">
+                    <p class="btn btn-primary btn-xs">退换货信息</p>
+                    <table class="table table-hover table_color table-striped" style="margin-top:10px">
+                        <thead>
+                            <tr>
+                                <th>品种</th>
+                                <th>单位</th>
+                                <th>价格</th>
+                                <th>数量</th>
+                                <th>退/换货</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in initReceiptDetail.itemList">
+                                <td>{{item.breedName}}</td>
+                                <td>{{item.unit | Unit}}</td>
+                                <td>{{item.price}}元</td>
+                                <td>{{item.number}}</td>
+                                <td>
+                                    <span v-if="item.type==0">换货</span>
+                                    <span v-if="item.type==1">退货</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
         </div>
@@ -134,5 +161,9 @@ export default {
     left: 0;
     right: 0;
     z-index: 1081;
+}
+
+table>thead>tr>th {
+    width: 23%;
 }
 </style>

@@ -291,8 +291,9 @@
                                 <!-- 新的取消订单流程，分三个阶段
                                     1.未申请审核或审核不通过阶段（validate<=0)，
                                     2.申请审核阶段（validate=1），不能取消
-                                    3.审核完成后，validate=2 -->
-                                <div>
+                                    3.审核完成后，validate=2 
+                                    并且订单完成后无法取消-->
+                                <div v-if="item.orderStatus<60">
                                     <!-- 普通订单（非预售）处于1阶段时，可以直接取消 -->
                                     <button class="btn btn-danger btn-xs" v-if="item.validate<=0&&(item.pre!=1||(item.pre==1&&item.type==0))" @click="cancelOrder(item.id,$index)">
                                         取消订单
