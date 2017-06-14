@@ -177,7 +177,9 @@ import {
     CHANGE_SENDBREEDCOUNT,
     CHANGE_DEALBREEDCOUNT,
     CHANGE_CANCELRECORD,
-    CHANGE_BILLLIST
+    CHANGE_BILLLIST,
+    CUSTOMER_COUNT_LIST,
+    CUSTOMER_COUNT_TOTAL
 } from '../mutation-types'
 
 
@@ -1126,15 +1128,17 @@ const state = {
     allYestodayDealBreed: [{ breedName: "全部成交测试" }, { breedName: "全部成交测试" }, { breedName: "全部成交测试" }, { breedName: "全部成交测试" }],
     orgAddBreedDetail: [{ breedName: "部门新增测试" }, { breedName: "部门新增测试" }, { breedName: "部门新增测试" }, { breedName: "部门新增测试" }],
     allAddBreedDetail: [{ breedName: "全部新增测试" }, { breedName: "全部新增测试" }, { breedName: "全部新增测试" }, { breedName: "全部新增测试" }],
-    sampleCountList:[],
-    mianOrderCountList:[],
-    sampleCountDetail:[],
-    mianOrderCountDetail:[],
-    breedCountList:[],
-    sendBreedList:[],
-    dealBreedList:[],
-    cancelRecordList:[],
-    billList:[],
+    sampleCountList: [],
+    mianOrderCountList: [],
+    sampleCountDetail: [],
+    mianOrderCountDetail: [],
+    breedCountList: [],
+    sendBreedList: [],
+    dealBreedList: [],
+    cancelRecordList: [],
+    billList: [],
+    customerCountList: [],
+    customerCountTotal: {}
 }
 
 const mutations = {
@@ -2492,41 +2496,49 @@ const mutations = {
         state.breedOrderDetail = data
     },
     //样品订单统计
-    [SELECT_SAMPLECOUNT](state,data){
+    [SELECT_SAMPLECOUNT](state, data) {
         state.sampleCountList = data
     },
     //样品订单详细
-    [SELECT_SAMPLEDETAIL](state,data){
-        state.sampleCountDetail=data
+    [SELECT_SAMPLEDETAIL](state, data) {
+        state.sampleCountDetail = data
     },
     //大货订单统计
-    [SELECT_MAINORDERCOUNT](state,data){
+    [SELECT_MAINORDERCOUNT](state, data) {
         state.mianOrderCountList = data
     },
     //大货订单详情
-    [SELECT_MAINORDERDETAIL](state,data){
+    [SELECT_MAINORDERDETAIL](state, data) {
         state.mianOrderCountDetail = data
     },
     //订单信息页面
-    [CHANGE_BREEDCOUNT](state,data){
+    [CHANGE_BREEDCOUNT](state, data) {
         state.breedCountList = data
     },
     //寄样详情页面
-    [CHANGE_SENDBREEDCOUNT](state,data){
+    [CHANGE_SENDBREEDCOUNT](state, data) {
         state.sendBreedList = data
     },
     //成交详情页面
-    [CHANGE_DEALBREEDCOUNT](state,data){
+    [CHANGE_DEALBREEDCOUNT](state, data) {
         state.dealBreedList = data
     },
     //取消报价列表
-    [CHANGE_CANCELRECORD](state,data){
+    [CHANGE_CANCELRECORD](state, data) {
         state.cancelRecordList = data
     },
     //收付费信息统计
-    [CHANGE_BILLLIST](state,data){
+    [CHANGE_BILLLIST](state, data) {
         state.billList = data
+    },
+    //客户统计信息（新）
+    [CUSTOMER_COUNT_LIST](state, data) {
+        state.customerCountList = data
+    },
+    [CUSTOMER_COUNT_TOTAL](state, data) {
+        state.customerCountTotal = data
     }
+
 }
 
 export default {

@@ -12,7 +12,8 @@ var util = {
     sub: subtr,
     mul: accMul,
     div: accDiv,
-    getDate: getDate
+    getDate: getDate,
+    deepCopy: deepCopy
 }
 
 //加法 
@@ -128,6 +129,22 @@ function getDate(days) {
     let realDateStr = year + "-" + month + "-" + day + " 00:00:00";
 
     return realDateStr;
+}
+
+//对象深克隆,将source克隆到target
+function deepCopy(target, source) {
+    let _this = this;
+    for (var key in source) {
+        //&& !(source[key] instanceof Array)
+        if (typeof source[key] === 'object') {
+            target[key] = _this.deepCopy(source[key], target[key]);
+        } else {
+            target[key] = source[key];
+        }
+
+    }
+
+    return target;
 }
 
 module.exports = util;

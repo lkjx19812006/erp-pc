@@ -8941,7 +8941,7 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         "intl": param.intl,
         "unit": param.unit,
         "pack": param.pack,
-        "paymentWay":param.paymentWay,
+        "paymentWay": param.paymentWay,
         "sampling": param.sampling,
         "sampleNumber": param.sampleNumber,
         "sampleAmount": param.sampleAmount,
@@ -9000,7 +9000,7 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
     const data = {
         "userId": param.userId,
         "type": param.type,
-        "paymentWay":param.paymentWay,
+        "paymentWay": param.paymentWay,
         "especial": param.especial,
         "preSell": param.preSell,
         "customerName": param.customerName,
@@ -11748,10 +11748,38 @@ export const getBreedCount = ({ dispatch }, param, data) => { //品种信息统�
     });
 }
 
+export const getCustomerCount = ({ dispatch }, param) => { //客户信息统计
+    var body = {
+        beginTime: "2015-01-01",
+        endTime: "2017-06-20",
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/count/queryCustomerCunt',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        let result = res.json().result;
+        //列表信息
+        dispatch('CUSTOMER_COUNT_LIST', result.list);
+        //合计信息
+        dispatch('CUSTOMER_COUNT_TOTAL', result.total);
+
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
 export const getCancelRecord = ({ dispatch }, param, data) => { //取消报价统计
     var body = {
-        page:param.cur,
-        pageSize:15
+        page: param.cur,
+        pageSize: 15
     }
 
     if (param.startTime) {
@@ -11779,7 +11807,7 @@ export const getCancelRecord = ({ dispatch }, param, data) => { //取消报价�
         }
     }).then((res) => {
         console.log(res.json())
-        dispatch('CHANGE_CANCELRECORD',res.json().result.list)
+        dispatch('CHANGE_CANCELRECORD', res.json().result.list)
         param.total = res.json().result.total
         param.all = res.json().result.pages
     }, (res) => {
@@ -11812,10 +11840,10 @@ export const getBillList = ({ dispatch }, param, data) => { //收付费信息统
     if (param.breedId) {
         body.breedId = param.breedId
     }
-    if(param.intl){
+    if (param.intl) {
         body.intl = param.intl
     }
-    if(param.type){
+    if (param.type) {
         body.type = param.type
     }
     if (param.sortNum) {
@@ -11832,7 +11860,7 @@ export const getBillList = ({ dispatch }, param, data) => { //收付费信息统
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        dispatch("CHANGE_BILLLIST",res.json().result.list)
+        dispatch("CHANGE_BILLLIST", res.json().result.list)
         param.callback(res.json().result.total)
         console.log("成功")
     }, (res) => {
