@@ -95,27 +95,27 @@
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==1}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(1)">已收金额
-                                    <span class="totalNum">({{totalData.receivableMoney}})</span>
+                                    <span class="totalNum">({{totalData.receivableMoney.toFixed(2)}})</span>
                                 </a>
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==2}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(2)">待收款
-                                    <span class="totalNum">({{totalData.stayPayMoney}})</span>
+                                    <span class="totalNum">({{totalData.stayPayMoney.toFixed(2)}})</span>
                                 </a>
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==3}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(3)">应收款
-                                    <span class="totalNum">({{totalData.payMoney}})</span>
+                                    <span class="totalNum">({{totalData.payMoney.toFixed(2)}})</span>
                                 </a>
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==4}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(4)">合计
-                                    <span class="totalNum">({{totalData.totalMoney}})</span>
+                                    <span class="totalNum">({{totalData.totalMoney.toFixed(2)}})</span>
                                 </a>
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==5}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(5)">毛利润
-                                    <span class="totalNum">({{totalData.grossProfit}})</span>
+                                    <span class="totalNum">({{totalData.grossProfit.toFixed(2)}})</span>
                                 </a>
                             </th>
                         </tr>
@@ -123,11 +123,11 @@
                     <tbody class="banma">
                         <tr v-for="item in initBillList" v-cloak>
                             <td>{{item.locationName}}</td>
-                            <td>{{item.receivableMoney}}</td>
-                            <td>{{item.stayPayMoney}}</td>
-                            <td>{{item.payMoney}}</td>
-                            <td>{{item.totalMoney }}</td>
-                            <td>{{item.grossProfit}}</td>
+                            <td>{{item.receivableMoney.toFixed(2)}}</td>
+                            <td>{{item.stayPayMoney.toFixed(2)}}</td>
+                            <td>{{item.payMoney.toFixed(2)}}</td>
+                            <td>{{item.totalMoney.toFixed(2) }}</td>
+                            <td>{{item.grossProfit.toFixed(2)}}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -90,17 +90,17 @@
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==5}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(5)">成交金额
-                                    <span class="totalNum">({{totalMainData.orderMoney}})</span>
+                                    <span class="totalNum">({{totalMainData.orderMoney.toFixed(2)}})</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==6}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(6)">毛利率
-                                    <span class="totalNum">({{totalMainData.grossProfit}})</span>
+                                    <span class="totalNum">({{totalMainData.grossProfit}}%)</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==7}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(7)">退货率
-                                    <span class="totalNum">({{totalMainData.recoveryRate}})</span>
+                                    <span class="totalNum">({{totalMainData.recoveryRate}}%)</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==8}">
@@ -122,9 +122,9 @@
                             <td>{{item.sampleBreedNumber}}</td>
                             <td>{{item.orderNumber}}</td>
                             <td>{{item.breedNumber}}</td>
-                            <td>{{item.orderMoney }}</td>
-                            <td>{{item.grossProfit}}</td>
-                            <td>{{item.recoveryRate}}</td>
+                            <td>{{item.orderMoney.toFixed(2) }}</td>
+                            <td>{{item.grossProfit.toFixed(2)}}%</td>
+                            <td>{{item.recoveryRate.toFixed(2)}}%</td>
                             <td>{{item.customerNumber}}</td>
                             <td>{{item.shipAddr}}</td>
                         </tr>
