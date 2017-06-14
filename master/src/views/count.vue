@@ -31,7 +31,7 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==6">
         <allorder-count></allorder-count>
     </div>
-     <!-- 我的统计（新） -->
+    <!-- 我的统计（新） -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==8">
         <my-newcount></my-newcount>
     </div>
@@ -43,11 +43,11 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==10">
         <all-newcount></all-newcount>
     </div>
-     <!-- 我的品种统计（新） -->
+    <!-- 我的品种统计（新） -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==11">
         <my-breedcount></my-breedcount>
     </div>
-     <!-- 部门品种统计（新） -->
+    <!-- 部门品种统计（新） -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==12">
         <org-breedcount></org-breedcount>
     </div>
@@ -66,6 +66,10 @@
     <!-- 收付费信息统计（新） -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==16">
         <bill-count></bill-count>
+    </div>
+    <!-- 客户信息统计（新） -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==17">
+        <new-customer-count></new-customer-count>
     </div>
 </template>
 <script>
@@ -87,6 +91,7 @@ import clientOverview from '../components/count/clientOverview'
 import allorderCount from '../components/count/allOrderCount'
 import orgManage from '../components/count/orgManage'
 import newOrderCount from '../components/count/newOrderCount'
+import newCustomerCount from '../components/count/newCustomerCount'
 export default {
     components: {
         personalCount,
@@ -106,7 +111,8 @@ export default {
         myNewcount,
         newOrderCount,
         breedCount,
-        billCount
+        billCount,
+        newCustomerCount
     }
 }
 </script>

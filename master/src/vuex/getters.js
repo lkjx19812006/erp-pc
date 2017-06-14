@@ -366,9 +366,9 @@ export const initIntentionDetail = (state) => {
 
 /*--报价详情--*/
 export const initIntentionOfferDetail = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionOfferDetail));
-}
-/*--国际意向详情--*/
+        return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionOfferDetail));
+    }
+    /*--国际意向详情--*/
 export const initIntlIntentionDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionDetail));
 }
@@ -862,6 +862,15 @@ export const initCancelRecordList = (state) => { //初始化取消询价列表
     return JSON.parse(JSON.stringify(state.table.cancelRecordList))
 }
 
-export const initBillList = (state) => {//初始化收付费信息统计列表
+export const initBillList = (state) => { //初始化收付费信息统计列表
     return JSON.parse(JSON.stringify(state.table.billList))
+}
+
+//初始化客户信息统计
+export const initCustomerCountList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.customerCountList))
+}
+
+export const initCustomerCountTotal = (state) => {
+    return JSON.parse(JSON.stringify(state.table.customerCountTotal))
 }

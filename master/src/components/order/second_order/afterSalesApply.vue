@@ -300,6 +300,12 @@ export default {
 
         },
         addGoods: function() {
+            let repeation = this.checkRepeation(this.afterSaleParam.goods.length - 1);
+            if (repeation) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "商品重复，请重新选择！";
+                return;
+            }
             let goods = this.afterSaleParam.goods[this.afterSaleParam.goods.length - 1];
             let goodsInfo = this.goodsInfo;
             goods.goodsIndex = goodsInfo.goodsIndex;
@@ -315,6 +321,12 @@ export default {
 
         },
         modifyGoods: function() {
+            let repeation = this.checkRepeation(this.goodsInfo.index);
+            if (repeation) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "商品重复，请重新选择！";
+                return;
+            }
             let goods = this.afterSaleParam.goods[this.goodsInfo.index];
             let goodsInfo = this.goodsInfo;
             goods.goodsIndex = goodsInfo.goodsIndex;
@@ -327,7 +339,6 @@ export default {
             goods.type = goodsInfo.type;
             //将status重新置为0
             goodsInfo.status = 0;
-
         },
         cancelAddGoods: function() {
             this.afterSaleParam.goods.pop();
@@ -338,6 +349,16 @@ export default {
         },
         deleteGoods: function(index) {
             this.afterSaleParam.goods.splice(index, 1);
+        },
+        //判断是否有重复商品，
+        checkRepeation: function(index) {
+            let goods = this.afterSaleParam.goods;
+            for (let i = 0; i < goods.length; i++) {
+                if (i != index && goods[i].id == this.goodsInfo.id) {
+                    return true;
+                }
+            }
+            return false;
         },
         confirm: function() {
             //检查是否出现重复的商品
