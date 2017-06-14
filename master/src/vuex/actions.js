@@ -11750,9 +11750,19 @@ export const getBreedCount = ({ dispatch }, param, data) => { //品种信息统�
 
 export const getCustomerCount = ({ dispatch }, param) => { //客户信息统计
     var body = {
-        beginTime: "2015-01-01",
-        endTime: "2017-06-20",
+        beginTime: param.beginTime,
+        endTime: param.endTime,
     }
+    if (param.breedId) {
+        body.breedId = param.breedId;
+    }
+    if (param.locationId) {
+        body.locationId = param.locationId;
+    }
+    if (param.orgId) {
+        body.orgId = param.orgId;
+    }
+
 
     Vue.http({
         method: 'POST',

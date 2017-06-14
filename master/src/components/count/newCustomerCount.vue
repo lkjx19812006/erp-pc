@@ -11,7 +11,7 @@
                     <dl class="clear left transfer">
                         <div class="left">
                             <dt class="left transfer marg_top">交易日期：</dt>
-                            <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
+                            <mz-datepicker :time.sync="loadParam.beginTime" format="yyyy-MM-dd HH:mm:ss">
                             </mz-datepicker>
                         </div>
                         <div class="left">
@@ -29,7 +29,7 @@
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top">区域：</dt>
                         <dl class="left">
-                            <v-select :debounce="250" :value.sync="loadParam.location" :options="initCNProvince" placeholder="省/Province" label="cname">
+                            <v-select :debounce="250" :value.sync="location" :options="initCNProvince" placeholder="省/Province" label="cname">
                             </v-select>
                         </dl>
                     </dl>
@@ -61,72 +61,105 @@
                     <thead>
                         <tr>
                             <th>
-                                <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(1)">厂家区域
+                                <a class="btn btn-link btn-xs">厂家区域
                                     <span class="totalNum"></span>
                                 </a>
                             </th>
                             <th>
-                                <a href="javascript:void(0);" class="btn btn-link btn-xs">厂家数量
-                                    <span class="totalNum"></span>
-                                </a>
+                                厂家数量
+                                <span class="totalNum">({{initCustomerCountTotal.customerNumber}})</span>
+                                <a v-if="loadParam.criterion!='customerNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('customerNumber', 0)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                                <a v-if="loadParam.criterion!='customerNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('customerNumber', 1)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
                             <th>
-                                <a href="javascript:void(0);" class="btn btn-link btn-xs">厂家区域占比
-                                    <span class="totalNum"></span>
-                                </a>
+                                厂家区域占比
+                                <span class="totalNum">({{initCustomerCountTotal.provinceRate}})</span>
+                                <a v-if="loadParam.criterion!='provinceRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('provinceRate',0)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                                <a v-if="loadParam.criterion!='provinceRate'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('provinceRate',1)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
                             <th>
-                                <a href="javascript:void(0);" class="btn btn-link btn-xs">订单数
-                                    <span class="totalNum">({{initCustomerCountTotal.orderNumber}})</span>
-                                </a>
+                                订单数
+                                <span class="totalNum">({{initCustomerCountTotal.orderNumber}})</span>
+                                <a v-if="loadParam.criterion!='orderNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('orderNumber',0)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                                <a v-if="loadParam.criterion!='orderNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('orderNumber',1)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
                             <th>
-                                <a href="javascript:void(0);" class="btn btn-link btn-xs">品种数
-                                    <span class="totalNum">({{initCustomerCountTotal.breedNumber}})</span>
-                                </a>
+                                品种数
+                                <span class="totalNum">({{initCustomerCountTotal.breedNumber}})</span>
+                                <a v-if="loadParam.criterion!='breedNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('breedNumber',0)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                                <a v-if="loadParam.criterion!='breedNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('breedNumber',1)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
                             <th>
-                                <a href="javascript:void(0);" class="btn btn-link btn-xs">成交品种数
-                                    <span class="totalNum"></span>
-                                </a>
+                                成交品种数
+                                <span class="totalNum">({{initCustomerCountTotal.tradeBreedNumber}})</span>
+                                <a v-if="loadParam.criterion!='tradeBreedNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('tradeBreedNumber',0)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                                <a v-if="loadParam.criterion!='tradeBreedNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('tradeBreedNumber',1)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
                             <th>
-                                <a href="javascript:void(0);" class="btn btn-link btn-xs">成交金额
-                                    <span class="totalNum"></span>
-                                </a>
+                                成交金额
+                                <span class="totalNum">({{initCustomerCountTotal.tradeAmount}})</span>
+                                <a v-if="loadParam.criterion!='tradeAmount'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('tradeAmount',0)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                                <a v-if="loadParam.criterion!='tradeAmount'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('tradeAmount',1)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
                             <th>
-                                <a href="javascript:void(0);" class="btn btn-link btn-xs">毛利率
-                                    <span class="totalNum"></span>
-                                </a>
+                                毛利率
+                                <span class="totalNum">({{initCustomerCountTotal.grossProfitRate}})</span>
+                                <a v-if="loadParam.criterion!='grossProfitRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('grossProfitRate',0)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                                <a v-if="loadParam.criterion!='grossProfitRate'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('grossProfitRate',1)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
                             <th>
-                                <a href="javascript:void(0);" class="btn btn-link btn-xs">退货率
-                                    <span class="totalNum"></span>
-                                </a>
+                                退货率
+                                <span class="totalNum">({{initCustomerCountTotal.returnsRate}})</span>
+                                <a v-if="loadParam.criterion!='returnsRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('returnsRate',0)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                                <a v-if="loadParam.criterion!='returnsRate'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('returnsRate',1)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
                             <th>
-                                <a href="javascript:void(0);" class="btn btn-link btn-xs">复购厂家数
-                                    <span class="totalNum"></span>
-                                </a>
+                                复购厂家数
+                                <span class="totalNum">({{initCustomerCountTotal.rebuyNumber}})</span>
+                                <a v-if="loadParam.criterion!='rebuyNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('rebuyNumber',0)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                                <a v-if="loadParam.criterion!='rebuyNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('rebuyNumber',1)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
                             <th>
-                                <a href="javascript:void(0);" class="btn btn-link btn-xs">采购金额占比
-                                    <span class="totalNum"></span>
-                                </a>
+                                采购金额占比
+                                <span class="totalNum">({{initCustomerCountTotal.buyAmountRate}})</span>
+                                <a v-if="loadParam.criterion!='buyAmountRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('buyAmountRate',0)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                                <a v-if="loadParam.criterion!='buyAmountRate'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('buyAmountRate',1)"></a>
+                                <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
                         </tr>
                     </thead>
                     <tbody class="banma">
-                        <tr v-for="item in initMainOrderCountList" v-cloak>
-                            <td><a href="javascript:void(0);" @click="showDetail(item)">{{item.locationName}}</a></td>
-                            <td>{{item.breedNumber}}</td>
-                            <td>{{item.orderNumber}}</td>
-                            <td>{{item.orderMoney}}</td>
-                            <td>{{item.grossProfit}}</td>
-                            <td>{{item.recoveryRate }}</td>
+                        <tr v-for="item in initCustomerCountList" v-cloak>
+                            <td><a href="javascript:void(0);" @click="showDetail(item)">{{item.provinceName}}</a></td>
                             <td>{{item.customerNumber}}</td>
-                            <td>{{item.shipAddr}}</td>
+                            <td>{{item.provinceRate}}</td>
+                            <td>{{item.orderNumber}}</td>
+                            <td>{{item.breedNumber}}</td>
+                            <td>{{item.tradeBreedNumber}}</td>
+                            <td>{{item.tradeAmount }}</td>
+                            <td>{{item.grossProfitRate}}</td>
+                            <td>{{item.returnsRate}}</td>
+                            <td>{{item.rebuyNumber}}</td>
+                            <td>{{item.buyAmountRate}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -171,8 +204,24 @@ export default {
         return {
             loadParam: {
                 loading: false,
+                criterion: '', //前端排序标准
+                asc: '', //升序（0或!=1）还是降序（1）
                 beginTime: '',
                 endTime: '',
+                breedId: '',
+                breedName: '',
+                locationId: '',
+                orgId: '',
+                orgName: ''
+
+            },
+            //默认的初始时间
+            beginTime: '',
+            endTime: '',
+            //产地
+            location: {
+                id: '',
+                cname: ''
             },
             selectOrgParam: {
                 show: false,
@@ -185,50 +234,6 @@ export default {
             },
             breedSearchParam: {
                 show: false
-            },
-            detailParam: {
-                show: false,
-                orderType: '',
-                totalMainData: {
-                    locationNumber: '',
-                    breedNumber: '',
-                    orderNumber: '',
-                    orderMoney: '',
-                    grossProfit: '',
-                    recoveryRate: '',
-                    customerNumber: '',
-                    shipAddr: ''
-                },
-                totalSampleData: {
-                    locationNumber: '',
-                    breedNumber: '',
-                    sampleBreedNumber: '',
-                    receiveNumber: '',
-                    qaStandardNumber: '',
-                    qaSelfNumber: '',
-                    tradedNumber: '',
-                    customerNumber: ''
-                }
-            },
-            totalMainData: {
-                locationNumber: '',
-                breedNumber: '',
-                orderNumber: '',
-                orderMoney: '',
-                grossProfit: '',
-                recoveryRate: '',
-                customerNumber: '',
-                shipAddr: ''
-            },
-            totalSampleData: {
-                locationNumber: '',
-                breedNumber: '',
-                sampleBreedNumber: '',
-                receiveNumber: '',
-                qaStandardNumber: '',
-                qaSelfNumber: '',
-                tradedNumber: '',
-                customerNumber: ''
             }
         }
     },
@@ -244,9 +249,6 @@ export default {
         }
     },
     methods: {
-        CheckType: function(data) {
-
-        },
         breedSearch: function() {
             this.breedSearchParam.show = true
         },
@@ -259,120 +261,66 @@ export default {
                 this.loadParam.orgId = this.selectOrgParam.orgId
             }
         },
-        sortBy: function(num) {
-
-            this.loadParam.sortNum = num;
-            let list = this.$store.state.table.mianOrderCountList;
+        //criterion:排序的标准，即按什么排序,asc:0/1,升序/降序
+        sortBy: function(criterion, asc) {
+            this.loadParam.criterion = criterion;
+            this.loadParam.asc = asc;
+            let list = this.$store.state.table.customerCountList;
             let length = list.length;
             for (let i = length; i > 0; i--) {
                 for (let j = 0; j < i - 1; j++) {
-                    if (list[j].breedNumber > list[j + 1].breedNumber) {
+                    //升序
+                    if (asc != 1 && list[j][criterion] > list[j + 1][criterion]) {
                         let temp = {};
                         util.deepCopy(temp, list[j]);
                         util.deepCopy(list[j], list[j + 1]);
                         util.deepCopy(list[j + 1], temp);
                     }
+                    //降序
+                    if (asc == 1 && list[j][criterion] < list[j + 1][criterion]) {
+                        let temp = {};
+                        util.deepCopy(temp, list[j]);
+                        util.deepCopy(list[j], list[j + 1]);
+                        util.deepCopy(list[j + 1], temp);
+                    }
+
                 }
             }
+        },
 
-            //this.getMainOrderCount(this.loadParam)
-        },
-        totalCallback: function(data) {
-            if (this.loadParam.orderType == 'mainOrder') {
-                this.totalMainData.locationNumber = data.locationNumber
-                this.totalMainData.breedNumber = data.breedNumber
-                this.totalMainData.orderNumber = data.orderNumber
-                this.totalMainData.orderMoney = data.orderMoney
-                this.totalMainData.grossProfit = data.grossProfit
-                this.totalMainData.recoveryRate = data.recoveryRate
-                this.totalMainData.customerNumber = data.customerNumber
-                this.totalMainData.shipAddr = data.shipAddr
-            } else if (this.loadParam.orderType == 'sampleOrder') {
-                console.log("sampleOrder")
-                this.totalSampleData.locationNumber = data.locationNumber
-                this.totalSampleData.breedNumber = data.breedNumber
-                this.totalSampleData.sampleBreedNumber = data.sampleBreedNumber
-                this.totalSampleData.receiveNumber = data.receiveNumber
-                this.totalSampleData.qaStandardNumber = data.qaStandardNumber
-                this.totalSampleData.qaSelfNumber = data.qaSelfNumber
-                this.totalSampleData.tradedNumber = data.tradedNumber
-                this.totalSampleData.customerNumber = data.customerNumber
-            }
-
-        },
-        detailCallback: function(data) {
-            if (this.loadParam.orderType == 'mainOrder') {
-                this.detailParam.totalMainData.locationNumber = data.locationNumber
-                this.detailParam.totalMainData.breedNumber = data.breedNumber
-                this.detailParam.totalMainData.orderNumber = data.orderNumber
-                this.detailParam.totalMainData.orderMoney = data.orderMoney
-                this.detailParam.totalMainData.grossProfit = data.grossProfit
-                this.detailParam.totalMainData.recoveryRate = data.recoveryRate
-                this.detailParam.totalMainData.customerNumber = data.customerNumber
-                this.detailParam.totalMainData.shipAddr = data.shipAddr
-            } else if (this.loadParam.orderType == 'sampleOrder') {
-                this.detailParam.totalSampleData.locationNumber = data.locationNumber
-                this.detailParam.totalSampleData.breedNumber = data.breedNumber
-                this.detailParam.totalSampleData.sampleBreedNumber = data.sampleBreedNumber
-                this.detailParam.totalSampleData.receiveNumber = data.receiveNumber
-                this.detailParam.totalSampleData.qaStandardNumber = data.qaStandardNumber
-                this.detailParam.totalSampleData.qaSelfNumber = data.qaSelfNumber
-                this.detailParam.totalSampleData.tradedNumber = data.tradedNumber
-                this.detailParam.totalSampleData.customerNumber = data.customerNumber
-            }
-        },
         selectEmployee: function() {
             this.employeeParam.show = true
         },
         showDetail: function(data) {
-            this.detailParam.show = true
-            this.detailParam.location = data.locationName
-            var allIds = {
-                ids: '',
-                locationId: ''
-            }
-            allIds.ids = data.breedIds.join(',')
-            allIds.locationId = data.locationIds.join('')
-            if (this.loadParam.orderType == 'mainOrder') {
-                this.detailParam.orderType = 'mainOrder'
-                this.getMainOrderCount(this.loadParam, allIds)
-            } else {
-                this.detailParam.orderType = 'sampleOrder'
-                this.getSampleOrderCount(this.loadParam, allIds)
-            }
+
 
         },
         resetCondition: function() {
-            this.loadParam.breedName = ''
-            this.loadParam.breedId = ''
-            this.loadParam.startTime = ''
-            this.loadParam.endTime = ''
-            this.loadParam.orgName = ''
-            this.loadParam.orgId = ''
-            this.loadParam.employeeName = ''
-            this.loadParam.employeeId = ''
-            this.loadParam.location = ''
-            if (this.loadParam.orderType == 'mainOrder') {
-                this.getMainOrderCount(this.loadParam)
-            } else {
-                this.getSampleOrderCount(this.loadParam)
-            }
+            this.loadParam.beginTime = this.beginTime;
+            this.loadParam.endTime = this.endTime;
+            this.loadParam.breedId = "";
+            this.loadParam.breedName = "";
+            this.location = {
+                id: '',
+                cname: ''
+            };
+            this.loadParam.locationId = "";
+            this.loadParam.orgId = "";
+            this.loadParam.orgName = "";
+            this.selectSearch();
 
         },
         selectSearch: function() {
-            if (this.loadParam.orderType == 'mainOrder') {
-                this.getMainOrderCount(this.loadParam)
-            } else {
-                this.getSampleOrderCount(this.loadParam)
+            console.log(this.location);
+            if (this.location.id) {
+                this.loadParam.locationId = this.location.id;
             }
+            this.getCustomerCount(this.loadParam)
         }
 
     },
     events: {
-        fresh: function(input) {
-            this.loadParam.cur = input;
 
-        },
         breed: function(breed) {
             this.loadParam.breedName = breed.breedName
             this.loadParam.breedId = breed.breedId
@@ -387,9 +335,12 @@ export default {
         //common('tab', 'table_box', 1);
     },
     created() {
+        //时间默认从2016至今
+        this.beginTime = "2016-01-01 00:00:00";
+        this.endTime = util.getDate(0);
+        this.loadParam.beginTime = this.beginTime;
+        this.loadParam.endTime = this.endTime;
         this.getCustomerCount(this.loadParam)
-
-
     }
 }
 </script>
