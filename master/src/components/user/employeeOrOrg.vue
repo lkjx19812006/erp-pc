@@ -306,8 +306,7 @@ export default {
         this.getOrgList(this.orgParam);
         if (this.param.employeeId) {
             this.loadParam.name = this.param.employeeName;
-            console.log(this.loadParam.name)
-            console.log(this.param.employeeName)
+
         }
     }
 }

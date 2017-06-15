@@ -8171,7 +8171,7 @@ export const intlIntentionItemInquire = ({ dispatch }, param) => { //国际意�
 
 export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原材料报价
     param.total = param.price * param.number;
-    console.log(param);
+
     const data = {
         id: param.id,
         intentionId: param.intentionId,
@@ -11762,8 +11762,15 @@ export const getCustomerCount = ({ dispatch }, param) => { //客户信息统计
     if (param.orgId) {
         body.orgId = param.orgId;
     }
-
-
+    if (param.employeeId) {
+        body.employeeId = param.employeeId;
+    }
+    if (param.scale) {
+        body.scale = param.scale;
+    }
+    if (param.paymentWay) {
+        body.paymentWay = param.paymentWay;
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/count/queryCustomerCunt',
@@ -11780,6 +11787,147 @@ export const getCustomerCount = ({ dispatch }, param) => { //客户信息统计
         dispatch('CUSTOMER_COUNT_LIST', result.list);
         //合计信息
         dispatch('CUSTOMER_COUNT_TOTAL', result.total);
+
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getCustomerCountDetail = ({ dispatch }, param) => { //客户详情（点击产地）信息统计
+    var body = {
+        beginTime: param.beginTime,
+        endTime: param.endTime,
+        locationId: param.locationId,
+    }
+    if (param.breedId) {
+        body.breedId = param.breedId;
+    }
+    if (param.orgId) {
+        body.orgId = param.orgId;
+    }
+    if (param.employeeId) {
+        body.employeeId = param.employeeId;
+    }
+    if (param.scale) {
+        body.scale = param.scale;
+    }
+    if (param.paymentWay) {
+        body.paymentWay = param.paymentWay;
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/count/queryCustomer',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        let result = res.json().result;
+        if (result == null) {
+            result = {
+                list: [],
+                total: {}
+            }
+
+        }
+        dispatch('CUSTOMER_COUNT_DETAIL_LIST', result.list);
+        dispatch('CUSTOMER_COUNT_DETAIL_TOTAL', result.total);
+
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getSupplierCount = ({ dispatch }, param) => { //供应商信息统计
+    var body = {
+        beginTime: param.beginTime,
+        endTime: param.endTime,
+    }
+    if (param.breedId) {
+        body.breedId = param.breedId;
+    }
+    if (param.locationId) {
+        body.locationId = param.locationId;
+    }
+    if (param.orgId) {
+        body.orgId = param.orgId;
+    }
+    if (param.employeeId) {
+        body.employeeId = param.employeeId;
+    }
+    if (param.scale) {
+        body.scale = param.scale;
+    }
+    if (param.paymentWay) {
+        body.paymentWay = param.paymentWay;
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/count/querySupplierCunt',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        let result = res.json().result;
+        //列表信息
+        dispatch('SUPPLIER_COUNT_LIST', result.list);
+        //合计信息
+        dispatch('SUPPLIER_COUNT_TOTAL', result.total);
+
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getSupplierCountDetail = ({ dispatch }, param) => { //供应商详情（点击产地）信息统计
+    var body = {
+        beginTime: param.beginTime,
+        endTime: param.endTime,
+        locationId: param.locationId,
+    }
+    if (param.breedId) {
+        body.breedId = param.breedId;
+    }
+    if (param.orgId) {
+        body.orgId = param.orgId;
+    }
+    if (param.employeeId) {
+        body.employeeId = param.employeeId;
+    }
+    if (param.scale) {
+        body.scale = param.scale;
+    }
+    if (param.paymentWay) {
+        body.paymentWay = param.paymentWay;
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/count/querySupplier',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        let result = res.json().result;
+        if (result == null) {
+            result = {
+                list: [],
+                total: {}
+            }
+
+        }
+        dispatch('SUPPLIER_COUNT_DETAIL_LIST', result.list);
+        dispatch('SUPPLIER_COUNT_DETAIL_TOTAL', result.total);
 
     }, (res) => {
         console.log('fail');

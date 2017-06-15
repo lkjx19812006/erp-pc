@@ -874,3 +874,28 @@ export const initCustomerCountList = (state) => {
 export const initCustomerCountTotal = (state) => {
     return JSON.parse(JSON.stringify(state.table.customerCountTotal))
 }
+
+export const initCustomerCountDetailList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.customerCountDetailList))
+}
+
+export const initCustomerCountDetailTotal = (state) => {
+    return JSON.parse(JSON.stringify(state.table.customerCountDetailTotal))
+}
+
+//初始化供应商信息统计
+export const initSupplierCountList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.supplierCountList))
+}
+
+export const initSupplierCountTotal = (state) => {
+    return JSON.parse(JSON.stringify(state.table.supplierCountTotal))
+}
+
+export const initSupplierCountDetailList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.supplierCountDetailList))
+}
+
+export const initSupplierCountDetailTotal = (state) => {
+    return JSON.parse(JSON.stringify(state.table.supplierCountDetailTotal))
+}
