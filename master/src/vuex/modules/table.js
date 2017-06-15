@@ -179,7 +179,14 @@ import {
     CHANGE_CANCELRECORD,
     CHANGE_BILLLIST,
     CUSTOMER_COUNT_LIST,
-    CUSTOMER_COUNT_TOTAL
+    CUSTOMER_COUNT_TOTAL,
+    CUSTOMER_COUNT_DETAIL_LIST,
+    CUSTOMER_COUNT_DETAIL_TOTAL,
+    SUPPLIER_COUNT_LIST,
+    SUPPLIER_COUNT_TOTAL,
+    SUPPLIER_COUNT_DETAIL_LIST,
+    SUPPLIER_COUNT_DETAIL_TOTAL,
+
 } from '../mutation-types'
 
 
@@ -1138,7 +1145,13 @@ const state = {
     cancelRecordList: [],
     billList: [],
     customerCountList: [],
-    customerCountTotal: {}
+    customerCountTotal: {},
+    customerCountDetailList: [],
+    customerCountDetailTotal: {},
+    supplierCountList: [],
+    supplierCountTotal: {},
+    supplierCountDetailList: [],
+    supplierCountDetailTotal: {},
 }
 
 const mutations = {
@@ -2537,8 +2550,26 @@ const mutations = {
     },
     [CUSTOMER_COUNT_TOTAL](state, data) {
         state.customerCountTotal = data
-    }
-
+    },
+    [CUSTOMER_COUNT_DETAIL_LIST](state, data) {
+        state.customerCountDetailList = data;
+    },
+    [CUSTOMER_COUNT_DETAIL_TOTAL](state, data) {
+        state.customerCountDetailTotal = data;
+    },
+    //供应商统计信息（新）
+    [SUPPLIER_COUNT_LIST](state, data) {
+        state.supplierCountList = data
+    },
+    [SUPPLIER_COUNT_TOTAL](state, data) {
+        state.supplierCountTotal = data
+    },
+    [SUPPLIER_COUNT_DETAIL_LIST](state, data) {
+        state.supplierCountDetailList = data;
+    },
+    [SUPPLIER_COUNT_DETAIL_TOTAL](state, data) {
+        state.supplierCountDetailTotal = data;
+    },
 }
 
 export default {

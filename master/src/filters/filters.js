@@ -609,7 +609,9 @@ Vue.filter('classify', function(val) { //客户分类
 
 Vue.filter('customerScale', function(val) { //客户规模
     var val = val;
-    if (val == 0) {
+    if (val === '') {
+        return '未知';
+    } else if (val == 0) {
         return '小型';
     } else if (val == 1) {
         return '中型';
@@ -1406,6 +1408,19 @@ Vue.filter('province', function(id) {
     return "不限"
 })
 
-Vue.filter('numFixed',function(data){
-    return parseFloat(data).toFixed(2)
+Vue.filter("paymentWay", function(val) {
+    if (val === "") {
+        return "未知";
+    } else if (val == 0) {
+        return "不预付";
+    } else if (val == 1) {
+        return "0~30%";
+    } else if (val == 2) {
+        return "30%~50%";
+    } else if (val == 3) {
+        return "50%~100%";
+    } else {
+        return "未知";
+    }
 })
+

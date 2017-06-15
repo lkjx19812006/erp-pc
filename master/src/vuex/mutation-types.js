@@ -292,3 +292,10 @@ export const CHANGE_BILLLIST = 'CHANGE_BILLLIST' //收付费统计
 
 export const CUSTOMER_COUNT_LIST = 'CUSTOMER_COUNT_LIST' //客户统计列表信息
 export const CUSTOMER_COUNT_TOTAL = 'CUSTOMER_COUNT_TOTAL' //客户统计合计信息
+export const CUSTOMER_COUNT_DETAIL_LIST = 'CUSTOMER_COUNT_DETAIL_LIST' //客户统计详情（某个省的客户）列表信息
+export const CUSTOMER_COUNT_DETAIL_TOTAL = 'CUSTOMER_COUNT_DETAIL_TOTAL' //客户统计详情（某个省的客户）合计信息
+
+export const SUPPLIER_COUNT_LIST = 'SUPPLIER_COUNT_LIST' //供应商统计列表信息
+export const SUPPLIER_COUNT_TOTAL = 'SUPPLIER_COUNT_TOTAL' //供应商统计合计信息
+export const SUPPLIER_COUNT_DETAIL_LIST = 'SUPPLIER_COUNT_DETAIL_LIST' //供应商统计详情（某个省的客户）列表信息
+export const SUPPLIER_COUNT_DETAIL_TOTAL = 'SUPPLIER_COUNT_DETAIL_TOTAL' //供应商统计详情（某个省的客户）合计信息
