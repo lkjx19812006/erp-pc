@@ -10,16 +10,72 @@
                 <thead>
                     <tr>
                         <th style="width:250px">厂家名称</th>
-                        <th style="width:250px">订单数<span class="totalNum">({{initSupplierCountDetailTotal.orderNumber}})</span></th>
-                        <th style="width:250px">品种数<span class="totalNum">({{initSupplierCountDetailTotal.breedNumber}})</span></th>
-                        <th style="width:250px">成交品种数<span class="totalNum">({{initSupplierCountDetailTotal.tradeBreedNumber}})</span></th>
-                        <th style="width:250px">成交金额<span class="totalNum">({{initSupplierCountDetailTotal.tradeAmount | money}})</span></th>
-                        <th style="width:250px">毛利率<span class="totalNum">({{initSupplierCountDetailTotal.grossProfitRate*100 | money}}%)</span></th>
-                        <th style="width:250px">退货率<span class="totalNum">({{initSupplierCountDetailTotal.returnsRate*100 | money}}%)</span></th>
+                        <th style="width:250px">
+                            订单数
+                            <span class="totalNum">({{initSupplierCountDetailTotal.orderNumber}})</span>
+                            <a v-if="loadParam.criterion!='orderNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('orderNumber', 0)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                            <a v-if="loadParam.criterion!='orderNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('orderNumber', 1)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-down"></span>
+                        </th>
+                        <th style="width:250px">
+                            品种数
+                            <span class="totalNum">({{initSupplierCountDetailTotal.breedNumber}})</span>
+                            <a v-if="loadParam.criterion!='breedNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('breedNumber', 0)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                            <a v-if="loadParam.criterion!='breedNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('breedNumber', 1)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-down"></span>
+                        </th>
+                        <th style="width:250px">
+                            成交品种数
+                            <span class="totalNum">({{initSupplierCountDetailTotal.tradeBreedNumber}})</span>
+                            <a v-if="loadParam.criterion!='tradeBreedNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('tradeBreedNumber', 0)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                            <a v-if="loadParam.criterion!='tradeBreedNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('tradeBreedNumber', 1)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-down"></span>
+                        </th>
+                        <th style="width:250px">
+                            成交金额
+                            <span class="totalNum">({{initSupplierCountDetailTotal.tradeAmount | money}})</span>
+                            <a v-if="loadParam.criterion!='tradeAmount'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('tradeAmount', 0)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                            <a v-if="loadParam.criterion!='tradeAmount'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('tradeAmount', 1)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-down"></span>
+                        </th>
+                        <th style="width:250px">
+                            毛利率
+                            <span class="totalNum">({{initSupplierCountDetailTotal.grossProfitRate*100 | money}}%)</span>
+                            <a v-if="loadParam.criterion!='grossProfitRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('grossProfitRate', 0)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                            <a v-if="loadParam.criterion!='grossProfitRate'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('grossProfitRate', 1)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-down"></span>
+                        </th>
+                        <th style="width:250px">
+                            退货率
+                            <span class="totalNum">({{initSupplierCountDetailTotal.returnsRate*100 | money}}%)</span>
+                            <a v-if="loadParam.criterion!='returnsRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('returnsRate', 0)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                            <a v-if="loadParam.criterion!='returnsRate'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('returnsRate', 1)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-down"></span>
+                        </th>
                         <th style="width:250px">收款方式<span class="totalNum"></span></th>
                         <th style="width:250px">规模<span class="totalNum"></span></th>
-                        <th style="width:250px">复购率<span class="totalNum">({{initSupplierCountDetailTotal.rebuyRate*100 | money}}%)</span></th>
-                        <th style="width:250px">采购金额占比<span class="totalNum">({{initSupplierCountDetailTotal.buyAmountRate*100 | money}}%)</span></th>
+                        <th style="width:250px">
+                            复购率
+                            <span class="totalNum">({{initSupplierCountDetailTotal.rebuyRate*100 | money}}%)</span>
+                            <a v-if="loadParam.criterion!='rebuyRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('rebuyRate', 0)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                            <a v-if="loadParam.criterion!='rebuyRate'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('rebuyRate', 1)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-down"></span>
+                        </th>
+                        <th style="width:250px">
+                            采购金额占比
+                            <span class="totalNum">({{initSupplierCountDetailTotal.buyAmountRate*100 | money}}%)</span>
+                            <a v-if="loadParam.criterion!='buyAmountRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('buyAmountRate', 0)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-up"></span>
+                            <a v-if="loadParam.criterion!='buyAmountRate'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('buyAmountRate', 1)"></a>
+                            <span v-else class="glyphicon glyphicon-arrow-down"></span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="banma">
@@ -43,6 +99,7 @@
 </template>
 <script>
 import common from '../../../common/common'
+import util from '../../tools/util.js'
 import {
     initSupplierCountDetailList,
     initSupplierCountDetailTotal,
@@ -66,12 +123,41 @@ export default {
     props: ['param'],
     data() {
         return {
-
+            loadParam: {
+                criterion: '', //前端排序标准
+                asc: '', //升序（0或!=1）还是降序（1）
+            }
         }
     },
     methods: {
         close: function() {
             this.param.show = false
+        },
+        //criterion:排序的标准，即按什么排序,asc:0/1,升序/降序
+        sortBy: function(criterion, asc) {
+            this.loadParam.criterion = criterion;
+            this.loadParam.asc = asc;
+            let list = this.$store.state.table.supplierCountDetailList;
+            let length = list.length;
+            for (let i = length; i > 0; i--) {
+                for (let j = 0; j < i - 1; j++) {
+                    //升序
+                    if (asc != 1 && list[j][criterion] > list[j + 1][criterion]) {
+                        let temp = {};
+                        util.deepCopy(temp, list[j]);
+                        util.deepCopy(list[j], list[j + 1]);
+                        util.deepCopy(list[j + 1], temp);
+                    }
+                    //降序
+                    if (asc == 1 && list[j][criterion] < list[j + 1][criterion]) {
+                        let temp = {};
+                        util.deepCopy(temp, list[j]);
+                        util.deepCopy(list[j], list[j + 1]);
+                        util.deepCopy(list[j + 1], temp);
+                    }
+
+                }
+            }
         },
     },
     ready() {

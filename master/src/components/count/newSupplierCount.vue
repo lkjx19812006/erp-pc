@@ -408,7 +408,7 @@ export default {
         }
 
         //时间默认从2016至今
-        this.beginTime = "2016-01-01 00:00:00";
+        this.beginTime = util.getDate(-7);;
         this.endTime = util.getDate(0);
         this.loadParam.beginTime = this.beginTime;
         this.loadParam.endTime = this.endTime;

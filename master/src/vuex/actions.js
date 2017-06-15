@@ -97,7 +97,7 @@ export const login = ({ dispatch }, data) => { //登录
             document.cookie = "name=" + compile(res.json().result.name) + ";expires=" + expire;
             document.cookie = "time=" + lastTime + ";expires=" + expire;
             document.cookie = "privilege=" + res.json().result.privilege + ";expires=" + expire;
-            document.cookie = "safeCode=" + (','+ res.json().result.functions.join() + ',') + ";expires=" + expire;
+            document.cookie = "safeCode=" + (res.json().result.functions.join() + ',') + ";expires=" + expire;
             var result = res.json().result;
             result.time = lastTime;
             //var safeCode = result.functions[3]?result.functions[3]:''
@@ -6245,6 +6245,7 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var j in con.trackings.arr) {
             con.trackings.arr[j].show = false;
         }
+
         /*if(con.orders.show&&con.intention.show){
             dispatch(types.CUSTOMER_DETAIL_DATA, con);
         }*/
@@ -6270,9 +6271,10 @@ export const getCustomerTransfer = ({ dispatch }, param, data) => { //客户详�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        console.log(res.json())
         data.list = res.json().result
-        //param.id = res.json().result.id;
-        //dispatch(types.CUSTOMER_CONTACT_DATA, param);
+            //param.id = res.json().result.id;
+            //dispatch(types.CUSTOMER_CONTACT_DATA, param);
     }, (res) => {
         console.log('fail');
     })
@@ -7171,7 +7173,6 @@ export const getIntentionDetail = ({ dispatch }, param, extraParam) => { //意�
         };
         dispatch(types.INTENTION_DETAIL_DATA, result);
         if (param.init) {
-            
             let pics = res.json().result.pics;
             let importQualityPics = res.json().result.importQualityPics;
             let testReportPics = res.json().result.testReportPics;
@@ -7179,6 +7180,7 @@ export const getIntentionDetail = ({ dispatch }, param, extraParam) => { //意�
         }
 
         if (param.getOffers) {
+
             param.getOffers(param.index, result);
         }
 
@@ -11581,7 +11583,7 @@ export const addBreedLocation = ({ dispatch }, param, breedId) => { //新增品�
 
 export const getSampleOrderCount = ({ dispatch }, param, data) => { //样品订单统计
     var body = {
-        beginTime: '2015-07-07 00:00:00',
+        beginTime: '2015-01-01 00:00:00',
         endTime: new Date().toFormatString()
     }
     if (param.startTime) {
@@ -11635,7 +11637,7 @@ export const getSampleOrderCount = ({ dispatch }, param, data) => { //样品订�
 
 export const getMainOrderCount = ({ dispatch }, param, data) => { //大货订单统计
     var body = {
-        beginTime: '2015-07-07 00:00:00',
+        beginTime: '2015-01-01 00:00:00',
         endTime: new Date().toFormatString()
     }
 
@@ -11691,7 +11693,7 @@ export const getMainOrderCount = ({ dispatch }, param, data) => { //大货订单
 
 export const getBreedCount = ({ dispatch }, param, data) => { //品种信息统计
     var body = {
-        beginTime: '2015-07-07 00:00:00',
+        beginTime: '2015-01-01 00:00:00',
         endTime: new Date().toFormatString(),
     }
 
@@ -11973,7 +11975,7 @@ export const getCancelRecord = ({ dispatch }, param, data) => { //取消报价�
 
 export const getBillList = ({ dispatch }, param, data) => { //收付费信息统计
     var body = {
-        beginTime: '2015-07-07 00:00:00',
+        beginTime: '2015-01-01 00:00:00',
         endTime: new Date().toFormatString(),
     }
 
