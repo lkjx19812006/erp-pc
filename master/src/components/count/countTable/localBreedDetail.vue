@@ -11,7 +11,7 @@
                     <tr>
                         <th style="width:250px">产地</th>
                         <th style="width:250px">寄样次数<span class="totalNum">({{param.totalMainData.sampleOrderNumber}})</span></th>
-                        <th style="width:250px">寄样品种<span class="totalNum">({{param.totalMainData.sampleBreedNumber}})</span></th>
+                        <!-- <th style="width:250px">寄样品种<span class="totalNum">({{param.totalMainData.sampleBreedNumber}})</span></th> -->
                         <th style="width:250px">成交次数<span class="totalNum">({{param.totalMainData.orderNumber}})</span></th>
                         <th style="width:250px">成交品种数<span class="totalNum">({{param.totalMainData.breedNumber}})</span></th>
                         <th style="width:250px">成交金额<span class="totalNum">({{param.totalMainData.orderMoney}})</span></th>
@@ -25,7 +25,7 @@
                     <tr v-for="item in initSendBreedList" v-cloak>
                         <td>{{item.locationName}}</td>
                         <td>{{item.sampleOrderNumber}}</td>
-                        <td>{{item.sampleBreedNumber}}</td>
+                        <!-- <td>{{item.sampleBreedNumber}}</td> -->
                         <td>{{item.orderNumber}}</td>
                         <td>{{item.breedName}}</td>
                         <td>{{item.orderMoney}}</td>

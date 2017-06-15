@@ -83,39 +83,33 @@
                 <!-- 大货订单 -->
                 <table class="table table-hover table_color table-striped " v-cloak id="tab">
                     <thead class="t_head">
-                        <tr>
-                            <!-- <th style="width:340px">厂家区域</th>
-                            <th style="width:340px">已收金额</th>
-                            <th style="width:340px">待收款</th>
-                            <th style="width:340px">应收款</th>
-                            <th style="width:340px">合计</th>
-                            <th style="width:340px">毛利润</th> -->                        
+                        <tr>                      
                             <th style="width:340px">厂家区域
-                                    <!-- <span class="totalNum">({{totalMainData.sampleOrderNumber}})</span> -->
+                                <!-- <span class="totalNum">({{totalMainData.sampleOrderNumber}})</span> -->
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==1}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(1)">已收金额
-                                    <span class="totalNum">({{totalData.receivableMoney.toFixed(2)}})</span>
+                                    <span class="totalNum">({{totalData.receivableMoney | money}})</span>
                                 </a>
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==2}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(2)">待收款
-                                    <span class="totalNum">({{totalData.stayPayMoney.toFixed(2)}})</span>
+                                    <span class="totalNum">({{totalData.stayPayMoney | money}})</span>
                                 </a>
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==3}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(3)">应收款
-                                    <span class="totalNum">({{totalData.payMoney.toFixed(2)}})</span>
+                                    <span class="totalNum">({{totalData.payMoney | money}})</span>
                                 </a>
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==4}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(4)">合计
-                                    <span class="totalNum">({{totalData.totalMoney.toFixed(2)}})</span>
+                                    <span class="totalNum">({{totalData.totalMoney | money}})</span>
                                 </a>
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==5}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(5)">毛利润
-                                    <span class="totalNum">({{totalData.grossProfit.toFixed(2)}})</span>
+                                    <span class="totalNum">({{totalData.grossProfit | money}}%)</span>
                                 </a>
                             </th>
                         </tr>
@@ -123,11 +117,11 @@
                     <tbody class="banma">
                         <tr v-for="item in initBillList" v-cloak>
                             <td>{{item.locationName}}</td>
-                            <td>{{item.receivableMoney.toFixed(2)}}</td>
-                            <td>{{item.stayPayMoney.toFixed(2)}}</td>
-                            <td>{{item.payMoney.toFixed(2)}}</td>
-                            <td>{{item.totalMoney.toFixed(2) }}</td>
-                            <td>{{item.grossProfit.toFixed(2)}}</td>
+                            <td>{{item.receivableMoney | money}}</td>
+                            <td>{{item.stayPayMoney | money}}</td>
+                            <td>{{item.payMoney | money}}</td>
+                            <td>{{item.totalMoney | money }}</td>
+                            <td>{{item.grossProfit | money}}%</td>
                         </tr>
                     </tbody>
                 </table>
@@ -148,6 +142,7 @@ import common from '../../common/common'
 
 import mglistModel from '../mguan/mgListComponent.vue'
 import vSelect from '../tools/vueSelect/components/Select'
+import util from '../tools/util.js'
 import {
     initCNProvince,
     initBillList
@@ -171,8 +166,8 @@ export default {
     			loading:false,
     			employeeName:'',
                 employeeId:'',
-    			startTime:'',
-    			endTime:'',
+    			startTime:util.getDate(-7),
+    			endTime:util.getDate(0),
                 breedId:'',
     			breedName:'',
                 orgName:'',
@@ -230,8 +225,8 @@ export default {
         resetCondition:function(){
             this.loadParam.employeeName = ''
             this.loadParam.employeeId = ''
-            this.loadParam.startTime = ''
-            this.loadParam.endTime = ''
+            this.loadParam.startTime = util.getDate(-7)
+            this.loadParam.endTime = util.getDate(0)
             this.loadParam.breedId = ''
             this.loadParam.breedName = ''
             this.loadParam.orgName = ''

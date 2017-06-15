@@ -63,7 +63,7 @@
                                             <!-- 成交时间 -->
                                             <mg-label :title="$t('static.transcation')">{{initOrderDetail.ctime}}</mg-label>
                                         </div>
-                                        <hr style="height:100px;border-color:#ccc" />
+                                        <hr style="height:1px;border-color:#ccc" />
                                         <div class="clearfix">
                                             <p class="btn btn-primary btn-xs">收货信息</p>
                                         </div>

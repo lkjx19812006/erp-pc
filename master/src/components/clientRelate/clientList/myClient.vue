@@ -111,10 +111,10 @@
                         <label class="checkbox_unselect" style="background-position:1px 5px" v-bind:class="{'checkbox_unselect':!loadParam.orderSum,'checkbox_select':loadParam.orderSum}" id="client_ids" @click="selectOrderSum()"></label>
                     </dl>
                     <dd class="left transfer">
-                        <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">{{$t("static.search")}}</button>
+                        <i-button type="primary" shape="circle" icon="ios-search" @click="selectSearch()">{{$t("static.search")}}</i-button>
                     </dd>
                     <dd class="left">
-                        <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">{{$t("static.clear_all")}}</button>
+                        <i-button type="warning" shape="circle" @click="resetCondition()">{{$t("static.clear_all")}}</i-button>
                     </dd>
                     <dd class="pull-right" style="margin-right:20px">
                         <!-- <button type="button" class="btn btn-default" @click="clientTransfer({
@@ -124,9 +124,9 @@
                         orgId:'',
                         show:true
                         })">{{$t("static.assigned_to_employee")}}</button> -->
-                        <button type="button" class="btn btn-default" @click="clientTransferBlack()">{{$t("static.drag_into_blacklist")}}</button>
-                        <button type="button" class="btn btn-default" @click="clientTransferSupplier()">{{$t("static.make_them_become_supplier")}}</button>
-                        <button type="button" class="btn btn-default" @click="createCustomer({
+                        <button type="button" class="btn btn-warning" @click="clientTransferBlack()">{{$t("static.drag_into_blacklist")}}</button>
+                        <button type="button" class="btn btn-success" @click="clientTransferSupplier()">{{$t("static.make_them_become_supplier")}}</button>
+                        <button type="button" class="btn btn-success" @click="createCustomer({
                                             show:true,
                                             loading:false,
                                             id:'',
@@ -259,7 +259,7 @@
                             <td v-if="this.initLogin.orgId==29">{{item.audit | tracking}}</td>
                             <td v-if="this.initLogin.orgId==29">{{item.auditComment}}</td>
                             <td>
-                                <a class="btn btn-default" style="padding:1px 5px;font-size: 12px;" @click="modifyClient({
+                                <a class="btn btn-info btn-xs" @click="modifyClient({
                                     id:item.id,
                                     sub:$index,
                                     show:true,

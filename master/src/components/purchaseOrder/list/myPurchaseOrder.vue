@@ -91,7 +91,7 @@
                         <th style="min-width:200px;text-align: left;">操作</th>
                     </tr>
                 </thead>
-                <tr>
+                <tr style="background:#f5f7f9">
                     <th style="min-width:60px">
                         <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
                     </th>

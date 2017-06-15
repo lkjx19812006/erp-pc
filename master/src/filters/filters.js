@@ -1405,3 +1405,7 @@ Vue.filter('province', function(id) {
 
     return "不限"
 })
+
+Vue.filter('numFixed',function(data){
+    return parseFloat(data).toFixed(2)
+})

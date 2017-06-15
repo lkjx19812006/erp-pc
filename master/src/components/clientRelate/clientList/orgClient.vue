@@ -388,6 +388,7 @@ export default {
                 show: false,
                 name: '',
                 arr: [],
+                sign:'org',
                 orgId: '',
                 employeeId: ''
             },

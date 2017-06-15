@@ -88,17 +88,17 @@
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==3}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(3)">金额(元)
-                                    <span class="totalNum">({{totalMainData.orderMoney.toFixed(2)}})</span>
+                                    <span class="totalNum">({{totalMainData.orderMoney | money}})</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==4}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(4)">毛利率
-                                    <span class="totalNum">({{totalMainData.grossProfit.toFixed(2)}}%)</span>
+                                    <span class="totalNum">({{totalMainData.grossProfit | money}}%)</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==5}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(5)">退货率
-                                    <span class="totalNum">({{totalMainData.recoveryRate.toFixed(2)}}%)</span>
+                                    <span class="totalNum">({{totalMainData.recoveryRate | money}}%)</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==6}">
@@ -118,9 +118,9 @@
                             <td><a href="javascript:void(0);" @click="showDetail(item)">{{item.locationName}}</a></td>
                             <td>{{item.breedNumber}}</td>
                             <td>{{item.orderNumber}}</td>
-                            <td>{{item.orderMoney.toFixed(2)}}</td>
-                            <td>{{item.grossProfit.toFixed(2)}}%</td>
-                            <td>{{item.recoveryRate.toFixed(2) }}%</td>
+                            <td>{{item.orderMoney | money}}</td>
+                            <td>{{item.grossProfit | money}}%</td>
+                            <td>{{item.recoveryRate | money }}%</td>
                             <td>{{item.customerNumber}}</td>
                             <td>{{item.shipAddr}}</td>
                         </tr>
@@ -145,22 +145,22 @@
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==3}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(3)">到货率
-                                    <span class="totalNum">({{totalSampleData.receiveNumber}})</span>
+                                    <span class="totalNum">({{totalSampleData.receiveNumber | money}})</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==4}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(4)">药典合格率
-                                    <span class="totalNum">({{totalSampleData.qaStandardNumber}})</span>
+                                    <span class="totalNum">({{totalSampleData.qaStandardNumber | money}})</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==5}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(5)">内控合格率
-                                    <span class="totalNum">({{totalSampleData.qaSelfNumber}})</span>
+                                    <span class="totalNum">({{totalSampleData.qaSelfNumber | money}})</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==6}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(6)">品种成交率
-                                    <span class="totalNum">({{totalSampleData.tradedNumber}})</span>
+                                    <span class="totalNum">({{totalSampleData.tradedNumber | money}})</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==7}">
@@ -175,10 +175,10 @@
                             <td><a href="javascript:void(0);" @click="showDetail(item)">{{item.locationName}}</a></td>
                             <td>{{item.breedNumber}}</td>
                             <td>{{item.sampleBreedNumber}}</td>
-                            <td>{{item.receiveNumber}}%</td>
-                            <td>{{item.qaStandardNumber}}%</td>
-                            <td>{{item.qaSelfNumber}}%</td>
-                            <td>{{item.tradedNumber}}%</td>
+                            <td>{{item.receiveNumber | money}}%</td>
+                            <td>{{item.qaStandardNumber | money}}%</td>
+                            <td>{{item.qaSelfNumber | money}}%</td>
+                            <td>{{item.tradedNumber | money}}%</td>
                             <td>{{item.customerNumber}}</td>
                         </tr>
                     </tbody>
@@ -200,6 +200,7 @@ import common from '../../common/common'
 import detailModel from './countTable/localDetailModel'
 import mglistModel from '../mguan/mgListComponent.vue'
 import vSelect from '../tools/vueSelect/components/Select'
+import util from '../tools/util.js'
 import {
     initCNProvince,
     initSampleCountList,
@@ -228,8 +229,8 @@ export default {
                 total:'',
                 breedName:'',
                 breedId:'',
-                startTime:'',
-                endTime:'',
+                startTime:util.getDate(-7),
+                endTime:util.getDate(0),
                 orgName:'',
                 employeeName:'',
                 orderType:'mainOrder',
@@ -294,7 +295,8 @@ export default {
                 qaSelfNumber:'',
                 tradedNumber:'',
                 customerNumber:''
-           }
+           },
+           times:'2015-01-01 00:00:00'
         }
     },
 
@@ -407,8 +409,8 @@ export default {
         resetCondition:function(){
             this.loadParam.breedName = ''
             this.loadParam.breedId = ''
-            this.loadParam.startTime = ''
-            this.loadParam.endTime = ''
+            this.loadParam.startTime = util.getDate(-7)
+            this.loadParam.endTime = util.getDate(0)
             this.loadParam.orgName = ''
             this.loadParam.orgId = ''
             this.loadParam.employeeName = ''

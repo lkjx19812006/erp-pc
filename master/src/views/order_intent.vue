@@ -24,9 +24,9 @@
         <msg></msg>
     </div>
     <!-- 预售意向留言 -->
-    <div class="myOrder" v-if="$route.path.split('=')[1]==9">
+    <!-- <div class="myOrder" v-if="$route.path.split('=')[1]==9">
         <pre-sell-msg></pre-sell-msg>
-    </div>
+    </div> -->
     <!-- 我的寄样申请列表 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==7">
         <my-sample></my-sample>>

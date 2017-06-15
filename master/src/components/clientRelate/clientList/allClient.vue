@@ -354,6 +354,7 @@ export default {
                 show: false,
                 name: '',
                 arr: [],
+                sign:'all',
                 orgId: '',
                 employeeId: '',
                 flag: 'allClient'

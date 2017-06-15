@@ -90,7 +90,7 @@
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==5}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(5)">成交金额
-                                    <span class="totalNum">({{totalMainData.orderMoney.toFixed(2)}})</span>
+                                    <span class="totalNum">({{totalMainData.orderMoney | money}})</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==6}">
@@ -100,7 +100,7 @@
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==7}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(7)">退货率
-                                    <span class="totalNum">({{totalMainData.recoveryRate}}%)</span>
+                                    <span class="totalNum">({{totalMainData.recoveryRate  | money}}%)</span>
                                 </a>
                             </th>
                             <th style="width:250px" :class="{'bgColor':loadParam.sortNum==8}">
@@ -122,9 +122,9 @@
                             <td>{{item.sampleBreedNumber}}</td>
                             <td>{{item.orderNumber}}</td>
                             <td><a href="javascript:void(0);" @click="showDetail(item)">{{item.breedNumber}}</a></td>
-                            <td>{{item.orderMoney.toFixed(2) }}</td>
-                            <td>{{item.grossProfit.toFixed(2)}}%</td>
-                            <td>{{item.recoveryRate.toFixed(2)}}%</td>
+                            <td>{{item.orderMoney | money }}</td>
+                            <td>{{item.grossProfit | money}}%</td>
+                            <td>{{item.recoveryRate | money}}%</td>
                             <td>{{item.customerNumber}}</td>
                             <td>{{item.shipAddr}}</td>
                         </tr>
@@ -148,6 +148,7 @@ import localBreedDetail from './countTable/localBreedDetail'
 import dealBreedCount from './countTable/dealBreedCount'
 import mglistModel from '../mguan/mgListComponent.vue'
 import vSelect from '../tools/vueSelect/components/Select'
+import util from '../tools/util.js'
 import {
     initCNProvince,
     initBreedCountList
@@ -175,8 +176,8 @@ export default {
                 total:'',
                 breedName:'',
                 breedId:'',
-                startTime:'',
-                endTime:'',
+                startTime:util.getDate(-7),
+                endTime:util.getDate(0),
                 orgName:'',
                 employeeName:'',
                 location:'',
@@ -325,8 +326,8 @@ export default {
         resetCondition:function(){
             this.loadParam.breedName = ''
             this.loadParam.breedId = ''
-            this.loadParam.startTime = ''
-            this.loadParam.endTime = ''
+            this.loadParam.startTime = util.getDate(-7)
+            this.loadParam.endTime = util.getDate(0)
             this.loadParam.orgName = ''
             this.loadParam.orgId = ''
             this.loadParam.employeeName = ''

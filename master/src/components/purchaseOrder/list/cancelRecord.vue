@@ -1,7 +1,9 @@
 <template>
     <div>
+        <chance-model :param="detailParam" v-if="detailParam.show"></chance-model>
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
         <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
+        <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
         <mglist-model>
             <!-- 头部搜索 -->
             <div slot="top">
@@ -59,8 +61,8 @@
                     <tbody class="banma">
                         <tr v-for="item in initCancelRecordList" v-cloak>
                             <td>{{item.ctimeFormat}}</td>
-                            <td>{{item.breedName}}</td>
-                            <td>{{item.customerName}}</td>
+                            <td><a href="javascript:void(0)" @click="showIntent(item)">{{item.breedName}}</a></td>
+                            <td><a href="javascript:void(0)" @click="showClient(item)">{{item.customerName}}</a></td>
                             <td>{{item.customerPhone}}</td>
                             <td>{{item.reason }}</td>
 
@@ -75,13 +77,14 @@
 </template>
 <script>
 import pagination from '../../pagination'
+import chanceModel from '../../intention/chanceDetail'
 import breedsearchModel from '../../intention/breedsearch'
 import selectorgModel from '../../../components/tips/treeDialog'
 //单个业务员搜索
 import employeeModel from '../../clientRelate/searchEmpInfo'
 import filter from '../../../filters/filters'
 import common from '../../../common/common'
-
+import detailModel from '../../../components/clientRelate/clientDetail'
 import mglistModel from '../../mguan/mgListComponent.vue'
 import vSelect from '../../tools/vueSelect/components/Select'
 import {
@@ -99,7 +102,9 @@ export default {
         selectorgModel,
         employeeModel,
         breedsearchModel,
-        vSelect
+        vSelect,
+        chanceModel,
+        detailModel
     },
     data(){
     	return {
@@ -122,8 +127,15 @@ export default {
     		breedSearchParam:{
     			show:false
     		},
-    		mock:[{ctime:'2017-06-09',breedName:'大蒜',customerName:'嘻嘻',customerPhone:'18563241265',reson:'开心就好'}]
-    	}
+            detailParam:{
+                show:false,
+                loading:false,
+            },
+            changeParam:{
+                show:false,
+                loading:false
+            }
+        }
     },
 
     vuex: {
@@ -143,6 +155,16 @@ export default {
         },
         selectSearch:function(){
             this.getCancelRecord(this.loadParam)
+        },
+        showIntent:function(data){
+            this.detailParam.show = true
+            this.detailParam.loading = true
+            this.detailParam.id = data.intentionId
+        },
+        showClient:function(data){
+            this.changeParam.show = true
+            this.changeParam.loading = true
+            this.changeParam.id = data.customerId
         },
         resetCondition:function(){
             this.loadParam.employeeName = ''

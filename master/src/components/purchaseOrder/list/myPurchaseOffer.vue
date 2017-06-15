@@ -80,7 +80,7 @@
                         <td>{{item.location | province}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.price}}</td>
-                        <td><span class="offer_source">{{item.clients | intentionSource}}</span></td>
+                        <td><span class="offer_source">{{item.clients | indentSource}}</span></td>
                         <td>
                             <Poptip placement="left" trigger="hover">
                                 <span>{{item.description | textDisplay '5'}}</span>
@@ -114,7 +114,7 @@
                         <td>{{item.location | province}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.price}}</td>
-                        <td><span class="offer_source">{{item.clients | intentionSource}}</span></td>
+                        <td><span class="offer_source">{{item.clients | indentSource}}</span></td>
                         <td>
                             <Poptip placement="left" trigger="hover">
                                 <span>{{item.description | textDisplay '5'}}</span>

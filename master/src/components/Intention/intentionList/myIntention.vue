@@ -178,6 +178,7 @@
                         <th>商品数量</th>
                         <th>剩余有效期</th>
                         <th>客户备注</th>
+                        <th>卖点</th>
                         <th>意向来源</th>
                         <th>上架状态</th>
                         <th style="min-width:200px;text-align: left;">操作</th>
@@ -251,6 +252,7 @@
                         <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.duedateDesc}}</td>
                         <td>{{item.description}}</td>
+                        <td>{{item.quality}}</td>
                         <td>{{item.inTypeDesc}}</td>
                         <td>{{item.onSell | onsell}}</td>
                         <td style="text-align: left">
