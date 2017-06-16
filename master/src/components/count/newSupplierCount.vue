@@ -85,12 +85,12 @@
                 <table class="table table-hover table_color table-striped " v-cloak id="tab">
                     <thead>
                         <tr>
-                            <th>
+                            <th style="width:170px">
                                 <a class="btn btn-link btn-xs">供应商区域
                                     <span class="totalNum"></span>
                                 </a>
                             </th>
-                            <th>
+                            <th style="width:170px">
                                 供应商数量
                                 <span class="totalNum">({{initSupplierCountTotal.tradeCustomerNumber}})</span>
                                 <a v-if="loadParam.criterion!='tradeCustomerNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('tradeCustomerNumber', 0)"></a>
@@ -98,7 +98,7 @@
                                 <a v-if="loadParam.criterion!='tradeCustomerNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('tradeCustomerNumber', 1)"></a>
                                 <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
-                            <th>
+                            <th style="width:170px">
                                 订单数
                                 <span class="totalNum">({{initSupplierCountTotal.orderNumber}})</span>
                                 <a v-if="loadParam.criterion!='orderNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('orderNumber',0)"></a>
@@ -106,7 +106,7 @@
                                 <a v-if="loadParam.criterion!='orderNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('orderNumber',1)"></a>
                                 <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
-                            <th>
+                            <th style="width:170px">
                                 品种数
                                 <span class="totalNum">({{initSupplierCountTotal.breedNumber}})</span>
                                 <a v-if="loadParam.criterion!='breedNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('breedNumber',0)"></a>
@@ -114,7 +114,7 @@
                                 <a v-if="loadParam.criterion!='breedNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('breedNumber',1)"></a>
                                 <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
-                            <th>
+                            <th style="width:170px">
                                 成交品种数
                                 <span class="totalNum">({{initSupplierCountTotal.tradeBreedNumber}})</span>
                                 <a v-if="loadParam.criterion!='tradeBreedNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('tradeBreedNumber',0)"></a>
@@ -122,7 +122,7 @@
                                 <a v-if="loadParam.criterion!='tradeBreedNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('tradeBreedNumber',1)"></a>
                                 <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
-                            <th>
+                            <th style="width:170px">
                                 成交金额
                                 <span class="totalNum">({{initSupplierCountTotal.tradeAmount | money}})</span>
                                 <a v-if="loadParam.criterion!='tradeAmount'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('tradeAmount',0)"></a>
@@ -130,7 +130,7 @@
                                 <a v-if="loadParam.criterion!='tradeAmount'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('tradeAmount',1)"></a>
                                 <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
-                            <th>
+                            <th style="width:170px">
                                 毛利率
                                 <span class="totalNum">({{initSupplierCountTotal.grossProfitRate*100 | money}}%)</span>
                                 <a v-if="loadParam.criterion!='grossProfitRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('grossProfitRate',0)"></a>
@@ -138,7 +138,7 @@
                                 <a v-if="loadParam.criterion!='grossProfitRate'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('grossProfitRate',1)"></a>
                                 <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
-                            <th>
+                            <th style="width:170px">
                                 退货率
                                 <span class="totalNum">({{initSupplierCountTotal.returnsRate*100 | money}}%)</span>
                                 <a v-if="loadParam.criterion!='returnsRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('returnsRate',0)"></a>
@@ -146,7 +146,7 @@
                                 <a v-if="loadParam.criterion!='returnsRate'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('returnsRate',1)"></a>
                                 <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
-                            <th>
+                            <th style="width:170px">
                                 复购厂家数
                                 <span class="totalNum">({{initSupplierCountTotal.rebuyNumber}})</span>
                                 <a v-if="loadParam.criterion!='rebuyNumber'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('rebuyNumber',0)"></a>
@@ -154,7 +154,7 @@
                                 <a v-if="loadParam.criterion!='rebuyNumber'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('rebuyNumber',1)"></a>
                                 <span v-else class="glyphicon glyphicon-arrow-down"></span>
                             </th>
-                            <th>
+                            <th style="width:170px">
                                 采购金额占比
                                 <span class="totalNum">({{initSupplierCountTotal.buyAmountRate*100 | money}}%)</span>
                                 <a v-if="loadParam.criterion!='buyAmountRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('buyAmountRate',0)"></a>

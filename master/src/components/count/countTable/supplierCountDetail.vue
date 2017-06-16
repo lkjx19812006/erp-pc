@@ -61,8 +61,13 @@
                         <th style="width:250px">收款方式<span class="totalNum"></span></th>
                         <th style="width:250px">规模<span class="totalNum"></span></th>
                         <th style="width:250px">
-                            复购率
-                            <span class="totalNum">({{initSupplierCountDetailTotal.rebuyRate*100 | money}}%)</span>
+                            <Poptip placement="left" trigger="hover">
+                                <span>复购率</span>
+                                <div class="api" slot="content">
+                                    三个月内每个厂家复购次数
+                                </div>
+                            </Poptip>
+                            <span class="totalNum">({{initSupplierCountDetailTotal.rebuyRate}})</span>
                             <a v-if="loadParam.criterion!='rebuyRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('rebuyRate', 0)"></a>
                             <span v-else class="glyphicon glyphicon-arrow-up"></span>
                             <a v-if="loadParam.criterion!='rebuyRate'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('rebuyRate', 1)"></a>
@@ -89,7 +94,7 @@
                         <td>{{item.returnsRate*100 | money}}%</td>
                         <td>{{item.paymentWay}}</td>
                         <td>{{item.customerScale}}</td>
-                        <td>{{item.rebuyRate*100 | money}}%</td>
+                        <td>{{item.rebuyRate}}</td>
                         <td>{{item.buyAmountRate*100 | money}}%</td>
                     </tr>
                 </tbody>
@@ -170,13 +175,13 @@ export default {
 </script>
 <style scoped>
 .box {
-    width: 1200px;
+    width: 1300px;
     height: 600px;
     background: #fff;
     position: absolute;
     z-index: 9999;
     left: 50%;
-    margin-left: -600px;
+    margin-left: -700px;
     margin-top: 100px;
     border-radius: 10px;
     padding-bottom: 20px;
@@ -214,5 +219,9 @@ export default {
 
 .banma>tr:nth-child(2n) {
     background: #f5f7f9!important
+}
+
+.api {
+    color: #3399ff;
 }
 </style>
