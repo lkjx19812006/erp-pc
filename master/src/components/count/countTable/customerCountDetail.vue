@@ -3,6 +3,9 @@
     <div class="box">
         <h4 class="title">{{param.locationName}}
             <button type="button" class="close" aria-label="Close" @click="close()"><span aria-hidden="true">&times;</span></button>
+            <div class="cover_loading">
+                <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+            </div>
         </h4>
         <div class="table_con">
             <!-- 客户详情 -->

@@ -266,6 +266,7 @@ export default {
                 show: false
             },
             detailParam: { //详情的搜索条件要和列表的搜索条件一致，除了locationId
+                loading: false,
                 show: false,
                 locationId: '',
                 locationName: '', //只用来显示

@@ -1,114 +1,113 @@
 <template>
-<searchcustomer-model :param="customerParam" v-if='customerParam.show'></searchcustomer-model>
-<validator name='validation'>
-    <div>
-        <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
-        <div class="container modal_con" v-show="param.show">
-            <div @click.stop="param.show=false" class="top-title">
-                <span class="glyphicon glyphicon-remove-circle"></span>
-            </div>
-            <div class="cover_loading">
-                <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
-            </div>
-            <div class="client_nav">
-                <nav class="navbar navbar-client" role="navigation">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <span class="navbar-brand navbar-name">购物车商品信息</span>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-            <section>
-                <div class="client-section clearfix">
-                    <div class="col-md-12">
-                        <table class="table  contactSet">
-                            <thead>
-                                <th>品种</th>
-                                <th>单价</th>
-                                <th>数量</th>
-                                <th>操作</th>
-                            </thead>
-                            <tbody>
-                                <tr v-for="item in param.goods">
-                                    <td>{{item.breedName}}</td>
-                                    <td>{{item.priceAndNumber.breedPrice}}元</td>
-                                    <td>{{item.priceAndNumber.breedNum}}/{{item.unitId | unit}}</td>
-                                    <td><a @click='deleteCart($index)'>移出</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+    <searchcustomer-model :param="customerParam" v-if='customerParam.show'></searchcustomer-model>
+    <validator name='validation'>
+        <div>
+            <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
+            <div class="container modal_con" v-show="param.show">
+                <div @click.stop="param.show=false" class="top-title">
+                    <span class="glyphicon glyphicon-remove-circle"></span>
                 </div>
-
-                <div class="client-section clearfix">
-                    <div class="editpage-input col-md-6" @click="selectCustomer()">
-                        <label class="editlabel">客户名称</label>
-                        <input type="text" class="form-control edit-input" style="width:95%" v-model="customerName" readonly="readonly" v-validate:custName="{required:true}"/>
-                    </div>
-                    <div class="editpage-input col-md-6">
-                        <label class="editlabel">收货人</label>
-                        <input type="text" class="form-control edit-input" style="width:95%" v-model="param.consignee" />
-                    </div>
-                    <div class="editpage-input col-md-6">
-                        <label class="editlabel">收货人手机</label>
-                        <input type="text" class="form-control edit-input" style="width:95%" v-model="param.consigneePhone" />
-                    </div>
-                    <div class="editpage-input col-md-6">
-                        <label class="editlabel">{{$t('static.province')}}</label>
-                        <div type="text" class="edit-input" style="width:95%">
-                            <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
-                            </v-select>
-                        </div>
-                    </div>
-                    <div class="editpage-input col-md-6">
-                        <label class="editlabel">{{$t('static.city')}}</label>
-                        <input type="text" v-if="!province.cname" class="form-control edit-input" style="width:95%" disabled="disabled" placeholder="{{$t('static.select_province_first')}}" />
-                        <div v-if="province.cname" type="text" class="edit-input" style="width:95%">
-                            <v-select :debounce="250" :value.sync="city" :on-change="selectDistrict" :options="initCitylist" placeholder="市/City" label="cname">
-                            </v-select>
-                        </div>
-                    </div>
-                    <div class="editpage-input col-md-6">
-                        <label class="editlabel">{{$t('static.area')}}</label>
-                        <input type="text" v-if="!city.cname" class="form-control edit-input" style="width:95%" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
-                        <div v-if="city.cname" type="text" class="edit-input" style="width:95%">
-                            <v-select :debounce="250" :value.sync="district" :options="initDistrictlist" placeholder="区" label="cname">
-                            </v-select>
-                        </div>
-                    </div>
-                    <div class="editpage-input col-md-6">
-                        <label class="editlabel">详细地址</label>
-                        <input type="text" class="form-control edit-input" v-model="param.consigneeAddr" style="width:95%" />
-                    </div>
-                    <div class="editpage-input col-md-6">
-                        <label class="editlabel">杂费</label>
-                        <input type="number" class="form-control edit-input" v-model="param.incidentals" style="width:95%" />
-                    </div>
-                    <div class="editpage-input col-md-6">
-                        <label class="editlabel">优惠</label>
-                        <input type="number" class="form-control edit-input" v-model="param.preferential" style="width:95%" />
-                    </div>
-                    <div class="editpage-input col-md-6">
-                        <label class="editlabel">杂费说明</label>
-                        <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" style="width:95%" />
-                    </div>
-                    <div class="editpage-input col-md-6">
-                        <label class="editlabel">优惠说明</label>
-                        <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" style="width:95%" />
-                    </div>
-                    <div class="editpage-input col-md-6">
-                        <label class="editlabel">总金额</label>
-                        <input type="text" class="form-control edit-input" v-model="total" style="width:95%" readonly="readonly" />
-                    </div>
+                <div class="cover_loading">
+                    <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
                 </div>
-            </section>
-            <div class="edit_footer">
-                <button type="button" class="btn btn-confirm" @click="createOrder()" :disabled="$validation.invalid">生成订单</button>
-                <button type="button" class="btn btn-default btn-close" @click="param.show = false">返回继续选择商品</button>
+                <div class="client_nav">
+                    <nav class="navbar navbar-client" role="navigation">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <span class="navbar-brand navbar-name">购物车商品信息</span>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+                <section>
+                    <div class="client-section clearfix">
+                        <div class="col-md-12">
+                            <table class="table  contactSet">
+                                <thead>
+                                    <th>品种</th>
+                                    <th>单价</th>
+                                    <th>数量</th>
+                                    <th>操作</th>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in param.goods">
+                                        <td>{{item.breedName}}</td>
+                                        <td>{{item.priceAndNumber.breedPrice}}元</td>
+                                        <td>{{item.priceAndNumber.breedNum}}/{{item.unitId | unit}}</td>
+                                        <td><a @click='deleteCart($index)'>移出</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="client-section clearfix">
+                        <div class="editpage-input col-md-6" @click="selectCustomer()">
+                            <label class="editlabel">客户名称<span class="system_danger" v-if="$validation.customername.required">必填项</span></label>
+                            <input type="text" class="form-control edit-input" style="width:95%" v-model="param.customerName" readonly="readonly" v-validate:customername="{required:true}" />
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">收货人</label>
+                            <input type="text" class="form-control edit-input" style="width:95%" v-model="param.consignee" />
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">收货人手机</label>
+                            <input type="text" class="form-control edit-input" style="width:95%" v-model="param.consigneePhone" />
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">{{$t('static.province')}}</label>
+                            <div type="text" class="edit-input" style="width:95%">
+                                <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
+                                </v-select>
+                            </div>
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">{{$t('static.city')}}</label>
+                            <input type="text" v-if="!province.cname" class="form-control edit-input" style="width:95%" disabled="disabled" placeholder="{{$t('static.select_province_first')}}" />
+                            <div v-if="province.cname" type="text" class="edit-input" style="width:95%">
+                                <v-select :debounce="250" :value.sync="city" :on-change="selectDistrict" :options="initCitylist" placeholder="市/City" label="cname">
+                                </v-select>
+                            </div>
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">{{$t('static.area')}}</label>
+                            <input type="text" v-if="!city.cname" class="form-control edit-input" style="width:95%" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
+                            <div v-if="city.cname" type="text" class="edit-input" style="width:95%">
+                                <v-select :debounce="250" :value.sync="district" :options="initDistrictlist" placeholder="区" label="cname">
+                                </v-select>
+                            </div>
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">详细地址</label>
+                            <input type="text" class="form-control edit-input" v-model="param.consigneeAddr" style="width:95%" />
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">杂费</label>
+                            <input type="number" class="form-control edit-input" v-model="param.incidentals" style="width:95%" />
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">优惠</label>
+                            <input type="number" class="form-control edit-input" v-model="param.preferential" style="width:95%" />
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">杂费说明</label>
+                            <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" style="width:95%" />
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">优惠说明</label>
+                            <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" style="width:95%" />
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">总金额</label>
+                            <input type="text" class="form-control edit-input" v-model="total" style="width:95%" readonly="readonly" />
+                        </div>
+                    </div>
+                </section>
+                <div class="edit_footer">
+                    <button type="button" class="btn btn-confirm" @click="createOrder()" :disabled="$validation.invalid">生成订单</button>
+                    <button type="button" class="btn btn-default btn-close" @click="param.show = false">返回继续选择商品</button>
+                </div>
             </div>
         </div>
-    </div>
     </validator>
 </template>
 <script>
@@ -159,10 +158,10 @@ export default {
                 id: '',
                 cname: ''
             },
-            customerParam:{
-            	show:false
+            customerParam: {
+                show: false
             },
-            customerName:''
+            customerName: ''
         }
     },
     vuex: {
@@ -188,7 +187,7 @@ export default {
                 //sum+=goods[i].priceAndNumber.breedPrice*goods[i].priceAndNumber.breedNum
             }
 
-            return util.sub(util.add(sum, this.param.incidentals), this.param.preferential);//sum + this.param.incidentals - this.param.preferential 
+            return util.sub(util.add(sum, this.param.incidentals), this.param.preferential); //sum + this.param.incidentals - this.param.preferential 
         }
     },
     methods: {
@@ -215,11 +214,11 @@ export default {
                 this.getDistrictList(this.city);
             }
         },
-        deleteCart:function($index){
-        	this.$store.state.table.stockCartList.splice($index,1);
-        	if(this.$store.state.table.stockCartList.length==0){
-        		this.param.leng = 0;
-        	}
+        deleteCart: function($index) {
+            this.$store.state.table.stockCartList.splice($index, 1);
+            if (this.$store.state.table.stockCartList.length == 0) {
+                this.param.leng = 0;
+            }
         },
         createOrder: function() {
             this.param.stockCartList = [];
@@ -228,28 +227,28 @@ export default {
             this.param.district = this.district.id;
             let goods = this.param.goods;
             for (let i = 0; i < goods.length; i++) {
-                this.param.stockCartList.push({                    
-                    freezeNum:parseFloat(goods[i].priceAndNumber.breedNum),
+                this.param.stockCartList.push({
+                    freezeNum: parseFloat(goods[i].priceAndNumber.breedNum),
                     id: goods[i].id,
-                    price:parseFloat(goods[i].priceAndNumber.breedPrice)
+                    price: parseFloat(goods[i].priceAndNumber.breedPrice)
                 });
             }
             this.createOrderByStock(this.param);
 
         },
-        selectCustomer:function(){
-        	this.customerParam.show=true;
+        selectCustomer: function() {
+            this.customerParam.show = true;
         }
 
     },
-    events:{
-    	'customer':function(data){
-    		this.customerName = data.customerName;
-    		this.param.customer = data.customerId;
-    		this.param.customerPhone = data.customerPhone;
-    		this.param.customerName = data.customerName;
-    		this.param.email = data.email
-    	}
+    events: {
+        'customer': function(data) {
+            this.customerName = data.customerName;
+            this.param.customer = data.customerId;
+            this.param.customerPhone = data.customerPhone;
+            this.param.customerName = data.customerName;
+            this.param.email = data.email
+        }
     },
     filter: (filter, {}),
     created() {

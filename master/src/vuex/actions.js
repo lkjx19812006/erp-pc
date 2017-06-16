@@ -11749,6 +11749,7 @@ export const getBreedCount = ({ dispatch }, param, data) => { //品种信息统�
 }
 
 export const getCustomerCount = ({ dispatch }, param) => { //客户信息统计
+    param.loading = true;
     var body = {
         beginTime: param.beginTime,
         endTime: param.endTime,
@@ -11782,6 +11783,7 @@ export const getCustomerCount = ({ dispatch }, param) => { //客户信息统计
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        param.loading = false;
         let result = res.json().result;
         //列表信息
         dispatch('CUSTOMER_COUNT_LIST', result.list);
@@ -11789,11 +11791,13 @@ export const getCustomerCount = ({ dispatch }, param) => { //客户信息统计
         dispatch('CUSTOMER_COUNT_TOTAL', result.total);
 
     }, (res) => {
+        param.loading = false;
         console.log('fail');
     });
 }
 
 export const getCustomerCountDetail = ({ dispatch }, param) => { //客户详情（点击产地）信息统计
+    param.loading = true;
     var body = {
         beginTime: param.beginTime,
         endTime: param.endTime,
@@ -11825,23 +11829,19 @@ export const getCustomerCountDetail = ({ dispatch }, param) => { //客户详情�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        param.loading = false;
         let result = res.json().result;
-        if (result == null) {
-            result = {
-                list: [],
-                total: {}
-            }
-
-        }
         dispatch('CUSTOMER_COUNT_DETAIL_LIST', result.list);
         dispatch('CUSTOMER_COUNT_DETAIL_TOTAL', result.total);
 
     }, (res) => {
+        param.loading = false;
         console.log('fail');
     });
 }
 
 export const getSupplierCount = ({ dispatch }, param) => { //供应商信息统计
+    param.loading = true;
     var body = {
         beginTime: param.beginTime,
         endTime: param.endTime,
@@ -11875,6 +11875,7 @@ export const getSupplierCount = ({ dispatch }, param) => { //供应商信息统�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        param.loading = false;
         let result = res.json().result;
         //列表信息
         dispatch('SUPPLIER_COUNT_LIST', result.list);
@@ -11882,11 +11883,13 @@ export const getSupplierCount = ({ dispatch }, param) => { //供应商信息统�
         dispatch('SUPPLIER_COUNT_TOTAL', result.total);
 
     }, (res) => {
+        param.loading = false;
         console.log('fail');
     });
 }
 
 export const getSupplierCountDetail = ({ dispatch }, param) => { //供应商详情（点击产地）信息统计
+    param.loading = true;
     var body = {
         beginTime: param.beginTime,
         endTime: param.endTime,
@@ -11918,18 +11921,14 @@ export const getSupplierCountDetail = ({ dispatch }, param) => { //供应商详�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        param.loading = false;
         let result = res.json().result;
-        if (result == null) {
-            result = {
-                list: [],
-                total: {}
-            }
 
-        }
         dispatch('SUPPLIER_COUNT_DETAIL_LIST', result.list);
         dispatch('SUPPLIER_COUNT_DETAIL_TOTAL', result.total);
 
     }, (res) => {
+        param.loading = false;
         console.log('fail');
     });
 }
