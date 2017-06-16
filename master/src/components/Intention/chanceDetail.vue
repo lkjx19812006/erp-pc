@@ -127,7 +127,8 @@
                                 <p class="btn btn-primary btn-xs">其他信息</p>
                             </div>
                             <div class="clearfix">
-                                <mg-label title="预付比例">{{initIntentionDetail.advance | advanced}}</mg-label>
+                                <!-- <mg-label title="预付比例">{{initIntentionDetail.advance | advanced}}</mg-label> -->
+                                <mg-label title="付款方式">{{initIntentionDetail.paymentWay}}</mg-label>
                                 <mg-label title="发票说明">{{initIntentionDetail.invoic | invoicstate}}</mg-label>
                                 <mg-label title="看货说明">{{initIntentionDetail.visit | visitstate}}</mg-label>
                                 <mg-label title="来源">{{initIntentionDetail.source | intentionSource}}</mg-label>

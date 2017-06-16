@@ -6812,6 +6812,7 @@ export const modifyPurchaseOrder = ({ dispatch }, param) => { //修改采购单
         customerName: param.customerName,
         customerPhone: param.customerPhone,
         address: param.address,
+        comment:param.comment,
         buyDesc: param.buyDesc,
         paymentWay: param.paymentWay,
         intentionList: param.intentionList

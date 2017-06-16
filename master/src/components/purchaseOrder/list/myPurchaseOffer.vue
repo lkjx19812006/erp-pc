@@ -207,6 +207,7 @@ export default {
             detailParam: {
                 show: false,
                 loading: true,
+                idOrName:true,
                 link: "/intention/offers/",
                 id: "",
             },

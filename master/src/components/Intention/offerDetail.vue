@@ -51,7 +51,12 @@
                             <ul class="clearfix" style="font-size: 14px;padding:5px 0">
                                 <label class="col-md-3 col-sm-4 col-xs-6">报价时间：{{initIntentionOfferDetail.offer.otime | date}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">报价类型：{{initIntentionOfferDetail.offer.type |offerType}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">供应商名称：{{initIntentionOfferDetail.offer.offerCustomerName}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6" v-if="!param.idOrName">
+                                    供应商名称：{{initIntentionOfferDetail.offer.offerCustomerName}}
+                                </label>
+                                 <label class="col-md-3 col-sm-4 col-xs-6" v-else>
+                                    供应商ID：{{initIntentionOfferDetail.offer.offerCustomer}}
+                                </label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">品种：{{initIntentionOfferDetail.offer.breedName}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">规格：{{initIntentionOfferDetail.offer.spec}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">产地：{{initIntentionOfferDetail.offer.location | province}}</label>
@@ -83,7 +88,12 @@
                         <h4 class="section_title">意向信息</h4>
                         <div class="panel panel-default" style="border:none">
                             <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                <label class="col-md-3 col-sm-4 col-xs-6">客户ID：{{initIntentionOfferDetail.intention.customerId}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6" v-if="!param.idOrName">
+                                    客户ID：{{initIntentionOfferDetail.intention.customerId}}
+                                </label>
+                                <label class="col-md-3 col-sm-4 col-xs-6" v-else>
+                                    客户名称：{{initIntentionOfferDetail.intention.customerName}}
+                                </label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">客户归属业务员：{{initIntentionOfferDetail.intention.employeeName}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">意向类型：{{initIntentionOfferDetail.intention.type | intentionType initIntentionOfferDetail.intention.especial initIntentionOfferDetail.intention.preSell}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">品种：{{initIntentionOfferDetail.intention.breedName}}</label>
