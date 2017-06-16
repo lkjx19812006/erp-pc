@@ -184,10 +184,10 @@
                                     <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" v-validate:address="{required:true}" />
                                 </div>
                                 <!-- 客户备注 -->
-                                <div class="editpage-input col-md-12" style="padding-left: 0px;padding-right: 80px;">
+                                <div class="editpage-input col-md-12" style="padding-left: 0px;padding-right: 30px;">
                                     <label class="editlabel">客户备注</label>
-                                    <!-- <textarea class="form-control" v-model="param.description" rows="5"></textarea> -->
-                                    <mark-info :param="param" :rows="4"></mark-info>
+                                    <!-- <textarea class="form-control" v-model="param.description" rows="5" ></textarea> -->
+                                    <mark-info :param="param"></mark-info>
                                 </div>
                             </div>
                             <div class="editpageright">

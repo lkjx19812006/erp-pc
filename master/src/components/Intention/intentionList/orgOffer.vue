@@ -3,6 +3,7 @@
     <search-model :param="loadParam" v-if="loadParam.show"></search-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
+    <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
@@ -61,7 +62,7 @@
                         <td style="min-width:120px">{{item.employeeName}}</td>
                         <td style="min-width:120px">{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
-                        <td>{{item.breedName}}</td>
+                        <td><a href="javascript:void(0);" @click="showDetail(item.id)">{{item.breedName}}</a></td>
                         <td>
                             <span v-for="val in item.pics">
                             <img :src="val.path" style="float: left; width:40px; height:40px; margin-right:10px" @click="clickBig(val.url)">
@@ -95,6 +96,7 @@ import changeMenu from '../../../components/tools/tabs/tabs.js'
 import pictureModel from '../../tips/pictureDialog'
 import tipsModel from '../../tips/tipDialog'
 import mglistModel from '../../mguan/mgListComponent.vue'
+import detailModel from '../../intention/offerDetail'
 import {
     initOrgOfferList,
     initLogin
@@ -109,7 +111,8 @@ export default {
         searchModel,
         tipsModel,
         pictureModel,
-        mglistModel
+        mglistModel,
+        detailModel
     },
     vuex: {
         getters: {
@@ -192,10 +195,21 @@ export default {
                 }]
 
             },
-            checked: false
+            checked: false,
+            detailParam: {
+                show: false,
+                loading: true,
+                idOrName:false,
+                link: "/intention/offers/",
+                id: "",
+            },
         }
     },
     methods: {
+        showDetail:function(data){
+            this.detailParam.show = true
+            this.detailParam.id = data
+        },
         searchOffer: function() {
             this.loadParam.show = true;
         },

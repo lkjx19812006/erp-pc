@@ -30,7 +30,12 @@
 				this.show = !this.show
 			},
 			addInfo:function(item){
-				this.param.quality += item+' '
+				if(this.param.quality.indexOf(item)!=-1){
+					return
+				}else{
+					this.param.quality += item+' '
+				}
+				
 			}
 		}
 	}
