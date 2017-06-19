@@ -75,6 +75,10 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==18">
         <new-supplier-count></new-supplier-count>
     </div>
+    <!-- 物流信息统计（新） -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==19">
+        <new-logistics-count></new-logistics-count>
+    </div>
 </template>
 <script>
 import allBreedcount from '../components/count/allBreedCount'
@@ -97,6 +101,7 @@ import orgManage from '../components/count/orgManage'
 import newOrderCount from '../components/count/newOrderCount'
 import newCustomerCount from '../components/count/newCustomerCount'
 import newSupplierCount from '../components/count/newSupplierCount'
+import newLogisticsCount from '../components/count/newLogisticsCount'
 export default {
     components: {
         personalCount,
@@ -118,7 +123,8 @@ export default {
         breedCount,
         billCount,
         newCustomerCount,
-        newSupplierCount
+        newSupplierCount,
+        newLogisticsCount
     }
 }
 </script>

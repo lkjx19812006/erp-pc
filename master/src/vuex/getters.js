@@ -899,3 +899,12 @@ export const initSupplierCountDetailList = (state) => {
 export const initSupplierCountDetailTotal = (state) => {
     return JSON.parse(JSON.stringify(state.table.supplierCountDetailTotal))
 }
+
+//初始化供应商信息统计
+export const initLogisticsCountList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.logisticsCountList))
+}
+
+export const initLogisticsCountTotal = (state) => {
+    return JSON.parse(JSON.stringify(state.table.logisticsCountTotal))
+}

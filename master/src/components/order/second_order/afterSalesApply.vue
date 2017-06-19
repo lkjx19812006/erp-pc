@@ -271,7 +271,6 @@ export default {
         },
         showModifyGoods: function(index) {
             let goods = this.afterSaleParam.goods[index];
-
             //因为在新增时，刚进入页面无法确认goodsIndex的值，所以需要去遍历订单中的商品，根据goodsId去设置goodsIndex的值
             if (goods.goodsIndex == '' && goods.goodsIndex !== 0) {
                 for (let i = 0; i < this.initOrderDetail.goods.length; i++) {
@@ -408,17 +407,12 @@ export default {
 
                 }
             }
-
             if (this.param.flag == 1) { //表示是修改
                 this.afterSaleParam.url = '/order/quality/after/sales/edit';
                 this.afterSalseEdit(this.afterSaleParam);
             } else { //否则是新建（申请售后）
                 this.afterSalesRequest(this.afterSaleParam);
             }
-
-
-
-
         }
 
     },
@@ -427,6 +421,21 @@ export default {
 
     },
     created() {
+
+        if (this.param.flag == 0 && this.param.goods.length == 1) { //新建时，如果订单中只有一件商品
+            let goods = this.param.goods[0];
+            this.afterSaleParam.goods.push({
+                goodsIndex: 0,
+                id: goods.id,
+                breedName: goods.breedName,
+                unit: goods.unit,
+                price: goods.price,
+                number: goods.number,
+                maxNumber: goods.number,
+                type: 0
+            });
+            this.showModifyGoods(0);
+        }
         this.afterSaleParam.orderId = this.param.id;
         this.afterSaleParam.callback = this.param.callback;
         this.getOrderDetail(this.param);

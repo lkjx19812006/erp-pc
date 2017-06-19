@@ -6812,7 +6812,7 @@ export const modifyPurchaseOrder = ({ dispatch }, param) => { //修改采购单
         customerName: param.customerName,
         customerPhone: param.customerPhone,
         address: param.address,
-        comment:param.comment,
+        comment: param.comment,
         buyDesc: param.buyDesc,
         paymentWay: param.paymentWay,
         intentionList: param.intentionList
@@ -10777,7 +10777,7 @@ export const afterSalesApply = ({ dispatch }, param) => { //售后申请
 }
 
 export const afterSalesRequest = ({ dispatch }, param) => { //售后申请(新版)
-
+    param.loading = true;
     const body = {
         orderId: param.orderId,
         comment: param.comment,
@@ -10795,13 +10795,13 @@ export const afterSalesRequest = ({ dispatch }, param) => { //售后申请(新�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        param.loading = false;
         if (param.callback) {
             param.callback(res.json().msg);
-
         }
 
-
     }, (res) => {
+        param.loading = false;
         console.log('fail');
     });
 }
@@ -11335,14 +11335,14 @@ export const importStock = ({ dispatch }, param) => { //excel导入社会库存
 
 export const createStockInfo = ({ dispatch }, param) => { //新建库存
     var today = new Date();
-    console.log(param)
-    var canDeposite, canProcess, unitId, usableNum, specAttribute,
-        unitId = parseInt(param.unit)
-    canDeposite = parseInt(param.canDeposite)
-    canProcess = parseInt(param.canProcess)
-    usableNum = parseInt(param.usableNum)
 
-    specAttribute = '{"' + param.breedName + '":{"规格":' + '"' + param.specAttribute + '"' + ',' + '"片型":' + '"' + param.shape + '"' + '}}'
+    var canDeposite, canProcess, unitId, usableNum, specAttribute;
+    unitId = parseInt(param.unit);
+    canDeposite = parseInt(param.canDeposite);
+    canProcess = parseInt(param.canProcess);
+    usableNum = parseInt(param.usableNum);
+
+    specAttribute = '{"' + param.breedName + '":{"规格":' + '"' + param.specAttribute + '"' + ',' + '"片型":' + '"' + param.shape + '"' + '}}';
 
     var body = {
         breedId: param.breedId,
@@ -11933,6 +11933,49 @@ export const getSupplierCountDetail = ({ dispatch }, param) => { //供应商详�
         console.log('fail');
     });
 }
+
+export const getLogisticsCount = ({ dispatch }, param) => { //物流（运费）信息统计
+    param.loading = true;
+    var body = {
+        beginTime: param.beginTime,
+        endTime: param.endTime,
+    }
+    if (param.breedId) {
+        body.breedId = param.breedId;
+    }
+    if (param.locationId) {
+        body.locationId = param.locationId;
+    }
+    if (param.orgId) {
+        body.orgId = param.orgId;
+    }
+    if (param.employeeId) {
+        body.employeeId = param.employeeId;
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/orderCount/queryFreightCount',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        let result = res.json().result;
+        //列表信息
+        dispatch('LOGISTICS_COUNT_LIST', result.list);
+        //合计信息
+        dispatch('LOGISTICS_COUNT_TOTAL', result.total);
+
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    });
+}
+
 
 export const getCancelRecord = ({ dispatch }, param, data) => { //取消报价统计
     var body = {

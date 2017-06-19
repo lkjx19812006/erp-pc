@@ -167,7 +167,6 @@
                             <th>{{$t('static.consignee_consigner_name')}}</th>
                             <th>{{$t('static.consignee_phone')}}</th>
                             <th style="width:300px">{{$t('static.consignee_address')}}</th>
-                            <!-- <th>{{$t('static.payment_method')}}</th> -->
                             <th>{{$t('static.order_status')}}</th>
                             <th>{{$t('static.order_source')}}</th>
                             <th>{{$t('static.review_status')}}</th>
@@ -181,13 +180,20 @@
                       <label v-if="item.validate==1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                     </td> -->
                             <td>{{item.tradeTime | subtime}}</td>
-                            <td v-if="item.type==1">{{$t('static.sell')}}</td>
-                            <td v-if="item.type==0">{{$t('static.purchase')}}</td>
-                            <td v-if="item.mode==1">{{$t('static.together')}}</td>
-                            <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
-                            <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
-                            <td v-if="item.sample==0">{{$t('static.no')}}</td>
-                            <td v-if="item.sample==1">{{$t('static.yes')}}</td>
+                            <td>
+                                <div v-if="item.type==1&&item.pre==0">{{$t('static.sell')}}</div>
+                                <div v-if="item.type==0&&item.pre==0">{{$t('static.purchase')}}</div>
+                                <div v-if="item.type==1&&item.pre==1">预售</div>
+                            </td>
+                            <td>
+                                <div v-if="item.mode==1">{{$t('static.together')}}</div>
+                                <div v-if="item.mode==2">{{$t('static.three_side')}}</div>
+                                <div v-if="item.mode==3">{{$t('static.self_support')}}</div>
+                            </td>
+                            <td>
+                                <div v-if="item.sample==0">{{$t('static.no')}}</div>
+                                <div v-if="item.sample==1">{{$t('static.yes')}}</div>
+                            </td>
                             <td><a @click="clickOn({
                                   show:true,
                                   id:item.id,
@@ -212,12 +218,6 @@
                                     </div>
                                 </Poptip>
                             </td>
-                            <!-- <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
-                                <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
-                                <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
-                                <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
-                                <td v-if="item.payWay==4">WeChat</td>
-                                <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td> -->
                             <td v-if="this.language=='zh_CN'">
                                 <div>{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</div>
                                 <div v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</div>
@@ -228,33 +228,20 @@
                                 <div v-if="item.orderStatus==70" style="background:green;color:#fff">{{$t('static.order_over')}}</div>
                                 <div v-if="item.orderStatus==0" style="background:#fa6705;color:#fff">{{$t('static.create_order')}}</div>
                             </td>
-                            <!-- <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
-                                <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
-                                <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
-                                <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
-                                <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td> {{$t('static.wait_ship')}}
-                                <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
-                                <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
-                                <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
-                                <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==2">已重新发货（仓库审核）</td>
-                                <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==50">{{$t('static.order_over')}}（补充合同申请）</td>
-                                <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==60">{{$t('static.order_over')}}（售后处理中）</td>
-                                <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
-                                <td v-if="item.orderStatus==70">{{$t('static.order_over')}}</td>
-                                <td v-if="item.orderStatus==-1">{{$t('static.cancle_order')}}</td>
-                                <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td> -->
-                            <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
-                            <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
-                            <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>
-                            <td v-if="item.sourceType==3">{{$t('static.sample_order')}}</td>
-                            <td v-if="item.validate==2">
-                                <div style="background:green;color:#fff">{{$t('static.approved')}}</div>
+                            <td>
+                                <span v-if="item.sourceType==0">{{$t('static.new')}}</span>
+                                <span v-if="item.sourceType==1">{{$t('static.intention')}}</span>
+                                <span v-if="item.sourceType==2">{{$t('static.quote')}}</span>
+                                <span v-if="item.sourceType==3">{{$t('static.sample_order')}}</span>
+                                <span v-if="item.sourceType==4">库存</span>
+                                <span v-if="item.sourceType==5">待采购</span>
                             </td>
-                            <td v-if="item.validate==-2">
-                                <div style="background:red;color:#fff">{{$t('static.unapproved')}}</div>
+                            <td>
+                                <div v-if="item.validate==0">{{$t('static.wait_approval')}}</div>
+                                <div v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</div>
+                                <div v-if="item.validate==2" style="background:green;color:#fff">{{$t('static.approved')}}</div>
+                                <div v-if="item.validate==-2" style="background:red;color:#fff">{{$t('static.unapproved')}}</div>
                             </td>
-                            <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
-                            <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
                             <td>
                                 <Poptip placement="left" trigger="hover">
                                     <span>{{item.comments | textDisplay '5'}}</span>

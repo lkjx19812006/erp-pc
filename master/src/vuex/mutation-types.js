@@ -299,3 +299,6 @@ export const SUPPLIER_COUNT_LIST = 'SUPPLIER_COUNT_LIST' //供应商统计列表
 export const SUPPLIER_COUNT_TOTAL = 'SUPPLIER_COUNT_TOTAL' //供应商统计合计信息
 export const SUPPLIER_COUNT_DETAIL_LIST = 'SUPPLIER_COUNT_DETAIL_LIST' //供应商统计详情（某个省的客户）列表信息
 export const SUPPLIER_COUNT_DETAIL_TOTAL = 'SUPPLIER_COUNT_DETAIL_TOTAL' //供应商统计详情（某个省的客户）合计信息
+
+export const LOGISTICS_COUNT_LIST = 'LOGISTICS_COUNT_LIST' //物流统计详情合计信息
+export const LOGISTICS_COUNT_TOTAL = 'LOGISTICS_COUNT_TOTAL' //物流统计详情合计信息

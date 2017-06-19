@@ -172,11 +172,15 @@
                                 <div v-if="item.type==0&&item.pre==0">{{$t('static.purchase')}}</div>
                                 <div v-if="item.type==1&&item.pre==1">预售</div>
                             </td>
-                            <td v-if="item.mode==1">{{$t('static.together')}}</td>
-                            <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
-                            <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
-                            <td v-if="item.sample==0">{{$t('static.no')}}</td>
-                            <td v-if="item.sample==1">{{$t('static.yes')}}</td>
+                            <td>
+                                <div v-if="item.mode==1">{{$t('static.together')}}</div>
+                                <div v-if="item.mode==2">{{$t('static.three_side')}}</div>
+                                <div v-if="item.mode==3">{{$t('static.self_support')}}</div>
+                            </td>
+                            <td>
+                                <div v-if="item.sample==0">{{$t('static.no')}}</div>
+                                <div v-if="item.sample==1">{{$t('static.yes')}}</div>
+                            </td>
                             <td><a @click="clickOn({
                                         show:true,
                                         id:item.id,
@@ -215,18 +219,20 @@
                                 <div v-if="item.orderStatus==0" style="background:#fa6705;color:#fff;">{{$t('static.create_order')}}</div>
                                 <span v-if="item.cancel==1" style="color:red">(正在取消)</span>
                             </td>
-                            <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
-                            <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
-                            <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>
-                            <td v-if="item.sourceType==3">{{$t('static.sample_order')}}</td>
-                            <td v-if="item.validate==2">
-                                <div style="background:green;color:#fff">{{$t('static.approved')}}</div>
+                            <td>
+                                <span v-if="item.sourceType==0">{{$t('static.new')}}</span>
+                                <span v-if="item.sourceType==1">{{$t('static.intention')}}</span>
+                                <span v-if="item.sourceType==2">{{$t('static.quote')}}</span>
+                                <span v-if="item.sourceType==3">{{$t('static.sample_order')}}</span>
+                                <span v-if="item.sourceType==4">库存</span>
+                                <span v-if="item.sourceType==5">待采购</span>
                             </td>
-                            <td v-if="item.validate==-2">
-                                <div style="background:red;color:#fff">{{$t('static.unapproved')}}</div>
+                            <td>
+                                <div v-if="item.validate==0">{{$t('static.wait_approval')}}</div>
+                                <div v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</div>
+                                <div v-if="item.validate==2" style="background:green;color:#fff">{{$t('static.approved')}}</div>
+                                <div v-if="item.validate==-2" style="background:red;color:#fff">{{$t('static.unapproved')}}</div>
                             </td>
-                            <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
-                            <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
                             <td>
                                 <Poptip placement="left" trigger="hover">
                                     <span>{{item.comments | textDisplay '5'}}</span>
@@ -367,6 +373,7 @@
                                             flag:0,
                                             orderId:item.id,
                                             id:item.id,
+                                            goods:item.goods,
                                             consignee:'',
                                             comment:'',
                                             shipper:'',

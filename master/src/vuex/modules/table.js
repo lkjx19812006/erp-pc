@@ -186,6 +186,8 @@ import {
     SUPPLIER_COUNT_TOTAL,
     SUPPLIER_COUNT_DETAIL_LIST,
     SUPPLIER_COUNT_DETAIL_TOTAL,
+    LOGISTICS_COUNT_LIST,
+    LOGISTICS_COUNT_TOTAL
 
 } from '../mutation-types'
 
@@ -1152,6 +1154,8 @@ const state = {
     supplierCountTotal: {},
     supplierCountDetailList: [],
     supplierCountDetailTotal: {},
+    logisticsCountList: [],
+    logisticsCountTotal: {},
 }
 
 const mutations = {
@@ -2570,6 +2574,13 @@ const mutations = {
     [SUPPLIER_COUNT_DETAIL_TOTAL](state, data) {
         state.supplierCountDetailTotal = data;
     },
+    [LOGISTICS_COUNT_LIST](state, data) {
+        state.logisticsCountList = data;
+    },
+    [LOGISTICS_COUNT_TOTAL](state, data) {
+        state.logisticsCountTotal = data;
+    },
+
 }
 
 export default {

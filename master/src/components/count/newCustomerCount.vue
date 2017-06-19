@@ -417,8 +417,8 @@ export default {
             this.employeeParam.org = true;
         }
 
-        //时间默认从2016至今
-        this.beginTime = util.getDate(-7);;
+        //时间默认7天内
+        this.beginTime = util.getDate(-7);
         this.endTime = util.getDate(0);
         this.loadParam.beginTime = this.beginTime;
         this.loadParam.endTime = this.endTime;
