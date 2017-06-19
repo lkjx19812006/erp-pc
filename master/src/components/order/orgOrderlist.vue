@@ -110,6 +110,21 @@
                             </dd>
                         </dl>
                         <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">{{$t('static.order_source')}}：</dt>
+                            <dd class="left">
+                                <select class="form-control" v-model="loadParam.sourceType" @change="selectSearch()">
+                                    <!-- 0/1/2/3/4/5 新建/意向/报价/样品申请/库存/待采购 -->
+                                    <option value="">{{$t('static.please_select')}}</option>
+                                    <option value="0">{{$t('static.new')}}</option>
+                                    <option value="1">{{$t('static.intention')}}</option>
+                                    <option value="2">{{$t('static.quoted_price')}}</option>
+                                    <option value="3">样品申请</option>
+                                    <option value="4">库存</option>
+                                    <option value="5">待采购</option>
+                                </select>
+                            </dd>
+                        </dl>
+                        <dl class="clear left transfer">
                             <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
                             <dd class="left">
                                 <input type="text" class="form-control" v-model="loadParam.consigneePhone" @keyup.enter="selectSearch()" />
@@ -387,7 +402,8 @@ export default {
                 ftime: '',
                 mode: '',
                 validate: '',
-                sample: ''
+                sample: '',
+                sourceType:''
 
             },
             language: '',
@@ -510,6 +526,9 @@ export default {
             }
             if (this.loadParam.no) {
                 url += "&no=" + this.loadParam.no;
+            }
+            if (this.loadParam.sourceType) {
+                url += "&sourceType=" + this.loadParam.sourceType;
             }
             return url;
         }

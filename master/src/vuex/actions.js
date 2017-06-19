@@ -1912,6 +1912,9 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         if (key == 'sample' && param[key] !== '') {
             url += '&sample=' + param[key];
         }
+        if (key == 'sourceType' && param[key] !== '') {
+            url += '&sourceType=' + param[key];
+        }
     }
     Vue.http({
         method: 'GET',
@@ -2017,6 +2020,9 @@ export const getOrderStatistical = ({ dispatch }, param) => { //简单的订单�
         }
         if (key == 'employeeId' && param[key] !== '') {
             body.employee = param[key];
+        }
+        if (key == 'sourceType' && param[key] !== '') {
+            body.sourceType = param[key];
         }
     }
     Vue.http({
@@ -2440,6 +2446,9 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
         if (key == 'sample' && param[key] !== '') {
             body.sample = param[key];
         }
+        if (key == 'sourceType' && param[key] !== '') {
+            body.sourceType = param[key];
+        }
     }
     Vue.http({
         method: 'POST',
@@ -2525,6 +2534,9 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
         }
         if (key == 'sample' && param[key] != '') {
             body.sample = param[key];
+        }
+        if (key == 'sourceType' && param[key] != '') {
+            body.sourceType = param[key];
         }
     }
 
@@ -6985,7 +6997,8 @@ export const createOrderByStock = ({ dispatch }, param) => { //库存列表页�
         city: param.city,
         district: param.district,
         stockList: param.stockCartList,
-        orderStatus: param.orderStatus
+        orderStatus: param.orderStatus,
+        sample:param.sample
     };
     console.log(body)
     Vue.http({

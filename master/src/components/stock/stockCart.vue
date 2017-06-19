@@ -54,6 +54,13 @@
                             <input type="text" class="form-control edit-input" style="width:95%" v-model="param.consigneePhone" />
                         </div>
                         <div class="editpage-input col-md-6">
+                            <label class="editlabel">订单类型<span class="system_danger" v-if="$validation.sample.required">必填项</span></label>
+                            <select class="form-control" v-model="param.sample" style="width:95%" v-validate:sample="{required:true}">
+                                <option value="0">大货订单</option>
+                                <option value="1">样品订单</option>
+                            </select>
+                        </div>
+                        <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.province')}}</label>
                             <div type="text" class="edit-input" style="width:95%">
                                 <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
@@ -273,7 +280,12 @@ export default {
     z-index: 1083;
     width: 50%;
 }
+.system_danger{
+    display: inline-block!important;
+    height: 14px!important;
+    width: 20px!important
 
+}
 .client_body {
     position: relative;
     background-color: #fff;
