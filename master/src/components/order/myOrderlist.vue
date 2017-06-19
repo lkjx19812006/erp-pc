@@ -165,7 +165,7 @@
                             <th>{{$t('static.wait_payment')}}</th>
                             <th>{{$t('static.paid')}}</th>
                             <th>{{$t('static.currency')}}</th>
-                            <th>{{$t('static.consignee_name')}}</th>
+                            <th>{{$t('static.consignee_consigner_name')}}</th>
                             <th>{{$t('static.consignee_phone')}}</th>
                             <th>{{$t('static.consignee_address')}}</th>
                             <!-- <th>{{$t('static.payment_method')}}</th> -->
@@ -759,7 +759,6 @@ export default {
             this.createParam.cost = "";
             this.createParam.incidentals = 0;
             this.createParam.preferential = 0;
-
             this.createParam.show = true;
             this.createParam.callback = this.newBack;
         },

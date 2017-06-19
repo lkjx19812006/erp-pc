@@ -179,7 +179,7 @@
                             <th>{{$t('static.paid')}}</th>
                             <th>{{$t('static.currency')}}</th>
                             <th>{{$t('static.salesman')}}</th>
-                            <th>{{$t('static.consignee_name')}}</th>
+                            <th>{{$t('static.consignee_consigner_name')}}</th>
                             <th>{{$t('static.consignee_phone')}}</th>
                             <th style="width:300px">{{$t('static.consignee_address')}}</th>
                             <!-- <th>{{$t('static.payment_method')}}</th> -->
