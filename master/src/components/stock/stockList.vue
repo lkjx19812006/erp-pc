@@ -230,6 +230,7 @@ export default {
                 province: '',
                 city: '',
                 district: '',
+                sample:'',
                 goods: [], //用于前端显示
                 //intentionOfferList: [] //传入后台，由goods生成
 				leng:0
