@@ -190,24 +190,25 @@
                             <th style="min-width: 40px">
                                 <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
                             </th>
-                            <th>{{$t('static.client_id')}}</th>
-                            <th style="min-width:145px;">{{$t('static.credit_rating')}}</th>
-                            <th>{{$t('static.salesman')}}</th>
-                            <th>{{$t('static.create_time')}}</th>
-                            <th>{{$t('static.recent_contact')}}</th>
                             <th>{{$t('static.client_name')}}</th>
-                            <th>{{$t('static.transaction_num')}}</th>
-                            <th>成交金额</th>
-                            <th>{{$t('static.client_type')}}</th>
+                            
+                            <th>{{$t('static.client_id')}}</th>
                             <th>{{$t('static.contact')}}</th>
                             <th>{{$t('static.position')}}</th>
                             <th>{{$t('static.cellphone')}}</th>
-                            <th>{{$t('static.telephone')}}</th>
                             <th>{{$t('static.phone_origin')}}</th>
+                            <th>{{$t('static.telephone')}}</th>
+                            <th style="min-width:100px;">{{$t('static.credit_rating')}}</th>
+                            <th>{{$t('static.salesman')}}</th>                                                    
+                            <th>{{$t('static.transaction_num')}}</th>
+                            <th>{{$t('static.recent_contact')}}</th>
+                            <th>成交金额</th>
+                            <th>{{$t('static.client_type')}}</th>                           
                             <th>{{$t('static.client_origin')}}</th>
-                            <th>划转/来源</th>
-                            <th>{{$t('static.detailed_address')}}</th>
                             <th>{{$t('static.main_product')}}</th>
+                            <th style="min-width:100px;">划转/来源</th>
+                            <th>{{$t('static.create_time')}}</th>  
+                            <!-- <th>{{$t('static.detailed_address')}}</th> -->
                             <th v-if="this.initLogin.orgId==29">跟进状态</th>
                             <th v-if="this.initLogin.orgId==29">跟进说明</th>
                             <th style="min-width:110px;">
@@ -229,18 +230,10 @@
                     <tbody>
                         <tr>
                         </tr>
-                        <tr v-for="item in initMyCustomerlist" :style="{background:(item.originalEmployee!=-1?'lightYellow':'')}">
+                        <tr v-for="item in initMyCustomerlist" :style="{background:(item['sort']>0?'#ADD8E6':'')}" :style="{background:(item.originalEmployee!=-1?'lightYellow':'')}">
                             <td @click.stop="">
                                 <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                             </td>
-                            <td>{{item.id}}</td>
-                            <td style="min-width:145px;">
-                                <Rate disabled :value.sync="item.creditLevel"></Rate>
-                            </td>
-                            <td>{{item.employeeName}}</td>
-                            <!-- 修改时间 -->
-                            <td>{{item.ctime | timeFilters}}</td>
-                            <td>{{item.lastOrderTime | timeFilters}}</td>
                             <td class="underline" @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -251,32 +244,45 @@
                                 url:'/customer/',
                                 key:'myCustomerList'
                                 })">{{item.name}}</td>
-                            <td>{{item.orderTotal}}</td>
-                            <td>{{item.orderAmount}}元</td>
-                            <td v-if="this.language=='zh_CN'">{{item.typeDesc}}</td>
-                            <td v-if="this.language=='en'">{{item.type | customerTypeEn}}</td>
+                            
+                            <td>{{item.id}}</td>
                             <td>{{item.mainContact}}</td>
                             <td>{{item.mainPosition}}</td>
                             <td>{{item.mainPhone}}</td>
-                            <td>{{item.tel}}</td>
                             <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
+                            <td>{{item.tel}}</td>
+                            <td style="min-width:100px;">
+                                <Rate disabled :value.sync="item.creditLevel"></Rate>
+                            </td>
+                            <td>{{item.employeeName}}</td>  
+                            <td>{{item.orderTotal}}</td>
+                            <td>
+                                <span v-if="item.orderTotal!=0">{{item.lastOrderTime | timeFilters}}</span>
+                                <span v-else>----:--:--</span>
+                            </td>
+                            <td>{{item.orderAmount}}元</td>
+                            <td v-if="this.language=='zh_CN'">{{item.typeDesc}}</td>
+                            <td v-if="this.language=='en'">{{item.type | customerTypeEn}}</td>
                             <td>{{item.provinceName}}{{item.cityName}}</td>
+                            <td>{{item.bizScope}}</td>
                             <td>                                
                                 <p style="color:red;border-bottom:1px solid #ccc" v-if="item.originalEmployee!=-1">
                                     批量划转（{{item.originalEmployeeName}}）
                                 </p>
                                 <p >{{item.sourceType}}</p>
                             </td>
-                            <td>{{item.address}}</td>
-                            <td>{{item.bizScope}}</td>
+                            <td>{{item.ctime | timeFilters}}</td>
+                            
+                            <!-- <td>{{item.address}}</td> -->
+                            
                             <td v-if="this.initLogin.orgId==29">{{item.audit | tracking}}</td>
                             <td v-if="this.initLogin.orgId==29">{{item.auditComment}}</td>
                             <td style="min-width:110px;">
-                                <a class="btn btn-success btn-xs " v-if="true" @click="setTop()">
+                                <a class="btn btn-success btn-xs " v-if="item['sort']==0" @click="setTop(item.id,1)">
                                     <Icon type="arrow-up-a"></Icon>
                                     置顶
                                 </a>
-                                <a class="btn btn-warning btn-xs " v-else @click="cancelTop()">
+                                <a class="btn btn-warning btn-xs " v-else @click="cancelTop(item.id,0)">
                                     <Icon type="arrow-down-a"></Icon>
                                     取消置顶
                                 </a>
@@ -361,7 +367,8 @@ import {
     transferInfo,
     customerTransferBlacklist,
     customerAudit,
-    importCustomer
+    importCustomer,
+    setClientTop
 } from '../../../vuex/actions'
 
 export default {
@@ -396,7 +403,8 @@ export default {
             transferInfo,
             customerTransferBlacklist,
             customerAudit,
-            importCustomer
+            importCustomer,
+            setClientTop
         }
     },
     data() {
@@ -732,11 +740,21 @@ export default {
         searchClient: function() {
             this.getClientList(this.loadParam)
         },
-        setTop:function(){
-
+        setTop:function(id,num){
+            let data = {
+                id:id,
+                sortNum:num,
+                callback:this.getClientList
+            }
+            this.setClientTop(data,this.loadParam)
         },
-        cancelTop:function(){
-
+        cancelTop:function(id,num){
+            let data = {
+                id:id,
+                sortNum:num,
+                callback:this.getClientList
+            }
+            this.setClientTop(data,this.loadParam)
         }
     },
     events: {
@@ -813,7 +831,10 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-
+.ivu-rate{
+    font-size:14px!important;
+    margin:0px!important;
+}
 #table_box table th,
 #table_box table td {
     width: 113px;

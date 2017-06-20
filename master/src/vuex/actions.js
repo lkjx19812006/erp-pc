@@ -12081,3 +12081,25 @@ export const getBillList = ({ dispatch }, param, data) => { //收付费信息统
         console.log('fail');
     });
 }
+
+export const setClientTop = ({ dispatch }, param, data) => { //收付费信息统计
+    var body = {
+        id:param.id,
+        sort:param.sortNum
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/customer/sort',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(data)
+    }, (res) => {
+        console.log('fail');
+    });
+}

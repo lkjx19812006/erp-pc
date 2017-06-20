@@ -83,11 +83,13 @@
                     <dt class="left transfer marg_top">信用等级：</dt>
                     <dd class="left">
                         <select v-model="loadParam.creditLevel" class="form-control" @change="selectSearch()">
-                            <option value="">全部</option>
-                            <option value="0">无</option>
-                            <option value="1">一星</option>
-                            <option value="2">两星</option>
-                            <option value="3">三星</option>
+                            <option value="">{{$t("static.please_select")}}</option>
+                            <option value="0">{{$t("static.none")}}</option>
+                            <option value="1">{{$t("static.one_star")}}</option>
+                            <option value="2">{{$t("static.two_star")}}</option>
+                            <option value="3">{{$t("static.three_star")}}</option>
+                            <option value="4">{{$t("static.four_star")}}</option>
+                            <option value="5">{{$t("static.five_star")}}</option>
                         </select>
                     </dd>
                 </dl>
@@ -177,6 +179,7 @@
                         <th>创建时间</th>
                         <th>最近成交时间</th>
                         <th>供应商名称</th>
+                        <th>星级</th>
                         <th>成交次数</th>
                         <th>供应商类型</th>
                         <th>联系人</th>
@@ -210,7 +213,7 @@
                 <tbody>
                     <tr>
                     </tr>
-                    <tr v-for="item in initSupplyCustomerlist">
+                    <tr v-for="item in initSupplyCustomerlist" :style="{background:(item.originalEmployee!=-1?'lightYellow':'')}">
                         <td>{{item.employeeName}}</td>
                         <td>{{item.ctime}}</td>
                         <td>{{item.lastOrderTime}}</td>
@@ -223,6 +226,9 @@
                                       url:'/customer/',
                                       key:'supplyCustomerList'
                                       })">{{item.name}}</td>
+                        <td>
+                          <Rate disabled :value.sync="item.creditLevel"></Rate>
+                        </td>
                         <td>{{item.orderTotal}}</td>
                         <td>{{item.typeDesc}}</td>
                         <td>{{item.mainContact}}</td>
@@ -587,7 +593,10 @@ export default {
     width: 119px;
     min-width: 119px;
 }
-
+.ivu-rate{
+    font-size:14px!important;
+    margin:0px!important;
+}
 .service-nav {
     padding: 23px 30px 0px 4px;
 }
