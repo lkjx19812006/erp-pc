@@ -75,6 +75,8 @@
                             <option value="1">{{$t("static.one_star")}}</option>
                             <option value="2">{{$t("static.two_star")}}</option>
                             <option value="3">{{$t("static.three_star")}}</option>
+                            <option value="4">{{$t("static.four_star")}}</option>
+                            <option value="5">{{$t("static.five_star")}}</option>
                         </select>
                     </dd>
                 </dl>
@@ -141,10 +143,12 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th>
+                        <th style="min-width: 40px">
                             <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
                         </th>
                         <th>{{$t('static.client_id')}}</th>
+                        <th style="min-width:145px;">{{$t('static.credit_rating')}}</th>
+                        <th>是否为划转</th>
                         <th>{{$t('static.salesman')}}</th>
                         <th>{{$t('static.create_time')}}</th>
                         <th>{{$t('static.recent_contact')}}</th>
@@ -158,6 +162,7 @@
                         <th>{{$t('static.cellphone')}}</th>
                         <th>{{$t('static.phone_origin')}}</th>
                         <th>{{$t('static.client_origin')}}</th>
+                        <th>划转/来源</th>
                         <th>{{$t('static.detailed_address')}}</th>
                         <th>{{$t('static.main_product')}}</th>
                         <th v-if="this.initLogin.orgId==29">跟进状态</th>
@@ -166,7 +171,7 @@
                     </tr>
                 </thead>
                 <tr>
-                    <th>
+                    <th style="min-width: 40px">
                         <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
                     </th>
                     <th style="color:#fa6705;font-size: 14px">全选</th>
@@ -175,11 +180,18 @@
                 <tbody>
                     <tr>
                     </tr>
-                    <tr v-for="item in initOrgCustomerlist">
-                        <td @click.stop="">
+                    <tr v-for="item in initOrgCustomerlist" :style="{background:(item.originalEmployee!=-1?'lightYellow':'')}"> 
+                        <td @click.stop="" style="min-width: 40px">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
                         <td>{{item.id}}</td>
+                        <td style="min-width:145px;">
+                            <Rate disabled :value.sync="item.creditLevel"></Rate>
+                        </td>
+                        <td>
+                            <span v-if="item.originalEmployee==-1">--</span>
+                            <span v-else>{{item.originalEmployeeName}}</span>
+                        </td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.ctime|timeFilters}}</td>
                         <td>{{item.lastOrderTime|timeFilters}}</td>
@@ -203,6 +215,12 @@
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
+                        <td>                                
+                            <p style="color:red;border-bottom:1px solid #ccc" v-if="item.originalEmployee!=-1">
+                                批量划转（{{item.originalEmployeeName}}）
+                            </p>
+                            <p >{{item.sourceType}}</p>
+                        </td>
                         <td>{{item.address}}</td>
                         <td>{{item.bizScope}}</td>
                         <td v-if="this.initLogin.orgId==29">{{item.audit | tracking}}</td>

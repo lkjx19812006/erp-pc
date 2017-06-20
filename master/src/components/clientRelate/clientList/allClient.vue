@@ -89,11 +89,13 @@
                     <dt class="left transfer marg_top">信用等级：</dt>
                     <dd class="left">
                         <select v-model="loadParam.creditLevel" class="form-control" @change="selectSearch()">
-                            <option value="">全部</option>
-                            <option value="0">无</option>
-                            <option value="1">一星</option>
-                            <option value="2">两星</option>
-                            <option value="3">三星</option>
+                            <option value="">{{$t("static.please_select")}}</option>
+                            <option value="0">{{$t("static.none")}}</option>
+                            <option value="1">{{$t("static.one_star")}}</option>
+                            <option value="2">{{$t("static.two_star")}}</option>
+                            <option value="3">{{$t("static.three_star")}}</option>
+                            <option value="4">{{$t("static.four_star")}}</option>
+                            <option value="5">{{$t("static.five_star")}}</option>
                         </select>
                     </dd>
                 </dl>
@@ -142,10 +144,12 @@
             <table data-toggle="table" class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th>
+                        <th style="min-width: 40px;">
                             <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
                         </th>
                         <th>客户ID</th>
+                        <th style="min-width:145px;">星级</th>
+                        <th>是否为划转</th>
                         <th>所属业务员</th>
                         <th>创建时间</th>
                         <th>最近成交时间</th>
@@ -159,6 +163,7 @@
                         <th>联系人手机</th>
                         <th>手机归属地</th>
                         <th>客户归属地</th>
+                        <th>划转/来源</th>
                         <th>详细地址</th>
                         <th>主营产品</th>
                         <th>操作</th>
@@ -167,11 +172,18 @@
                 <tbody>
                     <tr>
                     </tr>
-                    <tr v-for="item in initAllCustomerlist">
-                        <td @click.stop="">
+                    <tr v-for="item in initAllCustomerlist" :style="{background:(item.originalEmployee!=-1?'lightYellow':'')}">
+                        <td @click.stop="" style="min-width: 40px">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
                         <td>{{item.id}}</td>
+                        <td style="min-width:145px;">
+                            <Rate disabled :value.sync="item.creditLevel"></Rate>
+                        </td>
+                        <td>
+                            <span v-if="item.originalEmployee==-1">--</span>
+                            <span v-else>{{item.originalEmployeeName}}</span>
+                        </td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.ctime|timeFilters}}</td>
                         <td>{{item.lastOrderTime|timeFilters}}</td>
@@ -194,6 +206,12 @@
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
+                        <td>                                
+                            <p style="color:red;border-bottom:1px solid #ccc" v-if="item.originalEmployee!=-1">
+                                批量划转（{{item.originalEmployeeName}}）
+                            </p>
+                            <p >{{item.sourceType}}</p>
+                        </td>
                         <td>{{item.address}}</td>
                         <td>{{item.bizScope}}</td>
                         <td @click="modifyClient({
