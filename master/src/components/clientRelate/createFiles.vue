@@ -72,11 +72,12 @@ export default {
     },
     methods:{
         save:function(){
-            if(!this.param.path||this.param.name===''){
+            if(!this.param.path||this.param.name==''){
                 this.tipParam.show = true;
             }else{
                 this.param.link(this.param);
-                this.param.show = false;
+                this.param.show = false
+                
             }  
         }
     },

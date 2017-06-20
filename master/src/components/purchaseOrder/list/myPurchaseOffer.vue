@@ -9,19 +9,7 @@
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
-                    <div class="left" v-if="param.offerEmployee">
-                        <dt class="left transfer marg_top">报价业务员：</dt>
-                        <dd class="left margin_right">
-                            <input type="text" class="form-control" v-model="loadParam.offerEmployeeName" placeholder="按回车键搜索" @click="selectEmployee()" readonly="readonly">
-                        </dd>
-                    </div>
-                    <div class="left" v-if="param.breedId">
-                        <dt class="left transfer marg_top">品种：</dt>
-                        <dd class="left margin_right">
-                            <input type="text" class="form-control" v-model="loadParam.breedName" placeholder="按回车键搜索" @click="breedSearch()" readonly="readonly">
-                        </dd>
-                    </div>
-                    <div class="btn-group" style="margin-left:10px" v-if="param.accept">
+                    <div class="btn-group left" style="margin-right:10px" v-if="param.accept">
                         <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.accept===''}" @click="clickAccept('')">
                             全部
                         </button>
@@ -37,6 +25,18 @@
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='3'}" @click="clickAccept('3')">
                             待采用
                         </button>
+                    </div>
+                    <div class="left" v-if="param.offerEmployee">
+                        <dt class="left transfer marg_top">报价业务员：</dt>
+                        <dd class="left margin_right">
+                            <input type="text" class="form-control" v-model="loadParam.offerEmployeeName" placeholder="按回车键搜索" @click="selectEmployee()" readonly="readonly">
+                        </dd>
+                    </div>
+                    <div class="left" v-if="param.breedId">
+                        <dt class="left transfer marg_top">品种：</dt>
+                        <dd class="left margin_right">
+                            <input type="text" class="form-control" v-model="loadParam.breedName" placeholder="按回车键搜索" @click="breedSearch()" readonly="readonly">
+                        </dd>
                     </div>
                 </dl>
                 <button type="button" class="btn btn-primary right" style="width:75px" @click="resetCondition()">

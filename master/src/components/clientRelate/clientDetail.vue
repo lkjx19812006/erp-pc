@@ -805,8 +805,8 @@
                                                     <th>{{$t('static.origin')}}</th>
                                                     <th>{{$t('static.specification')}}</th>
                                                     <th>成交类型</th>
-                                                    <th>{{$t('static.product_type')}}</th>
-                                                    <th>{{$t('static.test_report')}}</th>
+                                                    <!-- <th>{{$t('static.product_type')}}</th>
+                                                    <th>{{$t('static.test_report')}}</th> -->
                                                     <th colspan="2">{{$t('static.operation')}}</th>
                                                 </thead>
                                                 <tbody>
@@ -818,9 +818,9 @@
                                                         <td>{{item.location}}</td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.mode | order_type}}</td>
-                                                        <td>{{item.cType==-1?'未定义':(item.cType==0?'客户供应':'客户需求')}}</td>
+                                                        <!-- <td>{{item.cType==-1?'未定义':(item.cType==0?'客户供应':'客户需求')}}</td>
                                                         <td v-if="item.coa==0">无</td>
-                                                        <td v-if="item.coa==1">有</td>
+                                                        <td v-if="item.coa==1">有</td> -->
                                                         <td @click.stop="newproduct({
                                                    sub:$index,
                                                    id:item.id,
@@ -858,7 +858,8 @@
                                                      path:'',
                                                      link:uploadFiles,
                                                      url:'/customer/file/',
-                                                     key:'files'
+                                                     key:'files',
+                                                     callback:showTips
                                                    })">
                                                             <a class="operate"><img src="/static/images/uploadPro.png" height="18" width="67" />
                                                             </a>
@@ -1165,6 +1166,11 @@ export default {
             this.ctrackParam.flag = 1; //1表示修改
             this.ctrackParam.show = true;
 
+        },
+        showTips:function(title){
+            this.tipsParam.show = true;
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
         },
         newproduct: function(initBreedDetail) {
             this.cproductParam = initBreedDetail;
