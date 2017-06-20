@@ -1895,10 +1895,10 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
             url += '&consigneePhone=' + param[key];
         }
         if (key == 'type' && param[key] !== '') {
-            url += '&type=' + param[key];
-            if (body.type == 2) { //表示预售
-                body.type = 1;
-                body.pre = 1;
+            if (param[key] == 2) { //预售时
+                url += '&type=1&pre=1';
+            } else {
+                url += '&type=' + param[key];
             }
         }
         if (key == 'org' && param[key] !== '') {
@@ -2012,6 +2012,10 @@ export const getOrderStatistical = ({ dispatch }, param) => { //简单的订单�
         }
         if (key == 'type' && param[key] !== '') {
             body[key] = param[key];
+            if (body[key] == 2) {
+                body[key] = 1;
+                body.pre = 1;
+            }
         }
         if (key == 'validate' && param[key] !== '') {
             body[key] = param[key];
@@ -9116,7 +9120,6 @@ export const intentionUpAndDown = ({ dispatch }, param) => { //意向上下架
         }
     }).then((res) => {
         if (param.callback) {
-            console.log(res.json());
             param.callback(res.json().msg);
         } else {
             dispatch(types.INTENTION_UP_DOWN, param);

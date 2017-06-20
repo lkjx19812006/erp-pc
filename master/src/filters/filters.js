@@ -1424,3 +1424,22 @@ Vue.filter("paymentWay", function(val) {
     }
 })
 
+Vue.filter("orderSource", function(val) { //订单来源
+    if (val === "") {
+        return "未知";
+    } else if (val == 0) {
+        return "新建";
+    } else if (val == 1) {
+        return "意向";
+    } else if (val == 2) {
+        return "报价";
+    } else if (val == 3) {
+        return "样品申请";
+    } else if (val == 4) {
+        return "库存";
+    } else if (val == 5) {
+        return "待采购";
+    } else {
+        return "未知";
+    }
+})
