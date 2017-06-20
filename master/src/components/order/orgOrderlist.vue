@@ -2,7 +2,7 @@
     <div>
         <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
         <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
-        <search-model :param="loadParam" v-if="loadParam.show"></search-model>
+        <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
         <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
         <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
         <cancel-model :param="cancelParam" v-if="cancelParam.show"></cancel-model>
@@ -28,6 +28,18 @@
                                 <input type="text" class="form-control" v-model="loadParam.id" @keyup.enter="selectSearch()" />
                             </dd>
                         </dl>
+                        <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.consignee" @keyup.enter="selectSearch()" />
+                            </dd>
+                        </dl>
+                        <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.consigneePhone" @keyup.enter="selectSearch()" />
+                            </dd>
+                        </dl>
                     </div>
                 </div>
                 <div class="clear">
@@ -39,6 +51,7 @@
                                     <option value="">{{$t('static.please_select')}}</option>
                                     <option value="0">{{$t('static.purchase')}}</option>
                                     <option value="1">{{$t('static.sell')}}</option>
+                                    <option value="2">预售</option>
                                 </select>
                             </dd>
                         </dl>
@@ -59,9 +72,13 @@
                             </dd>
                         </dl>
                         <dl class="clear left transfer">
-                            <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                            <dt class="left transfer marg_top">是否样品：</dt>
                             <dd class="left">
-                                <input type="text" class="form-control" v-model="loadParam.consignee" @keyup.enter="selectSearch()" />
+                                <select class="form-control" v-model="loadParam.sample" @change="selectSearch()">
+                                    <option value="">{{$t('static.please_select')}}</option>
+                                    <option value="0">{{$t('static.no')}}</option>
+                                    <option value="1">{{$t('static.yes')}}</option>
+                                </select>
                             </dd>
                         </dl>
                         <dl class="clear left transfer">
@@ -124,12 +141,6 @@
                                 </select>
                             </dd>
                         </dl>
-                        <dl class="clear left transfer">
-                            <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
-                            <dd class="left">
-                                <input type="text" class="form-control" v-model="loadParam.consigneePhone" @keyup.enter="selectSearch()" />
-                            </dd>
-                        </dl>
                         <!-- 单个业务员搜索 -->
                         <dl class="clear left transfer">
                             <dt class="left transfer marg_top">{{$t('static.salesman')}}：</dt>
@@ -141,16 +152,6 @@
                             <dt class="left transfer marg_top">{{$t('static.breed')}}：</dt>
                             <dd class="left">
                                 <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
-                            </dd>
-                        </dl>
-                        <dl class="clear left transfer">
-                            <dt class="left transfer marg_top">是否样品：</dt>
-                            <dd class="left">
-                                <select class="form-control" v-model="loadParam.sample" @change="selectSearch()">
-                                    <option value="">{{$t('static.please_select')}}</option>
-                                    <option value="0">{{$t('static.no')}}</option>
-                                    <option value="1">{{$t('static.yes')}}</option>
-                                </select>
                             </dd>
                         </dl>
                         <button class="new_btn transfer"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">{{$t('static.export_order')}}</a></button>
@@ -174,6 +175,7 @@
                             <th>{{$t('static.sample_order')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.breed')}}</th>
+                            <th>商品图片</th>
                             <th>{{$t('static.transcation_amount')}}</th>
                             <th>{{$t('static.wait_payment')}}</th>
                             <th>{{$t('static.paid')}}</th>
@@ -218,6 +220,11 @@
                                   contact:''
                           })">{{item.customerName}}</a></td>
                             <td>{{item.goodsDesc}}</td>
+                            <td>
+                                <div v-if="item.sourceType==1&&item.goods[0].image!=''">
+                                    <img src="{{item.goods[0].image}}" style="width:40px" @click="clickBig(item.goods[0].image)">
+                                </div>
+                            </td>
                             <td>{{item.total}}</td>
                             <td>{{item.unpaid}}</td>
                             <td>{{item.prepaid}}</td>
@@ -308,7 +315,7 @@
 import pagination from '../pagination'
 import editorderModel from '../order/orderInformationDialog'
 import detailModel from '../order/orderDetail'
-import searchModel from '../order/orderSearch'
+import pictureModel from '../tips/pictureDialog'
 import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import disposeModel from '../order/orderStatus'
 import tipsdialogModel from '../tips/tipDialog'
@@ -348,7 +355,7 @@ export default {
         mglistModel,
         filter,
         detailModel,
-        searchModel,
+        pictureModel,
         breedsearchModel,
         employeeModel,
         deletebreedModel,
@@ -390,7 +397,7 @@ export default {
                 mode: '',
                 validate: '',
                 sample: '',
-                sourceType:''
+                sourceType: ''
 
             },
             language: '',
@@ -426,6 +433,10 @@ export default {
             },
             detailParam: {
                 show: false
+            },
+            pictureParam: {
+                show: false,
+                img: ''
             },
             updateorderParam: {
                 show: false
@@ -551,6 +562,10 @@ export default {
                 this.$store.state.table.basicBaseList.orgOrderList[sub].show = true;
             }
         },
+        clickBig: function(img) {
+            this.pictureParam.show = true;
+            this.pictureParam.img = img;
+        },
         breedSearch: function() {
             this.breedSearchParam.show = true;
         },
@@ -637,10 +652,6 @@ export default {
         },
         newOrder: function(param) {
             this.dialogParam = param;
-        },
-        createSearch: function() {
-            this.loadParam.show = true;
-            this.loadParam.loading = false;
         },
         clickOn: function(param) {
             this.detailParam = param;
@@ -760,8 +771,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 90px;
-    min-width: 90px;
+    width: 83px;
+    min-width: 83px;
 }
 
 .base_pagination {

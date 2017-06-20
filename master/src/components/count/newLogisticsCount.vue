@@ -107,7 +107,7 @@
                             </th>
                             <th style="width:250px">
                                 运费占比
-                                <span class="totalNum">({{initLogisticsCountTotal.freightRate*100 | money}}%)</span>
+                                <span class="totalNum">({{initLogisticsCountTotal.freightRate}}%)</span>
                                 <a v-if="loadParam.criterion!='freightRate'||loadParam.asc==1" class="glyphicon glyphicon-arrow-up" @click="sortBy('freightRate',0)"></a>
                                 <span v-else class="glyphicon glyphicon-arrow-up"></span>
                                 <a v-if="loadParam.criterion!='freightRate'||loadParam.asc!=1" class="glyphicon glyphicon-arrow-down" @click="sortBy('freightRate',1)"></a>
@@ -123,7 +123,7 @@
                             <td>{{item.tradeBreedNumber}}</td>
                             <td>{{item.tradeAmount | money}}</td>
                             <td>{{item.freightAmount | money}}</td>
-                            <td>{{item.freightRate*100 | money}}%</td>
+                            <td>{{item.freightRate}}%</td>
                         </tr>
                     </tbody>
                 </table>
