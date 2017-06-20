@@ -475,9 +475,9 @@
                                                     <tr v-for="item in initClientDetail.orders.arr">
                                                         <!-- <td><img :src="item.path" /></td> -->
                                                         <td>{{item.no}}</td>
-                                                        <td v-if="item.sourceType==0">新建</td>
-                                                        <td v-if="item.sourceType==1">意向</td>
-                                                        <td v-if="item.sourceType==2">报价</td>
+                                                        <td>
+                                                            {{item.sourceType | orderSource}}
+                                                        </td>
                                                         <td>{{item.consignee}}</td>
                                                         <td>{{item.consigneePhone}}</td>
                                                         <td>{{item.consigneeAddr}}</td>
@@ -1167,7 +1167,7 @@ export default {
             this.ctrackParam.show = true;
 
         },
-        showTips:function(title){
+        showTips: function(title) {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;

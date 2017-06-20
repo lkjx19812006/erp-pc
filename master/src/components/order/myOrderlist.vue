@@ -566,10 +566,7 @@ export default {
                 consigner: '', //发货人,(销售订单时，是业务员ID，采购订单时，是""，不填)
                 consignerName: '', //发货人名
                 zipCode: '',
-                country: {
-                    name: '中国',
-                    id: '7'
-                },
+                country: '',
                 province: '',
                 city: '',
                 employee: this.initLogin.id,

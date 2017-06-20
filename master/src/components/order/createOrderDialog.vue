@@ -61,12 +61,14 @@
                         </div>
                     </div>
                     <section class="editsection">
-                        <!-- 填写收货地址，或选择收货地址 -->
                         <div style="margin-top:20px;">
                             <img src="/static/images/breedinfo@2x.png" style="display:inline" />
                             <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
-                            <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">{{$t('static.select_addr')}}</button>
-                            <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">{{$t('static.shipped_addr')}}</button>
+                            <!-- 填写收货地址，或选择收货地址（无法使用，因为国省市区要传ID，而选择的地址不是中文） -->
+                            <!-- 选择收货地址 -->
+                            <!-- <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">{{$t('static.select_addr')}}</button> -->
+                            <!-- 填写收货地址（默认） -->
+                            <!-- <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">{{$t('static.shipped_addr')}}</button> -->
                         </div>
                         <div class="clearfix">
                             <!-- 客户选择（销售）/供应商选择（采购） -->
@@ -494,8 +496,8 @@ export default {
                 consignerName: ''
             },
             country: {
-                id: '',
-                cname: '',
+                id: '7',
+                cname: '中国',
                 cnameEn: ''
             },
             province: {
@@ -682,13 +684,6 @@ export default {
             }
 
         },
-        selectConsignee: function() {
-            this.createOrSelect = 1;
-            if (this.param.customer) {
-                this.consigneeParam.customerId = this.param.customer;
-            }
-            this.consigneeParam.show = true;
-        },
         selectSupplier: function() {
             this.supplierParam.show = true;
         },
@@ -703,13 +698,26 @@ export default {
         createConsignee: function() {
             this.createOrSelect = 0;
             this.param.addressId = '';
+            //重置收货人信息
             this.param.consignee = this.param.customerName;
             this.param.consigneePhone = this.param.customerPhone;
             this.param.consigneeAddr = "";
+            //重置省市区信息
+            this.country.id = '7';
             this.country.cname = "中国";
+            this.province.id = "";
             this.province.cname = "";
+            this.city.id = "";
             this.city.cname = "";
+            this.district.id = "";
             this.district.cname = "";
+        },
+        selectConsignee: function() {
+            this.createOrSelect = 1;
+            if (this.param.customer) {
+                this.consigneeParam.customerId = this.param.customer;
+            }
+            this.consigneeParam.show = true;
         },
         addBreed: function() {
             //价格只能输入之多两位小数
@@ -961,24 +969,10 @@ export default {
         this.getEmployeeList(this.orgParam);
         this.getUnitList();
         this.getCurrencyList();
-        if (this.param.customer) {
-            this.consigneeParam.customerId = this.param.customer;
-        }
         if (this.param.breedId) {
             this.breedParam.breedName = this.param.breedName;
             this.breedParam.id = this.param.breedId;
             this.getBreedDetail(this.breedParam);
-        }
-        if (this.param.country) {
-            this.countryParam.country = this.param.country;
-            this.countryParam.province = this.param.province;
-            this.countryParam.city = this.param.city;
-            this.countryParam.district = this.param.district;
-            this.country.cname = this.param.country.name;
-            this.country.id = this.param.country.id;
-            this.province.cname = this.param.province;
-            this.city.cname = this.param.city;
-            this.district.cname = this.param.district;
         }
         if (this.param.goods.length > 0) {
             for (var i = 0; i < this.param.goods.length; i++) {

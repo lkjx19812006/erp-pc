@@ -531,7 +531,7 @@ export default {
             this.applyParam.title1 = '采购订单';
             this.applyParam.type = 0;
             this.applyParam.link = item.id;
-            console.log(this.applyParam)
+
             this.applyParam.callback = this.orderBack;
         },
         orderBack: function(title) {

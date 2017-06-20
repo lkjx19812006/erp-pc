@@ -491,10 +491,10 @@ export default {
             this.tipsParam.ids.push(id);
             this.tipsParam.indexs.push(index);
 
-            this.onSellParam.title = '意向上架审核',
-                this.onSellParam.pass = this.allowUp,
-                this.onSellParam.reject = this.rejectUp,
-                this.onSellParam.show = true;
+            this.onSellParam.title = '意向上架审核';
+            this.onSellParam.pass = this.allowUp;
+            this.onSellParam.reject = this.rejectUp;
+            this.onSellParam.show = true;
         },
         allowUp: function() {
             this.tipsParam.onSell = 2;
@@ -512,10 +512,10 @@ export default {
             this.tipsParam.ids.push(id);
             this.tipsParam.indexs.push(index);
 
-            this.onSellParam.title = '意向下架审核',
-                this.onSellParam.pass = this.allowDown,
-                this.onSellParam.reject = this.rejectDown,
-                this.onSellParam.show = true;
+            this.onSellParam.title = '意向下架审核';
+            this.onSellParam.pass = this.allowDown;
+            this.onSellParam.reject = this.rejectDown;
+            this.onSellParam.show = true;
 
         },
         allowDown: function() {

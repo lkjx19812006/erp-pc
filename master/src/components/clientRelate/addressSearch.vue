@@ -122,7 +122,6 @@ export default {
 
     },
     created() {
-        console.log(this.param);
         this.getAddrInfo(this.param);
     }
 }

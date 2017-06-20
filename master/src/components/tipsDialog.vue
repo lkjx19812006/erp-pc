@@ -1,13 +1,13 @@
 <template>
-    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container del_modal_con" v-show="param.show">
         <div class="model-header">
             <h4>友情提示</h4>
             <div class="model-tips clearfix">
-                <img src="../../static/images/bee.png"  class="pull-left" height="158" width="131"/>
+                <img src="../../static/images/bee.png" class="pull-left" height="158" width="131" />
                 <span class="tips_name">{{param.name}}</span></div>
             <div class="model-footer">
-                <input type="button" class="btn btn-close"  @click="param.show = false"  value="确定"/>
+                <input type="button" class="btn btn-close" @click="param.show = false" value="确定" />
             </div>
         </div>
     </div>
@@ -19,8 +19,7 @@ export default {
     },
     props: ['param'],
     data() {
-        return {
-        }
+        return {}
     }
 }
 </script>
@@ -31,9 +30,11 @@ export default {
     display: block;
     z-index: 1102;
 }
-.del_modal_con{
+
+.del_modal_con {
     z-index: 1102;
 }
+
 .top-title {
     position: absolute;
     right: 0;
@@ -46,7 +47,8 @@ export default {
     font-size: 30px;
     color: #fff;
 }
-.tips_name{
+
+.tips_name {
     color: #fa6705;
     font-size: 28px;
     margin-top: 40px;

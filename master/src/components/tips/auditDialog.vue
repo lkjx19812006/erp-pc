@@ -81,7 +81,6 @@ export default {
     },
     methods: {
         refuse: function(item) {
-            console.log(item);
             item.validate = 3;
             item.show = false;
             this.sampleApply(item);
