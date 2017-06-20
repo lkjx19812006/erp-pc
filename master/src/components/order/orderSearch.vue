@@ -165,7 +165,7 @@ export default {
             }
         },
         resetTime: function() {
-            console.log(this.param)
+
             this.param.ctime = "";
             this.param.ftime = "";
             this.param.consigneePhone = "";

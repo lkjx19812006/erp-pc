@@ -1896,6 +1896,10 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         }
         if (key == 'type' && param[key] !== '') {
             url += '&type=' + param[key];
+            if (body.type == 2) { //表示预售
+                body.type = 1;
+                body.pre = 1;
+            }
         }
         if (key == 'org' && param[key] !== '') {
             url += '&org=' + param[key];
@@ -2401,7 +2405,7 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
     const body = {
         employee: param.employee,
         page: param.cur,
-        pageSize: 15
+        pageSize: 15,
     }
     for (var key in param) {
         if (key == 'consignee' && param[key] != '') {
@@ -2439,6 +2443,10 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
         }
         if (key == 'type' && param[key] != '') {
             body.type = param[key];
+            if (body.type == 2) { //表示预售
+                body.type = 1;
+                body.pre = 1;
+            }
         }
         if (key == 'validate' && param[key] !== '') {
             body.validate = param[key];
@@ -2519,6 +2527,10 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
         }
         if (key == 'type' && param[key] != '') {
             body.type = param[key];
+            if (body.type == 2) { //表示预售
+                body.type = 1;
+                body.pre = 1;
+            }
         }
         if (key == 'breedId' && param[key] != '') {
             body.breedId = param[key];
@@ -6998,7 +7010,7 @@ export const createOrderByStock = ({ dispatch }, param) => { //库存列表页�
         district: param.district,
         stockList: param.stockCartList,
         orderStatus: param.orderStatus,
-        sample:param.sample
+        sample: param.sample
     };
     console.log(body)
     Vue.http({

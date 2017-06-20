@@ -2,7 +2,7 @@
     <div>
         <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
         <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
-        <search-model :param="loadParam" v-if="loadParam.show"></search-model>
+        <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
         <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
         <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
@@ -27,6 +27,18 @@
                                 <input type="text" class="form-control" v-model="loadParam.id" @keyup.enter="selectSearch()" />
                             </dd>
                         </dl>
+                        <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.consignee" @keyup.enter="selectSearch()" />
+                            </dd>
+                        </dl>
+                        <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.consigneePhone" @keyup.enter="selectSearch()" />
+                            </dd>
+                        </dl>
                     </div>
                 </div>
                 <div class="clear left">
@@ -37,6 +49,7 @@
                                 <option value="">{{$t('static.please_select')}}</option>
                                 <option value="0">{{$t('static.purchase')}}</option>
                                 <option value="1">{{$t('static.sell')}}</option>
+                                <option value="2">预售</option>
                             </select>
                         </dd>
                     </dl>
@@ -57,9 +70,13 @@
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
-                        <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                        <dt class="left transfer marg_top">是否样品：</dt>
                         <dd class="left">
-                            <input type="text" class="form-control" v-model="loadParam.consignee" @keyup.enter="selectSearch()" />
+                            <select class="form-control" v-model="loadParam.sample" @change="selectSearch()">
+                                <option value="">{{$t('static.please_select')}}</option>
+                                <option value="0">{{$t('static.no')}}</option>
+                                <option value="1">{{$t('static.yes')}}</option>
+                            </select>
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
@@ -121,12 +138,6 @@
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
-                        <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
-                        <dd class="left">
-                            <input type="text" class="form-control" v-model="loadParam.consigneePhone" @keyup.enter="selectSearch()" />
-                        </dd>
-                    </dl>
-                    <dl class="clear left transfer">
                         <dt class="left transfer marg_top">部门：</dt>
                         <dd class="left">
                             <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="请选择部门" readonly="true" @click="selectOrg()" />
@@ -136,17 +147,7 @@
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top" style="letter-spacing:3px">所属业务员：</dt>
                         <dd class="left">
-                            <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
-                        </dd>
-                    </dl>
-                    <dl class="clear left transfer">
-                        <dt class="left transfer marg_top">是否样品：</dt>
-                        <dd class="left">
-                            <select class="form-control" v-model="loadParam.sample" @change="selectSearch()">
-                                <option value="">{{$t('static.please_select')}}</option>
-                                <option value="0">{{$t('static.no')}}</option>
-                                <option value="1">{{$t('static.yes')}}</option>
-                            </select>
+                            <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" readonly="true" @click="selectEmployee()">
                         </dd>
                     </dl>
                     <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
@@ -171,6 +172,7 @@
                             <th>{{$t('static.sample_order')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.breed')}}</th>
+                            <th>商品图片</th>
                             <th>{{$t('static.transcation_amount')}}</th>
                             <th>{{$t('static.wait_payment')}}</th>
                             <th>{{$t('static.paid')}}</th>
@@ -212,6 +214,11 @@
                                   contact:''
                           })">{{item.customerName}}</a></td>
                             <td>{{item.goodsDesc}}</td>
+                            <td>
+                                <div v-if="item.sourceType==1&&item.goods[0].image!=''">
+                                    <img src="{{item.goods[0].image}}" style="width:40px" @click="clickBig(item.goods[0].image)">
+                                </div>
+                            </td>
                             <td>{{item.total}}</td>
                             <td>{{item.unpaid}}</td>
                             <td>{{item.prepaid}}</td>
@@ -288,7 +295,7 @@
 import pagination from '../pagination'
 import editorderModel from '../order/orderInformationDialog'
 import detailModel from '../order/orderDetail'
-import searchModel from '../order/orderSearch'
+import pictureModel from '../tips/pictureDialog'
 import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import disposeModel from '../order/orderStatus'
 import tipsdialogModel from '../tips/tipDialog'
@@ -323,7 +330,7 @@ export default {
         languageModel,
         pagination,
         detailModel,
-        searchModel,
+        pictureModel,
         deletebreedModel,
         disposeModel,
         tipsdialogModel,
@@ -364,7 +371,7 @@ export default {
                 mode: '',
                 validate: '',
                 sample: '',
-                sourceType:''
+                sourceType: ''
             },
             selectOrgParam: {
                 show: false,
@@ -392,6 +399,10 @@ export default {
             },
             detailParam: {
                 show: false
+            },
+            pictureParam: {
+                show: false,
+                img: ''
             },
             updateorderParam: {
                 show: false
@@ -516,15 +527,11 @@ export default {
                 this.$store.state.table.basicBaseList.allOrderList[sub].show = true;
             }
         },
-        /*newOrder:function(initOrderlist){
-             this.dialogParam=initOrderlist;
-        },*/
-        createSearch: function() {
-            this.loadParam.show = true;
-            this.loadParam.loading = false;
+        clickBig: function(img) {
+            this.pictureParam.show = true;
+            this.pictureParam.img = img;
         },
         clickOn: function(param) {
-
             this.detailParam = param;
         },
         updateOrder: function(param) {
@@ -646,8 +653,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 90px;
-    min-width: 90px;
+    width: 84px;
+    min-width: 84px;
 }
 
 .order_table .table > ul >li img {
