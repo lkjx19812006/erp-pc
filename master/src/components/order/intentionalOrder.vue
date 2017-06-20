@@ -3,7 +3,6 @@
         <editorder-model :param.sync="dialogParam" v-if="dialogParam.show"></editorder-model>
         <createorder-model :param="createParam" v-if="createParam.show"></createorder-model>
         <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
-        <search-model :param="loadParam" v-if="loadParam.show"></search-model>
         <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
         <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
@@ -245,7 +244,6 @@ import pagination from '../pagination'
 import filter from '../../filters/filters'
 import editorderModel from '../order/orderInformationDialog'
 import detailModel from '../order/orderDetail'
-import searchModel from '../order/orderSearch'
 import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import disposeModel from '../order/orderStatus'
 import tipsdialogModel from '../tips/tipDialog'
@@ -275,7 +273,6 @@ export default {
         pagination,
         createorderModel,
         detailModel,
-        searchModel,
         deletebreedModel,
         disposeModel,
         auditModel,
@@ -507,10 +504,6 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
-        },
-        createSearch: function() {
-            this.loadParam.show = true;
-            this.loadParam.link = '/order/myList';
         },
         clickOn: function(param) {
             this.detailParam = param;

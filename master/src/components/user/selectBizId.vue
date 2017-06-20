@@ -8,77 +8,66 @@
             <h3 v-if="param.bizType==1">选择意向</h3>
             <h3 v-if="param.bizType==2">选择订单</h3>
         </div>
-
-
-
         <div class="trans_service clearfix" v-show="param.bizType==1">
-          <div class="cover_loading">
-            <pulse-loader :loading="intentionParam.loading||orderParam.loading" :color="color" :size="size"></pulse-loader>
-          </div>
-                  <table class="table table-hover table_head table-striped "  v-cloak>
-                      <thead>
-                          <tr>
-                              <th></th>
-                              <th>品种名</th>
-                              <th>规格</th>
-                               <th>数量</th>
-                              <th>单位</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr v-for="item in initIntentionList">
-                             <td  @click.stop="">
-                                 <label  class="checkbox_unselect"  @click="selectIntention($index)" ></label>
-                              </td>
-                              <td>{{item.breedName}}</td>
-                              <td>{{item.spec}}</td>
-                              <td>{{item.number}}</td>
-                              <td>{{item.unit}}</td>
-                          </tr>
-
-                      </tbody>
-                  </table>
-          <div class="order_pagination" style="margin-bottom:60px">
-            <pagination :combination="intentionParam"></pagination>
-          </div>
+            <div class="cover_loading">
+                <pulse-loader :loading="intentionParam.loading||orderParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-
-
-      <div class="trans_service clearfix" v-show="param.bizType==2">
-        <div class="cover_loading">
-          <pulse-loader :loading="orderParam.loading" :color="color" :size="size"></pulse-loader>
+            <table class="table table-hover table_head table-striped " v-cloak>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>品种名</th>
+                        <th>规格</th>
+                        <th>数量</th>
+                        <th>单位</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in initIntentionList">
+                        <td @click.stop="">
+                            <label class="checkbox_unselect" @click="selectIntention($index)"></label>
+                        </td>
+                        <td>{{item.breedName}}</td>
+                        <td>{{item.spec}}</td>
+                        <td>{{item.number}}</td>
+                        <td>{{item.unit}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="order_pagination" style="margin-bottom:60px">
+                <pagination :combination="intentionParam"></pagination>
+            </div>
         </div>
-        <table class="table table-hover table_head table-striped "  v-cloak>
-          <thead>
-          <tr>
-            <th></th>
-            <th>订单流水号</th>
-            <th>订单金额</th>
-            <th>商品</th>
-            <th>创建时间</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="item in initOrderlist">
-            <td  @click.stop="">
-              <label  class="checkbox_unselect"   @click="selectOrder(item)" ></label>
-            </td>
-            <td>{{item.no}}</td>
-            <td>{{item.amount}}</td>
-            <td>{{item.goods[0].brredName}}</td>
-            <td>{{item.ctime}}</td>
-          </tr>
-
-          </tbody>
-        </table>
-        <div class="order_pagination" style="margin-bottom:60px">
-          <pagination :combination="orderParam"></pagination>
+        <div class="trans_service clearfix" v-show="param.bizType==2">
+            <div class="cover_loading">
+                <pulse-loader :loading="orderParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_head table-striped " v-cloak>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>订单流水号</th>
+                        <th>订单金额</th>
+                        <th>商品</th>
+                        <th>创建时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in initOrderlist">
+                        <td @click.stop="">
+                            <label class="checkbox_unselect" @click="selectOrder(item)"></label>
+                        </td>
+                        <td>{{item.no}}</td>
+                        <td>{{item.amount}}</td>
+                        <td>{{item.goods[0].brredName}}</td>
+                        <td>{{item.ctime}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="order_pagination" style="margin-bottom:60px">
+                <pagination :combination="orderParam"></pagination>
+            </div>
         </div>
-      </div>
-
-
-
-
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false,cancel()">取消</button>
             <!-- <button type="button" class="btn  btn-confirm" @click="">确定</button> -->
@@ -87,46 +76,46 @@
 </template>
 <script>
 import {
-  initOrderlist,
-  initIntentionList
+    initOrderlist,
+    initIntentionList
 
 } from '../../vuex/getters'
 import {
-      getOrderList,
-     getIntentionList
+    getOrderList,
+    getIntentionList
 } from '../../vuex/actions'
 import pagination from '../pagination'
 export default {
-  components: {
-    pagination
-  },
+    components: {
+        pagination
+    },
     props: ['param'],
     data() {
         return {
-          orderParam:{
+            orderParam: {
                 loading: false,
                 color: '#5dc596',
                 size: '15px',
                 customerId: this.param.userId,
                 cur: 1,
                 all: 7,
-                link:'/order/'
-          },
-          intentionParam:{
+                link: '/order/'
+            },
+            intentionParam: {
                 loading: false,
                 color: '#5dc596',
                 size: '15px',
                 userId: this.param.userId,
                 cur: 1,
                 all: 7,
-                link:'/intention/'
-          }
+                link: '/intention/'
+            }
         }
     },
     vuex: {
-       getters: {
-          initOrderlist,
-          initIntentionList
+        getters: {
+            initOrderlist,
+            initIntentionList
 
         },
         actions: {
@@ -136,66 +125,67 @@ export default {
     },
 
     methods: {
-      orderSearch:function(){
-        this.getOrderList(this.customerParam);
-      },
-      intentionSearch:function(){
-        this.getIntentionList(this.intentionParam);
-      },
-      selectOrder:function(item){
-          this.$dispatch('getBiz',item);
-          this.param.show=false;
-
-      },
-      selectIntention:function(index){
-          this.$store.state.table.basicBaseList.intentionList[index].checked=!this.$store.state.table.basicBaseList.intentionList[index].checked;
-          this.$dispatch('getBiz',this.initIntentionList[index]);
-          this.param.show=false;
-          console.log(this.initIntentionList[index]);
-      },
-      cancel:function(){
-        this.$dispatch('cancel');
-      }
-
+        orderSearch: function() {
+            this.getOrderList(this.customerParam);
+        },
+        intentionSearch: function() {
+            this.getIntentionList(this.intentionParam);
+        },
+        selectOrder: function(item) {
+            this.$dispatch('getBiz', item);
+            this.param.show = false;
+        },
+        selectIntention: function(index) {
+            this.$store.state.table.basicBaseList.intentionList[index].checked = !this.$store.state.table.basicBaseList.intentionList[index].checked;
+            this.$dispatch('getBiz', this.initIntentionList[index]);
+            this.param.show = false;
+            console.log(this.initIntentionList[index]);
+        },
+        cancel: function() {
+            this.$dispatch('cancel');
+        }
     },
     events: {
-    fresh: function(input) {
-      if(this.param.bizType==1){
-        this.intentionParam.cur = input;
-        this.getIntentionList(this.intentionParam);
-      }
-      else if(this.param.bizType==2){
-        this.orderParam.cur = input;
-        this.getOrderList(this.orderParam);
-      }
-    }
-  },
-    created(){
-      if(this.param.bizType==2)this.getOrderList(this.orderParam);
-      if(this.param.bizType==1){this.getIntentionList(this.intentionParam);}
+        fresh: function(input) {
+            if (this.param.bizType == 1) {
+                this.intentionParam.cur = input;
+                this.getIntentionList(this.intentionParam);
+            } else if (this.param.bizType == 2) {
+                this.orderParam.cur = input;
+                this.getOrderList(this.orderParam);
+            }
+        }
+    },
+    created() {
+        if (this.param.bizType == 2) this.getOrderList(this.orderParam);
+        if (this.param.bizType == 1) {
+            this.getIntentionList(this.intentionParam);
+        }
     }
 }
 </script>
 <style scoped>
-.modal{
-  z-index: 1085;
-}
-.modal_con{
-  z-index: 1085;
+.modal {
+    z-index: 1085;
 }
 
-.top-title{
-  left: 0;
-  right: 0;
-  width: 800px;
+.modal_con {
+    z-index: 1085;
 }
+
+.top-title {
+    left: 0;
+    right: 0;
+    width: 800px;
+}
+
 .top-title span {
     font-size: 28px;
 }
 
-.order_pagination{
-  margin: 0 auto;
-  text-align: center;
+.order_pagination {
+    margin: 0 auto;
+    text-align: center;
 }
 
 .edit-content {
@@ -203,6 +193,7 @@ export default {
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
+
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
@@ -287,7 +278,7 @@ export default {
     display: inline-block;
 }
 
-.checkbox_unselect{
+.checkbox_unselect {
     background-image: url(/static/images/unselect.png);
     display: inline-block;
     background-repeat: no-repeat;
@@ -298,7 +289,8 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-.checkbox_select{
+
+.checkbox_select {
     background-image: url(/static/images/selected.png);
     display: inline-block;
     background-repeat: no-repeat;
@@ -309,8 +301,10 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-th,td{
-  width: 200px;
-  min-width: 200px;
+
+th,
+td {
+    width: 200px;
+    min-width: 200px;
 }
 </style>

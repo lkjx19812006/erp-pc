@@ -1,28 +1,27 @@
-  <template>
+<template>
     <div>
-      <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
-      <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
-      <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
-      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-      <mglist-model>
-          <!-- 头部搜索 -->
-          <div slot="top">
-            <div class="clear">
-                <div class="my_order col-xs-2">{{$t('static.pay_confirm')}}</div>
-                <div class="right">
-                    <button class="btn btn-primary transfer" @click="createSearch()">{{$t('static.refresh')}}</button>
+        <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
+        <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
+        <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
+        <mglist-model>
+            <!-- 头部搜索 -->
+            <div slot="top">
+                <div class="clear">
+                    <div class="my_order col-xs-2">{{$t('static.pay_confirm')}}</div>
+                    <div class="right">
+                        <button class="btn btn-primary transfer" @click="createSearch()">{{$t('static.refresh')}}</button>
+                    </div>
                 </div>
             </div>
-          </div>
-          <!-- 中间列表 -->
-          <div slot="form">
-              <div class="cover_loading">
-                  <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-              </div>
-              <table class="table table-hover table_color table-striped " v-cloak id="tab">
-                  <thead>
-                      <tr>
-                        <!-- <th>{{$t('static.order_no')}}</th>
+            <!-- 中间列表 -->
+            <div slot="form">
+                <div class="cover_loading">
+                    <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+                </div>
+                <table class="table table-hover table_color table-striped " v-cloak id="tab">
+                    <thead>
+                        <tr>
+                            <!-- <th>{{$t('static.order_no')}}</th>
                           <th>{{$t('static.order_type')}}</th>
                           <th>{{$t('static.order_source')}}</th>
                           <th>{{$t('static.consignee_name')}}</th>
@@ -56,11 +55,11 @@
                             <th>{{$t('static.order_source')}}</th>
                             <th>{{$t('static.review_status')}}</th>
                             <th style="width:200px;">{{$t('static.handle')}}</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr v-for="item in initSellOrderlist"  v-cloak>
-                      <!-- <td><a @click="clickOn({
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in initSellOrderlist" v-cloak>
+                            <!-- <td><a @click="clickOn({
                                       show:true,
                                       id:item.id,
                                       loading:false,
@@ -94,17 +93,17 @@
                         <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                         <td v-if="item.payWay==null">其他</td> 
                       -->
-                        <td>{{item.ctime}}</td>
-                        <td v-if="item.type==1">{{$t('static.sell')}}</td>
-                        <td v-if="item.type==0">{{$t('static.purchase')}}</td>
-                        <td v-if="item.mode==1">{{$t('static.together')}}</td>
-                        <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
-                        <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
-                        <td v-if="item.sample==0">否</td>
-                        <td v-if="item.sample==1">是</td>
-                        <td>{{item.goodsDesc}}</td>
-                        <td>{{item.total}}</td>
-                        <td><a @click="clickOn({
+                            <td>{{item.ctime}}</td>
+                            <td v-if="item.type==1">{{$t('static.sell')}}</td>
+                            <td v-if="item.type==0">{{$t('static.purchase')}}</td>
+                            <td v-if="item.mode==1">{{$t('static.together')}}</td>
+                            <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
+                            <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
+                            <td v-if="item.sample==0">否</td>
+                            <td v-if="item.sample==1">是</td>
+                            <td>{{item.goodsDesc}}</td>
+                            <td>{{item.total}}</td>
+                            <td><a @click="clickOn({
                                       show:true,
                                       id:item.id,
                                       loading:false,
@@ -112,33 +111,37 @@
                                       orderStatus:item.orderStatus,
                                       contact:'/order/myList'
                               })">{{item.customerName}}</a></td>
-                        <td></td>
-                        <td>{{item.employeeName}}</td>
-                        <td>{{item.consignee}}</td>
-                        <td>{{item.consigneePhone}}</td>
-                        <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
-                        <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
-                        <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
-                        <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
-                        <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
-                        <td v-if="item.payWay==4">WeChat</td>
-                        <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">未支付</td>
-                        <td v-if="item.orderStatus==30">已支付，等待审核</td>
-                        <td v-if="item.orderStatus==40">已审核</td>
-                        <td v-if="item.sourceType==0">交易员新建</td>
-                        <td v-if="item.sourceType==1">意向</td>
-                        <td v-if="item.sourceType==2">报价</td>
-                        <td v-if="item.sourceType==3">{{$t('static.sample_order')}}</td>
-                        <td v-if="item.validate==2"><div style="background:green;color:#fff">{{item.validate | Auditing}}</div></td>
-                        <td v-if="item.validate==-2"><div style="background:red;color:#fff">{{item.validate | Auditing}}</div></td>
-                        <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
-                        <td>
-                            <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1">
-                                   <img src="/static/images/{{$t('static.img_uncheck')}}.png"  title="等待核查" alt="等待核查" @click="pendingOrder(item,$index)" />
-                            </a>
-                            <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.validate==2"><img src="/static/images/unorderStatus.png" height="18" width="18" title="暂无处理" alt="暂无处理" @click="pendingOrder(item,$index)" /></a>
-                        </td>
-                        <!-- <td @click="editClick($index)">
+                            <td></td>
+                            <td>{{item.employeeName}}</td>
+                            <td>{{item.consignee}}</td>
+                            <td>{{item.consigneePhone}}</td>
+                            <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
+                            <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
+                            <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
+                            <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
+                            <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
+                            <td v-if="item.payWay==4">WeChat</td>
+                            <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">未支付</td>
+                            <td v-if="item.orderStatus==30">已支付，等待审核</td>
+                            <td v-if="item.orderStatus==40">已审核</td>
+                            <td v-if="item.sourceType==0">交易员新建</td>
+                            <td v-if="item.sourceType==1">意向</td>
+                            <td v-if="item.sourceType==2">报价</td>
+                            <td v-if="item.sourceType==3">{{$t('static.sample_order')}}</td>
+                            <td v-if="item.validate==2">
+                                <div style="background:green;color:#fff">{{item.validate | Auditing}}</div>
+                            </td>
+                            <td v-if="item.validate==-2">
+                                <div style="background:red;color:#fff">{{item.validate | Auditing}}</div>
+                            </td>
+                            <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
+                            <td>
+                                <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1">
+                                    <img src="/static/images/{{$t('static.img_uncheck')}}.png" title="等待核查" alt="等待核查" @click="pendingOrder(item,$index)" />
+                                </a>
+                                <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.validate==2"><img src="/static/images/unorderStatus.png" height="18" width="18" title="暂无处理" alt="暂无处理" @click="pendingOrder(item,$index)" /></a>
+                            </td>
+                            <!-- <td @click="editClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="component_action" v-show="item.show">
                                  <ul>
@@ -146,288 +149,292 @@
                                  </ul>
                              </div>
                         </td> -->
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
-           <!-- 底部分页 -->
-          <pagination :combination="loadParam"  slot="page"></pagination>
-      </mglist-model>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- 底部分页 -->
+            <pagination :combination="loadParam" slot="page"></pagination>
+        </mglist-model>
     </div>
-  </template>
-  <script>
-    import pagination from '../pagination'
-    import detailModel from '../order/orderDetail'
-    import searchModel from '../order/orderSearch'
-    import disposeModel  from  '../order/orderStatus'
-    import filter from '../../filters/filters'
-    import common from '../../common/common'
-    import changeMenu from '../../components/tools/tabs/tabs.js'
-    import tipsModel from '../tips/tipDialog'
-    import mglistModel from '../mguan/mgListComponent.vue'
-    import {
-        getList,
-        initSellOrderlist
-    } from '../../vuex/getters'
-    import {
-        getOrderCheckList,
-        alterOrder,
-        createOrder,
-        orderStatu,
-        getOrderDetail
-    } from '../../vuex/actions'
+</template>
+<script>
+import pagination from '../pagination'
+import detailModel from '../order/orderDetail'
+import disposeModel from '../order/orderStatus'
+import filter from '../../filters/filters'
+import common from '../../common/common'
+import changeMenu from '../../components/tools/tabs/tabs.js'
+import tipsModel from '../tips/tipDialog'
+import mglistModel from '../mguan/mgListComponent.vue'
+import {
+    getList,
+    initSellOrderlist
+} from '../../vuex/getters'
+import {
+    getOrderCheckList,
+    alterOrder,
+    createOrder,
+    orderStatu,
+    getOrderDetail
+} from '../../vuex/actions'
 
-    export default {
-        components: {
-            pagination,
-            detailModel,
-            searchModel,
-            disposeModel,
-            filter,
-            mglistModel,
-            tipsModel
+export default {
+    components: {
+        pagination,
+        detailModel,
+        disposeModel,
+        filter,
+        mglistModel,
+        tipsModel
+    },
+    data() {
+        return {
+            loadParam: {
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                show: false,
+                cur: 1,
+                all: 1,
+                consignee: '',
+                link: '/order/',
+                key: 'sellOrderList',
+                consigneePhone: '',
+                orderStatus: '',
+                payWay: '',
+                clients: '',
+                dataStatus: '',
+                total: 0,
+                type: 1,
+                orderStatus: 30
+            },
+            dialogParam: {
+                show: false
+            },
+            updateParam: {
+                show: false,
+            },
+            detailParam: {
+                show: false
+            },
+            updateorderParam: {
+                show: false
+            },
+            tipsParam: {
+                name: '',
+                alert: true,
+                show: false
+            },
+            disposeParam: { //订单处理各个状态
+                show: false,
+                sales: false,
+                handle: false,
+                payment: false,
+                Auditing: false,
+                sendoff: false,
+                express: false,
+                delivery: false,
+                aaaa: '/order/payConfirm',
+                key: 'sellOrderList'
+            },
+            show: true
+        }
+    },
+    vuex: {
+        getters: {
+            getList,
+            initSellOrderlist
         },
-        data() {
-            return {
-                loadParam: {
-                    loading: true,
-                    color: '#5dc596',
-                    size: '15px',
-                    show:false,
-                    cur: 1,
-                    all: 1,
-                    consignee:'',
-                    link:'/order/',
-                    key:'sellOrderList',
-                    consigneePhone:'',
-                    orderStatus:'',
-                    payWay:'',
-                    clients:'',
-                    dataStatus:'',
-                    total:0,
-                    type:1,
-                    orderStatus:30
-                },
-                dialogParam:{
-                    show: false
-                },
-                updateParam: {
-                    show:false,
-                },
-                detailParam: {
-                    show:false
-                },
-                updateorderParam:{
-                    show:false
-                },
-                tipsParam:{
-                  name:'',
-                  alert:true,
-                  show:false
-                },
-                disposeParam:{ //订单处理各个状态
-                    show:false,
-                    sales:false,
-                    handle:false,
-                    payment:false,
-                    Auditing:false,
-                    sendoff:false,
-                    express:false,
-                    delivery:false,
-                    aaaa:'/order/payConfirm',
-                    key:'sellOrderList'
-                },
-                show:true
+        actions: {
+            getOrderCheckList,
+            alterOrder,
+            createOrder,
+            orderStatu,
+            getOrderDetail
+        }
+    },
+    created() {
+        changeMenu(this.$store.state.table.isTop, this.getOrderCheckList, this.loadParam, localStorage.sellOrderCheckParam);
+        /*if(!this.$store.state.table.isTop){
+            console.log("刷新数据");
+            this.getOrderCheckList(this.loadParam);
+        }else{
+            console.log("不刷新数据");
+            this.loadParam = JSON.parse(localStorage.sellOrderParam);
+            this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.sellOrderCheckList);
+        }*/
+    },
+    methods: {
+        editClick: function(sub) {
+            if (this.$store.state.table.basicBaseList.sellOrderList[sub].show) {
+                this.$store.state.table.basicBaseList.sellOrderList[sub].show = !this.$store.state.table.basicBaseList.sellOrderList[sub].show;
+            } else {
+                this.$store.state.table.basicBaseList.sellOrderList[sub].show = true;
             }
         },
-        vuex: {
-            getters: {
-                getList,
-                initSellOrderlist
-            },
-            actions: {
-                getOrderCheckList,
-                alterOrder,
-                createOrder,
-                orderStatu,
-                getOrderDetail
-            }
+        newOrder: function(param) {
+            this.dialogParam = param;
         },
-        created() {
-            changeMenu(this.$store.state.table.isTop,this.getOrderCheckList,this.loadParam,localStorage.sellOrderCheckParam); 
-            /*if(!this.$store.state.table.isTop){
-                console.log("刷新数据");
-                this.getOrderCheckList(this.loadParam);
-            }else{
-                console.log("不刷新数据");
-                this.loadParam = JSON.parse(localStorage.sellOrderParam);
-                this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.sellOrderCheckList);
-            }*/
+        createSearch: function() {
+            this.getOrderCheckList(this.loadParam);
         },
-        methods: {
-            editClick: function(sub) {
-                if(this.$store.state.table.basicBaseList.sellOrderList[sub].show){
-                    this.$store.state.table.basicBaseList.sellOrderList[sub].show=!this.$store.state.table.basicBaseList.sellOrderList[sub].show;
-                }else{
-                     this.$store.state.table.basicBaseList.sellOrderList[sub].show=true;
-                }
-            },
-            newOrder:function(param){
-                 this.dialogParam=param;
-            },
-            createSearch:function(){
-                this.getOrderCheckList(this.loadParam);
-            },
-            clickOn:function(param){
-                this.detailParam=param;
-            },
-            updateOrder:function(param){
-                this.dialogParam=param;
-            },
-            pendingOrder:function(item,sub){
-                item.show=!item.show;
-                item.sub = sub;
-                this.disposeParam = item;
-                this.disposeParam.key = "sellOrderList";
-                this.disposeParam.show = true;
+        clickOn: function(param) {
+            this.detailParam = param;
+        },
+        updateOrder: function(param) {
+            this.dialogParam = param;
+        },
+        pendingOrder: function(item, sub) {
+            item.show = !item.show;
+            item.sub = sub;
+            this.disposeParam = item;
+            this.disposeParam.key = "sellOrderList";
+            this.disposeParam.show = true;
 
-                /*--采购状态type==0--*/
-                if(item.orderStatus==30&&item.type==0){
-                    this.disposeParam.tips="订单买家已付款，商家正在核查！";
-                    /*this.disposeParam.Auditing = true;*/
-                }
-                /*--销售状态type==1--*/
-                if(item.orderStatus==30&&item.type==1){
-                    this.disposeParam.tips="订单买家已付款，商家正在核查,！";
-                    this.disposeParam.Auditing = true;
-                }
-                this.disposeParam.callback = this.orderBack;
-            },
-            orderBack:function(title){
-                this.tipsParam.show = true;
-                this.tipsParam.name=title;
-                this.tipsParam.alert=true;
-            },
-        },
-        filter:(filter,{}),
-        ready(){
-          common('tab','table_box',1);
-        },
-        events: {
-            fresh: function(input) {
-                this.loadParam.cur = input;
-                this.getOrderCheckList(this.loadParam);
+            /*--采购状态type==0--*/
+            if (item.orderStatus == 30 && item.type == 0) {
+                this.disposeParam.tips = "订单买家已付款，商家正在核查！";
+                /*this.disposeParam.Auditing = true;*/
             }
+            /*--销售状态type==1--*/
+            if (item.orderStatus == 30 && item.type == 1) {
+                this.disposeParam.tips = "订单买家已付款，商家正在核查,！";
+                this.disposeParam.Auditing = true;
+            }
+            this.disposeParam.callback = this.orderBack;
+        },
+        orderBack: function(title) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+        },
+    },
+    filter: (filter, {}),
+    ready() {
+        common('tab', 'table_box', 1);
+    },
+    events: {
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getOrderCheckList(this.loadParam);
         }
     }
-  </script>
-  <style scoped>
-    .myOrder {
-        width: 100%;
-        white-space: nowrap;
-    }
-    .order_search {
-        padding: 25px 30px 0 40px;
-    }
-    .transfer{
-        margin-right: 20px;
-    }
-    .order_table {
-        margin-top: 10px;
-        position: relative;
-    }
+}
+</script>
+<style scoped>
+.myOrder {
+    width: 100%;
+    white-space: nowrap;
+}
 
-    .order_table .table {
-        background: #fff;
-        position: relative;
-        margin-bottom: 10px;
-        border-top: 1px solid #ddd;
-    }
-    .component_action{
-        right: 43px;
-    }
-    .order_table .table > ul {
-        position: relative;
-        width: 100%;
-        display: table;
-        border-bottom: 1px solid #ddd;
-        margin-bottom: 0;
-    }
+.order_search {
+    padding: 25px 30px 0 40px;
+}
 
-    .order_table .table > ul >li {
-        float: left;
-        padding: 7.5px 0;
-        text-align: center;
-        width: 11.1%;
-        display: table-cell;
-    }
+.transfer {
+    margin-right: 20px;
+}
 
-    .order_table .table > ul >li a {
-        color: #003077;
-    }
+.order_table {
+    margin-top: 10px;
+    position: relative;
+}
 
-    .order_table .table_hover > ul:hover {
-        background: #f5f5f5;
-    }
+.order_table .table {
+    background: #fff;
+    position: relative;
+    margin-bottom: 10px;
+    border-top: 1px solid #ddd;
+}
 
-    .order_table .table > ul >li img {
-        margin: auto;
-    }
+.component_action {
+    right: 43px;
+}
 
-    .order_action {
-        position: absolute;
-        right: 97px;
-        padding: 10px 0;
-        top: 32px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background: #fff;
-        z-index: 10;
-        min-width: 90px;
-        max-width: 200px;
-    }
+.order_table .table > ul {
+    position: relative;
+    width: 100%;
+    display: table;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 0;
+}
 
-    .order_show {
-        position: absolute;
-        right: 20px;
-        padding: 10px 0;
-        top: 32px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background: #fff;
-        z-index: 10;
-        min-width: 90px;
-        max-width: 200px;
-        display: block;
-    }
+.order_table .table > ul >li {
+    float: left;
+    padding: 7.5px 0;
+    text-align: center;
+    width: 11.1%;
+    display: table-cell;
+}
 
-    .order_action ul,
-    .order_show ul {
-        margin-bottom: 0;
-    }
+.order_table .table > ul >li a {
+    color: #003077;
+}
 
-    .order_action ul li a,
-    .order_show ul li a {
-        color: #003077;
-        padding: 5px 5px 5px 10px;
-        display: block;
-    }
+.order_table .table_hover > ul:hover {
+    background: #f5f5f5;
+}
 
-    .expand-transition {
-        transition: all .3s ease;
-        overflow: inherit;
-    }
+.order_table .table > ul >li img {
+    margin: auto;
+}
 
-    .expand-enter,
-    .expand-leave {
-        opacity: 0;
-        height: 0;
-    }
+.order_action {
+    position: absolute;
+    right: 97px;
+    padding: 10px 0;
+    top: 32px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    z-index: 10;
+    min-width: 90px;
+    max-width: 200px;
+}
 
-    .v-spinner {
-        text-align: center;
-    }
-    .order_pagination{
-        text-align: center;
-    }
-  </style>
+.order_show {
+    position: absolute;
+    right: 20px;
+    padding: 10px 0;
+    top: 32px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    z-index: 10;
+    min-width: 90px;
+    max-width: 200px;
+    display: block;
+}
+
+.order_action ul,
+.order_show ul {
+    margin-bottom: 0;
+}
+
+.order_action ul li a,
+.order_show ul li a {
+    color: #003077;
+    padding: 5px 5px 5px 10px;
+    display: block;
+}
+
+.expand-transition {
+    transition: all .3s ease;
+    overflow: inherit;
+}
+
+.expand-enter,
+.expand-leave {
+    opacity: 0;
+    height: 0;
+}
+
+.v-spinner {
+    text-align: center;
+}
+
+.order_pagination {
+    text-align: center;
+}
+</style>
