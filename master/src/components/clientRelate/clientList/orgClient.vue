@@ -712,7 +712,7 @@ export default {
 #table_box table th,
 #table_box table td {
     width: 108px;
-    min-width: 102px;
+    min-width: 6px;
 }
 
 .service-nav {
