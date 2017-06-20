@@ -147,26 +147,27 @@
                         <th style="min-width: 40px;">
                             <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
                         </th>
-                        <th>客户ID</th>
-                        <th style="min-width:145px;">星级</th>
-                        <th>是否为划转</th>
-                        <th>所属业务员</th>
-                        <th>创建时间</th>
-                        <th>最近成交时间</th>
-                        <th>客户名称</th>
-                        <th>成交次数</th>
+                        <th>{{$t('static.client_name')}}</th>
+                        <th>{{$t('static.client_id')}}</th>
+                        <th>{{$t('static.contact')}}</th>
+                        <th>{{$t('static.position')}}</th>
+                        <th>{{$t('static.cellphone')}}</th>
+                        <th>{{$t('static.phone_origin')}}</th>
+                        <th>{{$t('static.telephone')}}</th>
+                        <th style="min-width:145px;">{{$t('static.credit_rating')}}</th>
+                        <th>{{$t('static.salesman')}}</th>
+                        <th>{{$t('static.transaction_num')}}</th>
+                        <th>{{$t('static.recent_contact')}}</th>
                         <th>成交金额</th>
-                        <th>客户类型</th>
-                        <th>联系人</th>
-                        <th>联系人职位</th>
-                        <th>联系人电话</th>
-                        <th>联系人手机</th>
-                        <th>手机归属地</th>
-                        <th>客户归属地</th>
+                        <th>{{$t('static.client_type')}}</th> 
+                        <th>{{$t('static.client_origin')}}</th>
+                        <th>{{$t('static.main_product')}}</th>
                         <th>划转/来源</th>
-                        <th>详细地址</th>
-                        <th>主营产品</th>
-                        <th>操作</th>
+                        <!-- <th>{{$t('static.detailed_address')}}</th> -->
+                        <th>{{$t('static.create_time')}}</th>
+                        <th v-if="this.initLogin.orgId==29">跟进状态</th>
+                        <th v-if="this.initLogin.orgId==29">跟进说明</th>
+                        <th>{{$t("static.operation")}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -176,17 +177,6 @@
                         <td @click.stop="" style="min-width: 40px">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
-                        <td>{{item.id}}</td>
-                        <td style="min-width:145px;">
-                            <Rate disabled :value.sync="item.creditLevel"></Rate>
-                        </td>
-                        <td>
-                            <span v-if="item.originalEmployee==-1">--</span>
-                            <span v-else>{{item.originalEmployeeName}}</span>
-                        </td>
-                        <td>{{item.employeeName}}</td>
-                        <td>{{item.ctime|timeFilters}}</td>
-                        <td>{{item.lastOrderTime|timeFilters}}</td>
                         <td class="underline" @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -197,23 +187,36 @@
                                 url:'/customer/',
                                 key:'allCustomerList'
                                 })">{{item.name}}</td>
-                        <td>{{item.orderTotal}}</td>
-                        <td>{{item.orderAmount}}元</td>
-                        <td>{{item.type | customerType}}</td>
+                        <td>{{item.id}}</td>
                         <td>{{item.mainContact}}</td>
                         <td>{{item.mainPosition}}</td>
-                        <td>{{item.tel}}</td>
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
+                        <td>{{item.tel}}</td>
+                        <td style="min-width:145px;">
+                            <Rate disabled :value.sync="item.creditLevel"></Rate>
+                        </td>
+                        <td>{{item.employeeName}}</td>
+                        <td>{{item.orderTotal}}</td>
+                        <!-- <td>
+                            <span v-if="item.originalEmployee==-1">--</span>
+                            <span v-else>{{item.originalEmployeeName}}</span>
+                        </td> -->     
+                        <td>
+                            <span v-if="item.orderTotal!=0">{{item.lastOrderTime | timeFilters}}</span>
+                            <span v-else>----:--:--</span>
+                        </td>
+                        <td>{{item.orderAmount}}元</td>
+                        <td>{{item.type | customerType}}</td> 
                         <td>{{item.provinceName}}{{item.cityName}}</td>
+                        <td>{{item.bizScope}}</td>
                         <td>                                
                             <p style="color:red;border-bottom:1px solid #ccc" v-if="item.originalEmployee!=-1">
                                 批量划转（{{item.originalEmployeeName}}）
                             </p>
                             <p >{{item.sourceType}}</p>
                         </td>
-                        <td>{{item.address}}</td>
-                        <td>{{item.bizScope}}</td>
+                        <td>{{item.ctime|timeFilters}}</td>
                         <td @click="modifyClient({
                                                 id:item.id,
                                                 sub:$index,
@@ -627,7 +630,10 @@ export default {
 .transfer {
     margin-right: 8px;
 }
-
+.ivu-rate{
+    font-size:14px!important;
+    margin:0px!important;
+}
 .table>tbody>tr>td {
     max-width: 300px;
     white-space: normal;
