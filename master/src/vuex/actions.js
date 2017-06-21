@@ -11216,6 +11216,7 @@ export const createStockInfo = ({ dispatch }, param) => { //新建库存
                 total: '',
                 show: false
             })
+        param.sCallBack(res.json().msg)
             //dispatch(types.ADD_STOCK_LIST, param);
             //window.location.reload()
     }, (res) => {
@@ -11258,17 +11259,17 @@ export const editStockInfo = ({ dispatch }, param) => { //修改库存
         body: body
     }).then((res) => {
         param.callback({
-            loading: false,
-            breedName: "",
-            breedId: '',
-            depotName: '',
-            depotType: '',
-            cur: 1,
-            all: 1,
-            total: '',
-            show: false
-        })
-
+                loading: false,
+                breedName: "",
+                breedId: '',
+                depotName: '',
+                depotType: '',
+                cur: 1,
+                all: 1,
+                total: '',
+                show: false
+            })
+        param.sCallBack(res.json().msg)
     }, (res) => {
         console.log('fail')
     })

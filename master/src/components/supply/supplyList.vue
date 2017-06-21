@@ -175,20 +175,22 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th>所属业务员</th>
-                        <th>创建时间</th>
-                        <th>最近成交时间</th>
                         <th>供应商名称</th>
-                        <th>星级</th>
-                        <th>成交次数</th>
-                        <th>供应商类型</th>
                         <th>联系人</th>
                         <th>联系人职位</th>
                         <th>联系人电话</th>
                         <th>手机归属地</th>
+                        <th>星级</th>
+                        <th>所属业务员</th>
+                        <th>供应商类型</th>
                         <th>客户归属地</th>
-                        <th>详细地址</th>
+                        <th>成交次数</th>
+                        <th>最近成交时间</th>
                         <th>主营产品</th>
+                        <th style="min-width:150px;">划转/来源</th>
+                        <th>创建时间</th>      
+                        <!-- <th>详细地址</th> -->
+                        
                         <!-- <th>分类</th>
                   <th>客户来源</th>
                   <th>客户信用等级</th>
@@ -214,9 +216,6 @@
                     <tr>
                     </tr>
                     <tr v-for="item in initSupplyCustomerlist" :style="{background:(item.originalEmployee!=-1?'lightYellow':'')}">
-                        <td>{{item.employeeName}}</td>
-                        <td>{{item.ctime}}</td>
-                        <td>{{item.lastOrderTime}}</td>
                         <td class="underline" @click="clickOn({
                                       id:item.id,
                                       sub:$index,
@@ -226,18 +225,29 @@
                                       url:'/customer/',
                                       key:'supplyCustomerList'
                                       })">{{item.name}}</td>
+                        <td>{{item.mainContact}}</td>
+                        <td>{{item.position}}</td>
+                        <td>{{item.mainPhone}}</td>
+                        <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>
                           <Rate disabled :value.sync="item.creditLevel"></Rate>
                         </td>
-                        <td>{{item.orderTotal}}</td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.typeDesc}}</td>
-                        <td>{{item.mainContact}}</td>
-                        <td></td>
-                        <td>{{item.mainPhone}}</td>
-                        <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
-                        <td>{{item.address}}</td>
+                        <td>{{item.orderTotal}}</td>
+                        <td>{{item.lastOrderTime}}</td> 
+                        
                         <td>{{item.bizScope}}</td>
+                        <td>                                
+                            <p style="color:red;border-bottom:1px solid #ccc" v-if="item.originalEmployee!=-1">
+                                批量划转（{{item.originalEmployeeName}}）
+                            </p>
+                            <p >{{item.sourceType}}</p>
+                        </td>
+                        <!-- <td>{{item.address}}</td> -->
+                        
+                        <td>{{item.ctime}}</td>
                         <!-- <td>{{item.classifyDesc | classify}}</td>
                   <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
                                 <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
@@ -591,7 +601,7 @@ export default {
 #table_box table th,
 #table_box table td {
     width: 119px;
-    min-width: 119px;
+    min-width: 50px;
 }
 .ivu-rate{
     font-size:14px!important;
