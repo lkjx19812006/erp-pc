@@ -5,6 +5,7 @@
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <delete-model :param="deleteParam" v-if="deleteParam.show"></delete-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+    <offer-now :param="offerParam" v-if="offerParam.show"></offer-now>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
@@ -128,7 +129,11 @@
                             <button v-if="item.inquire==0" class="btn btn-danger btn-xs" @click.stop="deletePurchase(item.id,$index)">删除</button>
                             <button v-if="item.inquire==0" class="btn btn-success btn-xs" @click.stop="singleInquire(item.id,$index)">询价扩散</button>
                             <button v-if="item.inquire==1||item.inquire==2" class="btn btn-danger btn-xs" @click.stop="cancelInquire(item.id,$index)">终止询价</button>
-                            <button v-else v-if="item.inquire!=0" class="btn btn-primary btn-xs" @click.stop="singleInquire(item.id,$index)">恢复询价</button>
+                            <div v-else v-if="item.inquire!=0" >
+                                <button class="btn btn-primary btn-xs" @click.stop="singleInquire(item.id,$index)">恢复询价</button>
+                                <button class="btn btn-info btn-xs" @click.stop="editPurchase(item,$index)">编辑</button>
+                                <button class="btn btn-danger btn-xs" @click.stop="deletePurchase(item.id,$index)">删除</button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -150,6 +155,7 @@ import filter from '../../../filters/filters'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import common from '../../../common/common'
 import mglistModel from '../../mguan/mgListComponent.vue'
+import offerNow from '../offerNow.vue'
 import {
     initMyPurchaseList
 } from '../../../vuex/getters'
@@ -168,7 +174,8 @@ export default {
         deleteModel,
         tipsdialogModel,
         pagination,
-        mglistModel
+        mglistModel,
+        offerNow
     },
     vuex: {
         getters: {
@@ -275,13 +282,16 @@ export default {
                 name: '',
                 alert: true
             },
-
+            offerParam:{
+                show:false,
+            },
             checked: false
         }
     },
     methods: {
         selectSearch: function() { //搜索
             this.getPurchaseOrderList(this.loadParam);
+            //this.offerParam.show = true
         },
         resetCondition: function() { //清除搜索条件
             this.loadParam.source = '';

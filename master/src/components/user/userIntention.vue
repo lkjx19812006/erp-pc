@@ -124,7 +124,7 @@
                                     </select>
                                 </div>
                                 <div class="editpage-input" style="clear:both;padding-top:15px">
-                                    <label class="editlabel">过期时间</label>
+                                    <label class="editlabel">过期时间<span class="system_danger">（过期时间应为30天内）</span></label>
                                     <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" style="height:36px">
                                     </mz-datepicker>
                                     <button type="button" class="btn btn-default" style="margin-top:-6px" height="24" width="24" @click="reset('duedate')">清空</button>

@@ -42,17 +42,27 @@
                                 <label class="editlabel">客户电话： <span class="system_danger" v-if="$validation.phone.required">{{$t('static.required')}}</span></label>
                                 <input type="text" class="form-control edit-input" v-model="param.customerPhone" value="{{param.customerPhone}}" v-validate:phone="['required']" />
                             </div>
-                            <!-- 省 -->
-                            <div class="editpage-input col-md-4">
-                                <label class="editlabel">省</label>
+                            <div class="editpage-input col-md-12" >
+                                <div style="margin-top:20px;">
+                                    <Icon type="location" style="font-size:14px;"></Icon>
+                                    <h5 style="display:inline">交货地</h5>  
+                                </div>
+                                <div class="editpage-input col-md-4">
+                                <label class="editlabel">省
+                                    <span class="system_danger" v-if="$validation.province.required">必填项</span>
+                                </label>
                                 <div type="text" class="edit-input">
+                                    <input type="text" v-model="province.id" v-validate:province="{'required':true}" v-show="false">
                                     <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
                                     </v-select>
                                 </div>
                             </div>
                             <!-- 市 -->
                             <div class="editpage-input col-md-4">
-                                <label class="editlabel">{{$t('static.city')}}</label>
+                                <label class="editlabel">{{$t('static.city')}}
+                                    <span class="system_danger" v-if="$validation.city.required">必填项</span>
+                                </label>
+                                <input type="text" v-model="city.id" v-validate:city="{'required':true}" v-show="false">
                                 <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_province_first')}}" />
                                 <div v-if="province.cname" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="city" :on-change="selectDistrict" :options="initCitylist" placeholder="市/City" label="cname">
@@ -61,13 +71,19 @@
                             </div>
                             <!-- 区 -->
                             <div class="editpage-input col-md-4">
-                                <label class="editlabel">{{$t('static.area')}}</label>
+                                <label class="editlabel">{{$t('static.area')}}
+                                    <span class="system_danger" v-if="$validation.district.required">必填项</span>
+                                </label>
+                                <input type="text" v-model="district.id" v-validate:district="{'required':true}" v-show="false">
                                 <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
                                 <div v-if="city.cname" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="district" :options="initDistrictlist" placeholder="区" label="cname">
                                     </v-select>
                                 </div>
                             </div>
+                            </div>
+                            <!-- 省 -->
+                            
                             <!-- <div class="editpage-input col-md-8">
                                 <label class="editlabel">详细地址 <span class="system_danger" v-if="$validation.address.required">必填项</span></label>
                                 <input type="text" class="form-control edit-input" style="width:95%" v-model="param.address" v-validate:address="{required:true}"/>
@@ -81,8 +97,8 @@
                                 </select>
                             </div> -->
                             <div class="editpage-input col-md-8">
-                                <label class="editlabel">付款方式 <span class="system_danger" v-if="$validation.paymentWay.required">必填项</span></label>
-                                <input type="text" v-model="param.paymentWay" v-validate:paymentWay='{required:true}' v-show="false"/>
+                                <label class="editlabel">付款方式 <span class="system_danger" v-if="$validation.paymentway.required">必填项</span></label>
+                                <input type="text" v-model="param.paymentWay" v-validate:paymentway='{required:true}' v-show="false"/>
                                 <pay-type :width="'95%'" :param="param"></pay-type>
                             </div>
                             
