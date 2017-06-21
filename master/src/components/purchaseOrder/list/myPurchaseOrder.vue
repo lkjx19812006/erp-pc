@@ -19,6 +19,10 @@
                     <dd class="left margin_right">
                         <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
+                    <dt class="left transfer marg_top">采购单ID</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.purchaseId" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
                     <dt class="left transfer marg_top">询价状态：</dt>
                     <dd class="left margin_right">
                         <select class="form-control" v-model="loadParam.inquire" @change="selectSearch()">
@@ -207,7 +211,8 @@ export default {
                 offer: '-1',
                 customerName: '',
                 customerPhone: '',
-                purchaseContent: ''
+                purchaseContent: '',
+                purchaseId:''
             },
             createParam: {
                 show: false,
@@ -305,6 +310,7 @@ export default {
             this.loadParam.customerName = '';
             this.loadParam.customerPhone = '';
             this.loadParam.purchaseContent = ''
+            this.loadParam.purchaseId = ''
             this.getPurchaseOrderList(this.loadParam);
         },
         checkedAll: function() { //全选
@@ -483,7 +489,7 @@ export default {
 #table_box table th,
 #table_box table td {
     width: 115px;
-    min-width: 60px;
+    min-width: 100px;
 }
 
 .service-nav {

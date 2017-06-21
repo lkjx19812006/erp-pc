@@ -6569,6 +6569,9 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
     if (param.purchaseContent) {
         url += '&buyDesc=' + param.purchaseContent;
     }
+    if (param.purchaseId) {
+        url += '&id=' + param.purchaseId;
+    }
     Vue.http({
         method: 'GET',
         url: url,
