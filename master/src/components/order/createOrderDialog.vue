@@ -330,12 +330,26 @@
                             <img src="/static/images/breedinfo@2x.png" style="display:inline" />
                             <h5 style="display:inline">{{$t('static.other_info')}}</h5>
                         </div>
+                        <!-- 运费 -->
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">{{$t('static.freight')}}</label>
+                            <div class="clearfix">
+                                <input type="number" class="form-control edit-input" v-model="param.freight" style="display:inline-block;float:left;" @keyup="" />
+                            </div>
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">运费支付</label>
+                            <select type="text" class="form-control edit-input" v-model="param.freightType" @change="selectBizType()">
+                                <option value="0">我方支付</option>
+                                <option value="1">客户支付</option>
+                            </select>
+                        </div>
                         <!-- 杂费 -->
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.sundry_fees')}}</label>
                             <div class="clearfix">
                                 <!-- <button class="btn btn-default left" style="font-size: 16px" @click="addIncidentals()">+</button> -->
-                                <input type="number" class="form-control edit-input" v-model="param.incidentals" style="display:inline-block;float:left;" value="{{param.incidentals}}" @keyup="" />
+                                <input type="number" class="form-control edit-input" v-model="param.incidentals" style="display:inline-block;float:left;" @keyup="" />
                                 <!-- <button class="btn btn-default right" style="font-size: 16px" @click="subduction()">-</button> -->
                             </div>
                         </div>
@@ -344,7 +358,7 @@
                             <label class="editlabel">{{$t('static.preferential')}}</label>
                             <div class="clearfix">
                                 <!-- <button class="btn btn-default left" style="font-size: 16px" @click="addCompute()">+</button> -->
-                                <input type="number" class="form-control edit-input" v-model="param.preferential" style="display:inline-block;float:left;" value="{{param.preferential}}" />
+                                <input type="number" class="form-control edit-input" v-model="param.preferential" style="display:inline-block;float:left;" />
                                 <!-- <button class="btn btn-default right" style="font-size: 16px" @click="reduce()">-</button> -->
                             </div>
                         </div>
@@ -882,11 +896,17 @@ export default {
         },
         changeTotal: function() {
             var patt = new RegExp(/\.\d{3,}/);
+            if (!this.param.freight) {
+                this.param.freight = 0
+            }
             if (!this.param.incidentals) {
                 this.param.incidentals = 0
             }
             if (!this.param.preferential) {
                 this.param.preferential = 0
+            }
+            if (patt.test(this.param.freight)) { //如果超过两位小数，则只保留前两位小数
+                this.param.freight = this.param.freight.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/, '$1$2.$3');
             }
             if (patt.test(this.param.incidentals)) { //如果超过两位小数，则只保留前两位小数
                 this.param.incidentals = this.param.incidentals.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/, '$1$2.$3');
@@ -906,13 +926,19 @@ export default {
             //this.param.incidentals.replace(/^(\-)*(\d+)\.(\d\d)*$/,'$1$2.$3');
             this.param.total = (parseFloat(this.altogether) * 1000 + parseFloat(this.param.incidentals) * 1000 - parseFloat(this.param.preferential) * 1000) / 1000;
             this.param.cost = (parseFloat(this.costmoney) * 1000) / 1000;
+            //如果是客户支付运费total=total+freight
+            if (this.param.freightType == 1) {
+                this.param.total = (parseFloat(this.param.total) * 1000 + parseFloat(this.param.freight) * 1000) / 1000;
+            }
         }
     },
     watch: {
+        'param.freightType': 'changeTotal',
+        'param.freight': 'changeTotal',
         'param.incidentals': 'changeTotal',
         'param.preferential': 'changeTotal',
         'altogether': 'changeTotal',
-        'costmoney': 'changeTotal'
+        'costmoney': 'changeTotal',
     },
     events: {
         breed: function(breed) {

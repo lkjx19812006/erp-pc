@@ -576,6 +576,8 @@ export default {
                 customerName: '',
                 customerPhone: '',
                 comments: '',
+                freight: 0,
+                freightType: 1, //0/1，我方支付/客户支付（默认）
                 incidentals: 0,
                 incidentalsDesc: '',
                 preferential: 0,
@@ -784,11 +786,11 @@ export default {
             })
         },
         newOrder: function() {
-            //新建订单时将一些之前填入的信息请空
-
+            //新建订单时将一些之前填入的信息清空
             this.createParam.goods = [];
             this.createParam.total = "";
             this.createParam.cost = "";
+            this.createParam.freight = 0;
             this.createParam.incidentals = 0;
             this.createParam.preferential = 0;
             this.createParam.show = true;
