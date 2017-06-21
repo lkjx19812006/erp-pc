@@ -6755,7 +6755,10 @@ export const modifyPurchaseOrder = ({ dispatch }, param) => { //修改采购单
         comment: param.comment,
         buyDesc: param.buyDesc,
         paymentWay: param.paymentWay,
-        intentionList: param.intentionList
+        intentionList: param.intentionList,
+        province:param.province,
+        city:param.city,
+        district:param.district
     }
 
     Vue.http({

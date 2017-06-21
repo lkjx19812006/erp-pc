@@ -33,7 +33,7 @@
 				if(this.param.quality.indexOf(item)!=-1){
 					return
 				}else{
-					this.param.quality += item+' '
+					this.param.quality += item+','
 				}
 				
 			}

@@ -24,28 +24,74 @@
             <section>
                 <div class="client-section clearfix">
                     <div class="col-md-12">
-                        <!-- 意向信息 -->
-                        <!-- <h4 class="section_title">采购单交易员基本信息</h4>
+                        <!-- 采购单交易员信息 -->
+                        <h4 class="section_title">采购单交易员基本信息</h4>
                         <div class="panel panel-default" style="border:none">
                             <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                <label class="col-md-3 col-sm-4 col-xs-6">
-                                    采购单ID：{{initIntentionOfferDetail.intention.customerId}}
-                                </label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">
-                                    意向ID：{{initIntentionOfferDetail.intention.customerName}}
-                                </label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">
                                     交易员姓名：{{initIntentionOfferDetail.intention.employeeName}}
                                 </label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">
-                                    交易员联系方式：{{initIntentionOfferDetail.intention.breedName}}
+                                    采购单ID：{{initIntentionOfferDetail.intention.indentId}}
                                 </label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">
+                                    意向ID：{{initIntentionOfferDetail.intention.id}}
+                                </label>
+                                
+                                <!-- <label class="col-md-3 col-sm-4 col-xs-6">
+                                    交易员联系方式：{{initIntentionOfferDetail.intention.breedName}}
+                                </label> -->
                             </ul>
-                        </div> -->
+                        </div>
+                        <!-- 意向信息 -->
+                        <h4 class="section_title">意向信息</h4>
+                        <div class="panel panel-default" style="border:none">
+                            <table class="table table-hover table_color table-striped " v-cloak>
+                                <thead>
+                                    <tr>
+                                        <th>客户ID</th>
+                                        <th>客户名称</th>
+                                        <th>客户归属业务员</th>
+                                        <th>意向类型</th>
+                                        <th>品种</th>
+                                        <th>数量</th>
+                                        <th>单价</th>
+                                        <th>付款方式</th>
+                                        <th>产地</th>
+                                        <th>规格</th>
+                                        <th>上架状态</th>
+                                        <th>报价人数</th>
+                                        <th>上架时间</th>
+                                        <th>过期时间</th>
+                                        <th>备注说明</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{initIntentionOfferDetail.intention.customerId}}</td>
+                                        <td>{{initIntentionOfferDetail.intention.customerName}}</td>
+                                        <td>{{initIntentionOfferDetail.intention.employeeName}}</td>
+                                        <td>
+                                            {{initIntentionOfferDetail.intention.type | intentionType initIntentionOfferDetail.intention.especial initIntentionOfferDetail.intention.preSell}}
+                                        </td>
+                                        <td>{{initIntentionOfferDetail.intention.breedName}}</td>
+                                        <td>{{initIntentionOfferDetail.intention.number}}{{initIntentionOfferDetail.intention.unit | Unit}}</td>
+                                        <td>{{initIntentionOfferDetail.intention.price}}</td>
+                                        <td>{{initIntentionOfferDetail.intention.paymentWay}}</td>
+                                        <td>{{initIntentionOfferDetail.intention.location | province}}</td>
+                                        <td>{{initIntentionOfferDetail.intention.spec}}</td>
+                                        <td>{{initIntentionOfferDetail.intention.onSell | onsell}}</td>
+                                        <td>{{initIntentionOfferDetail.offers.length}}</td>
+                                        <td>{{initIntentionOfferDetail.intention.pubdate | date}}</td>
+                                        <td>{{initIntentionOfferDetail.intention.duedate | date}}</td>
+                                        <td>{{initIntentionOfferDetail.intention.description}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         <!-- 报价信息 -->
                         <div class="clear section_title">
                             <h4 class="pull-left">报价信息
-                                <span v-if="initIntentionOfferDetail.offer.accept==0" class="warning">({{initIntentionOfferDetail.offer.accept | offerAccept}})</span>
+                                <!-- <span v-if="initIntentionOfferDetail.offer.accept==0" class="warning">({{initIntentionOfferDetail.offer.accept | offerAccept}})</span>
                                 <span v-if="initIntentionOfferDetail.offer.accept==1" class="success">({{initIntentionOfferDetail.offer.accept | offerAccept}})</span>
                                 <span v-if="initIntentionOfferDetail.offer.accept==2 ||initIntentionOfferDetail.offer.accept==3" class="error">
                                 ({{initIntentionOfferDetail.offer.accept | offerAccept}}：
@@ -55,10 +101,8 @@
                                             {{initIntentionOfferDetail.offer.comments}}
                                         </div>
                                     </Poptip>)
-                                </span>
+                                </span> -->
                             </h4>
-                            <button type="botton" class="btn btn-primary pull-right" @click="offerAccept(initIntentionOfferDetail.offer)" v-if="param.idOrName">       处理报价
-                            </button>
                         </div>
                         <!-- 报价图片 -->
                         <div class="clearfix">
@@ -67,68 +111,60 @@
                             </div>
                         </div>
                         <div class="panel panel-default" style="border:none">
-                            <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                <label class="col-md-3 col-sm-4 col-xs-6">报价时间：{{initIntentionOfferDetail.offer.otime | date}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">报价类型：{{initIntentionOfferDetail.offer.type |offerType}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6" v-if="!param.idOrName">
-                                    供应商名称：{{initIntentionOfferDetail.offer.offerCustomerName}}
-                                </label>
-                                 <label class="col-md-3 col-sm-4 col-xs-6" v-else>
-                                    供应商ID：{{initIntentionOfferDetail.offer.offerCustomer}}
-                                </label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">品种：{{initIntentionOfferDetail.offer.breedName}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">规格：{{initIntentionOfferDetail.offer.spec}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">产地：{{initIntentionOfferDetail.offer.location | province}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">数量：{{initIntentionOfferDetail.offer.number}}{{initIntentionOfferDetail.offer.unit | Unit}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">价格：{{initIntentionOfferDetail.offer.price}}</label>
-                                <!-- 新增产品信息和价格信息 -->
-                                <label class="col-md-3 col-sm-4 col-xs-6">产品信息：{{initIntentionOfferDetail.offer.quality}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">价格信息：{{initIntentionOfferDetail.offer.priceDescription}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">备注：
-                                    <Poptip placement="top" trigger="hover">
-                                        <span>{{initIntentionOfferDetail.offer.description | textDisplay '10'}}</span>
-                                        <div class="api" slot="content">
-                                            {{initIntentionOfferDetail.offer.description}}
-                                        </div>
-                                    </Poptip>
-                                </label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">是否采纳：{{initIntentionOfferDetail.offer.accept | offerAccept}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">原因：
-                                    <Poptip placement="top" trigger="hover">
-                                        <span>{{initIntentionOfferDetail.offer.comments | textDisplay '10'}}</span>
-                                        <div class="api" slot="content">
-                                            {{initIntentionOfferDetail.offer.comments}}
-                                        </div>
-                                    </Poptip>
-                                </label>
-                            </ul>
+                            <table class="table table-hover table_color table-striped " v-cloak>
+                                <thead>
+                                    <tr>
+                                        <th>报价时间</th>
+                                        <th>报价类型</th>
+                                        <th>供应商名称</th>
+                                        <th>供应商id</th>
+                                        <th>品种</th>
+                                        <th>规格</th>
+                                        <th>产地</th>
+                                        <th>数量</th>
+                                        <th>价格</th>
+                                        <th>备注</th>
+                                        <th>是否采纳</th>
+                                        <th>原因</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in initIntentionOfferDetail.offers" :style="{background:(item.id==param.id?'lightYellow':'')}">
+                                        <td>{{item.otime | date}}</td>
+                                        <td>{{item.type |offerType}}</td>
+                                        <td>{{item.offerCustomerName}}</td>
+                                        <td>{{item.offerCustomer}}</td>
+                                        <td>{{item.breedName}}</td>
+                                        <td>{{item.spec}}</td>
+                                        <td>{{item.location | province}}</td>
+                                        <td>{{item.number}}{{item.unit | Unit}}</td>
+                                        <td>{{item.price}}</td>
+                                        <td>
+                                            <Poptip placement="top" trigger="hover">
+                                                <span>{{item.description | textDisplay '10'}}</span>
+                                                <div class="api" slot="content">
+                                                    {{item.description}}
+                                                </div>
+                                            </Poptip>
+                                        </td>
+                                        <td>{{item.accept | offerAccept}}</td>
+                                        <td>
+                                            <Poptip placement="top" trigger="hover">
+                                                <span>{{item.comments | textDisplay '10'}}</span>
+                                                <div class="api" slot="content">
+                                                    {{item.comments}}
+                                                </div>
+                                            </Poptip>
+                                        </td>
+                                        <td>
+                                            <button type="botton" class="btn btn-primary btn-xs" @click="offerAccept(item)" v-if="param.idOrName&&(item.id==param.id)">       处理报价
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <!-- 意向信息 -->
-                        <h4 class="section_title">意向信息</h4>
-                        <div class="panel panel-default" style="border:none">
-                            <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                <label class="col-md-3 col-sm-4 col-xs-6" v-if="!param.idOrName">
-                                    客户ID：{{initIntentionOfferDetail.intention.customerId}}
-                                </label>
-                                <label class="col-md-3 col-sm-4 col-xs-6" v-else>
-                                    客户名称：{{initIntentionOfferDetail.intention.customerName}}
-                                </label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">客户归属业务员：{{initIntentionOfferDetail.intention.employeeName}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">意向类型：{{initIntentionOfferDetail.intention.type | intentionType initIntentionOfferDetail.intention.especial initIntentionOfferDetail.intention.preSell}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">品种：{{initIntentionOfferDetail.intention.breedName}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">规格：{{initIntentionOfferDetail.intention.spec}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">产地：{{initIntentionOfferDetail.intention.location | province}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">数量：{{initIntentionOfferDetail.intention.number}}{{initIntentionOfferDetail.intention.unit | Unit}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">价格：{{initIntentionOfferDetail.intention.price}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">付款方式：{{initIntentionOfferDetail.intention.paymentWay}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">上下架：{{initIntentionOfferDetail.intention.onSell | onsell}}
-                                </label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">发布时间：{{initIntentionOfferDetail.intention.pubdate | date}}
-                                </label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">过期时间：{{initIntentionOfferDetail.intention.duedate | date}}
-                                </label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">备注说明：{{initIntentionOfferDetail.intention.description}}</label>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -213,7 +249,7 @@ export default {
 .top-title {
     position: fixed;
     z-index: 1088;
-    width: 60%;
+    width: 1000px;
     right: 0;
     left: 0;
 }
@@ -224,7 +260,8 @@ export default {
 
 .modal_con {
     z-index: 1082;
-    width: 60%;
+    width: 1000px;
+    overflow-y: auto;
 }
 
 .client_body {
@@ -254,7 +291,9 @@ export default {
 section {
     background-color: #fff;
 }
-
+table>thead>tr>th{
+    font-weight: bold!important
+}
 section article {
     margin-top: 10px;
 }

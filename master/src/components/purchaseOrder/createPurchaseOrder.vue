@@ -72,9 +72,9 @@
                             <!-- 区 -->
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.area')}}
-                                    <span class="system_danger" v-if="$validation.district.required">必填项</span>
+                                    <!-- <span class="system_danger" v-if="$validation.district.required">必填项</span> -->
                                 </label>
-                                <input type="text" v-model="district.id" v-validate:district="{'required':true}" v-show="false">
+                                <!-- <input type="text" v-model="district.id" v-validate:district="{'required':true}" v-show="false"> -->
                                 <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
                                 <div v-if="city.cname" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="district" :options="initDistrictlist" placeholder="区" label="cname">
