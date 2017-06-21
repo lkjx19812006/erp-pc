@@ -162,7 +162,7 @@
                         <th>{{$t('static.client_type')}}</th> 
                         <th>{{$t('static.client_origin')}}</th>
                         <th>{{$t('static.main_product')}}</th>
-                        <th>划转/来源</th>
+                        <th style="min-width:150px;">划转/来源</th>
                         <!-- <th>{{$t('static.detailed_address')}}</th> -->
                         <th>{{$t('static.create_time')}}</th>
                         <th v-if="this.initLogin.orgId==29">跟进状态</th>
@@ -671,8 +671,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 107px;
-    min-width: 6px;
+    /* width: 107px; */
+    min-width: 50px;
 }
 
 .service-nav {

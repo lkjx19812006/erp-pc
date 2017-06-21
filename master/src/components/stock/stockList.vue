@@ -74,7 +74,8 @@
                                             dueDate:'',
                                             comment:'',
                                             key:'',
-                                            callback:getStockList
+                                            callback:getStockList,
+                                            sCallBack:callback_price
                                             })">{{$t("static.new")}}</button>
                 </dd>
             </div>
@@ -378,24 +379,25 @@ export default {
                 }
             }
             this.createParam.show = true,
-                this.createParam.flag = 1,
-                this.createParam.breedName = item.breedName,
-                this.createParam.breedId = item.breedId,
-                this.createParam.id = item.id,
-                this.createParam.employeeName = item.employeeName,
-                this.createParam.specAttribute = spec_a,
-                this.createParam.shape = spec_b,
-                this.createParam.location = item.location,
-                this.createParam.depotName = item.depotName,
-                this.createParam.usableNum = item.usableNum,
-                this.createParam.unit = item.unitId,
-                this.createParam.canProcess = item.canProcess,
-                this.createParam.canDeposite = item.canDeposite,
-                this.createParam.price = item.price,
-                this.createParam.dueDate = item.dueDate,
-                this.createParam.comment = item.comment,
-                this.createParam.key = '',
-                this.createParam.callback = this.getStockList
+            this.createParam.flag = 1,
+            this.createParam.breedName = item.breedName,
+            this.createParam.breedId = item.breedId,
+            this.createParam.id = item.id,
+            this.createParam.employeeName = item.employeeName,
+            this.createParam.specAttribute = spec_a,
+            this.createParam.shape = spec_b,
+            this.createParam.location = item.location,
+            this.createParam.depotName = item.depotName,
+            this.createParam.usableNum = item.usableNum,
+            this.createParam.unit = item.unitId,
+            this.createParam.canProcess = item.canProcess,
+            this.createParam.canDeposite = item.canDeposite,
+            this.createParam.price = item.price,
+            this.createParam.dueDate = item.dueDate,
+            this.createParam.comment = item.comment,
+            this.createParam.key = '',
+            this.createParam.callback = this.getStockList
+            this.createParam.sCallBack = this.callback_price
         },
         deleteStock: function(data) {
             this.deleteParam.show = true
