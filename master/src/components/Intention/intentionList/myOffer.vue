@@ -62,9 +62,9 @@
                     <tr v-for="item in initMyOfferList">
                         <td>{{item.ctime}}</td>
                         <td>{{item.employeeName}}</td>
-                        <td>{{item.customerName}}</td>
+                        <td><a href="javascript:void(0);" @click="showDetail(item.id)">{{item.customerName}}</a></td>
                         <td>{{item.customerPhone}}</td>
-                        <td><a href="javascript:void(0);" @click="showDetail(item.id)">{{item.breedName}}</a></td>
+                        <td>{{item.breedName}}</td>
                         <td>
                             <span v-for="val in item.pics">
                             <img :src="val.path" style="float: left; width:40px; height:40px; margin-right:10px" @click="clickBig(val.url)">

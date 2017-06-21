@@ -24,6 +24,24 @@
             <section>
                 <div class="client-section clearfix">
                     <div class="col-md-12">
+                        <!-- 意向信息 -->
+                        <!-- <h4 class="section_title">采购单交易员基本信息</h4>
+                        <div class="panel panel-default" style="border:none">
+                            <ul class="clearfix" style="font-size: 14px;padding:5px 0">
+                                <label class="col-md-3 col-sm-4 col-xs-6">
+                                    采购单ID：{{initIntentionOfferDetail.intention.customerId}}
+                                </label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">
+                                    意向ID：{{initIntentionOfferDetail.intention.customerName}}
+                                </label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">
+                                    交易员姓名：{{initIntentionOfferDetail.intention.employeeName}}
+                                </label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">
+                                    交易员联系方式：{{initIntentionOfferDetail.intention.breedName}}
+                                </label>
+                            </ul>
+                        </div> -->
                         <!-- 报价信息 -->
                         <div class="clear section_title">
                             <h4 class="pull-left">报价信息
@@ -39,7 +57,8 @@
                                     </Poptip>)
                                 </span>
                             </h4>
-                            <button type="botton" class="btn btn-primary pull-right" @click="offerAccept(initIntentionOfferDetail.offer)">处理报价</button>
+                            <button type="botton" class="btn btn-primary pull-right" @click="offerAccept(initIntentionOfferDetail.offer)" v-if="param.idOrName">       处理报价
+                            </button>
                         </div>
                         <!-- 报价图片 -->
                         <div class="clearfix">
