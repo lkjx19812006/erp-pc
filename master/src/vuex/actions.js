@@ -2893,6 +2893,8 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         sample: param.sample,
         intl: param.intl,
         customer: param.customer,
+        freight: param.freight,
+        freightType: param.freightType,
         incidentals: param.incidentals,
         incidentalsDesc: param.incidentalsDesc,
         preferential: param.preferential,
@@ -11206,16 +11208,16 @@ export const createStockInfo = ({ dispatch }, param) => { //新建库存
     }).then((res) => {
         param.specAttribute = specAttribute
         param.callback({
-                loading: false,
-                breedName: "",
-                breedId: '',
-                depotName: '',
-                depotType: '',
-                cur: 1,
-                all: 1,
-                total: '',
-                show: false
-            })
+            loading: false,
+            breedName: "",
+            breedId: '',
+            depotName: '',
+            depotType: '',
+            cur: 1,
+            all: 1,
+            total: '',
+            show: false
+        })
         param.sCallBack(res.json().msg)
             //dispatch(types.ADD_STOCK_LIST, param);
             //window.location.reload()
@@ -11259,16 +11261,16 @@ export const editStockInfo = ({ dispatch }, param) => { //修改库存
         body: body
     }).then((res) => {
         param.callback({
-                loading: false,
-                breedName: "",
-                breedId: '',
-                depotName: '',
-                depotType: '',
-                cur: 1,
-                all: 1,
-                total: '',
-                show: false
-            })
+            loading: false,
+            breedName: "",
+            breedId: '',
+            depotName: '',
+            depotType: '',
+            cur: 1,
+            all: 1,
+            total: '',
+            show: false
+        })
         param.sCallBack(res.json().msg)
     }, (res) => {
         console.log('fail')
