@@ -38,19 +38,20 @@ export default {
     },
     computed: { //改变输入框的值时，payType需要重新选中后值才会变化，所以当输入框发生改变的时候，直接赋值给payType，再返回这个值，使其选中
         one: function() {
-            this.param.paymentWay = '合同签订后，预付' + this.bookMoney + '%定金'
-            return '合同签订后，预付' + this.bookMoney + '%定金'
+            this.param.paymentWay = '合同签订后，预付' + this.bookMoney + '%定金';
+            return '合同签订后，预付' + this.bookMoney + '%定金';
         },
         two: function() {
-            return '验收合格后，立即付款'
+            return '验收合格后，立即付款';
         },
         three: function() {
-            this.param.paymentWay = '验收合格后，' + this.payDay + '天内付款'
-            return '验收合格后，' + this.payDay + '天内付款'
+            this.param.paymentWay = '验收合格后，' + this.payDay + '天内付款';
+            return '验收合格后，' + this.payDay + '天内付款';
         },
         four: function() {
-            this.param.paymentWay = '其他：' + this.otherWay
-            return '其他：' + this.otherWay
+
+            this.param.paymentWay = this.otherWay;
+            return this.otherWay;
         }
     }
 }
