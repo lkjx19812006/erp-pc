@@ -739,7 +739,7 @@ const state = {
             }
         },
         intentionOfferDetail: {
-            offer: {},
+            offers: [],
             intention: {},
         },
         intlIntentionDetail: {},

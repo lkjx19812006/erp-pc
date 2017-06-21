@@ -28,38 +28,78 @@
                                 <label class="editlabel">客户电话： <span class="system_danger" v-if="$validation.phone.required">{{$t('static.required')}}</span></label>
                                 <input type="text" class="form-control edit-input" v-model="param.customerPhone" value="{{param.customerPhone}}" v-validate:phone="['required']" />
                             </div>
+                            <div class="editpage-input col-md-12">
+                                <div style="margin-top:20px;">
+                                    <Icon type="location" style="font-size:14px;"></Icon>
+                                    <h5 style="display:inline">交货地</h5>
+                                </div>
+                                <div class="editpage-input col-md-4">
+                                    <label class="editlabel">省
+                                        <span class="system_danger" v-if="$validation.province.required">必填项</span>
+                                    </label>
+                                    <div type="text" class="edit-input">
+                                        <input type="text" v-model="province.id" v-validate:province="{'required':true}" v-show="false">
+                                        <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
+                                        </v-select>
+                                    </div>
+                                </div>
+                                <!-- 市 -->
+                                <div class="editpage-input col-md-4">
+                                    <label class="editlabel">{{$t('static.city')}}
+                                        <span class="system_danger" v-if="$validation.city.required">必填项</span>
+                                    </label>
+                                    <input type="text" v-model="city.id" v-validate:city="{'required':true}" v-show="false">
+                                    <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_province_first')}}" />
+                                    <div v-if="province.cname" type="text" class="edit-input">
+                                        <v-select :debounce="250" :value.sync="city" :on-change="selectDistrict" :options="initCitylist" placeholder="市/City" label="cname">
+                                        </v-select>
+                                    </div>
+                                </div>
+                                <!-- 区 -->
+                                <div class="editpage-input col-md-4">
+                                    <label class="editlabel">{{$t('static.area')}}
+                                        <!-- <span class="system_danger" v-if="$validation.district.required">必填项</span> -->
+                                    </label>
+                                    <!-- <input type="text" v-model="district.id" v-validate:district="{'required':true}" v-show="false"> -->
+                                    <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
+                                    <div v-if="city.cname" type="text" class="edit-input">
+                                        <v-select :debounce="250" :value.sync="district" :options="initDistrictlist" placeholder="区" label="cname">
+                                        </v-select>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- 省 -->
-                            <div class="editpage-input col-md-4">
+                            <!-- <div class="editpage-input col-md-4">
                                 <label class="editlabel">省</label>
                                 <div type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
                                     </v-select>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- 市 -->
-                            <div class="editpage-input col-md-4">
+                            <!-- <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.city')}}</label>
                                 <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_province_first')}}" />
                                 <div v-if="province.cname" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="city" :on-change="selectDistrict" :options="initCitylist" placeholder="市/City" label="cname">
                                     </v-select>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- 区 -->
-                            <div class="editpage-input col-md-4">
+                            <!-- <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.area')}}</label>
                                 <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
                                 <div v-if="city.cname" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="district" :options="initDistrictlist" placeholder="区" label="cname">
                                     </v-select>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- <div class="editpage-input col-md-8">
                                 <label class="editlabel">详细地址<span class="system_danger" v-if="$validation.address.required">必填项</span> </label>
                                 <input type="text" class="form-control edit-input" style="width:95%" v-model="param.address" v-validate:address="{required:true}"/>
                             </div> -->
                             <!-- 是否标品 -->
-                           <!--  <div class="editpage-input col-md-5">
+                            <!--  <div class="editpage-input col-md-5">
                                 <label class="editlabel">是否标品: <span class="system_danger" v-if="$validation.standard.required">必填项</span></label>
                                 <select class="form-control" v-model="param.type">
                                     <option value="0">是</option>
@@ -141,7 +181,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- 中标价格 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">中标价格
@@ -173,7 +212,7 @@
                                         <label class="editlabel">质量要求
                                             <span class="system_danger" v-if="$inner.quality.required">必填项</span>
                                         </label>
-                                        <input type="text" v-model="intentionInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" v-show="false"/>
+                                        <input type="text" v-model="intentionInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" v-show="false" />
                                         <quality-required :param="intentionInfo"></quality-required>
                                     </div>
                                     <!-- 竞争性指标 -->
@@ -380,7 +419,7 @@ export default {
                 this.intentionInfo.unit = '';
                 this.intentionInfo.price = '';
                 this.intentionInfo.quality = '';
-                this.intentionInfo.mainStandard='';
+                this.intentionInfo.mainStandard = '';
                 this.param.intentionList.push({
                     breedId: '',
                     breedName: '',
@@ -389,8 +428,8 @@ export default {
                     number: '',
                     unit: '',
                     price: '',
-                    quality:'',
-                    mainStandard:''
+                    quality: '',
+                    mainStandard: ''
                 });
                 //新增时将breedParam清空
                 this.breedParam.id = "";
@@ -485,13 +524,13 @@ export default {
             let temp = [];
             //确认时需要知道原先存在于数据库中的数据是否被删除
             for (let i = 0; i < this.param.intentionListBack.length; i++) {
-                console.log("i=" + i);
+                //console.log("i=" + i);
                 let j = 0;
                 for (let k = 0; k < this.param.intentionList.length; k++) {
                     if (this.param.intentionListBack[i].id != this.param.intentionList[k].id) {
                         j++;
                     }
-                    console.log("k=" + k);
+                    //console.log("k=" + k);
                     if (j == this.param.intentionList.length) {
 
                         this.param.intentionListBack[i].status = 0;
@@ -500,6 +539,10 @@ export default {
                 }
 
             }
+            // 地址
+            this.param.province = this.province.id;
+            this.param.city = this.city.id;
+            this.param.district = this.district.id;
             //将原先存在于数据库中的数据加到尾部
             this.param.intentionList = this.param.intentionList.concat(temp);
             this.param.show = false;
@@ -528,8 +571,13 @@ export default {
 
     },
     created() {
-        console.log(this.param)
-        //获取中国的省
+        this.province.id = this.param.province
+        this.province.cname = this.param.provinceName
+        this.city.cname = this.param.cityName
+        this.city.id = this.param.city
+        this.district.id = this.param.district
+        this.district.cname = this.param.districtName
+            //获取中国的省
         this.getProvinceList(this.countryParam);
         //获取单位列表
         this.getUnitList();

@@ -78,6 +78,7 @@
                 <thead>
                     <tr>
                         <th style="min-width:60px"></th>
+                        <th>采购单ID</th>
                         <th>采购单类型</th>
                         <th>客户名称</th>
                         <th>客户手机</th>
@@ -104,6 +105,7 @@
                         <td @click.stop="" style="min-width:60px">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
                         </td>
+                        <td>{{item.id}}</td>
                         <td>{{item.type | indentType}}</td>
                         <td>
                             <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
@@ -244,6 +246,9 @@ export default {
                 customerPhone: "",
                 comment:'',
                 province: "",
+                provinceName:'',
+                cityName:'',
+                districtName:'',
                 city: "",
                 district: "",
                 address: "",
@@ -340,7 +345,7 @@ export default {
             this.importParam.show = true;
         },
         editPurchase: function(item, index) {
-
+            console.log(item)
             this.editParam.link = "/indent/queryById";
             this.editParam.id = item.id;
             this.editParam.customerName = item.customerName;
@@ -349,6 +354,9 @@ export default {
             this.editParam.province = item.province;
             this.editParam.city = item.city;
             this.editParam.district = item.district;
+            this.editParam.provinceName = item.provinceName;
+            this.editParam.cityName = item.cityName;
+            this.editParam.districtName = item.districtName;
             this.editParam.address = item.address;
             this.editParam.comment = item.comment;
             this.editParam.intentionList = [];
@@ -474,8 +482,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 136px;
-    min-width: 136px;
+    width: 115px;
+    min-width: 60px;
 }
 
 .service-nav {

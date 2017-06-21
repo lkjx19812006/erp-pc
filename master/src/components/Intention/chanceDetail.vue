@@ -100,7 +100,7 @@
                             <hr style="height:10px;border-color:#ccc" />
                             <div class="clearfix">
                                 <label class="editlabel">
-                                    <p class="btn btn-primary btn-xs">交收信息</p>
+                                    <p class="btn btn-primary btn-xs">交货地址</p>
                                     <span style="font-weight:400">
                                         {{initIntentionDetail.provinceName}} {{initIntentionDetail.cityName}} {{initIntentionDetail.districtName}} {{initIntentionDetail.address}}
                                     </span>
