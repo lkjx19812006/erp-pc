@@ -73,9 +73,9 @@
                     <tr v-show="param.init=='initMyIndentOfferList'" v-for="item in initMyIndentOfferList">
                         <td>{{item.otime | date}}</td>
                         <td>{{item.source | offerType}}</td>
-                        <td>{{item.buyCustomerName}}</td>
+                        <td><a @click="clickDetail(item.id)">{{item.buyCustomerName}}</a></td>
                         <td>{{item.offerEmployeeName}}</td>
-                        <td><a @click="clickDetail(item.id)">{{item.breedName}}</a></td>
+                        <td>{{item.breedName}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.location | province}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
@@ -107,9 +107,9 @@
                         <td>{{item.otime | date}}</td>
                         <td>{{item.source | offerType}}</td>
                         <td>{{item.offerCustomerName}}</td>
-                        <td>{{item.buyCustomerName}}</td>
+                        <td><a @click="clickDetail(item.id)">{{item.buyCustomerName}}</a></td>
                         <td>{{item.offerEmployeeName}}</td>
-                        <td><a @click="clickDetail(item.id)">{{item.breedName}}</a></td>
+                        <td>{{item.breedName}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.location | province}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
@@ -351,7 +351,7 @@ export default {
 #table_box table th,
 #table_box table td {
     width: 130px;
-    min-width: 130px;
+    min-width: 100px;
 }
 .offer_source{
     display: inline-block;

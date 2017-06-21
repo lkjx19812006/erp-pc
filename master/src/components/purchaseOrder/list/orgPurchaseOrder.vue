@@ -15,6 +15,10 @@
                     <dd class="left margin_right">
                         <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
+                    <dt class="left transfer marg_top">采购单ID</dt>
+                    <dd class="left margin_right">
+                        <input type="text" class="form-control" v-model="loadParam.purchaseId" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
                     <!-- 单个业务员搜索 -->
                     <dt class="left transfer marg_top">业务员：</dt>
                     <dd class="left margin_right">
@@ -71,6 +75,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
+                        <th>采购单ID</th>
                         <th>采购单类型</th>
                         <th>客户名称</th>
                         <th>客户手机</th>
@@ -87,6 +92,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initOrgPurchaseList">
+                        <td>{{item.id}}</td>
                         <td>{{item.type | indentType}}</td>
                         <td>
                             <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
@@ -171,7 +177,8 @@ export default {
                 customerName: '',
                 customerPhone: '',
                 employee: '',
-                employeeName: ''
+                employeeName: '',
+                purchaseId:''
             },
             detailParam: {
                 show: false,
@@ -216,6 +223,7 @@ export default {
             this.loadParam.employee = '';
             this.loadParam.employeeName = '';
             this.loadParam.purchaseContent = '';
+            this.loadParam.purchaseId = ''
             this.getPurchaseOrderList(this.loadParam);
         },
         detailClick: function(id, customerId) {
@@ -294,8 +302,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 150px;
-    min-width: 150px;
+    width: 125px;
+    min-width: 100px;
 }
 
 .service-nav {
