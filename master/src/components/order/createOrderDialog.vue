@@ -154,7 +154,7 @@
                             </div>
                             <div class="editpage-input col-md-8">
                                 <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">{{$t('static.enter_address')}}</span></label>
-                                <input type="text" class="form-control edit-input" style="width:95%" v-model="param.consigneeAddr" v-validate:addr="['required']" value="{{param.consigneeAddr}}" />
+                                <input type="text" class="form-control edit-input" style="width:95%" v-model="param.consigneeAddr" v-validate:addr="['required']" />
                             </div>
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.postcodes')}} <span class="system_danger" v-if="$validation.code.postcode">{{$t('static.enter_code')}}</span></label>
@@ -338,10 +338,10 @@
                             </div>
                         </div>
                         <div class="editpage-input col-md-6">
-                            <label class="editlabel">运费支付</label>
+                            <label class="editlabel">{{$t('static.freight_payer')}}</label>
                             <select type="text" class="form-control edit-input" v-model="param.freightType" @change="selectBizType()">
-                                <option value="0">我方支付</option>
-                                <option value="1">客户支付</option>
+                                <option value="0">{{$t('static.pay_by_us')}}</option>
+                                <option value="1">{{$t('static.pay_by_customer')}}</option>
                             </select>
                         </div>
                         <!-- 杂费 -->
@@ -353,6 +353,10 @@
                                 <!-- <button class="btn btn-default right" style="font-size: 16px" @click="subduction()">-</button> -->
                             </div>
                         </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">{{$t('static.fee_explain')}}</label>
+                            <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}" />
+                        </div>
                         <!-- 优惠金额 -->
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.preferential')}}</label>
@@ -361,10 +365,6 @@
                                 <input type="number" class="form-control edit-input" v-model="param.preferential" style="display:inline-block;float:left;" />
                                 <!-- <button class="btn btn-default right" style="font-size: 16px" @click="reduce()">-</button> -->
                             </div>
-                        </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">{{$t('static.fee_explain')}}</label>
-                            <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}" />
                         </div>
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.discount_note')}}</label>
@@ -396,6 +396,7 @@
 <script>
 import vSelect from '../tools/vueSelect/components/Select'
 import pressImage from '../imagePress'
+import mzDatepicker from '../calendar/vue.datepicker.js'
 import breedLocation from './second_order/breedLocation'
 import searchcustomerModel from '../Intention/clientname'
 import inputSelect from '../tools/vueSelect/components/inputselect'
@@ -431,6 +432,7 @@ export default {
     components: {
         vSelect,
         pressImage,
+        mzDatepicker,
         searchcustomerModel,
         searchbreedModel,
         consigneeModel,

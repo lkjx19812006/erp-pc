@@ -266,15 +266,15 @@
                                         </div> -->
                                         <!-- 产地 -->
                                         <label class="editlabel">{{$t('static.origin')}}<span class="jinggao" v-if="$inner.locals.required">{{$t('static.required')}}</span> </label>
-                                        <input type="text" v-show="false" v-model="breedInfo.location" v-validate:locals="{required:true}"/>
+                                        <input type="text" v-show="false" v-model="breedInfo.location" v-validate:locals="{required:true}" />
                                         <breed-location :param="breedInfo" :show="breedParam" :widparam="'285'"></breed-location>
                                     </div>
                                     <!-- 发货地 -->
                                     <div class="editpage-input col-md-6">
                                         <label class="editlabel">发货地 <span class="jinggao" v-if="$inner.lcoals.required">{{$t('static.required')}}</span> </label>
-                                        <input type="text" v-show="false" v-model="breedInfo.provinceId" v-validate:lcoals="{required:true}"/>                     
-                                        <div  type="text" class="edit-input">
-                                            <v-select :debounce="250" :value.sync="breedInfo.provinceId"  :options="initCNProvince" placeholder="省/Province" label="cname">
+                                        <input type="text" v-show="false" v-model="breedInfo.provinceId" v-validate:lcoals="{required:true}" />
+                                        <div type="text" class="edit-input">
+                                            <v-select :debounce="250" :value.sync="breedInfo.provinceId" :options="initCNProvince" placeholder="省/Province" label="cname">
                                             </v-select>
                                         </div>
                                     </div>
@@ -299,6 +299,21 @@
                             <img src="/static/images/breedinfo@2x.png" style="display:inline" />
                             <h5 style="display:inline">{{$t('static.other_info')}}</h5>
                         </div>
+                        <!-- 运费 -->
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">{{$t('static.freight')}}</label>
+                            <div class="clearfix">
+                                <input type="number" class="form-control edit-input" v-model="param.freight" style="display:inline-block;float:left;" @keyup="" />
+                            </div>
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">{{$t('static.freight_payer')}}</label>
+                            <select type="text" class="form-control edit-input" v-model="param.freightType" @change="selectBizType()">
+                                <option value="0">{{$t('static.pay_by_us')}}</option>
+                                <option value="1">{{$t('static.pay_by_customer')}}</option>
+                            </select>
+                        </div>
+                        <!-- 杂费 -->
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.sundry_fees')}}：</label>
                             <div class="clearfix">
@@ -306,6 +321,10 @@
                                 <input type="number" class="form-control edit-input" v-model="param.incidentals" style="display:inline-block;float:left;" value="{{param.incidentals}}" @keyup="" />
                                 <!-- <button class="btn btn-default right" style="font-size: 16px" @click="subduction()">-</button> -->
                             </div>
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">{{$t('static.fee_explain')}}</label>
+                            <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}" />
                         </div>
                         <!-- 优惠金额 -->
                         <div class="editpage-input col-md-6">
@@ -315,10 +334,6 @@
                                 <input type="number" class="form-control edit-input" v-model="param.preferential" style="display:inline-block;" value="{{param.preferential}}" />
                                 <!-- <button class="btn btn-default right" style="font-size: 16px" @click="reduce()">-</button> -->
                             </div>
-                        </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">{{$t('static.fee_explain')}}</label>
-                            <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}" />
                         </div>
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.discount_note')}}</label>
@@ -438,7 +453,7 @@ export default {
                 price: '',
                 costPrice: '',
                 id: '',
-                provinceId:''
+                provinceId: ''
             },
             consigneeParam: {
                 show: false,
@@ -622,8 +637,8 @@ export default {
         },
         showModifyBreed: function(index) {
             var breedids = {
-                id:this.param.goods[index].breedId,
-                name:this.param.goods[index].breedName
+                id: this.param.goods[index].breedId,
+                name: this.param.goods[index].breedName
             }
             this.getBreedDetail(breedids)
             this.breedInfo.status = 2;
@@ -775,11 +790,17 @@ export default {
         },
         changeTotal: function() {
             var patt = new RegExp(/\.\d{3,}/);
+            if (!this.param.freight) {
+                this.param.freight = 0
+            }
             if (!this.param.incidentals) {
                 this.param.incidentals = 0
             }
             if (!this.param.preferential) {
                 this.param.preferential = 0
+            }
+            if (patt.test(this.param.freight)) { //如果超过两位小数，则只保留前两位小数
+                this.param.freight = this.param.freight.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/, '$1$2.$3');
             }
             if (patt.test(this.param.incidentals)) { //如果超过两位小数，则只保留前两位小数
                 this.param.incidentals = this.param.incidentals.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/, '$1$2.$3');
@@ -797,9 +818,15 @@ export default {
             }
             this.param.total = (parseFloat(this.altogether) * 1000 + parseFloat(this.param.incidentals) * 1000 - parseFloat(this.param.preferential) * 1000) / 1000;
             this.param.cost = (parseFloat(this.costmoney) * 1000) / 1000;
+            //如果是客户支付运费total=total+freight
+            if (this.param.freightType == 1) {
+                this.param.total = (parseFloat(this.param.total) * 1000 + parseFloat(this.param.freight) * 1000) / 1000;
+            }
         }
     },
     watch: {
+        'param.freightType': 'changeTotal',
+        'param.freight': 'changeTotal',
         'param.incidentals': 'changeTotal',
         'param.preferential': 'changeTotal',
         'altogether': 'changeTotal',
@@ -857,7 +884,7 @@ export default {
         if (this.param.customer) {
             this.consigneeParam.customerId = this.param.customer;
         }
-        if(this.param.goods.length!=0){
+        if (this.param.goods.length != 0) {
             this.breedInfo.provinceId = this.param.goods
         }
         if (this.param.breedId) {
@@ -924,14 +951,16 @@ export default {
     -ms-box-orient: horizontal;
     box-orient: horizontal;
 }
-.jinggao{
+
+.jinggao {
     color: red;
     display: inline-block;
     margin-bottom: 0;
     font-weight: 100;
     font-size: 12px;
-    height:10px;
+    height: 10px;
 }
+
 .editpageleft,
 .editpageright {
     -webkit-box-flex: 1;
