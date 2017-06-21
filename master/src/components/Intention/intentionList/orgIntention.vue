@@ -200,15 +200,9 @@
                              key:'orgIntentionList'
                              })"><img src="/static/images/del.png" height="18" width="30" alt="删除" title="删除" />
                             </a>
-                            <!-- <a class="operate" v-if="item.validate==2" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png"   alt="审核" title="审核"/>
-                             </a> -->
-                            <!-- <a class="operate" v-if="item.onSell==1&&item.especial==1" @click.stop="upAudit($index,item.id)">上架审核
-                             </a> -->
                             <a v-if="item.onSell==1">
                                 <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="upAudit($index,item.id)">上架审核</button>
                             </a>
-                            <!-- <a class="operate" v-if="item.onSell==3&&item.especial==1" @click.stop="downAudit($index,item.id)">下架审核
-                             </a> -->
                             <a v-if="item.onSell==3">
                                 <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="downAudit($index,item.id)">下架审核</button>
                             </a>
@@ -352,6 +346,7 @@ export default {
                 show: false,
                 audit: true,
                 title: '',
+                auditComment: '',
                 pass: '',
                 reject: '',
             },
@@ -499,11 +494,14 @@ export default {
         allowUp: function() {
             this.tipsParam.onSell = 2;
             this.tipsParam.name = '意向上架成功';
+            this.tipsParam.onUnValidateDescription = this.onSellParam.auditComment;
+            console.log(this.onSellParam);
             this.intentionUpAndDown(this.tipsParam);
         },
         rejectUp: function() {
             this.tipsParam.onSell = -2;
             this.tipsParam.name = '拒绝上架';
+            this.tipsParam.onUnValidateDescription = this.onSellParam.auditComment;
             this.intentionUpAndDown(this.tipsParam);
         },
         downAudit: function(index, id) {
@@ -521,11 +519,13 @@ export default {
         allowDown: function() {
             this.tipsParam.onSell = 4;
             this.tipsParam.name = '意向下架成功';
+            this.tipsParam.onUnValidateDescription = this.onSellParam.auditComment;
             this.intentionUpAndDown(this.tipsParam);
         },
         rejectDown: function() {
             this.tipsParam.onSell = 2;
             this.tipsParam.name = '拒绝下架';
+            this.tipsParam.onUnValidateDescription = this.onSellParam.auditComment;
             this.intentionUpAndDown(this.tipsParam);
         },
         searchIntention: function() {

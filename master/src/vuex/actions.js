@@ -8968,6 +8968,9 @@ export const intentionUpAndDown = ({ dispatch }, param) => { //意向上下架
         ids: param.ids,
         onSell: param.onSell
     }
+    if (param.onUnValidateDescription) {
+        updatedata.onUnValidateDescription = param.onUnValidateDescription;
+    }
     Vue.http({
         method: 'PUT',
         url: apiUrl.clientList + '/intention/upAndDowns',
