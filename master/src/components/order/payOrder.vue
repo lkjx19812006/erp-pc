@@ -1,6 +1,5 @@
 <template>
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
-    <search-model :param="loadParam" v-if="loadParam.show"></search-model>
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <mglist-model>
@@ -121,7 +120,6 @@
 <script>
 import pagination from '../pagination'
 import detailModel from '../order/orderDetail'
-import searchModel from '../order/orderSearch'
 import disposeModel from '../order/orderStatus'
 import filter from '../../filters/filters'
 import common from '../../common/common'
@@ -143,7 +141,6 @@ export default {
     components: {
         pagination,
         detailModel,
-        searchModel,
         disposeModel,
         filter,
         tipsModel,
