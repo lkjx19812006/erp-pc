@@ -69,17 +69,17 @@
                                         </v-select>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- 区 -->
-                            <div class="editpage-input col-md-4">
-                                <label class="editlabel">{{$t('static.area')}}
-                                    <!-- <span class="system_danger" v-if="$validation.district.required">必填项</span> -->
-                                </label>
-                                <!-- <input type="text" v-model="district.id" v-validate:district="{'required':true}" v-show="false"> -->
-                                <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
-                                <div v-if="city.cname" type="text" class="edit-input">
-                                    <v-select :debounce="250" :value.sync="district" :options="initDistrictlist" placeholder="区" label="cname">
-                                    </v-select>
+                                <!-- 区 -->
+                                <div class="editpage-input col-md-4">
+                                    <label class="editlabel">{{$t('static.area')}}
+                                        <!-- <span class="system_danger" v-if="$validation.district.required">必填项</span> -->
+                                    </label>
+                                    <!-- <input type="text" v-model="district.id" v-validate:district="{'required':true}" v-show="false"> -->
+                                    <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
+                                    <div v-if="city.cname" type="text" class="edit-input">
+                                        <v-select :debounce="250" :value.sync="district" :options="initDistrictlist" placeholder="区" label="cname">
+                                        </v-select>
+                                    </div>
                                 </div>
                             </div>
                             <!-- 省 -->
@@ -237,7 +237,6 @@
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
                     <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&intentionInfo.status==0&&param.intentionList.length>0&&param.intentionList[param.intentionList.length-1].breedId!=''" @click="confirm()">{{$t('static.confirm')}}</button>
                     <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.confirm')}}</button>
-                    <button type="button" class="btn  btn-confirm" @click="test()">测试</button>
                 </div>
             </validator>
         </div>
@@ -377,9 +376,7 @@ export default {
         }
     },
     methods: {
-        test: function() {
-            console.log(this.param.paymentWay);
-        },
+
         searchCustomer: function() {
             this.customerParam.show = true;
         },
