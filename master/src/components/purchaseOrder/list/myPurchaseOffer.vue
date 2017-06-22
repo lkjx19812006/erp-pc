@@ -39,7 +39,7 @@
                         </dd>
                     </div>
                 </dl>
-                <button type="button" class="btn btn-primary right" style="width:75px" @click="resetCondition()">
+                <button type="button" class="btn btn-primary left" style="width:75px" @click="resetCondition()">
                     清空条件
                 </button>
             </div>

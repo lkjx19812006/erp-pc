@@ -116,6 +116,7 @@
                                     <tr>
                                         <th>报价时间</th>
                                         <th>报价类型</th>
+                                        <th>报价人</th>
                                         <th>供应商名称</th>
                                         <th>供应商id</th>
                                         <th>品种</th>
@@ -133,6 +134,7 @@
                                     <tr v-for="item in initIntentionOfferDetail.offers" :style="{background:(item.id==param.id?'lightYellow':'')}">
                                         <td>{{item.otime | date}}</td>
                                         <td>{{item.type |offerType}}</td>
+                                        <td>{{item.offerEmployeeName}}</td>
                                         <td>{{item.offerCustomerName}}</td>
                                         <td>{{item.offerCustomer}}</td>
                                         <td>{{item.breedName}}</td>

@@ -48,6 +48,8 @@
                                 <label class="col-md-3 col-sm-4 col-xs-6">邮箱：{{initClientDetail.email}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">邮编：{{initClientDetail.number}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">省市：{{initClientDetail.provinceName}}{{initClientDetail.cityName}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6" style="white-space: pre-wrap">付款方式：{{initPurchaseDetail.intentionList.arr[0].paymentWay}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6" style="white-space: pre-wrap">备注：{{initPurchaseDetail.comment}}</label>
                             </ul>
                         </div>
                         <!-- 其他信息 -->
@@ -543,6 +545,7 @@ export default {
 
         clickType: function(type) {
             this.intentionOrOffer = type;
+            console.log(this.initClientDetail)
         },
         clickAccept: function(accept) {
             this.indentOfferParam.accept = accept;
@@ -650,6 +653,7 @@ export default {
         this.getClientDetail(clientParam);
         this.getPurchaseOrderDetail(this.param);
         this.getOffersByIndentId(this.indentOfferParam);
+
     }
 }
 </script>

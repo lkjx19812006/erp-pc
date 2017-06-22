@@ -29,14 +29,14 @@
                 </div>
                 <div class="clear left">
                 <!-- 部门 -->
-                    <dl class="clear left transfer">
+                    <dl class="clear left transfer" v-if="allPower">
                         <dt class="left transfer marg_top">部门：</dt>
                         <dd class="left">
                             <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="请选择部门" readonly="true" @click="selectOrg()" />
                         </dd>
                     </dl>
                     <!-- 单个业务员搜索 -->
-                    <dl class="clear left transfer">
+                    <dl class="clear left transfer" v-if="orgPower">
                         <dt class="left transfer marg_top" style="letter-spacing:3px">所属业务员：</dt>
                         <dd class="left">
                             <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
@@ -89,7 +89,7 @@
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==1}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(1)">已收金额
-                                    <span class="totalNum">({{totalData.receivableMoney | money}})</span>
+                                    <span class="totalNum">({{totalData.payMoney | money}})</span>
                                 </a>
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==2}">
@@ -99,7 +99,7 @@
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==3}">
                                 <a href="javascript:void(0);" class="btn btn-link btn-xs" @click="sortBy(3)">应收款
-                                    <span class="totalNum">({{totalData.payMoney | money}})</span>
+                                    <span class="totalNum">({{totalData.receivableMoney | money}})</span>
                                 </a>
                             </th>
                             <th style="width:340px" :class="{'bgColor':loadParam.sortNum==4}">
@@ -117,9 +117,9 @@
                     <tbody class="banma">
                         <tr v-for="item in initBillList" v-cloak>
                             <td>{{item.locationName}}</td>
-                            <td>{{item.receivableMoney | money}}</td>
-                            <td>{{item.stayPayMoney | money}}</td>
                             <td>{{item.payMoney | money}}</td>
+                            <td>{{item.stayPayMoney | money}}</td>
+                            <td>{{item.receivableMoney | money}}</td>
                             <td>{{item.totalMoney | money }}</td>
                             <td>{{item.grossProfit | money}}%</td>
                         </tr>
@@ -144,6 +144,7 @@ import mglistModel from '../mguan/mgListComponent.vue'
 import vSelect from '../tools/vueSelect/components/Select'
 import util from '../tools/util.js'
 import {
+    initLogin,
     initCNProvince,
     initBillList
 } from '../../vuex/getters'
@@ -196,14 +197,17 @@ export default {
                 payMoney:'',
                 totalMoney:'',
                 grossProfit:''
-            }
+            },
+            orgPower: false, //表示是否有主管(查看部门所有业务员)权限
+            allPower: false, //表示是否有总经理(查看公司所有业务员)权限
     	}
     },
 
     vuex: {
         getters: {
             initCNProvince,
-            initBillList
+            initBillList,
+            initLogin
         },
         actions: {
             getBillList
@@ -223,15 +227,24 @@ export default {
             this.selectOrgParam.show = true
         },
         resetCondition:function(){
-            this.loadParam.employeeName = ''
-            this.loadParam.employeeId = ''
+            // this.loadParam.employeeName = ''
+            // this.loadParam.employeeId = ''
             this.loadParam.startTime = util.getDate(-7)
             this.loadParam.endTime = util.getDate(0)
             this.loadParam.breedId = ''
             this.loadParam.breedName = ''
-            this.loadParam.orgName = ''
-            this.loadParam.orgId = ''
+            // this.loadParam.orgName = ''
+            // this.loadParam.orgId = ''
             this.loadParam.location = ''
+            if (this.allPower) { //有总经理权限
+                this.loadParam.orgId = "";
+                this.loadParam.orgName = "";
+                this.loadParam.employeeId = "";
+                this.loadParam.employeeName = "";
+            } else if (this.orgPower) { //有主管权限
+                this.loadParam.employeeId = "";
+                this.loadParam.employeeName = "";
+            }
             this.loadParam.intl = '-1'
             this.loadParam.type = '-1'
             this.getBillList(this.loadParam)
@@ -273,6 +286,21 @@ export default {
         //common('tab', 'table_box', 1);
     },
     created() {
+        if (this.initLogin.safeCode.indexOf(",P569-F570,") != -1) {
+            this.orgPower = true;
+        }
+        if (this.initLogin.safeCode.indexOf(",P569-F571,") != -1) {
+            this.allPower = true;
+        }
+        if (!this.orgPower && !this.allPower) { //如果没有主管权限并且没有总经理权限，就只能查看自己的信息
+            this.loadParam.employeeId = this.initLogin.id;
+        }
+        if (this.orgPower && !this.allPower) { //如果有主管权限但没有总经理权限，就只能查看本部门的所有信息
+            this.loadParam.orgId = this.initLogin.orgId;
+            //这样就只会查询到本部门的业务员了
+            this.employeeParam.orgId = this.initLogin.orgId;
+            this.employeeParam.org = true;
+        }
          this.getBillList(this.loadParam)
     }
 }
