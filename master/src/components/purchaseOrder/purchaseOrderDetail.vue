@@ -47,7 +47,7 @@
                                 <label class="col-md-3 col-sm-4 col-xs-6">电话：{{initClientDetail.tel}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">邮箱：{{initClientDetail.email}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">邮编：{{initClientDetail.number}}</label>
-                                <label class="col-md-3 col-sm-4 col-xs-6">省市：{{initClientDetail.provinceName}}{{initClientDetail.cityName}}</label>
+                                <label class="col-md-3 col-sm-4 col-xs-6">交货地：{{initClientDetail.provinceName}}{{initClientDetail.cityName}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6" style="white-space: pre-wrap">付款方式：{{initPurchaseDetail.intentionList.arr[0].paymentWay}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6" style="white-space: pre-wrap">备注：{{initPurchaseDetail.comment}}</label>
                             </ul>

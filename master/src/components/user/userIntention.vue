@@ -244,8 +244,9 @@
                                     <input type="text" v-model='param.sampleAmount' class="form-control edit-input" value="{{param.sampleAmount}}" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">选择付款方式</label>
-                                    <pay-type :width="'90%'" :param='param'></pay-type>
+                                    <label class="editlabel">选择付款方式<span class="system_danger" v-if="$validation.payment.required">必填项</span></label>
+                                    <input type="text" v-model="validata.isPassed" v-show='false' v-validate:payment="{required:true}"/>
+                                    <pay-type :width="'90%'" :param='param' :judge='validata'></pay-type>
                                 </div>
                             </div>
                         </div>
@@ -423,6 +424,9 @@ export default {
                 name: '',
                 remain: true,
                 callback: this.callback
+            },
+            validata:{//付款方式验证
+                isPassed:''
             },
             breedParam: {
                 show: false,

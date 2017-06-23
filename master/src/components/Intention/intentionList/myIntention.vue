@@ -293,6 +293,7 @@
                                               sampleUnit:item.sampleUnit,
                                               sampleAmount:item.sampleAmount,
                                               offer:item.offer,
+                                              paymentWay:item.paymentWay,
                                               status:item.status,
                                                country:item.country,
                                                countryName:item.countryName,

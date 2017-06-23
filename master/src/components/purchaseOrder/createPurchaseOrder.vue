@@ -97,8 +97,8 @@
                             </div> -->
                             <div class="editpage-input col-md-8">
                                 <label class="editlabel">付款方式 <span class="system_danger" v-if="$validation.paymentway.required">必填项</span></label>
-                                <input type="text" v-model="param.paymentWay" v-validate:paymentway='{required:true}' v-show="false" />
-                                <pay-type :width="'95%'" :param="param"></pay-type>
+                                <input type="text" v-model="validata.isPassed" v-validate:paymentway='{required:true}' v-show="false" />
+                                <pay-type :width="'95%'" :param="param" :judge='validata'></pay-type>
                             </div>
                             <div class="editpage-input col-md-8">
                                 <label class="editlabel">采购备注 </label>
@@ -348,7 +348,9 @@ export default {
                 show: false,
                 index: 0,
             },
-
+            validata:{
+                isPassed:''
+            }
         }
     },
     vuex: {
