@@ -1443,3 +1443,13 @@ Vue.filter("orderSource", function(val) { //订单来源
         return "未知";
     }
 })
+
+Vue.filter("freightType", function(val) { //运费支付人
+    if (val === "") {
+        return "未知";
+    } else if (val == 0) {
+        return "我方支付";
+    } else if (val == 1) {
+        return "客户支付";
+    }
+})

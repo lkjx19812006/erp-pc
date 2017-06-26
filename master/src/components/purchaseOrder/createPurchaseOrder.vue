@@ -356,8 +356,8 @@ export default {
                 show: false,
                 index: 0,
             },
-            validata:{
-                isPassed:''
+            validata: {
+                isPassed: ''
             }
         }
     },
@@ -608,12 +608,14 @@ export default {
     -ms-box-orient: horizontal;
     box-orient: horizontal;
 }
-.addIntention{
-    border:1px solid #ccc;
+
+.addIntention {
+    border: 1px solid #ccc;
     border-radius: 5px;
     width: 200px;
     line-height: 30px;
 }
+
 .editpageleft,
 .editpageright {
     -webkit-box-flex: 1;

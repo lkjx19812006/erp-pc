@@ -80,9 +80,11 @@
                                         <div class="clearfix">
                                             <mg-label :title="$t('static.transcation_amount')" style="color:red">{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</mg-label>
                                             <mg-label :title="$t('static.wait_payment')">{{initOrderDetail.unpaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
+                                            <mg-label :title="$t('static.paid')">{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
                                             <mg-label :title="$t('static.sundry_fees')+$t('static.fee_explain')">{{initOrderDetail.incidentals}}<span v-if="initOrderDetail.incidentalsDesc!=''">（{{initOrderDetail.incidentalsDesc}}）</span></mg-label>
                                             <mg-label :title="$t('static.preferential')+$t('static.discount_note')">{{initOrderDetail.preferential}}<span v-if="initOrderDetail.preferentialDesc!=''">（{{initOrderDetail.preferentialDesc}}）</span></mg-label>
-                                            <mg-label :title="$t('static.paid')">{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
+                                            <mg-label :title="$t('static.freight')+$t('static.freight_payer')">{{initOrderDetail.freight}}（{{initOrderDetail.freightType | freightType}}）</span>
+                                            </mg-label>
                                         </div>
                                         <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.comments}}</mg-label>
                                     </ul>
