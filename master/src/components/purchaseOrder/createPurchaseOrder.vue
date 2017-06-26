@@ -112,7 +112,7 @@
                             <img src="/static/images/breedInfo@2x.png" style="display:inline" />
                             <h5 style="display:inline">意向信息</h5>
                             <div class="right">
-                                <!-- <upload-excel></upload-excel> -->
+                                <upload-excel></upload-excel>
                             </div>
                         </div>
                         <table class="table table-hover table_color table-striped ">
