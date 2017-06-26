@@ -1,15 +1,18 @@
 <template>
+    <tips-dialog :param="tipsParam" v-if="tipsParam.show"></tips-dialog>
     <custom-dialog :param="customParam" v-if="customParam.show"></custom-dialog>
 </template>
 <script>
 import customDialog from '../tips/customDialog'
+import tipsDialog from '../tips/tipDialog'
 import {
     handleOfferAccept
 } from '../../vuex/actions'
 export default {
     props: ['param'],
     components: {
-        customDialog
+        customDialog,
+        tipsDialog
     },
     data() {
         return {
@@ -73,6 +76,11 @@ export default {
         },
         //拒绝
         refuseOffer: function() {
+            if (this.customParam.comments === "") {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "请填写不接受原因";
+                return;
+            }
             this.customParam.accept = 2;
             this.handleOfferAccept(this.customParam);
         },
