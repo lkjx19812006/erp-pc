@@ -63,11 +63,11 @@
                 <dd class="pull-right" style="margin-right:10px">
                     <button type="button" class="btn btn-primary" style="margin-right:10px" height="24" width="24" class="new_btn" @click="batchInquire()">批量询价</button>
                     <button type="button" class="btn btn-success" style="margin-right:10px" height="24" width="24" class="new_btn" @click="createPurchase()">新建</button>
-                    <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn">
-                        <a href="http://erp.yaocaimaimai.net/local/template/Indent_template.xlsx">
+                    <!-- <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn">
+                        <a href="http://erp.yaocaimaimai.net/local/template/Indent_Item_template.xlsx">
                             EXCEL采购单模板下载
                         </a>
-                    </button>
+                    </button> -->
                     <button type="button" class="btn btn-primary" style="margin-right:10px" height="24" width="24" class="new_btn" @click="excelImport()">EXCEL导入采购单</button>
                     <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                 </dd>
@@ -105,7 +105,7 @@
                     <th colspan="13"></th>
                 </tr>
                 <tbody>
-                    <tr v-for="item in initMyPurchaseList">
+                    <tr v-for="item in initMyPurchaseList" v-if="item.id!=-1">
                         <td @click.stop="" style="min-width:60px">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
                         </td>
@@ -258,7 +258,7 @@ export default {
                 district: "",
                 address: "",
                 buyDesc: "",
-                paymentWay:'',
+                paymentWay:'asdas',
                 intentionList: [], //意向信息
                 intentionListBack: [] //意向信息副本
             },
@@ -352,6 +352,7 @@ export default {
         },
         editPurchase: function(item, index) {
             console.log(item)
+            this.editParam.show = true;
             this.editParam.link = "/indent/queryById";
             this.editParam.id = item.id;
             this.editParam.customerName = item.customerName;
@@ -365,9 +366,10 @@ export default {
             this.editParam.districtName = item.districtName;
             this.editParam.address = item.address;
             this.editParam.comment = item.comment;
+            this.editParam.paymentWay = item.paymentWay
             this.editParam.intentionList = [];
             this.editParam.intentionListBack = [];
-            this.editParam.show = true;
+            
         },
         detailClick: function(id, customerId) {
             this.detailParam.id = id;

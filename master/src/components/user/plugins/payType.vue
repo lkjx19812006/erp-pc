@@ -1,4 +1,12 @@
 <template>
+    <p class="title_info">
+        <Icon type="ios-information" class="icon_c" :style="{color:(judge.isPassed==''?'#ff6600':'#00cc66')}"></Icon>当前选择：
+        <span v-if="param.paymentWay==''">{{title}}<b style="color:#ff6600">（请选择并确认）</b></span>
+        <span v-else>{{param.paymentWay}}
+            <b style="color:#ff6600" v-if="judge.isPassed==''">（请点击空白处完成验证）</b>
+            <b style="color:#00cc66" v-else>（验证成功）</b>
+        </span>
+    </p>
     <Radio-group :model.sync="param.paymentWay" vertical class="radio_con" :style="{width:width}">
         <Radio :value="one" @change="selectPayment('one')" @click="choose('one')">
             <span>合同签订后，预付<input type="number" max="100" min="0" class="pay_input" v-model="bookMoney" @change="choose('one')"/>%定金</span>
@@ -19,7 +27,7 @@
     </Radio-group>
     <!-- <input type="text" v-model="judge" v-show="false"/> -->
 </template>
-<script>
+<script> 
 export default {
     components: {},
     data() {
@@ -28,7 +36,8 @@ export default {
             bookMoney: '',
             payDay: '',
             otherWay: '',
-            selected: 'four'
+            selected: 'four',
+            title:''
         }
     },
     props: ['width', 'param','judge'],
@@ -76,6 +85,10 @@ export default {
             return this.otherWay;
         }
     },
+    created(){
+        this.title = this.param.paymentWay
+
+    }
 }
 </script>
 <style scoped>
@@ -89,5 +102,14 @@ export default {
     border-bottom: 1px solid #ccc;
     color: red;
     text-align: center
+}
+.title_info{
+    color:#464c5b;
+    font-weight: bold
+}
+.icon_c{
+    font-size:16px;
+    line-height: 16px;
+    margin-right: 5px;
 }
 </style>
