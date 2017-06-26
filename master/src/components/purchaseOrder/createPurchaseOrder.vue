@@ -112,7 +112,7 @@
                             <img src="/static/images/breedInfo@2x.png" style="display:inline" />
                             <h5 style="display:inline">意向信息</h5>
                             <div class="right">
-                                <!-- <upload-excel></upload-excel> -->
+                                <upload-excel></upload-excel>
                             </div>
                         </div>
                         <table class="table table-hover table_color table-striped ">
@@ -356,8 +356,8 @@ export default {
                 show: false,
                 index: 0,
             },
-            validata:{
-                isPassed:''
+            validata: {
+                isPassed: ''
             }
         }
     },
@@ -608,12 +608,14 @@ export default {
     -ms-box-orient: horizontal;
     box-orient: horizontal;
 }
-.addIntention{
-    border:1px solid #ccc;
+
+.addIntention {
+    border: 1px solid #ccc;
     border-radius: 5px;
     width: 200px;
     line-height: 30px;
 }
+
 .editpageleft,
 .editpageright {
     -webkit-box-flex: 1;
