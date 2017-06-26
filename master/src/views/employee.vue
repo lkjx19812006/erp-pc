@@ -641,7 +641,7 @@ export default {
 }
 
 .treeview {
-    height: 500px;
+    height: 630px;
     border: 0px;
 }
 
@@ -657,7 +657,7 @@ export default {
 #table_box table th,
 #table_box table td {
     width: 90px;
-    min-width: 90px;
+    min-width: 60px;
 }
 
 .form-control {

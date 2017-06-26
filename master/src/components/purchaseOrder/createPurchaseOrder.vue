@@ -111,8 +111,16 @@
                         <div style="margin-top:40px;">
                             <img src="/static/images/breedInfo@2x.png" style="display:inline" />
                             <h5 style="display:inline">意向信息</h5>
+                            <div class="right excel_download">
+                                <div style="width: 100px;height:30px;line-height: 30px;margin-right:50px;color:#39f">
+                                    <Icon type="ios-cloud-download" size="20"></Icon>
+                                    <a href="http://erp.yaocaimaimai.net/local/template/Indent_Item_template.xlsx">
+                                        EXCEL采购单模板下载
+                                    </a>
+                                </div>
+                            </div>
                             <div class="right">
-                                <upload-excel></upload-excel>
+                                <upload-excel :param='param'></upload-excel>
                             </div>
                         </div>
                         <table class="table table-hover table_color table-striped ">
@@ -597,7 +605,11 @@ export default {
     width: 100%;
     box-sizing: border-box;
 }
-
+.excel_download{
+    border:1px dashed #39f;
+    padding: 0 5px;
+    border-radius: 5px;
+}
 .editpage {
     display: -webkit-flex;
     display: -webkit-box;

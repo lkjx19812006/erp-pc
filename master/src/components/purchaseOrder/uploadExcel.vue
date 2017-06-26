@@ -15,7 +15,21 @@
         <span class="system_danger">{{errorInfo}}</span>
         <span class="system_danger" v-if="validate.isComplete">正在上传...</span>
     </div>
-    <Upload v-ref:upload :show-upload-list="false" :on-success="handleSuccess" :format="['xlsx','xls']" :max-size="2048" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload" :on-error="handleError" :on-progress="handelProgress" name="mFile" multiple type="drag" action="/crm/api/v1/indent/parseExcel" style="display: inline-block;width:100px;">
+    <Upload v-ref:upload 
+    :show-upload-list="false" 
+    :on-success="handleSuccess" 
+    :format="['xlsx','xls']" 
+    :max-size="2048" 
+    :on-format-error="handleFormatError" 
+    :on-exceeded-size="handleMaxSize" 
+    :before-upload="handleBeforeUpload" 
+    :on-error="handleError" 
+    :on-progress="handelProgress" 
+    name="mFile" 
+    multiple 
+    type="drag" 
+    action="/crm/api/v1/indent/parseExcel" 
+    style="display: inline-block;width:100px;">
         <div style="width: 100px;height:30px;line-height: 30px;margin-right:50px;color:#39f">
             <Icon type="ios-cloud-upload" size="20"></Icon>上传文件
         </div>
@@ -38,6 +52,7 @@ export default {
                 errorInfo: ''
             }
         },
+        props:['param'],
         computed: {
             uploadList() {
                 return this.$refs.upload ? this.$refs.upload.fileList : [];
@@ -52,14 +67,23 @@ export default {
             },
             handleSuccess(res, file) { //上传成功后回调函数
                 // 因为上传过程为实例，这里模拟添加 url
-                // file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
-                // file.name = '7eb99afb9d5f317c912f08b5212fd69a';
                 this.validate.format = false
                 this.validate.size = false
                 this.validate.isComplete = false
-                for (var key in res.result) {
-                    this.errorInfo = res.result[key]
+                console.log(res)
+                if(res.msg == 'error'){
+                   for (var key in res.result) {
+                        this.errorInfo = res.result[key]
+                    } 
                 }
+                if(res.msg == 'success'){
+                    this.errorInfo = '上传成功'
+                    for(var i = 0;i<res.result.length;i++){
+                        this.param.intentionList.push(res.result[i])
+                    }
+                    
+                }
+                
             },
             handleFormatError(file) { //验证文件格式
                 this.validate.format = true

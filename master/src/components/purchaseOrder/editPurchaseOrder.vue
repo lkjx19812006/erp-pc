@@ -122,6 +122,17 @@
                         <div style="margin-top:40px;">
                             <img src="/static/images/breedInfo@2x.png" style="display:inline" />
                             <h5 style="display:inline">意向信息</h5>
+                            <div class="right excel_download">
+                                <div style="width: 100px;height:30px;line-height: 30px;margin-right:50px;color:#39f">
+                                    <Icon type="ios-cloud-download" size="20"></Icon>
+                                    <a href="http://erp.yaocaimaimai.net/local/template/Indent_Item_template.xlsx">
+                                        EXCEL采购单模板下载
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <upload-excel :param='param'></upload-excel>
+                            </div>
                         </div>
                         <table class="table table-hover table_color table-striped ">
                             <thead>
@@ -152,8 +163,9 @@
                             </tbody>
                         </table>
                         <!-- 添加意向按钮 -->
-                        <div style="padding-left:25%">
-                            <div v-if="intentionInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddIntention()">{{$t('static.add_material_information')}}</div>
+                        <div style="padding:0 30%">
+                            <!-- <div v-if="intentionInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddIntention()">{{$t('static.add_material_information')}}</div> -->
+                            <i-button type="primary" long v-if="intentionInfo.status==0" @click="showAddIntention()">{{$t('static.add_material_information')}}</i-button>
                         </div>
                         <!-- 添加意向或更新意向表单 -->
                         <validator name="inner">
@@ -257,6 +269,7 @@ import supplierDialog from '../order/second_order/selectAllSupplier.vue'
 import breedLocation from '../order/second_order/breedLocation'
 import payType from '../user/plugins/payType'
 import markInfo from '../user/plugins/markInfo'
+import uploadExcel from './uploadExcel.vue'
 import {
     initCountrylist,
     initProvince,
@@ -289,7 +302,8 @@ export default {
         breedLocation,
         qualityRequired,
         payType,
-        markInfo
+        markInfo,
+        uploadExcel
     },
     props: ['param'],
     data() {
@@ -667,7 +681,11 @@ export default {
     margin-top: 0px;
     width: 950px;
 }
-
+.excel_download{
+    border:1px dashed #39f;
+    padding: 0 5px;
+    border-radius: 5px;
+}
 .edit_footer button {
     margin-left: 15px;
 }
