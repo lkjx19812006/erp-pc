@@ -671,7 +671,6 @@
                                                     <th>{{$t('static.province')}}</th>
                                                     <th>{{$t('static.city')}}</th>
                                                     <th>{{$t('static.area')}}</th>
-                                                    <th>{{$t('static.street')}}</th>
                                                     <th>{{$t('static.address')}}</th>
                                                     <th>{{$t('static.detailed_address')}}</th>
                                                     <th colspan="2">{{$t('static.operation')}}</th>
@@ -682,14 +681,15 @@
                                                         <td v-if="item.type==1">默认</td>
                                                         <td>{{item.contactName}}</td>
                                                         <td>{{item.contactPhone}}</td>
-                                                        <td v-if="item.sex==1">男</td>
-                                                        <td v-if="item.sex==0">女</td>
-                                                        <td v-if="item.sex==null">未说明</td>
-                                                        <td>{{item.country}}</td>
-                                                        <td>{{item.province}}</td>
-                                                        <td>{{item.city}}</td>
-                                                        <td>{{item.district}}</td>
-                                                        <td>{{item.street}}</td>
+                                                        <td>
+                                                            <span v-if="item.sex==1">男</span>
+                                                            <span v-if="item.sex===0">女</span>
+                                                            <span v-if="item.sex===null||item.sex===''">未说明</span>
+                                                        </td>
+                                                        <td>{{item.countryName}}</td>
+                                                        <td>{{item.provinceName}}</td>
+                                                        <td>{{item.cityName}}</td>
+                                                        <td>{{item.districtName}}</td>
                                                         <td>{{item.detailAddr}}</td>
                                                         <td>{{item.address}}</td>
                                                         <td>
