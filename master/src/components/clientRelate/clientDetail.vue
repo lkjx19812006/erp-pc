@@ -643,20 +643,7 @@
                                 </a>
                                 <button type="button" class="btn btn-base pull-right" @click.stop="createAddr({
                                        customerId:param.id,
-                                       id:param.id,
                                        show:true,
-                                       title:'地址',
-                                       typelist:'类型',
-                                       namelist:'联系人姓名',
-                                       phonelist:'联系人电话',
-                                       sexlist:'性别',
-                                       countylist:'国家',
-                                       provicelist:'所在省',
-                                       citylist:'所在市',
-                                       addr_detail:'地址',
-                                       distlist:'所在区域',
-                                       streetlist:'所在街道',
-                                       addr:'详细地址',
                                        type:'',
                                        contactName:'',
                                        contactPhone:'',
@@ -665,10 +652,8 @@
                                        province:'',
                                        city:'',
                                        district:'',
-                                       street:'',
                                        detailAddr:'',
                                        address:'',
-                                       link:createAddress,
                                        url:'/customer/insertAddress',
                                        key:'addresses'
                                        })">{{$t('static.new')}}</button>
@@ -707,40 +692,32 @@
                                                         <td>{{item.street}}</td>
                                                         <td>{{item.detailAddr}}</td>
                                                         <td>{{item.address}}</td>
-                                                        <td @click.stop="updateAddr({
-                                                   sub:$index,
-                                                   id:item.id,
-                                                   customerId:item.customerId,
-                                                   show:true,
-                                                   title:'地址',
-                                                   typelist:'类型',
-                                                   namelist:'联系人姓名',
-                                                   phonelist:'联系人电话',
-                                                   sexlist:'性别',
-                                                   countylist:'国家',
-                                                   provicelist:'所在省',
-                                                   citylist:'所在市',
-                                                   addr_detail:'地址',
-                                                   distlist:'所在区域',
-                                                   streetlist:'所在街道',
-                                                   addr:'详细地址',
-                                                   type:item.type,
-                                                   contactName:item.contactName,
-                                                   contactPhone:item.contactPhone,
-                                                   sex:item.sex,
-                                                   country:item.country,
-                                                   province:item.province,
-                                                   city:item.city,
-                                                   district:item.district,
-                                                   street:item.street,
-                                                   detailAddr:item.detailAddr,
-                                                   address:item.address,
-                                                   link:addrInfo,
-                                                   url:'/customer/updateAddress',
-                                                   key:'addresses',
-                                                   headline:'clientDetail'
-                                                   })">
-                                                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30" />
+                                                        <td>
+                                                            <a class="operate" @click.stop="updateAddr({
+                                                               sub:$index,
+                                                               id:item.id,
+                                                               customerId:item.customerId,
+                                                               show:true,
+                                                               type:item.type,
+                                                               contactName:item.contactName,
+                                                               contactPhone:item.contactPhone,
+                                                               sex:item.sex,
+                                                               country:item.country,
+                                                               countryName:item.countryName,
+                                                               province:item.province,
+                                                               provinceName:item.provinceName,
+                                                               city:item.city,
+                                                               cityName:item.cityName,
+                                                               district:item.district,
+                                                               districtName:item.districtName,
+                                                               street:item.street,
+                                                               detailAddr:item.detailAddr,
+                                                               address:item.address,
+                                                               url:'/customer/updateAddress',
+                                                               key:'addresses',
+                                                               headline:'clientDetail'
+                                                               })">
+                                                                <img src="/static/images/edit.png" height="18" width="30" />
                                                             </a>
                                                         </td>
                                                         <td @click.stop="specDelete({
@@ -1101,6 +1078,7 @@ export default {
         },
         createAddr: function(initBreedDetail) {
             this.addressParam = initBreedDetail;
+            this.addressParam.callback = this.publicCallback;
         },
         newlabel: function(initBreedDetail) {
             this.labelParam = initBreedDetail;
@@ -1140,6 +1118,7 @@ export default {
         },
         updateAddr: function(initBreedDetail) {
             this.addrParam = initBreedDetail;
+            this.addrParam.callback = this.publicCallback;
         },
         updatelabel: function(initBreedDetail) {
             this.updlabelParam = initBreedDetail;
@@ -1256,6 +1235,12 @@ export default {
             this.auditParam.confirm = true;
             this.auditParam.callback = this.callback;
             this.auditParam.show = true;
+        },
+        publicCallback: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.tipsParam.alert = true;
+            this.getClientDetail(this.param);
         },
         newOrder: function(order) {
             this.orderParam = order;

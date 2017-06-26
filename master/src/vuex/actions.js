@@ -4073,7 +4073,6 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
                         city: param.city,
                         loading: false
                     }
-
                     return getProvinceList({ dispatch }, object);
                 }
             }
@@ -4146,6 +4145,9 @@ export const getCityList = ({ dispatch }, param) => { //获取市的列表
         }
     }).then((res) => {
         var obj = res.json().result;
+        obj.forEach(function(item) {
+            item.cnameEn = item.cname + '(' + item.nameEn + ')'; //中英文名字"中国/Chinese"
+        })
         dispatch(types.CITY_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
@@ -4182,6 +4184,7 @@ export const getDistrictList = ({ dispatch }, param) => { //获取区的列表
         }
     }).then((res) => {
         var obj = res.json().result;
+
         dispatch(types.DISTRICT_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
@@ -5948,7 +5951,6 @@ export const addrInfo = ({ dispatch }, param) => { //修改客户地址
         province: param.province,
         city: param.city,
         district: param.district,
-        street: param.street,
         detailAddr: param.detailAddr,
         address: param.address,
         id: param.id,
@@ -5965,8 +5967,13 @@ export const addrInfo = ({ dispatch }, param) => { //修改客户地址
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        param.show = false;
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
         dispatch(types.UPDATE_ADDR_DETAIL, param);
     }, (res) => {
+        param.show = false;
         console.log('fail');
     })
 }
@@ -6269,7 +6276,7 @@ export const createCustomer = ({ dispatch }, param) => { //新增客户相关联
     })
 }
 export const createAddress = ({ dispatch }, param) => { //新增客户地址
-    const data1 = {
+    const data = {
         "type": param.type,
         "contactName": param.contactName,
         "contactPhone": param.contactPhone,
@@ -6278,7 +6285,6 @@ export const createAddress = ({ dispatch }, param) => { //新增客户地址
         "province": param.province,
         "city": param.city,
         "district": param.district,
-        "street": param.street,
         'detailAddr': param.detailAddr,
         "address": param.address,
         "customerId": param.customerId
@@ -6287,16 +6293,21 @@ export const createAddress = ({ dispatch }, param) => { //新增客户地址
         method: "POST",
         url: apiUrl.clientList + param.url,
         emulateHTTP: true,
-        body: data1,
+        body: data,
         emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest",
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        param.show = false;
         param.id = res.json().result.id;
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
         dispatch(types.ADD_ADDR_DETAIL, param);
     }, (res) => {
+        param.show = false;
         console.log('fail');
     })
 }
@@ -6762,9 +6773,9 @@ export const modifyPurchaseOrder = ({ dispatch }, param) => { //修改采购单
         buyDesc: param.buyDesc,
         paymentWay: param.paymentWay,
         intentionList: param.intentionList,
-        province:param.province,
-        city:param.city,
-        district:param.district
+        province: param.province,
+        city: param.city,
+        district: param.district
     }
 
     Vue.http({

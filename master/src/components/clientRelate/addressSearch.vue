@@ -29,7 +29,7 @@
                                 </td>
                                 <td>{{item.contactName}}</td>
                                 <td>{{item.contactPhone}}</td>
-                                <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.detailAddr}}</td>
+                                <td>{{item.countryName}}{{item.provinceName}}{{item.cityName}}{{item.districtName}}{{item.detailAddr}}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -66,9 +66,9 @@
                             <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
                             <!-- 填写收货地址，或选择收货地址（无法使用，因为国省市区要传ID，而选择的地址不是中文） -->
                             <!-- 选择收货地址 -->
-                            <!-- <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">{{$t('static.select_addr')}}</button> -->
+                            <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">{{$t('static.select_addr')}}</button>
                             <!-- 填写收货地址（默认） -->
-                            <!-- <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">{{$t('static.shipped_addr')}}</button> -->
+                            <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">{{$t('static.shipped_addr')}}</button>
                         </div>
                         <div class="clearfix">
                             <!-- 客户选择（销售）/供应商选择（采购） -->
@@ -128,26 +128,26 @@
                                 <label class="editlabel">{{$t('static.province')}}</label>
                                 <input type="text" v-if="!country.cnameEn&&!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_country_first')}}" />
                                 <div v-if="country.cnameEn" type="text" class="edit-input">
-                                    <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
+                                    <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cnameEn">
                                     </v-select>
                                 </div>
                                 <div v-if="!country.cnameEn&&country.cname" type="text" class="edit-input">
-                                    <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cname">
+                                    <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省/Province" label="cnameEn">
                                     </v-select>
                                 </div>
                             </div>
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.city')}}</label>
-                                <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_province_first')}}" />
-                                <div v-if="province.cname" type="text" class="edit-input">
-                                    <v-select :debounce="250" :value.sync="city" :on-change="selectDistrict" :options="initCitylist" placeholder="市/City" label="cname">
+                                <input type="text" v-if="!province.cnameEn" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_province_first')}}" />
+                                <div v-if="province.cnameEn" type="text" class="edit-input">
+                                    <v-select :debounce="250" :value.sync="city" :on-change="selectDistrict" :options="initCitylist" placeholder="市/City" label="cnameEn">
                                     </v-select>
                                 </div>
                             </div>
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.area')}}</label>
-                                <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
-                                <div v-if="city.cname" type="text" class="edit-input">
+                                <input type="text" v-if="!city.cnameEn" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
+                                <div v-if="city.cnameEn" type="text" class="edit-input">
                                     <v-select :debounce="250" :value.sync="district" :options="initDistrictlist" placeholder="区" label="cname">
                                     </v-select>
                                 </div>
@@ -339,7 +339,7 @@
                         </div>
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.freight_payer')}}</label>
-                            <select type="text" class="form-control edit-input" v-model="param.freightType" @change="selectBizType()">
+                            <select type="text" class="form-control edit-input" v-model="param.freightType">
                                 <option value="0">{{$t('static.pay_by_us')}}</option>
                                 <option value="1">{{$t('static.pay_by_customer')}}</option>
                             </select>
@@ -514,15 +514,15 @@ export default {
             country: {
                 id: '7',
                 cname: '中国',
-                cnameEn: ''
+                cnameEn: '中国(China)'
             },
             province: {
                 id: '',
-                cname: ''
+                cnameEn: ''
             },
             city: {
                 id: '',
-                cname: ''
+                cnameEn: ''
             },
             district: {
                 id: '',
@@ -596,17 +596,17 @@ export default {
         selectProvince: function() {
             this.province = {
                 id: '',
-                cname: ''
+                cnameEn: ''
             };
             this.city = {
                 id: '',
-                cname: ''
+                cnameEn: ''
             };
             this.district = {
                 id: '',
                 cname: ''
             };
-            if (this.country != '' && this.country != null) {
+            if (this.country.id) {
                 this.getProvinceList(this.country);
             }
         },
@@ -614,13 +614,13 @@ export default {
         selectCity: function() {
             this.city = {
                 id: '',
-                cname: ''
+                cnameEn: ''
             };
             this.district = {
                 id: '',
                 cname: ''
             };
-            if (this.province != '' && this.province != null) {
+            if (this.province.id) {
                 this.getCityList(this.province);
             }
 
@@ -630,7 +630,7 @@ export default {
                 id: '',
                 cname: ''
             };
-            if (this.city != '' && this.city != null) {
+            if (this.city.id) {
                 this.getDistrictList(this.city);
             }
         },
@@ -719,14 +719,17 @@ export default {
             this.param.consigneePhone = this.param.customerPhone;
             this.param.consigneeAddr = "";
             //重置省市区信息
-            this.country.id = '7';
-            this.country.cname = "中国";
+            this.country.id = 7;
+            this.country.cnameEn = "中国(China)";
             this.province.id = "";
-            this.province.cname = "";
+            this.province.cnameEn = "";
             this.city.id = "";
-            this.city.cname = "";
+            this.city.cnameEn = "";
             this.district.id = "";
             this.district.cname = "";
+            this.countryParam.country = 7;
+            this.getCountryList(this.countryParam);
+
         },
         selectConsignee: function() {
             this.createOrSelect = 1;
@@ -974,12 +977,15 @@ export default {
         address: function(address) {
             this.param.consignee = address.contactName;
             this.param.consigneePhone = address.contactPhone;
-            //选择地址时，清空country.cnameEn
-            this.country.cname = address.country;
-            this.country.cnameEn = "";
-            this.province.cname = address.province;
-            this.city.cname = address.city;
-            this.district.cname = address.district;
+
+            this.country.id = address.country;
+            this.country.cnameEn = address.countryName;
+            this.province.id = address.province;
+            this.province.cnameEn = address.provinceName;
+            this.city.id = address.city;
+            this.city.cnameEn = address.cityName;
+            this.district.id = address.district;
+            this.district.cname = address.districtName;
             this.param.consigneeAddr = address.detailAddr;
             this.param.addressId = address.id; //地址ID
 
@@ -1009,6 +1015,7 @@ export default {
             }
             this.supplierParam.supplierName = this.param.customerName;
         }
+
         if (!this.param.tradeTime) {
             var date = new Date();
             date.setDate(date.getDate());
