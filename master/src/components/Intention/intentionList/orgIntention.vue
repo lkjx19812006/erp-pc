@@ -12,6 +12,12 @@
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">意向ID：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.id" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
+                </dl>
+                <dl class="clear left transfer">
                     <dt class="left transfer marg_top">客户名：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
@@ -283,6 +289,7 @@ export default {
                 all: 7,
                 link: '/intention/org/list',
                 key: 'orgIntentionList',
+                id: '',
                 type: '', //类型
                 especial: '', //特殊
                 preSell: '', //是否预售
@@ -532,6 +539,7 @@ export default {
             this.getIntentionList(this.loadParam);
         },
         resetCondition: function() {
+            this.loadParam.id = '';
             this.loadParam.type = '';
             this.loadParam.especial = '';
             this.loadParam.preSell = '';
