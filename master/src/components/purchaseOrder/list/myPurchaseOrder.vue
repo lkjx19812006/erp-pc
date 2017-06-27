@@ -67,8 +67,8 @@
                         <a href="http://erp.yaocaimaimai.net/local/template/Indent_Item_template.xlsx">
                             EXCEL采购单模板下载
                         </a>
-                    </button> -->
-                    <button type="button" class="btn btn-primary" style="margin-right:10px" height="24" width="24" class="new_btn" @click="excelImport()">EXCEL导入采购单</button>
+                    </button> 
+                    <button type="button" class="btn btn-primary" style="margin-right:10px" height="24" width="24" class="new_btn" @click="excelImport()">EXCEL导入采购单</button>-->
                     <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                 </dd>
             </div>
@@ -258,6 +258,7 @@ export default {
                 district: "",
                 address: "",
                 buyDesc: "",
+                duedate:'',
                 paymentWay:'asdas',
                 intentionList: [], //意向信息
                 intentionListBack: [] //意向信息副本
@@ -366,6 +367,7 @@ export default {
             this.editParam.districtName = item.districtName;
             this.editParam.address = item.address;
             this.editParam.comment = item.comment;
+            this.editParam.duedate = item.duedate
             this.editParam.paymentWay = item.paymentWay
             this.editParam.intentionList = [];
             this.editParam.intentionListBack = [];

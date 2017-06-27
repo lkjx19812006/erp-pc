@@ -6689,6 +6689,7 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
 }
 
 export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
+    console.log(param)
     const body = {
         type: param.type,
         customerId: param.customerId,
@@ -6701,7 +6702,8 @@ export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
         district: param.district,
         address: param.address,
         paymentWay: param.paymentWay,
-        intentionList: param.intentionList
+        intentionList: param.intentionList,
+        duedate:param.duedate
     }
 
 
@@ -6775,7 +6777,8 @@ export const modifyPurchaseOrder = ({ dispatch }, param) => { //修改采购单
         intentionList: param.intentionList,
         province: param.province,
         city: param.city,
-        district: param.district
+        district: param.district,
+        duedate:param.duedate
     }
 
     Vue.http({

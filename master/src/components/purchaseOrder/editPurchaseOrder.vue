@@ -28,6 +28,15 @@
                                 <label class="editlabel">客户电话： <span class="system_danger" v-if="$validation.phone.required">{{$t('static.required')}}</span></label>
                                 <input type="text" class="form-control edit-input" v-model="param.customerPhone" value="{{param.customerPhone}}" v-validate:phone="['required']" />
                             </div>
+                            <!-- 过期时间 -->
+                            <div class="editpage-input col-md-4">
+                                <label class="editlabel">过期时间<span class="system_danger" v-if="$validation.duedate.required">必填项</span></label>
+                                <input type="text" v-model="param.duedate" v-show="false" v-validate:duedate="{required:true}">
+                                <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" style="height:36px" @change="changeDate()">
+                                </mz-datepicker>
+                                <button type="button" class="btn btn-default" style="margin-top:-6px" height="24" width="24" @click="reset('duedate')">清空</button>
+                            </div>
+
                             <div class="editpage-input col-md-12">
                                 <div style="margin-top:20px;">
                                     <Icon type="location" style="font-size:14px;"></Icon>
