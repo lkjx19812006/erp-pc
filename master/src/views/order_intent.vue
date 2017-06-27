@@ -7,14 +7,18 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==2">
         <org-intention></org-intention>
     </div>
+        <!-- 全部意向 -->
+   <div class="myOrder" v-if="$route.path.split('=')[1]==3">
+    <all-intention></all-intention>
+</div> 
     <!-- 意向资源池 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==6">
         <potential-intention></potential-intention>
     </div>
     <!-- 我的报价 -->
-    <div class="myOrder" v-if="$route.path.split('=')[1]==3">
-        <my-offer></my-offer>
-    </div>
+  <!--   <div class="myOrder" v-if="$route.path.split('=')[1]==3">
+      <my-offer></my-offer>
+  </div> -->
     <!-- 部门报价 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==4">
         <org-offer></org-offer>
@@ -38,6 +42,7 @@
 </template>
 <script>
 import myIntention from '../components/Intention/intentionList/myIntention.vue'
+import allIntention from '../components/Intention/intentionList/allIntention.vue'
 import orgIntention from '../components/Intention/intentionList/orgIntention.vue'
 import potentialIntention from '../components/Intention/intentionList/potentialIntention.vue'
 import myOffer from '../components/Intention/intentionList/myOffer.vue'
@@ -50,6 +55,7 @@ export default {
     components: {
         myIntention,
         orgIntention,
+        allIntention,
         potentialIntention,
         myOffer,
         orgOffer,
