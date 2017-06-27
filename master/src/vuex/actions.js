@@ -6703,7 +6703,7 @@ export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
         address: param.address,
         paymentWay: param.paymentWay,
         intentionList: param.intentionList,
-        duedate:param.duedate
+        duedate: param.duedate
     }
 
 
@@ -6778,7 +6778,7 @@ export const modifyPurchaseOrder = ({ dispatch }, param) => { //修改采购单
         province: param.province,
         city: param.city,
         district: param.district,
-        duedate:param.duedate
+        duedate: param.duedate
     }
 
     Vue.http({
