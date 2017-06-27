@@ -32,8 +32,19 @@
 
         },
         created:function(){//之前编辑的时候逗号英文逗号，所以现在为了兼容之前的作此处理
-            if(this.param.comment!=''){
+            //console.log(this.param.comment)
+            console.log(this.param.description)
+
+            if(this.param.comment!=undefined&&this.param.comment!=''){
                 this.mock = this.param.comment.split(",")
+                for(var i = 0;i<this.mock.length;i++){
+                    if(this.mock[i].indexOf('常年需求')!=-1){
+                        this.mock[i] = '常年需求，可建立稳固渠道'
+                    }
+               }
+            }
+            if(this.param.description!=undefined&&this.param.description!=''){
+                this.mock = this.param.description.split(",")
                 for(var i = 0;i<this.mock.length;i++){
                     if(this.mock[i].indexOf('常年需求')!=-1){
                         this.mock[i] = '常年需求，可建立稳固渠道'
