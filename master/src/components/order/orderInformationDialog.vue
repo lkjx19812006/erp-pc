@@ -44,12 +44,12 @@
                         </div>
                         <div class="clearfix">
                             <div class="editpage-input col-md-4" v-if="param.type==1">
-                                <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.choose_client')}}</span></label>
-                                <input type="text" class="form-control edit-input" v-model="param.customerName" v-validate:custname="['required']" value="{{param.customerName}}" readonly="true" @click="searchCustomer(param.customerName,param.customer)" />
+                                <label class="editlabel">{{$t('static.client_name')}}</label>
+                                <input type="text" class="form-control edit-input" v-model="param.customerName" readonly="true" @click="searchCustomer(param.customerName,param.customer)" />
                             </div>
                             <div class="editpage-input col-md-4" v-if="param.type==0">
                                 <label class="editlabel">{{$t('static.supplier_name')}}</label>
-                                <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customerName}}" readonly="true" @click="searchCustomer(param.customerName,param.customer)" />
+                                <input type="text" class="form-control edit-input" v-model="param.customerName" readonly="true" @click="searchCustomer(param.customerName,param.customer)" />
                             </div>
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.international')}}</label>
@@ -112,13 +112,9 @@
                                     </v-select>
                                 </div>
                             </div>
-                            <div class="editpage-input col-md-8" v-if="param.type==1">
+                            <div class="editpage-input col-md-8">
                                 <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">{{$t('static.enter_address')}}</span></label>
                                 <input type="text" class="form-control edit-input" v-model="param.consigneeAddr" v-validate:addr="['required']" value="{{param.consigneeAddr}}" />
-                            </div>
-                            <div class="editpage-input col-md-8" v-if="param.type==0">
-                                <label class="editlabel">{{$t('static.detailed_address')}}</label>
-                                <input type="text" class="form-control edit-input" v-model="param.consigneeAddr" />
                             </div>
                             <div class="editpage-input col-md-4">
                                 <label class="editlabel">{{$t('static.postcodes')}} <span class="system_danger" v-if="$validation.code.postcode">{{$t('static.enter_code')}}</span></label>
@@ -913,9 +909,9 @@ export default {
                 this.costmoney += parseFloat(this.param.goods[i].number) * parseFloat(this.param.goods[i].costPrice);
             }
         }
-        if (this.param.consigner) {
+        /*if (this.param.consigner) {
             this.param.consignerName = this.param.consigner;
-        }
+        }*/
     }
 }
 </script>

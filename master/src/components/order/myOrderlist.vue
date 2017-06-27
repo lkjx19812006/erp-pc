@@ -282,7 +282,7 @@
                                         index:$index,
                                         type:item.type,
                                         consigner:item.consigner,
-                                        consignerName:'',
+                                        consignerName:item.consignerName,
                                         sourceType:0,
                                         sample:item.sample,
                                         intl:item.intl,
