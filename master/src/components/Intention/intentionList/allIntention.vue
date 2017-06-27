@@ -94,7 +94,7 @@
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
                 </dl>
                 <dd class="pull-right" style="margin-right:10px">
-                    <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="createIntention({
+                    <button type="button" class="btn btn-default" v-if="false" style="margin-right:10px" height="24" width="24" class="new_btn" @click="createIntention({
                          show:true,
                          selectCustomer:true,
                          flag:0,
@@ -243,7 +243,7 @@
                                 <img v-bind:src="{{pic.url}}" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
                             </li>
                             <li v-for="pic in item.importQualityPics" class="pull-left">
-                                <img sv-bind:src="{{pic.url}}" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                                <img v-bind:src="{{pic.url}}" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
                             </li>
                         </td>
                         <td>{{item.breedName}}</td>
@@ -429,7 +429,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                link: '/intention/employee/list',
+                link: '/intention/',
                 key: 'myIntentionList',
                 type: '', //类型
                 especial: '', //特殊
