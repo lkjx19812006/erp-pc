@@ -117,6 +117,7 @@
                         <th>联系方式</th>
                         <th>手机归属地</th>
                         <th>意向商品</th>
+                        <th>意向图片</th>
                         <th>商品产地</th>
                         <th>商品规格</th>
                         <th>商品数量</th>
@@ -186,8 +187,19 @@
                                 })">{{item.customerName}}</td>
                         <td>{{item.mainContact}}</td>
                         <td>{{item.customerPhone}}</td>
-                        <td></td>
+                        <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.breedName}}</td>
+                        <td width="200px">
+                            <li v-for="pic in item.pics" class="pull-left">
+                                <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                            </li>
+                            <li v-for="pic in item.testReportPics" class="pull-left">
+                                <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                            </li>
+                            <li v-for="pic in item.importQualityPics" class="pull-left">
+                                <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                            </li>
+                        </td>
                         <td>{{item.locationName}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.number}}{{item.unit | Unit}}</td>
