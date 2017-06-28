@@ -123,6 +123,7 @@
                         <th>剩余有效期</th>
                         <th>客户备注</th>
                         <th>意向来源</th>
+                         <th>意向ID</th>
                         <th>上架状态</th>
                         <th>操作</th>
                     </tr>
@@ -193,6 +194,7 @@
                         <td>{{item.duedateDesc}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.inTypeDesc}}</td>
+                        <td>{{item.id}}</td>
                         <td>{{item.onSell | onsell}}</td>
                         <td>
                             <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" @click.stop="specDelete({

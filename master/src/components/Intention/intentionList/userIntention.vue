@@ -136,6 +136,7 @@
                             <th>联系方式</th>
                             <th>手机归属地</th>
                             <th>意向商品</th>
+                             <th>意向ID</th>
                             <th>商品产地</th>
                             <th>单价</th>
                             <th>商品规格</th>
@@ -210,6 +211,7 @@
                             <td>{{item.customerPhone}}</td>
                             <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                             <td>{{item.breedName}}</td>
+                            <td>{{item.id}}</td>
                             <td>{{item.locationName}}</td>
                             <td>{{item.price}}元/{{item.unit | Unit}}</td>
                             <td>{{item.spec}}</td>
