@@ -69,12 +69,17 @@ function getCookie(name) { //获取cookie
 
 //路由拦截器判断是否登录
 router.beforeEach(function({ to, next }) {
+    console.log("拦截器");
+    console.log(to.name);
+    console.log(getCookie('no'));
     if (to.name == "login") {
         next();
     } else {
         if (!getCookie('no')) {
+            console.log("返回登录页面");
             router.go({ name: 'login' });
         } else {
+            console.log("登录成功");
             next();
         }
     }
