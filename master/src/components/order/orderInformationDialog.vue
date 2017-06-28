@@ -24,7 +24,7 @@
                             </select>
                         </div>
                         <!-- 销售订单时的发货人，为公司员工 -->
-                        <div class="editpage-input col-md-6" v-show="param.type==1">
+                        <div class="editpage-input col-md-6" v-if="param.type==1">
                             <label class="editlabel">{{$t('static.send_person')}} <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
                             <input type="text" class="form-control edit-input" v-model="param.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee()" />
                         </div>
