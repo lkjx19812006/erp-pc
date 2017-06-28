@@ -52,8 +52,8 @@
                                         <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
                                         <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
                                         <mg-label :title="$t('static.consignee_phone')">{{initOrderDetail.consigneePhone}}</mg-label>
-                                        <mg-label :title="$t('static.country')">{{initOrderDetail.country}}</mg-label>
-                                        <mg-label :title="$t('static.province')+$t('static.city')+$t('static.area')">{{initOrderDetail.province}} {{initOrderDetail.city}} {{initOrderDetail.district}}</mg-label>
+                                        <mg-label :title="$t('static.country')">{{initOrderDetail.countryName}}</mg-label>
+                                        <mg-label :title="$t('static.province')+$t('static.city')+$t('static.area')">{{initOrderDetail.provinceName}} {{initOrderDetail.cityName}} {{initOrderDetail.districtName}}</mg-label>
                                         <mg-label :title="$t('static.detailed_address')">{{initOrderDetail.consigneeAddr}}</mg-label>
                                         <mg-label :title="$t('static.sample_order')">{{initOrderDetail.sample | Sample}}</mg-label>
                                         <mg-label :title="$t('static.transcation_amount')" style="color:red">{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</mg-label>
