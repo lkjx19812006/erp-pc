@@ -243,13 +243,13 @@
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td width="200px">
                             <li v-for="pic in item.pics" class="pull-left">
-                                <img v-bind:src="{{pic.url}}" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                                <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
                             </li>
                             <li v-for="pic in item.testReportPics" class="pull-left">
-                                <img v-bind:src="{{pic.url}}" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                                <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
                             </li>
                             <li v-for="pic in item.importQualityPics" class="pull-left">
-                                <img sv-bind:src="{{pic.url}}" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                                <img sv-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
                             </li>
                         </td>
                         <td>{{item.breedName}}</td>
