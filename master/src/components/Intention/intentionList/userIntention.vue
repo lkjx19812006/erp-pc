@@ -701,7 +701,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 100px;
+    width: 130px;
     min-width: 100px;
 }
 
