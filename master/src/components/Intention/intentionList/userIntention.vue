@@ -18,12 +18,20 @@
                             <input type="text" class="form-control" v-model="loadParam.userName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                         </dd>
                     </dl>
+
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top" style="letter-spacing:3px">会员手机：</dt>
                         <dd class="left">
                             <input type="text" class="form-control" v-model="loadParam.userPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                         </dd>
                     </dl>
+                    <dl class="clear left transfer">
+                        <dt class="left transfer marg_top" style="letter-spacing:3px">意向ID：</dt>
+                        <dd class="left">
+                            <input type="text" class="form-control" v-model="loadParam.id" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                        </dd>
+                    </dl>
+
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top" style="letter-spacing:3px">品种：</dt>
                         <dd class="left">
@@ -403,6 +411,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                id:'',
                 link: '/intention/user/list',
                 key: 'userIntentionList',
                 type: '', //类型
@@ -630,6 +639,9 @@ export default {
             this.loadParam.inType = '';
             this.loadParam.source = '';
             this.loadParam.label = '';
+            this.loadParam.id='';
+            this.loadParam.userPhone='';
+            this.loadParam.userName='';
             this.getIntentionList(this.loadParam);
 
         },

@@ -6976,7 +6976,8 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
     param.loading = true;
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     for (var search in param) {
-        if (search == 'id' && param[search] !== '') {
+         if (search == 'id' && param[search] !== '') {
+            console.log(param.id)
             url += '&id=' + param.id
         }
         if (search == 'userName' && param[search] !== '') {

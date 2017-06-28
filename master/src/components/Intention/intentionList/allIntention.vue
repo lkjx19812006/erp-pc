@@ -15,9 +15,9 @@
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户名：</dt>
+                    <dt class="left transfer marg_top">意向ID：</dt>
                     <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                        <input type="text" class="form-control" v-model="loadParam.id" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
@@ -431,6 +431,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                id:'',
                 link: '/intention/',
                 key: 'myIntentionList',
                 type: '', //类型
