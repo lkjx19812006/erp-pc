@@ -177,7 +177,6 @@ export default {
             return test;
         },
         loginCallback: function() {
-            console.log("跳转");
             this.$route.router.go({
                 name: 'home'
             });

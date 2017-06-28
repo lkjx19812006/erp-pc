@@ -14,13 +14,13 @@
                             全部
                         </button>
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='0'}" @click="clickAccept('0')">
-                            未处理
+                            待处理
                         </button>
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='1'}" @click="clickAccept('1')">
-                            已接受
+                            已采用
                         </button>
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='2'}" @click="clickAccept('2')">
-                            已拒绝
+                            未采用
                         </button>
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='3'}" @click="clickAccept('3')">
                             待采用
@@ -89,7 +89,6 @@
                                 </div>
                             </Poptip>
                         </td>
-
                         <td>{{item.accept | offerAccept}}</td>
                         <td>
                             <Poptip placement="left" trigger="hover">
@@ -207,7 +206,7 @@ export default {
             detailParam: {
                 show: false,
                 loading: true,
-                idOrName:true,
+                idOrName: true,
                 link: "/intention/offers/",
                 id: "",
             },
@@ -353,14 +352,16 @@ export default {
     width: 130px;
     min-width: 100px;
 }
-.offer_source{
+
+.offer_source {
     display: inline-block;
     width: 60px;
     line-height: 20px;
     background: #2d8cf0;
     border-radius: 3px;
-    color:#fff;
+    color: #fff;
 }
+
 .service-nav {
     padding: 23px 10px 0px 4px;
 }
