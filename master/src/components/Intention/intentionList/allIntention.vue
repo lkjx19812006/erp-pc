@@ -180,8 +180,9 @@
                         <th>客户备注</th>
                         <th>卖点</th>
                         <th>意向来源</th>
+                         <th>意向ID</th>
                         <th>上架状态</th>
-                        <th style="min-width:200px;text-align: left;">操作</th>
+                        <th style="min-width:200px;text-align: left;" v-if="false">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -254,8 +255,9 @@
                         <td>{{item.description}}</td>
                         <td>{{item.quality}}</td>
                         <td>{{item.inTypeDesc}}</td>
+                        <td>{{item.id}}</td>
                         <td>{{item.onSell | onsell}}</td>
-                        <td style="text-align: left">
+                        <td style="text-align: left" v-if="false">
                             <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" @click.stop="modifyIntention({
                                               id:item.id,
                                               sub:$index,

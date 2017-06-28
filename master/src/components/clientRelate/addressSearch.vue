@@ -115,6 +115,10 @@ export default {
         },
         showCreateAddress: function(address) {
             this.addressParam = address;
+            this.addressParam.callback = this.callback;
+        },
+        callback: function() {
+            this.getAddrInfo(this.param);
         }
 
     },
