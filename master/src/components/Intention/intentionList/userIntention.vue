@@ -18,12 +18,20 @@
                             <input type="text" class="form-control" v-model="loadParam.userName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                         </dd>
                     </dl>
+
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top" style="letter-spacing:3px">会员手机：</dt>
                         <dd class="left">
                             <input type="text" class="form-control" v-model="loadParam.userPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                         </dd>
                     </dl>
+                    <dl class="clear left transfer">
+                        <dt class="left transfer marg_top" style="letter-spacing:3px">意向ID：</dt>
+                        <dd class="left">
+                            <input type="text" class="form-control" v-model="loadParam.id" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                        </dd>
+                    </dl>
+
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top" style="letter-spacing:3px">品种：</dt>
                         <dd class="left">
@@ -136,6 +144,7 @@
                             <th>联系方式</th>
                             <th>手机归属地</th>
                             <th>意向商品</th>
+                             <th>意向ID</th>
                             <th>商品产地</th>
                             <th>单价</th>
                             <th>商品规格</th>
@@ -210,6 +219,7 @@
                             <td>{{item.customerPhone}}</td>
                             <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                             <td>{{item.breedName}}</td>
+                            <td>{{item.id}}</td>
                             <td>{{item.locationName}}</td>
                             <td>{{item.price}}元/{{item.unit | Unit}}</td>
                             <td>{{item.spec}}</td>
@@ -401,6 +411,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                id:'',
                 link: '/intention/user/list',
                 key: 'userIntentionList',
                 type: '', //类型
@@ -628,6 +639,9 @@ export default {
             this.loadParam.inType = '';
             this.loadParam.source = '';
             this.loadParam.label = '';
+            this.loadParam.id='';
+            this.loadParam.userPhone='';
+            this.loadParam.userName='';
             this.getIntentionList(this.loadParam);
 
         },
@@ -687,7 +701,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 100px;
+    width: 130px;
     min-width: 100px;
 }
 

@@ -19,7 +19,7 @@
         },
         props:['param'],
         methods:{
-            choose:function(){
+            choose:function(){//为了兼容意向和采购单中字段不相同的问题
                 if(this.param.comment!=undefined){
                     this.param.comment = this.mock.join()
                 }

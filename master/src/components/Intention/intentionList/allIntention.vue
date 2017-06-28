@@ -15,9 +15,9 @@
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户名：</dt>
+                    <dt class="left transfer marg_top">意向ID：</dt>
                     <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                        <input type="text" class="form-control" v-model="loadParam.id" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
@@ -180,8 +180,9 @@
                         <th>客户备注</th>
                         <th>卖点</th>
                         <th>意向来源</th>
+                         <th>意向ID</th>
                         <th>上架状态</th>
-                        <th style="min-width:200px;text-align: left;">操作</th>
+                        <th style="min-width:200px;text-align: left;" v-if="false">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -237,13 +238,13 @@
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td width="200px">
                             <li v-for="pic in item.pics" class="pull-left">
-                                <img v-bind:src="{{pic.url}}" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                                <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
                             </li>
                             <li v-for="pic in item.testReportPics" class="pull-left">
-                                <img v-bind:src="{{pic.url}}" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                                <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
                             </li>
                             <li v-for="pic in item.importQualityPics" class="pull-left">
-                                <img v-bind:src="{{pic.url}}" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                                <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
                             </li>
                         </td>
                         <td>{{item.breedName}}</td>
@@ -254,8 +255,9 @@
                         <td>{{item.description}}</td>
                         <td>{{item.quality}}</td>
                         <td>{{item.inTypeDesc}}</td>
+                        <td>{{item.id}}</td>
                         <td>{{item.onSell | onsell}}</td>
-                        <td style="text-align: left">
+                        <td style="text-align: left" v-if="false">
                             <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" @click.stop="modifyIntention({
                                               id:item.id,
                                               sub:$index,
@@ -429,6 +431,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                id:'',
                 link: '/intention/',
                 key: 'myIntentionList',
                 type: '', //类型
