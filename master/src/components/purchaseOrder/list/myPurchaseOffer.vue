@@ -26,6 +26,20 @@
                             待采用
                         </button>
                     </div>
+                    <div class="btn-group left" style="margin-right:10px">
+                        <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.onSell===''}" @click="clickOnSell('')">
+                            全部
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='2'}" @click="clickOnSell('2')">
+                            已上架
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:100px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='3'}" @click="clickOnSell('3')">
+                            申请下架中
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='4'}" @click="clickOnSell('4')">
+                            已下架
+                        </button>
+                    </div>
                     <div class="left" v-if="param.offerEmployee">
                         <dt class="left transfer marg_top">报价业务员：</dt>
                         <dd class="left margin_right">
@@ -55,7 +69,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th v-if="param.init=='initMyIndentOfferList'"></th>
                         <th>报价时间</th>
                         <th>报价类型</th>
                         <th v-if="param.init=='initAllIndentOfferList'">供应商名称</th>
@@ -73,7 +87,7 @@
                         <th v-if="param.init=='initMyIndentOfferList'">处理报价</th>
                     </tr>
                 </thead>
-                <tr>
+                <tr v-if="param.init=='initMyIndentOfferList'">
                     <th>
                         <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
                     </th>
@@ -215,6 +229,7 @@ export default {
                 breedId: "",
                 breedName: "",
                 accept: "",
+                onSell: ""
 
             },
             detailParam: {
@@ -282,6 +297,11 @@ export default {
             this.loadParam.accept = accept;
             this.selectSearch();
         },
+        clickAccept: function(onSell) {
+            this.loadParam.onSell = onSell;
+            this.selectSearch();
+        },
+
         breedSearch: function() {
             this.breedSearchParam.show = true;
         },
@@ -297,6 +317,7 @@ export default {
             this.loadParam.breedId = "";
             this.loadParam.breedName = "";
             this.loadParam.accept = "";
+            this.loadParam.onSell = "";
             this.selectSearch(this.loadParam);
         },
         clickDetail: function(id) {
