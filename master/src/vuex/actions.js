@@ -7267,6 +7267,9 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
         param.loading = false;
         var result = res.json().result;
         let list = result.list;
+        for (let i = 0; i < list.length; i++) {
+            list[i].checked = false;
+        }
         param.total = result.total;
         param.all = result.pages;
         list.key = param.key;
