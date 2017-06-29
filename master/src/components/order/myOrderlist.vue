@@ -234,7 +234,8 @@
                             <td>{{item.consigneePhone}}</td>
                             <td>
                                 <Poptip placement="top" trigger="hover">
-                                    <span>{{item.consigneeAddr | textDisplay '5'}}</span>
+                                    <span v-if="item.consigneeAddr">{{item.consigneeAddr | textDisplay '5'}}</span>
+                                    <span v-else>未填写详细地址</span>
                                     <div class="api" slot="content">
                                         {{item.countryName}} {{item.provinceName}} {{item.cityName}} {{item.districtName}} {{item.consigneeAddr}}
                                     </div>
