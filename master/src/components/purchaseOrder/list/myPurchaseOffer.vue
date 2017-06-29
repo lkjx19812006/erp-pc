@@ -30,8 +30,17 @@
                         <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.onSell===''}" @click="clickOnSell('')">
                             全部
                         </button>
+                        <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='0'}" @click="clickOnSell('0')">
+                            初始
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:100px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='1'}" @click="clickOnSell('1')">
+                            申请上架中
+                        </button>
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='2'}" @click="clickOnSell('2')">
                             已上架
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='-2'}" @click="clickOnSell('-2')">
+                            上架失败
                         </button>
                         <button type="button" class="btn btn-default" style="width:100px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='3'}" @click="clickOnSell('3')">
                             申请下架中
@@ -294,14 +303,15 @@ export default {
             }
         },
         clickAccept: function(accept) {
+            this.loadParam.cur = 1;
             this.loadParam.accept = accept;
             this.selectSearch();
         },
-        clickAccept: function(onSell) {
+        clickOnSell: function(onSell) {
+            this.loadParam.cur = 1;
             this.loadParam.onSell = onSell;
             this.selectSearch();
         },
-
         breedSearch: function() {
             this.breedSearchParam.show = true;
         },
@@ -309,6 +319,7 @@ export default {
             this.employeeParam.show = true;
         },
         selectSearch: function() {
+            this.checked = false;
             this.getIndentOffers(this.loadParam);
         },
         resetCondition: function() {
@@ -318,7 +329,7 @@ export default {
             this.loadParam.breedName = "";
             this.loadParam.accept = "";
             this.loadParam.onSell = "";
-            this.selectSearch(this.loadParam);
+            this.selectSearch();
         },
         clickDetail: function(id) {
             this.detailParam.show = true;
@@ -357,7 +368,7 @@ export default {
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getIndentOffers(this.loadParam);
+            this.selectSearch();
         },
         breed: function(breed) {
             this.loadParam.breedId = breed.breedId;
