@@ -6212,8 +6212,6 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         /*if(con.orders.show&&con.intention.show){
             dispatch(types.CUSTOMER_DETAIL_DATA, con);
         }*/
-        console.log(con)
-        console.log(res.json().result)
         dispatch(types.CUSTOMER_DETAIL_DATA, con);
     }, (res) => {
         param.loading = false;
@@ -6680,7 +6678,6 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
             }
         }
         dispatch(types.PURCHASE_DETAIL, detail);
-        console.log(detail)
         param.loading = false;
 
     }, (res) => {
@@ -6689,7 +6686,6 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
 }
 
 export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
-    console.log(param)
     const body = {
         type: param.type,
         customerId: param.customerId,
