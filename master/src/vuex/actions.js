@@ -7252,6 +7252,9 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
     if (param.accept) {
         body.accept = param.accept;
     }
+    if (param.onSell) {
+        body.onSell = param.onSell;
+    }
     Vue.http({
         method: 'POST',
         url: url,
