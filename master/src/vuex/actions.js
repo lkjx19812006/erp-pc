@@ -88,7 +88,6 @@ export const login = ({ dispatch }, data) => { //登录
         data.loading = false;
         if (res.json().result) {
             var no = compile(data.no);
-
             var lastTime = getNowFormatDate();
             var expire = new Date((new Date()).getTime() + 24 * 3600000); //得到的时间与真实时间差了8小时,cookie将在24小时后过期
             document.cookie = "no=" + no + ";expires=" + expire;
@@ -129,7 +128,6 @@ export const login = ({ dispatch }, data) => { //登录
             data.show = true;
 
         }
-
 
     }, (res) => {
         console.log('fail');
@@ -6973,6 +6971,7 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     for (var search in param) {
         if (search == 'id' && param[search] !== '') {
+            console.log(param.id)
             url += '&id=' + param.id
         }
         if (search == 'userName' && param[search] !== '') {
@@ -7264,6 +7263,9 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
         param.loading = false;
         var result = res.json().result;
         let list = result.list;
+        for (let i = 0; i < list.length; i++) {
+            list[i].checked = false;
+        }
         param.total = result.total;
         param.all = result.pages;
         list.key = param.key;

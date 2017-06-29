@@ -32,12 +32,12 @@
                                     交易员姓名：{{initIntentionOfferDetail.intention.employeeName}}
                                 </label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">
-                                    采购单ID：{{initIntentionOfferDetail.intention.indentId}}
+                                    采购单ID：<span v-if="initIntentionOfferDetail.intention.indentId==-1">无对应采购单</span>
+                                    <span v-else>{{initIntentionOfferDetail.intention.indentId}}</span>
                                 </label>
                                 <label class="col-md-3 col-sm-4 col-xs-6">
                                     意向ID：{{initIntentionOfferDetail.intention.id}}
                                 </label>
-                                
                                 <!-- <label class="col-md-3 col-sm-4 col-xs-6">
                                     交易员联系方式：{{initIntentionOfferDetail.intention.breedName}}
                                 </label> -->
@@ -88,9 +88,9 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        <!-- 报价信息 -->
-                        <div class="clear section_title">
-                            <h4 class="pull-left">报价信息
+                            <!-- 报价信息 -->
+                            <div class="clear section_title">
+                                <h4 class="pull-left">报价信息
                                 <!-- <span v-if="initIntentionOfferDetail.offer.accept==0" class="warning">({{initIntentionOfferDetail.offer.accept | offerAccept}})</span>
                                 <span v-if="initIntentionOfferDetail.offer.accept==1" class="success">({{initIntentionOfferDetail.offer.accept | offerAccept}})</span>
                                 <span v-if="initIntentionOfferDetail.offer.accept==2 ||initIntentionOfferDetail.offer.accept==3" class="error">
@@ -103,70 +103,70 @@
                                     </Poptip>)
                                 </span> -->
                             </h4>
-                        </div>
-                        <!-- 报价图片 -->
-                        <div class="clearfix">
-                            <div class="client-detailInfo col-md-9 col-xs-12">
-                                <img v-for="item in initIntentionOfferDetail.offerFiles" :src="item" width="140px;" class="left" @click="clickBig(item)" />
                             </div>
-                        </div>
-                        <div class="panel panel-default" style="border:none">
-                            <table class="table table-hover table_color table-striped " v-cloak>
-                                <thead>
-                                    <tr>
-                                        <th>报价时间</th>
-                                        <th>报价类型</th>
-                                        <th>报价人</th>
-                                        <th>供应商名称</th>
-                                        <th>供应商id</th>
-                                        <th>品种</th>
-                                        <th>规格</th>
-                                        <th>产地</th>
-                                        <th>数量</th>
-                                        <th>价格</th>
-                                        <th>备注</th>
-                                        <th>是否采纳</th>
-                                        <th>原因</th>
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in initIntentionOfferDetail.offers" :style="{background:(item.id==param.id?'lightYellow':'')}">
-                                        <td>{{item.otime | date}}</td>
-                                        <td>{{item.type |offerType}}</td>
-                                        <td>{{item.offerEmployeeName}}</td>
-                                        <td>{{item.offerCustomerName}}</td>
-                                        <td>{{item.offerCustomer}}</td>
-                                        <td>{{item.breedName}}</td>
-                                        <td>{{item.spec}}</td>
-                                        <td>{{item.location | province}}</td>
-                                        <td>{{item.number}}{{item.unit | Unit}}</td>
-                                        <td>{{item.price}}</td>
-                                        <td>
-                                            <Poptip placement="top" trigger="hover">
-                                                <span>{{item.description | textDisplay '10'}}</span>
-                                                <div class="api" slot="content">
-                                                    {{item.description}}
-                                                </div>
-                                            </Poptip>
-                                        </td>
-                                        <td>{{item.accept | offerAccept}}</td>
-                                        <td>
-                                            <Poptip placement="top" trigger="hover">
-                                                <span>{{item.comments | textDisplay '10'}}</span>
-                                                <div class="api" slot="content">
-                                                    {{item.comments}}
-                                                </div>
-                                            </Poptip>
-                                        </td>
-                                        <td>
-                                            <button type="botton" class="btn btn-primary btn-xs" @click="offerAccept(item)" v-if="param.idOrName&&(item.id==param.id)">       处理报价
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                            <!-- 报价图片 -->
+                            <div class="clearfix">
+                                <div class="client-detailInfo col-md-9 col-xs-12">
+                                    <img v-for="item in initIntentionOfferDetail.offerFiles" :src="item" width="140px;" class="left" @click="clickBig(item)" />
+                                </div>
+                            </div>
+                            <div class="panel panel-default" style="border:none">
+                                <table class="table table-hover table_color table-striped " v-cloak>
+                                    <thead>
+                                        <tr>
+                                            <th>报价时间</th>
+                                            <th>报价类型</th>
+                                            <th>报价人</th>
+                                            <th>供应商名称</th>
+                                            <th>供应商id</th>
+                                            <th>品种</th>
+                                            <th>规格</th>
+                                            <th>产地</th>
+                                            <th>数量</th>
+                                            <th>价格</th>
+                                            <th>备注</th>
+                                            <th>是否采纳</th>
+                                            <th>原因</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="item in initIntentionOfferDetail.offers" :style="{background:(item.id==param.id?'lightYellow':'')}">
+                                            <td>{{item.otime | date}}</td>
+                                            <td>{{item.type |offerType}}</td>
+                                            <td>{{item.offerEmployeeName}}</td>
+                                            <td>{{item.offerCustomerName}}</td>
+                                            <td>{{item.offerCustomer}}</td>
+                                            <td>{{item.breedName}}</td>
+                                            <td>{{item.spec}}</td>
+                                            <td>{{item.location | province}}</td>
+                                            <td>{{item.number}}{{item.unit | Unit}}</td>
+                                            <td>{{item.price}}</td>
+                                            <td>
+                                                <Poptip placement="top" trigger="hover">
+                                                    <span>{{item.description | textDisplay '10'}}</span>
+                                                    <div class="api" slot="content">
+                                                        {{item.description}}
+                                                    </div>
+                                                </Poptip>
+                                            </td>
+                                            <td>{{item.accept | offerAccept}}</td>
+                                            <td>
+                                                <Poptip placement="top" trigger="hover">
+                                                    <span>{{item.comments | textDisplay '10'}}</span>
+                                                    <div class="api" slot="content">
+                                                        {{item.comments}}
+                                                    </div>
+                                                </Poptip>
+                                            </td>
+                                            <td>
+                                                <button type="botton" class="btn btn-primary btn-xs" @click="offerAccept(item)" v-if="param.idOrName&&(item.id==param.id)"> 处理报价
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -293,9 +293,11 @@ export default {
 section {
     background-color: #fff;
 }
-table>thead>tr>th{
+
+table>thead>tr>th {
     font-weight: bold!important
 }
+
 section article {
     margin-top: 10px;
 }

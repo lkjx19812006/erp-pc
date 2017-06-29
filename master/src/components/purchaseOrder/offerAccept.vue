@@ -39,11 +39,11 @@ export default {
                     handle: this.acceptCancel,
                     style: "btn-warning"
                 }, {
-                    name: "接受",
+                    name: "采用",
                     handle: this.acceptOffer,
 
                 }, {
-                    name: "不接受",
+                    name: "不采用",
                     handle: this.refuseOffer,
 
                 }, {
