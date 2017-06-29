@@ -26,6 +26,26 @@
                             待采用
                         </button>
                     </div>
+                    <!-- <div class="btn-group left" style="margin-right:10px">
+                        <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.onSell===''}" @click="clickOnSell('')">
+                            全部
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:100px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='1'}" @click="clickOnSell('1')">
+                            申请上架中
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='2'}" @click="clickOnSell('2')">
+                            已上架
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='-2'}" @click="clickOnSell('-2')">
+                            上架失败
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:100px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='3'}" @click="clickOnSell('3')">
+                            申请下架中
+                        </button>
+                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='4'}" @click="clickOnSell('4')">
+                            已下架
+                        </button>
+                    </div> -->
                     <div class="left" v-if="param.offerEmployee">
                         <dt class="left transfer marg_top">报价业务员：</dt>
                         <dd class="left margin_right">
@@ -42,9 +62,9 @@
                 <button type="button" class="btn btn-primary transfer left" style="width:75px" @click="resetCondition()">
                     清空条件
                 </button>
-                <button type="button" class="btn btn-success" style="width:100px" @click="batchAccept()">
+                <!-- <button type="button" class="btn btn-success" style="width:100px" @click="batchAccept()">
                     批量处理报价
-                </button>
+                </button> -->
             </div>
         </div>
         <!--中间列表-->
@@ -55,7 +75,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th></th>
+                        <!-- <th v-if="param.init=='initMyIndentOfferList'"></th> -->
                         <th>报价时间</th>
                         <th>报价类型</th>
                         <th v-if="param.init=='initAllIndentOfferList'">供应商名称</th>
@@ -73,18 +93,18 @@
                         <th v-if="param.init=='initMyIndentOfferList'">处理报价</th>
                     </tr>
                 </thead>
-                <tr>
+                <!-- <tr v-if="param.init=='initMyIndentOfferList'">
                     <th>
                         <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
                     </th>
                     <th style="color:#fa6705;font-size: 14px">全选</th>
                     <th colspan="13"></th>
-                </tr>
+                </tr> -->
                 <tbody>
                     <tr v-show="param.init=='initMyIndentOfferList'" v-for="item in initMyIndentOfferList">
-                        <td @click.stop="">
+                        <!-- <td @click.stop="">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
-                        </td>
+                        </td> -->
                         <td>{{item.otime | date}}</td>
                         <td>{{item.source | offerType}}</td>
                         <td><a @click="clickDetail(item.id)">{{item.buyCustomerName}}</a></td>
@@ -215,6 +235,7 @@ export default {
                 breedId: "",
                 breedName: "",
                 accept: "",
+                onSell: ""
 
             },
             detailParam: {
@@ -279,7 +300,13 @@ export default {
             }
         },
         clickAccept: function(accept) {
+            this.loadParam.cur = 1;
             this.loadParam.accept = accept;
+            this.selectSearch();
+        },
+        clickOnSell: function(onSell) {
+            this.loadParam.cur = 1;
+            this.loadParam.onSell = onSell;
             this.selectSearch();
         },
         breedSearch: function() {
@@ -289,6 +316,7 @@ export default {
             this.employeeParam.show = true;
         },
         selectSearch: function() {
+            this.checked = false;
             this.getIndentOffers(this.loadParam);
         },
         resetCondition: function() {
@@ -297,7 +325,8 @@ export default {
             this.loadParam.breedId = "";
             this.loadParam.breedName = "";
             this.loadParam.accept = "";
-            this.selectSearch(this.loadParam);
+            this.loadParam.onSell = "";
+            this.selectSearch();
         },
         clickDetail: function(id) {
             this.detailParam.show = true;
@@ -336,7 +365,7 @@ export default {
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getIndentOffers(this.loadParam);
+            this.selectSearch();
         },
         breed: function(breed) {
             this.loadParam.breedId = breed.breedId;
