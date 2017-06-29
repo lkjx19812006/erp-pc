@@ -7061,6 +7061,9 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         if (param.link == "/intention/resource/list") {
             localStorage.potentialIntentionParam = JSON.stringify(param);
         }
+          if (param.link == "/intention/") {
+            localStorage.allIntentionParam = JSON.stringify(param);
+        }
 
     }, (res) => {
         console.log('fail');

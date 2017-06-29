@@ -325,7 +325,7 @@
             </mglist-model>
         </div>
         <!-- 会员意向 -->
-        <div class="myOrder" v-if="$route.path.split('=')[1]==1">
+        <div class="myOrder" v-if="$route.path.split('=')[1]==4">
             <user-intention></user-intention>
         </div>
         <!-- 注册订单列表 -->
