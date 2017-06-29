@@ -88,7 +88,6 @@ export const login = ({ dispatch }, data) => { //登录
         data.loading = false;
         if (res.json().result) {
             var no = compile(data.no);
-
             var lastTime = getNowFormatDate();
             var expire = new Date((new Date()).getTime() + 24 * 3600000); //得到的时间与真实时间差了8小时,cookie将在24小时后过期
             document.cookie = "no=" + no + ";expires=" + expire;
@@ -129,7 +128,6 @@ export const login = ({ dispatch }, data) => { //登录
             data.show = true;
 
         }
-
 
     }, (res) => {
         console.log('fail');
@@ -6212,8 +6210,6 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         /*if(con.orders.show&&con.intention.show){
             dispatch(types.CUSTOMER_DETAIL_DATA, con);
         }*/
-        console.log(con)
-        console.log(res.json().result)
         dispatch(types.CUSTOMER_DETAIL_DATA, con);
     }, (res) => {
         param.loading = false;
@@ -6680,7 +6676,6 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
             }
         }
         dispatch(types.PURCHASE_DETAIL, detail);
-        console.log(detail)
         param.loading = false;
 
     }, (res) => {
@@ -6689,7 +6684,6 @@ export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详�
 }
 
 export const createPurchaseOrder = ({ dispatch }, param) => { //新增采购单
-    console.log(param)
     const body = {
         type: param.type,
         customerId: param.customerId,
@@ -6976,7 +6970,7 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
     param.loading = true;
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     for (var search in param) {
-         if (search == 'id' && param[search] !== '') {
+        if (search == 'id' && param[search] !== '') {
             console.log(param.id)
             url += '&id=' + param.id
         }
@@ -7272,6 +7266,9 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
         param.loading = false;
         var result = res.json().result;
         let list = result.list;
+        for (let i = 0; i < list.length; i++) {
+            list[i].checked = false;
+        }
         param.total = result.total;
         param.all = result.pages;
         list.key = param.key;

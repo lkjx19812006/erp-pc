@@ -14,13 +14,13 @@
                             全部
                         </button>
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='0'}" @click="clickAccept('0')">
-                            未处理
+                            待处理
                         </button>
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='1'}" @click="clickAccept('1')">
-                            已接受
+                            已采用
                         </button>
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='2'}" @click="clickAccept('2')">
-                            已拒绝
+                            未采用
                         </button>
                         <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='3'}" @click="clickAccept('3')">
                             待采用
@@ -39,8 +39,11 @@
                         </dd>
                     </div>
                 </dl>
-                <button type="button" class="btn btn-primary left" style="width:75px" @click="resetCondition()">
+                <button type="button" class="btn btn-primary transfer left" style="width:75px" @click="resetCondition()">
                     清空条件
+                </button>
+                <button type="button" class="btn btn-success" style="width:100px" @click="batchAccept()">
+                    批量处理报价
                 </button>
             </div>
         </div>
@@ -52,6 +55,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>报价时间</th>
                         <th>报价类型</th>
                         <th v-if="param.init=='initAllIndentOfferList'">供应商名称</th>
@@ -69,8 +73,18 @@
                         <th v-if="param.init=='initMyIndentOfferList'">处理报价</th>
                     </tr>
                 </thead>
+                <tr>
+                    <th>
+                        <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
+                    </th>
+                    <th style="color:#fa6705;font-size: 14px">全选</th>
+                    <th colspan="13"></th>
+                </tr>
                 <tbody>
                     <tr v-show="param.init=='initMyIndentOfferList'" v-for="item in initMyIndentOfferList">
+                        <td @click.stop="">
+                            <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
+                        </td>
                         <td>{{item.otime | date}}</td>
                         <td>{{item.source | offerType}}</td>
                         <td><a @click="clickDetail(item.id)">{{item.buyCustomerName}}</a></td>
@@ -89,7 +103,6 @@
                                 </div>
                             </Poptip>
                         </td>
-
                         <td>{{item.accept | offerAccept}}</td>
                         <td>
                             <Poptip placement="left" trigger="hover">
@@ -207,7 +220,7 @@ export default {
             detailParam: {
                 show: false,
                 loading: true,
-                idOrName:true,
+                idOrName: true,
                 link: "/intention/offers/",
                 id: "",
             },
@@ -233,10 +246,38 @@ export default {
                 name: '',
                 alert: true
             },
+            checked: false
 
         }
     },
     methods: {
+        checkedAll: function() {
+            this.checked = !this.checked;
+            if (this.checked) {
+                this.$store.state.table.myIndentOfferList.forEach(function(item) {
+                    item.checked = true;
+                })
+            } else {
+                this.$store.state.table.myIndentOfferList.forEach(function(item) {
+                    item.checked = false;
+                })
+            }
+        },
+        onlyselected: function(sub, id) {
+            //this.id = id;
+            const _this = this;
+            this.$store.state.table.myIndentOfferList[sub].checked = !this.$store.state.table.myIndentOfferList[sub].checked;
+            if (!this.$store.state.table.myIndentOfferList[sub].checked) {
+                _this.checked = false;
+            } else {
+                _this.checked = true;
+                this.$store.state.table.myIndentOfferList.forEach(function(item) {
+                    if (!item.checked) {
+                        _this.checked = false;
+                    }
+                })
+            }
+        },
         clickAccept: function(accept) {
             this.loadParam.accept = accept;
             this.selectSearch();
@@ -264,6 +305,22 @@ export default {
         },
         offerAccept: function(item) {
             this.offerAcceptParam.id = item.id;
+            this.offerAcceptParam.show = true;
+        },
+        batchAccept: function() {
+            let list = this.initMyIndentOfferList;
+            let offerIds = [];
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].checked) {
+                    offerIds.push(list[i].id);
+                }
+            }
+            if (offerIds.length <= 0) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "请至少选择一条报价！";
+                return;
+            }
+            this.offerAcceptParam.id = offerIds.join(",");
             this.offerAcceptParam.show = true;
         },
 
@@ -353,14 +410,16 @@ export default {
     width: 130px;
     min-width: 100px;
 }
-.offer_source{
+
+.offer_source {
     display: inline-block;
     width: 60px;
     line-height: 20px;
     background: #2d8cf0;
     border-radius: 3px;
-    color:#fff;
+    color: #fff;
 }
+
 .service-nav {
     padding: 23px 10px 0px 4px;
 }
