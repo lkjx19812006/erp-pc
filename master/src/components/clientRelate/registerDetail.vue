@@ -8,8 +8,8 @@
         <tipsdialog-model :param="tipParam" v-if="tipParam.show"></tipsdialog-model>
         <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
         <customer-detail :param="customerParam" v-if="customerParam.show"></customer-detail>
-        <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
-        <div class="container modal_con modal_overall" v-show="param.show">
+        <div v-show="param.show" class="re_model" ></div>
+        <div class=" re_main_model " v-show="param.show">
             <!-- <div @click="param.show=false" class="top-title">
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div> -->
@@ -55,9 +55,7 @@
                 <div class="client-section clearfix">
                     <div class="col-md-12">
                         <h4 class="section_title">详情
-                            <button class="btn btn-primary btn-xs right" @click="showDetail()" v-if="initUserDetail.customerId!=-1">
-                                <Icon type="ios-person" size="20"></Icon>&nbsp查看客户详情
-                            </button>
+                            <button class="btn btn-primary btn-xs right" @click="showDetail()" v-if="initUserDetail.customerId!=-1&&param.clientSource">查看客户详情</button>
                         </h4>
                         <article @click.stop="">
                             <div class="panel-group">
@@ -420,12 +418,12 @@
     </div>
 </template>
 <script>
-import trackingModel from './userTracking'
+import trackingModel from '../user/userTracking'
 import customerDetail from '../clientRelate/clientDetail'
-import intentionModel from './userIntention'
-import personalauthModel from './personalAuth'
-import companyauthModel from './companyAuth'
-import intentionauditModel from './intentionAudit'
+import intentionModel from '../user/userIntention'
+import personalauthModel from '../user/personalAuth'
+import companyauthModel from '../user/companyAuth'
+import intentionauditModel from '../user/intentionAudit'
 import tipsdialogModel from '../tips/tipDialog'
 import filter from '../../filters/filters'
 import pictureModel from '../tips/pictureDialog'
@@ -547,8 +545,7 @@ export default {
             customerParam:{
                 show:false,
                 id:'',
-                loading:false,
-                registerSource:false
+                loading:false
             }
         }
     },
@@ -790,7 +787,7 @@ export default {
 
     },
     created() {
-        console.log(this.initLogin)
+        console.log(this.param)
         this.getUserDetail(this.param);
     },
     filter: (filter, {})
@@ -847,7 +844,26 @@ section {
 section article {
     margin-top: 30px;
 }
-
+.re_main_model{
+    width: 1000px;
+    overflow: hidden;
+    height: 800px;
+    position: absolute;
+    z-index:1500;
+    margin-left:50%;
+    left:-500px;
+    top: 20px;
+}
+.re_model{
+    width: 100%;
+    height: 130%;
+    overflow: hidden;
+    background: #000;
+    border-radius: 10px;
+    opacity: 0.6;
+    position: absolute;
+    z-index: 1499;
+}
 .top-title {
     z-index: 100;
     width: 60%;
@@ -857,7 +873,9 @@ section article {
     left: 0;
     margin: auto;
 }
-
+.modal{
+    z-index:1500!important
+}
 .client-section {
     padding: 10px 5px 40px 5px;
 }

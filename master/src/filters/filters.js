@@ -1453,3 +1453,15 @@ Vue.filter("freightType", function(val) { //运费支付人
         return "客户支付";
     }
 })
+
+Vue.filter("newCustomerType",function(val){
+    if (val == 0) {
+        return "初始";
+    } else if (val == 1) {
+        return "买方";
+    } else if (val == 2) {
+        return "卖方";
+    } else if (val ==3){
+        return "既买又卖"
+    }
+})

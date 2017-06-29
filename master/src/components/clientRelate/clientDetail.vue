@@ -14,10 +14,11 @@
         <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+        <register-model :param='registerParam' v-if="registerParam.show"></register-model>
         <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
         <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con" v-show="param.show">
-            <div @click.stop="param.show=false" class="top-title">
+            <div @click.stop="param.show=false" class="top-title" style="right:30px;">
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
             <div class="cover_loading">
@@ -65,7 +66,12 @@
             <section>
                 <div class="client-section clearfix">
                     <div class="col-md-12">
-                        <h4 class="section_title">{{$t('static.detailed_information')}}</h4>
+                        <h4 class="section_title">{{$t('static.detailed_information')}}
+                            <button class="btn btn-primary btn-xs right" @click="showDetail()" v-if="initClientDetail.userId!=''&&initClientDetail.customerId!=-1&&param.registerSource">
+                                <Icon type="ios-person" size="20"></Icon>&nbsp已注册，查看详情
+                            </button>
+                            
+                        </h4>
                         <article>
                             <div class="panel-group" @click.stop="">
                                 <div class="panel panel-default" style="border:none">
@@ -890,6 +896,7 @@
 </template>
 <script>
 import pressImage from '../../components/imagePress'
+import registerModel from './registerDetail'
 import filter from '../../filters/filters.js'
 import tipsdialogModel from '../tips/tipDialog'
 import createcustModel from '../clientRelate/createClientDetail'
@@ -950,7 +957,8 @@ export default {
         auditDialog,
         createorderModel,
         pictureModel,
-        mgLabel
+        mgLabel,
+        registerModel
     },
     props: ['param'],
     data() {
@@ -1026,6 +1034,12 @@ export default {
             transferData: {
                 show: false,
                 list: []
+            },
+            registerParam:{
+                show:false,
+                loading:false,
+                id:'',
+                clientSource:false
             }
         }
     },
@@ -1061,6 +1075,11 @@ export default {
                 this.$store.state.table.clientDetail[param.crete].show = false
             }
             this.$store.state.table.clientDetail[param.crete].show = !this.$store.state.table.clientDetail[param.crete].show;
+        },
+        showDetail:function(){
+            this.registerParam.id = this.initClientDetail.userId
+            console.log(this.initClientDetail)
+            this.registerParam.show = true
         },
         showTransfer: function() {
             this.transferData.show = !this.transferData.show

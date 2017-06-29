@@ -242,7 +242,8 @@
                                 link:alterInfo,
                                 loading:true,
                                 url:'/customer/',
-                                key:'myCustomerList'
+                                key:'myCustomerList',
+                                registerSource:true
                                 })">{{item.name}}</td>
                             
                             <td>{{item.id}}</td>
@@ -252,7 +253,7 @@
                             <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                             <td>{{item.tel}}</td>
                             <td style="min-width:100px;">
-                                <Rate disabled :value.sync="item.creditLevel"></Rate>
+                                <Rate disabled :value.sync="{item.creditLevel?item.creditLevel:0}"></Rate>
                             </td>
                             <td>{{item.employeeName}}</td>  
                             <td>{{item.orderTotal}}</td>
@@ -464,7 +465,8 @@ export default {
             },
             changeParam: {
                 show: false,
-                loading: true
+                loading: true,
+                registerSource:true
             },
             createParam: {
                 show: false,
