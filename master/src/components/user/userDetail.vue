@@ -73,8 +73,8 @@
                                             <label>QQ：</label>{{initUserDetail.qq}}</div>
                                         <div class="col-md-3 col-sm-4 col-xs-6">
                                             <label>客户分类：</label>{{initUserDetail.userType | newCustomerType}}</div>
-                                        <div class="col-md-3 col-sm-4 col-xs-6">
-                                            <label>客户类型：</label>{{initUserDetail.company}}</div>
+                                        <!-- <div class="col-md-3 col-sm-4 col-xs-6">
+                                            <label>客户类型：</label>{{initUserDetail.company}}</div> -->
                                         <div class="col-md-3 col-sm-4 col-xs-6">
                                             <label>主营品种：</label>{{initUserDetail.bizMain}}</div>
                                         <div class="col-md-3 col-sm-4 col-xs-6">
