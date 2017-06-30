@@ -71,7 +71,7 @@
                                 
                                 <label class="col-md-12 col-sm-12col-xs-12">
                                     <span class="title_layout"><Icon type="social-yen"></Icon>付款方式</span>
-                                    <span class="f_weight">：{{initPurchaseDetail.intentionList.arr[0].paymentWay}}</span>
+                                    <span class="f_weight">：{{initPurchaseDetail.paymentWay}}</span>
                                 </label>
                                 <label class="col-md-12 col-sm-12 col-xs-12">
                                     <span class="title_layout"><Icon type="ios-time"></Icon>过期时间</span>
