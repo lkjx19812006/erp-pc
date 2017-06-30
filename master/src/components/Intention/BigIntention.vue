@@ -436,7 +436,7 @@
                               <img src="/static/images/sample.png" alt="寄样申请" />
                           </a>
                           
-                           <a v-show='showTrans' class="operate" @click.stop="userToClient({
+                           <a v-show='showBox' class="operate" @click.stop="userToClient({
                                     name:item.userFullname,
                                     keyname:'transStatus',
                                     sub:$index,
@@ -470,7 +470,7 @@
                                   },item.show=false)">
                                     <img src="/static/images/transfer.png" height="18" width="28" alt="划转" title="划转" />
                                 </a>
-                                <a v-show='showTrans' class="operate" v-if="item.validate==0||item.validate==9" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png" height="18" width="28" alt="审核" title="审核" /></a>
+                                <a v-show='showBox' class="operate" v-if="item.validate==0||item.validate==9" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png" height="18" width="28" alt="审核" title="审核" /></a>
 
 
                       </td>
@@ -576,7 +576,6 @@ export default {
             showBox:'',//显示注册册用户意向的勾选框
             showCustomer:'',//注册客户意向隐藏客户名称
             showOPin:'',
-            showTrans:'',
             loadParam: {
                 loading: true,
                 color: '#5dc596',
@@ -1011,7 +1010,7 @@ export default {
             this.sampleOrderParam.ctime = item.ctime;
         },
         //变量true false控制函数
-        changeBool:function(a,b,c,d,e,f,g,h){
+        changeBool:function(a,b,c,d,e,f,g){
           this.functionShow=a;
             this.showCustomer=b;
             this.showOwn=c;
@@ -1019,21 +1018,20 @@ export default {
             this.showOperate=e;
             this.showBox=f;
             this.showOPin=g;
-            this.showTrans=h;
         },
         //显示隐藏功能键
       funBtn:function(){
           if(this.$route.query.id==1){
-            this.changeBool(true,true,false,true,true,false,true,false)
+            this.changeBool(true,true,false,true,true,false,true)
             changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.myIntentionParam);
           }else if(this.$route.query.id==2){
-            this.changeBool(true,true,true,true,true,false,false,false)
+            this.changeBool(true,true,true,true,true,false,false)
             changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.orgIntentionParam);
           }else if(this.$route.query.id==3){
-            this.changeBool(false,true,false,true,false,false,true,false)
+            this.changeBool(false,true,false,true,false,false,true)
              changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.allIntentionParam);
           }else{
-            this.changeBool(true,true,true,false,true,true,false,true)
+            this.changeBool(true,true,true,false,true,true,false)
              changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.userIntentionParam);
           }
         },
