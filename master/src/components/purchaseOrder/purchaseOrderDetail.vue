@@ -29,7 +29,7 @@
                 <div class="client-section clearfix">
                     <div class="col-md-12">
                         <!-- 客户信息 -->
-                        <h4 class="section_title">基本信息</h4>
+                        <!-- <h4 class="section_title">基本信息</h4>
                         <div class="panel panel-default" style="border:none">
                             <ul class="clearfix" style="font-size: 14px;padding:5px 0">
                                 <label class="col-md-3 col-sm-4 col-xs-6">姓名：{{initClientDetail.name}}</label>
@@ -51,7 +51,40 @@
                                 <label class="col-md-3 col-sm-4 col-xs-6" style="white-space: pre-wrap">付款方式：{{initPurchaseDetail.intentionList.arr[0].paymentWay}}</label>
                                 <label class="col-md-3 col-sm-4 col-xs-6" style="white-space: pre-wrap">备注：{{initPurchaseDetail.comment}}</label>
                             </ul>
+                        </div> -->
+                        <!-- 采购单的基本信息 -->
+                        <h4 class="section_title">基本信息</h4>
+                        <div class="panel panel-default" style="border:none">
+                            <ul class="clearfix" style="font-size: 14px;padding:5px 0">
+                                <label class="col-md-6 col-sm-6 col-xs-6">
+                                    <span class="title_layout"><Icon type="person-stalker"></Icon>姓名</span>
+                                    <span class="f_weight">：{{initPurchaseDetail.customerName}}</span>
+                                </label>
+                                <label class="col-md-6 col-sm-6 col-xs-6">
+                                    <span class="title_layout"><Icon type="iphone"></Icon>手机号</span>
+                                    <span class="f_weight">：{{initPurchaseDetail.customerPhone}}</span>
+                                </label>
+                                <label class="col-md-12 col-sm-12 col-xs-12">
+                                    <span class="title_layout"><Icon type="location"></Icon>交货地</span>
+                                    <span class="f_weight">：{{initPurchaseDetail.provinceName}}{{initPurchaseDetail.cityName}}{{initPurchaseDetail.districtName}}</span>
+                                </label>
+                                
+                                <label class="col-md-12 col-sm-12col-xs-12">
+                                    <span class="title_layout"><Icon type="social-yen"></Icon>付款方式</span>
+                                    <span class="f_weight">：{{initPurchaseDetail.intentionList.arr[0].paymentWay}}</span>
+                                </label>
+                                <label class="col-md-12 col-sm-12 col-xs-12">
+                                    <span class="title_layout"><Icon type="ios-time"></Icon>过期时间</span>
+                                    <span class="f_weight">：{{initPurchaseDetail.duedate}}</span>
+                                </label>
+                                <label class="col-md-12 col-sm-12 col-xs-12">
+                                    <span class="title_layout"><Icon type="information-circled"></Icon>备注</span>
+                                    <span class="f_weight">：{{initPurchaseDetail.comment}}</span>
+                                </label>
+                                 
+                            </ul>
                         </div>
+
                         <!-- 其他信息 -->
                         <!-- <h4 class="section_title">其他</h4>
                         <div class="panel panel-default" style="border:none">
@@ -767,5 +800,16 @@ section article {
 
 .api {
     color: #3399ff;
+}
+.f_weight{
+    font-weight: normal
+}
+.title_layout{
+    display: inline-block;
+    width: 85px;
+    text-align: left
+}
+.title_layout>Icon{
+    text-align: left
 }
 </style>

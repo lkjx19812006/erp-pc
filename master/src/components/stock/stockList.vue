@@ -170,7 +170,8 @@ import filter from '../../filters/filters'
 import {
     getStockList,
     importStock,
-    deleteStockInfo
+    deleteStockInfo,
+    testing
 } from '../../vuex/actions'
 import {
     initStockList,
@@ -194,7 +195,8 @@ export default {
         actions: {
             getStockList,
             importStock,
-            deleteStockInfo
+            deleteStockInfo,
+            testing
         },
         getters: {
             initStockList,
@@ -308,6 +310,7 @@ export default {
     },
     methods: {
         selectSearch: function() {
+            this.testing()
             this.getStockList(this.loadParam)
         },
         showBig: function(img) {

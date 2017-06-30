@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import * as types from './mutation-types'
 import apiUrl from './api/api'
-
+import testing from './actions_modules/new_actions'
+export const testing = testing
 export const increment = ({ dispatch }) => dispatch(types.INCREMENT)
 export const decrement = ({ dispatch }) => dispatch(types.DECREMENT)
 export const menuBar = ({ dispatch }) => dispatch(types.MENU_BAR)
