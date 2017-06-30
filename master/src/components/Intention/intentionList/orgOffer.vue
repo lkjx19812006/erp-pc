@@ -25,9 +25,16 @@
                     <dd class="left">
                         <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss" class="a">
                         </mz-datepicker>
+                        ~
+                    </dd>
+                    <dd class="left">
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss" class="a">
+                        </mz-datepicker>
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
+                    <button type="button" class="btn btn-default" @click="todayOffer()">今日报价</button>
+                    <button type="button" class="btn btn-default" @click="weekOffer()">本周报价</button>
                     <button type="button" class="btn btn-default" height="24" width="24" @click="offerSearch()">搜索</button>
                     <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 </dl>
@@ -97,6 +104,7 @@ import pictureModel from '../../tips/pictureDialog'
 import tipsModel from '../../tips/tipDialog'
 import mglistModel from '../../mguan/mgListComponent.vue'
 import detailModel from '../../intention/offerDetail'
+import util from '../../tools/util.js'
 import {
     initOrgOfferList,
     initLogin
@@ -199,14 +207,14 @@ export default {
             detailParam: {
                 show: false,
                 loading: true,
-                idOrName:false,
+                idOrName: false,
                 link: "/intention/offers/",
                 id: "",
             },
         }
     },
     methods: {
-        showDetail:function(data){
+        showDetail: function(data) {
             this.detailParam.show = true
             this.detailParam.id = data
         },
@@ -214,8 +222,17 @@ export default {
             this.loadParam.show = true;
         },
         offerSearch: function() {
-            console.log(this.loadParam);
             this.getOfferList(this.loadParam);
+        },
+        todayOffer: function() {
+            this.loadParam.startTime = util.dateFormat(util.getDate(0), "/", ":");
+            this.loadParam.endTime = util.dateFormat(util.getDate(1), "/", ":");
+            this.offerSearch();
+        },
+        weekOffer: function() {
+            this.loadParam.startTime = util.dateFormat(util.getMonday(), "/", ":");
+            this.loadParam.endTime = util.dateFormat(util.getDate(1), "/", ":");
+            this.offerSearch();
         },
         resetCondition: function() {
             this.loadParam.breedName = '';

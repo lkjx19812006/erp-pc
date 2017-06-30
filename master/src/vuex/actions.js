@@ -7266,6 +7266,16 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
     if (param.onSell) {
         body.onSell = param.onSell;
     }
+    if (param.startTime) {
+        body.startTime = param.startTime;
+    }
+    if (param.endTime) {
+        body.endTime = param.endTime;
+    }
+    if (param.effective) {
+        body.effective = param.effective;
+    }
+
     Vue.http({
         method: 'POST',
         url: url,
