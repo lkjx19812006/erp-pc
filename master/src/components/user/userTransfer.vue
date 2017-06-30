@@ -163,11 +163,13 @@
                                 </div>
                                 <!-- 信用等级 -->
                                 <div class="client-detailInfo  col-md-6">
-                                    <label>{{$t('static.credit_rating')}}</label>
+                                    <label>{{$t('static.credit_rating')}}</label>{{param.creditLevel}}
                                     <select class="form-control edit-input" v-model="param.creditLevel">
                                         <option value="1" selected>{{$t('static.one_star')}}</option>
                                         <option value="2">{{$t('static.two_star')}}</option>
                                         <option value="3">{{$t('static.three_star')}}</option>
+                                        <option value="4">{{$t('static.four_star')}}</option>
+                                        <option value="5">{{$t('static.five_star')}}</option>
                                     </select>
                                 </div>
                                 <!-- 注册地址 -->

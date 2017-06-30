@@ -1031,7 +1031,7 @@ export default {
             this.changeBool(false,true,false,true,false,false,true)
              changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.allIntentionParam);
           }else{
-            this.changeBool(true,true,true,false,true,true,false)
+            this.changeBool(true,true,true,false,true,true,false,true)
              changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.userIntentionParam);
           }
         },

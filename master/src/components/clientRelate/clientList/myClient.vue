@@ -137,6 +137,7 @@
                                             classify:'1,买',
                                             type:0,
                                             scale:0,
+                                            creditLevel:'3',
                                             nature:0,
                                             advance:1,
                                             capitalReturnDays:0,
@@ -253,7 +254,7 @@
                             <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                             <td>{{item.tel}}</td>
                             <td style="min-width:100px;">
-                                <Rate disabled :value.sync="{item.creditLevel?item.creditLevel:0}"></Rate>
+                                <Rate disabled :value.sync="item.creditLevel"></Rate>
                             </td>
                             <td>{{item.employeeName}}</td>  
                             <td>{{item.orderTotal}}</td>
@@ -772,6 +773,11 @@ export default {
             this.transferInfo(this.transferParam);
         }
     },
+    computed:{
+        rating:function(data){
+            return data?data:0
+        }
+    },
     created() {
         this.getProvinceList(this.provinceParam);
         changeMenu(this.$store.state.table.isTop, this.getClientList, this.loadParam, localStorage.myClientParam);
@@ -784,6 +790,9 @@ export default {
         timeFilters: function(mytime) {
             // debugger;
             return mytime ? mytime.substring(0, 10) : '';
+        },
+        rating:function(data){
+            return data?data:0
         }
     }
 
