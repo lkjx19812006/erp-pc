@@ -1665,28 +1665,32 @@ const mutations = {
 
     },
     [CUSTOMER_BATCH_DELETE](state, data) {
-        data.customerIds.forEach(function(item) {
-            for (var i = 0; i < state.basicBaseList[data.key].length; i++) {
-                if (state.basicBaseList[data.key][i].id == item) {
-                    state.basicBaseList[data.key].splice(i, 1);
+        if (data.key) {
+            data.customerIds.forEach(function(item) {
+                for (var i = 0; i < state.basicBaseList[data.key].length; i++) {
+                    if (state.basicBaseList[data.key][i].id == item) {
+                        state.basicBaseList[data.key].splice(i, 1);
+                    }
                 }
-            }
-        })
-
+            })
+        }
         if (data.customerIds[0] == state.clientDetail.id) {
             state.clientDetail.blacklist = 1 - state.clientDetail.blacklist;
         }
 
     },
     [CUSTOMER_BATCH_SUPPLIER](state, data) {
-        data.customerIds.forEach(function(item) {
-            for (var i = 0; i < state.basicBaseList[data.key].length; i++) {
-                if (state.basicBaseList[data.key][i].id == item) {
-                    state.basicBaseList[data.key][i].comments = data.blackComments;
-                    state.basicBaseList[data.key][i].supplier = 1;
+        if (data.key) {
+            data.customerIds.forEach(function(item) {
+                for (var i = 0; i < state.basicBaseList[data.key].length; i++) {
+                    if (state.basicBaseList[data.key][i].id == item) {
+                        state.basicBaseList[data.key][i].comments = data.blackComments;
+                        state.basicBaseList[data.key][i].supplier = 1;
+                    }
                 }
-            }
-        })
+            })
+        }
+
     },
 
     [CUSTOMER_ADD_DATA](state, data) { //新增客户

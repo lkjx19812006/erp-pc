@@ -8,8 +8,9 @@
         <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <search-model :param="loadParam" v-if="loadParam.show"></search-model>
-        <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
         <updatetracking-model :param="updateTrackingParam" v-if="updateTrackingParam.show"></updatetracking-model>
+        <set-supplier :param="supplierParam" v-if="supplierParam.show"></set-supplier>
+        <set-blacklist :param="blacklistParam" v-if="blacklistParam.show"></set-blacklist>
         <language-model v-show="false"></language-model>
         <mglist-model>
             <!-- 头部搜索-->
@@ -192,7 +193,6 @@
                                 <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
                             </th>
                             <th>{{$t('static.client_name')}}</th>
-                            
                             <th>{{$t('static.client_id')}}</th>
                             <th>{{$t('static.contact')}}</th>
                             <th>{{$t('static.position')}}</th>
@@ -200,15 +200,15 @@
                             <th>{{$t('static.phone_origin')}}</th>
                             <th>{{$t('static.telephone')}}</th>
                             <th style="min-width:100px;">{{$t('static.credit_rating')}}</th>
-                            <th>{{$t('static.salesman')}}</th>                                                    
+                            <th>{{$t('static.salesman')}}</th>
                             <th>{{$t('static.transaction_num')}}</th>
                             <th>{{$t('static.recent_contact')}}</th>
                             <th>成交金额</th>
-                            <th>{{$t('static.client_type')}}</th>                           
+                            <th>{{$t('static.client_type')}}</th>
                             <th>{{$t('static.client_origin')}}</th>
                             <th>{{$t('static.main_product')}}</th>
                             <th style="min-width:150px;">划转/来源</th>
-                            <th>{{$t('static.create_time')}}</th>  
+                            <th>{{$t('static.create_time')}}</th>
                             <!-- <th>{{$t('static.detailed_address')}}</th> -->
                             <th v-if="this.initLogin.orgId==29">跟进状态</th>
                             <th v-if="this.initLogin.orgId==29">跟进说明</th>
@@ -246,7 +246,6 @@
                                 key:'myCustomerList',
                                 registerSource:true
                                 })">{{item.name}}</td>
-                            
                             <td>{{item.id}}</td>
                             <td>{{item.mainContact}}</td>
                             <td>{{item.mainPosition}}</td>
@@ -256,7 +255,7 @@
                             <td style="min-width:100px;">
                                 <Rate disabled :value.sync="item.creditLevel"></Rate>
                             </td>
-                            <td>{{item.employeeName}}</td>  
+                            <td>{{item.employeeName}}</td>
                             <td>{{item.orderTotal}}</td>
                             <td>
                                 <span v-if="item.orderTotal!=0">{{item.lastOrderTime | timeFilters}}</span>
@@ -267,16 +266,14 @@
                             <td v-if="this.language=='en'">{{item.type | customerTypeEn}}</td>
                             <td>{{item.provinceName}}{{item.cityName}}</td>
                             <td>{{item.bizScope}}</td>
-                            <td >                                
+                            <td>
                                 <p style="color:red;border-bottom:1px solid #ccc" v-if="item.originalEmployee!=-1">
                                     批量划转（{{item.originalEmployeeName}}）
                                 </p>
-                                <p >{{item.sourceType}}</p>
+                                <p>{{item.sourceType}}</p>
                             </td>
                             <td>{{item.ctime | timeFilters}}</td>
-                            
                             <!-- <td>{{item.address}}</td> -->
-                            
                             <td v-if="this.initLogin.orgId==29">{{item.audit | tracking}}</td>
                             <td v-if="this.initLogin.orgId==29">{{item.auditComment}}</td>
                             <td style="min-width:110px;">
@@ -348,7 +345,8 @@ import alterinfoModel from '../../../components/clientRelate/clientUpdate'
 import transferModel from '../../../components/user/employeeOrOrg'
 import tipsdialogModel from '../../../components/tips/tipDialog'
 import searchModel from '../../../components/clientRelate/searchModel'
-import auditDialog from '../../../components/tips/auditDialog'
+import setSupplier from '../setSupplier.vue'
+import setBlacklist from '../setBlacklist.vue'
 import updatetrackingModel from '../../../components/tips/auditDialog'
 import vSelect from '../../tools/vueSelect/components/Select'
 import common from '../../../common/common'
@@ -384,7 +382,8 @@ export default {
         transferModel,
         tipsdialogModel,
         searchModel,
-        auditDialog,
+        setSupplier,
+        setBlacklist,
         updatetrackingModel,
         vSelect,
         languageModel,
@@ -467,7 +466,7 @@ export default {
             changeParam: {
                 show: false,
                 loading: true,
-                registerSource:true
+                registerSource: true
             },
             createParam: {
                 show: false,
@@ -512,16 +511,11 @@ export default {
                 name: '请先选择客户',
                 alert: true
             },
-            auditParam: {
-                link: '/customer/transferBlacklist',
-                key: 'myCustomerList',
-                show: false,
-                title: '客户拉入黑名单备注',
-                arr: [],
-                blacklist: 1,
-                auditComment: '',
-                blackComments: '',
-                callback: this.callback
+            supplierParam: {
+                show: false
+            },
+            blacklistParam: {
+                show: false
             },
             checked: false
         }
@@ -656,56 +650,50 @@ export default {
 
             this.tipsParam.alert = true;
         },
+        //客户提取为供应商
         clientTransferSupplier: function() {
-            this.auditParam.title = "客户提取为供应商备注";
-            this.auditParam.link = '/customer/setSupplier';
-            this.auditParam.arr = [];
+            this.supplierParam.link = '/customer/setSupplier';
+            this.supplierParam.customerIds = [];
             for (var i in this.initMyCustomerlist) {
                 if (this.initMyCustomerlist[i].checked) {
-                    this.auditParam.arr.push(this.initMyCustomerlist[i].id);
+                    this.supplierParam.customerIds.push(this.initMyCustomerlist[i].id);
                 }
             }
-            if (this.auditParam.arr.length > 0) {
-                this.auditParam.show = true;
-                this.auditParam.confirm = true;
-                this.auditParam.callback = this.callback;
+            if (this.supplierParam.customerIds.length > 0) {
+                this.supplierParam.show = true;
+                this.supplierParam.supplier = 1;
+                this.supplierParam.callback = this.supplierCallback;
             } else {
-                this.tipsParam.show = true;
-                this.tipsParam.alert = true;
-                this.tipsParam.name = '请先选择客户';
-                this.tipsParam.confirm = false;
+                this.showTips('请先选择客户');
             }
         },
+        supplierCallback: function(name) {
+            this.supplierParam.show = false;
+            this.showTips(name);
+            this.searchClient();
+        },
+        //客户加入黑名单
         clientTransferBlack: function() {
-            this.auditParam.title = "客户踢入黑名单备注";
-            this.auditParam.arr = [];
+            this.blacklistParam.title = "加入黑名单";
+            this.blacklistParam.link = '/customer/transferBlacklist';
+            this.blacklistParam.customerIds = [];
             for (var i in this.initMyCustomerlist) {
                 if (this.initMyCustomerlist[i].checked) {
-                    this.auditParam.arr.push(this.initMyCustomerlist[i].id);
+                    this.blacklistParam.customerIds.push(this.initMyCustomerlist[i].id);
                 }
             }
-            if (this.auditParam.arr.length > 0) {
-                this.auditParam.show = true;
-                this.auditParam.confirm = true;
-                this.auditParam.callback = this.callback;
+            if (this.blacklistParam.customerIds.length > 0) {
+                this.blacklistParam.show = true;
+                this.blacklistParam.blacklist = 1;
+                this.blacklistParam.callback = this.blacklistCallback;
             } else {
-                this.tipsParam.show = true;
-                this.tipsParam.alert = true;
-                this.tipsParam.name = '请先选择客户';
-                this.tipsParam.confirm = false;
+                this.showTips('请先选择客户');
             }
         },
-        callback: function() {
-            this.auditParam.blackComments = this.auditParam.auditComment;
-            this.auditParam.customerIds = this.auditParam.arr;
-            this.auditParam.auditComment = '';
-            this.auditParam.callback = this.supplierback;
-            this.customerTransferBlacklist(this.auditParam);
-        },
-        supplierback: function(title) {
-            this.tipsParam.show = true;
-            this.tipsParam.name = title;
-            this.tipsParam.alert = true;
+        blacklistCallback: function(name) {
+            this.blacklistParam.show = false;
+            this.showTips(name);
+            this.searchClient();
         },
         trackCallback: function(title) {
             this.tipsParam.show = true;
@@ -743,22 +731,27 @@ export default {
         searchClient: function() {
             this.getClientList(this.loadParam)
         },
-        setTop:function(id,num){
+        setTop: function(id, num) {
             let data = {
-                id:id,
-                sortNum:num,
-                callback:this.getClientList
+                id: id,
+                sortNum: num,
+                callback: this.getClientList
             }
-            this.setClientTop(data,this.loadParam)
+            this.setClientTop(data, this.loadParam)
         },
-        cancelTop:function(id,num){
+        cancelTop: function(id, num) {
             let data = {
-                id:id,
-                sortNum:num,
-                callback:this.getClientList
+                id: id,
+                sortNum: num,
+                callback: this.getClientList
             }
-            this.setClientTop(data,this.loadParam)
-        }
+            this.setClientTop(data, this.loadParam)
+        },
+        showTips: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.tipsParam.alert = true;
+        },
     },
     events: {
         fresh: function(input) {
@@ -773,9 +766,9 @@ export default {
             this.transferInfo(this.transferParam);
         }
     },
-    computed:{
-        rating:function(data){
-            return data?data:0
+    computed: {
+        rating: function(data) {
+            return data ? data : 0
         }
     },
     created() {
@@ -791,8 +784,8 @@ export default {
             // debugger;
             return mytime ? mytime.substring(0, 10) : '';
         },
-        rating:function(data){
-            return data?data:0
+        rating: function(data) {
+            return data ? data : 0
         }
     }
 
@@ -842,10 +835,12 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-.ivu-rate{
-    font-size:14px!important;
-    margin:0px!important;
+
+.ivu-rate {
+    font-size: 14px!important;
+    margin: 0px!important;
 }
+
 #table_box table th,
 #table_box table td {
     width: 113px;
@@ -865,7 +860,8 @@ dl {
     overflow-y: auto;
     position: relative;
 }
-.isTop{
-    background:#ADD8E6!important
+
+.isTop {
+    background: #ADD8E6!important
 }
 </style>
