@@ -4,7 +4,7 @@
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
     <search-model :param="loadParam" v-if="loadParam.show"></search-model>
-    <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+    <set-supplier :param="supplierParam" v-if="supplierParam.show"></set-supplier>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <mglist-model>
         <!-- 头部搜索-->
@@ -188,27 +188,7 @@
                         <th>最近成交时间</th>
                         <th>主营产品</th>
                         <th style="min-width:150px;">划转/来源</th>
-                        <th>创建时间</th>      
-                        <!-- <th>详细地址</th> -->
-                        
-                        <!-- <th>分类</th>
-                  <th>客户来源</th>
-                  <th>客户信用等级</th>
-                  <th>分类码</th>
-                  <th>所属分类</th>
-                  
-                  <th>负责人</th>
-                  <th>经营范围</th>
-                  <th>手机</th>
-                  <th>手机省</th>
-                  <th>手机市</th>
-                  <th>邮箱</th>
-                  <th>国家</th>
-                  <th>所在省</th>
-                  <th>所在市</th>
-                  <th>注册地址</th>
-                  <th>备注</th> 
-                -->
+                        <th>创建时间</th>
                         <th style="min-width:150px;">操作</th>
                     </tr>
                 </thead>
@@ -230,85 +210,22 @@
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>
-                          <Rate disabled :value.sync="item.creditLevel"></Rate>
+                            <Rate disabled :value.sync="item.creditLevel"></Rate>
                         </td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.typeDesc}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
                         <td>{{item.orderTotal}}</td>
-                        <td>{{item.lastOrderTime}}</td> 
-                        
+                        <td>{{item.lastOrderTime}}</td>
                         <td>{{item.bizScope}}</td>
-                        <td>                                
+                        <td>
                             <p style="color:red;border-bottom:1px solid #ccc" v-if="item.originalEmployee!=-1">
                                 批量划转（{{item.originalEmployeeName}}）
                             </p>
-                            <p >{{item.sourceType}}</p>
+                            <p>{{item.sourceType}}</p>
                         </td>
-                        <!-- <td>{{item.address}}</td> -->
-                        
                         <td>{{item.ctime}}</td>
-                        <!-- <td>{{item.classifyDesc | classify}}</td>
-                  <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
-                                <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
-                                <td v-if="item.sourceType=='android'" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
-                                <td v-if="item.sourceType=='ios'" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
-                                <td v-if="item.sourceType!='pc'&&item.sourceType!='weixin'&&item.sourceType!='android'&&item.sourceType!='ios'" style="background:#fa6705;color:#fff">{{item.sourceType}}</td> 
-                  <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
-                  <td v-if="item.creditLevel==1">一星客户</td>
-                  <td v-if="item.creditLevel==2">二星客户</td>
-                  <td v-if="item.creditLevel==3">三星客户</td>
-                  
-                  上面这个img显示新客户图标
-                  <td>{{item.category}}</td>
-                  <td>{{item.classify | classify}}</td>
-                  
-                  <td>{{item.principal}}</td>
-                  <td>{{item.bizScope}}</td>
-                  <td>{{item.mainPhone}}</td>
-                  <td>{{item.phoneProvince}}</td>
-                  <td>{{item.phoneCity}}</td>
-                  <td>{{item.email}}</td>
-                  <td>{{item.countryName }}</td>
-                  <td>{{item.provinceName}}</td>
-                  <td>{{item.cityName}}</td>
-                  <td>{{item.address}}</td>
-                  <td>{{item.comments}}</td> 
-                -->
                         <td>
-                            <!-- <a class="operate" @click="modifyClient({
-                            id:item.id,
-                            sub:$index,
-                            show:true,
-                            name:item.name,
-                            type:item.type,
-                            typeDesc:item.typeDesc,
-                            classify:item.classify,
-                            classifyDesc:item.classify,
-                            category:item.category,
-                            principal:item.principal,
-                            bizScope:item.bizScope,
-                            mainPhone:item.mainPhone,
-                            email:item.email,
-                            province:item.province,
-                            city:item.city,
-                            address:item.address,
-                            country:item.country,
-                            comments:item.comments,
-                            countryName:item.countryName,
-                            provinceName:item.provinceName,
-                            cityName:item.cityName,
-                            employeeId:item.employeeId,
-                            employeeName:item.employeeName,
-                            orgName:item.orgName,
-                            orgId:item.orgId,
-                            creditLevel:item.creditLevel,
-                            link:alterInfo,
-                            url:'/customer/',
-                            key:'supplyCustomerList',
-                            supplier:1
-                            })"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
-                     </a> -->
                             <a class="operate" @click="removeSupplier(item.id)">移出供应商</a>
                         </td>
                     </tr>
@@ -325,7 +242,7 @@ import detailModel from '../clientRelate/clientDetail'
 import createModel from '../user/userTransfer'
 import alterinfoModel from '../clientRelate/clientUpdate'
 import searchModel from '../clientRelate/searchModel'
-import auditDialog from '../../components/tips/auditDialog'
+import setSupplier from '../clientRelate/setSupplier.vue'
 //单个业务员搜索
 import employeeModel from '../clientRelate/searchEmpInfo'
 //多个业务员搜索
@@ -357,7 +274,7 @@ export default {
         createModel,
         alterinfoModel,
         searchModel,
-        auditDialog,
+        setSupplier,
         employeeModel,
         tipsModel,
         mglistModel
@@ -445,17 +362,8 @@ export default {
                 show: false,
                 id: ''
             },
-            auditParam: {
-                link: '/customer/setSupplier',
-                key: 'supplyCustomerList',
-                show: false,
-                confirm: true,
-                title: '移出供应商',
-                customerIds: [],
-                supplier: '0',
-                auditComment: '',
-                blackComments: '',
-                callback: this.callback
+            supplierParam: {
+                show: false
             },
             tipsParam: {
                 show: false,
@@ -523,17 +431,24 @@ export default {
             this.getClientList(this.loadParam)
         },
         removeSupplier: function(id) {
-            this.auditParam.callback = this.callback;
-            this.auditParam.customerIds = [];
-            this.auditParam.customerIds.push(id);
-            this.auditParam.show = true;
+            this.supplierParam.link = '/customer/setSupplier';
+            this.supplierParam.supplier = 0;
+            this.supplierParam.title = "客户移出供应商";
+            this.supplierParam.customerIds = [];
+            this.supplierParam.customerIds.push(id);
+            this.supplierParam.callback = this.supplierCallback;
+            this.supplierParam.show = true;
         },
-        callback: function() {
-            this.auditParam.auditComment = '';
-            this.auditParam.callback = this.valueback;
-            this.customerTransferBlacklist(this.auditParam);
+        supplierCallback: function(name) {
+            this.supplierParam.show = false;
+            this.showTips(name);
+            this.selectSearch();
         },
-
+        showTips: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.tipsParam.alert = true;
+        },
     },
     events: {
         fresh: function(input) {
@@ -603,10 +518,12 @@ export default {
     width: 119px;
     min-width: 50px;
 }
-.ivu-rate{
-    font-size:14px!important;
-    margin:0px!important;
+
+.ivu-rate {
+    font-size: 14px!important;
+    margin: 0px!important;
 }
+
 .service-nav {
     padding: 23px 30px 0px 4px;
 }

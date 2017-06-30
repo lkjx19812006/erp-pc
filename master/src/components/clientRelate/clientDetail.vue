@@ -13,7 +13,8 @@
         <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
         <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-        <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+        <set-supplier :param="supplierParam" v-if="supplierParam.show"></set-supplier>
+        <set-blacklist :param="blacklistParam" v-if="blacklistParam.show"></set-blacklist>
         <register-model :param='registerParam' v-if="registerParam.show"></register-model>
         <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
         <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
@@ -47,7 +48,7 @@
                             <li v-if="initClientDetail.supplier!=1">
                                 <button type="button" class="btn btn-base" @click.stop="clientTransferSupplier({
                                    id:param.id,
-                                   sub:param.sub,
+                                   supplier:1,
                                    show:true,
                                    link:'/customer/setSupplier',
                                    title:'客户提取为供应商备注'
@@ -910,7 +911,8 @@ import createfilesModel from '../clientRelate/createFiles'
 import createtrackModel from '../user/userTracking'
 import createproductModel from '../clientRelate/label/createProduct'
 import intentionModel from '../user/userIntention'
-import auditDialog from '../tips/auditDialog'
+import setSupplier from './setSupplier.vue'
+import setBlacklist from './setBlacklist.vue'
 import createorderModel from '../order/createOrderDialog'
 import pictureModel from '../tips/pictureDialog'
 import mgLabel from '../../components/mguan/mgLabel'
@@ -954,7 +956,8 @@ export default {
         createproductModel,
         intentionModel,
         tipsdialogModel,
-        auditDialog,
+        setSupplier,
+        setBlacklist,
         createorderModel,
         pictureModel,
         mgLabel,
@@ -1024,7 +1027,10 @@ export default {
                 name: '',
                 alert: true
             },
-            auditParam: {
+            supplierParam: {
+                show: false
+            },
+            blacklistParam: {
                 show: false
             },
             show: true,
@@ -1035,11 +1041,11 @@ export default {
                 show: false,
                 list: []
             },
-            registerParam:{
-                show:false,
-                loading:false,
-                id:'',
-                clientSource:false
+            registerParam: {
+                show: false,
+                loading: false,
+                id: '',
+                clientSource: false
             }
         }
     },
@@ -1076,7 +1082,7 @@ export default {
             }
             this.$store.state.table.clientDetail[param.crete].show = !this.$store.state.table.clientDetail[param.crete].show;
         },
-        showDetail:function(){
+        showDetail: function() {
             this.registerParam.id = this.initClientDetail.userId
             console.log(this.initClientDetail)
             this.registerParam.show = true
@@ -1104,7 +1110,7 @@ export default {
             this.labelParam.callback = this.labelCallback;
         },
         specDelete: function(initBreedDetail) {
-            console.log(initBreedDetail)
+
             var _self = this;
             if (initBreedDetail.key == 'customerList') {
                 initBreedDetail.callback = function() {
@@ -1120,17 +1126,43 @@ export default {
         deleteLabel: function(item, sub) {
             this.labelDelParam.id = item.id;
             this.labelDelParam.sub = sub;
-            console.log(this.labelDelParam)
+
             this.addrDel(this.labelDelParam)
         },
-        clientTransferSupplier: function(initBreedDetail) {
-            this.auditParam = initBreedDetail;
-            this.auditParam.confirm = true;
-            this.auditParam.arr = [];
-            if (initBreedDetail.id) {
-                this.auditParam.arr.push(initBreedDetail.id);
+        //客户提取为供应商
+        clientTransferSupplier: function(item) {
+            this.supplierParam = item;
+            this.supplierParam.customerIds = [];
+            this.supplierParam.customerIds.push(item.id);
+            this.supplierParam.callback = this.supplierCallback;
+        },
+        supplierCallback: function(name) {
+            this.supplierParam.show = false;
+            this.showTips(name);
+            this.getClientDetail(this.param);
+        },
+        //客户移入或移出黑名单
+        clientTransferBlack: function() {
+            this.blacklistParam.link = '/customer/transferBlacklist';
+            this.blacklistParam.customerIds = [];
+            this.blacklistParam.customerIds.push(this.initClientDetail.id);
+
+            if (this.initClientDetail.blacklist == 0) {
+                this.blacklistParam.blacklist = 1;
+                this.blacklistParam.title = '加入黑名单';
+            } else {
+                this.blacklistParam.blacklist = 0;
+                this.blacklistParam.title = '移出黑名单';
             }
-            this.auditParam.callback = this.callback;
+
+            this.blacklistParam.callback = this.blacklistCallback;
+
+            this.blacklistParam.show = true;
+        },
+        blacklistCallback: function(name) {
+            this.blacklistParam.show = false;
+            this.showTips(name);
+            this.getClientDetail(this.param);
         },
         updateSpec: function(initBreedDetail) {
             this.updateParam = initBreedDetail;
@@ -1144,7 +1176,7 @@ export default {
         },
         createfiles: function(initBreedDetail) {
             this.cfilesParam = initBreedDetail;
-            //         this.$broadcast('getImageData');
+
         },
         createTracking: function(param) {
             this.ctrackParam.objId = param.objId;
@@ -1232,29 +1264,6 @@ export default {
         updateIntention: function(param) {
             this.intentionParam = param;
         },
-
-        callback: function() {
-            this.auditParam.blackComments = this.auditParam.auditComment;
-            this.auditParam.customerIds = this.auditParam.arr;
-            this.auditParam.auditComment = '';
-            this.customerTransferBlacklist(this.auditParam);
-        },
-        clientTransferBlack: function() {
-            this.auditParam.link = '/customer/transferBlacklist';
-            this.auditParam.arr = [];
-            this.auditParam.arr.push(this.initClientDetail.id);
-
-            if (this.initClientDetail.blacklist == 0) {
-                this.auditParam.blacklist = 1;
-                this.auditParam.title = '加入黑名单备注';
-            } else {
-                this.auditParam.blacklist = 0;
-                this.auditParam.title = '踢出黑名单备注';
-            }
-            this.auditParam.confirm = true;
-            this.auditParam.callback = this.callback;
-            this.auditParam.show = true;
-        },
         publicCallback: function(name) {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
@@ -1305,7 +1314,7 @@ export default {
     },
     created() {
         this.getClientDetail(this.param);
-        this.getCustomerTransfer(this.param, this.transferData)
+        this.getCustomerTransfer(this.param, this.transferData);
     }
 }
 </script>

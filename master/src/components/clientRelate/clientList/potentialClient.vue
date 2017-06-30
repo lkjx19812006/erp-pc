@@ -6,7 +6,8 @@
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model :param="loadParam" v-if="loadParam.show"></search-model>
-    <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+    <set-supplier :param="supplierParam" v-if="supplierParam.show"></set-supplier>
+    <set-blacklist :param="blacklistParam" v-if="blacklistParam.show"></set-blacklist>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
@@ -288,7 +289,8 @@ import alterinfoModel from '../../../components/clientRelate/clientUpdate'
 import transferModel from '../../../components/user/employeeOrOrg'
 import tipsdialogModel from '../../../components/tips/tipDialog'
 import searchModel from '../../../components/clientRelate/searchModel'
-import auditDialog from '../../../components/tips/auditDialog'
+import setSupplier from '../setSupplier.vue'
+import setBlacklist from '../setBlacklist.vue'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import mglistModel from '../../mguan/mgListComponent.vue'
@@ -316,7 +318,8 @@ export default {
         transferModel,
         tipsdialogModel,
         searchModel,
-        auditDialog,
+        setSupplier,
+        setBlacklist,
         mglistModel
     },
     vuex: {
@@ -404,15 +407,11 @@ export default {
                 show: false,
                 name: '请先选择客户'
             },
-            auditParam: {
-                link: '/customer/transferBlacklist',
-                key: 'unCustomerList',
-                show: false,
-                title: '客户拉入黑名单备注',
-                arr: [],
-                blacklist: 1,
-                auditComment: '',
-                blackComments: '',
+            supplierParam: {
+                show: false
+            },
+            blacklistParam: {
+                show: false
             },
             checked: false
         }
@@ -506,62 +505,50 @@ export default {
 
             this.tipsParam.alert = true;
         },
+        //客户提取为供应商
         clientTransferSupplier: function() {
-            this.auditParam.title = "客户提取为供应商备注";
-            this.auditParam.link = '/customer/setSupplier';
-            this.auditParam.arr = [];
+            this.supplierParam.link = '/customer/setSupplier';
+            this.supplierParam.customerIds = [];
             for (var i in this.initUnCustomerlist) {
                 if (this.initUnCustomerlist[i].checked) {
-                    this.auditParam.arr.push(this.initUnCustomerlist[i].id);
+                    this.supplierParam.customerIds.push(this.initUnCustomerlist[i].id);
                 }
             }
-
-            if (this.auditParam.arr.length > 0) {
-                this.auditParam.show = true;
-                this.auditParam.confirm = true;
-                this.auditParam.callback = this.callback;
+            if (this.supplierParam.customerIds.length > 0) {
+                this.supplierParam.show = true;
+                this.supplierParam.supplier = 1;
+                this.supplierParam.callback = this.supplierCallback;
             } else {
-                this.tipsParam.show = true;
-                this.tipsParam.alert = true;
-                this.tipsParam.name = '请先选择客户';
-                this.tipsParam.confirm = false;
-
+                this.showTips('请先选择客户');
             }
         },
+        supplierCallback: function(name) {
+            this.supplierParam.show = false;
+            this.showTips(name);
+            this.selectSearch();
+        },
+        //客户加入黑名单
         clientTransferBlack: function() {
-            this.auditParam.title = "客户踢入黑名单备注";
-            this.auditParam.arr = [];
+            this.blacklistParam.title = "加入黑名单";
+            this.blacklistParam.link = '/customer/transferBlacklist';
+            this.blacklistParam.customerIds = [];
             for (var i in this.initUnCustomerlist) {
                 if (this.initUnCustomerlist[i].checked) {
-                    this.auditParam.arr.push(this.initUnCustomerlist[i].id);
+                    this.blacklistParam.customerIds.push(this.initUnCustomerlist[i].id);
                 }
             }
-
-            if (this.auditParam.arr.length > 0) {
-                this.auditParam.show = true;
-                this.auditParam.confirm = true;
-                this.auditParam.callback = this.callback;
+            if (this.blacklistParam.customerIds.length > 0) {
+                this.blacklistParam.show = true;
+                this.blacklistParam.blacklist = 1;
+                this.blacklistParam.callback = this.blacklistCallback;
             } else {
-                this.tipsParam.show = true;
-                this.tipsParam.alert = true;
-                this.tipsParam.name = '请先选择客户';
-                this.tipsParam.confirm = false;
-
+                this.showTips('请先选择客户');
             }
-
         },
-        callback: function() {
-            this.auditParam.blackComments = this.auditParam.auditComment;
-            this.auditParam.customerIds = this.auditParam.arr;
-            this.auditParam.auditComment = '';
-            this.auditParam.callback = this.supplierback;
-            this.customerTransferBlacklist(this.auditParam);
-        },
-        supplierback: function(title) {
-            console.log(title)
-            this.tipsParam.show = true;
-            this.tipsParam.name = title;
-            this.tipsParam.alert = true;
+        blacklistCallback: function(name) {
+            this.blacklistParam.show = false;
+            this.showTips(name);
+            this.selectSearch();
         },
         checkedAll: function() {
             this.checked = !this.checked;
@@ -576,9 +563,6 @@ export default {
             }
         },
         onlyselected: function(sub, id) {
-
-            //this.id = id;
-
             const _this = this;
             this.$store.state.table.basicBaseList.unCustomerList[sub].checked = !this.$store.state.table.basicBaseList.unCustomerList[sub].checked;
             if (!this.$store.state.table.basicBaseList.unCustomerList[sub].checked) {
@@ -594,7 +578,12 @@ export default {
         },
         selectSearch: function() {
             this.getClientList(this.loadParam)
-        }
+        },
+        showTips: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.tipsParam.alert = true;
+        },
     },
     events: {
         fresh: function(input) {

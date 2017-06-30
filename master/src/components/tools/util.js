@@ -13,6 +13,8 @@ var util = {
     mul: accMul,
     div: accDiv,
     getDate: getDate,
+    getMonday: getMonday,
+    dateFormat: dateFormat,
     deepCopy: deepCopy
 }
 
@@ -130,6 +132,49 @@ function getDate(days) {
 
     return realDateStr;
 }
+
+//获取本周的第一天(星期一)的时间
+function getMonday() {
+    let now = new Date();
+    let week = now.getDay();
+    if (week != 0) { //如果week!=0
+        return getDate(1 - week);
+    } else {
+        return getDate(-6);
+    }
+}
+
+//时间格式化,date表示需要被格式化的时间字符串,dateSign表示日期分隔符,timeSign表示时分秒分割符
+function dateFormat(date, dateSign, timeSign) {
+    let arr = date.split(" ");
+    let dateStr = "";
+    let timeStr = "";
+    let year = "1970";
+    let month = "01";
+    let day = "01";
+    let hour = "00";
+    let minute = "00";
+    let second = "00";
+    let formatStr = "1970";
+    let pattern = new RegExp("[-\/._~:*,]", "g");
+    if (arr.length >= 1) {
+        dateStr = arr[0];
+        let dateArr = dateStr.split(pattern);
+        year = dateArr[0];
+        month = dateArr[1];
+        day = dateArr[2];
+    }
+    if (arr.length > 1) {
+        timeStr = arr[1];
+        let timeArr = timeStr.split(pattern);
+        hour = timeArr[0];
+        minute = timeArr[1];
+        second = timeArr[2];
+    }
+    return year + dateSign + month + dateSign + day + " " + hour + timeSign + minute + timeSign + second;
+
+}
+
 
 //对象深克隆,将source克隆到target
 function deepCopy(target, source) {
