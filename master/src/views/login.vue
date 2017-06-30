@@ -180,6 +180,7 @@ export default {
             this.$route.router.go({
                 name: 'home'
             });
+            
         }
 
     },
