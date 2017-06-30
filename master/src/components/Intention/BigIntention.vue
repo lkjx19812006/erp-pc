@@ -10,6 +10,7 @@
     <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
     <sendapply-model :param="sampleOrderParam" v-if="sampleOrderParam.send"></sendapply-model>
     <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
+     <onsell-model :param="onSellParam" v-if="onSellParam.show"></onsell-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <mglist-model>
         <!-- 头部搜索-->
@@ -415,10 +416,10 @@
                                              key:'myIntentionList'
                                              })"><img src="/static/images/del.png" height="18" width="28" alt="删除" />
                           </a>
-                           <a v-if="item.onSell==1" v-show='showOthers'>
+                           <a v-if="item.onSell==1" v-show='showUp'>
                                 <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="upAudit($index,item.id)">上架审核</button>
                             </a>
-                            <a v-if="item.onSell==3" v-show='showOthers'>
+                            <a v-if="item.onSell==3" v-show='showUp'>
                                 <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="downAudit($index,item.id)">下架审核</button>
                             </a>
                           <a v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='showOPin'>
@@ -484,6 +485,8 @@ import chancedetailModel from '../Intention/chanceDetail'
 import intentionauditModel from '../user/intentionAudit'
 import tipsdialogModel from '../tipsDialog'
 import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
+import onsellModel from '../tips/auditDialog'
+
 /*import editintentModel  from  '../../Intention/Editintention'*/
 import transferModel from '../user/userTransfer'
 import createintentModel from '../user/userIntention'
@@ -536,7 +539,8 @@ export default {
         sendapplyModel,
         inputSelect,
         mglistModel,
-        transferModel
+        transferModel,
+        onsellModel
     
     },
     vuex: {
@@ -570,6 +574,7 @@ export default {
             showBox:'',//显示注册册用户意向的勾选框
             showCustomer:'',//注册客户意向隐藏客户名称
             showOPin:'',
+            showUp:'',//上架审核
             loadParam: {
                 loading: true,
                 color: '#5dc596',
@@ -725,6 +730,13 @@ export default {
               transferParam: {
                 show: false
             },
+             onSellParam: {
+                show: false,
+                audit: true,
+                title: '',
+                pass: '',
+                reject: '',
+            }
         }
     },
     methods: {
@@ -983,6 +995,18 @@ export default {
             this.auditParam.show = true;
             this.auditParam.callback = this.auditCallback;
         },
+        //上架审核
+         upAudit: function(index, id) {
+            this.tipsParam.ids = [];
+            this.tipsParam.indexs = [];
+            this.tipsParam.ids.push(id);
+            this.tipsParam.indexs.push(index);
+
+            this.onSellParam.title = '意向上架审核',
+                this.onSellParam.pass = this.allowUp,
+                this.onSellParam.reject = this.rejectUp,
+                this.onSellParam.show = true;
+        },
         auditCallback: function() {
             this.auditParam.description = this.auditParam.auditComment;
             this.batchUserIntentionAudit(this.auditParam);
@@ -1004,7 +1028,7 @@ export default {
             this.sampleOrderParam.ctime = item.ctime;
         },
         //变量true false控制函数
-        changeBool:function(a,b,c,d,e,f,g){
+        changeBool:function(a,b,c,d,e,f,g,h){
           this.functionShow=a;
             this.showCustomer=b;
             this.showOwn=c;
@@ -1012,20 +1036,21 @@ export default {
             this.showOperate=e;
             this.showBox=f;
             this.showOPin=g;
+            this.showUp=h;
         },
         //显示隐藏功能键
       funBtn:function(){
           if(this.$route.query.id==1){
-            this.changeBool(true,true,false,true,true,false,true)
+            this.changeBool(true,true,false,true,true,false,true,false)
             changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.myIntentionParam);
           }else if(this.$route.query.id==2){
-            this.changeBool(true,true,true,true,true,false,false)
+            this.changeBool(true,true,true,true,true,false,false,true)
             changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.orgIntentionParam);
           }else if(this.$route.query.id==3){
-            this.changeBool(false,true,false,true,false,false,true)
+            this.changeBool(false,true,false,true,false,false,true,false)
              changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.allIntentionParam);
           }else{
-            this.changeBool(true,false,true,false,true,true,false)
+            this.changeBool(true,false,true,false,true,true,false,false)
              changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.userIntentionParam);
           }
         },
