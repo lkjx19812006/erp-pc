@@ -774,6 +774,13 @@ export default {
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
         },
+        audit: function(index, id) { //单个意向审核
+            this.intentionAuditParam.show = true;
+            this.intentionAuditParam.arr = [];
+            this.intentionAuditParam.indexs = [];
+            this.intentionAuditParam.arr.push(id);
+            this.intentionAuditParam.indexs.push(index);
+        },
 
         eventClick: function(sub) {
             if (this.$store.state.table.basicBaseList.myIntentionList[sub].show) {
@@ -1007,9 +1014,41 @@ export default {
                 this.onSellParam.reject = this.rejectUp,
                 this.onSellParam.show = true;
         },
+         allowUp: function() {
+            this.tipsParam.onSell = 2;
+            this.tipsParam.name = '意向上架成功';
+            this.intentionUpAndDown(this.tipsParam);
+        },
+        rejectUp: function() {
+            this.tipsParam.onSell = -2;
+            this.tipsParam.name = '拒绝上架';
+            this.intentionUpAndDown(this.tipsParam);
+        },
         auditCallback: function() {
             this.auditParam.description = this.auditParam.auditComment;
             this.batchUserIntentionAudit(this.auditParam);
+        },
+                downAudit: function(index, id) {
+            this.tipsParam.ids = [];
+            this.tipsParam.indexs = [];
+            this.tipsParam.ids.push(id);
+            this.tipsParam.indexs.push(index);
+
+            this.onSellParam.title = '意向下架审核',
+                this.onSellParam.pass = this.allowDown,
+                this.onSellParam.reject = this.rejectDown,
+                this.onSellParam.show = true;
+
+        },
+        allowDown: function() {
+            this.tipsParam.onSell = 4;
+            this.tipsParam.name = '意向下架成功';
+            this.intentionUpAndDown(this.tipsParam);
+        },
+        rejectDown: function() {
+            this.tipsParam.onSell = 2;
+            this.tipsParam.name = '拒绝下架';
+            this.intentionUpAndDown(this.tipsParam);
         },
         selectSearch: function() {
             this.getIntentionList(this.loadParam);
