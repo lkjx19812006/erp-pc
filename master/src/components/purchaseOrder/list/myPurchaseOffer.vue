@@ -59,12 +59,40 @@
                         </dd>
                     </div>
                 </dl>
+                <button type="button" class="btn btn-default" @click="todayOffer()">今日报价</button>
+                <button type="button" class="btn btn-default" @click="weekOffer()">本周报价</button>
+                <button type="button" class="btn btn-default" @click="selectSearch()">搜索</button>
                 <button type="button" class="btn btn-primary transfer left" style="width:75px" @click="resetCondition()">
                     清空条件
                 </button>
                 <!-- <button type="button" class="btn btn-success" style="width:100px" @click="batchAccept()">
                     批量处理报价
                 </button> -->
+            </div>
+            <div class="clear" style="margin-top:3px;">
+                <div class="btn-group left" style="margin-right:10px" v-if="param.init=='initAllIndentOfferList'">
+                    <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.effective===''}" @click="clickEffective('')">
+                        全部
+                    </button>
+                    <button type="button" class="btn btn-default" style="width:125px" v-bind:class="{ 'btn-warning': this.loadParam.effective==='1'}" @click="clickEffective('1')">
+                        有效意向报价
+                    </button>
+                    <button type="button" class="btn btn-default" style="width:125px" v-bind:class="{ 'btn-warning': this.loadParam.effective==='0'}" @click="clickEffective('0')">
+                        无效意向报价
+                    </button>
+                </div>
+                <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">报价时间：</dt>
+                    <dd class="left">
+                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss" class="a">
+                        </mz-datepicker>
+                        ~
+                    </dd>
+                    <dd class="left">
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss" class="a">
+                        </mz-datepicker>
+                    </dd>
+                </dl>
             </div>
         </div>
         <!--中间列表-->
@@ -184,6 +212,7 @@ import filter from '../../../filters/filters'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import common from '../../../common/common'
 import mglistModel from '../../mguan/mgListComponent.vue'
+import util from '../../tools/util.js'
 import {
     initMyIndentOfferList,
     initAllIndentOfferList
@@ -235,7 +264,10 @@ export default {
                 breedId: "",
                 breedName: "",
                 accept: "",
-                onSell: ""
+                onSell: "",
+                effective: "",
+                startTime: "",
+                endTime: ""
 
             },
             detailParam: {
@@ -309,6 +341,11 @@ export default {
             this.loadParam.onSell = onSell;
             this.selectSearch();
         },
+        clickEffective: function(effective) {
+            this.loadParam.cur = 1;
+            this.loadParam.effective = effective;
+            this.selectSearch();
+        },
         breedSearch: function() {
             this.breedSearchParam.show = true;
         },
@@ -319,6 +356,16 @@ export default {
             this.checked = false;
             this.getIndentOffers(this.loadParam);
         },
+        todayOffer: function() {
+            this.loadParam.startTime = util.getDate(0);
+            this.loadParam.endTime = util.getDate(1);
+            this.selectSearch();
+        },
+        weekOffer: function() {
+            this.loadParam.startTime = util.getMonday();
+            this.loadParam.endTime = util.getDate(1);
+            this.selectSearch();
+        },
         resetCondition: function() {
             this.loadParam.offerEmployee = "";
             this.loadParam.offerEmployeeName = "";
@@ -326,6 +373,9 @@ export default {
             this.loadParam.breedName = "";
             this.loadParam.accept = "";
             this.loadParam.onSell = "";
+            this.loadParam.startTime = "";
+            this.loadParam.endTime = "";
+            this.loadParam.effective = "";
             this.selectSearch();
         },
         clickDetail: function(id) {

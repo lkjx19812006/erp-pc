@@ -5435,8 +5435,18 @@ export const customerAudit = ({ dispatch }, param) => { //客户审核(跟进)
 }
 export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转供应商,移出供应商,拉黑,移出黑名单
     param.loading = true;
-    const data = {};
-    if (param.link == '/customer/transferBlacklist') {
+    const data = {
+        customerIds: param.customerIds,
+    };
+    if (param.supplier || param.supplier === 0) {
+        data.supplier = param.supplier;
+        data.comments = param.comments;
+    }
+    if (param.blacklist || param.blacklist === 0) {
+        data.blacklist = param.blacklist;
+        data.blackComments = param.comments;
+    }
+    /*if (param.link == '/customer/transferBlacklist') {
         data.blackComments = param.blackComments;
         data.customerIds = param.customerIds;
         data.blacklist = param.blacklist;
@@ -5448,7 +5458,8 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
             data.supplier = param.supplier;
         }
         data.comments = param.blackComments;
-    }
+    }*/
+
 
     Vue.http({
         method: "POST",
@@ -7062,7 +7073,7 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         if (param.link == "/intention/resource/list") {
             localStorage.potentialIntentionParam = JSON.stringify(param);
         }
-          if (param.link == "/intention/") {
+        if (param.link == "/intention/") {
             localStorage.allIntentionParam = JSON.stringify(param);
         }
 
@@ -7256,6 +7267,16 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
     if (param.onSell) {
         body.onSell = param.onSell;
     }
+    if (param.startTime) {
+        body.startTime = param.startTime;
+    }
+    if (param.endTime) {
+        body.endTime = param.endTime;
+    }
+    if (param.effective) {
+        body.effective = param.effective;
+    }
+
     Vue.http({
         method: 'POST',
         url: url,

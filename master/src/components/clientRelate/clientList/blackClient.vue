@@ -2,7 +2,7 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <search-model :param="loadParam" v-if="loadParam.show"></search-model>
-    <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+    <set-blacklist :param="blacklistParam" v-if="blacklistParam.show"></set-blacklist>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
@@ -79,7 +79,7 @@ import pagination from '../../../components/pagination'
 import detailModel from '../../../components/clientRelate/clientDetail'
 import searchModel from '../../../components/clientRelate/searchModel'
 import tipsdialogModel from '../../../components/tipsDialog'
-import auditDialog from '../../../components/tips/auditDialog'
+import setBlacklist from '../setBlacklist.vue'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import mglistModel from '../../mguan/mgListComponent.vue'
@@ -98,7 +98,7 @@ export default {
         detailModel,
         tipsdialogModel,
         searchModel,
-        auditDialog,
+        setBlacklist,
         mglistModel
     },
     vuex: {
@@ -147,15 +147,8 @@ export default {
                 show: false,
                 loading: true
             },
-            auditParam: {
-                show: false,
-                title: '客户踢出黑名单备注',
-                arr: [],
-                blacklist: 0,
-                link: '/customer/transferBlacklist',
-                key: 'blackCustomerList',
-                auditComment: '',
-                blackComments: '',
+            blacklistParam: {
+                show: false
             },
             checked: false
         }
@@ -195,41 +188,36 @@ export default {
         searchClient: function() {
             this.getClientList(this.loadParam)
         },
-        clientTransferWhite() {
+
+        //客户移出黑名单
+        clientTransferWhite: function() {
+            this.blacklistParam.title = "移出黑名单";
+            this.blacklistParam.link = '/customer/transferBlacklist';
+            this.blacklistParam.customerIds = [];
             for (var i in this.initBlackCustomerlist) {
                 if (this.initBlackCustomerlist[i].checked) {
-                    this.auditParam.arr.push(this.initBlackCustomerlist[i].id);
+                    this.blacklistParam.customerIds.push(this.initBlackCustomerlist[i].id);
                 }
             }
-            if (this.auditParam.arr.length > 0) {
-                this.auditParam.show = true;
-                this.auditParam.confirm = true;
-                this.auditParam.arr = this.auditParam.arr;
-                this.auditParam.callback = this.callback;
+            if (this.blacklistParam.customerIds.length > 0) {
+                this.blacklistParam.show = true;
+                this.blacklistParam.blacklist = 0;
+                this.blacklistParam.callback = this.blacklistCallback;
             } else {
-                this.tipsParam.show = true;
-                this.tipsParam.alert = true;
-                this.tipsParam.name = '请先选择客户';
-                this.tipsParam.confirm = false;
+                this.showTips('请先选择客户');
             }
         },
-        callback: function() {
-            this.auditParam.blackComments = this.auditParam.auditComment;
-            this.auditParam.customerIds = this.auditParam.arr;
-            this.auditParam.arr = [];
-            this.auditParam.auditComment = '';
-            this.auditParam.callback = this.supplierback;
-            this.customerTransferBlacklist(this.auditParam);
+        blacklistCallback: function(name) {
+            this.blacklistParam.show = false;
+            this.showTips(name);
+            this.selectSearch();
         },
-        supplierback: function(title) {
-            console.log(title)
+        selectSearch: function() {
+            this.getClientList(this.loadParam);
+        },
+        showTips: function(name) {
             this.tipsParam.show = true;
-            if (title == 'success') {
-                this.tipsParam.name = '移除黑名单成功';
-            } else {
-                this.tipsParam.name = title;
-            }
-
+            this.tipsParam.name = name;
             this.tipsParam.alert = true;
         },
     },
@@ -246,10 +234,10 @@ export default {
         changeMenu(this.$store.state.table.isTop, this.getClientList, this.loadParam, localStorage.blackClientParam);
     },
     filters: {
-        timeFilters:function(mytime){
-           // debugger;
-            return mytime?mytime.substring(0,10):'';
-        }    
+        timeFilters: function(mytime) {
+            // debugger;
+            return mytime ? mytime.substring(0, 10) : '';
+        }
     }
 }
 </script>

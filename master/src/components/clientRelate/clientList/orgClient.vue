@@ -7,7 +7,8 @@
     <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model :param="loadParam" v-if="loadParam.show"></search-model>
-    <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+    <set-supplier :param="supplierParam" v-if="supplierParam.show"></set-supplier>
+    <set-blacklist :param="blacklistParam" v-if="blacklistParam.show"></set-blacklist>
     <language-model v-show="false"></language-model>
     <mglist-model>
         <!-- 头部搜索-->
@@ -158,7 +159,7 @@
                         <th>{{$t('static.transaction_num')}}</th>
                         <th>{{$t('static.recent_contact')}}</th>
                         <th>成交金额</th>
-                        <th>{{$t('static.client_type')}}</th> 
+                        <th>{{$t('static.client_type')}}</th>
                         <th>{{$t('static.client_origin')}}</th>
                         <th>{{$t('static.main_product')}}</th>
                         <th style="min-width:150px;">划转/来源</th>
@@ -179,7 +180,7 @@
                 <tbody>
                     <tr>
                     </tr>
-                    <tr v-for="item in initOrgCustomerlist" :style="{background:(item.originalEmployee!=-1?'lightYellow':'')}"> 
+                    <tr v-for="item in initOrgCustomerlist" :style="{background:(item.originalEmployee!=-1?'lightYellow':'')}">
                         <td @click.stop="" style="min-width: 40px">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
@@ -208,25 +209,23 @@
                             <span v-if="item.originalEmployee==-1">--</span>
                             <span v-else>{{item.originalEmployeeName}}</span>
                         </td> -->
-                        
                         <td>
                             <span v-if="item.orderTotal!=0">{{item.lastOrderTime | timeFilters}}</span>
                             <span v-else>----:--:--</span>
                         </td>
                         <td>{{item.orderAmount}}元</td>
                         <td v-if="this.language=='zh_CN'">{{item.typeDesc}}</td>
-                        <td v-if="this.language=='en'">{{item.type | customerTypeEn}}</td> 
+                        <td v-if="this.language=='en'">{{item.type | customerTypeEn}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
                         <td>{{item.bizScope}}</td>
-                        <td>                                
+                        <td>
                             <p style="color:red;border-bottom:1px solid #ccc" v-if="item.originalEmployee!=-1">
                                 批量划转（{{item.originalEmployeeName}}）
                             </p>
-                            <p >{{item.sourceType}}</p>
+                            <p>{{item.sourceType}}</p>
                         </td>
                         <td>{{item.ctime|timeFilters}}</td>
                         <!-- <td>{{item.address}}</td> -->
-                        
                         <td v-if="this.initLogin.orgId==29">{{item.audit | tracking}}</td>
                         <td v-if="this.initLogin.orgId==29">{{item.auditComment}}</td>
                         <td @click="modifyClient({
@@ -287,7 +286,8 @@ import tipsdialogModel from '../../../components/tips/tipDialog'
 import searchModel from '../../../components/clientRelate/searchModel'
 //单个业务员搜索
 import employeeModel from '../searchEmpInfo'
-import auditDialog from '../../../components/tips/auditDialog'
+import setSupplier from '../setSupplier.vue'
+import setBlacklist from '../setBlacklist.vue'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import languageModel from '../../tools/language.vue'
@@ -318,7 +318,8 @@ export default {
         employeeModel,
         tipsdialogModel,
         searchModel,
-        auditDialog,
+        setSupplier,
+        setBlacklist,
         languageModel,
         mglistModel
     },
@@ -410,7 +411,7 @@ export default {
                 show: false,
                 name: '',
                 arr: [],
-                sign:'org',
+                sign: 'org',
                 orgId: '',
                 employeeId: ''
             },
@@ -425,15 +426,11 @@ export default {
                 show: false,
                 name: '请先选择客户'
             },
-            auditParam: {
-                link: '/customer/transferBlacklist',
-                key: 'orgCustomerList',
-                show: false,
-                title: '客户拉入黑名单备注',
-                auditComment: '',
-                blackComments: '',
-                arr: [],
-                blacklist: 1
+            supplierParam: {
+                show: false
+            },
+            blacklistParam: {
+                show: false
             },
             checked: false
         }
@@ -526,54 +523,55 @@ export default {
                 this.tipsParam.alert = true;
             }
 
-            console.log(this.transferParam)
+
         },
+        //客户提取为供应商
         clientTransferSupplier: function() {
-            this.auditParam.title = "客户提取为供应商备注";
-            this.auditParam.link = '/customer/setSupplier';
-            this.auditParam.arr = [];
+            this.supplierParam.link = '/customer/setSupplier';
+            this.supplierParam.customerIds = [];
             for (var i in this.initOrgCustomerlist) {
                 if (this.initOrgCustomerlist[i].checked) {
-                    this.auditParam.arr.push(this.initOrgCustomerlist[i].id);
+                    this.supplierParam.customerIds.push(this.initOrgCustomerlist[i].id);
                 }
             }
-
-            if (this.auditParam.arr.length > 0) {
-                this.auditParam.show = true;
-                this.auditParam.confirm = true;
-                this.auditParam.callback = this.callback;
+            if (this.supplierParam.customerIds.length > 0) {
+                this.supplierParam.show = true;
+                this.supplierParam.supplier = 1;
+                this.supplierParam.callback = this.supplierCallback;
             } else {
-                this.tipsParam.show = true;
-                this.tipsParam.alert = true;
-                this.tipsParam.name = '请先选择客户';
-                this.tipsParam.confirm = false;
-
+                this.showTips('请先选择客户');
             }
         },
+        supplierCallback: function(name) {
+            this.supplierParam.show = false;
+            this.showTips(name);
+            this.selectSearch();
+        },
+        //客户加入黑名单
         clientTransferBlack: function() {
-            this.auditParam.title = "客户踢入黑名单备注";
-            this.auditParam.arr = [];
+            this.blacklistParam.title = "加入黑名单";
+            this.blacklistParam.link = '/customer/transferBlacklist';
+            this.blacklistParam.customerIds = [];
             for (var i in this.initOrgCustomerlist) {
                 if (this.initOrgCustomerlist[i].checked) {
-                    this.auditParam.arr.push(this.initOrgCustomerlist[i].id);
+                    this.blacklistParam.customerIds.push(this.initOrgCustomerlist[i].id);
                 }
             }
-
-            if (this.auditParam.arr.length > 0) {
-                this.auditParam.show = true;
-                this.auditParam.confirm = true;
-                this.auditParam.callback = this.callback;
+            if (this.blacklistParam.customerIds.length > 0) {
+                this.blacklistParam.show = true;
+                this.blacklistParam.blacklist = 1;
+                this.blacklistParam.callback = this.blacklistCallback;
             } else {
-                this.tipsParam.show = true;
-                this.tipsParam.alert = true;
-                this.tipsParam.name = '请先选择客户';
-                this.tipsParam.confirm = false;
-
+                this.showTips('请先选择客户');
             }
-
+        },
+        blacklistCallback: function(name) {
+            this.blacklistParam.show = false;
+            this.showTips(name);
+            this.selectSearch();
         },
         transferback: function(title) {
-            console.log(title)
+
             this.tipsParam.show = true;
             if (title == 'success') {
                 this.tipsParam.name = '划转成功';
@@ -581,19 +579,6 @@ export default {
                 this.tipsParam.name = title;
             }
 
-            this.tipsParam.alert = true;
-        },
-        callback: function() {
-            this.auditParam.blackComments = this.auditParam.auditComment;
-            this.auditParam.customerIds = this.auditParam.arr;
-            this.auditParam.auditComment = '';
-            this.auditParam.callback = this.supplierback;
-            this.customerTransferBlacklist(this.auditParam);
-        },
-        supplierback: function(title) {
-            console.log(title)
-            this.tipsParam.show = true;
-            this.tipsParam.name = title;
             this.tipsParam.alert = true;
         },
         checkedAll: function() {
@@ -625,12 +610,14 @@ export default {
                 })
             }
         },
-        searchClient: function() {
-            this.getClientList(this.loadParam)
-        },
         selectSearch: function() {
             this.getClientList(this.loadParam);
-        }
+        },
+        showTips: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.tipsParam.alert = true;
+        },
     },
     events: {
         fresh: function(input) {
@@ -686,10 +673,12 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-.ivu-rate{
-    font-size:14px!important;
-    margin:0px!important;
+
+.ivu-rate {
+    font-size: 14px!important;
+    margin: 0px!important;
 }
+
 .table>tbody>tr>td {
     max-width: 300px;
     white-space: normal;
