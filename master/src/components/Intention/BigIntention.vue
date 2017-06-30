@@ -774,6 +774,13 @@ export default {
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
         },
+        audit: function(index, id) { //单个意向审核
+            this.intentionAuditParam.show = true;
+            this.intentionAuditParam.arr = [];
+            this.intentionAuditParam.indexs = [];
+            this.intentionAuditParam.arr.push(id);
+            this.intentionAuditParam.indexs.push(index);
+        },
 
         eventClick: function(sub) {
             if (this.$store.state.table.basicBaseList.myIntentionList[sub].show) {
