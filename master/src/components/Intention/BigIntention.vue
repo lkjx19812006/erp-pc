@@ -575,7 +575,7 @@ export default {
             showCustomer:'',//注册客户意向隐藏客户名称
             showOPin:'',
             showUp:'',//上架审核
-            showuu:''
+            showuu:'',
             loadParam: {
                 loading: true,
                 color: '#5dc596',
