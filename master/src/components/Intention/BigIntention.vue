@@ -211,8 +211,7 @@
                       <th>剩余有效期</th>
                       <th>客户备注</th>
                       <th v-if='showOthers'>卖点</th>
-                      <th>意向来源</th>
-                      
+                      <th>意向来源</th>                     
                        <th v-if='showCustomer'>上架状态</th>
                      <th style="min-width:200px;text-align: left;" v-if='showOperate'>操作</th>
                   </tr>
@@ -338,8 +337,7 @@
                       <td>{{item.duedateDesc}}</td>
                       <td>{{item.description}}</td>
                       <td  v-if='showOthers'>{{item.quality}}</td>
-                      <td>{{item.inTypeDesc}}</td>
-                  
+                      <td>{{item.inTypeDesc}}</td>      
                       <td v-if='showCustomer'>{{item.onSell | onsell}}</td>
                       <td style="text-align: left" v-if="showOperate">
                           <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='showOPin' @click.stop="modifyIntention({
@@ -420,8 +418,6 @@
                            <a v-if="item.onSell==1" v-show='showOthers'>
                                 <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="upAudit($index,item.id)">上架审核</button>
                             </a>
-                            <!-- <a class="operate" v-if="item.onSell==3&&item.especial==1" @click.stop="downAudit($index,item.id)">下架审核
-                             </a> -->
                             <a v-if="item.onSell==3" v-show='showOthers'>
                                 <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="downAudit($index,item.id)">下架审核</button>
                             </a>
@@ -471,8 +467,6 @@
                                     <img src="/static/images/transfer.png" height="18" width="28" alt="划转" title="划转" />
                                 </a>
                                 <a v-show='showBox' class="operate" v-if="item.validate==0||item.validate==9" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png" height="18" width="28" alt="审核" title="审核" /></a>
-
-
                       </td>
                   </tr>
               </tbody>
@@ -921,15 +915,15 @@ export default {
             this.createOrderParam.goods[0].location = item.location;
             this.createOrderParam.total = 0;
             this.createOrderParam.callback = this.createback;
-            this.createOrderParam.consignee = ''
-            this.createOrderParam.consigneePhone = ''
-            this.createOrderParam.consigner = ''
-            this.createOrderParam.incidentals = 0
-            this.createOrderParam.preferential = 0
-            this.createOrderParam.incidentalsDesc = ''
-            this.createOrderParam.preferentialDesc = ''
-            this.createOrderParam.consigneeAddr = ''
-            this.createOrderParam.comments = ''
+            this.createOrderParam.consignee = '';
+            this.createOrderParam.consigneePhone= '';
+            this.createOrderParam.consigner = '';
+            this.createOrderParam.incidentals = 0;
+            this.createOrderParam.preferential = 0;
+            this.createOrderParam.incidentalsDesc = '';
+            this.createOrderParam.preferentialDesc = '';
+            this.createOrderParam.consigneeAddr = '';
+            this.createOrderParam.comments = '';
         },
 
         searchIntention: function() {
@@ -1031,7 +1025,7 @@ export default {
             this.changeBool(false,true,false,true,false,false,true)
              changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.allIntentionParam);
           }else{
-            this.changeBool(true,true,true,false,true,true,false,true)
+            this.changeBool(true,false,true,false,true,true,false)
              changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.userIntentionParam);
           }
         },
