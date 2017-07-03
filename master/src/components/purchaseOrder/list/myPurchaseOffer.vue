@@ -69,7 +69,7 @@
                     批量处理报价
                 </button> -->
             </div>
-            <div class="clear" style="margin-top:3px;">
+            <!-- <div class="clear" style="margin-top:3px;">
                 <div class="btn-group left" style="margin-right:10px" v-if="param.init=='initAllIndentOfferList'">
                     <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.effective===''}" @click="clickEffective('')">
                         全部
@@ -93,7 +93,7 @@
                         </mz-datepicker>
                     </dd>
                 </dl>
-            </div>
+            </div> -->
         </div>
         <!--中间列表-->
         <div slot="form">
