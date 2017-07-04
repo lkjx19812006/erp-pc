@@ -112,7 +112,8 @@
                                     <ul class="clearfix" style="font-size: 14px;padding:5px 0">
                                         <mg-label :title="$t('static.principals')">{{initClientDetail.principal}}</mg-label>
                                         <mg-label :title="$t('static.legal')">{{initClientDetail.legalPerson}}</mg-label>
-                                        <mg-label :title="$t('static.transaction_num')">{{initClientDetail.orderTotal}}{{initClientDetail.lastOrderTime}}</mg-label>
+                                        <mg-label :title="$t('static.transaction_num')">{{initClientDetail.orderTotal}}</mg-label>
+                                        <mg-label :title="$t('static.recent_contact')">{{initClientDetail.lastOrderTime}}</mg-label>
                                         <mg-label :title="$t('static.client_source')">{{initClientDetail.source | intentionSource}}</mg-label>
                                         <mg-label :title="$t('static.department')+'/'+$t('static.salesman')">{{initClientDetail.orgName}}<span v-if="initClientDetail.employeeName">（{{initClientDetail.employeeName}}）</span></mg-label>
                                         <mg-label :title="$t('static.blacklist')" v-if="initClientDetail.blacklist==1">{{initClientDetail.name}}</mg-label>

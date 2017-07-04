@@ -1016,8 +1016,6 @@ export default {
             this.auditParam.description = this.auditParam.auditComment;
             this.batchUserIntentionAudit(this.auditParam);
         },
-
-
         selectSearch: function() {
             this.getIntentionList(this.loadParam);
         },
