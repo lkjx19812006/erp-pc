@@ -171,7 +171,7 @@ export const commonHttp = ({dispatch}, data) =>{ //回调wms的接口
 
 export const cus = ({dispatch},data) =>{
     //httpService.getDate()
-     body = {
+     let body = {
         biz_module:'erpCustomerProductService',
         biz_method:'queryCustomerProductInfo',
         biz_param:{
@@ -5582,8 +5582,7 @@ export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及�
 
 export const getEmployeeDetail = ({ dispatch }, param) => { //员工列表以及搜索
     param.loading = true;
-    console.log(param)
-    var apiurl = httpService.addSID(apiUrl.clientList + '/employee/' + param.id);
+    var apiurl = apiUrl.clientList + '/employee/' + param.id;
     Vue.http({
         method: 'GET',
         url: apiurl,
