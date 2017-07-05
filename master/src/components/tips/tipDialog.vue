@@ -33,8 +33,8 @@
 <script>
 export default {
     props: ['param'],
-    methods:{
-        hidden:function(){
+    methods: {
+        hidden: function() {
             this.param.show = false;
             // this.$parent.param.show =false
         }

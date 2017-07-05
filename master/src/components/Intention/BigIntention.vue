@@ -10,11 +10,11 @@
     <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
     <sendapply-model :param="sampleOrderParam" v-if="sampleOrderParam.send"></sendapply-model>
     <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
-     <onsell-model :param="onSellParam" v-if="onSellParam.show"></onsell-model>
+    <onsell-model :param="onSellParam" v-if="onSellParam.show"></onsell-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <mglist-model>
         <!-- 头部搜索-->
-   <div slot="top">
+        <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
                     <dt class="left transfer marg_top">意向ID：</dt>
@@ -92,26 +92,26 @@
                         </button>
                     </div>
                 </dl>
-                 <dl class="clear left transfer" style="margin-left:20px" v-if='showBox'>
-                        <dt class="left transfer marg_top">意向来源：</dt>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===''}" @click="selectSource('')">
-                                全部
-                            </button>
-                            <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===1}" @click="selectSource(1)">
-                                PC
-                            </button>
-                            <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===2}" @click="selectSource(2)">
-                                安卓
-                            </button>
-                            <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===3}" @click="selectSource(3)">
-                                微信
-                            </button>
-                            <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===4}" @click="selectSource(4)">
-                                IOS
-                            </button>
-                        </div>
-                    </dl>
+                <dl class="clear left transfer" style="margin-left:20px" v-if='showBox'>
+                    <dt class="left transfer marg_top">意向来源：</dt>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===''}" @click="selectSource('')">
+                            全部
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===1}" @click="selectSource(1)">
+                            PC
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===2}" @click="selectSource(2)">
+                            安卓
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===3}" @click="selectSource(3)">
+                            微信
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===4}" @click="selectSource(4)">
+                            IOS
+                        </button>
+                    </div>
+                </dl>
                 <dl class="clear left transfer" style="margin-left:50px">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
                 </dl>
@@ -178,62 +178,60 @@
                     <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                 </dd>
                 <dd class="pull-right" style="margin-right:10px" v-if='showBox'>
-                        <button type="button" class="btn btn-default" height="24" width="24" @click="intentionAudit()">审核</button>
-                    </dd>
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="intentionAudit()">审核</button>
+                </dd>
             </div>
         </div>
-     <!--   <Ttop slot="top"></Ttop> -->
-
+        <!--   <Ttop slot="top"></Ttop> -->
         <!--中间列表-->
-       
-<div slot="form">
-          <div class="cover_loading">
-              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-          </div>
-          <table class="table table-hover table_color table-striped " v-cloak id="tab">
-              <thead>
-                  <tr>
-                     <th v-if='showBox'></th> 
-                      <th>意向ID</th>
-                      <th>类型</th>
-                      <th>发布日期</th>
-                      <th v-if='showOwn'>所属业务员</th>  
-                      <th v-if='showCustomer'>客户名称</th>
-                      <th v-if='showBox'>会员名称</th>
-                      <th>主要联系人</th>
-                      <th>联系方式</th>
-                      <th>手机归属地</th>
-                      <th  v-if='showCustomer'>意向图片</th>
-                      <th>意向商品</th>
-                      <th v-if='showBox'>单价</th>
-                      <th>商品产地</th>
-                      <th>商品规格</th>
-                      <th>商品数量</th>
-                      <th>剩余有效期</th>
-                      <th>客户备注</th>
-                      <th v-if='showOthers'>卖点</th>
-                      <th>意向来源</th>                     
-                       <th v-if='showCustomer'>上架状态</th>
-                     <th style="min-width:200px;text-align: left;" v-if='showOperate'>操作</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr v-for="item in initMyIntentionList">
-                   <td v-if='showBox'>
-                  <label v-if="item.validate==0||item.validate==9" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)">
-                   </label>
-                  </td> 
-                      <td>{{item.id}}</td>
-                      <td>
-                          <div v-if="item.especial==0&&item.type==0&&item.preSell==0">普通求购</div>
-                          <div v-if="item.especial==0&&item.type==1&&item.preSell==0">普通供应</div>
-                          <div v-if="item.especial==1&&item.type==0&&item.preSell==0">紧急求购</div>
-                          <div v-if="item.especial==1&&item.type==1&&item.preSell==0">低价资源</div>
-                          <div v-if="item.especial==1&&item.type==1&&item.preSell==1">预售资源</div>
-                      </td>
-                      <td>{{item.pubdate|subtime}}</td>
-                      <td v-if='showOwn'>{{item.employeeName}}</td>
-                      <td v-if='showCustomer' class="underline" @click.stop="detailClick({
+        <div slot="form">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
+                <thead>
+                    <tr>
+                        <th v-if='showBox'></th>
+                        <th>意向ID</th>
+                        <th>类型</th>
+                        <th>发布日期</th>
+                        <th v-if='showOwn'>所属业务员</th>
+                        <th v-if='showCustomer'>客户名称</th>
+                        <th v-if='showBox'>会员名称</th>
+                        <th>主要联系人</th>
+                        <th>联系方式</th>
+                        <th>手机归属地</th>
+                        <th v-if='showCustomer'>意向图片</th>
+                        <th>意向商品</th>
+                        <th v-if='showBox'>单价</th>
+                        <th>商品产地</th>
+                        <th>商品规格</th>
+                        <th>商品数量</th>
+                        <th>剩余有效期</th>
+                        <th>客户备注</th>
+                        <th v-if='showOthers'>卖点</th>
+                        <th>意向来源</th>
+                        <th v-if='showCustomer'>上架状态</th>
+                        <th style="min-width:200px;text-align: left;" v-if='showOperate'>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in initMyIntentionList">
+                        <td v-if='showBox'>
+                            <label v-if="item.validate==0||item.validate==9" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)">
+                            </label>
+                        </td>
+                        <td>{{item.id}}</td>
+                        <td>
+                            <div v-if="item.especial==0&&item.type==0&&item.preSell==0">普通求购</div>
+                            <div v-if="item.especial==0&&item.type==1&&item.preSell==0">普通供应</div>
+                            <div v-if="item.especial==1&&item.type==0&&item.preSell==0">紧急求购</div>
+                            <div v-if="item.especial==1&&item.type==1&&item.preSell==0">低价资源</div>
+                            <div v-if="item.especial==1&&item.type==1&&item.preSell==1">预售资源</div>
+                        </td>
+                        <td>{{item.pubdate|subtime}}</td>
+                        <td v-if='showOwn'>{{item.employeeName}}</td>
+                        <td v-if='showCustomer' class="underline" @click.stop="detailClick({
                               id:item.id,
                               sub:$index,
                               show:true,
@@ -271,7 +269,7 @@
                               url:'/intention/',
                               key:'myIntentionList'
                               })">{{item.customerName}}</td>
-                               <td v-if='showBox' class="underline" @click.stop="detailClick({
+                        <td v-if='showBox' class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
                                 show:true,
@@ -316,32 +314,32 @@
                                 image_t_show:'',
                                 duedate:item.duedate
                                 })">{{item.userFullname}}</td>
-                      <td>{{item.mainContact}}</td>
-                      <td>{{item.customerPhone}}</td>
-                      <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
-                      <td width="200px"  v-if='showCustomer'>
-                          <li v-for="pic in item.pics" class="pull-left">
-                              <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
-                          </li>
-                          <li v-for="pic in item.testReportPics" class="pull-left">
-                              <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
-                          </li>
-                          <li v-for="pic in item.importQualityPics" class="pull-left">
-                              <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
-                          </li>
-                      </td>
-                      <td>{{item.breedName}}</td>
-                       <td v-if='showBox'>{{item.price}}元/{{item.unit | Unit}}</td>
-                      <td>{{item.locationName}}</td>
-                      <td>{{item.spec}}</td>
-                      <td>{{item.number}}{{item.unit | Unit}}</td>
-                      <td>{{item.duedateDesc}}</td>
-                      <td>{{item.description}}</td>
-                      <td  v-if='showOthers'>{{item.quality}}</td>
-                      <td>{{item.inTypeDesc}}</td>      
-                      <td v-if='showCustomer'>{{item.onSell | onsell}}</td>
-                      <td style="text-align: left" v-if="showOperate">
-                          <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='showOPin' @click.stop="modifyIntention({
+                        <td>{{item.mainContact}}</td>
+                        <td>{{item.customerPhone}}</td>
+                        <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
+                        <td width="200px" v-if='showCustomer'>
+                            <li v-for="pic in item.pics" class="pull-left">
+                                <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                            </li>
+                            <li v-for="pic in item.testReportPics" class="pull-left">
+                                <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                            </li>
+                            <li v-for="pic in item.importQualityPics" class="pull-left">
+                                <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
+                            </li>
+                        </td>
+                        <td>{{item.breedName}}</td>
+                        <td v-if='showBox'>{{item.price}}元/{{item.unit | Unit}}</td>
+                        <td>{{item.locationName}}</td>
+                        <td>{{item.spec}}</td>
+                        <td>{{item.number}}{{item.unit | Unit}}</td>
+                        <td>{{item.duedateDesc}}</td>
+                        <td>{{item.description}}</td>
+                        <td v-if='showOthers'>{{item.quality}}</td>
+                        <td>{{item.inTypeDesc}}</td>
+                        <td v-if='showCustomer'>{{item.onSell | onsell}}</td>
+                        <td style="text-align: left" v-if="showOperate">
+                            <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='showOPin' @click.stop="modifyIntention({
                                             id:item.id,
                                             sub:$index,
                                             selectCustomer:false,
@@ -404,8 +402,8 @@
                                              transportType:item.transportType,
                                              description: item.description
                                              })"><img src="/static/images/edit.png" height="18" width="28" alt="编辑" />
-                          </a>
-                          <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" @click.stop="specDelete({
+                            </a>
+                            <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" @click.stop="specDelete({
                                              id:item.id,
                                              sub:$index,
                                              show:true,
@@ -415,25 +413,24 @@
                                              url:'/intention/',
                                              key:'myIntentionList'
                                              })"><img src="/static/images/del.png" height="18" width="28" alt="删除" />
-                          </a>
-                           <a v-if="item.onSell==1" v-show='showUp'>
-                                <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="upAudit($index,item.id)">上架审核</button>
+                            </a>
+                            <a v-if="item.onSell==1" v-show='showUp'>
+                                <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="upOrDownAudit(item.id,0)">上架审核</button>
                             </a>
                             <a v-if="item.onSell==3" v-show='showUp'>
-                                <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="downAudit($index,item.id)">下架审核</button>
+                                <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="upOrDownAudit(item.id,1)">下架审核</button>
                             </a>
-                          <a v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='showOPin'>
-                              <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;margin-top:-22px;color:#fa6705" @click="up($index,item.id,1)">申请上架</button>
-                          </a>
-                          <a class="operate" v-show='showOPin' v-if="item.onSell==2" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架" />
-                          </a>
-                          <a class="operate" v-show='showOPin' v-if="item.type==1&&item.preSell===0" @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" alt="生成订单" />
-                          </a>
-                          <a class="operate" v-show='showOPin' @click.stop="sengSample(item,$index)">
-                              <img src="/static/images/sample.png" alt="寄样申请" />
-                          </a>
-                          
-                           <a v-show='showBox' class="operate" @click.stop="userToClient({
+                            <a v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='showOPin'>
+                                <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;margin-top:-22px;color:#fa6705" @click="up($index,item.id,1)">申请上架</button>
+                            </a>
+                            <a class="operate" v-show='showOPin' v-if="item.onSell==2" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架" />
+                            </a>
+                            <a class="operate" v-show='showOPin' v-if="item.type==1&&item.preSell===0" @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" alt="生成订单" />
+                            </a>
+                            <a class="operate" v-show='showOPin' @click.stop="sengSample(item,$index)">
+                                <img src="/static/images/sample.png" alt="寄样申请" />
+                            </a>
+                            <a v-show='showBox' class="operate" @click.stop="userToClient({
                                     name:item.userFullname,
                                     keyname:'transStatus',
                                     sub:$index,
@@ -465,15 +462,15 @@
                                        wechart: ''
                                      }
                                   },item.show=false)">
-                                    <img src="/static/images/transfer.png" height="18" width="28" alt="划转" title="划转" />
-                                </a>
-                                <a v-show='showBox' class="operate" v-if="item.validate==0||item.validate==9" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png" height="18" width="28" alt="审核" title="审核" /></a>
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
-      </div> 
-<!--   <Ttable slot="form"></Ttable> -->
+                                <img src="/static/images/transfer.png" height="18" width="28" alt="划转" title="划转" />
+                            </a>
+                            <a v-show='showBox' class="operate" v-if="item.validate==0||item.validate==9" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png" height="18" width="28" alt="审核" title="审核" /></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--   <Ttable slot="form"></Ttable> -->
         <!--底部分页-->
         <pagination :combination="loadParam" slot="page"></pagination>
     </mglist-model>
@@ -485,7 +482,8 @@ import chancedetailModel from '../Intention/chanceDetail'
 import intentionauditModel from '../user/intentionAudit'
 import tipsdialogModel from '../tipsDialog'
 import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
-import onsellModel from '../tips/auditDialog'
+/*import onsellModel from '../tips/auditDialog'*/
+import onsellModel from './onSellAudit'
 
 /*import editintentModel  from  '../../Intention/Editintention'*/
 import transferModel from '../user/userTransfer'
@@ -511,7 +509,7 @@ import {
     initLogin,
     initOrgIntentionList,
     initIntentionList
-    
+
 } from '../../vuex/getters'
 import {
     getIntentionList,
@@ -541,7 +539,7 @@ export default {
         mglistModel,
         transferModel,
         onsellModel
-    
+
     },
     vuex: {
         getters: {
@@ -564,25 +562,25 @@ export default {
     },
     data() {
         return {
-            mata8:{}, //存储不同的intentionlist
-            pageID:'', //页面id来决定功能dom隐藏显示 以及loadparam.link的值
-            url:['/intention/employee/list','/intention/org/list','/intention/','/intention/user/list'], //存储link,根据条件改变loadparam.link
-            functionShow:'',//是否显示 我的意向页面的新建按钮
-            showOwn:'',
-            showOperate:'',
-            showOthers:'', //存储不同页面 表格th 是否显示的变量 showOwn:是否显示：所属业务员---showOthers：其他的th
-            showBox:'',//显示注册册用户意向的勾选框
-            showCustomer:'',//注册客户意向隐藏客户名称
-            showOPin:'',
-            showUp:'',//上架审核
+            mata8: {}, //存储不同的intentionlist
+            pageID: '', //页面id来决定功能dom隐藏显示 以及loadparam.link的值
+            url: ['/intention/employee/list', '/intention/org/list', '/intention/', '/intention/user/list'], //存储link,根据条件改变loadparam.link
+            functionShow: '', //是否显示 我的意向页面的新建按钮
+            showOwn: '',
+            showOperate: '',
+            showOthers: '', //存储不同页面 表格th 是否显示的变量 showOwn:是否显示：所属业务员---showOthers：其他的th
+            showBox: '', //显示注册册用户意向的勾选框
+            showCustomer: '', //注册客户意向隐藏客户名称
+            showOPin: '',
+            showUp: '', //上架审核
             loadParam: {
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
                 all: 7,
-                id:'',
-                link:'/intention/employee/list',
+                id: '',
+                link: '/intention/employee/list',
                 key: 'myIntentionList',
                 type: '', //类型
                 especial: '', //特殊
@@ -595,7 +593,7 @@ export default {
                 validate: '', //审核状态
                 source: '', //意向来源
                 onSell: '', //审核状态
-                price:'',//商品价格
+                price: '', //商品价格
                 total: 0,
                 breedId: '',
                 breedName: '',
@@ -727,15 +725,14 @@ export default {
                 show: false,
                 img: ''
             },
-              transferParam: {
+            transferParam: {
                 show: false
             },
-             onSellParam: {
+            onSellParam: {
+                flag: '', //上架还是下架审核， 0/1,上架/下架
                 show: false,
-                audit: true,
-                title: '',
-                pass: '',
-                reject: '',
+                ids: '',
+                callback: ''
             }
         }
     },
@@ -760,7 +757,7 @@ export default {
             }*/
 
         },
-         userToClient: function(item) {
+        userToClient: function(item) {
             this.transferParam = item;
             this.transferParam.callback = this.transferback;
         },
@@ -835,7 +832,7 @@ export default {
             this.loadParam.validate = validate;
             this.selectSearch();
         },
-           selectSource: function(source) {
+        selectSource: function(source) {
             this.loadParam.source = source;
             this.selectSearch();
         },
@@ -935,7 +932,7 @@ export default {
             this.createOrderParam.total = 0;
             this.createOrderParam.callback = this.createback;
             this.createOrderParam.consignee = '';
-            this.createOrderParam.consigneePhone= '';
+            this.createOrderParam.consigneePhone = '';
             this.createOrderParam.consigner = '';
             this.createOrderParam.incidentals = 0;
             this.createOrderParam.preferential = 0;
@@ -965,8 +962,8 @@ export default {
             this.loadParam.customerPhone = '';
             this.loadParam.location = '';
             this.loadParam.label = '';
-            this.loadParam.id='';
-            this.loadParam.userName='';
+            this.loadParam.id = '';
+            this.loadParam.userName = '';
             this.getIntentionList(this.loadParam);
         },
         specDelete: function(param) {
@@ -1002,53 +999,22 @@ export default {
             this.auditParam.show = true;
             this.auditParam.callback = this.auditCallback;
         },
-        //上架审核
-         upAudit: function(index, id) {
-            this.tipsParam.ids = [];
-            this.tipsParam.indexs = [];
-            this.tipsParam.ids.push(id);
-            this.tipsParam.indexs.push(index);
-
-            this.onSellParam.title = '意向上架审核',
-                this.onSellParam.pass = this.allowUp,
-                this.onSellParam.reject = this.rejectUp,
-                this.onSellParam.show = true;
+        //上下架审核
+        upOrDownAudit: function(id, flag) {
+            this.onSellParam.ids = [];
+            this.onSellParam.ids.push(id);
+            this.onSellParam.flag = flag;
+            this.onSellParam.callback = this.upAuditCallback;
+            this.onSellParam.show = true;
         },
-         allowUp: function() {
-            this.tipsParam.onSell = 2;
-            this.tipsParam.name = '意向上架成功';
-            this.intentionUpAndDown(this.tipsParam);
-        },
-        rejectUp: function() {
-            this.tipsParam.onSell = -2;
-            this.tipsParam.name = '拒绝上架';
-            this.intentionUpAndDown(this.tipsParam);
+        upAuditCallback: function(name) {
+            this.showTips(name);
+            this.onSellParam.show = false;
+            this.selectSearch();
         },
         auditCallback: function() {
             this.auditParam.description = this.auditParam.auditComment;
             this.batchUserIntentionAudit(this.auditParam);
-        },
-                downAudit: function(index, id) {
-            this.tipsParam.ids = [];
-            this.tipsParam.indexs = [];
-            this.tipsParam.ids.push(id);
-            this.tipsParam.indexs.push(index);
-
-            this.onSellParam.title = '意向下架审核',
-                this.onSellParam.pass = this.allowDown,
-                this.onSellParam.reject = this.rejectDown,
-                this.onSellParam.show = true;
-
-        },
-        allowDown: function() {
-            this.tipsParam.onSell = 4;
-            this.tipsParam.name = '意向下架成功';
-            this.intentionUpAndDown(this.tipsParam);
-        },
-        rejectDown: function() {
-            this.tipsParam.onSell = 2;
-            this.tipsParam.name = '拒绝下架';
-            this.intentionUpAndDown(this.tipsParam);
         },
         selectSearch: function() {
             this.getIntentionList(this.loadParam);
@@ -1067,37 +1033,42 @@ export default {
             this.sampleOrderParam.ctime = item.ctime;
         },
         //变量true false控制函数
-        changeBool:function(a,b,c,d,e,f,g,h){
-          this.functionShow=a;
-            this.showCustomer=b;
-            this.showOwn=c;
-            this.showOthers=d;
-            this.showOperate=e;
-            this.showBox=f;
-            this.showOPin=g;
-            this.showUp=h;
+        changeBool: function(a, b, c, d, e, f, g, h) {
+            this.functionShow = a;
+            this.showCustomer = b;
+            this.showOwn = c;
+            this.showOthers = d;
+            this.showOperate = e;
+            this.showBox = f;
+            this.showOPin = g;
+            this.showUp = h;
         },
         //显示隐藏功能键
-      funBtn:function(){
-          if(this.$route.query.id==1){
-            this.changeBool(true,true,false,true,true,false,true,false)
-            changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.myIntentionParam);
-          }else if(this.$route.query.id==2){
-            this.changeBool(true,true,true,true,true,false,false,true)
-            changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.orgIntentionParam);
-          }else if(this.$route.query.id==3){
-            this.changeBool(false,true,false,true,false,false,true,false)
-             changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.allIntentionParam);
-          }else{
-            this.changeBool(true,false,true,false,true,true,false,false)
-             changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.userIntentionParam);
-          }
+        funBtn: function() {
+            if (this.$route.query.id == 1) {
+                this.changeBool(true, true, false, true, true, false, true, false)
+                changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.myIntentionParam);
+            } else if (this.$route.query.id == 2) {
+                this.changeBool(true, true, true, true, true, false, false, true)
+                changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.orgIntentionParam);
+            } else if (this.$route.query.id == 3) {
+                this.changeBool(false, true, false, true, false, false, true, false)
+                changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.allIntentionParam);
+            } else {
+                this.changeBool(true, false, true, false, true, true, false, false)
+                changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.userIntentionParam);
+            }
         },
+        showTips: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.tipsParam.alert = true;
+        }
     },
     events: {
         fresh: function(input) {
-           this.loadParam.cur = input;
-            this.getIntentionList(this.loadParam);     
+            this.loadParam.cur = input;
+            this.getIntentionList(this.loadParam);
         },
         breed: function(breed) {
             this.loadParam.breedId = breed.breedId;
@@ -1107,33 +1078,32 @@ export default {
     },
     created() {
         this.labels = commonArray.intentionLabels;
-        
         this.funBtn()
-        console.log(this.functionShow)
+
     },
     ready() {
         common('tab', 'table_box', 1);
-        this.pageID=this.$route.query.id
-         if(Number(this.pageID)==1){
-          this.functionShow=true  
-         }else{
-           this.functionShow=false
-         }
-      if(this.pageID==1){
-       this.loadParam.link=this.url[0]  
-       this.selectSearch()     
-      }else if(this.pageID==2){
-        this.loadParam.link=this.url[1] 
-       this.selectSearch()
-      }else if(this.pageID==3){
-       this.loadParam.link=this.url[2]  
-       this.selectSearch() 
-      }else if(this.pageID==4){
-       this.loadParam.link=this.url[3]    
-      } else{
-        console.log('nothing')
-      }
-     },
+        this.pageID = this.$route.query.id
+        if (Number(this.pageID) == 1) {
+            this.functionShow = true
+        } else {
+            this.functionShow = false
+        }
+        if (this.pageID == 1) {
+            this.loadParam.link = this.url[0]
+            this.selectSearch()
+        } else if (this.pageID == 2) {
+            this.loadParam.link = this.url[1]
+            this.selectSearch()
+        } else if (this.pageID == 3) {
+            this.loadParam.link = this.url[2]
+            this.selectSearch()
+        } else if (this.pageID == 4) {
+            this.loadParam.link = this.url[3]
+        } else {
+            console.log('nothing')
+        }
+    },
     filter: (filter, {})
 }
 </script>
