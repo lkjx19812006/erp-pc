@@ -15,6 +15,11 @@
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
+
+                    <dt class="left transfer marg_top" style="margin-left:5px">供应商ID：</dt>
+                        <dd class="left">
+                            <input type="text" class="form-control" v-model="loadParam.id" placeholder="{{$t('static.Enter_search')}}" @keyup.enter="selectSearch()">
+                        </dd>
                 </dl>
                 <dl class="clear left transfer">
                     <dt class="left transfer marg_top">手机省：</dt>
@@ -176,6 +181,7 @@
                 <thead>
                     <tr>
                         <th>供应商名称</th>
+                        <th>供应商ID</th>
                         <th>联系人</th>
                         <th>联系人职位</th>
                         <th>联系人电话</th>
@@ -205,6 +211,7 @@
                                       url:'/customer/',
                                       key:'supplyCustomerList'
                                       })">{{item.name}}</td>
+                        <td>{{item.id}}</td>              
                         <td>{{item.mainContact}}</td>
                         <td>{{item.position}}</td>
                         <td>{{item.mainPhone}}</td>
@@ -395,6 +402,7 @@ export default {
             this.loadParam.show = true;
         },
         resetCondition: function() {
+            this.loadParam.id = '';
             this.loadParam.name = '';
             this.loadParam.phone = '';
             this.loadParam.employeeId = '';
