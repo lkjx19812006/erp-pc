@@ -29,7 +29,12 @@ module.exports = {
                 //target: 'http://192.168.25.16:8080', //林奇
                 //target: 'http://192.168.25.188:8080', //韦军军
                 changeOrigin: true
+            },
+            '/front/**': {//代理wms端口
+                target: 'http://192.168.1.141:8080',
+                changeOrigin: true
             }
+            
         },
         // CSS Sourcemaps off by default because relative paths are "buggy"
         // with this option, according to the CSS-Loader README

@@ -52,7 +52,8 @@ import {
 
 } from '../vuex/getters'
 import {
-    login
+    login,
+    commonHttp
 } from '../vuex/actions'
 export default {
     components: {
@@ -87,7 +88,8 @@ export default {
 
         },
         actions: {
-            login
+            login,
+            commonHttp
         }
     },
     watch: {
@@ -176,7 +178,8 @@ export default {
             test = unescape(test);
             return test;
         },
-        loginCallback: function() {
+        loginCallback: function(data) {
+            this.commonHttp(data)
             this.$route.router.go({
                 name: 'home'
             });
