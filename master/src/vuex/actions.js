@@ -11,7 +11,7 @@ Date.prototype.toFormatString = function() {
 };
 
 export const login = ({ dispatch }, data) => { //登录
-    
+
     const body = {
         no: data.no,
         password: data.password
@@ -103,7 +103,7 @@ export const login = ({ dispatch }, data) => { //登录
             var result = res.json().result;
             result.time = lastTime;
             //var safeCode = result.functions[3]?result.functions[3]:''
-            
+
             var loginInfo = {
                 id: result.id,
                 name: result.name,
@@ -122,7 +122,7 @@ export const login = ({ dispatch }, data) => { //登录
             localStorage.menus = JSON.stringify(result.menus);
 
             data.required = false;
-            
+
             data.loginCallback(body);
         } else if (res.json().code == "160104") {
             data.required = true;
@@ -140,11 +140,11 @@ export const login = ({ dispatch }, data) => { //登录
         data.loading = false;
     });
 }
-export const commonHttp = ({dispatch}, data) =>{ //回调wms的接口
+export const commonHttp = ({ dispatch }, data) => { //回调wms的接口
     let body = {
-        biz_param :{
-            no:data.no,
-            password:data.password
+        biz_param: {
+            no: data.no,
+            password: data.password
         }
     }
     Vue.http({
@@ -169,23 +169,23 @@ export const commonHttp = ({dispatch}, data) =>{ //回调wms的接口
     })
 }
 
-export const cus = ({dispatch},data) =>{
+export const cus = ({ dispatch }, data) => {
     //httpService.getDate()
-     body = {
-        biz_module:'erpCustomerProductService',
-        biz_method:'queryCustomerProductInfo',
-        biz_param:{
-            id:17
+    let body = {
+        biz_module: 'erpCustomerProductService',
+        biz_method: 'queryCustomerProductInfo',
+        biz_param: {
+            id: 17
         },
-        time:Date.parse(new Date()) + parseInt(httpService.difTime)
+        time: Date.parse(new Date()) + parseInt(httpService.difTime)
     }
     body.sign = httpService.getSign(body);
-    httpService.commonPOST('/front/handle/control.do',body)
-    .then((res)=>{
-        console.log(res)
-    },(error) => {
-        console.log(error+"错误")
-    })
+    httpService.commonPOST('/front/handle/control.do', body)
+        .then((res) => {
+            console.log(res)
+        }, (error) => {
+            console.log(error + "错误")
+        })
 }
 
 export const resetPawd = ({ dispatch }, data) => { //修改密码(需要提供原密码)
