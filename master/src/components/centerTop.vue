@@ -147,6 +147,8 @@ export default {
         }
     },
     created() {
+        console.log(this.initLogin)
+        
         this.getEmployeeDetail(this.loadParam);
     }
     /*events:{

@@ -171,7 +171,7 @@ import {
     getStockList,
     importStock,
     deleteStockInfo,
-    testing
+    cus
 } from '../../vuex/actions'
 import {
     initStockList,
@@ -191,12 +191,13 @@ export default {
         pictureModel,
         setpriceModel
     },
+
     vuex: {
         actions: {
             getStockList,
             importStock,
             deleteStockInfo,
-            testing
+            cus
         },
         getters: {
             initStockList,
@@ -310,7 +311,7 @@ export default {
     },
     methods: {
         selectSearch: function() {
-            this.testing()
+            this.cus()
             this.getStockList(this.loadParam)
         },
         showBig: function(img) {

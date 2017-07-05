@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import * as types from './mutation-types'
 import apiUrl from './api/api'
+import httpService from '../common/httpService.js'
 export const increment = ({ dispatch }) => dispatch(types.INCREMENT)
 export const decrement = ({ dispatch }) => dispatch(types.DECREMENT)
 export const menuBar = ({ dispatch }) => dispatch(types.MENU_BAR)
@@ -10,6 +11,7 @@ Date.prototype.toFormatString = function() {
 };
 
 export const login = ({ dispatch }, data) => { //登录
+
     const body = {
         no: data.no,
         password: data.password
@@ -19,7 +21,7 @@ export const login = ({ dispatch }, data) => { //登录
     }
     Vue.http({
         method: 'POST',
-        url: apiUrl.orderList + data.link,
+        url: httpService.addSID(apiUrl.orderList + data.link),
         emulateHTTP: true,
         body: body,
         emulateJSON: false,
@@ -90,6 +92,8 @@ export const login = ({ dispatch }, data) => { //登录
             var lastTime = getNowFormatDate();
             var expire = new Date((new Date()).getTime() + 24 * 3600000); //得到的时间与真实时间差了8小时,cookie将在24小时后过期
             document.cookie = "no=" + no + ";expires=" + expire;
+            console.log(res.json().result.id)
+            console.log(compile(res.json().result.id))
             document.cookie = "id=" + compile(res.json().result.id) + ";expires=" + expire;
             document.cookie = "orgId=" + compile(res.json().result.orgid) + ";expires=" + expire;
             document.cookie = "name=" + compile(res.json().result.name) + ";expires=" + expire;
@@ -99,6 +103,7 @@ export const login = ({ dispatch }, data) => { //登录
             var result = res.json().result;
             result.time = lastTime;
             //var safeCode = result.functions[3]?result.functions[3]:''
+
             var loginInfo = {
                 id: result.id,
                 name: result.name,
@@ -118,7 +123,7 @@ export const login = ({ dispatch }, data) => { //登录
 
             data.required = false;
 
-            data.loginCallback();
+            data.loginCallback(body);
         } else if (res.json().code == "160104") {
             data.required = true;
         } else {
@@ -135,6 +140,54 @@ export const login = ({ dispatch }, data) => { //登录
         data.loading = false;
     });
 }
+export const commonHttp = ({ dispatch }, data) => { //回调wms的接口
+    let body = {
+        biz_param: {
+            no: data.no,
+            password: data.password
+        }
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/front/account/erpLogin.do',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        window.localStorage.KEY = res.json().biz_result.KEY;
+        window.localStorage.SID = res.json().biz_result.SID;
+        httpService.SID = res.json().biz_result.SID;
+        httpService.KEY = res.json().biz_result.KEY;
+        httpService.setCookie('KEY', httpService.KEY);
+        httpService.setCookie('SID', httpService.SID);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const cus = ({ dispatch }, data) => {
+    //httpService.getDate()
+    let body = {
+        biz_module: 'erpCustomerProductService',
+        biz_method: 'queryCustomerProductInfo',
+        biz_param: {
+            id: 17
+        },
+        time: Date.parse(new Date()) + parseInt(httpService.difTime)
+    }
+    body.sign = httpService.getSign(body);
+    httpService.commonPOST('/front/handle/control.do', body)
+        .then((res) => {
+            console.log(res)
+        }, (error) => {
+            console.log(error + "错误")
+        })
+}
+
 export const resetPawd = ({ dispatch }, data) => { //修改密码(需要提供原密码)
     const body = {
         no: data.no,

@@ -1160,6 +1160,7 @@ const state = {
 
 const mutations = {
     [LOGIN_DATA](state, data) { //登录
+        console.log(uncompile(getCookie('id')))
         state.login = data;
     },
     [BACKLOG_TABLE](state, data) {
