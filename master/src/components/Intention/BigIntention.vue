@@ -1078,12 +1078,8 @@ export default {
     },
     created() {
         this.labels = commonArray.intentionLabels;
-        this.funBtn()
-
-    },
-    ready() {
-        common('tab', 'table_box', 1);
-        this.pageID = this.$route.query.id
+        this.funBtn();
+          this.pageID = this.$route.query.id
         if (Number(this.pageID) == 1) {
             this.functionShow = true
         } else {
@@ -1103,6 +1099,11 @@ export default {
         } else {
             console.log('nothing')
         }
+
+    },
+    ready() {
+        common('tab', 'table_box', 1);
+
     },
     filter: (filter, {})
 }
