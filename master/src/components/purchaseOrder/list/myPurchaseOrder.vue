@@ -88,6 +88,7 @@
                         <th>客户手机</th>
                         <th>业务员</th>
                         <th>发布日期</th>
+                        <th>上架时间</th>
                         <th>过期时间</th>
                         <th>采购单来源</th>
                         <th>采购内容描述</th>
@@ -117,6 +118,7 @@
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.pubdate}}</td>
+                        <td>{{item.shelveTime}}</td>
                         <td>{{item.duedate}}</td>
                         <td>{{item.source | indentSource}}</td>
                         <td>
@@ -135,7 +137,7 @@
                             <button v-if="item.inquire==0" class="btn btn-danger btn-xs" @click.stop="deletePurchase(item.id,$index)">删除</button>
                             <button v-if="item.inquire==0" class="btn btn-success btn-xs" @click.stop="singleInquire(item.id,$index)">询价扩散</button>
                             <button v-if="item.inquire==1||item.inquire==2" class="btn btn-danger btn-xs" @click.stop="cancelInquire(item.id,$index)">终止询价</button>
-                            <div v-else v-if="item.inquire!=0" >
+                            <div v-else v-if="item.inquire!=0">
                                 <button class="btn btn-primary btn-xs" @click.stop="singleInquire(item.id,$index)">恢复询价</button>
                                 <button class="btn btn-info btn-xs" @click.stop="editPurchase(item,$index)">编辑</button>
                                 <button class="btn btn-danger btn-xs" @click.stop="deletePurchase(item.id,$index)">删除</button>
@@ -212,7 +214,7 @@ export default {
                 customerName: '',
                 customerPhone: '',
                 purchaseContent: '',
-                purchaseId:''
+                purchaseId: ''
             },
             createParam: {
                 show: false,
@@ -223,13 +225,13 @@ export default {
                 customerName: "",
                 customerPhone: "",
                 buyDesc: "", //采购内容描述
-                comment:'',
+                comment: '',
                 province: "",
                 city: "",
                 district: "",
                 address: "",
                 duedate: "",
-                paymentWay:'',
+                paymentWay: '',
                 intentionList: [] //意向信息
             },
             importParam: {
@@ -249,17 +251,17 @@ export default {
                 customerId: "",
                 customerName: "",
                 customerPhone: "",
-                comment:'',
+                comment: '',
                 province: "",
-                provinceName:'',
-                cityName:'',
-                districtName:'',
+                provinceName: '',
+                cityName: '',
+                districtName: '',
                 city: "",
                 district: "",
                 address: "",
                 buyDesc: "",
-                duedate:'',
-                paymentWay:'asdas',
+                duedate: '',
+                paymentWay: '',
                 intentionList: [], //意向信息
                 intentionListBack: [] //意向信息副本
             },
@@ -293,8 +295,8 @@ export default {
                 name: '',
                 alert: true
             },
-            offerParam:{
-                show:false,
+            offerParam: {
+                show: false,
             },
             checked: false
         }
@@ -371,7 +373,7 @@ export default {
             this.editParam.paymentWay = item.paymentWay
             this.editParam.intentionList = [];
             this.editParam.intentionListBack = [];
-            
+
         },
         detailClick: function(id, customerId) {
             this.detailParam.id = id;
