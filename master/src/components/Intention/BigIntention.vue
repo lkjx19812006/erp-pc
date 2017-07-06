@@ -75,7 +75,7 @@
                         </button>
                     </div>
                 </dl>
-                <dl class="clear left transfer" style="margin-left:50px">
+                <dl class="clear left transfer" style="margin-left:50px" v-if="showBox">
                     <dt class="left transfer marg_top">审核状态：</dt>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===''}" @click="selectValidate('')">
@@ -92,6 +92,26 @@
                         </button>
                     </div>
                 </dl>
+
+                 <dl class="clear left transfer" style="margin-left:50px" v-if="!showBox">
+                    <dt class="left transfer marg_top">上架状态：</dt>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.onSell===''}" @click="selectOnsell('')">
+                            全部
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.onSell===0}" @click="selectOnsell(0)">
+                            初始
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.onSell===1}" @click="selectOnsell(1)">
+                            申请上架中
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.onSell===2}" @click="selectOnsell(2)">
+                            上架
+                        </button>
+                    </div>
+                </dl>
+
+
                 <dl class="clear left transfer" style="margin-left:20px" v-if='showBox'>
                     <dt class="left transfer marg_top">意向来源：</dt>
                     <div class="btn-group">
@@ -339,7 +359,7 @@
                         <td>{{item.inTypeDesc}}</td>
                         <td v-if='showCustomer'>{{item.onSell | onsell}}</td>
                         <td style="text-align: left" v-if="showOperate">
-                            <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='showOPin' @click.stop="modifyIntention({
+                            <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='!showOwn' @click.stop="modifyIntention({
                                             id:item.id,
                                             sub:$index,
                                             selectCustomer:false,
@@ -420,14 +440,14 @@
                             <a v-if="item.onSell==3" v-show='showUp'>
                                 <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="upOrDownAudit(item.id,1)">下架审核</button>
                             </a>
-                            <a v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='showOPin'>
+                            <a v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='!showOwn'>
                                 <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;margin-top:-22px;color:#fa6705" @click="up($index,item.id,1)">申请上架</button>
                             </a>
-                            <a class="operate" v-show='showOPin' v-if="item.onSell==2" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架" />
+                            <a class="operate" v-show='!showOwn' v-if="item.onSell==2" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架" />
                             </a>
-                            <a class="operate" v-show='showOPin' v-if="item.type==1&&item.preSell===0" @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" alt="生成订单" />
+                            <a class="operate" v-show='!showOwn' v-if="item.type==1&&item.preSell===0" @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" alt="生成订单" />
                             </a>
-                            <a class="operate" v-show='showOPin' @click.stop="sengSample(item,$index)">
+                            <a class="operate" v-show='!showOwn' @click.stop="sengSample(item,$index)">
                                 <img src="/static/images/sample.png" alt="寄样申请" />
                             </a>
                             <a v-show='showBox' class="operate" @click.stop="userToClient({
@@ -560,11 +580,9 @@ export default {
             createOrder
         }
     },
+    props: ['param'],
     data() {
         return {
-            mata8: {}, //存储不同的intentionlist
-            pageID: '', //页面id来决定功能dom隐藏显示 以及loadparam.link的值
-            url: ['/intention/employee/list', '/intention/org/list', '/intention/', '/intention/user/list'], //存储link,根据条件改变loadparam.link
             functionShow: '', //是否显示 我的意向页面的新建按钮
             showOwn: '',
             showOperate: '',
@@ -580,7 +598,7 @@ export default {
                 cur: 1,
                 all: 7,
                 id: '',
-                link: '/intention/employee/list',
+                link: this.param.url,
                 key: 'myIntentionList',
                 type: '', //类型
                 especial: '', //特殊
@@ -832,6 +850,10 @@ export default {
             this.loadParam.validate = validate;
             this.selectSearch();
         },
+        selectOnsell: function(onSell) {
+            this.loadParam.onSell = onSell;
+            this.selectSearch();
+        },
         selectSource: function(source) {
             this.loadParam.source = source;
             this.selectSearch();
@@ -1045,13 +1067,13 @@ export default {
         },
         //显示隐藏功能键
         funBtn: function() {
-            if (this.$route.query.id == 1) {
+            if (this.param.id == 1) {
                 this.changeBool(true, true, false, true, true, false, true, false)
                 changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.myIntentionParam);
-            } else if (this.$route.query.id == 2) {
+            } else if (this.param.id == 2) {
                 this.changeBool(true, true, true, true, true, false, false, true)
                 changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.orgIntentionParam);
-            } else if (this.$route.query.id == 3) {
+            } else if (this.param.id == 3) {
                 this.changeBool(false, true, false, true, false, false, true, false)
                 changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.allIntentionParam);
             } else {
@@ -1079,26 +1101,6 @@ export default {
     created() {
         this.labels = commonArray.intentionLabels;
         this.funBtn();
-          this.pageID = this.$route.query.id
-        if (Number(this.pageID) == 1) {
-            this.functionShow = true
-        } else {
-            this.functionShow = false
-        }
-        if (this.pageID == 1) {
-            this.loadParam.link = this.url[0]
-            this.selectSearch()
-        } else if (this.pageID == 2) {
-            this.loadParam.link = this.url[1]
-            this.selectSearch()
-        } else if (this.pageID == 3) {
-            this.loadParam.link = this.url[2]
-            this.selectSearch()
-        } else if (this.pageID == 4) {
-            this.loadParam.link = this.url[3]
-        } else {
-            console.log('nothing')
-        }
 
     },
     ready() {

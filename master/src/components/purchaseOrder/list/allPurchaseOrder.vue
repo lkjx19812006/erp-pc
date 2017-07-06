@@ -85,6 +85,7 @@
                         <th>客户手机</th>
                         <th>业务员</th>
                         <th>发布日期</th>
+                        <th>上架时间</th>
                         <th>过期时间</th>
                         <th>采购单来源</th>
                         <th>采购内容描述</th>
@@ -103,6 +104,7 @@
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.pubdate}}</td>
+                        <td>{{item.shelveTime}}</td>
                         <td>{{item.duedate}}</td>
                         <td>{{item.source | indentSource}}</td>
                         <td>
@@ -178,7 +180,7 @@ export default {
                 employeeName: '',
                 org: '',
                 orgName: '',
-                purchaseId:''
+                purchaseId: ''
             },
             detailParam: {
                 show: false,

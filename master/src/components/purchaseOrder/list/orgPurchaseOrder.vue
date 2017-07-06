@@ -33,15 +33,14 @@
                             <option value="3">报价完成</option>
                         </select>
                     </dd>
-
-                  <dt class="left transfer marg_top">已收报价：</dt>
-                  <dd class="left margin_right">
-                    <select class="form-control" v-model="loadParam.offer" @change="selectSearch()">
-                      <option value="-1">全部</option>
-                      <option value="1">收到报价</option>
-                      <option value="0">暂无报价</option>
-                    </select>
-                  </dd>
+                    <dt class="left transfer marg_top">已收报价：</dt>
+                    <dd class="left margin_right">
+                        <select class="form-control" v-model="loadParam.offer" @change="selectSearch()">
+                            <option value="-1">全部</option>
+                            <option value="1">收到报价</option>
+                            <option value="0">暂无报价</option>
+                        </select>
+                    </dd>
                     <dt class="left transfer marg_top">采购单来源：</dt>
                     <dd class="left margin_right">
                         <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
@@ -81,6 +80,7 @@
                         <th>客户手机</th>
                         <th>业务员</th>
                         <th>发布日期</th>
+                        <th>上架时间</th>
                         <th>过期时间</th>
                         <th>采购单来源</th>
                         <th>采购内容描述</th>
@@ -100,6 +100,7 @@
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.pubdate}}</td>
+                        <td>{{item.shelveTime}}</td>
                         <td>{{item.duedate}}</td>
                         <td>{{item.source | indentSource}}</td>
                         <td>
@@ -178,7 +179,7 @@ export default {
                 customerPhone: '',
                 employee: '',
                 employeeName: '',
-                purchaseId:''
+                purchaseId: ''
             },
             detailParam: {
                 show: false,

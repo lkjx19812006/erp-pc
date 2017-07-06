@@ -1,10 +1,19 @@
 <template>
-     <bigintention></bigintention>
+     <bigintention :param="userParam"></bigintention>
 </template>
 <script type="text/javascript">
   import bigintention from '../BigIntention.vue'
   
   export default{
+     data(){
+        return{
+            userParam:{
+                url:'/intention/user/list',
+                id:4
+            }
+            
+        }
+    },
     components:{
    bigintention
     }
