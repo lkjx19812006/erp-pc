@@ -259,7 +259,7 @@ function uncompile(code) {
 }
 
 
-function getCookie(name) { //获取cookie
+/*function getCookie(name) { //获取cookie
     var search = name + "=";
     var offset = document.cookie.indexOf(search);
     if (offset == -1) { //cookie中不存在这个变量
@@ -272,9 +272,19 @@ function getCookie(name) { //获取cookie
         }
         return (document.cookie.substring(offset, end));
     }
+}*/
+
+function getCookie(name){ //
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg)){
+        return unescape(arr[2]);
+    }else{
+        return null;
+    }
+    
+    
+    
 }
-
-
 
 const state = {
     isTop: false, //用于判断是左侧列表还是上部列表
@@ -1160,7 +1170,8 @@ const state = {
 
 const mutations = {
     [LOGIN_DATA](state, data) { //登录
-        console.log(uncompile(getCookie('id')))
+        console.log(getCookie('id'))
+        console.log(uncompile('MTAwMDAw'))
         state.login = data;
     },
     [BACKLOG_TABLE](state, data) {

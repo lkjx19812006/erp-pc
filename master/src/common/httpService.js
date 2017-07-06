@@ -55,7 +55,6 @@ var httpService = new Vue({
                 return;
             } else {
                 this.commonGet(this.urlCommon + this.apiUrl.getDate).then(function(response) {
-                	console.log("请求成功")
                     if (response.code == '1c01') {
                         var timestamp = Date.parse(new Date());
                         window.localStorage.difTime = response.biz_result.time - timestamp;
@@ -84,7 +83,6 @@ var httpService = new Vue({
         commonGet: function commonGet(url) {
             return new Promise(function(resolve, reject) {
                 axios.get(url).then(function(response) {
-                	console.log(response.data)
                     resolve(response.data);
                 }).catch(function(error) {
                     reject(error);
@@ -97,7 +95,6 @@ var httpService = new Vue({
         		axios.post(_self.addSID(url), body).then(function (response) {//vue-resource无法抓取403错误，所以用axios
 				  	console.log("请求成功")
 				  	_self.getDate();
-				  	//debugger;
 				    resolve(response.data);
 				  }).catch(function (error) {
 				  	console.log("请求失败")

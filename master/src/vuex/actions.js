@@ -5582,8 +5582,7 @@ export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及�
 
 export const getEmployeeDetail = ({ dispatch }, param) => { //员工列表以及搜索
     param.loading = true;
-    console.log(param)
-    var apiurl = httpService.addSID(apiUrl.clientList + '/employee/' + param.id);
+    var apiurl = apiUrl.clientList + '/employee/' + param.id;
     Vue.http({
         method: 'GET',
         url: apiurl,
