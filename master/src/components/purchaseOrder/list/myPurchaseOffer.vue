@@ -65,11 +65,11 @@
                 <button type="button" class="btn btn-primary transfer left" style="width:75px" @click="resetCondition()">
                     清空条件
                 </button>
-                <!-- <button type="button" class="btn btn-success" style="width:100px" @click="batchAccept()">
+                <button type="button" class="btn btn-success" style="width:100px" @click="batchAccept()" v-if="param.init=='initMyIndentOfferList'">
                     批量处理报价
-                </button> -->
+                </button>
             </div>
-            <!-- <div class="clear" style="margin-top:3px;">
+            <div class="clear" style="margin-top:3px;">
                 <div class="btn-group left" style="margin-right:10px" v-if="param.init=='initAllIndentOfferList'">
                     <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.effective===''}" @click="clickEffective('')">
                         全部
@@ -93,7 +93,7 @@
                         </mz-datepicker>
                     </dd>
                 </dl>
-            </div> -->
+            </div>
         </div>
         <!--中间列表-->
         <div slot="form">
@@ -103,7 +103,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <!-- <th v-if="param.init=='initMyIndentOfferList'"></th> -->
+                        <th v-if="param.init=='initMyIndentOfferList'"></th>
                         <th>报价时间</th>
                         <th>报价类型</th>
                         <th v-if="param.init=='initAllIndentOfferList'">供应商名称</th>
@@ -121,18 +121,18 @@
                         <th v-if="param.init=='initMyIndentOfferList'">处理报价</th>
                     </tr>
                 </thead>
-                <!-- <tr v-if="param.init=='initMyIndentOfferList'">
+                <tr v-if="param.init=='initMyIndentOfferList'">
                     <th>
                         <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
                     </th>
                     <th style="color:#fa6705;font-size: 14px">全选</th>
                     <th colspan="13"></th>
-                </tr> -->
+                </tr>
                 <tbody>
                     <tr v-show="param.init=='initMyIndentOfferList'" v-for="item in initMyIndentOfferList">
-                        <!-- <td @click.stop="">
+                        <td @click.stop="">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
-                        </td> -->
+                        </td>
                         <td>{{item.otime | date}}</td>
                         <td>{{item.source | offerType}}</td>
                         <td><a @click="clickDetail(item.id)">{{item.buyCustomerName}}</a></td>

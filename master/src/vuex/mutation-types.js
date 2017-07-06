@@ -154,7 +154,8 @@ export const ADD_EMPLOYEE_DATA = 'ADD_EMPLOYEE_DATA' //新增员工信息
 export const UPDATE_EMPLOY_DATA = 'UPDATE_EMPLOY_DATA' //修改员工信息
 export const EMPLOYEE_DETAIL = 'EMPLOYEE_DETAIL' //员工详情
 
-export const IDENTIFY_DATA = 'IDENTIFY_DATA' //认证信息
+export const PERSON_IDENTIFY_DATA = 'PERSON_IDENTIFY_DATA' //个人认证信息
+export const COMPANY_IDENTIFY_DATA = 'COMPANY_IDENTIFY_DATA' //企业认证信息
 
 export const UPDATE_TRACKING_DATA = 'UPDATE_TRACKING_DATA' //跟新跟进信息
 

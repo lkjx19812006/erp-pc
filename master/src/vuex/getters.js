@@ -405,9 +405,11 @@ export const initUserDetail = (state) => {
 
 
 /*---认证信息---*/
-export const initIdentify = (state) => {
-
-    return parseJson(state.table.identify);
+export const initPersonIdentify = (state) => {
+    return parseJson(state.table.personIdentify);
+}
+export const initCompanyIdentify = (state) => {
+    return parseJson(state.table.companyIdentify);
 }
 
 /*---获取省市区---*/

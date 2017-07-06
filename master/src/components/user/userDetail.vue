@@ -22,9 +22,8 @@
                         <div class="navbar-header">
                             <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
                             <span class="navbar-brand navbar-name">{{initUserDetail.fullname}}</span>
-                            
                         </div>
-                        <p class="right" >
+                        <p class="right">
                             <Icon type="close-circled" style="font-size:30px;color:#ff9900" @click="param.show=false"></Icon>
                         </p>
                         <!--   <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
@@ -227,7 +226,7 @@
                                     </h4>
                                     </div>
                                     <!-- <div class="panel-collapse" v-show="initUserDetail.personalAuthShow&&initUserDetail.utype==1"> -->
-                                    <div class="panel-collapse" v-show="initUserDetail.personalAuthShow&&initIdentify.files.length>0">
+                                    <div class="panel-collapse" v-show="initUserDetail.personalAuthShow&&initPersonIdentify.files.length>0">
                                         <div class="panel-body panel-set">
                                             <table class="table  contactSet">
                                                 <thead>
@@ -236,7 +235,7 @@
                                                     <th>描述</th>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="item in initIdentify.files">
+                                                    <tr v-for="item in initPersonIdentify.files">
                                                         <td>{{item.fileType}}</td>
                                                         <td>
                                                             <img v-bind:src="item.path" @click="clickBig(item.path)" width='150px' />
@@ -264,7 +263,7 @@
                                   </h4>
                                     </div>
                                     <!-- <div class="panel-collapse" v-show="initUserDetail.companyAuthShow&&initUserDetail.ctype==1"> -->
-                                    <div class="panel-collapse" v-show="initUserDetail.companyAuthShow&&initIdentify.files.length>0">
+                                    <div class="panel-collapse" v-show="initUserDetail.companyAuthShow&&initCompanyIdentify.files.length>0">
                                         <div class="panel-body panel-set">
                                             <table class="table  contactSet">
                                                 <thead>
@@ -274,7 +273,7 @@
                                                         <th>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="item in initIdentify.files">
+                                                    <tr v-for="item in initCompanyIdentify.files">
                                                         <td>{{item.fileType}}</td>
                                                         <td>
                                                             <div class="thumbnail col-md-3 col-sm-4 col-xs-6">
@@ -433,7 +432,8 @@ import pictureModel from '../tips/pictureDialog'
 import {
     initClientDetail,
     initUserDetail,
-    initIdentify,
+    initPersonIdentify,
+    initCompanyIdentify,
     initLogin
 } from '../../vuex/getters'
 import {
@@ -544,11 +544,11 @@ export default {
                 alert: true,
                 name: '请先选择意向'
             },
-            customerParam:{
-                show:false,
-                id:'',
-                loading:false,
-                registerSource:false
+            customerParam: {
+                show: false,
+                id: '',
+                loading: false,
+                registerSource: false
             }
         }
     },
@@ -556,7 +556,8 @@ export default {
         getters: {
             initUserDetail,
             initClientDetail,
-            initIdentify,
+            initPersonIdentify,
+            initCompanyIdentify,
             initLogin
         },
         actions: {
@@ -593,7 +594,7 @@ export default {
                 userType: ''
             });
         },
-        showDetail:function(){
+        showDetail: function() {
             this.customerParam.id = this.initUserDetail.customerId
             this.customerParam.show = true
         },

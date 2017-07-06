@@ -70,7 +70,8 @@ import {
     USER_DETAIL_DATA,
     ADD_EMPLOYEE_DATA,
     UPDATE_EMPLOY_DATA,
-    IDENTIFY_DATA,
+    PERSON_IDENTIFY_DATA,
+    COMPANY_IDENTIFY_DATA,
     UPDATE_TRACKING_DATA,
     ADD_TRACKING_DATA,
     PURCHASE_LIST_DATA,
@@ -274,16 +275,16 @@ function uncompile(code) {
     }
 }*/
 
-function getCookie(name){ //
-    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-    if(arr=document.cookie.match(reg)){
+function getCookie(name) { //
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    if (arr = document.cookie.match(reg)) {
         return unescape(arr[2]);
-    }else{
+    } else {
         return null;
     }
-    
-    
-    
+
+
+
 }
 
 const state = {
@@ -1113,7 +1114,8 @@ const state = {
             show: false
         }
     },
-    identify: {},
+    personIdentify: {},
+    companyIdentify: {},
     trackingDetail: {},
     employeeDetail: {},
     orgDetail: {},
@@ -2190,10 +2192,12 @@ const mutations = {
         })
     },
 
-    [IDENTIFY_DATA](state, data) { //认证信息
-        state.identify = data;
+    [PERSON_IDENTIFY_DATA](state, data) { //个人认证信息
+        state.personIdentify = data;
     },
-
+    [COMPANY_IDENTIFY_DATA](state, data) { //企业认证信息
+        state.companyIdentify = data;
+    },
     [UPDATE_TRACKING_DATA](state, data) { //更新跟进
         if (state.userDetail.tracking.arr[data.index]) {
             state.userDetail.tracking.arr[data.index].trackingWay = data.trackingWay;

@@ -9176,7 +9176,6 @@ export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信�
 }
 
 export const getAuthInfo = ({ dispatch }, param) => { //查询认证信息
-
     const data = {
         id: param.id
     }
@@ -9200,7 +9199,13 @@ export const getAuthInfo = ({ dispatch }, param) => { //查询认证信息
         }
     }).then((res) => {
         var identify = res.json().result;
-        dispatch(types.IDENTIFY_DATA, identify);
+        if (param.utype) {
+            dispatch(types.PERSON_IDENTIFY_DATA, identify);
+        }
+        if (param.ctype) {
+            dispatch(types.COMPANY_IDENTIFY_DATA, identify);
+        }
+
     }, (res) => {
         console.log('fail');
     })
