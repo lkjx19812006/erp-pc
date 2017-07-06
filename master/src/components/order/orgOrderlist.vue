@@ -169,6 +169,7 @@
                     <thead>
                         <tr>
                             <!-- <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th> -->
+                            <th>{{$t('static.order')}}ID</th>
                             <th>{{$t('static.transcation')}}</th>
                             <th>{{$t('static.order_type')}}</th>
                             <th>{{$t('static.trading_patterns')}}</th>
@@ -196,6 +197,7 @@
                             <!-- <td  @click.stop="">
                       <label v-if="item.validate==1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                     </td> -->
+                            <td>{{item.id}}</td>
                             <td>{{item.tradeTime | subtime}}</td>
                             <td>
                                 <div v-if="item.type==1&&item.pre==0">{{$t('static.sell')}}</div>

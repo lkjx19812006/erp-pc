@@ -134,10 +134,10 @@
                             </dd>
                         </dl>
                         <dd class="left" style="margin-left:20px">
-                            <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+                            <button type="button" class="btn btn-warning" height="24" width="24" @click="resetCondition()">清空条件</button>
                         </dd>
                         <dd class="pull-right">
-                            <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
+                            <button type="button" class="btn btn-success" height="24" width="24" @click="audit()">审核</button>
                             <button type="button" class="btn btn-primary" height="24" width="24" @click="selectSearch()">刷新</button>
                         </dd>
                     </div>
@@ -153,6 +153,7 @@
                                 <th>
                                     <!-- <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label> -->
                                 </th>
+                                <th>ID</th>
                                 <th>姓名</th>
                                 <!-- <th>昵称</th> -->
                                 <th>等级</th>
@@ -183,6 +184,7 @@
                             <label v-if="item.audit==1" class="checkbox_unselect"></label> -->
                                     <label v-if="item.audit!=2" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
                                 </td>
+                                <td>{{item.id}}</td>
                                 <td class="underline" v-if="item.fullname==''||item.fullname==null" @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -328,6 +330,10 @@
         <div class="myOrder" v-if="$route.path.split('=')[1]==4">
             <user-intention></user-intention>
         </div>
+        <!-- 注册客户反馈 -->
+        <div class="myOrder" v-if="$route.path.split('=')[1]==1">
+            <user-feedback></user-feedback>
+        </div>
         <!-- 注册订单列表 -->
         <div class="myOrder" v-if="$route.path.split('=')[1]==2">
             <register-order-list></register-order-list>
@@ -336,6 +342,7 @@
 </template>
 <script>
 import userIntention from '../components/Intention/intentionList/userIntention.vue'
+import userFeedback from '../components/user/userFeedback'
 import tipsdialogModel from '../components/tips/tipDialog'
 import calendar from '../components/calendar/vue.datepicker'
 import alterinfoModel from '../components/user/userUpdate'
@@ -374,7 +381,8 @@ export default {
         companyauthModel,
         mglistModel,
         userIntention,
-        registerOrderList
+        registerOrderList,
+        userFeedback
     },
     data() {
         return {
@@ -706,8 +714,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    min-width: 88px;
-    width: 88px;
+    min-width: 70px;
+    width:100px;
 }
 
 dl {

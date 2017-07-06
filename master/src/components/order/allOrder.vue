@@ -166,6 +166,7 @@
                 <table class="table table-hover table_color table-striped " v-cloak id="tab">
                     <thead>
                         <tr>
+                            <th>{{$t('static.order')}}ID</th>
                             <th>{{$t('static.transcation')}}</th>
                             <th>{{$t('static.order_type')}}</th>
                             <th>{{$t('static.trading_patterns')}}</th>
@@ -190,6 +191,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="item in initAllOrderlist" v-cloak>
+                            <td>{{item.id}}</td>
                             <td>{{item.tradeTime | subtime}}</td>
                             <td>
                                 <div v-if="item.type==1&&item.pre==0">{{$t('static.sell')}}</div>

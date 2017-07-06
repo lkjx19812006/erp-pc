@@ -16,7 +16,7 @@ var httpService = new Vue({
         }
 	},
 	methods:{
-		addSID:function addSID(url){
+		addSID:function(url){
 			if(this.SID&&this.SID != undefined){
 				return url + ';jsessionid=' + this.SID;
 			}else{
@@ -47,7 +47,7 @@ var httpService = new Vue({
                 redirect('/login');
             }
         },
-        getDate: function getDate(cb) {
+        getDate: function(cb) {
             var _self = this;
             if (_self.difTime && cb) {
                 return cb();
@@ -68,7 +68,7 @@ var httpService = new Vue({
                 });
             }
         },
-        getSign: function getSign(body) {
+        getSign: function(body) {
         	var str = 'biz_module=' + body.biz_module + '&biz_method=' + body.biz_method + '&time=' + body.time
             var _self = this;
             if (!_self.KEY) {
@@ -80,7 +80,7 @@ var httpService = new Vue({
             var signStr = cryptoJs.HmacSHA1(str, _self.KEY).toString(cryptoJs.enc.Base64);
             return signStr;
         },
-        commonGet: function commonGet(url) {
+        commonGet: function(url) {
             return new Promise(function(resolve, reject) {
                 axios.get(url).then(function(response) {
                     resolve(response.data);
@@ -89,15 +89,14 @@ var httpService = new Vue({
                 });       
             });
         },
-        commonPOST:function commonPOST(url,body){
+        commonPOST:function(body,url){
         	var _self = this
+        	url = url?url:'/front/handle/control.do'
         	return new Promise(function(resolve,reject){
         		axios.post(_self.addSID(url), body).then(function (response) {//vue-resource无法抓取403错误，所以用axios
-				  	console.log("请求成功")
-				  	_self.getDate();
+				  	_self.getDate();//获取时间戳
 				    resolve(response.data);
 				  }).catch(function (error) {
-				  	console.log("请求失败")
 				  	if (error.response !== undefined && error.response !== '') {
                         if (error.response.status === 403) {
                             window.localStorage.KEY = '';
@@ -113,43 +112,20 @@ var httpService = new Vue({
                     };
                     reject(error);
 				  });
-        		/*Vue.http({
-        			method: 'POST',
-			        url: _self.addSID(url),
-			        emulateHTTP: true,
-			        body: body,
-			        emulateJSON: false,
-			        headers: {
-			            "X-Requested-With": "XMLHttpRequest",
-			            'Content-Type': 'application/json;charset=UTF-8'
-			        }
-        		}).then((res)=>{
-        			console.log(res)
-        			resolve(JSON.parse(res.data))
-        		},(error)=>{
-        			console.log(error)
-        			if (error.response !== undefined && error.response !== '') {
-                        if (error.response.status === 403) {
-                            window.localStorage.KEY = '';
-                            window.localStorage.SID = '';
-                            _self.KEY = '';
-                            _self.SID = '';
-                            window.location.href = '/login';
-                        };
-                    };
-                    reject(error);
-        		})*/
         	})
         },
-        getCookie(cname) {
-            var name = cname + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1);
-                if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
-            }
-            return "";
+        commonBody:function(body){
+    		body.time = Date.parse(new Date()) + parseInt(this.difTime),
+        	body.sign = this.getSign(body)
+        	return body
+        },
+        getCookie(name) {
+            var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+			    if(arr=document.cookie.match(reg)){
+			        return unescape(arr[2]);
+			    }else{
+			        return '';
+			    }  
         },
         setCookie(name, value) {
             var Days = 1;
