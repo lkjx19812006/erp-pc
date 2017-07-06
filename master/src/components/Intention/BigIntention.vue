@@ -560,7 +560,7 @@ export default {
             createOrder
         }
     },
-    props:['param'],
+    props: ['param'],
     data() {
         return {
             functionShow: '', //是否显示 我的意向页面的新建按钮
@@ -1076,7 +1076,7 @@ export default {
     },
     created() {
         this.labels = commonArray.intentionLabels;
-     this.funBtn();
+        this.funBtn();
 
     },
     ready() {
