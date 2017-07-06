@@ -652,7 +652,9 @@ section {
 .contactSet thead {
     color: #fa6705;
 }
-
+.modal_con{
+    z-index:1081!important;
+}
 .table {
     display: table;
 }

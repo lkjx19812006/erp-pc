@@ -188,8 +188,8 @@ import {
     SUPPLIER_COUNT_DETAIL_LIST,
     SUPPLIER_COUNT_DETAIL_TOTAL,
     LOGISTICS_COUNT_LIST,
-    LOGISTICS_COUNT_TOTAL
-
+    LOGISTICS_COUNT_TOTAL,
+    USER_FEEDBACK_INFO
 } from '../mutation-types'
 
 
@@ -259,31 +259,13 @@ function uncompile(code) {
 
 }
 
-
-/*function getCookie(name) { //获取cookie
-    var search = name + "=";
-    var offset = document.cookie.indexOf(search);
-    if (offset == -1) { //cookie中不存在这个变量
-        return '';
-    } else {
-        offset += search.length;
-        var end = document.cookie.indexOf(";", offset);
-        if (end == -1) {
-            end = document.cookie.length;
-        }
-        return (document.cookie.substring(offset, end));
-    }
-}*/
-
 function getCookie(name) { //
     var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
     if (arr = document.cookie.match(reg)) {
         return unescape(arr[2]);
     } else {
-        return null;
+        return '';
     }
-
-
 
 }
 
@@ -1168,12 +1150,11 @@ const state = {
     supplierCountDetailTotal: {},
     logisticsCountList: [],
     logisticsCountTotal: {},
+    userFeedbackInfo: [],
 }
 
 const mutations = {
     [LOGIN_DATA](state, data) { //登录
-        console.log(getCookie('id'))
-        console.log(uncompile('MTAwMDAw'))
         state.login = data;
     },
     [BACKLOG_TABLE](state, data) {
@@ -2600,7 +2581,9 @@ const mutations = {
     [LOGISTICS_COUNT_TOTAL](state, data) {
         state.logisticsCountTotal = data;
     },
-
+    [USER_FEEDBACK_INFO](state, data) {
+        state.userFeedbackInfo = data
+    }
 }
 
 export default {

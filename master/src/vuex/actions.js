@@ -169,22 +169,17 @@ export const commonHttp = ({ dispatch }, data) => { //回调wms的接口
     })
 }
 
-export const cus = ({ dispatch }, data) => {
-    //httpService.getDate()
+export const test = ({ dispatch }, data) => {
     let body = {
-        biz_module: 'erpCustomerProductService',
-        biz_method: 'queryCustomerProductInfo',
-        biz_param: {
-            id: 17
-        },
-        time: Date.parse(new Date()) + parseInt(httpService.difTime)
+        biz_module: 'userSuggestService',
+        biz_method: 'querySuggestList',
+        biz_param: data
     }
-    body.sign = httpService.getSign(body);
-    httpService.commonPOST('/front/handle/control.do', body)
+    httpService.commonPOST(httpService.commonBody(body))
         .then((res) => {
             console.log(res)
         }, (error) => {
-            console.log(error + "错误")
+            console.log(error)
         })
 }
 
@@ -2760,7 +2755,6 @@ export const batchOrgOrder = ({ dispatch }, param) => { //批量审核部门的�
     if (param.validate) {
         OrgOrderdata.validate = param.validate;
     }
-    console.log(OrgOrderdata);
     Vue.http({
         method: 'PUT',
         url: apiUrl.userList + '/order/validates',
@@ -12032,4 +12026,47 @@ export const setClientTop = ({ dispatch }, param, data) => { //收付费信息�
     }, (res) => {
         console.log('fail');
     });
+}
+
+export const getFeedbackList = ({ dispatch }, data) => {
+    let body = {
+        biz_module: 'userSuggestService',
+        biz_method: 'querySuggestList',
+        biz_param: {
+            pn:data.pn,
+            pSize:data.pSize,
+            phone:data.phone,
+            id:data.id,
+            sign:data.sign,
+            operator:data.operator,
+            name:data.name
+        }
+    }
+    httpService.commonPOST(httpService.commonBody(body))
+        .then((res) => {
+            data.total = res.biz_result.total
+            data.all = res.biz_result.pages
+            dispatch('USER_FEEDBACK_INFO',res.biz_result.list)
+        }, (error) => {
+            console.log(error)
+        })
+}
+
+export const handleFeedbackInfo = ({ dispatch }, data) => {
+    let body = {
+        biz_module: 'userSuggestService',
+        biz_method: 'addPushSuggestResponse',
+        biz_param: {
+            suggestId:data.suggestId,
+            message:data.message
+        }
+    }
+    httpService.commonPOST(httpService.commonBody(body))
+        .then((res) => {
+            data.callback(res)
+            console.log(res)
+            
+        }, (error) => {
+            console.log(error)
+        })
 }

@@ -109,19 +109,27 @@ export default {
                 this.login(this.loginParam);
             }
         },
-        getCookie: function(name) { //获取cookie
-            var search = name + "=";
-            var offset = document.cookie.indexOf(search);
-            if (offset == -1) { //cookie中不存在这个变量
+        // getCookie: function(name) { //获取cookie
+        //     var search = name + "=";
+        //     var offset = document.cookie.indexOf(search);
+        //     if (offset == -1) { //cookie中不存在这个变量
+        //         return '';
+        //     } else {
+        //         offset += search.length;
+        //         var end = document.cookie.indexOf(";", offset);
+        //         if (end == -1) {
+        //             end = document.cookie.length;
+        //         }
+        //         return (document.cookie.substring(offset, end));
+        //     }
+        // },
+        getCookie:function (name){ //
+            var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+            if(arr=document.cookie.match(reg)){
+                return unescape(arr[2]);
+            }else{
                 return '';
-            } else {
-                offset += search.length;
-                var end = document.cookie.indexOf(";", offset);
-                if (end == -1) {
-                    end = document.cookie.length;
-                }
-                return (document.cookie.substring(offset, end));
-            }
+            }    
         },
         base64decode: function(str) {
             var c1, c2, c3, c4;
@@ -188,6 +196,8 @@ export default {
 
     },
     created() {
+        //console.log(this.getCookies('no'))
+        console.log(this.getCookie('no'))
         this.loginParam.no = this.uncompile(this.getCookie('no'));
         this.loginParam.password = this.uncompile(this.getCookie('password'));
     }

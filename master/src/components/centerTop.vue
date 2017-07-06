@@ -146,9 +146,7 @@ export default {
             this.tabs.splice(index, 1);
         }
     },
-    created() {
-        console.log(this.initLogin)
-        
+    created() {  
         this.getEmployeeDetail(this.loadParam);
     }
     /*events:{

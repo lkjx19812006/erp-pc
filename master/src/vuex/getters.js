@@ -910,3 +910,7 @@ export const initLogisticsCountList = (state) => {
 export const initLogisticsCountTotal = (state) => {
     return JSON.parse(JSON.stringify(state.table.logisticsCountTotal))
 }
+
+export const initUserFeedbackInfo = (state) => {//初始化用户反馈信息
+    return JSON.parse(JSON.stringify(state.table.userFeedbackInfo))
+}

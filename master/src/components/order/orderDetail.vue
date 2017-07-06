@@ -11,6 +11,7 @@
         <delete-model :param="deleteParam" v-if="deleteParam.show"></delete-model>
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
         <purchase-model :param="purchaseParam" v-if="purchaseParam.show"></purchase-model>
+        <chance-detail-model :param="chanceParam" v-if="chanceParam.show"></chance-detail-model>
         <shadow-model :param="param">
             <div class="cover_loading">
                 <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
@@ -112,20 +113,26 @@
                                                     <th>{{$t('static.specification')}}</th>
                                                     <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                                     <th>{{$t('static.quality')}}</th>
+                                                    <th>{{$t('static.order_source')}}</th>
                                                     <th v-if="initOrderDetail.type == 1">销售价格</th>
                                                     <th v-if="initOrderDetail.type == 0">采购价格</th>
                                                     <th v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==0">{{$t('static.cost_price')}}</th>
+
                                                     <th v-if="initOrderDetail.orderStatus==60">药典合格</th>
                                                     <th v-if="initOrderDetail.orderStatus==60">内控合格</th>
                                                     <th v-if="initOrderDetail.orderStatus==60&&initOrderDetail.sample==1">是否成交</th>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.goods.arr">
-                                                        <td>{{item.breedName}}</td>
+                                                        <td>                                                            
+                                                            <a v-if="item.sourceType == 1" @click="showIntent(item.sourceId)" href="javascript:void(0);">{{item.breedName}}</a>
+                                                            <span v-else>{{item.breedName}}</span>
+                                                        </td>
                                                         <td>{{item.locationName}}</td>
                                                         <td>{{item.spec | specFilter_a}}</td>
                                                         <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                         <td>{{item.quality}}</td>
+                                                        <td>{{item.sourceType | orderSource}}</td>
                                                         <td>{{item.price}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
                                                         <td v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==0">{{item.costPrice}} （{{initOrderDetail.currency | Currency}}）/{{item.unit | Unit}}</td>
                                                         <td v-if="initOrderDetail.orderStatus==60">
@@ -738,6 +745,7 @@ import applyModel from './second_order/applyDetaillist'
 import mgLabel from '../mguan/mgLabel.vue'
 import shadowModel from '../mguan/shadow.vue'
 import deleteModel from '../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
+import chanceDetailModel from '../intention/chanceDetail'
 import {
     initOrderDetail,
     initLinkOrder,
@@ -769,7 +777,8 @@ export default {
         applyModel,
         mgLabel,
         shadowModel,
-        deleteModel
+        deleteModel,
+        chanceDetailModel
     },
     props: ['param'],
     data() {
@@ -851,6 +860,11 @@ export default {
                 show: false,
                 key: "orderDetail",
                 callback: this.getOrderDetail
+            },
+            chanceParam:{
+                show:false,
+                loading:false,
+                id:''
             }
         }
     },
@@ -1005,6 +1019,11 @@ export default {
             this.editParam.ids = item.id
             this.editParam.type = type
             this.editParam.id = this.initOrderDetail.id
+        },
+        showIntent:function(id){
+            this.chanceParam.id = id
+            this.chanceParam.show = true
+
         }
     },
     filter: (filter, {}),
