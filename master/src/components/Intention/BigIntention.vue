@@ -75,7 +75,7 @@
                         </button>
                     </div>
                 </dl>
-                <dl class="clear left transfer" style="margin-left:50px">
+                <dl class="clear left transfer" style="margin-left:50px" v-if="showBox">
                     <dt class="left transfer marg_top">审核状态：</dt>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===''}" @click="selectValidate('')">
@@ -92,6 +92,26 @@
                         </button>
                     </div>
                 </dl>
+
+                 <dl class="clear left transfer" style="margin-left:50px" v-if="!showBox">
+                    <dt class="left transfer marg_top">上架状态：</dt>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.onSell===''}" @click="selectOnsell('')">
+                            全部
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.onSell===0}" @click="selectOnsell(0)">
+                            初始
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.onSell===1}" @click="selectOnsell(1)">
+                            申请上架中
+                        </button>
+                        <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.onSell===2}" @click="selectOnsell(2)">
+                            上架
+                        </button>
+                    </div>
+                </dl>
+
+
                 <dl class="clear left transfer" style="margin-left:20px" v-if='showBox'>
                     <dt class="left transfer marg_top">意向来源：</dt>
                     <div class="btn-group">
@@ -828,6 +848,10 @@ export default {
         },
         selectValidate: function(validate) {
             this.loadParam.validate = validate;
+            this.selectSearch();
+        },
+        selectOnsell: function(onSell) {
+            this.loadParam.onSell = onSell;
             this.selectSearch();
         },
         selectSource: function(source) {
