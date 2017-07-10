@@ -1096,8 +1096,8 @@ const state = {
             show: false
         }
     },
-    personIdentify: {},
-    companyIdentify: {},
+    personIdentify: { files: [] },
+    companyIdentify: { files: [] },
     trackingDetail: {},
     employeeDetail: {},
     orgDetail: {},

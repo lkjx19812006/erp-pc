@@ -44,7 +44,7 @@
                 <dl class="clear left transfer">
                     <dt class="left transfer marg_top">{{$t('static.salesman')}}：</dt>
                     <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" @click="selectEmployee()">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" @click="selectEmployee()" readonly="readonly">
                     </dd>
                 </dl>
                 <dl class="clear left transfer" v-if="this.initLogin.orgId==29">
@@ -394,7 +394,7 @@ export default {
             },
             employeeParam: {
                 show: false,
-                org: true,
+                org: false,
                 orgId: this.initLogin.orgId,
                 //单个业务员搜索
                 employeeId: '',
