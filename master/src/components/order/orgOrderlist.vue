@@ -302,15 +302,15 @@
             <!-- 底部分页 -->
             <pagination :combination="loadParam" slot="page"></pagination>
         </mglist-model>
-        <div style="font-size:14px;white-space: normal;">
-            <span style="margin-left:1%;color:red">{{$t('static.total_money')}}：{{initOrgOrderStatis.totalSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-            <span style="margin-left:1%;color:red">{{$t('static.paid_amount')}}：{{initOrgOrderStatis.prepaidSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-            <span style="margin-left:1%;color:red">{{$t('static.unpaid_amount')}}：{{initOrgOrderStatis.unpaidSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-            <span style="margin-left:1%;">{{$t('static.costprice')}}：{{initOrgOrderStatis.costSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-            <span style="margin-left:1%;">{{$t('static.order_total')}}：{{initOrgOrderStatis.amountSum  | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-            <span style="margin-left:1%;">{{$t('static.order_num')}}：{{initOrgOrderStatis.orderCount | money}}笔</span>
-            <span style="margin-left:1%;">{{$t('static.discount')}}：{{initOrgOrderStatis.preferentialSum  | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-            <span style="margin-left:1%;">{{$t('static.extra_total')}}：{{initOrgOrderStatis.incidentalsSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+        <div class="total_msg">
+                <span style="margin-left:1%;color:red">{{$t('static.total_money')}}：{{initOrgOrderStatis.totalSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+                <span style="margin-left:1%;color:red">{{$t('static.paid_amount')}}：{{initOrgOrderStatis.prepaidSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+                <span style="margin-left:1%;color:red">{{$t('static.unpaid_amount')}}：{{initOrgOrderStatis.unpaidSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+                <span style="margin-left:1%;">{{$t('static.costprice')}}：{{initOrgOrderStatis.costSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+                <span style="margin-left:1%;">{{$t('static.order_total')}}：{{initOrgOrderStatis.amountSum  | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+                <span style="margin-left:1%;">{{$t('static.order_num')}}：{{initOrgOrderStatis.orderCount | money}}笔</span>
+                <span style="margin-left:1%;">{{$t('static.discount')}}：{{initOrgOrderStatis.preferentialSum  | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+                <span style="margin-left:1%;">{{$t('static.extra_total')}}：{{initOrgOrderStatis.incidentalsSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>           
         </div>
     </div>
 </template>
@@ -774,17 +774,20 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 83px;
-    min-width: 83px;
+    width: 80px;
+    min-width: 50px;
 }
 
 .base_pagination {
     position: fixed;
-    bottom: 20px;
-    padding-top: 50px;
+    bottom: 0px!important;
 }
 
 .api {
     color: #3399ff;
+}
+.total_msg{
+    font-size: 14px;
+    white-space: normal;
 }
 </style>

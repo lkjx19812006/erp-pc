@@ -21,12 +21,12 @@
                             <input type="text" class="form-control" v-model="loadParam.phone"/>
                         </dd>
                     </dl>
-                    <dl class="clear left transfer">
+                    <!-- <dl class="clear left transfer">
                         <dt class="left transfer marg_top">用户ID：</dt>
                         <dd class="left">
                             <input type="text" class="form-control" v-model="loadParam.id"/>
                         </dd>
-                    </dl>
+                    </dl> -->
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top">是否处理：</dt>
                         <dd class="left">

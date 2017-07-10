@@ -44,6 +44,7 @@
                                     <option value="50">{{$t('static.wait_receipt')}}</option>
                                     <option value="60">{{$t('static.awaiting_comment')}}</option>
                                     <option value="70">{{$t('static.order_over')}}</option>
+                                    <option value ="-1">{{$t('static.canceled')}}</option>
                                 </select>
                             </dd>
                         </dl>
@@ -1053,8 +1054,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 83px;
-    min-width: 83px;
+    width: 80px;
+    min-width:50px;
 }
 
 .order_pagination {

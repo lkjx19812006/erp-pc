@@ -16,7 +16,7 @@
                         <div class="editpageleft">
                             <div class="editpage-input">
                                 <label class="editlabel">申请认证时间：</label>
-                                <input v-if="initIdentify.files.length>0" type="text" v-model="initIdentify.files[0].ctime" class="form-control edit-input" disabled="disabled" />
+                                <input v-if="initCompanyIdentify.files.length>0" type="text" v-model="initCompanyIdentify.files[0].ctime" class="form-control edit-input" disabled="disabled" />
                                 <input v-else type="text" class="form-control edit-input" disabled="disabled" value="无法获取申请时间" />
                             </div>
                             <div class="editpage-input">
@@ -34,7 +34,7 @@
                                             <th>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="item in initIdentify.files">
+                                        <tr v-for="item in initCompanyIdentify.files">
                                             <td>{{item.name}}</td>
                                             <td>{{item.fileType}}</td>
                                             <td><img :src="item.path" width="200" @click="clickBig(item.path)" /></td>
@@ -59,7 +59,7 @@
 <script>
 import pictureModel from '../tips/pictureDialog'
 import {
-    initIdentify
+    initCompanyIdentify
 } from '../../vuex/getters'
 import {
     updateUserInfo,
@@ -80,7 +80,7 @@ export default {
     },
     vuex: {
         getters: {
-            initIdentify
+            initCompanyIdentify
         },
         actions: {
             updateUserInfo,

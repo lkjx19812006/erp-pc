@@ -44,5 +44,7 @@ export default{
 }
 </script>
 <style scoped>
-
+.base_pagination{
+	bottom: 0px!important;
+}
 </style>
