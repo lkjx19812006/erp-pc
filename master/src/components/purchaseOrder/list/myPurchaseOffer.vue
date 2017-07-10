@@ -114,6 +114,7 @@
                         <th>产地</th>
                         <th>数量</th>
                         <th>价格</th>
+                        <th>客户端</th>
                         <th>报价来源</th>
                         <th>备注</th>
                         <th>是否采纳</th>
@@ -143,6 +144,7 @@
                         <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.price}}</td>
                         <td><span class="offer_source">{{item.clients | indentSource}}</span></td>
+                        <td>{{item.source | offerType}}</td>
                         <td>
                             <Poptip placement="left" trigger="hover">
                                 <span>{{item.description | textDisplay '5'}}</span>
@@ -176,6 +178,7 @@
                         <td>{{item.number}}{{item.unit | Unit}}</td>
                         <td>{{item.price}}</td>
                         <td><span class="offer_source">{{item.clients | indentSource}}</span></td>
+                        <td>{{item.source | offerType}}</td>
                         <td>
                             <Poptip placement="left" trigger="hover">
                                 <span>{{item.description | textDisplay '5'}}</span>

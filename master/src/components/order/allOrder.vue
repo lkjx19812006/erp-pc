@@ -66,6 +66,7 @@
                                 <option value="50">{{$t('static.wait_for_receiving')}}</option>
                                 <option value="60">{{$t('static.awaiting_comment')}}</option>
                                 <option value="70">{{$t('static.order_over')}}</option>
+                                <option value ="-1">{{$t('static.canceled')}}</option>
                             </select>
                         </dd>
                     </dl>
