@@ -196,7 +196,7 @@
                         <tr v-for="item in initMyOrderlist" v-cloak>
                             <!-- <td  @click.stop="">
                     <label v-if="item.validate<=0&&(item.orderStatus==0||item.orderStatus==70)" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
-                  </td> --> 
+                  </td> -->
                             <td>{{item.id}}</td>
                             <td>{{item.tradeTime | subtime}}</td>
                             <td>
@@ -341,15 +341,15 @@
                                     并且订单完成后无法取消-->
                                 <div v-if="item.orderStatus<60">
                                     <!-- 普通订单（非预售）处于1阶段时，可以直接取消 -->
-                                    <button class="btn btn-danger btn-xs" v-if="item.validate<=0&&(item.pre!=1||(item.pre==1&&item.type==0))" @click="cancelOrder(item.id,$index)">
+                                    <button class="btn btn-danger btn-xs" v-if="item.orderStatus>=0&&item.validate<=0&&(item.pre!=1||(item.pre==1&&item.type==0))" @click="cancelOrder(item.id,$index)">
                                         取消订单
                                     </button>
                                     <!-- 预售订单处于1阶段时，需要走流程 -->
-                                    <button class="btn btn-primary btn-base" v-if="item.validate<=0&&item.pre==1&&item.type==1&&item.cancel==0" @click="cancelOrderByFlow(item.id)">
+                                    <button class="btn btn-primary btn-base" v-if="item.orderStatus>=0&&item.validate<=0&&item.pre==1&&item.type==1&&item.cancel==0" @click="cancelOrderByFlow(item.id)">
                                         申请取消订单
                                     </button>
                                     <!-- 所有订单处于3阶段时，需要走流程 -->
-                                    <button class="btn btn-primary btn-base" v-if="item.validate==2&&item.cancel==0" @click="cancelOrderByFlow(item.id)">
+                                    <button class="btn btn-primary btn-base" v-if="item.orderStatus>=0&&item.validate==2&&item.cancel==0" @click="cancelOrderByFlow(item.id)">
                                         申请取消订单
                                     </button>
                                 </div>

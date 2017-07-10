@@ -116,7 +116,7 @@
                             <select v-model="loadParam.validate" class="form-control" @change="selectSearch()">
                                 <option value="">{{$t('static.please_select')}}</option>
                                 <option value="0">未审核</option>
-                                <option value="1">待审核</option>
+                                <option value="1">审核中</option>
                                 <option value="2">审核通过</option>
                                 <option value="-2">审核未通过</option>
                             </select>

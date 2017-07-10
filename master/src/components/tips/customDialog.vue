@@ -11,6 +11,7 @@
                         <span v-for="text in item.texts" style="cursor:pointer" class="quick_edit" @click="addText(text)">{{text}}&nbsp;&nbsp;</span>
                     </div>
                 </div>
+                <slot></slot>
                 <textarea v-model='param.comments' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5"></textarea>
             </div>
             <div class="model-footer">
@@ -48,6 +49,7 @@ export default {
 </script>
 <style scoped>
 .del_modal_con {
+    width: 500px;
     z-index: 1083;
 }
 

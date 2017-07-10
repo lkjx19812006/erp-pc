@@ -39,8 +39,8 @@
                         <div style="margin-top:20px;">
                             <img src="/static/images/breedinfo@2x.png" style="display:inline" />
                             <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
-                            <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">{{$t('static.select_addr')}}</button>
-                            <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">{{$t('static.shipped_addr')}}</button>
+                            <!--  <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">{{$t('static.select_addr')}}</button>
+                           <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">{{$t('static.shipped_addr')}}</button> -->
                         </div>
                         <div class="clearfix">
                             <div class="editpage-input col-md-4" v-if="param.type==1">
