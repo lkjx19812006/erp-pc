@@ -1410,7 +1410,7 @@ section article {
     padding: 0 15px 14px 15px;
 }
 
-.client-detailInfo img {
+.client-detailInfo a {
     margin-right: 8px;
 }
 </style>
