@@ -22,7 +22,7 @@
                 </div> -->
                 <div class="trans_service clearfix" v-show="currentView==1">
                     <div style="margin:30px 10px 15px 10px" class="clearfix">
-                        <div class="input-group col-xs-4 pull-left" @click="treeParam.show=true" v-if="param.sign=='all'">
+                        <div class="input-group col-xs-4 pull-left" @click="treeParam.show=true">
                             <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
                             <input type="text" class="form-control" placeholder="点击选择部门" value="{{treeParam.orgName}}">
                             <!--<input type="button" class="form-control" value="根据部门查找" @click="treeParam.show=true"/>-->

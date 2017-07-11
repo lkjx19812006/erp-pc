@@ -66,9 +66,9 @@
                             <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
                             <!-- 填写收货地址，或选择收货地址（无法使用，因为国省市区要传ID，而选择的地址不是中文） -->
                             <!-- 选择收货地址 -->
-                            <!-- <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">{{$t('static.select_addr')}}</button> -->
+                            <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">{{$t('static.select_addr')}}</button>
                             <!-- 填写收货地址（默认） -->
-                            <!-- <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">{{$t('static.shipped_addr')}}</button> -->
+                            <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">{{$t('static.shipped_addr')}}</button>
                         </div>
                         <div class="clearfix">
                             <!-- 客户选择（销售）/供应商选择（采购） -->
