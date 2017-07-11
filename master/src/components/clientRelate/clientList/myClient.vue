@@ -176,7 +176,7 @@
                                             key:'myCustomerList'
                                             })">{{$t("static.new")}}</button>
                         <!-- EXCEL导入客户 -->
-                        <button type="button" class="btn btn-primary" @click="excelImport()">{{$t('static.upload_clients')}}</button>
+                        <button type="button" v-if="this.initLogin.safeCode.indexOf('P12-F576,')!=-1" class="btn btn-primary" @click="excelImport()">{{$t('static.upload_clients')}}</button>
                         <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                     </dd>
                 </div>
@@ -775,6 +775,7 @@ export default {
         this.getProvinceList(this.provinceParam);
         changeMenu(this.$store.state.table.isTop, this.getClientList, this.loadParam, localStorage.myClientParam);
         this.language = localStorage.lang;
+        console.log(this.initLogin)
     },
     ready() {
         common('tab', 'table_box', 1);

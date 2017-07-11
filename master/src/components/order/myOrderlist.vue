@@ -87,7 +87,10 @@
                 </div>
                 <div class="clear">
                     <div class="right">
-                        <button class="btn btn-default transfer" @click="newOrder()">{{$t('static.new')}}</button>
+                    <!-- 新建销售订单 -->
+                        <button v-if="initLogin.safeCode.indexOf('P27-F577,')!=-1" class="btn btn-success transfer" @click="newOrder(1)">{{$t('static.new')}}{{$t('static.sell')}}</button>
+                    <!-- 新建采购订单 -->
+                        <button v-if="initLogin.safeCode.indexOf('P27-F578,')!=-1" class="btn btn-info transfer" @click="newOrder(0)">{{$t('static.new')}}{{$t('static.purchase')}}</button>
                         <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                     </div>
                     <div class="left">
@@ -791,7 +794,7 @@ export default {
                 if (item.validate == 0) item.checked = checked;
             })
         },
-        newOrder: function() {
+        newOrder: function(type) {
             //新建订单时将一些之前填入的信息清空
             this.createParam.goods = [];
             this.createParam.total = "";
@@ -801,6 +804,7 @@ export default {
             this.createParam.preferential = 0;
             this.createParam.show = true;
             this.createParam.callback = this.newBack;
+            this.createParam.type = type
         },
         newBack: function(title) {
             this.tipsParam.show = true;

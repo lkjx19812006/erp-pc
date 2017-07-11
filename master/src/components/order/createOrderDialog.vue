@@ -29,15 +29,15 @@
                         <div class="editpage-input col-md-3">
                             <label class="editlabel">
                                 {{$t('static.order_type')}}
-                                <span class="system_danger" v-if="$validation.type.required">
+                                <!-- <span class="system_danger" v-if="$validation.type.required">
                                     {{$t('static.select_order_type')}}
-                                </span>
+                                </span> -->
                             </label>
-                            <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly" />
-                            <select class="form-control edit-input" v-model="param.type" @change="exChange()">
+                            <input type="text" class="form-control" v-model="orderType" readonly="readonly" />
+                            <!-- <select class="form-control edit-input" v-model="param.type" @change="exChange()">
                                 <option value="0">{{$t('static.purchase')}}</option>
                                 <option value="1">{{$t('static.sell')}}</option>
-                            </select>
+                            </select> -->
                         </div>
                         <!-- 是否样品单： -->
                         <div class="editpage-input col-md-6">
@@ -549,6 +549,7 @@ export default {
             sum: 0, //点击按钮计算
             altogether: 0, //所有商品的总金额,
             costmoney: 0, //所有商品的成本总金额
+            orderType:''
         }
     },
     vuex: {
@@ -1031,7 +1032,11 @@ export default {
             this.param.tradeTime = year + "-" + month + "-" + day + " 00:00:00";
         }
         this.initParam();
-
+        if(this.param.type==1){
+            this.orderType = '销售'
+        }else{
+            this.orderType = '采购'
+        }
     }
 }
 </script>
