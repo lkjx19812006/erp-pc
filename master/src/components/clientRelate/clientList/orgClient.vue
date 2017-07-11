@@ -377,7 +377,7 @@ export default {
             language: '',
             provinceParam: {
                 loading: true,
-                show: false,
+                show: true,
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,

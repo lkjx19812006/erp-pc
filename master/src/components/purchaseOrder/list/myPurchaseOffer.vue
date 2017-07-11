@@ -65,9 +65,9 @@
                 <button type="button" class="btn btn-primary transfer left" style="width:75px" @click="resetCondition()">
                     清空条件
                 </button>
-                <!-- <button type="button" class="btn btn-success" style="width:100px" @click="batchAccept()" v-if="param.init=='initMyIndentOfferList'">
+                <button type="button" class="btn btn-success" style="width:100px" @click="batchAccept()" v-if="param.init=='initMyIndentOfferList'">
                     批量处理报价
-                </button> -->
+                </button>
             </div>
             <div class="clear" style="margin-top:3px;">
                 <div class="btn-group left" style="margin-right:10px" v-if="param.init=='initAllIndentOfferList'">
