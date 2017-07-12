@@ -151,7 +151,7 @@ export default {
             }
         },
         selectSub: function(text) {
-            this.customParam.comments += "，" + text;
+            this.customParam.comments += "；" + text;
         },
         //取消
         acceptCancel: function() {
