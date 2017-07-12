@@ -92,8 +92,6 @@ export const login = ({ dispatch }, data) => { //登录
             var lastTime = getNowFormatDate();
             var expire = new Date((new Date()).getTime() + 24 * 3600000); //得到的时间与真实时间差了8小时,cookie将在24小时后过期
             document.cookie = "no=" + no + ";expires=" + expire;
-            console.log(res.json().result.id)
-            console.log(compile(res.json().result.id))
             document.cookie = "id=" + compile(res.json().result.id) + ";expires=" + expire;
             document.cookie = "orgId=" + compile(res.json().result.orgid) + ";expires=" + expire;
             document.cookie = "name=" + compile(res.json().result.name) + ";expires=" + expire;

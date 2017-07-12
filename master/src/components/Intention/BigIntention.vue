@@ -218,15 +218,15 @@
                         <th v-if='showOwn'>所属业务员</th>
                         <th v-if='showCustomer'>客户名称</th>
                         <th v-if='showBox'>会员名称</th>
-                        <th>主要联系人</th>
-                        <th>联系方式</th>
-                        <th>手机归属地</th>
+                        <!-- <th>主要联系人</th> -->
+                        <th style="width: 200px;">联系方式</th>
+                        <!-- <th>手机归属地</th> -->
                         <th v-if='showCustomer'>意向图片</th>
-                        <th>意向商品</th>
+                        <th>意向商品/(产地)</th>
                         <th v-if='showBox'>单价</th>
-                        <th>商品产地</th>
-                        <th>商品规格</th>
-                        <th>商品数量</th>
+                        <!-- <th>商品产地</th> -->
+                        <!-- <th>商品规格</th> -->
+                        <th style="width: 200px;">商品数量/(规格)</th>
                         <th>剩余有效期</th>
                         <th>客户备注</th>
                         <th v-if='showOthers'>卖点</th>
@@ -334,9 +334,9 @@
                                 image_t_show:'',
                                 duedate:item.duedate
                                 })">{{item.userFullname}}</td>
-                        <td>{{item.mainContact}}</td>
-                        <td>{{item.customerPhone}}</td>
-                        <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
+                        <!-- <td>{{item.mainContact}}</td> -->
+                        <td>{{item.customerPhone}}<span v-if="item.phoneProvince">/({{item.phoneProvince}}{{item.phoneCity}})</span></td>
+                        <!-- <td>{{item.phoneProvince}}{{item.phoneCity}}</td> -->
                         <td width="200px" v-if='showCustomer'>
                             <li v-for="pic in item.pics" class="pull-left">
                                 <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
@@ -348,11 +348,11 @@
                                 <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
                             </li>
                         </td>
-                        <td>{{item.breedName}}</td>
+                        <td>{{item.breedName}}<span v-if="item.locationName">/({{item.locationName}})</span></td>
                         <td v-if='showBox'>{{item.price}}元/{{item.unit | Unit}}</td>
-                        <td>{{item.locationName}}</td>
-                        <td>{{item.spec}}</td>
-                        <td>{{item.number}}{{item.unit | Unit}}</td>
+                        <!-- <td>{{item.locationName}}</td> -->
+                        <!-- <td>{{item.spec}}</td> -->
+                        <td>{{item.number}}{{item.unit | Unit}}<span v-if="item.spec">/({{item.spec}})</span></td>
                         <td>{{item.duedateDesc}}</td>
                         <td>{{item.description}}</td>
                         <td v-if='showOthers'>{{item.quality}}</td>
@@ -435,13 +435,13 @@
                                              })"><img src="/static/images/del.png" height="18" width="28" alt="删除" />
                             </a>
                             <a v-if="item.onSell==1" v-show='showUp'>
-                                <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="upOrDownAudit(item.id,0)">上架审核</button>
+                                <button type="button" class="btn btn-success btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,0)">上架审核</button>
                             </a>
                             <a v-if="item.onSell==3" v-show='showUp'>
-                                <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="upOrDownAudit(item.id,1)">下架审核</button>
+                                <button type="button" class="btn btn-warning btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,1)">下架审核</button>
                             </a>
                             <a v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='!showOwn'>
-                                <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;margin-top:-22px;color:#fa6705" @click="up($index,item.id,1)">申请上架</button>
+                                <button type="button" class="btn btn-info btn-xs" height="24" width="24"  @click="up($index,item.id,1)">申请上架</button>
                             </a>
                             <a class="operate" v-show='!showOwn' v-if="item.onSell==2" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架" />
                             </a>
@@ -1150,8 +1150,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 121px;
-    min-width: 110px;
+    width: 160px;
+    min-width: 80px;
 }
 
 .service-nav {

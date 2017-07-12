@@ -197,7 +197,6 @@ export default {
     },
     created() {
         //console.log(this.getCookies('no'))
-        console.log(this.getCookie('no'))
         this.loginParam.no = this.uncompile(this.getCookie('no'));
         this.loginParam.password = this.uncompile(this.getCookie('password'));
     }
