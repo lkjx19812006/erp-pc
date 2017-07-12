@@ -58,11 +58,23 @@
                             <input type="text" class="form-control" v-model="loadParam.breedName" placeholder="按回车键搜索" @click="breedSearch()" readonly="readonly">
                         </dd>
                     </div>
+                    <div class="left">
+                        <dt class="left transfer marg_top">来源：</dt>
+                        <dd class="left margin_right">
+                            <select class="form-control" v-model="loadParam.source">
+                                <option value=''>全部</option>
+                                <option value="0">业务员</option>
+                                <option value="1">客户</option>
+                                <!-- <option value="2">库存信息</option>
+                                <option value="3">供应意向</option> -->
+                            </select>
+                        </dd>
+                    </div>
                 </dl>
-                <button type="button" class="btn btn-default" @click="todayOffer()">今日报价</button>
-                <button type="button" class="btn btn-default" @click="weekOffer()">本周报价</button>
-                <button type="button" class="btn btn-default" @click="selectSearch()">搜索</button>
-                <button type="button" class="btn btn-primary transfer left" style="width:75px" @click="resetCondition()">
+                <button type="button" class="btn btn-success" @click="todayOffer()">今日报价</button>
+                <button type="button" class="btn btn-success" @click="weekOffer()">本周报价</button>
+                <button type="button" class="btn btn-info" @click="selectSearch()">搜索</button>
+                <button type="button" class="btn btn-primary" style="width:75px" @click="resetCondition()">
                     清空条件
                 </button>
                 <button type="button" class="btn btn-success" style="width:100px" @click="batchAccept()" v-if="param.init=='initMyIndentOfferList'">
@@ -103,27 +115,30 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th v-if="param.init=='initMyIndentOfferList'"></th>
+                        <th v-if="param.init=='initMyIndentOfferList'" style="width:100px;"></th>
                         <th>报价时间</th>
-                        <th>报价类型</th>
+                        <!-- <th>报价类型</th> -->
                         <th v-if="param.init=='initAllIndentOfferList'">供应商名称</th>
-                        <th>发布意向的客户</th>
+                        
                         <th>报价业务员</th>
-                        <th>品种</th>
+                        <th>求购业务员</th>
+                        <th>求购客户</th>
+                        <th>品种/产地</th>
+                        
+                        <!-- <th>产地</th> -->
+                        <!-- <th>数量</th> -->
+                        <th style="width:220px;">价格/数量</th>
                         <th>规格</th>
-                        <th>产地</th>
-                        <th>数量</th>
-                        <th>价格</th>
-                        <th>客户端</th>
-                        <th>报价来源</th>
-                        <th>备注</th>
+                        <th>报价来源/客户端</th>
+                        <!-- <th>报价来源</th> -->
+                        <!-- <th>备注</th> -->
                         <th>是否采纳</th>
                         <th>原因</th>
                         <th v-if="param.init=='initMyIndentOfferList'">处理报价</th>
                     </tr>
                 </thead>
                 <tr v-if="param.init=='initMyIndentOfferList'">
-                    <th>
+                    <th style="width:100px;">
                         <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
                     </th>
                     <th style="color:#fa6705;font-size: 14px">全选</th>
@@ -131,28 +146,39 @@
                 </tr>
                 <tbody>
                     <tr v-show="param.init=='initMyIndentOfferList'" v-for="item in initMyIndentOfferList">
-                        <td @click.stop="">
+                        <td @click.stop="" style="width:100px;">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
                         <td>{{item.otime | date}}</td>
-                        <td>{{item.source | offerType}}</td>
-                        <td><a @click="clickDetail(item.id)">{{item.buyCustomerName}}</a></td>
+                        <!-- <td>{{item.source | offerType}}</td> -->
+                        
                         <td>{{item.offerEmployeeName}}</td>
-                        <td>{{item.breedName}}</td>
-                        <td>{{item.spec}}</td>
-                        <td>{{item.location | province}}</td>
-                        <td>{{item.number}}{{item.unit | Unit}}</td>
-                        <td>{{item.price}}</td>
-                        <td><span class="offer_source">{{item.clients | indentSource}}</span></td>
-                        <td>{{item.source | offerType}}</td>
+                        <td>{{item.buyEmployeeName}}</td>
+                        <td><a @click="clickDetail(item.id)">{{item.buyCustomerName}}</a></td>
+                        <td style="text-align:left">
+                            <p style="font-size: 16px;">{{item.breedName}}</p>
+                            <p style="color:#666">产地：{{item.location | province}}</p>
+                        </td>
+                        
+                        <!-- <td></td> -->
+                        <!-- <td>{{item.number}}{{item.unit | Unit}}</td> -->
                         <td>
+                            <p style="font-size: 16px;text-align:left;color:#ec971f;">{{item.price}}￥/{{item.unit | Unit}}</p>
+                            <p style="text-align:left;">数量：{{item.number}}{{item.unit | Unit}}</p>
+                        </td>
+                        <td>{{item.spec}}</td>
+                        <td style="text-align:left">
+                            <span :style="{color:item.source==0?'red':''}">{{item.source | offerType}}({{item.clients | indentSource}})</span>
+                        </td>
+                        <!-- <td>{{item.source | offerType}}</td> -->
+                        <!-- <td>
                             <Poptip placement="left" trigger="hover">
                                 <span>{{item.description | textDisplay '5'}}</span>
                                 <div class="api" slot="content">
                                     {{item.description}}
                                 </div>
                             </Poptip>
-                        </td>
+                        </td> -->
                         <td>{{item.accept | offerAccept}}</td>
                         <td>
                             <Poptip placement="left" trigger="hover">
@@ -168,25 +194,37 @@
                     </tr>
                     <tr v-show="param.init=='initAllIndentOfferList'" v-for="item in initAllIndentOfferList">
                         <td>{{item.otime | date}}</td>
-                        <td>{{item.source | offerType}}</td>
+                        <!-- <td>{{item.source | offerType}}</td> -->
                         <td>{{item.offerCustomerName}}</td>
-                        <td><a @click="clickDetail(item.id)">{{item.buyCustomerName}}</a></td>
+                        
                         <td>{{item.offerEmployeeName}}</td>
-                        <td>{{item.breedName}}</td>
-                        <td>{{item.spec}}</td>
-                        <td>{{item.location | province}}</td>
-                        <td>{{item.number}}{{item.unit | Unit}}</td>
-                        <td>{{item.price}}</td>
-                        <td><span class="offer_source">{{item.clients | indentSource}}</span></td>
-                        <td>{{item.source | offerType}}</td>
+                        <td>{{item.buyEmployeeName}}</td>
+                        <td><a @click="clickDetail(item.id)">{{item.buyCustomerName}}</a></td>
+                        <td style="text-align:left">
+                            <p style="font-size: 16px;">{{item.breedName}}</p>
+                            <p style="color:#666">产地：{{item.location | province}}</p>
+                        </td>
+                        
+                        <!-- <td>{{item.location | province}}</td> -->
+                        <!-- <td>{{item.number}}{{item.unit | Unit}}</td> -->
                         <td>
+                            <p style="font-size: 16px;text-align:left;color:#ec971f;">{{item.price}}￥/{{item.unit | Unit}}</p>
+                            <p style="text-align:left;">数量：{{item.number}}{{item.unit | Unit}}</p>
+                        </td>
+                        <td>{{item.spec}}</td>
+                        <td style="text-align:left">
+                            <span :style="{color:item.source==0?'red':''}">{{item.source | offerType}}({{item.clients | indentSource}})</span>
+                        </td>
+                        <!-- <td>{{item.source | offerType}}：<span class="offer_source">{{item.clients | indentSource}}</span></td> -->
+                        <!-- <td></td> -->
+                        <!-- <td>
                             <Poptip placement="left" trigger="hover">
                                 <span>{{item.description | textDisplay '5'}}</span>
                                 <div class="api" slot="content">
                                     {{item.description}}
                                 </div>
                             </Poptip>
-                        </td>
+                        </td> -->
                         <td>{{item.accept | offerAccept}}</td>
                         <td>
                             <Poptip placement="left" trigger="hover">
@@ -270,8 +308,8 @@ export default {
                 onSell: "",
                 effective: "",
                 startTime: "",
-                endTime: ""
-
+                endTime: "",
+                source:''
             },
             detailParam: {
                 show: false,
@@ -489,13 +527,13 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 130px;
+    width: 155px;
     min-width: 100px;
 }
 
 .offer_source {
     display: inline-block;
-    width: 60px;
+    width: 100px;
     line-height: 20px;
     background: #2d8cf0;
     border-radius: 3px;

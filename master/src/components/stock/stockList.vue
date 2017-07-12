@@ -46,7 +46,7 @@
                    <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                </dd> -->
                 <dd class="pull-right" style="margin-right:200px">
-                	<button type='button' class='btn btn-default cartbtn' :class={cartbtnAct:cartData.leng} height="24" width="24" @click="showCartList()">购物车({{cartData.leng}})</button>
+                	<button type='button' class='btn btn-default cartbtn' :class={cartbtnAct:cartData.leng} height="24" width="24" @click="showCartList()"><Icon type="android-cart" size="16"></Icon>购物车({{cartData.leng}})</button>
                 	<!-- 库存模板下载 -->
                     <a href="http://erp.yaocaimaimai.net/local/template/Resource_template.xlsx" class="btn btn-default btn-info">
                         EXCEL库存模板下载

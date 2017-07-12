@@ -7319,6 +7319,9 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
     if (param.effective) {
         body.effective = param.effective;
     }
+    if(param.source){
+        body.source = param.source
+    }
 
     Vue.http({
         method: 'POST',
