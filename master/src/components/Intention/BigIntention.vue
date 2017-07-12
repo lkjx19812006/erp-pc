@@ -223,13 +223,14 @@
                         <!-- <th>手机归属地</th> -->
                         <th v-if='showCustomer'>意向图片</th>
                         <th>意向商品/(产地)</th>
-                        <th v-if='showBox'>单价</th>
+                        <th style="width:280px;">单价/数量</th>
                         <!-- <th>商品产地</th> -->
-                        <!-- <th>商品规格</th> -->
-                        <th style="width: 200px;">商品数量/(规格)</th>
+                        
+                        <!-- <th style="width: 200px;">商品数量</th> -->
+                        <th>商品规格</th>
                         <th>剩余有效期</th>
-                        <th>客户备注</th>
-                        <th v-if='showOthers'>卖点</th>
+                        <!-- <th>客户备注</th>
+                        <th v-if='showOthers'>卖点</th> -->
                         <th>意向来源</th>
                         <th v-if='showCustomer'>上架状态</th>
                         <th style="min-width:200px;text-align: left;" v-if='showOperate'>操作</th>
@@ -335,7 +336,9 @@
                                 duedate:item.duedate
                                 })">{{item.userFullname}}</td>
                         <!-- <td>{{item.mainContact}}</td> -->
-                        <td>{{item.customerPhone}}<span v-if="item.phoneProvince">/({{item.phoneProvince}}{{item.phoneCity}})</span></td>
+                        <td style="text-align:left">{{item.customerPhone}}
+                            <p v-if="item.phoneProvince">{{item.phoneProvince}}{{item.phoneCity}}</p>
+                        </td>
                         <!-- <td>{{item.phoneProvince}}{{item.phoneCity}}</td> -->
                         <td width="200px" v-if='showCustomer'>
                             <li v-for="pic in item.pics" class="pull-left">
@@ -348,14 +351,22 @@
                                 <img v-bind:src="pic.url" style="float: left; width:40px; height:40px; margin-right:2px" @click="clickBig(pic.url)">
                             </li>
                         </td>
-                        <td>{{item.breedName}}<span v-if="item.locationName">/({{item.locationName}})</span></td>
-                        <td v-if='showBox'>{{item.price}}元/{{item.unit | Unit}}</td>
+                        <td>
+                            <p style="font-size: 16px;text-align:left;">{{item.breedName}}</p>
+                            <p style="text-align:left;color:#666" v-if="item.locationName">产地：{{item.locationName}}</p>
+                        </td>
+                        <!-- <td></td> -->
                         <!-- <td>{{item.locationName}}</td> -->
                         <!-- <td>{{item.spec}}</td> -->
-                        <td>{{item.number}}{{item.unit | Unit}}<span v-if="item.spec">/({{item.spec}})</span></td>
+                        <td>
+                            
+                            <p style="font-size: 16px;text-align:left;color:#ec971f;">{{item.price}}元/{{item.unit | Unit}}</p>
+                            <p style="text-align:left;">数量：{{item.number}}{{item.unit | Unit}}</p>   
+                        </td>
+                        <td><p v-if="item.spec">{{item.spec}}</p></td>
                         <td>{{item.duedateDesc}}</td>
-                        <td>{{item.description}}</td>
-                        <td v-if='showOthers'>{{item.quality}}</td>
+                        <!-- <td>{{item.description}}</td>
+                        <td v-if='showOthers'>{{item.quality}}</td> -->
                         <td>{{item.inTypeDesc}}</td>
                         <td v-if='showCustomer'>{{item.onSell | onsell}}</td>
                         <td style="text-align: left" v-if="showOperate">
