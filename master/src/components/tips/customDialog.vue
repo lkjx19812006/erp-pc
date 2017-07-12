@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <slot></slot>
-                <textarea v-model='param.comments' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5"></textarea>
+                <textarea v-model='param.comments' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5" v-if="!param.hidden"></textarea>
             </div>
             <div class="model-footer">
                 <button v-for="item in param.items" type="button" class="btn btn-default" :class=item.style @click="item.handle">{{item.name}}</button>
