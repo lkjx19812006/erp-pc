@@ -7,12 +7,12 @@
                  <dl class="clear left transfer">
                         <div class="left">
                             <dt class="left transfer marg_top">起止时间：</dt>
-                            <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
+                            <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
                             </mz-datepicker>
                         </div>
                         <div class="left">
                             <dt class="left marg_top">~~</dt>
-                            <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
+                            <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
                             </mz-datepicker>
                         </div>
                     </dl>
@@ -199,6 +199,8 @@ export default {
     },
     data() {
         return {
+            ReCur:'',
+            PayCur:'',
             loadParam: {
                 loading: true,
                 show: false,
@@ -285,11 +287,6 @@ export default {
             this.loadParam.customerEmail = '';
             this.loadParam.startTime='';
             this.loadParam.endTime='';
-            this.getFinancialList(this.loadParam);
-        },
-     
-        //在详情界面需要刷新列表页面时，调用此函数
-        detailCallback: function() {
             this.getFinancialList(this.loadParam);
         },
         changeCur:function(storageParam) {   //
