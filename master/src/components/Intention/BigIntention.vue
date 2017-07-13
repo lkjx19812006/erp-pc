@@ -370,7 +370,7 @@
                         <td>{{item.inTypeDesc}}</td>
                         <td v-if='showCustomer'>{{item.onSell | onsell}}</td>
                         <td style="text-align: left" v-if="showOperate">
-                            <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='!showOwn' @click.stop="modifyIntention({
+                            <button class="btn btn-primary btn-xs" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='!showOwn' @click.stop="modifyIntention({
                                             id:item.id,
                                             sub:$index,
                                             selectCustomer:false,
@@ -432,9 +432,9 @@
                                              transportNo:item.transportNo,
                                              transportType:item.transportType,
                                              description: item.description
-                                             })"><img src="/static/images/edit.png" height="18" width="28" alt="编辑" />
-                            </a>
-                            <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" @click.stop="specDelete({
+                                             })">编辑
+                            </button>
+                            <button class="btn btn-danger btn-xs" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" @click.stop="specDelete({
                                              id:item.id,
                                              sub:$index,
                                              show:true,
@@ -443,25 +443,15 @@
                                              link:deleteInfo,
                                              url:'/intention/',
                                              key:'myIntentionList'
-                                             })"><img src="/static/images/del.png" height="18" width="28" alt="删除" />
-                            </a>
-                            <a v-if="item.onSell==1" v-show='showUp'>
-                                <button type="button" class="btn btn-success btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,0)">上架审核</button>
-                            </a>
-                            <a v-if="item.onSell==3" v-show='showUp'>
-                                <button type="button" class="btn btn-warning btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,1)">下架审核</button>
-                            </a>
-                            <a v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='!showOwn'>
-                                <button type="button" class="btn btn-info btn-xs" height="24" width="24"  @click="up($index,item.id,1)">申请上架</button>
-                            </a>
-                            <a class="operate" v-show='!showOwn' v-if="item.onSell==2" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架" />
-                            </a>
-                            <a class="operate" v-show='!showOwn' v-if="item.type==1&&item.preSell===0" @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" alt="生成订单" />
-                            </a>
-                            <a class="operate" v-show='!showOwn' @click.stop="sengSample(item,$index)">
-                                <img src="/static/images/sample.png" alt="寄样申请" />
-                            </a>
-                            <a v-show='showBox' class="operate" @click.stop="userToClient({
+                                             })">删除
+                            </button>
+                            <button v-if="item.onSell==1" v-show='showUp' class="btn btn-success btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,0)">上架审核</button>
+                            <button v-if="item.onSell==3" v-show='showUp' class="btn btn-warning btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,1)">下架审核</button>
+                            <button v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='!showOwn' class="btn btn-success btn-xs"       height="24" width="24"  @click="up($index,item.id,1)">申请上架</button>
+                            <button class="btn btn-warning btn-xs" v-show='!showOwn' v-if="item.onSell==2" @click="up($index,item.id,3)">申请下架</button>
+                            <button class="btn btn-success btn-xs" v-show='!showOwn' v-if="item.type==1&&item.preSell===0" @click.stop="newOrder(item,$index)">生成订单</button>
+                            <button class="btn btn-info btn-xs" v-show='!showOwn' @click.stop="sengSample(item,$index)">寄样申请</button>
+                            <button v-show='showBox' class="btn btn-info btn-xs" @click.stop="userToClient({
                                     name:item.userFullname,
                                     keyname:'transStatus',
                                     sub:$index,
@@ -492,10 +482,9 @@
                                        qq: item.userQq,
                                        wechart: ''
                                      }
-                                  },item.show=false)">
-                                <img src="/static/images/transfer.png" height="18" width="28" alt="划转" title="划转" />
-                            </a>
-                            <a v-show='showBox' class="operate" v-if="item.validate==0||item.validate==9" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png" height="18" width="28" alt="审核" title="审核" /></a>
+                                  },item.show=false)">划转
+                            </button>
+                            <button v-show='showBox' class="btn btn-primary btn-xs" v-if="item.validate==0||item.validate==9" @click.stop="audit($index,item.id)">审核</button>
                         </td>
                     </tr>
                 </tbody>

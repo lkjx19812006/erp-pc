@@ -57,28 +57,28 @@
                         <div class="panel panel-default" style="border:none">
                             <ul class="clearfix" style="font-size: 14px;padding:5px 0">
                                 <label class="col-md-6 col-sm-6 col-xs-6">
-                                    <span class="title_layout"><Icon type="person-stalker"></Icon>姓名</span>
-                                    <span class="f_weight">：{{initPurchaseDetail.customerName}}</span>
+                                    <span class="title_layout"><Icon type="person-stalker" class="icon_s"></Icon>姓名</span>
+                                    <span class="f_weight">：{{initPurchaseDetail.customerName}}({{initPurchaseDetail.customerPhone}})</span>
                                 </label>
-                                <label class="col-md-6 col-sm-6 col-xs-6">
-                                    <span class="title_layout"><Icon type="iphone"></Icon>手机号</span>
+                                <!-- <label class="col-md-6 col-sm-6 col-xs-6">
+                                    <span class="title_layout"><Icon type="iphone" class="icon_s"></Icon>手机号</span>
                                     <span class="f_weight">：{{initPurchaseDetail.customerPhone}}</span>
-                                </label>
+                                </label> -->
                                 <label class="col-md-12 col-sm-12 col-xs-12">
-                                    <span class="title_layout"><Icon type="location"></Icon>交货地</span>
+                                    <span class="title_layout"><Icon type="location" class="icon_s"></Icon>交货地</span>
                                     <span class="f_weight">：{{initPurchaseDetail.provinceName}}{{initPurchaseDetail.cityName}}{{initPurchaseDetail.districtName}}</span>
                                 </label>
                                 
                                 <label class="col-md-12 col-sm-12col-xs-12">
-                                    <span class="title_layout"><Icon type="social-yen"></Icon>付款方式</span>
+                                    <span class="title_layout"><Icon type="social-yen" class="icon_s"></Icon>付款方式</span>
                                     <span class="f_weight">：{{initPurchaseDetail.paymentWay}}</span>
                                 </label>
                                 <label class="col-md-12 col-sm-12 col-xs-12">
-                                    <span class="title_layout"><Icon type="ios-time"></Icon>过期时间</span>
+                                    <span class="title_layout"><Icon type="ios-time" class="icon_s"></Icon>过期时间</span>
                                     <span class="f_weight">：{{initPurchaseDetail.duedate}}</span>
                                 </label>
                                 <label class="col-md-12 col-sm-12 col-xs-12">
-                                    <span class="title_layout"><Icon type="information-circled"></Icon>备注</span>
+                                    <span class="title_layout"><Icon type="information-circled" class="icon_s"></Icon>备注</span>
                                     <span class="f_weight">：{{initPurchaseDetail.comment}}</span>
                                 </label>
                                  
@@ -762,7 +762,9 @@ section article {
 .table>thead>tr>th {
     text-align: center;
 }
-
+.icon_s{
+    margin-right:5px;
+}
 .edit-detail {
     border: 1px solid #ddd;
     border-radius: 3px;

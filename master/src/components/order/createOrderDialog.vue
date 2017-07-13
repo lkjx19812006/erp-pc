@@ -1033,9 +1033,9 @@ export default {
         }
         this.initParam();
         if(this.param.type==1){
-            this.orderType = '销售'
+            this.orderType = '销售(sell)'
         }else{
-            this.orderType = '采购'
+            this.orderType = '采购(purchase)'
         }
     }
 }
