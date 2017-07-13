@@ -43,7 +43,7 @@
             </div>
             <button class="btn btn-primary pull-right" style="margin-right:70px" @click="resetCondition()">{{$t('static.refresh')}}</button>
         </div>
-        <div slot="form" style="position:relative;height:100%">
+        <div slot="form" style="position:relative;height:1000px">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -230,52 +230,8 @@ export default {
                 orgName: '',
                 callback: this.callback,
             },
-            inquireParam: {
-                show: false,
-                times: 0, //询价的次数
-                link: '',
-                intentionId: '',
-                inquireType: '',
-                comment: ''
-            },
-            tipsParam: {
-                show: false,
-                name: '修改成功',
-                alert: true,
-            },
-            createParam: {
-                show: false,
-                url: '/intlIntention/',
-                customerId: '',
-                customerName: '',
-                customerPhone: '',
-                customerEmail: '',
-                country: '',
-                province: '',
-                city: '',
-                district: '',
-                address: '',
-                duedate: '',
-                pack: '',
-                items: [
-
-                ]
-            },
-            offerParam: {
-                show: false,
-                id: '',
-                items: [],
-            },
             currentView: 1,
-            privilege: /31/.test(this.initLogin.privilege), //判断是否为供应部主管
-            checked: false,
-            auditParam: {
-                title: '意向申请审核备注',
-                auditComment: '',
-                confirm: true,
-                callback: '',
-                show: false
-            }
+           
         }
     },
     methods: {
