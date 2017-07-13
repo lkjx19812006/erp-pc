@@ -41,16 +41,16 @@
                 <button class="btn btn-default" v-bind:class="{ 'btn-warning': currentView==1}" @click="clickChange(1)">应收账款</button>
                 <button class="btn btn-default" v-bind:class="{ 'btn-warning': currentView==0}" @click="clickChange(0)">应付账款</button>
             </div>
-            <button class="btn btn-primary pull-right" style="margin-right:70px" @click="resetCondition()">{{$t('static.refresh')}}</button>
+            <button class="btn btn-primary pull-right" style="margin-right:70px" @click="search()">{{$t('static.refresh')}}</button>
         </div>
- <div slot="form" style="position:relative;">
+  <div slot="form" style="position:relative;">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
 
-<div class="module_table" v-if="currentView==1" id="tt" style="height:1000px;oposition:relative">
- <div class="table-head">
- <table class="table table-hover table_color table-striped " v-cloak id="tab">
+    <div class="module_table" v-if="currentView==1" id="tt" style="height:1000px;oposition:relative">
+     <div class="table-head">
+     <table class="table table-hover table_color table-striped " v-cloak id="tab">
          <colgroup>
              <col style="width: 80px;" />
              <col />
@@ -99,13 +99,10 @@
               <td>{{item.employeeName}}</td>
               <td>{{item.orgName}}</td>
              </tr>
-         </tbody>
-     </table>
-
-            </div>
-            </div>
-
-
+            </tbody>
+           </table>
+       </div>
+    </div>
      <div class="module_table"  v-if="currentView==0" id="t2">
         <div class="table-head">
          <table class="table table-hover table_color table-striped " v-cloak id="tab">
@@ -156,14 +153,11 @@
                 </td>
                 <td>{{item.employeeName}}</td>
                 <td>{{item.orgName}}</td>
-     </tr>
-         </tbody>
-     </table>
-
-            </div>
-
-
-            </div>
+               </tr>
+             </tbody>
+             </table>
+         </div>
+      </div>
 
 
         </div>
@@ -255,11 +249,23 @@ export default {
     },
     methods: {
         clickChange: function(currentView) {
-                this.loadParam.cur=1;
+ /*             if(currentView==1){
+                this.loadParam.cur=localStorage.financialReParam.cur;
+                 this.currentView = currentView;
+                this.loadParam.type=currentView;
+                this.getFinancialList(this.loadParam);
+                console.log(this.currentView)
+            }else if(currentView==0){
+                this.loadParam.cur=localStorage.financialPaParam.cur;
                 this.currentView = currentView;
                 this.loadParam.type=currentView;
                 this.getFinancialList(this.loadParam);
                 console.log(this.currentView)
+            }*/
+                this.loadParam.cur=1;
+                this.currentView = currentView;
+                this.loadParam.type=currentView;
+                this.getFinancialList(this.loadParam);
     
         },
         search: function() {
@@ -321,10 +327,6 @@ export default {
             this.loadParam.employeeName = employee.employeeName;
         }
     },
- ready(){
-         
-
-     },
    created() {
     this.getFinancialList(this.loadParam)
       
