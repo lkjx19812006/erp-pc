@@ -741,6 +741,15 @@ Vue.filter('subtime', function(val) { //将时间的时分秒去掉
     }
     return val;
 })
+Vue.filter('subtime2', function(val) { //将时间的分秒去掉
+    var val = val;
+    if (val) {
+        val = val.substring(0, 16);
+    } else {
+        val = "";
+    }
+    return val;
+})
 
 function format(time, format){ 
     var t = new Date(time); 

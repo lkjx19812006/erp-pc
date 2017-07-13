@@ -189,7 +189,9 @@ import {
     SUPPLIER_COUNT_DETAIL_TOTAL,
     LOGISTICS_COUNT_LIST,
     LOGISTICS_COUNT_TOTAL,
+    FINANCIAL_COUNT_TOTAL,
     USER_FEEDBACK_INFO
+    
 } from '../mutation-types'
 
 
@@ -1151,6 +1153,7 @@ const state = {
     logisticsCountList: [],
     logisticsCountTotal: {},
     userFeedbackInfo: [],
+    financialCountTotal:{}
 }
 
 const mutations = {
@@ -2583,7 +2586,11 @@ const mutations = {
     },
     [USER_FEEDBACK_INFO](state, data) {
         state.userFeedbackInfo = data
+    },
+     [FINANCIAL_COUNT_TOTAL](state, data) {
+        state.financialCountTotal = data;
     }
+
 }
 
 export default {
