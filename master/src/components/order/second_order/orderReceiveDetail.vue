@@ -1,3 +1,4 @@
+<!-- 这是售后和补充合同的详情 -->
 <template>
     <div>
         <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
@@ -47,15 +48,21 @@
                             <label>{{initReceiptDetail.ctime | dateTime}}</label>
                         </li>
                     </ul>
-                    <ul class="col-md-12  clearfix">
+                    <ul class="col-md-12  clearfix" v-if="param.url=='/order/quality/after/sales/details/'">
                         <li v-for="img in initReceiptDetail.applyImage" class="navbar-img">
                             <img v-if="img.path | file" :src="img.path" alt="图片" height="100px" @click="bigPicture(img.path)" />
                             <a v-else href="{{img.path}}" download="" style="display: inline-block;width: 100px;margin-top: 10%"><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
                         </li>
                     </ul>
+                    <ul class="col-md-12  clearfix" v-if="param.url=='/order/contract/details/'">
+                        <li v-for="img in initReceiptDetail.images" class="navbar-img">
+                            <img v-if="img | file" :src="img" alt="图片" height="100px" @click="bigPicture(img)" />
+                            <a v-else href="{{img}}" download="" style="display: inline-block;width: 100px;margin-top: 10%"><img src="/static/images/{{$t('static.img_upload')}}.png" style="margin:auto" /></a>
+                        </li>
+                    </ul>
                 </div>
                 <hr style="height:10px;border-color:#ccc" />
-                <div class="clearfix client-section clearfix" @click.stop="">
+                <div class="clearfix client-section clearfix" @click.stop="" v-if="param.url=='/order/quality/after/sales/details/'">
                     <p class="btn btn-primary btn-xs">退换货信息</p>
                     <table class="table table-hover table_color table-striped" style="margin-top:10px">
                         <thead>
@@ -126,6 +133,7 @@ export default {
         }
     },
     created() {
+        console.log(this.param);
         this.getReceiptDetail(this.param);
     }
 }
