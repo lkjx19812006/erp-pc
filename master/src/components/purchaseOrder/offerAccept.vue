@@ -230,6 +230,10 @@ export default {
                 this.showTips("请填写自定义原因！");
                 return;
             }
+            if (this.customComment.length > 10) {
+                this.showTips("自定义原因不得超过十个字符！");
+                return;
+            }
             this.customParam.comments = this.mainComment + "；" + (this.subComment == "其他" ? this.customComment : this.subComment);
             this.customParam.accept = 2;
             this.handleOfferAccept(this.customParam);
