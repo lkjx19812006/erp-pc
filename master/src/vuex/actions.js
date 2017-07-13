@@ -3429,6 +3429,7 @@ export const editPayment = ({ dispatch }, param) => { //编辑我的收付款
     });
 };
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
+    param.loading = true;
     const body = {
         orderId: param.id
     }
@@ -3493,6 +3494,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        param.loading = false;
         if (res.json().result == null) {
             var status = param;
         } else {
@@ -3510,6 +3512,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     })
 }
 export const orderDeliverGoods = ({ dispatch }, param) => { //销售订单发货，采购订单发货在上面
+    param.loading = true;
     const body = {
         id: param.id,
         logisticses: param.logisticses
@@ -3525,6 +3528,7 @@ export const orderDeliverGoods = ({ dispatch }, param) => { //销售订单发货
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        param.loading = false;
         if (res.json().result == null) {
             var status = param;
         } else {
@@ -3532,11 +3536,7 @@ export const orderDeliverGoods = ({ dispatch }, param) => { //销售订单发货
         }
         status.orderStatus = 50;
         param.callback(res.json().msg);
-        // status.link = param.link;
-        // status.key = param.key;
-        if (res.json().code == 200) {
-            dispatch(types.ORDER_STATUS, status);
-        }
+
     }, (res) => {
         console.log('fail');
     })
@@ -12114,20 +12114,20 @@ export const getFeedbackList = ({ dispatch }, data) => {
         biz_module: 'userSuggestService',
         biz_method: 'querySuggestList',
         biz_param: {
-            pn:data.pn,
-            pSize:data.pSize,
-            phone:data.phone,
+            pn: data.pn,
+            pSize: data.pSize,
+            phone: data.phone,
             //id:data.id,
-            sign:data.sign,
-            operator:data.operator,
-            name:data.name
+            sign: data.sign,
+            operator: data.operator,
+            name: data.name
         }
     }
     httpService.commonPOST(httpService.commonBody(body))
         .then((res) => {
             data.total = res.biz_result.total
             data.all = res.biz_result.pages
-            dispatch('USER_FEEDBACK_INFO',res.biz_result.list)
+            dispatch('USER_FEEDBACK_INFO', res.biz_result.list)
         }, (error) => {
             console.log(error)
         })
@@ -12138,15 +12138,15 @@ export const handleFeedbackInfo = ({ dispatch }, data) => {
         biz_module: 'userSuggestService',
         biz_method: 'addPushSuggestResponse',
         biz_param: {
-            suggestId:data.suggestId,
-            message:data.message
+            suggestId: data.suggestId,
+            message: data.message
         }
     }
     httpService.commonPOST(httpService.commonBody(body))
         .then((res) => {
             data.callback(res)
             console.log(res)
-            
+
         }, (error) => {
             console.log(error)
         })

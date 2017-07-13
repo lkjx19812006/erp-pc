@@ -5,6 +5,7 @@
         <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
         <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
         <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
+        <deliver-goods :param="deliverParam" v-if="deliverParam.show"></deliver-goods>
         <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <applysend-model :param="applyParam" v-if="applyParam.show"></applysend-model>
@@ -44,7 +45,7 @@
                                     <option value="50">{{$t('static.wait_receipt')}}</option>
                                     <option value="60">{{$t('static.awaiting_comment')}}</option>
                                     <option value="70">{{$t('static.order_over')}}</option>
-                                    <option value ="-1">{{$t('static.canceled')}}</option>
+                                    <option value="-1">{{$t('static.canceled')}}</option>
                                 </select>
                             </dd>
                         </dl>
@@ -87,9 +88,9 @@
                 </div>
                 <div class="clear">
                     <div class="right">
-                    <!-- 新建销售订单 -->
+                        <!-- 新建销售订单 -->
                         <button v-if="initLogin.safeCode.indexOf('P27-F577,')!=-1" class="btn btn-success transfer" @click="newOrder(1)">{{$t('static.new')}}{{$t('static.sell')}}</button>
-                    <!-- 新建采购订单 -->
+                        <!-- 新建采购订单 -->
                         <button v-if="initLogin.safeCode.indexOf('P27-F578,')!=-1" class="btn btn-info transfer" @click="newOrder(0)">{{$t('static.new')}}{{$t('static.purchase')}}</button>
                         <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                     </div>
@@ -379,14 +380,17 @@
                                             contact:'/order/myList'
                                     })" v-if="(item.orderStatus==20||item.orderStatus==30)&&item.type==1">{{$t('static.apply_income')}}
                                     </button>
-                                    <!-- 销售订单发货流程start-->
+                                    <!-- 销售订单发货流程start，时间较长需要有loading画面-->
                                     <button class="btn btn-danger btn-xs" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0">{{$t('static.apply_send')}}
                                     </button>
                                     <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.logistics==1&&item.taskKey=='order_send_governor_validate'" style="color:#333;">{{$t('static.management_approval')}}</a>
+                                    <!-- 重新发货 -->
                                     <button class="btn btn-danger btn-xs" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee">{{$t('static.reapply_delivery')}}
                                     </button>
                                     <!-- 发货 -->
-                                    <button class="btn btn-warning btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.verifier==item.employee">{{$t('static.shipped')}}
+                                    <!-- <button class="btn btn-warning btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.verifier==item.employee">{{$t('static.shipped')}}
+                                    </button> -->
+                                    <button class="btn btn-warning btn-xs" @click="deliverGoods(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.verifier==item.employee">{{$t('static.shipped')}}
                                     </button>
                                     <!-- 销售订单发货流程end -->
                                     <button class="btn btn-success btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==0&&(item.logistics==3||item.logistics==2)">{{$t('static.quality_satisfied')}}
@@ -432,8 +436,12 @@
                                     <button class="btn btn-danger btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1">{{$t('static.pending_payment')}}</button>
                                     <button class="btn btn-danger btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0">{{$t('static.receive')}}
                                     </button>
-                                    <button class="btn btn-danger btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0">{{$t('static.pending_shipped')}}
+                                    <!-- 待客户发货 -->
+                                    <!-- <button class="btn btn-danger btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0">{{$t('static.pending_shipped')}}
+                                    </button> -->
+                                    <button class="btn btn-danger btn-xs" @click="deliverGoods(item,$index)" v-if="item.orderStatus==40&&item.type==0">{{$t('static.pending_shipped')}}
                                     </button>
+                                    <!-- 收货 -->
                                     <button class="btn btn-primary btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1">{{$t('static.receive')}}
                                     </button>
                                     <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==0">
@@ -469,6 +477,7 @@ import detailModel from '../order/orderDetail'
 import pictureModel from '../tips/pictureDialog'
 import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import disposeModel from '../order/orderStatus'
+import deliverGoods from './order_status/deliverGoods'
 import tipsdialogModel from '../tips/tipDialog'
 import auditModel from '../order/orgAudit'
 import common from '../../common/common'
@@ -506,6 +515,7 @@ export default {
         pictureModel,
         deletebreedModel,
         disposeModel,
+        deliverGoods,
         auditModel,
         tipsdialogModel,
         filter,
@@ -621,6 +631,10 @@ export default {
                 delivery: false,
                 confirmReceipt: false,
                 estimate: false,
+                key: 'myOrderList'
+            },
+            deliverParam: {
+                show: false,
                 key: 'myOrderList'
             },
             show: true,
@@ -881,6 +895,7 @@ export default {
                 this.disposeParam.tips = "订单已付款，待客户收款";
                 this.disposeParam.confirmReceipt = true;
             }
+            //采购订单，待客户发货
             if (item.orderStatus == 40 && item.type == 0) {
                 this.disposeParam.tips = this.$t('static.pending_shipped');
                 this.disposeParam.sendoff = true;
@@ -944,6 +959,12 @@ export default {
             }
             this.disposeParam.callback = this.orderBack;
         },
+        deliverGoods: function(item, sub) {
+            this.deliverParam = item;
+            this.deliverParam.key = "myOrderList";
+            this.deliverParam.show = true;
+            this.deliverParam.callback = this.deliverBack;
+        },
         addContract: function(contract) {
             this.contractParam = contract;
             this.contractParam.show = true;
@@ -954,18 +975,29 @@ export default {
             this.applicationParam.show = true;
             this.applicationParam.callback = this.afterSalesBack;
         },
-        afterSalesBack: function(title) {
-            this.tipsParam.show = true;
-            this.tipsParam.name = title;
-            this.tipsParam.alert = true;
+        //通用回调
+        publicBack: function(name) {
+            this.showTips(name);
+            this.getEmpolyeeOrder(this.loadParam);
+        },
+        //发货后的回调
+        deliverBack: function(name) {
+            this.deliverParam.show = false;
+            this.publicBack(name);
+        },
+        afterSalesBack: function(name) {
+            this.showTips(name);
             this.applicationParam.show = false;
             this.getEmpolyeeOrder(this.loadParam);
         },
-        orderBack: function(title) {
-            this.tipsParam.show = true;
-            this.tipsParam.name = title;
-            this.tipsParam.alert = true;
+        orderBack: function(name) {
+            this.showTips(name);
             this.getEmpolyeeOrder(this.loadParam);
+        },
+        showTips: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.tipsParam.alert = true;
         },
         resetTime: function() {
             this.loadParam.startTime = "";
@@ -1059,7 +1091,7 @@ export default {
 #table_box table th,
 #table_box table td {
     width: 80px;
-    min-width:50px;
+    min-width: 50px;
 }
 
 .order_pagination {

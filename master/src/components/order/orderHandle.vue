@@ -182,7 +182,8 @@ import changeMenu from '../../components/tools/tabs/tabs.js'
 import mglistModel from '../mguan/mgListComponent.vue'
 import languageModel from '../tools/language.vue'
 import recordModel from '../record/record'
-import deliverModel from '../order/orderStatus'
+//import deliverModel from '../order/orderStatus'
+import deliverModel from './order_status/deliverGoods'
 import auditModel from '../tips/auditDialog'
 import cancelModel from './cancelAudit'
 import cancelReapplyModel from './cancelReapply'
@@ -456,7 +457,7 @@ export default {
             this.deliverParam.show = true;
             this.deliverParam.sendoff = true;
             this.deliverParam.tips = "财务核查通过，请等待卖家发货！";
-            this.deliverParam.callback = this.callback;
+            this.deliverParam.callback = this.deliverBack;
         },
         receiveAudit: function(item) { //合同补充
             if (item.taskKey == 'supplementary_contract_employee_handle') {
@@ -493,6 +494,11 @@ export default {
             this.tipParam.name = name;
             //审核完成后刷新页面
             this.getToDoOrderList(this.loadParam);
+        },
+        //发货后的回调
+        deliverBack: function(name) {
+            this.deliverParam.show = false;
+            this.callback(name);
         },
         //取消订单
         cancelOrderByFlow: function(item) {
