@@ -199,8 +199,6 @@ export default {
     },
     data() {
         return {
-            ReCur:'',
-            PayCur:'',
             loadParam: {
                 loading: true,
                 show: false,
@@ -249,19 +247,6 @@ export default {
     },
     methods: {
         clickChange: function(currentView) {
- /*             if(currentView==1){
-                this.loadParam.cur=localStorage.financialReParam.cur;
-                 this.currentView = currentView;
-                this.loadParam.type=currentView;
-                this.getFinancialList(this.loadParam);
-                console.log(this.currentView)
-            }else if(currentView==0){
-                this.loadParam.cur=localStorage.financialPaParam.cur;
-                this.currentView = currentView;
-                this.loadParam.type=currentView;
-                this.getFinancialList(this.loadParam);
-                console.log(this.currentView)
-            }*/
                 this.loadParam.cur=1;
                 this.currentView = currentView;
                 this.loadParam.type=currentView;
