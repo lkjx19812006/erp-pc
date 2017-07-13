@@ -19,19 +19,19 @@
                 <dl class="clear left transfer">
                     <dt class="left  marg_top">{{$t('static.salesman')}}：</dt>
                     <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" @click="selectEmployee()" />
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" readonly="true" style="cursor:pointer" placeholder="请选择业务员" @click="selectEmployee()" />
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
                     <dt class="left  marg_top">{{$t('static.department')}}：</dt>
                     <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="请选择部门" readonly="true" @click="selectOrg()"/>
+                        <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="请选择部门" style="cursor:pointer" readonly="true" @click="selectOrg()"/>
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
-                    <dt class="left  marg_top">{{$t('static.supplier_name')}}：</dt>
+                    <dt class="left  marg_top">{{$t('static.customerName')}}：</dt>
                     <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.customerName"  @keyup.enter="search()" />
+                        <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="请输入客户名称" @keyup.enter="search()" />
                     </dd>
                 </dl>
                 <button class="new_btn left transfer pull-left btn-clear" @click="resetCondition()">{{$t('static.clear_all')}}</button>
@@ -41,112 +41,123 @@
                 <button class="btn btn-default" v-bind:class="{ 'btn-warning': currentView==1}" @click="clickChange(1)">应收账款</button>
                 <button class="btn btn-default" v-bind:class="{ 'btn-warning': currentView==0}" @click="clickChange(0)">应付账款</button>
             </div>
-            <button class="btn btn-primary pull-right" style="margin-right:70px" @click="resetCondition()">{{$t('static.refresh')}}</button>
+            <button class="btn btn-primary pull-right" style="margin-right:70px" @click="search()">{{$t('static.refresh')}}</button>
         </div>
-        <div slot="form" style="position:relative;height:1000px">
+  <div slot="form" style="position:relative;">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
 
-       <div class="module_table" v-if="currentView==1" id="tt" style="height:900px;overflow:auto;position:relative">
+    <div class="module_table" v-if="currentView==1" id="tt" style="height:1000px;oposition:relative">
+     <div class="table-head">
+     <table class="table table-hover table_color table-striped " v-cloak id="tab">
+         <colgroup>
+             <col style="width: 80px;" />
+             <col />
+         </colgroup>
+         <thead>
+              <th>{{$t('static.client_name')}}</th>
+              <th>{{$t('static.orderTradeTime')}}</th>
+              <th>{{$t('static.orderFicount')}}</th>
+              <th>{{$t('static.backAmount')}}</th>
+              <th>{{$t('static.chargeAmount')}}</th>
+              <th>{{$t('static.billDate')}}</th>
+              <th>{{$t('static.dueDate')}}</th>
+              <th>{{$t('static.overDue')}}</th>
+              <th>{{$t('static.operator')}}</th>
+              <th>{{$t('static.department')}}</th> 
+         </thead>
+     </table>
+     </div>
+     <div class="table-body">
+     <table class="table table-hover table_color table-striped " v-cloak id="tab">
+         <colgroup><col style="width: 80px;" /><col /></colgroup>
+         <tbody>
+              <tr v-for="item in initFinancialCountTotal" style="cursor:pointer">
+              <td>{{item.customerName}}</td>
+              <td>{{item.tradeTime|subtime2}}</td>
+              <td>￥{{item.total|money}}</td>
+              <td>
+                  <a v-for="stage in item.stages">￥{{stage.received|money}}</a>
+              </td>
+               <td>
+                  <a v-for="stage in item.stages">￥{{stage.unreceived|money}}</a>
+              </td>
+              <td>
+                  <a v-for="stage in item.stages">{{stage.extra}}天</a>
+              </td>
+              <td>
+                  <a v-for="stage in item.stages">{{stage.scheduleTime|date}}</a>
+              </td>
+              <td>
+                  <p v-for="stage in item.stages">
+                 <a v-if="stage.isOverdue==0">否</a>
+                 <a v-if="stage.isOverdue==1">是</a>
+                 </p>
+  
+              </td>
+              <td>{{item.employeeName}}</td>
+              <td>{{item.orgName}}</td>
+             </tr>
+            </tbody>
+           </table>
+       </div>
+    </div>
+     <div class="module_table"  v-if="currentView==0" id="t2">
+        <div class="table-head">
+         <table class="table table-hover table_color table-striped " v-cloak id="tab">
+                 <colgroup>
+                     <col style="width: 80px;" />
+                     <col />
+                 </colgroup>
+                 <thead>
+               <th>{{$t('static.client_name')}}</th>
+                <th>{{$t('static.orderTradeTime')}}</th>
+                <th>{{$t('static.orderFicount')}}</th>
+                <th>{{$t('static.order_amount')}}</th>
+                <th>{{$t('static.payAmount')}}</th>
+                <th>{{$t('static.billDate')}}</th>
+                <th>{{$t('static.dueDate')}}</th>
+                <th>{{$t('static.overDue')}}</th>
+                <th>{{$t('static.operator')}}</th>
+                <th>{{$t('static.department')}}</th> 
+             </thead>
+                 </table>
+                 </div>
+                 <div class="table-body">
+                 <table class="table table-hover table_color table-striped " v-cloak id="tab">
+         <colgroup><col style="width: 80px;" /><col /></colgroup>
+         <tbody>
+              <tr v-for="item in initFinancialCountTotal" style="cursor:pointer">
+              <td>{{item.customerName}}</td>
+                <td>{{item.tradeTime|subtime2}}</td>
+                <td>￥{{item.total|money}}</td>
+                <td>
+                    <a v-for="stage in item.stages">￥{{stage.paid|money}}</a>
+                </td>
+                 <td>
+                    <a v-for="stage in item.stages">￥{{stage.unpaid|money}}</a>
+                </td>
+                <td>
+                    <a v-for="stage in item.stages">{{stage.extra}}天</a>
+                </td>
+                <td>
+                    <a v-for="stage in item.stages">{{stage.scheduleTime|date}}</a>
+                </td>
+                <td>
+                   <p v-for="stage in item.stages">
+                   <a v-if="stage.isOverdue==0">否</a>
+                   <a v-if="stage.isOverdue==1">是</a>
+                   </p>
 
-            <table class="table table-hover table_color table-striped " v-cloak id="tab">
-                <thead>
-                    <tr>
-                        <th>{{$t('static.client_name')}}</th>
-                        <th>{{$t('static.orderTradeTime')}}</th>
-                        <th>{{$t('static.orderFicount')}}</th>
-                        <th>{{$t('static.backAmount')}}</th>
-                        <th>{{$t('static.chargeAmount')}}</th>
-                        <th>{{$t('static.billDate')}}</th>
-                        <th>{{$t('static.dueDate')}}</th>
-                        <th>{{$t('static.overDue')}}</th>
-                        <th>{{$t('static.operator')}}</th>
-                        <th>{{$t('static.department')}}</th> 
-                    </tr>
-                       
-                </thead>
-                <tbody>
-                    <tr v-for="item in initFinancialCountTotal" style="cursor:pointer">
-                        <td>{{item.customerName}}</td>
-                        <td>{{item.tradeTime|subtime2}}</td>
-                        <td>{{item.total}}</td>
-                        <td>
-                            <a v-for="stage in item.stages">{{stage.received}}</a>
-                        </td>
-                         <td>
-                            <a v-for="stage in item.stages">{{stage.unreceived}}</a>
-                        </td>
-                        <td>
-                            <a v-for="stage in item.stages">{{stage.extra}}</a>
-                        </td>
-                        <td>
-                            <a v-for="stage in item.stages">{{stage.scheduleTime|date}}</a>
-                        </td>
-                        <td>
-                            <p v-for="stage in item.stages">
-                           <a v-if="stage.isOverdue==0">否</a>
-                           <a v-if="stage.isOverdue==1">是</a>
-                           </p>
-
-                        </td>
-                        <td>{{item.employeeName}}</td>
-                        <td>{{item.orgName}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            </div>
-
-
-       <div class="module_table"  v-if="currentView==0" id="t2">
-            <table class="table table-hover table_color table-striped" id="t1" v-cloak id="tab" style="height:850px;overflow-y:auto">
-
-                <thead>
-                    <tr>
-                        <th>{{$t('static.client_name')}}</th>
-                        <th>{{$t('static.orderTradeTime')}}</th>
-                        <th>{{$t('static.orderFicount')}}</th>
-                        <th>{{$t('static.order_amount')}}</th>
-                        <th>{{$t('static.payAmount')}}</th>
-                        <th>{{$t('static.billDate')}}</th>
-                        <th>{{$t('static.dueDate')}}</th>
-                        <th>{{$t('static.overDue')}}</th>
-                        <th>{{$t('static.operator')}}</th>
-                        <th>{{$t('static.department')}}</th> 
-                    </tr>
-                       
-                </thead>
-                <tbody>
-                    <tr v-for="item in initFinancialCountTotal" style="cursor:pointer">
-                      
-                       <td>{{item.customerName}}</td>
-                        <td>{{item.tradeTime|subtime2}}</td>
-                        <td>{{item.total}}</td>
-                        <td>
-                            <a v-for="stage in item.stages">{{stage.paid}}</a>
-                        </td>
-                         <td>
-                            <a v-for="stage in item.stages">{{stage.unpaid}}</a>
-                        </td>
-                        <td>
-                            <a v-for="stage in item.stages">{{stage.extra}}</a>
-                        </td>
-                        <td>
-                            <a v-for="stage in item.stages">{{stage.scheduleTime|date}}</a>
-                        </td>
-                        <td>
-                           <p v-for="stage in item.stages">
-                           <a v-if="stage.isOverdue==0">否</a>
-                           <a v-if="stage.isOverdue==1">是</a>
-                           </p>
-
-                        </td>
-                        <td>{{item.employeeName}}</td>
-                        <td>{{item.orgName}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            </div>
+                </td>
+                <td>{{item.employeeName}}</td>
+                <td>{{item.orgName}}</td>
+               </tr>
+             </tbody>
+             </table>
+         </div>
+      </div>
 
 
         </div>
@@ -231,17 +242,16 @@ export default {
                 callback: this.callback,
             },
             currentView: 1,
-           
+       
         }
     },
     methods: {
         clickChange: function(currentView) {
-
-            this.currentView = currentView;
-            this.loadParam.type=currentView;
-            this.getFinancialList(this.loadParam);
-            console.log(this.currentView)
-             
+                this.loadParam.cur=1;
+                this.currentView = currentView;
+                this.loadParam.type=currentView;
+                this.getFinancialList(this.loadParam);
+    
         },
         search: function() {
             this.getFinancialList(this.loadParam);
@@ -302,12 +312,8 @@ export default {
             this.loadParam.employeeName = employee.employeeName;
         }
     },
- ready(){
-         common('tab', 'tt', 1);
-
-     },
    created() {
-      changeMenu(this.$store.state.table.isTop, this.getFinancialList, this.loadParam, localStorage.financialReParam);
+    this.getFinancialList(this.loadParam)
       
     },
     filter: (filter, {})
@@ -317,7 +323,6 @@ export default {
 .service-nav {
     padding: 25px 0 0 0;
 }
-
 .click_change {
     text-align: left;
     border: 1px solid #ddd;
@@ -340,6 +345,7 @@ export default {
 }
 .module_table {
     border: 1px solid #ddd;
+    border-top:0;
     border-bottom: none;
     padding: 0;
     position: absolute;
@@ -370,16 +376,22 @@ export default {
 .btn-clear{
     background: #F0AD4E;
 }
+#table_box table{
+    margin:0;
+}
+
 #table_box table th,
 #table_box table td {
     min-width: 170px;
     width: 170px;
     padding:10px 0;
-
+}
+#table_box table td:first-child{
+    padding:10px;
 }
 #table_box table td a,
 #table_box table td p{
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid gold;
     display:inline-block;
     height:30px;
     width:100%;
@@ -389,5 +401,7 @@ export default {
 #table_box table td p:last-child{
     border-bottom: none;
 }
+ .table-body{width:100%; height:800px;overflow-y:scroll;}
+ .table-head table,.table-body table{width:100%;}
 
 </style>

@@ -4,7 +4,7 @@
         	<slot name="top"></slot>
         </div>
         <div>
-	        <div class="order_table" id="table_box" style="height:1000px">
+	        <div class="order_table" id="table_box">
 		        <slot name="form"></slot>
 		        <!-- <table is="my_table"></table> -->
 	        </div>
