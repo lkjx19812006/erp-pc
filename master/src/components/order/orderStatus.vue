@@ -230,6 +230,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 采购订单客户发货 -->
                     <div class="clearfix logical_color">
                         <input type="button" class="btn  btn-confirm right" @click="accept(uploadLogistic,param.show=false)" v-if="$purchase.valid" value="{{$t('static.confirmation_delivery')}}" />
                         <input type="button" class="btn  btn-confirm right" v-else disabled="true" value="{{$t('static.confirmation_delivery')}}" />
@@ -414,6 +415,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 销售订单发货 -->
                     <div class="clearfix logical_color">
                         <input type="button" class="btn  btn-confirm right" @click="deliverGoods()" v-if="$sale.valid" value="{{$t('static.confirmation_delivery')}}" />
                         <input type="button" class="btn  btn-confirm right" v-else disabled="true" value="{{$t('static.confirmation_delivery')}}" />

@@ -91,7 +91,8 @@ import recordModel from '../record/record'
 import auditModel from '../tips/auditDialog'
 import tipModel from '../tips/tipDialog'
 import sendDetail from '../order/second_order/orderSendDetail'
-import deliverModel from '../order/orderStatus'
+//import deliverModel from '../order/orderStatus'
+import deliverModel from '../order/order_status/deliverGoods'
 import receivedetailModel from '../order/second_order/orderReceiveDetail'
 import resendModel from '../order/second_order/afterResendPage'
 import cancelDetailModel from '../order/orderDetailByCancel'
@@ -301,7 +302,7 @@ export default {
             this.deliverParam.show = true;
             this.deliverParam.sendoff = true;
             this.deliverParam.tips = "财务核查通过，请等待卖家发货！";
-            this.deliverParam.callback = this.callback;
+            this.deliverParam.callback = this.deliverBack;
 
         },
         showRecord: function(item) {
@@ -381,6 +382,11 @@ export default {
             this.tipParam.show = true;
             this.tipParam.name = name;
             this.getBacklogList(this.loadparam);
+        },
+        //发货后的回调
+        deliverBack: function(name) {
+            this.deliverParam.show = false;
+            this.callback(name);
         },
         //审核取消订单
         cancelOrderAudit: function(item) {

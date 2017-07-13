@@ -1077,6 +1077,86 @@ export const freshOrgCount = ({ dispatch }, getCharList) => { //获取部门客�
         console.log('fail')
     })
 }
+export const getFinancialList = ({ dispatch }, param) => { //财务应收应付数据获取
+    param.loading = true;
+    var  url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
+    var body = {
+        type:param.type,
+        page:param.cur,
+        pageSize:15
+        /*
+        employeeId:param.employeeId,
+        orgId:param.orgId,
+        customerId:param.customerId,
+        startTime:param.startTime,
+        endTime:param.endTime*/
+    }
+        for (var search in param) {
+        if (search == 'startTime' && param[search] !== '') {
+           body={
+            type:param.type,
+            startTime:param.startTime,
+            endTime:param.endTime
+           }
+        }
+          if (search == 'endTime' && param[search] !== '') {
+           body={
+            type:param.type,
+            startTime:param.startTime,
+            endTime:param.endTime
+           }
+        }
+      if (search == 'employeeId' && param[search] !== '') {
+           body={
+            type:param.type,
+            employeeId:param.employeeId
+           }
+        }
+       if (search == 'orgId'  && param[search] !== '') {
+          body={
+            type:param.type,
+            orgId:param.orgId,
+            employeeId:param.employeeId
+           }
+        }
+
+      if (search == 'customerName' && param[search] !== '') {
+          body={
+            type:param.type,
+            customerName:param.customerName
+           }
+        }
+
+    }
+
+    Vue.http({
+        method: 'POST',
+        url: url,
+        body:body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json().result)
+         var finan=res.json().result.list;
+      dispatch(types.FINANCIAL_COUNT_TOTAL, finan);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+    if(param.type==1){
+        localStorage.financialReParam = JSON.stringify(param);
+    }else if(param.type==0){
+     localStorage.financialPaParam = JSON.stringify(param);
+    }
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
 
 export const freshAllCount = ({ dispatch }, getCharList) => { //获取全部客户统计折线图
     if (getCharList) getCharList.load = true;
@@ -3349,6 +3429,7 @@ export const editPayment = ({ dispatch }, param) => { //编辑我的收付款
     });
 };
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
+    param.loading = true;
     const body = {
         orderId: param.id
     }
@@ -3413,6 +3494,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        param.loading = false;
         if (res.json().result == null) {
             var status = param;
         } else {
@@ -3430,6 +3512,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     })
 }
 export const orderDeliverGoods = ({ dispatch }, param) => { //销售订单发货，采购订单发货在上面
+    param.loading = true;
     const body = {
         id: param.id,
         logisticses: param.logisticses
@@ -3445,6 +3528,7 @@ export const orderDeliverGoods = ({ dispatch }, param) => { //销售订单发货
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        param.loading = false;
         if (res.json().result == null) {
             var status = param;
         } else {
@@ -3452,11 +3536,7 @@ export const orderDeliverGoods = ({ dispatch }, param) => { //销售订单发货
         }
         status.orderStatus = 50;
         param.callback(res.json().msg);
-        // status.link = param.link;
-        // status.key = param.key;
-        if (res.json().code == 200) {
-            dispatch(types.ORDER_STATUS, status);
-        }
+
     }, (res) => {
         console.log('fail');
     })
@@ -12034,20 +12114,20 @@ export const getFeedbackList = ({ dispatch }, data) => {
         biz_module: 'userSuggestService',
         biz_method: 'querySuggestList',
         biz_param: {
-            pn:data.pn,
-            pSize:data.pSize,
-            phone:data.phone,
+            pn: data.pn,
+            pSize: data.pSize,
+            phone: data.phone,
             //id:data.id,
-            sign:data.sign,
-            operator:data.operator,
-            name:data.name
+            sign: data.sign,
+            operator: data.operator,
+            name: data.name
         }
     }
     httpService.commonPOST(httpService.commonBody(body))
         .then((res) => {
             data.total = res.biz_result.total
             data.all = res.biz_result.pages
-            dispatch('USER_FEEDBACK_INFO',res.biz_result.list)
+            dispatch('USER_FEEDBACK_INFO', res.biz_result.list)
         }, (error) => {
             console.log(error)
         })
@@ -12058,15 +12138,15 @@ export const handleFeedbackInfo = ({ dispatch }, data) => {
         biz_module: 'userSuggestService',
         biz_method: 'addPushSuggestResponse',
         biz_param: {
-            suggestId:data.suggestId,
-            message:data.message
+            suggestId: data.suggestId,
+            message: data.message
         }
     }
     httpService.commonPOST(httpService.commonBody(body))
         .then((res) => {
             data.callback(res)
             console.log(res)
-            
+
         }, (error) => {
             console.log(error)
         })

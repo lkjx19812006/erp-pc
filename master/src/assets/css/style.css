@@ -886,15 +886,14 @@ dl {
 }
 
 #table_box {
-    height: 550px;
+    height:1000px;
     width: 100%;
-    overflow-y: auto;
     position: relative;
 }
 
-@media screen and (min-height:800px) {
+@media screen and (min-height:1000px) {
     #table_box {
-        height: 700px;
+        height: 1000px;
         width: 100%;
         overflow-y: auto;
         position: relative;

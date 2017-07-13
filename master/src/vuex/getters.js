@@ -26,6 +26,7 @@ export const getCharList = (state) => {
 }
 
 export const initLogin = (state) => {
+    console.log(state.table.login)
     return JSON.parse(JSON.stringify(state.table.login));
 }
 
@@ -913,4 +914,9 @@ export const initLogisticsCountTotal = (state) => {
 
 export const initUserFeedbackInfo = (state) => {//初始化用户反馈信息
     return JSON.parse(JSON.stringify(state.table.userFeedbackInfo))
+}
+//财务应付应收
+export const initFinancialCountTotal = (state) => {
+   // console.log(JSON.parse(JSON.stringify(state.table.financialCountTotal)))
+    return JSON.parse(JSON.stringify(state.table.financialCountTotal))
 }
