@@ -501,10 +501,14 @@ export default {
             this.countryParam.province = this.param.province;
             this.countryParam.city = this.param.city;
             this.countryParam.district = this.param.district;
-            this.country.cname = this.param.country;
-            this.province.cname = this.param.province;
-            this.city.cname = this.param.city;
-            this.district.cname = this.param.district;
+            this.country.cname = this.param.country.cname;
+            this.country.id = this.param.country.id;
+            this.province.cname = this.param.province.cname;
+            this.province.id = this.param.province.id;
+            this.city.cname = this.param.city.cname;
+            this.city.id = this.param.city.id;
+            this.district.cname = this.param.district.cname;
+            this.district.id = this.param.district.id;
         }
 
     }

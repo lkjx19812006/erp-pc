@@ -17,11 +17,11 @@
                     <div class="clearfix">
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
-                            <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly" />
-                            <select class="form-control edit-input" v-model="param.type">
+                            <input type="text" class="form-control" v-model="orderType" v-validate:type="['required']" readonly="readonly" />
+                            <!-- <select class="form-control edit-input" v-model="param.type">
                                 <option value="0">{{$t('static.purchase')}}</option>
                                 <option value="1">{{$t('static.sell')}}</option>
-                            </select>
+                            </select> -->
                         </div>
                         <!-- 销售订单时的发货人，为公司员工 -->
                         <div class="editpage-input col-md-6" v-if="param.type==1">
@@ -488,6 +488,7 @@ export default {
             sum: 0, //点击按钮计算
             altogether: 0, //所有商品的总金额,
             costmoney: 0, // 所有商品的成本总价
+            orderType:''
         }
     },
     vuex: {
@@ -909,9 +910,11 @@ export default {
                 this.costmoney += parseFloat(this.param.goods[i].number) * parseFloat(this.param.goods[i].costPrice);
             }
         }
-        /*if (this.param.consigner) {
-            this.param.consignerName = this.param.consigner;
-        }*/
+        if(this.param.type==1){
+            this.orderType = '销售(sell)'
+        }else{
+            this.orderType = '采购(purchase)'
+        }
     }
 }
 </script>

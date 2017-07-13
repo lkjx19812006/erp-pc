@@ -2,6 +2,7 @@
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
     <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
+    <transfer-purchase :param="transferParam" v-if="transferParam.show"></transfer-purchase>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
@@ -62,11 +63,13 @@
                         <input type="text" class="form-control" v-model="loadParam.purchaseContent" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
                 </dl>
-                <dl class="clear left transfer" style="margin-left:50px">
-                    <button type="button" class="btn btn-default margin_right" height="24" width="24" @click="selectSearch()">搜索</button>
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+                <dl class="clear right transfer" >
+                    <button type="button" class="btn btn-primary margin_right" height="24" width="24" @click="selectSearch()">搜索</button>
+                    <button type="button" class="btn btn-warning" height="24" width="24" @click="resetCondition()">清空条件</button>
                 </dl>
-                <dd class="pull-right" style="margin-right:10px">
+                <dd class="right" style="margin-right:10px">
+                    <Checkbox :checked='selectAll' @click.prevent="checkAll()">全选</Checkbox>
+                    <!-- <button type="button" class="btn btn-success" @click="tansfer()">采购单报价划转</button> -->
                     <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                 </dd>
             </div>
@@ -79,6 +82,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
+                        <th style="width:30px;">勾选</th>
                         <th>采购单ID</th>
                         <th>采购单类型</th>
                         <th>客户名称</th>
@@ -95,7 +99,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initAllPurchaseList">
+                    <tr v-for="($index,item) in initAllPurchaseList">
+                        <td style="width:30px;">
+                            <Checkbox @click="singleSelect($index,item)" :checked="item.checked"></Checkbox>
+                        </td>
                         <td>{{item.id}}</td>
                         <td>{{item.type | indentType}}</td>
                         <td>
@@ -135,6 +142,7 @@ import common from '../../../common/common'
 import mglistModel from '../../mguan/mgListComponent.vue'
 import selectorgModel from '../../tips/treeDialog'
 import employeeModel from '../../clientRelate/searchEmpInfo'
+import transferPurchase from '../transferPurchase'
 import {
     initAllPurchaseList,
     initLogin
@@ -148,7 +156,8 @@ export default {
         pagination,
         mglistModel,
         selectorgModel,
-        employeeModel
+        employeeModel,
+        transferPurchase
     },
     vuex: {
         getters: {
@@ -203,7 +212,12 @@ export default {
                 //单个业务员搜索
                 employeeId: '',
                 employeeName: ''
-            }
+            },
+            transferParam:{
+                show:false
+            },
+            transferPurchase:[],
+            selectAll:false
         }
     },
     methods: {
@@ -247,6 +261,42 @@ export default {
                 this.employeeParam.orgId = this.selectOrgParam.orgId;
                 this.selectSearch(this.loadParam);
             }
+        },
+        singleSelect:function($index,item){      
+            this.$store.state.table.basicBaseList.allPurchaseList[$index].checked = !this.$store.state.table.basicBaseList.allPurchaseList[$index].checked;
+            for(let i = 0;i<this.$store.state.table.basicBaseList.allPurchaseList.length;i++){//判断是否全部选择
+                if(!this.$store.state.table.basicBaseList.allPurchaseList[i].checked){
+                    this.selectAll = false
+                    return
+                }else{
+                    this.selectAll = true
+                }
+            }
+        },
+        checkAll:function(){
+            this.selectAll = !this.selectAll
+            let _this = this
+            if(this.selectAll){
+                _this.transferPurchase = []
+                this.$store.state.table.basicBaseList.allPurchaseList.forEach(function(item){
+                    item.checked = true
+                })
+            }else{
+                _this.transferPurchase = []    
+                this.$store.state.table.basicBaseList.allPurchaseList.forEach(function(item){
+                    item.checked = false
+                })
+            }
+        },
+        tansfer:function(){
+            this.transferPurchase = []
+            for(let i = 0;i<this.$store.state.table.basicBaseList.allPurchaseList.length;i++){
+                if(this.$store.state.table.basicBaseList.allPurchaseList[i].checked){
+                    this.transferPurchase.push(this.$store.state.table.basicBaseList.allPurchaseList[i].id)
+                }
+            }
+            console.log(this.transferPurchase)
+            this.transferParam.show = true
         }
     },
     events: {
@@ -259,6 +309,9 @@ export default {
             this.loadParam.employeeName = employee.employeeName;
             this.selectSearch(this.loadParam);
         }
+    },
+    computed:{
+
     },
     created() {
         this.getPurchaseOrderList(this.loadParam);
@@ -329,5 +382,9 @@ dl {
     max-width: 400px;
     color: #3399ff;
     white-space: normal;
+}
+.ivu-checkbox-inner{
+    width: 20px!important;
+    height: 20px!important;
 }
 </style>

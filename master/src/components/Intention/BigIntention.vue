@@ -636,9 +636,9 @@ export default {
                 send: false,
                 sub: '',
                 country: '中国',
-                province: '',
-                city: '',
-                district: '',
+                province: {},
+                city: {},
+                district: {},
                 customer: '',
                 customerName: '',
                 customerPhone: '',
@@ -1048,10 +1048,22 @@ export default {
             this.sampleOrderParam.customerName = item.customerName;
             this.sampleOrderParam.customerPhone = item.customerPhone;
             this.sampleOrderParam.breedName = item.breedName;
-            this.sampleOrderParam.country = item.country;
-            this.sampleOrderParam.province = item.province;
-            this.sampleOrderParam.city = item.city;
-            this.sampleOrderParam.district = item.district;
+            this.sampleOrderParam.country = {
+                id:item.country,
+                cname:item.countryName
+            }
+            this.sampleOrderParam.province = {
+                id:item.province,
+                cname:item.provinceName
+            }
+            this.sampleOrderParam.city = {
+                id:item.city,
+                cname:item.cityName
+            }
+            this.sampleOrderParam.district = {
+                id:item.district,
+                cname:item.districtName
+            }
             this.sampleOrderParam.ctime = item.ctime;
         },
         //变量true false控制函数
