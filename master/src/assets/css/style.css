@@ -886,12 +886,12 @@ dl {
 }
 
 #table_box {
-    height:1000px;
+    height: 1000px;
     width: 100%;
     position: relative;
 }
 
-@media screen and (min-height:1000px) {
+@media screen and (min-height:800px) {
     #table_box {
         height: 1000px;
         width: 100%;
