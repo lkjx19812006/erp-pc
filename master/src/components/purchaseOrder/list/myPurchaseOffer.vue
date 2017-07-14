@@ -78,7 +78,7 @@
                     清空条件
                 </button>
                 <button type="button" class="btn btn-success" style="width:100px" @click="batchAccept()" v-if="param.init=='initMyIndentOfferList'">
-                    批量处理报价
+                    批量处理
                 </button>
             </div>
             <div class="clear" style="margin-top:3px;">
