@@ -1100,12 +1100,6 @@ export const getFinancialList = ({ dispatch }, param) => { //财务应收应付�
     if (param.customerName != "") {
         body.customerName = param.customerName;
     }
-    body = {
-        startTime: "2017-07-01 00:00:00",
-        endTime: "2017-08-01 00:00:00",
-        isOverdue: 1,
-        type: param.type
-    }
     Vue.http({
         method: 'POST',
         url: url,
