@@ -43,12 +43,12 @@
             </div>
             <button class="btn btn-primary pull-right" style="margin-right:70px" @click="search()">{{$t('static.refresh')}}</button>
         </div>
-  <div slot="form" style="position:relative;">
+  <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
 
-    <div class="module_table" v-if="currentView==1" id="tt" style="height:1000px;oposition:relative">
+    <div class="module_table" v-if="currentView==1" id="tt" style="height:100%;">
      <div class="table-head">
      <table class="table table-hover table_color table-striped " v-cloak id="tab">
          <colgroup>
@@ -87,7 +87,10 @@
                   <a v-for="stage in item.stages">{{stage.extra}}天</a>
               </td>
               <td>
-                  <a v-for="stage in item.stages">{{stage.scheduleTime|date}}</a>
+                  <p v-for="stage in item.stages">          
+                  <a v-if="stage.scheduleTime!=0">{{stage.scheduleTime|date}}</a>
+                  <a v-else>----:--:--</a>
+                  </p>
               </td>
               <td>
                   <p v-for="stage in item.stages">
@@ -142,7 +145,10 @@
                     <a v-for="stage in item.stages">{{stage.extra}}天</a>
                 </td>
                 <td>
-                    <a v-for="stage in item.stages">{{stage.scheduleTime|date}}</a>
+                  <p v-for="stage in item.stages">          
+                  <a v-if="stage.scheduleTime!=0">{{stage.scheduleTime|date}}</a>
+                  <a v-else>----:--:--</a>
+                  </p>
                 </td>
                 <td>
                    <p v-for="stage in item.stages">
@@ -381,7 +387,7 @@ export default {
 #table_box table td {
     min-width: 170px;
     width: 170px;
-    padding:10px 0;
+    padding:7px 0;
 }
 #table_box table td:first-child{
     padding:10px;
@@ -398,7 +404,7 @@ export default {
 #table_box table td p:last-child{
     border-bottom: none;
 }
- .table-body{width:100%; height:800px;overflow-y:scroll;}
+ .table-body{width:100%; height:600px;overflow-y:scroll;}
  .table-head table,.table-body table{width:100%;}
 
 </style>
