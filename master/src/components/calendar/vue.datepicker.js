@@ -173,7 +173,7 @@
                     } else if (isLast) {
                         return new Date(tmpTime.getFullYear(), tmpTime.getMonth(), tmpTime.getDate(), 23, 59, 59, 999);
                     } else {
-                        return new Date(tmpTime.getFullYear(), tmpTime.getMonth(), tmpTime.getDate());
+                        return new Date(tmpTime.getFullYear(), tmpTime.getMonth(), tmpTime.getDate(), tmpTime.getHours(), tmpTime.getMinutes(), tmpTime.getSeconds());
                     }
                 }
                 return null;
