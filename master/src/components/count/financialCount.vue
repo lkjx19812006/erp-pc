@@ -274,7 +274,6 @@ export default {
             if (this.selectOrgParam.orgId) {
                 this.loadParam.orgId = this.selectOrgParam.orgId;
                 this.loadParam.orgName = this.selectOrgParam.orgName;
-
                 this.employeeParam.orgId = this.selectOrgParam.orgId;
             }
         },
@@ -303,23 +302,21 @@ export default {
 
         },
         //获得本月的开端日期 
-        showMonthFirstDay:function(){     
-        var date=new Date();
+        showMonthFirstDay: function() {
+            var date = new Date();
             date.setDate(1);
-            return date; 
+            return date;
         },
         //获得本月的停止日期 
-        showMonthLastDay:function(){     
-       var date=new Date();
-       var currentMonth=date.getMonth();
-       var nextMonth=++currentMonth;
-       var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
-       var oneDay=1000*60*60*24;
-       return new Date(nextMonthFirstDay-oneDay); 
+        showMonthLastDay: function() {
+            var date = new Date();
+            var currentMonth = date.getMonth();
+            var nextMonth = ++currentMonth;
+            var nextMonthFirstDay = new Date(date.getFullYear(), nextMonth, 1);
+            var oneDay = 1000 * 60 * 60 * 24;
+            return new Date(nextMonthFirstDay - oneDay);
         }
-
-
-      },
+    },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
@@ -331,10 +328,9 @@ export default {
         }
     },
     created() {
-            this.loadParam.startTime=this.showMonthFirstDay();
-            this.loadParam.endTime=this.showMonthLastDay();
-            this.getFinancialList(this.loadParam)
-
+        this.loadParam.startTime = this.showMonthFirstDay();
+        this.loadParam.endTime = this.showMonthLastDay();
+        this.getFinancialList(this.loadParam);
     },
     filter: (filter, {})
 }
@@ -443,5 +439,4 @@ export default {
 .table-body table {
     width: 100%;
 }
-
 </style>
