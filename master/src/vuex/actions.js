@@ -6957,6 +6957,7 @@ export const deletePurchaseOrder = ({ dispatch }, param) => { //删除采购单
 }
 
 export const inquirePurchaseOrder = ({ dispatch }, param) => { //采购单询价或采购单取消询价(终止询价)
+    console.log(param.ids)
     const body = {
         ids: param.ids
     }
@@ -12087,7 +12088,7 @@ export const getBillList = ({ dispatch }, param, data) => { //收付费信息统
     });
 }
 
-export const setClientTop = ({ dispatch }, param, data) => { //收付费信息统计
+export const setClientTop = ({ dispatch }, param, data) => { //客户置顶
     var body = {
         id: param.id,
         sort: param.sortNum
@@ -12149,5 +12150,22 @@ export const handleFeedbackInfo = ({ dispatch }, data) => {
 
         }, (error) => {
             console.log(error)
+        })
+}
+
+export const transferPurchaseOrder = ({ dispatch }, data) => {
+    let body = {
+        biz_module: 'erpIndentService',
+        biz_method: 'indentTransfer',
+        biz_param: {
+            ids: data.ids,
+            offerOrgs: data.offerOrgs
+        }
+    }
+    httpService.commonPOST(httpService.commonBody(body))
+        .then((res) => {
+            data.callback(res.msg)
+        }, (error) => {
+            data.callback(res.msg)
         })
 }
