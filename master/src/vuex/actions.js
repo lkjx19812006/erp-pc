@@ -1079,56 +1079,27 @@ export const freshOrgCount = ({ dispatch }, getCharList) => { //获取部门客�
 }
 export const getFinancialList = ({ dispatch }, param) => { //财务应收应付数据获取
     param.loading = true;
-    var  url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
+    var  url = apiUrl.clientList + param.link;
     var body = {
         type:param.type,
         page:param.cur,
         pageSize:15
-        /*
-        employeeId:param.employeeId,
-        orgId:param.orgId,
-        customerId:param.customerId,
-        startTime:param.startTime,
-        endTime:param.endTime*/
     }
-        for (var search in param) {
-        if (search == 'startTime' && param[search] !== '') {
-           body={
-            type:param.type,
-            startTime:param.startTime,
-            endTime:param.endTime
-           }
-        }
-          if (search == 'endTime' && param[search] !== '') {
-           body={
-            type:param.type,
-            startTime:param.startTime,
-            endTime:param.endTime
-           }
-        }
-      if (search == 'employeeId' && param[search] !== '') {
-           body={
-            type:param.type,
-            employeeId:param.employeeId
-           }
-        }
-       if (search == 'orgId'  && param[search] !== '') {
-          body={
-            type:param.type,
-            orgId:param.orgId,
-            employeeId:param.employeeId
-           }
-        }
-
-      if (search == 'customerName' && param[search] !== '') {
-          body={
-            type:param.type,
-            customerName:param.customerName
-           }
-        }
-
+    if(param.startTime != ""){
+        body.startTime = param.startTime;
     }
-
+    if(param.endTime != ""){
+        body.endTime = param.endTime;
+    }
+    if(param.orgId != ""){
+        body.orgId = param.orgId;
+    }
+    if(param.employeeId != ""){
+        body.employeeId = param.employeeId;
+    }
+    if(param.customerName != ""){
+        body.customerName = param.customerName;
+    }
     Vue.http({
         method: 'POST',
         url: url,
@@ -1140,18 +1111,11 @@ export const getFinancialList = ({ dispatch }, param) => { //财务应收应付�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log(res.json().result)
-         var finan=res.json().result.list;
-      dispatch(types.FINANCIAL_COUNT_TOTAL, finan);
+        var finan=res.json().result.list;
+        dispatch(types.FINANCIAL_COUNT_TOTAL, finan);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
-    if(param.type==1){
-        localStorage.financialReParam = JSON.stringify(param);
-    }else if(param.type==0){
-     localStorage.financialPaParam = JSON.stringify(param);
-    }
-
     }, (res) => {
         console.log('fail');
         param.loading = false;

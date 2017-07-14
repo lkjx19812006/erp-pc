@@ -354,7 +354,7 @@ var locales = {
             assignTime:'划转时间',
             assignTo:'划转到',
              orderFicount:'合计订单金额',
-            backAmount:'回款金额',
+            backAmount:'已回款金额',
             chargeAmount:'应收金额',
             payAmount:'应付金额',
             billDate:'账期',
