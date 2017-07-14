@@ -12,7 +12,7 @@
                     </div>
                     <div class="left">
                         <dt class="left marg_top">~~</dt>
-                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
+                        <mz-datepicker :time.sync="loadParam.endTime"  format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                 </dl>
@@ -274,7 +274,6 @@ export default {
             if (this.selectOrgParam.orgId) {
                 this.loadParam.orgId = this.selectOrgParam.orgId;
                 this.loadParam.orgName = this.selectOrgParam.orgName;
-
                 this.employeeParam.orgId = this.selectOrgParam.orgId;
             }
         },
@@ -317,8 +316,6 @@ export default {
        var oneDay=1000*60*60*24;
        return new Date(nextMonthFirstDay-oneDay); 
         }
-
-
       },
     events: {
         fresh: function(input) {
