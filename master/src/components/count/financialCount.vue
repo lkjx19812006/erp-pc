@@ -13,7 +13,7 @@
                     <div class="left">
                         <dt class="left marg_top">~~</dt>
 
-                        <mz-datepicker :time.sync="loadParam.endTime" @click="dateOrder()" format="yyyy-MM-dd HH:mm:ss">
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
 
                         <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
@@ -296,11 +296,6 @@ export default {
             this.loadParam.endTime = '';
             this.getFinancialList(this.loadParam);
         },
-        dateOrder:function(){
-           if(this.loadParam.startTime.getTime()>this.loadParam.endTime.getTime()){
-            alert("xixi")
-           }
-        },
         changeCur: function(storageParam) { //
             if (!!storageParam) {
                 for (var key in param) {
@@ -320,7 +315,6 @@ export default {
             this.loadParam.employeeName = employee.employeeName;
         }
     },
-
     created() {    
             this.loadParam.startTime=util.getMonthFirstDay();
             this.loadParam.endTime=util.getMonthLastDay();
