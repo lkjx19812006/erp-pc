@@ -3,6 +3,7 @@
     <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
     <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
     <transfer-purchase :param="transferParam" v-if="transferParam.show"></transfer-purchase>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
@@ -69,7 +70,7 @@
                 </dl>
                 <dd class="right" style="margin-right:10px">
                     <Checkbox :checked='selectAll' @click.prevent="checkAll()">全选</Checkbox>
-                    <!-- <button type="button" class="btn btn-success" @click="tansfer()">采购单报价划转</button> -->
+                    <button type="button" class="btn btn-success" @click="tansfer()">采购单报价划转</button>
                     <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                 </dd>
             </div>
@@ -92,6 +93,7 @@
                         <th>询价时间</th>
                         <th>过期时间</th>
                         <th>采购单来源</th>
+                        <th>采购单划转至</th>
                         <th>采购内容描述</th>
                         <th>备注</th>
                         <th>收到报价数</th>
@@ -114,6 +116,9 @@
                         <td>{{item.shelveTime}}</td>
                         <td>{{item.duedate}}</td>
                         <td>{{item.source | indentSource}}</td>
+                        <td>
+                            <p v-for="entry in item.orgNameArray" style="text-align:left;font-weight:bold;">【{{entry.name}}】</p>
+                        </td> 
                         <td>
                             <Poptip placement="left" trigger="hover">
                                 <span>{{item.buyDesc | textDisplay "8"}}</span>
@@ -143,6 +148,7 @@ import mglistModel from '../../mguan/mgListComponent.vue'
 import selectorgModel from '../../tips/treeDialog'
 import employeeModel from '../../clientRelate/searchEmpInfo'
 import transferPurchase from '../transferPurchase'
+import tipsdialogModel from '../../tips/tipDialog'
 import {
     initAllPurchaseList,
     initLogin
@@ -157,7 +163,8 @@ export default {
         mglistModel,
         selectorgModel,
         employeeModel,
-        transferPurchase
+        transferPurchase,
+        tipsdialogModel
     },
     vuex: {
         getters: {
@@ -214,9 +221,15 @@ export default {
                 employeeName: ''
             },
             transferParam:{
-                show:false
+                show:false,
+                transferPurchase:[],
+                callback:this.showTips
             },
-            transferPurchase:[],
+            tipsParam: {
+                show: false,
+                name: '',
+                alert: true
+            },
             selectAll:false
         }
     },
@@ -262,6 +275,11 @@ export default {
                 this.selectSearch(this.loadParam);
             }
         },
+        showTips:function(data){
+            this.tipsParam.name = data
+            this.tipsParam.show = true
+            this.getPurchaseOrderList(this.loadParam)
+        },
         singleSelect:function($index,item){      
             this.$store.state.table.basicBaseList.allPurchaseList[$index].checked = !this.$store.state.table.basicBaseList.allPurchaseList[$index].checked;
             for(let i = 0;i<this.$store.state.table.basicBaseList.allPurchaseList.length;i++){//判断是否全部选择
@@ -277,26 +295,31 @@ export default {
             this.selectAll = !this.selectAll
             let _this = this
             if(this.selectAll){
-                _this.transferPurchase = []
+                _this.transferParam.transferPurchase = []
                 this.$store.state.table.basicBaseList.allPurchaseList.forEach(function(item){
                     item.checked = true
                 })
             }else{
-                _this.transferPurchase = []    
+                _this.transferParam.transferPurchase = []    
                 this.$store.state.table.basicBaseList.allPurchaseList.forEach(function(item){
                     item.checked = false
                 })
             }
         },
         tansfer:function(){
-            this.transferPurchase = []
+            this.transferParam.transferPurchase = []
             for(let i = 0;i<this.$store.state.table.basicBaseList.allPurchaseList.length;i++){
                 if(this.$store.state.table.basicBaseList.allPurchaseList[i].checked){
-                    this.transferPurchase.push(this.$store.state.table.basicBaseList.allPurchaseList[i].id)
+                    this.transferParam.transferPurchase.push(this.$store.state.table.basicBaseList.allPurchaseList[i].id)
                 }
             }
-            console.log(this.transferPurchase)
-            this.transferParam.show = true
+            if(this.transferParam.transferPurchase.length==0){
+                this.tipsParam.name = '请至少选择一个采购单'
+                this.tipsParam.show = true
+            }else{
+                this.transferParam.show = true
+            }
+            
         }
     },
     events: {
