@@ -12,7 +12,10 @@
                     </div>
                     <div class="left">
                         <dt class="left marg_top">~~</dt>
+
                         <mz-datepicker :time.sync="loadParam.endTime" @click="dateOrder()" format="yyyy-MM-dd HH:mm:ss">
+
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                 </dl>
@@ -317,11 +320,11 @@ export default {
             this.loadParam.employeeName = employee.employeeName;
         }
     },
+
     created() {    
             this.loadParam.startTime=util.getMonthFirstDay();
             this.loadParam.endTime=util.getMonthLastDay();
-            console.log(this.loadParam.startTime)
-            this.getFinancialList(this.loadParam);
+           this.getFinancialList(this.loadParam)
     },
     filter: (filter, {})
 }
@@ -430,5 +433,4 @@ export default {
 .table-body table {
     width: 100%;
 }
-
 </style>

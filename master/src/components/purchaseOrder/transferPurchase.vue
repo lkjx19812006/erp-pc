@@ -13,14 +13,15 @@
             </p>
         </div>    
         <footer class="footer">
-            <button class="btn btn-primary right" style="margin-left:10px;">确认</button>
-            <button class="btn btn-warning right" >取消</button>
+            <button class="btn btn-primary right" style="margin-left:10px;" @click="confirm()">确认</button>
+            <button class="btn btn-warning right" @click="param.show=false">取消</button>
         </footer>  
     </div>
 </template>
 
 <script>
 import selectorgModel from '../tips/treeDialog'
+import {transferPurchaseOrder} from '../../vuex/actions'
     export default{
         components:{
             selectorgModel
@@ -30,7 +31,7 @@ import selectorgModel from '../tips/treeDialog'
 
             },
             actions:{
-
+                transferPurchaseOrder
             }
         },
         props:['param'],
@@ -56,21 +57,28 @@ import selectorgModel from '../tips/treeDialog'
                 this.orgArr.splice($index,1)
             },
             callback: function() {
-                // if (this.selectOrgParam.orgId) {
-                //     this.loadParam.org = this.selectOrgParam.orgId;
-                //     this.loadParam.orgName = this.selectOrgParam.orgName;
-                //     this.orgArr.push
-                // }
                 var orgData = {
                     org:this.selectOrgParam.orgId,
                     orgName:this.selectOrgParam.orgName
                 }
                 this.orgArr.push(orgData)
             },
+            confirm:function(){
+                let orgIds = []
+                this.orgArr.forEach(function(item){
+                    orgIds.push(item.org)
+                })
+                let submitData = {
+                    ids:this.param.transferPurchase,
+                    offerOrgs:orgIds,
+                    callback:this.param.callback
+                }
+                this.transferPurchaseOrder(submitData)
+                this.param.show = false
+            }
         },
         ready() {
-            //common('tabd', 'table_box', 1);
-            console.log(this.param)
+           
         },
     }
 </script>

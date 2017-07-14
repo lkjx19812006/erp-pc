@@ -549,7 +549,7 @@ export default {
             sum: 0, //点击按钮计算
             altogether: 0, //所有商品的总金额,
             costmoney: 0, //所有商品的成本总金额
-            orderType:''
+            orderType: ''
         }
     },
     vuex: {
@@ -1023,18 +1023,21 @@ export default {
             var year = date.getFullYear();
             var month = date.getMonth() + 1;
             var day = date.getDate();
+            let hour = date.getHours();
+            let minute = date.getMinutes();
+            let second = date.getSeconds();
             if (month < 10) {
                 month = '0' + month;
             }
             if (day < 10) {
                 day = '0' + day;
             }
-            this.param.tradeTime = year + "-" + month + "-" + day + " 00:00:00";
+            this.param.tradeTime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
         }
         this.initParam();
-        if(this.param.type==1){
+        if (this.param.type == 1) {
             this.orderType = '销售(sell)'
-        }else{
+        } else {
             this.orderType = '采购(purchase)'
         }
     }
