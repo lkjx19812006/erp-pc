@@ -1111,18 +1111,11 @@ export const getFinancialList = ({ dispatch }, param) => { //财务应收应付�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log(res.json().result)
-         var finan=res.json().result.list;
-      dispatch(types.FINANCIAL_COUNT_TOTAL, finan);
+        var finan=res.json().result.list;
+        dispatch(types.FINANCIAL_COUNT_TOTAL, finan);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
-    if(param.type==1){
-        localStorage.financialReParam = JSON.stringify(param);
-    }else if(param.type==0){
-     localStorage.financialPaParam = JSON.stringify(param);
-    }
-
     }, (res) => {
         console.log('fail');
         param.loading = false;

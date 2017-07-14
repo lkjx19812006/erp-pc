@@ -309,12 +309,12 @@ export default {
         },
         //获得本月的停止日期 
         showMonthLastDay:function(){     
-       var date=new Date();
-       var currentMonth=date.getMonth();
-       var nextMonth=++currentMonth;
-       var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
-       var oneDay=1000*60*60*24;
-       return new Date(nextMonthFirstDay-oneDay); 
+        var date=new Date();
+        var currentMonth=date.getMonth();
+        var nextMonth=++currentMonth;
+        var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
+        var oneDay=1000*60*60*24;
+        return new Date(nextMonthFirstDay-oneDay); 
         }
       },
     events: {
@@ -330,8 +330,7 @@ export default {
     created() {
             this.loadParam.startTime=this.showMonthFirstDay();
             this.loadParam.endTime=this.showMonthLastDay();
-            this.getFinancialList(this.loadParam)
-
+            this.getFinancialList(this.loadParam);
     },
     filter: (filter, {})
 }
