@@ -97,7 +97,7 @@
                                 <td>
                                     <p v-for="stage in item.stages">
                                         <a v-if="stage.isOverdue==0">否</a>
-                                        <a v-if="stage.isOverdue==1">是</a>
+                                        <a v-if="stage.isOverdue==1" style="color:red;font-weight:bold">是</a>
                                     </p>
                                 </td>
                                 <td>{{item.employeeName}}</td>
@@ -118,8 +118,8 @@
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.orderTradeTime')}}</th>
                             <th>{{$t('static.orderFicount')}}</th>
-                            <th>{{$t('static.order_amount')}}</th>
-                            <th>{{$t('static.payAmount')}}</th>
+                            <th>{{$t('static.paid_amount')}}</th>
+                            <th>{{$t('static.unpaid_amount')}}</th>
                             <th>{{$t('static.billDate')}}</th>
                             <th>{{$t('static.dueDate')}}</th>
                             <th>{{$t('static.overDue')}}</th>
@@ -150,14 +150,14 @@
                                 </td>
                                 <td>
                                     <p v-for="stage in item.stages">
-                                        <a v-if="stage.scheduleTime!=0">{{stage.scheduleTime|date}}</a>
+                                        <a v-if="stage.scheduleTime!=0">{{stage.scheduleTime|subtime}}</a>
                                         <a v-else>----:--:--</a>
                                     </p>
                                 </td>
                                 <td>
                                     <p v-for="stage in item.stages">
                                         <a v-if="stage.isOverdue==0">否</a>
-                                        <a v-if="stage.isOverdue==1">是</a>
+                                        <a v-if="stage.isOverdue==1" style="color:red;font-weight:bold">是</a>
                                     </p>
                                 </td>
                                 <td>{{item.employeeName}}</td>
@@ -206,8 +206,6 @@ export default {
     },
     data() {
         return {
-            ReCur: '',
-            PayCur: '',
             loadParam: {
                 loading: true,
                 show: false,
@@ -427,4 +425,5 @@ export default {
 .table-body table {
     width: 100%;
 }
+
 </style>

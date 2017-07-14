@@ -893,7 +893,7 @@ dl {
 
 @media screen and (min-height:800px) {
     #table_box {
-        height: 1000px;
+        height: 700px;
         width: 100%;
         overflow-y: auto;
         position: relative;
