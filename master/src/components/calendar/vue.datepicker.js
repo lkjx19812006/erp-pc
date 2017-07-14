@@ -142,7 +142,7 @@
             value: function() {
                 if (this.range) {
                     if (this.startTime && this.endTime) {
-                        return this.stringify(this.parse(this.startTime, false)) + ' ~ ' + this.stringify(this.parse(this.endTime, false));
+                            return this.stringify(this.parse(this.startTime, false)) + ' ~ ' + this.stringify(this.parse(this.endTime, false));                 
                     } else {
                         return '';
                     }
@@ -173,7 +173,7 @@
                     } else if (isLast) {
                         return new Date(tmpTime.getFullYear(), tmpTime.getMonth(), tmpTime.getDate(), 23, 59, 59, 999);
                     } else {
-                        return new Date(tmpTime.getFullYear(), tmpTime.getMonth(), tmpTime.getDate());
+                        return new Date(tmpTime.getFullYear(), tmpTime.getMonth(), tmpTime.getDate(), tmpTime.getHours(), tmpTime.getMinutes(), tmpTime.getSeconds());
                     }
                 }
                 return null;

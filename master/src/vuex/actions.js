@@ -1079,31 +1079,31 @@ export const freshOrgCount = ({ dispatch }, getCharList) => { //获取部门客�
 }
 export const getFinancialList = ({ dispatch }, param) => { //财务应收应付数据获取
     param.loading = true;
-    var  url = apiUrl.clientList + param.link;
+    var url = apiUrl.clientList + param.link;
     var body = {
-        type:param.type,
-        page:param.cur,
-        pageSize:15
+        type: param.type,
+        page: param.cur,
+        pageSize: 15
     }
-    if(param.startTime != ""){
+    if (param.startTime != "") {
         body.startTime = param.startTime;
     }
-    if(param.endTime != ""){
+    if (param.endTime != "") {
         body.endTime = param.endTime;
     }
-    if(param.orgId != ""){
+    if (param.orgId != "") {
         body.orgId = param.orgId;
     }
-    if(param.employeeId != ""){
+    if (param.employeeId != "") {
         body.employeeId = param.employeeId;
     }
-    if(param.customerName != ""){
+    if (param.customerName != "") {
         body.customerName = param.customerName;
     }
     Vue.http({
         method: 'POST',
         url: url,
-        body:body,
+        body: body,
         emulateHTTP: false,
         emulateJSON: false,
         headers: {
@@ -1111,11 +1111,13 @@ export const getFinancialList = ({ dispatch }, param) => { //财务应收应付�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        var finan=res.json().result.list;
+
+        var finan = res.json().result.list;
         dispatch(types.FINANCIAL_COUNT_TOTAL, finan);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -2896,7 +2898,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         city: data.city,
         employee: data.employee,
         org: data.org,
-        tradeTime: data.tradeTime.substring(0, 10),
+        tradeTime: data.tradeTime,
         district: data.district,
         consigneeAddr: data.consigneeAddr,
         comments: data.comments,
@@ -2992,7 +2994,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         country: param.country,
         province: param.province,
         city: param.city,
-        tradeTime: param.tradeTime.substring(0, 10),
+        tradeTime: param.tradeTime,
         district: param.district,
         customerName: param.customerName,
         consigneeAddr: param.consigneeAddr,
@@ -5522,18 +5524,8 @@ export const customerAudit = ({ dispatch }, param) => { //客户审核(跟进)
 }
 export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转供应商,移出供应商,拉黑,移出黑名单
     param.loading = true;
-    const data = {
-        customerIds: param.customerIds,
-    };
-    if (param.supplier || param.supplier === 0) {
-        data.supplier = param.supplier;
-        data.comments = param.comments;
-    }
-    if (param.blacklist || param.blacklist === 0) {
-        data.blacklist = param.blacklist;
-        data.blackComments = param.comments;
-    }
-    /*if (param.link == '/customer/transferBlacklist') {
+    const data = {};
+    if (param.link == '/customer/transferBlacklist') {
         data.blackComments = param.blackComments;
         data.customerIds = param.customerIds;
         data.blacklist = param.blacklist;
@@ -5545,7 +5537,7 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
             data.supplier = param.supplier;
         }
         data.comments = param.blackComments;
-    }*/
+    }
 
 
     Vue.http({
@@ -7364,7 +7356,7 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
     if (param.effective) {
         body.effective = param.effective;
     }
-    if(param.source){
+    if (param.source) {
         body.source = param.source
     }
 

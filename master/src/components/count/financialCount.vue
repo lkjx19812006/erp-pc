@@ -12,7 +12,10 @@
                     </div>
                     <div class="left">
                         <dt class="left marg_top">~~</dt>
-                        <mz-datepicker :time.sync="loadParam.endTime"  format="yyyy-MM-dd HH:mm:ss">
+
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
+
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                 </dl>
@@ -176,6 +179,7 @@ import pagination from '../pagination'
 import filter from '../../filters/filters'
 import common from '../../common/common'
 import changeMenu from '../tools/tabs/tabs.js'
+import util from '../tools/util.js'
 import mglistModel from '../mguan/mgListComponent.vue'
 import employeeModel from '../clientRelate/searchEmpInfo'
 import selectorgModel from '../tips/treeDialog'
@@ -277,7 +281,6 @@ export default {
                 this.employeeParam.orgId = this.selectOrgParam.orgId;
             }
         },
-
         resetCondition: function() {
             this.loadParam.employee = '';
             this.loadParam.orgName = '';
@@ -300,23 +303,8 @@ export default {
                 }
             }
 
-        },
-        //获得本月的开端日期 
-        showMonthFirstDay:function(){     
-        var date=new Date();
-            date.setDate(1);
-            return date; 
-        },
-        //获得本月的停止日期 
-        showMonthLastDay:function(){     
-        var date=new Date();
-        var currentMonth=date.getMonth();
-        var nextMonth=++currentMonth;
-        var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
-        var oneDay=1000*60*60*24;
-        return new Date(nextMonthFirstDay-oneDay); 
         }
-      },
+      }, 
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
@@ -327,10 +315,10 @@ export default {
             this.loadParam.employeeName = employee.employeeName;
         }
     },
-    created() {
-            this.loadParam.startTime=this.showMonthFirstDay();
-            this.loadParam.endTime=this.showMonthLastDay();
-            this.getFinancialList(this.loadParam);
+    created() {    
+            this.loadParam.startTime=util.getMonthFirstDay();
+            this.loadParam.endTime=util.getMonthLastDay();
+           this.getFinancialList(this.loadParam)
     },
     filter: (filter, {})
 }
@@ -439,5 +427,4 @@ export default {
 .table-body table {
     width: 100%;
 }
-
 </style>
