@@ -5068,7 +5068,7 @@ export const specDel = ({ dispatch }, param) => { //删除药材相关信息
 
 export const getClientList = ({ dispatch }, param) => { //客户信息列表与搜索
     param.loading = true;
-    var clienturl = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
+    var clienturl = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize='+param.pageSize;
     for (var search in param) {
         if (search == 'name' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&name=' + param.name

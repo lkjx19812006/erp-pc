@@ -136,6 +136,7 @@
                     <button type="button" class="btn btn-default btn-warning" style="border-radius:20%" @click="resetCondition()">清空条件</button>
                 </dd>
                 <dd class="pull-right" style="margin-right:20px">
+
                     <button type="button" class="btn btn-default btn-warning" v-if='showTran' @click="clientTransfer({
                         arr:[],
                         name:'test',
@@ -192,7 +193,7 @@
                                             key:'myCustomerList'
                                             })">{{$t("static.new")}}</button>
                         <button type="button" v-if='!showTran' class="btn btn-primary" @click="excelImport()">{{$t('static.upload_clients')}}</button>
-                         <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+                        <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
 
                 </dd>
             </div>
@@ -201,7 +202,6 @@
      <!-- /*Middle Part*/ -->
 
         <div slot="form";>
-        
              <div class="cover_loading">
                     <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
                 </div>
@@ -445,6 +445,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                pageSize:15,
                 total: 0,
                 link: this.param.url,
                 key: 'allCustomerList',
@@ -466,8 +467,8 @@ export default {
                 label: '',
                 creditLevel: '',
                 trackingDay: '',
-                orderSum: ''
-
+                orderSum: '',
+                pageCallback:this.pageCallback
             },
              excelImportParam: {
                 show: false,
@@ -832,6 +833,10 @@ export default {
           }else{
               console.log("nothing is here")
           }
+      },
+      pageCallback:function(data){
+            this.loadParam.pageSize = data
+            this.getClientList(this.loadParam)
       }
     },
     events: {
@@ -853,7 +858,7 @@ export default {
     },
     created() {
         this.getProvinceList(this.provinceParam);
-       this.funBtn()
+        this.funBtn()
         
 
     },

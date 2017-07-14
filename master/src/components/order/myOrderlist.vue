@@ -193,7 +193,7 @@
                             <th>{{$t('static.order_source')}}</th>
                             <th>{{$t('static.review_status')}}</th>
                             <th>{{$t('static.comment')}}</th>
-                            <th style="min-width: 105px;">{{$t('static.handle')}}</th>
+                            <th style="min-width: 150px;">{{$t('static.handle')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -283,7 +283,7 @@
                                     </div>
                                 </Poptip>
                             </td>
-                            <td>
+                            <td >
                                 <button class="btn btn-primary btn-xs" v-if="(item.validate==0||item.validate==-2)&&item.orderStatus!==-1" @click="updateOrder({
                                         show:true,
                                         id:item.id,
@@ -439,7 +439,7 @@
                                     <!-- 待客户发货 -->
                                     <!-- <button class="btn btn-danger btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0">{{$t('static.pending_shipped')}}
                                     </button> -->
-                                    <button class="btn btn-danger btn-xs" @click="deliverGoods(item,$index)" v-if="item.orderStatus==40&&item.type==0">{{$t('static.pending_shipped')}}
+                                    <button class="btn btn-success btn-xs" @click="deliverGoods(item,$index)" v-if="item.orderStatus==40&&item.type==0">{{$t('static.pending_shipped')}}
                                     </button>
                                     <!-- 收货 -->
                                     <button class="btn btn-primary btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1">{{$t('static.receive')}}
