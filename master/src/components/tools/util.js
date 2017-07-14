@@ -15,7 +15,9 @@ var util = {
     getDate: getDate,
     getMonday: getMonday,
     dateFormat: dateFormat,
-    deepCopy: deepCopy
+    deepCopy: deepCopy,
+    getMonthFirstDay:getMonthFirstDay,
+    getMonthLastDay:getMonthLastDay
 }
 
 //加法 
@@ -173,6 +175,21 @@ function dateFormat(date, dateSign, timeSign) {
     }
     return year + dateSign + month + dateSign + day + " " + hour + timeSign + minute + timeSign + second;
 
+}
+//获得本月的开端日期 
+function getMonthFirstDay(){     
+    var date=new Date();
+    var MonthFirstDay=new Date(date.getFullYear(),date.getMonth(),1);
+    return  MonthFirstDay;
+}
+//获得本月的停止日期 
+function getMonthLastDay(){     
+    var date=new Date();
+    var currentMonth=date.getMonth();
+    var nextMonth=++currentMonth;
+    var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
+    var oneDay=1000*60*60*24;
+    return new Date(nextMonthFirstDay-oneDay); 
 }
 
 

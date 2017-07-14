@@ -718,7 +718,8 @@ export default {
             this.auditParam.customerIds = this.auditParam.arr;
             this.auditParam.auditComment = '';
             this.auditParam.callback = this.supplierback;
-            this.customerTransferBlacklist(this.auditParam);
+           this.customerTransferBlacklist(this.auditParam);
+          
         },
         supplierback: function(title) {
             this.tipsParam.show = true;

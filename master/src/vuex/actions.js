@@ -5522,18 +5522,8 @@ export const customerAudit = ({ dispatch }, param) => { //客户审核(跟进)
 }
 export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转供应商,移出供应商,拉黑,移出黑名单
     param.loading = true;
-    const data = {
-        customerIds: param.customerIds,
-    };
-    if (param.supplier || param.supplier === 0) {
-        data.supplier = param.supplier;
-        data.comments = param.comments;
-    }
-    if (param.blacklist || param.blacklist === 0) {
-        data.blacklist = param.blacklist;
-        data.blackComments = param.comments;
-    }
-    /*if (param.link == '/customer/transferBlacklist') {
+    const data = {};
+    if (param.link == '/customer/transferBlacklist') {
         data.blackComments = param.blackComments;
         data.customerIds = param.customerIds;
         data.blacklist = param.blacklist;
@@ -5545,7 +5535,7 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
             data.supplier = param.supplier;
         }
         data.comments = param.blackComments;
-    }*/
+    }
 
 
     Vue.http({
