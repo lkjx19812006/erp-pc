@@ -9,6 +9,7 @@
     <search-model :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
+     <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
     <language-model v-show="false"></language-model>
 
 
@@ -27,16 +28,36 @@
                         <input type="text" class="form-control" v-model="loadParam.id" placeholder="{{$t('static.Enter_search')}}" @keyup.enter="selectSearch()">
                     </dd>
                 </dl>
+               
+                <dl class="clear left transfer" v-if='showReg'>
+                    <div class="left">
+                        <dt class="left transfer marg_top">注册起止时间：</dt>
+                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                    <div class="left">
+                        <dt class="left marg_top">~~</dt>
+
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
+                        </mz-datepicker>
+
+                    </div>
+                </dl>
                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">手机省：</dt>
+                    <dt class="left transfer marg_top">信用等级：</dt>
                     <dd class="left">
-                        <select v-model="loadParam.phoneProvinceName" class="form-control" @change="selectSearch()">
-                            <option value="">全部</option>
-                            <option v-for="item in initProvince">{{item.cname}}</option>
+                        <select v-model="loadParam.creditLevel" class="form-control" @change="selectSearch()">
+                            <option value="">{{$t("static.please_select")}}</option>
+                            <option value="0">{{$t("static.none")}}</option>
+                            <option value="1">{{$t("static.one_star")}}</option>
+                            <option value="2">{{$t("static.two_star")}}</option>
+                            <option value="3">{{$t("static.three_star")}}</option>
+                            <option value="4">{{$t("static.four_star")}}</option>
+                            <option value="5">{{$t("static.five_star")}}</option>
                         </select>
                     </dd>
                 </dl>
-                <dl class="clear left transfer" style="width:192px">
+                <dl class="clear left transfer">
                     <dt class="left transfer marg_top">客户类型：</dt>
                     <dd class="left" style="width:100px">
                         <select v-model="loadParam.type" class="form-control" @change="selectSearch()">
@@ -69,19 +90,16 @@
                         </select>
                     </dd>
                 </dl>
-                <dl class="clear left transfer" v-if='showReg'>
-                    <div class="client-detailInfo col-xs-6">
-                        <dt class="left transfer marg_top">注册起始时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </dl>
-                <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">未跟进天数：</dt>
+                 <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">手机归属地：</dt>
                     <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.trackingDay" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                        <select v-model="loadParam.phoneProvinceName" class="form-control" @change="selectSearch()">
+                            <option value="">全部</option>
+                            <option v-for="item in initProvince">{{item.cname}}</option>
+                        </select>
                     </dd>
                 </dl>
+               
             </div>
         
             <div class="clear" style="margin-top:3px;">
@@ -91,51 +109,49 @@
                         <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
                 </dl>
-                <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">信用等级：</dt>
-                    <dd class="left">
-                        <select v-model="loadParam.creditLevel" class="form-control" @change="selectSearch()">
-                            <option value="">{{$t("static.please_select")}}</option>
-                            <option value="0">{{$t("static.none")}}</option>
-                            <option value="1">{{$t("static.one_star")}}</option>
-                            <option value="2">{{$t("static.two_star")}}</option>
-                            <option value="3">{{$t("static.three_star")}}</option>
-                            <option value="4">{{$t("static.four_star")}}</option>
-                            <option value="5">{{$t("static.five_star")}}</option>
-                        </select>
+               
+
+               
+               <!--  //部门搜索 -->
+               <dl class="clear left transfer" v-if="showReg">   
+                    <dt class="left  marg_top">{{$t('static.department')}}：</dt>
+                    <dd class="left"> 
+                        <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="请选择部门" style="cursor:pointer" readonly="true" @click="selectOrg()" />
                     </dd>
-                </dl>
-                <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">经营范围：</dt>
-                    <dd class="left">
-                        <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                    </dd>
-                </dl>
-                <dl class="clear left transfer" style="margin-left:-33px;" v-if='showReg'>
-                    <div class="client-detailInfo col-xs-6">
-                        <dt class="left transfer marg_top">注册结束时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.ctimeEnd" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
                 </dl>
 
                 <dl class="clear left transfer" v-if='showTran'>
                     <dt class="left transfer marg_top">{{$t('static.salesman')}}：</dt>
                     <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" @click="selectEmployee()">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" @click="selectEmployee()" placeholder="请选择业务员" style="width:120px">
+                    </dd>
+                </dl>
+                 <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">经营范围：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.bizScope" placeholder="按回车键搜索" @keyup.enter="selectSearch()" style="width:120px">
+                    </dd>
+                </dl>
+                  <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">未跟进天数：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.trackingDay" placeholder="按回车键搜索" @keyup.enter="selectSearch()" style="width:120px">
                     </dd>
                 </dl>
                 <dl class="clear left transfer" style="line-height:30px">
-                    <dt class="left">已成交：</dt>
+                    <dt class="left transfer marg_top">已成交：</dt>
                     <label class="checkbox_unselect" style="background-position:1px 5px" v-bind:class="{'checkbox_unselect':!loadParam.orderSum,'checkbox_select':loadParam.orderSum}" id="client_ids" @click="selectOrderSum()"></label>
                 </dl>
                 <dd class="left" style="margin-left:20px">
-                    <button type="button" class="btn btn-default btn-success" style="border-radius:30%;width:70px;" @click="selectSearch()">搜索</button>
+                    <button type="button" class="btn btn-default btn-success" style="border-radius:13%;width:70px;" @click="selectSearch()">搜索</button>
                 </dd>
                 <dd class="left" style="margin-left:20px">
-                    <button type="button" class="btn btn-default btn-warning" style="border-radius:20%" @click="resetCondition()">清空条件</button>
+                    <button type="button" class="btn btn-default btn-warning" style="border-radius:12%" @click="resetCondition()">清空条件</button>
                 </dd>
-                <dd class="pull-right" style="margin-right:20px">
+                 <dd class="left" style="margin-left:20px">
+                 <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+                 </dd>
+                <dd class="pull-right" style="margin-right:20px;">
 
                     <button type="button" class="btn btn-default btn-warning" v-if='showTran' @click="clientTransfer({
                         arr:[],
@@ -193,7 +209,7 @@
                                             key:'myCustomerList'
                                             })">{{$t("static.new")}}</button>
                         <button type="button" v-if='!showTran' class="btn btn-primary" @click="excelImport()">{{$t('static.upload_clients')}}</button>
-                        <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+                       
 
                 </dd>
             </div>
@@ -230,7 +246,7 @@
                         <th>{{$t('static.create_time')}}</th>
                         <th v-if="this.initLogin.orgId==29">跟进状态</th>
                         <th v-if="this.initLogin.orgId==29">跟进说明</th>
-                        <th>{{$t("static.operation")}}</th>
+                        <th v-if='!showReg'>{{$t("static.operation")}}</th>
                     </tr>
                
                       <tr>
@@ -291,7 +307,7 @@
                             <p >{{item.sourceType}}</p>
                         </td>
                         <td>{{item.ctime|timeFilters}}</td>
-                        <td>
+                        <td  v-if='!showReg'>
                         <a class="btn btn-info btn-xs" @click="modifyClient({
                                                 id:item.id,
                                                 sub:$index,
@@ -369,6 +385,8 @@ import vSelect from '../../tools/vueSelect/components/Select'
 //单个业务员
 import employeeModel from '../searchEmpInfo'
 import languageModel from '../../tools/language'
+import selectorgModel from '../../../components/tips/treeDialog'
+
 
 import {
     initAllCustomerlist,
@@ -406,7 +424,8 @@ export default {
         mglistModel,
         importCustomerModel,
         employeeModel,
-        languageModel
+        languageModel,
+        selectorgModel
     },
     vuex: {
         getters: {
@@ -468,7 +487,8 @@ export default {
                 creditLevel: '',
                 trackingDay: '',
                 orderSum: '',
-                pageCallback:this.pageCallback
+                pageCallback:this.pageCallback,
+                orgId:''
             },
              excelImportParam: {
                 show: false,
@@ -492,6 +512,12 @@ export default {
                 employeeIds: '',
                 employeeNames: '',
 
+            },
+              selectOrgParam: {
+                show: false,
+                orgId: '',
+                orgName: '',
+                callback: this.orgCall,
             },
               updateTrackingParam: {
                 show: false,
@@ -587,6 +613,16 @@ export default {
        selectEmployee: function() {
             this.employeeParam.show = true;
         },
+         selectOrg: function() {
+            this.selectOrgParam.show = true;
+        },
+          orgCall: function() {
+            if (this.selectOrgParam.orgId) {
+                this.loadParam.orgId = this.selectOrgParam.orgId;
+                this.loadParam.orgName = this.selectOrgParam.orgName;
+                this.employeeParam.orgId = this.selectOrgParam.orgId;
+            }
+        },
         createCustomer: function(info) {
             this.createParam = info;
             this.createParam.callback = this.valueback;
@@ -622,6 +658,8 @@ export default {
             this.loadParam.ctimeEnd = '';
             this.loadParam.trackingDay = '';
             this.loadParam.orderSum = '';
+            this.loadParam.orgId='';
+            this.loadParam.orgName='';
             this.getClientList(this.loadParam);
         },
         eventClick: function(id) {
@@ -943,8 +981,6 @@ dl {
 }
 .clear .left{
     display: inline-block;
-    height:30px;
-    line-height: 30px;
 }
 .clear .left button{
     outline: none;

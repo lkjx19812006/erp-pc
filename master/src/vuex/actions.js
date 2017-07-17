@@ -1100,6 +1100,9 @@ export const getFinancialList = ({ dispatch }, param) => { //财务应收应付�
     if (param.customerName != "") {
         body.customerName = param.customerName;
     }
+    if(param.isOverdue != ""){
+        body.isOverdue=Number(param.isOverdue);
+    }
     Vue.http({
         method: 'POST',
         url: url,
@@ -5137,6 +5140,9 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         }
         if (search == 'orderSum' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&orderSum=' + param.orderSum
+        }
+         if (search == 'orgId' && param[search] !== '' && param[search] != 'undefined') {
+            clienturl += '&orgId=' + param.orgId
         }
     }
     Vue.http({
