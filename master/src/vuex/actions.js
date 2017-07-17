@@ -1100,6 +1100,9 @@ export const getFinancialList = ({ dispatch }, param) => { //财务应收应付�
     if (param.customerName != "") {
         body.customerName = param.customerName;
     }
+    if(param.isOverdue != ""){
+        body.isOverdue=Number(param.isOverdue);
+    }
     Vue.http({
         method: 'POST',
         url: url,
