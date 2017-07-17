@@ -12,10 +12,8 @@
                     </div>
                     <div class="left">
                         <dt class="left marg_top">~~</dt>
-
                         <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
-
                     </div>
                 </dl>
                 <dl class="clear left transfer">
@@ -99,8 +97,9 @@
                                 </td>
                                 <td>
                                     <p v-for="stage in item.stages">
-                                        <a v-if="stage.isOverdue==0">否</a>
-                                        <a v-if="stage.isOverdue==1" style="color:red;font-weight:bold">是</a>
+                                        <a v-if="stage.received!=0">已回款</a>
+                                        <a v-if="stage.received==0&&stage.isOverdue==0">否</a>
+                                        <a v-if="stage.received==0&&stage.isOverdue==1" style="color:red;font-weight:bold">是</a>
                                     </p>
                                 </td>
                                 <td>{{item.employeeName}}</td>
@@ -159,8 +158,9 @@
                                 </td>
                                 <td>
                                     <p v-for="stage in item.stages">
-                                        <a v-if="stage.isOverdue==0">否</a>
-                                        <a v-if="stage.isOverdue==1" style="color:red;font-weight:bold">是</a>
+                                        <a v-if="stage.paid!=0">已付款</a>
+                                        <a v-if="stage.paid==0&&stage.isOverdue==0">否</a>
+                                        <a v-if="stage.paid==0&&stage.isOverdue==1" style="color:red;font-weight:bold">是</a>
                                     </p>
                                 </td>
                                 <td>{{item.employeeName}}</td>
