@@ -180,7 +180,36 @@ function dateFormat(date, dateSign, timeSign) {
 function getMonthFirstDay(){     
     var date=new Date();
     var MonthFirstDay=new Date(date.getFullYear(),date.getMonth(),1);
-    return  MonthFirstDay;
+
+            format = format || this.format;
+                var year = time.getFullYear(), //年份
+                    month = time.getMonth() + 1, //月份
+                    day = time.getDate(), //日
+                    hours24 = time.getHours(), //小时
+                    hours = hours24 % 12 === 0 ? 12 : hours24 % 12,
+                    minutes = time.getMinutes(), //分
+                    seconds = time.getSeconds(), //秒
+                    milliseconds = time.getMilliseconds(); //毫秒
+                var map = {
+                    yyyy: year,
+                    MM: ('0' + month).slice(-2),
+                    M: month,
+                    dd: ('0' + day).slice(-2),
+                    d: day,
+                    HH: ('0' + hours24).slice(-2),
+                    H: hours24,
+                    hh: ('0' + hours).slice(-2),
+                    h: hours,
+                    mm: ('0' + minutes).slice(-2),
+                    m: minutes,
+                    ss: ('0' + seconds).slice(-2),
+                    s: seconds,
+                    S: milliseconds
+                };
+                return format.replace(/y+|M+|d+|H+|h+|m+|s+|S+/g, function(str) {
+                    return map[str];
+                });
+
 }
 //获得本月的停止日期 
 function getMonthLastDay(){     
