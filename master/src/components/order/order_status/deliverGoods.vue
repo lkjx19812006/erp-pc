@@ -272,7 +272,7 @@
     </order-status>
 </template>
 <script>
-import orderStatus from '../orderStatus1.vue'
+import orderStatus from '../orderStatusModel.vue'
 import pressImage from '../../tools/upload/imagePressMul.vue'
 import {
     initOrderDetail,
