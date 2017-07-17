@@ -16,8 +16,16 @@
     <li v-else class="disabled"><a><span> {{$t('static.next_page')}} </span></a></li>
     <li class="disabled"><a>{{$t('static.altogether')}}<i>{{ combination.total }}</i></a></li>
     <li>
+      <p style="float:left;line-height:1.42857143;color:#777;margin:8px 10px 0 10px" v-if="combination.pageCallback">本页显示条数：
+        <select v-model="numbers" style="border:1px solid #ccc;border-radius: 5px;height:30px;margin-top:-10px; " @change="combination.pageCallback(numbers)">
+          <option value="15">15</option>
+          <option value="30">30</option>
+          <option value="60">60</option>
+          <option value="100">100</option>
+        </select>
+      </p>
       <p style="float:left;line-height:1.42857143;color:#777;margin:8px 10px 0 10px">{{$t('static.jump_to')}}:</p>
-      <input  type="text"  v-model="inpage" :value="page" style="position: relative;width:60px;margin:0 10px;float: left;padding: 6px 12px;margin-left: -1px;line-height: 1.42857143;color: #337ab7;text-decoration: none; background-color: #fff;border: 1px solid #ddd;"/>
+      <input  type="text"  v-model="inpage" :value="page" style="position: relative;width:60px;margin:0 10px;float: left;padding: 6px 12px;margin-left: -1px;line-height: 1.42857143;color: #337ab7;text-decoration: none; background-color: #fff;border: 1px solid #ddd;border-radius: 5px;"/>
       <a v-on:click="combination.cur=page,pageClick()" class="btn">{{$t('static.click_jump')}}</a>
     </li>
   </ul>
@@ -31,14 +39,18 @@
 </style>
 <script>
   module.exports = {
-    props: {'combination':{
-      cur:'',
-      total:'',
-      all:''
-  }},
+    props: {
+      'combination':{
+          cur:'',
+          total:'',
+          all:'',
+          pageCallback:''
+      },
+    },
     data(){
       return{
-        inpage:1
+        inpage:1,
+        numbers:15
       }
     },
     computed: {
@@ -111,6 +123,9 @@
         //   this.combination = data;
         //});
       },
+    },
+    created(){
+      console.log(this.combination.pageCallback)
     }
   };
 </script>

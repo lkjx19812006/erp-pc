@@ -15,9 +15,10 @@ var util = {
     getDate: getDate,
     getMonday: getMonday,
     dateFormat: dateFormat,
+    parseDate: parseDate,
     deepCopy: deepCopy,
-    getMonthFirstDay:getMonthFirstDay,
-    getMonthLastDay:getMonthLastDay
+    getMonthFirstDay: getMonthFirstDay,
+    getMonthLastDay: getMonthLastDay
 }
 
 //加法 
@@ -173,54 +174,55 @@ function dateFormat(date, dateSign, timeSign) {
         minute = timeArr[1];
         second = timeArr[2];
     }
+    if (month.length == 1) {
+        month = "0" + month;
+    }
+    if (day.length == 1) {
+        day = "0" + day;
+    }
+    if (hour.length == 1) {
+        hour = "0" + hour;
+    }
+    if (minute.length == 1) {
+        minute = "0" + minute;
+    }
+    if (second.length == 1) {
+        second = "0" + second;
+    }
     return year + dateSign + month + dateSign + day + " " + hour + timeSign + minute + timeSign + second;
 
 }
+//时间格式化，将Date类型转化成指定格式的字符串类型,默认为yyyy-MM-dd HH:mm:ss
+function parseDate(date, dateSign, timeSign) {
+    if (dateSign == undefined) {
+        dateSign = "-";
+    }
+    if (timeSign == undefined) {
+        timeSign = ":";
+    }
+    //如果date不是Date类型，那么返回1970-01-01 00:00:00
+    if (!(date instanceof Date)) {
+        return "1970-01-01 00:00:00";
+    }
+    var result = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    return dateFormat(result, dateSign, timeSign);
+}
 //获得本月的开端日期 
-function getMonthFirstDay(){     
-    var date=new Date();
-    var MonthFirstDay=new Date(date.getFullYear(),date.getMonth(),1);
-
-            format = format || this.format;
-                var year = time.getFullYear(), //年份
-                    month = time.getMonth() + 1, //月份
-                    day = time.getDate(), //日
-                    hours24 = time.getHours(), //小时
-                    hours = hours24 % 12 === 0 ? 12 : hours24 % 12,
-                    minutes = time.getMinutes(), //分
-                    seconds = time.getSeconds(), //秒
-                    milliseconds = time.getMilliseconds(); //毫秒
-                var map = {
-                    yyyy: year,
-                    MM: ('0' + month).slice(-2),
-                    M: month,
-                    dd: ('0' + day).slice(-2),
-                    d: day,
-                    HH: ('0' + hours24).slice(-2),
-                    H: hours24,
-                    hh: ('0' + hours).slice(-2),
-                    h: hours,
-                    mm: ('0' + minutes).slice(-2),
-                    m: minutes,
-                    ss: ('0' + seconds).slice(-2),
-                    s: seconds,
-                    S: milliseconds
-                };
-                return format.replace(/y+|M+|d+|H+|h+|m+|s+|S+/g, function(str) {
-                    return map[str];
-                });
+function getMonthFirstDay() {
+    var date = new Date();
+    var MonthFirstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    return MonthFirstDay;
 
 }
 //获得本月的停止日期 
-function getMonthLastDay(){     
-    var date=new Date();
-    var currentMonth=date.getMonth();
-    var nextMonth=++currentMonth;
-    var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
-    var oneDay=1000*60*60*24;
-    return new Date(nextMonthFirstDay-oneDay); 
+function getMonthLastDay() {
+    var date = new Date();
+    var currentMonth = date.getMonth();
+    var nextMonth = ++currentMonth;
+    var nextMonthFirstDay = new Date(date.getFullYear(), nextMonth, 1);
+    var oneDay = 1000 * 60 * 60 * 24;
+    return new Date(nextMonthFirstDay - oneDay);
 }
-
 
 //对象深克隆,将source克隆到target
 function deepCopy(target, source) {

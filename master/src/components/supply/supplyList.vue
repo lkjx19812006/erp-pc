@@ -333,8 +333,8 @@ export default {
                 creditLevel: '',
                 ctimeStart: '',
                 ctimeEnd: '',
-                total: 0
-
+                total: 0,
+                pageSize:15
             },
             provinceParam: {
                 loading: true,

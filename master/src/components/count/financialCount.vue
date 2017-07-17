@@ -7,13 +7,15 @@
                 <dl class="clear left transfer">
                     <div class="left">
                         <dt class="left transfer marg_top">起止时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
+                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                     <div class="left">
                         <dt class="left marg_top">~~</dt>
-                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
+
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
+
                     </div>
                 </dl>
                 <dl class="clear left transfer">
@@ -301,7 +303,7 @@ export default {
             }
 
         }
-      }, 
+    },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
@@ -312,13 +314,10 @@ export default {
             this.loadParam.employeeName = employee.employeeName;
         }
     },
-    ready(){
-    console.log(this.initFinancialCountTotal)
-    },
-    created() {    
-        this.loadParam.startTime=util.getMonthFirstDay();
-            this.loadParam.endTime=util.getMonthLastDay();
-           this.getFinancialList(this.loadParam)
+    created() {
+        this.loadParam.startTime = util.parseDate(util.getMonthFirstDay());
+        this.loadParam.endTime = util.parseDate(util.getMonthLastDay());
+        this.getFinancialList(this.loadParam)
     },
     filter: (filter, {})
 }
