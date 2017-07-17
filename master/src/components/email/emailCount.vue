@@ -35,6 +35,7 @@
                         <th>邮箱</th>
                         <th>发件数量</th>
                         <th>收件数量</th>
+                        <th>是否离职</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,6 +45,7 @@
                         <td>{{item.no}}</td>
                         <td>{{item.sendNumber}}</td>
                         <td>{{item.receiveNumber}}</td>
+                        <td :style="{color:item.employeeLeave==0?'red':''}">{{item.employeeLeave | isLeave}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -116,6 +118,11 @@ export default {
     created() {
           this.getEmailCount(this.loadParam);
     },
+    filters:{
+        isLeave:function(item){
+            return item==0?'离职':'在职'
+        }
+    },
     ready(){
       common('tab','table_box',1);
     },
@@ -162,8 +169,8 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 350px;
-    min-width: 300px;
+    width: 300px;
+    min-width: 200px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;

@@ -21,10 +21,10 @@
                         <input type="text" class="form-control" v-model="loadParam.purchaseContent" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
                     <!-- 单个业务员搜索 -->
-                    <dt class="left transfer marg_top" style="margin-left:50px">业务员：</dt>
+                    <!-- <dt class="left transfer marg_top" style="margin-left:50px">业务员：</dt>
                     <dd class="left margin_right">
                         <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="{{$t('static.select_salesman')}}" @click="selectEmployee()" readonly="readonly">
-                    </dd>
+                    </dd> -->
                 </dl>
                 <dl class="clear left transfer" style="margin-left:50px">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
@@ -44,7 +44,7 @@
                 <thead>
                     <tr>
                         <th>采购单类型</th>
-                        <th>业务员</th>
+                        <!-- <th>业务员</th> -->
                         <th>发布日期</th>
                         <th>过期时间</th>
                         <th>采购单来源</th>
@@ -57,7 +57,7 @@
                 <tbody>
                     <tr v-for="item in initPurchaseOfferList">
                         <td>{{item.type | indentType}}</td>
-                        <td>{{item.employeeName}}</td>
+                        <!-- <td>{{item.employeeName}}</td> -->
                         <td>{{item.pubdate}}</td>
                         <td>{{item.duedate}}</td>
                         <td>{{item.source | indentSource}}</td>
@@ -241,8 +241,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 189px;
-    min-width: 189px;
+    width: 220px;
+    min-width: 200px;
 }
 
 .service-nav {
