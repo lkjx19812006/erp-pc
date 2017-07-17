@@ -13,8 +13,7 @@
                     <div class="left">
                         <dt class="left marg_top">~~</dt>
                         <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
-                            <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
-                            </mz-datepicker>
+                        </mz-datepicker>
                     </div>
                 </dl>
                 <dl class="clear left transfer">
