@@ -137,7 +137,7 @@
 
                      <div class="editpage-input">
                        <label class="editlabel">主营业务</label>
-                       <input type="text" v-model='param.bizMain' class="form-control edit-input" value="{{initUserDetail.busiType}}" />
+                       <input type="text" v-model='param.bizMain' class="form-control edit-input" value="{{initUserDetail.busiType}}" readonly disabled />
                      </div>
                    </div>
                </div>

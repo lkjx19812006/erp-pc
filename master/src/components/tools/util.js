@@ -212,6 +212,7 @@ function getMonthFirstDay() {
     var date = new Date();
     var MonthFirstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     return MonthFirstDay;
+
 }
 //获得本月的停止日期 
 function getMonthLastDay() {
