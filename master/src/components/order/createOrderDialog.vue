@@ -405,6 +405,7 @@ import consigneeModel from '../clientRelate/addressSearch'
 import searchemgModel from '../order/second_order/allEmployee'
 import supplierDialog from '../order/second_order/selectAllSupplier.vue'
 import tipsdialogModel from '../tips/tipDialog'
+import util from '../tools/util.js'
 import {
     initCountrylist,
     initProvince,
@@ -1018,7 +1019,7 @@ export default {
         }
 
         if (!this.param.tradeTime) {
-            var date = new Date();
+            /*var date = new Date();
             date.setDate(date.getDate());
             var year = date.getFullYear();
             var month = date.getMonth() + 1;
@@ -1032,7 +1033,17 @@ export default {
             if (day < 10) {
                 day = '0' + day;
             }
-            this.param.tradeTime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+            if (hour < 10) {
+                hour = '0' + hour;
+            }
+            if (minute < 10) {
+                minute = '0' + minute;
+            }
+            if (second < 10) {
+                second = '0' + second;
+            }
+            this.param.tradeTime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;*/
+            this.param.tradeTime = util.getDate(0, true);
         }
         this.initParam();
         if (this.param.type == 1) {
