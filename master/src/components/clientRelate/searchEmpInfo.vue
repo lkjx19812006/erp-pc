@@ -17,7 +17,7 @@
                         <img src="/static/images/search.png" height="24" width="24">
                         <input type="text" class="search_input" v-model="loadParam.orgName" placeholder="请选择部门" @click="selectOrg()" readonly="true">
                     </div> -->
-                        <dl class="clear left transfer" v-if="!param.org">
+                        <dl class="clear left transfer">
                             <dt class="left marg_top">{{$t('static.department')}}：</dt>
                             <dd class="left">
                                 <input type="text" class="form-control" v-model="loadParam.orgName" @click="selectOrg()" readonly="true" placeholder="请选择部门" />
@@ -180,7 +180,7 @@ export default {
     },
     created() {
         if (this.param.orgId) {
-            this.loadParam.orgId = this.param.orgId;
+            this.loadParam.orgId = 1;
         }
         this.getEmployeeList(this.loadParam);
         this.getOrgList(this.loadParam);

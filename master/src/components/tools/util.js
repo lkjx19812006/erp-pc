@@ -111,27 +111,38 @@ function accDiv(arg1, arg2) {
     return accMul((r1 / r2), pow(10, t2 - t1));
 
 }
-//获取今日(距离今天days天)时间
-function getDate(days) {
+//获取今日(距离今天days天)时间,current表示是否为当前时分秒
+function getDate(days, current) {
     let now = new Date();
+    //获取当前时分秒
+    let hour = now.getHours();
+    let minute = now.getMinutes();
+    let second = now.getSeconds();
     let today = now.toLocaleDateString();
     let realDate = new Date(Date.parse(today) + days * 86400000);
-
+    //获取days天后的年月日
     let year = realDate.getFullYear();
     let month = realDate.getMonth() + 1;
     let day = realDate.getDate();
-    let hour = realDate.getHours();
-    let minute = realDate.getMinutes();
-    let second = realDate.getSeconds();
-
     if (month < 10) {
         month = "0" + month;
     }
     if (day < 10) {
         day = "0" + day;
     }
-
+    if (hour < 10) {
+        hour = "0" + hour;
+    }
+    if (minute < 10) {
+        minute = "0" + minute;
+    }
+    if (second < 10) {
+        second = "0" + second;
+    }
     let realDateStr = year + "-" + month + "-" + day + " 00:00:00";
+    if (current) {
+        realDateStr = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+    }
 
     return realDateStr;
 }
@@ -212,6 +223,7 @@ function getMonthFirstDay() {
     var date = new Date();
     var MonthFirstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     return MonthFirstDay;
+
 }
 //获得本月的停止日期 
 function getMonthLastDay() {
