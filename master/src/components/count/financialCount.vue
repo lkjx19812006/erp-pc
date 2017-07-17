@@ -127,7 +127,7 @@
                             <col />
                         </colgroup>
                         <thead>
-                            <th>{{$t('static.client_name')}}</th>
+                            <th>{{$t('static.supplier_name')}}</th>
                             <th>{{$t('static.orderTradeTime')}}</th>
                             <th>{{$t('static.orderFicount')}}</th>
                             <th>{{$t('static.paid_amount')}}</th>
@@ -407,7 +407,7 @@ export default {
 #table_box table td {
     min-width: 170px;
     width: 170px;
-    padding: 0;
+    padding: 7px 0;
 }
 
 #table_box table td:first-child {
@@ -418,6 +418,7 @@ export default {
 #table_box table td p {
     border-bottom: 1px solid #FA6705;
     display: inline-block;
+    height: 30px;
     width: 100%;
     color:#A27603;
     line-height: 30px;
