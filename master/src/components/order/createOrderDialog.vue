@@ -1019,30 +1019,6 @@ export default {
         }
 
         if (!this.param.tradeTime) {
-            /*var date = new Date();
-            date.setDate(date.getDate());
-            var year = date.getFullYear();
-            var month = date.getMonth() + 1;
-            var day = date.getDate();
-            let hour = date.getHours();
-            let minute = date.getMinutes();
-            let second = date.getSeconds();
-            if (month < 10) {
-                month = '0' + month;
-            }
-            if (day < 10) {
-                day = '0' + day;
-            }
-            if (hour < 10) {
-                hour = '0' + hour;
-            }
-            if (minute < 10) {
-                minute = '0' + minute;
-            }
-            if (second < 10) {
-                second = '0' + second;
-            }
-            this.param.tradeTime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;*/
             this.param.tradeTime = util.getDate(0, true);
         }
         this.initParam();
