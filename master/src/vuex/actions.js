@@ -5138,6 +5138,9 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         if (search == 'orderSum' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&orderSum=' + param.orderSum
         }
+         if (search == 'orgId' && param[search] !== '' && param[search] != 'undefined') {
+            clienturl += '&orgId=' + param.orgId
+        }
     }
     Vue.http({
         method: 'GET',

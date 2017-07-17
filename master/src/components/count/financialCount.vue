@@ -19,17 +19,18 @@
                     </div>
                 </dl>
                 <dl class="clear left transfer">
-                    <dt class="left  marg_top">{{$t('static.salesman')}}：</dt>
-                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" readonly="true" style="cursor:pointer" placeholder="请选择业务员" @click="selectEmployee()" />
-                    </dd>
-                </dl>
-                <dl class="clear left transfer">
                     <dt class="left  marg_top">{{$t('static.department')}}：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="请选择部门" style="cursor:pointer" readonly="true" @click="selectOrg()" />
                     </dd>
                 </dl>
+                <dl class="clear left transfer">
+                    <dt class="left  marg_top">{{$t('static.salesman')}}：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" readonly="true" style="cursor:pointer" placeholder="请选择业务员" @click="selectEmployee()" />
+                    </dd>
+                </dl>
+                
                 <dl class="clear left transfer">
                     <dt class="left  marg_top">{{$t('static.customerName')}}：</dt>
                     <dd class="left">

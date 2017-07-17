@@ -917,6 +917,6 @@ export const initUserFeedbackInfo = (state) => {//初始化用户反馈信息
 }
 //财务应付应收
 export const initFinancialCountTotal = (state) => {
-   // console.log(JSON.parse(JSON.stringify(state.table.financialCountTotal)))
+ console.log(JSON.parse(JSON.stringify(state.table.financialCountTotal)))
     return JSON.parse(JSON.stringify(state.table.financialCountTotal))
 }
