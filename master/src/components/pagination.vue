@@ -125,7 +125,7 @@
       },
     },
     created(){
-      console.log(this.combination.pageCallback)
+      
     }
   };
 </script>

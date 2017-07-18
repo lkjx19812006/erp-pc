@@ -29,11 +29,25 @@
             <section>
                 <div class="client-section clearfix">
                     <div class="col-md-12">
-                        <h4 class="section_title">{{$t('static.details')}}</h4>
+                        <!-- <h4 class="section_title">{{$t('static.customer_info')}}</h4> -->
                         <article @click.stop="">
                             <div class="panel-group">
                                 <div class="panel panel-default" style="border:none">
                                     <ul class="clearfix" style="font-size: 14px;padding:5px 0">
+                                        <!-- 客户 -->
+                                        <div class="clearfix">
+                                            <p class="btn btn-primary btn-xs">{{$t('static.customer_info')}}</p>
+                                        </div>
+                                        <div class="clearfix">
+                                            <mg-label title="ID">
+                                                <span v-if="initOrderDetail.customer>=0">{{initOrderDetail.customer}}</span>
+                                                <span v-else>{{initOrderDetail.user}}</span>
+                                            </mg-label>
+                                            <mg-label :title="$t('static.customerName')">{{initOrderDetail.customerName}}</mg-label>
+                                            <mg-label :title="$t('static.cellphone')">{{initOrderDetail.customerPhone}}</mg-label>
+                                        </div>
+                                        <hr style="height:1px;border-color:#ccc" />
+                                        <!-- 订单 -->
                                         <div class="clearfix">
                                             <p class="btn btn-primary btn-xs">订单信息</p>
                                         </div>
