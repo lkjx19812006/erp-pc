@@ -39,7 +39,10 @@
                                             <p class="btn btn-primary btn-xs">{{$t('static.customer_info')}}</p>
                                         </div>
                                         <div class="clearfix">
-                                            <mg-label title="ID">{{initOrderDetail.customer}}</mg-label>
+                                            <mg-label title="ID">
+                                                <span v-if="initOrderDetail.customer>=0">{{initOrderDetail.customer}}</span>
+                                                <span v-else>{{initOrderDetail.user}}</span>
+                                            </mg-label>
                                             <mg-label :title="$t('static.customerName')">{{initOrderDetail.customerName}}</mg-label>
                                             <mg-label :title="$t('static.cellphone')">{{initOrderDetail.customerPhone}}</mg-label>
                                         </div>

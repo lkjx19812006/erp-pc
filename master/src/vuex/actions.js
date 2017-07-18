@@ -7316,6 +7316,9 @@ export const getOffersByIndentId = ({ dispatch }, param) => { //根据意向ID�
     if (param.accept) {
         body.accept = param.accept;
     }
+    if(param.source){
+        body.source = param.source
+    }
     Vue.http({
         method: 'POST',
         url: url,

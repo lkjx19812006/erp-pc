@@ -233,11 +233,19 @@
                                     <div class="clear" style="margin:5px">
                                         <dt class="left transfer marg_top">报价业务员：</dt>
                                         <dd class="left margin_right">
-                                            <input type="text" class="form-control" v-model="indentOfferParam.offerEmployeeName" placeholder="按回车键搜索" @click="selectEmployee()" readonly="readonly">
+                                            <input type="text" class="form-control" v-model="indentOfferParam.offerEmployeeName" placeholder="按回车键搜索" @click="selectEmployee()" readonly="readonly" style="width: 100px;">
                                         </dd>
                                         <dt class="left transfer marg_top">品种：</dt>
                                         <dd class="left margin_right">
-                                            <input type="text" class="form-control" v-model="indentOfferParam.breedName" placeholder="按回车键搜索" @click="breedSearch()" readonly="readonly">
+                                            <input type="text" class="form-control" v-model="indentOfferParam.breedName" placeholder="按回车键搜索" @click="breedSearch()" readonly="readonly" style="width: 100px;">
+                                        </dd>
+                                        <dt class="left transfer marg_top">报价来源：</dt>
+                                        <dd class="left margin_right">
+                                            <select type="text" class="form-control" v-model="indentOfferParam.source" @change="selectSearch()" style="width: 100px;">
+                                                <option value="">全部</option>
+                                                <option value="0">业务员</option>
+                                                <option value="1">客户</option>
+                                            </select>
                                         </dd>
                                         <div class="btn-group" style="margin-left:10px">
                                             <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept===''}" @click="clickAccept('')">
@@ -403,8 +411,8 @@ export default {
                 offerEmployeeName: "",
                 breedId: "",
                 breedName: "",
-                accept: ""
-
+                accept: "",
+                source:""
             },
             tipsParam: {
                 show: false,
@@ -594,11 +602,13 @@ export default {
             this.getOffersByIndentId(this.indentOfferParam);
         },
         resetCondition: function() {
+            console.log(this.indentOfferParam.source)
             this.indentOfferParam.offerEmployee = "";
             this.indentOfferParam.offerEmployeeName = "";
             this.indentOfferParam.breedId = "";
             this.indentOfferParam.breedName = "";
-            this.indentOfferParam.accept = "";
+            this.indentOfferParam.accept = ""
+            this.indentOfferParam.source = ""
             this.selectSearch(this.indentOfferParam);
         },
         enfoldment: function(param) {
@@ -705,7 +715,7 @@ export default {
 
 .modal_con {
     z-index: 1081;
-    width: 60%;
+    width: 1000px;
 }
 
 .client_body {
