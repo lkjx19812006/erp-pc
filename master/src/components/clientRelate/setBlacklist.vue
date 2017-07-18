@@ -19,7 +19,7 @@ export default {
             customParam: {
                 customerIds: "",
                 blacklist: "",
-                comments: "",
+                blackComments: "",
                 callback: "",
                 title: "加入黑名单",
                 show: true,
@@ -56,6 +56,12 @@ export default {
             this.customerTransferBlacklist(this.customParam);
         },
 
+    },
+    events: {
+        Comment: function(input) {
+            this.customParam.blackComments = input;
+            console.log(this.customParam.blackComments )
+        }
     },
     created() {
         this.customParam.customerIds = this.param.customerIds;
