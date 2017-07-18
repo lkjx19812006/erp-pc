@@ -28,7 +28,6 @@
                         <input type="text" class="form-control" v-model="loadParam.employeeName" readonly="true" style="cursor:pointer" placeholder="请选择业务员" @click="selectEmployee()" />
                     </dd>
                 </dl>
-                
                 <dl class="clear left transfer">
                     <dt class="left  marg_top">{{$t('static.customerName')}}：</dt>
                     <dd class="left">
@@ -36,15 +35,15 @@
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
-                        <dt class="left transfer marg_top">是否逾期：</dt>
-                        <dd class="left">
-                            <select class="form-control" v-model="loadParam.isOverdue" @change="search()">
-                                <option value="">{{$t('static.please_select')}}</option>
-                                <option value="0">{{$t('static.no')}}</option>
-                                <option value="1">{{$t('static.yes')}}</option>
-                            </select>
-                        </dd>
-                    </dl>
+                    <dt class="left transfer marg_top">是否逾期：</dt>
+                    <dd class="left">
+                        <select class="form-control" v-model="loadParam.isOverdue" @change="search()">
+                            <option value="">{{$t('static.please_select')}}</option>
+                            <option value="0">{{$t('static.no')}}</option>
+                            <option value="1">{{$t('static.yes')}}</option>
+                        </select>
+                    </dd>
+                </dl>
                 <button class="new_btn left transfer pull-left btn-clear" @click="resetCondition()">{{$t('static.clear_all')}}</button>
                 <button class="new_btn left transfer pull-left btn-search" @click="search()">{{$t('static.search')}}</button>
             </div>
@@ -91,25 +90,25 @@
                                 <td>{{item.tradeTime|subtime2}}</td>
                                 <td>￥{{item.total|money}}</td>
                                 <td>
-                                    <a v-for="stage in item.stages"  v-bind:class="{ 'Duedate': stage.isRequired==1}">￥{{stage.received|money}}</a>
+                                    <a v-for="stage in item.stages" v-bind:class="{ 'Duedate': stage.isRequired==1}">￥{{stage.received|money}}</a>
                                 </td>
                                 <td>
-                                    <a v-for="stage in item.stages"  v-bind:class="{ 'Duedate': stage.isRequired==1}">￥{{stage.unreceived|money}}</a>
+                                    <a v-for="stage in item.stages" v-bind:class="{ 'Duedate': stage.isRequired==1}">￥{{stage.unreceived|money}}</a>
                                 </td>
                                 <td>
-                                    <a v-for="stage in item.stages"  v-bind:class="{ 'Duedate': stage.isRequired==1}">{{stage.extra}}天</a>
+                                    <a v-for="stage in item.stages" v-bind:class="{ 'Duedate': stage.isRequired==1}">{{stage.extra}}天</a>
                                 </td>
                                 <td>
                                     <p v-for="stage in item.stages">
-                                        <a v-if="stage.scheduleTime!=0"  v-bind:class="{ 'Duedate': stage.isRequired==1}">{{stage.scheduleTime|subtime2}}</a>
-                                        <a v-else  v-bind:class="{ 'Duedate': stage.isRequired==1}">----:--:--</a>
+                                        <a v-if="stage.scheduleTime!=0" v-bind:class="{ 'Duedate': stage.isRequired==1}">{{stage.scheduleTime|subtime2}}</a>
+                                        <a v-else v-bind:class="{ 'Duedate': stage.isRequired==1}">----:--:--</a>
                                     </p>
                                 </td>
                                 <td>
                                     <p v-for="stage in item.stages">
-                                        <a v-if="stage.received!=0"  v-bind:class="{ 'Duedate': stage.isRequired==1}">已回款</a>
-                                        <a v-if="stage.received==0&&stage.isOverdue==0"  v-bind:class="{ 'Duedate': stage.isRequired==1}">否</a>
-                                        <a v-if="stage.received==0&&stage.isOverdue==1" style="color:#FA6705;font-weight:bold"  v-bind:class="{ 'Duedate': stage.isRequired==1}">是</a>
+                                        <a v-if="stage.received!=0" v-bind:class="{ 'Duedate': stage.isRequired==1}">已回款</a>
+                                        <a v-if="stage.received==0&&stage.isOverdue==0" v-bind:class="{ 'Duedate': stage.isRequired==1}">否</a>
+                                        <a v-if="stage.received==0&&stage.isOverdue==1" style="color:#FA6705;font-weight:bold" v-bind:class="{ 'Duedate': stage.isRequired==1}">是</a>
                                     </p>
                                 </td>
                                 <td>{{item.employeeName}}</td>
@@ -152,25 +151,25 @@
                                 <td>{{item.tradeTime|subtime2}}</td>
                                 <td>￥{{item.total|money}}</td>
                                 <td>
-                                    <a v-for="stage in item.stages"  v-bind:class="{ 'Duedate': stage.isRequired==1}">￥{{stage.paid|money}}</a>
+                                    <a v-for="stage in item.stages" v-bind:class="{ 'Duedate': stage.isRequired==1}">￥{{stage.paid|money}}</a>
                                 </td>
                                 <td>
-                                    <a v-for="stage in item.stages"  v-bind:class="{ 'Duedate': stage.isRequired==1}">￥{{stage.unpaid|money}}</a>
+                                    <a v-for="stage in item.stages" v-bind:class="{ 'Duedate': stage.isRequired==1}">￥{{stage.unpaid|money}}</a>
                                 </td>
                                 <td>
-                                    <a v-for="stage in item.stages"  v-bind:class="{ 'Duedate': stage.isRequired==1}">{{stage.extra}}天</a>
+                                    <a v-for="stage in item.stages" v-bind:class="{ 'Duedate': stage.isRequired==1}">{{stage.extra}}天</a>
                                 </td>
                                 <td>
                                     <p v-for="stage in item.stages">
-                                        <a v-if="stage.scheduleTime!=0"  v-bind:class="{ 'Duedate': stage.isRequired==1}">{{stage.scheduleTime|subtime2}}</a>
-                                        <a v-else  v-bind:class="{ 'Duedate': stage.isRequired==1}">----:--:--</a>
+                                        <a v-if="stage.scheduleTime!=0" v-bind:class="{ 'Duedate': stage.isRequired==1}">{{stage.scheduleTime|subtime2}}</a>
+                                        <a v-else v-bind:class="{ 'Duedate': stage.isRequired==1}">----:--:--</a>
                                     </p>
                                 </td>
                                 <td>
                                     <p v-for="stage in item.stages">
-                                        <a v-if="stage.paid!=0"  v-bind:class="{ 'Duedate': stage.isRequired==1}">已付款</a>
-                                        <a v-if="stage.paid==0&&stage.isOverdue==0"  v-bind:class="{ 'Duedate': stage.isRequired==1}">否</a>
-                                        <a v-if="stage.paid==0&&stage.isOverdue==1" style="color:#FA6705;font-weight:bold"  v-bind:class="{ 'Duedate': stage.isRequired==1}">是</a>
+                                        <a v-if="stage.paid!=0" v-bind:class="{ 'Duedate': stage.isRequired==1}">已付款</a>
+                                        <a v-if="stage.paid==0&&stage.isOverdue==0" v-bind:class="{ 'Duedate': stage.isRequired==1}">否</a>
+                                        <a v-if="stage.paid==0&&stage.isOverdue==1" style="color:#FA6705;font-weight:bold" v-bind:class="{ 'Duedate': stage.isRequired==1}">是</a>
                                     </p>
                                 </td>
                                 <td>{{item.employeeName}}</td>
@@ -243,7 +242,7 @@ export default {
                 country: '',
                 startTime: "",
                 endTime: "",
-                isOverdue:''
+                isOverdue: ''
             },
             employeeParam: {
                 show: false,
@@ -420,7 +419,7 @@ export default {
     display: inline-block;
     height: 30px;
     width: 100%;
-    color:#A27603;
+    color: #A27603;
     line-height: 30px;
 }
 
@@ -439,7 +438,8 @@ export default {
 .table-body table {
     width: 100%;
 }
-.Duedate{
+
+.Duedate {
     background: #BCD1F2;
 }
 </style>

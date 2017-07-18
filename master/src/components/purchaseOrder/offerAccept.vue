@@ -12,7 +12,7 @@
                 <i-option v-for="item in refuseTexts" :value="item.text" @click="selectText(item.text,$index)">{{item.text}}</i-option>
             </i-select>
             <i-select style="width:150px;float:left;margin-left:10px" v-if="showSub" :model.sync="subComment">
-                <i-option v-for="item in refuseTexts[textIndex].sub " :value="item.text" @click="selectSub(item.text)">{{ item.text }}</i-option>
+                <i-option v-for="item in refuseTexts[textIndex].sub " :value="item.text" @click="selectSub(item.text)">{{item.text}}</i-option>
             </i-select>
         </div>
         <div style="clear:both" v-if="accept==3">
@@ -192,9 +192,11 @@ export default {
             if (this.refuseTexts[index].sub.length > 0) {
                 this.showSub = true;
             }
+            console.log("dadad");
         },
         selectSub: function(text) {
             //选择次级原因后，自定义原因置为空
+
             this.customComment = "";
         },
         //取消
