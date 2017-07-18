@@ -601,7 +601,8 @@ var locales = {
             upload_clients: 'excel导入客户',
             two_decimal: '至多两位小数',
             offer_message: '报价消息',
-            delivery_addr: '发货地'
+            delivery_addr: '发货地',
+            main_product:'主营产品'
         }
     },
     en: {

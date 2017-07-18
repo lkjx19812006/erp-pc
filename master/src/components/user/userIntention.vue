@@ -45,25 +45,36 @@
                             </div>
                         </div>
                         <div v-if="param.selectCustomer" style="margin-top:15px">
-                            <label class="editlabel">选择客户</label>
-                            <input type="text" v-model='param.customerName' class="form-control edit-input" style="width:95%" readonly="readonly" @click="searchCustomer(param.customerName,param.customerId,param.customerPhone)" />
+                            <label class="editlabel">选择客户<span v-if="$validation.customername.required" class="system_danger">必填项</span></label>
+                            <input type="text" v-model='param.customerName' class="form-control edit-input" style="width:95%" readonly="readonly" @click="searchCustomer(param.customerName,param.customerId,param.customerPhone)" v-validate:customername="['required']"/>
                         </div>
                         <div style="margin-top:15px">
                             <img src="/static/images/breedinfo@2x.png" style="display:inline" />
                             <h5 style="display:inline">药材信息</h5>
                         </div>
-                        <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
+                        <!-- 求购药材图片不需要上传 -->
+                        <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto" v-if="this.param.type===0&&this.param.preSell==0&&(this.param.especial===0||this.param.especial===1)">
                             <label class="editlabel">药材图片</label>
-                            <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" boxid="box1" style="float:left;margin-left:5%;width:20%"></press-image>
+                            <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" boxid="box1" ></press-image>
+                        </div>
+                        <!-- 供应意向药材图片需要上传 -->
+                        <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto" v-else>
+                            <label class="editlabel">药材图片
+                                <span v-if="$validation.image.required" class="system_danger">
+                                    必填项
+                                </span>
+                            </label>
+                            <input type="text" v-show="false" v-model="param.images" v-validate:image="{required:true}">
+                            <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" boxid="box1" ></press-image>
                         </div>
                         <!-- 当为预售资源时，进口资质和检测报告需要上传 -->
                         <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                             <label class="editlabel">进口资质</label>
-                            <press-image :value.sync="param.importQualityImages" :type.sync="type" :param="importQualityParam" boxid="box2" style="float:left;margin-left:5%;width:20%"></press-image>
+                            <press-image :value.sync="param.importQualityImages" :type.sync="type" :param="importQualityParam" boxid="box2" ></press-image>
                         </div>
                         <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                             <label class="editlabel">检测报告</label>
-                            <press-image :value.sync="param.testReportImages" :type.sync="type" :param="testReportParam" boxid="box3" style="float:left;margin-left:5%;width:20%"></press-image>
+                            <press-image :value.sync="param.testReportImages" :type.sync="type" :param="testReportParam" boxid="box3" ></press-image>
                         </div>
                         <div class="editpage">
                             <div class="editpageleft">
@@ -287,7 +298,7 @@
                                 <div class="editpage-input col-md-12" style="padding-left: 0px;padding-right: 30px;">
                                     <label class="editlabel">备注</label>
                                     <textarea class="form-control" v-model="param.description" rows="5" v-show="false"></textarea>
-                                    <mark-info :param="param" :rows="5"></mark-info>
+                                    <mark-info :param="param" ></mark-info>
                                 </div>
                             </div>
                             <div class="editpageright">

@@ -83,7 +83,8 @@
                         <th>发件人</th>
                         <th>发件人姓名</th>
                         <th>收件人</th>
-                        <th>发送时间</th>  
+                        <th>发送时间</th>
+                        <th>收件时间</th>  
                     </tr>
                 </thead>
                 <tbody>
@@ -94,6 +95,7 @@
                         <td>{{item.sendName}}</td>
                         <td>{{item.receiveNo}}</td>
                         <td>{{item.sendDate}}</td>
+                        <td>{{item.receiveDate}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -239,8 +241,8 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 281px;
-    min-width: 281px;
+    width: 250px;
+    min-width: 150px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;

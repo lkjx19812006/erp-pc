@@ -5547,7 +5547,7 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
         } else {
             data.supplier = param.supplier;
         }
-        data.comments = param.blackComments;
+        data.comments = param.supplierComments;
     }
 
 
