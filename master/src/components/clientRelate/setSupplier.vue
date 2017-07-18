@@ -19,7 +19,7 @@ export default {
             customParam: {
                 customerIds: "",
                 supplier: "",
-                comments: "",
+                supplierComments:'',
                 callback: "",
                 title: "客户提取为供应商",
                 show: true,
@@ -57,6 +57,13 @@ export default {
         },
 
     },
+    //获取输入的comments
+    events: {
+        Comment: function(input) {
+            this.customParam.supplierComments = input;
+            console.log(this.customParam.supplierComments )
+        }
+    },
     created() {
         this.customParam.customerIds = this.param.customerIds;
         if (this.param.title) {
@@ -64,6 +71,7 @@ export default {
         }
         this.customParam.supplier = this.param.supplier;
         this.customParam.link = this.param.link;
+        this.customParam.comments = this.param.comments;
         this.customParam.callback = this.param.callback;
     }
 

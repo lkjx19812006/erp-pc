@@ -415,7 +415,7 @@ export default {
 
 #table_box table td a,
 #table_box table td p {
-    border-bottom: 1px solid #FA6705;
+    border-bottom: 1px solid #F0AD4E;
     display: inline-block;
     height: 30px;
     width: 100%;
@@ -440,6 +440,6 @@ export default {
 }
 
 .Duedate {
-    background: #BCD1F2;
+    background: #e8f1ff;
 }
 </style>

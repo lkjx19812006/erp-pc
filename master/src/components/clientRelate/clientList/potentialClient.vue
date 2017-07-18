@@ -113,15 +113,15 @@
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
                 </dd>
                 <dd class="pull-right" style="margin-right:20px">
-                    <button type="button" class="btn btn-default" @click="clientTransfer({
+                    <button type="button" class="btn btn-default btn-success" @click="clientTransfer({
                         arr:[],
                         name:'test',
                         employeeId:'',
                         orgId:'',
                         show:true
                         })">划转</button>
-                    <button type="button" class="btn btn-default" @click="clientTransferBlack()">加入黑名单</button>
-                    <button type="button" class="btn btn-default" @click="clientTransferSupplier()">提取供应商</button>
+                    <button type="button" class="btn btn-default btn-warning" @click="clientTransferBlack()">加入黑名单</button>
+                    <button type="button" class="btn btn-default btn-success" @click="clientTransferSupplier()">提取供应商</button>
                     <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                 </dd>
             </div>
@@ -267,7 +267,7 @@
                                                 employeeName:item.employeeName,
                                                 orgId:item.orgId
                                                 })">
-                            <a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" height="18" width="30" />
+                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30" />
                             </a>
                         </td>
                     </tr>
