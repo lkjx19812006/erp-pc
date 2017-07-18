@@ -1,7 +1,6 @@
 <template>
     <tips-dialog :param="tipsParam" v-if="tipsParam.show"></tips-dialog>
     <custom-dialog :param="customParam" v-if="customParam.show">
-    <validate name="validation">
         <Radio-group :model.sync="accept">
             <Radio value="1">采用</Radio>
             <Radio value="2">不采用</Radio>
@@ -25,7 +24,7 @@
         <div style="margin-top:50px;width:200px;"></div>
         <div style="clear:both" v-if="accept==2&&subComment=='其他'">
             <span style="float:left;font-size:12px">填写原因：</span>
-            <input style="float:left;font-size:12px" type="text" v-model="customComment" class="custom_input" v-validate:comment="{max:10}"/>
+            <input style="float:left;font-size:12px" type="text" v-model="customComment" class="custom_input"/>
             <span style="color:red;font-size:12px">至多填写十个字符！</span>
         </div>
         <div style="clear:both" v-if="accept==3&&waitComment=='其他'">
@@ -34,7 +33,6 @@
             <span style="color:red;font-size:12px">至多填写十个字符！</span>
         </div>
         <div style="clear:both;margin-top:50px;width:600px;"></div>
-    </validate>
     </custom-dialog>
 </template>
 <script>
