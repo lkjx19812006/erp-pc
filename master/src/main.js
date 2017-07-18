@@ -13,7 +13,9 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import fullCalendar from 'vue-fullcalendar';
 import InfiniteLoading from 'vue-infinite-loading';
-
+import erpSearch from './components/tools/basicsComponents/erpSearch.vue'
+import erpSelect from './components/tools/basicsComponents/erpSelect.vue'
+import searchModel from './components/tools/searchModel.vue'
 
 /*import alert from 'vue-strap/src/alert'*/
 
@@ -28,7 +30,9 @@ Vue.component('treeview', treeview);
 Vue.component('tabs', tabs);
 Vue.component('full-calendar', fullCalendar);
 Vue.component('InfiniteLoading', InfiniteLoading);
-
+Vue.component('erpSearch',erpSearch)
+Vue.component('erpSelect',erpSelect)
+Vue.component('searchModel',searchModel)
 Vue.directive('echarts', require('./directives/echarts'));
 
 // Vue.use(VueValidator)
