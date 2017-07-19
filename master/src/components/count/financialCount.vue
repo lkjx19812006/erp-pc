@@ -427,8 +427,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    min-width: 170px;
-    width: 170px;
+    min-width: 150px;
+    width: 150px;
     padding: 7px 0;
 }
 
