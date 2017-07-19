@@ -19,13 +19,13 @@
                 <dl class="clear left transfer">
                     <dt class="left  marg_top">{{$t('static.department')}}：</dt>
                     <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="请选择部门" style="cursor:pointer" readonly="true" @click="selectOrg()" />
+                        <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="请选择部门" style="cursor:pointer;width:148px" readonly="true" @click="selectOrg()" />
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
                     <dt class="left  marg_top">{{$t('static.salesman')}}：</dt>
                     <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" readonly="true" style="cursor:pointer" placeholder="请选择业务员" @click="selectEmployee()" />
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" readonly="true" style="cursor:pointer;width:148px" placeholder="请选择业务员" @click="selectEmployee()" />
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
@@ -44,6 +44,23 @@
                         </select>
                     </dd>
                 </dl>
+                <dl class="clear left transfer">
+                        <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
+                        <dd class="left">
+                            <select v-model="loadParam.orderStatus" class="form-control" @change="search()">
+                                <option value="" selected="">{{$t('static.please_select')}}</option>
+                                 <option value="-1">{{$t('static.cancle_order')}}</option>
+                                <option value="0">{{$t('static.new_order')}}</option>
+                                <!-- <option value="10">{{$t('static.pending')}}</option> -->
+                                <option value="20">{{$t('static.waiting_order')}}</option>
+                                <option value="30">{{$t('static.awaiting_review')}}</option>
+                                <option value="40">{{$t('static.wait_owner_deliver')}}</option>
+                                <option value="50">{{$t('static.wait_receipt')}}</option>
+                                <option value="60">{{$t('static.receivedGood')}}</option>
+                                <option value="70">{{$t('static.order_over')}}</option>
+                            </select>
+                        </dd>
+                    </dl>
                 <button class="new_btn left transfer pull-left btn-clear" @click="resetCondition()">{{$t('static.clear_all')}}</button>
                 <button class="new_btn left transfer pull-left btn-search" @click="search()">{{$t('static.search')}}</button>
             </div>
@@ -67,9 +84,10 @@
                         <thead>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.orderTradeTime')}}</th>
-                            <th>{{$t('static.orderFicount')}}</th>
-                            <th>{{$t('static.backAmount')}}</th>
-                            <th>{{$t('static.chargeAmount')}}</th>
+                            <th>{{$t('static.order_status')}}</th>
+                            <th>{{$t('static.orderFicount')}} (￥{{initFinancialCountTotal.sum.amount}})</th>
+                            <th>{{$t('static.backAmount')}} (￥{{initFinancialCountTotal.sum.received}})</th>
+                            <th>{{$t('static.chargeAmount')}} (￥{{initFinancialCountTotal.sum.unreceived}})</th>
                             <th>{{$t('static.billDate')}}</th>
                             <th>{{$t('static.dueDate')}}</th>
                             <th>{{$t('static.overDue')}}</th>
@@ -85,9 +103,10 @@
                             <col />
                         </colgroup>
                         <tbody>
-                            <tr v-for="item in initFinancialCountTotal" style="cursor:pointer">
+                            <tr v-for="item in initFinancialCountTotal.list" style="cursor:pointer">
                                 <td>{{item.customerName}}</td>
                                 <td>{{item.tradeTime|subtime2}}</td>
+                                <td>{{item.orderStatus|orderstatus}}</td>
                                 <td>￥{{item.total|money}}</td>
                                 <td>
                                     <a v-for="stage in item.stages" v-bind:class="{ 'Duedate': stage.isRequired==1}">￥{{stage.received|money}}</a>
@@ -128,9 +147,10 @@
                         <thead>
                             <th>{{$t('static.supplier_name')}}</th>
                             <th>{{$t('static.orderTradeTime')}}</th>
-                            <th>{{$t('static.orderFicount')}}</th>
-                            <th>{{$t('static.paid_amount')}}</th>
-                            <th>{{$t('static.unpaid_amount')}}</th>
+                            <th>{{$t('static.order_status')}}</th>
+                            <th>{{$t('static.orderFicount')}} (￥{{initFinancialCountTotal.sum.amount}})</th>
+                            <th>{{$t('static.paid_amount')}} (￥{{initFinancialCountTotal.sum.paid}})</th>
+                            <th>{{$t('static.unpaid_amount')}} (￥{{initFinancialCountTotal.sum.unpaid}})</th>
                             <th>{{$t('static.billDate')}}</th>
                             <th>{{$t('static.dueDate')}}</th>
                             <th>{{$t('static.overDue')}}</th>
@@ -146,9 +166,10 @@
                             <col />
                         </colgroup>
                         <tbody>
-                            <tr v-for="item in initFinancialCountTotal" style="cursor:pointer">
+                            <tr v-for="item in initFinancialCountTotal.list" style="cursor:pointer">
                                 <td>{{item.customerName}}</td>
                                 <td>{{item.tradeTime|subtime2}}</td>
+                                <td>{{item.orderStatus|orderstatus}}</td>
                                 <td>￥{{item.total|money}}</td>
                                 <td>
                                     <a v-for="stage in item.stages" v-bind:class="{ 'Duedate': stage.isRequired==1}">￥{{stage.paid|money}}</a>
@@ -242,7 +263,8 @@ export default {
                 country: '',
                 startTime: "",
                 endTime: "",
-                isOverdue: ''
+                isOverdue: '',
+                orderStatus:''
             },
             employeeParam: {
                 show: false,
@@ -304,6 +326,7 @@ export default {
             this.loadParam.customerEmail = '';
             this.loadParam.startTime = '';
             this.loadParam.endTime = '';
+            this.loadParam.orderStatus='';
             this.getFinancialList(this.loadParam);
         },
         changeCur: function(storageParam) { //
