@@ -704,7 +704,7 @@ export default {
 .top-title {
     position: fixed;
     z-index: 1081;
-    width: 60%;
+    width: 950px;
     right: 0;
     left: 0;
 }

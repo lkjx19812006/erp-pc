@@ -9,69 +9,27 @@
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
-            <div class="clear" style="margin-top:3px;">
-                <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户名称：</dt>
-                    <dd class="left margin_right">
-                        <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                    </dd>
-                    <dt class="left transfer marg_top">客户电话：</dt>
-                    <dd class="left margin_right">
-                        <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                    </dd>
-                    <dt class="left transfer marg_top">采购单ID</dt>
-                    <dd class="left margin_right">
-                        <input type="text" class="form-control" v-model="loadParam.purchaseId" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                    </dd>
-                    <dt class="left transfer marg_top">询价状态：</dt>
-                    <dd class="left margin_right">
-                        <select class="form-control" v-model="loadParam.inquire" @change="selectSearch()">
-                            <option value="0">初始</option>
-                            <option value="1">询价中</option>
-                            <option value="2">报价中</option>
-                            <option value="3">报价完成</option>
-                        </select>
-                    </dd>
-                    <dt class="left transfer marg_top">已收报价：</dt>
-                    <dd class="left margin_right">
-                        <select class="form-control" v-model="loadParam.offer" @change="selectSearch()">
-                            <option value="-1">全部</option>
-                            <option value="1">收到报价</option>
-                            <option value="0">暂无报价</option>
-                        </select>
-                    </dd>
-                    <dt class="left transfer marg_top">采购单来源：</dt>
-                    <dd class="left margin_right">
-                        <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
-                            <option value="0">业务员导入</option>
-                            <option value="1">web</option>
-                            <option value="2">android</option>
-                            <option value="3">weixin</option>
-                            <option value="4">ios</option>
-                        </select>
-                    </dd>
-                    <!-- 新增搜索 -->
-                    <dt class="left transfer marg_top">采购品种：</dt>
-                    <dd class="left margin_right">
-                        <input type="text" class="form-control" v-model="loadParam.purchaseContent" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                    </dd>
-                </dl>
-                <dl class="clear left transfer" style="margin-left:20px">
+            <search-model>
+                <div slot="main">
+                    <erp-search title="客户名称" :value.sync="loadParam.customerName" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="客户电话" :value.sync="loadParam.customerPhone" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="采购单ID" :value.sync="loadParam.purchaseId" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="采购品种" :value.sync="loadParam.purchaseContent" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-select title="询价状态" :value.sync="loadParam.inquire" :options="options.inquireOptions" @on-change="selectSearch()"></erp-select>
+                </div>
+                <div slot="more">
+                    
+                    <erp-select title="已收报价" :value.sync="loadParam.offer" :options="options.offerOptions" @on-change="selectSearch()"></erp-select>
+                    <erp-select title="采购单来源" :value.sync="loadParam.source" :options="options.purchaseSource" @on-change="selectSearch()"></erp-select>
+                </div> 
+                <div slot="handle">
                     <i-button type="primary" icon="ios-search" shape="circle" @click="selectSearch()">搜索</i-button>
                     <i-button type="warning" shape="circle" @click="resetCondition()">清空条件</i-button>
-                </dl>
-                <dd class="pull-right" style="margin-right:10px">
                     <button type="button" class="btn btn-primary" style="margin-right:10px" height="24" width="24" class="new_btn" @click="batchInquire()">批量询价扩散</button>
                     <button type="button" class="btn btn-success" style="margin-right:10px" height="24" width="24" class="new_btn" @click="createPurchase()">新建</button>
-                    <!-- <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn">
-                        <a href="http://erp.yaocaimaimai.net/local/template/Indent_Item_template.xlsx">
-                            EXCEL采购单模板下载
-                        </a>
-                    </button> 
-                    <button type="button" class="btn btn-primary" style="margin-right:10px" height="24" width="24" class="new_btn" @click="excelImport()">EXCEL导入采购单</button>-->
                     <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
-                </dd>
-            </div>
+                </div>
+            </search-model>
         </div>
         <!--中间列表-->
         <div slot="form">
@@ -162,6 +120,7 @@ import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import common from '../../../common/common'
+import {inquireOptions,purchaseSource,offerOptions} from '../../../common/searchData'
 import mglistModel from '../../mguan/mgListComponent.vue'
 import offerNow from '../offerNow.vue'
 import {
@@ -198,6 +157,12 @@ export default {
     },
     data() {
         return {
+            options:{
+                inquireOptions:inquireOptions,
+                purchaseSource:purchaseSource,
+                offerOptions:offerOptions
+            },
+            
             loadParam: {
                 loading: false,
                 show: false,

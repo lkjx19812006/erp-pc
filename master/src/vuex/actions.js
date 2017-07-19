@@ -3036,9 +3036,14 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
 
 export const getOrderLinkList = ({ dispatch }, param) => { //获取“待采购”列表
     param.loading = true;
-    const body = {
+    let body = {
         page: param.cur,
-        pageSize: 15,
+        
+    }
+    if(param.pageSize){
+        body.pageSize = param.pageSize
+    }else{
+         body.pageSize = 15
     }
     if (param.sellEmployee) {
         body.sellEmployee = param.sellEmployee;

@@ -38,13 +38,6 @@
 		methods:{
 			showMore:function(){
 				this.isMore = !this.isMore
-				let doms = document.querySelector('.more_search')
-				if(doms.children[0].children){
-					console.log("存在")
-				}else{
-					console.log("不存在")
-				}
-				console.log(doms.children[0].children)
 			},
 			
 		},
@@ -52,12 +45,17 @@
 			
 		},
 		ready(){
-			let doms = document.querySelector('.more_search')
-			if(doms.children[0].children.length>0){
-				this.hasMore = true
+			let doms = document.querySelector('.more_search');//控制更多选项是否显示
+			if(doms.children.length>0){
+				if(doms.children[0].children.length>0){
+					this.hasMore = true
+				}else{
+					this.hasMore = false
+				}
 			}else{
 				this.hasMore = false
 			}
+			
 		},
 		created(){
 			
@@ -67,7 +65,9 @@
 
 <style scoped>
 	.search_box{
-		padding:5px 0; 
+		padding:5px 0;
+		float: left;
+		width: 100% 
 	}
 	.more_fa{
 		padding-top:15px;

@@ -9,7 +9,7 @@
 	    	:disabled='disabled'
 	    	:style="{width:width+'px'}"
 	    	v-model="value">
-	    		<option v-for="item in options" :value='item.value'>{{item.text}}</option>
+	    		<option v-for="item in options" :value='item.value'>{{item.text.indexOf('static')!=-1?$t(item.text):item.text}}</option>
 	    	</select>
 	    </dd>
 	</dl>		

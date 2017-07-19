@@ -117,9 +117,9 @@ export default{
 .modal_con{
 	z-index: 1082;
 	width: 554px;
-	height: 600px;
+	height: 620px;
 	top: 0px;
-	bottom: 0;
+	bottom: 0px;
 }
 .top-title{
 	width: 554px;
