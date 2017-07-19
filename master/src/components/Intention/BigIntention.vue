@@ -92,8 +92,7 @@
                         </button>
                     </div>
                 </dl>
-
-                 <dl class="clear left transfer" style="margin-left:50px" v-if="!showBox">
+                <dl class="clear left transfer" style="margin-left:50px" v-if="!showBox">
                     <dt class="left transfer marg_top">上架状态：</dt>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.onSell===''}" @click="selectOnsell('')">
@@ -110,8 +109,6 @@
                         </button>
                     </div>
                 </dl>
-
-
                 <dl class="clear left transfer" style="margin-left:20px" v-if='showBox'>
                     <dt class="left transfer marg_top">意向来源：</dt>
                     <div class="btn-group">
@@ -225,7 +222,6 @@
                         <th>意向商品/(产地)</th>
                         <th style="width:280px;">单价/数量</th>
                         <!-- <th>商品产地</th> -->
-                        
                         <!-- <th style="width: 200px;">商品数量</th> -->
                         <th>商品规格</th>
                         <th>剩余有效期</th>
@@ -359,11 +355,12 @@
                         <!-- <td>{{item.locationName}}</td> -->
                         <!-- <td>{{item.spec}}</td> -->
                         <td>
-                            
                             <p style="font-size: 16px;text-align:left;color:#ec971f;">{{item.price}}元/{{item.unit | Unit}}</p>
-                            <p style="text-align:left;">数量：{{item.number}}{{item.unit | Unit}}</p>   
+                            <p style="text-align:left;">数量：{{item.number}}{{item.unit | Unit}}</p>
                         </td>
-                        <td><p v-if="item.spec">{{item.spec}}</p></td>
+                        <td>
+                            <p v-if="item.spec">{{item.spec}}</p>
+                        </td>
                         <td>{{item.duedateDesc}}</td>
                         <!-- <td>{{item.description}}</td>
                         <td v-if='showOthers'>{{item.quality}}</td> -->
@@ -447,7 +444,7 @@
                             </button>
                             <button v-if="item.onSell==1" v-show='showUp' class="btn btn-success btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,0)">上架审核</button>
                             <button v-if="item.onSell==3" v-show='showUp' class="btn btn-warning btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,1)">下架审核</button>
-                            <button v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='!showOwn' class="btn btn-success btn-xs"       height="24" width="24"  @click="up($index,item.id,1)">申请上架</button>
+                            <button v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='!showOwn' class="btn btn-success btn-xs" height="24" width="24" @click="up($index,item.id,1)">申请上架</button>
                             <button class="btn btn-warning btn-xs" v-show='!showOwn' v-if="item.onSell==2" @click="up($index,item.id,3)">申请下架</button>
                             <button class="btn btn-success btn-xs" v-show='!showOwn' v-if="item.type==1&&item.preSell===0" @click.stop="newOrder(item,$index)">生成订单</button>
                             <button class="btn btn-info btn-xs" v-show='!showOwn' @click.stop="sengSample(item,$index)">寄样申请</button>
@@ -1049,20 +1046,20 @@ export default {
             this.sampleOrderParam.customerPhone = item.customerPhone;
             this.sampleOrderParam.breedName = item.breedName;
             this.sampleOrderParam.country = {
-                id:item.country,
-                cname:item.countryName
+                id: item.country,
+                cname: item.countryName
             }
             this.sampleOrderParam.province = {
-                id:item.province,
-                cname:item.provinceName
+                id: item.province,
+                cname: item.provinceName
             }
             this.sampleOrderParam.city = {
-                id:item.city,
-                cname:item.cityName
+                id: item.city,
+                cname: item.cityName
             }
             this.sampleOrderParam.district = {
-                id:item.district,
-                cname:item.districtName
+                id: item.district,
+                cname: item.districtName
             }
             this.sampleOrderParam.ctime = item.ctime;
         },

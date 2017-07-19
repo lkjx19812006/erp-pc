@@ -26,11 +26,11 @@ import {
 } from '../../vuex/actions'
 export default {
     props: ['param'],
-   data(){
-    return{
-        comments:''
-    }
-   },
+    data() {
+        return {
+            comments: ''
+        }
+    },
     vuex: {
         actions: {
 
@@ -46,12 +46,12 @@ export default {
 
         },
     },
-  //观察comments 执行响应函数 传递给父组件 注意：观察对象为数组或对象 要深观察deee:true
-    watch:{
-        comments:function(curVal,oldVal){
-        this.$dispatch("Comment",this.comments);
-　　　　}　　　　　　　
-　　},
+    //观察comments 执行响应函数 传递给父组件 注意：观察对象为数组或对象 要深观察deee:true
+    watch: {
+        comments: function(curVal, oldVal) {
+            this.$dispatch("Comment", this.comments);　　　　
+        }　　　　　　　　　
+    },
     created() {
 
     }
