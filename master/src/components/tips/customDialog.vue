@@ -26,6 +26,7 @@ import {
 } from '../../vuex/actions'
 export default {
     props: ['param'],
+
     vuex: {
         actions: {
 
