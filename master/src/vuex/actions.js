@@ -1103,6 +1103,10 @@ export const getFinancialList = ({ dispatch }, param) => { //财务应收应付�
     if(param.isOverdue != ""){
         body.isOverdue=Number(param.isOverdue);
     }
+    if(param.orderStatus != ""){
+        body.orderStatus=Number(param.orderStatus);
+    }
+
     Vue.http({
         method: 'POST',
         url: url,
@@ -1115,7 +1119,7 @@ export const getFinancialList = ({ dispatch }, param) => { //财务应收应付�
         }
     }).then((res) => {
 
-        var finan = res.json().result.list;
+        var finan = res.json().result;
         dispatch(types.FINANCIAL_COUNT_TOTAL, finan);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
@@ -5542,7 +5546,7 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
     param.loading = true;
     const data = {};
     if (param.link == '/customer/transferBlacklist') {
-        data.blackComments = param.blackComments;
+        data.blackComments = param.comments;
         data.customerIds = param.customerIds;
         data.blacklist = param.blacklist;
     } else if (param.link == '/customer/setSupplier') {
@@ -5552,7 +5556,7 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
         } else {
             data.supplier = param.supplier;
         }
-        data.comments = param.supplierComments;
+        data.comments = param.comments;
     }
 
 
