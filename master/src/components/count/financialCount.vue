@@ -85,9 +85,9 @@
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.orderTradeTime')}}</th>
                             <th>{{$t('static.order_status')}}</th>
-                            <th>{{$t('static.orderFicount')}} (￥{{initFinancialCountTotal.sum.amount}})</th>
-                            <th>{{$t('static.backAmount')}} (￥{{initFinancialCountTotal.sum.received}})</th>
-                            <th>{{$t('static.chargeAmount')}} (￥{{initFinancialCountTotal.sum.unreceived}})</th>
+                            <th>{{$t('static.orderFicount')}}<span style="color:#F5741F;font-weight:bold"> (￥{{initFinancialCountTotal.sum.amount}})</span></th>
+                            <th>{{$t('static.backAmount')}} <span style="color:#F5741F;font-weight:bold"> (￥{{initFinancialCountTotal.sum.received}})</span></th>
+                            <th>{{$t('static.chargeAmount')}} <span style="color:#F5741F;font-weight:bold"> (￥{{initFinancialCountTotal.sum.unreceived}})</span></th>
                             <th>{{$t('static.billDate')}}</th>
                             <th>{{$t('static.dueDate')}}</th>
                             <th>{{$t('static.overDue')}}</th>
@@ -148,9 +148,9 @@
                             <th>{{$t('static.supplier_name')}}</th>
                             <th>{{$t('static.orderTradeTime')}}</th>
                             <th>{{$t('static.order_status')}}</th>
-                            <th>{{$t('static.orderFicount')}} (￥{{initFinancialCountTotal.sum.amount}})</th>
-                            <th>{{$t('static.paid_amount')}} (￥{{initFinancialCountTotal.sum.paid}})</th>
-                            <th>{{$t('static.unpaid_amount')}} (￥{{initFinancialCountTotal.sum.unpaid}})</th>
+                            <th>{{$t('static.orderFicount')}}<span style="color:#F5741F;font-weight:bold">  (￥{{initFinancialCountTotal.sum.amount}})</span></th>
+                            <th>{{$t('static.paid_amount')}} <span style="color:#F5741F;font-weight:bold"> (￥{{initFinancialCountTotal.sum.paid}})</span></th>
+                            <th>{{$t('static.unpaid_amount')}} <span style="color:#F5741F;font-weight:bold"> (￥{{initFinancialCountTotal.sum.unpaid}})</span></th>
                             <th>{{$t('static.billDate')}}</th>
                             <th>{{$t('static.dueDate')}}</th>
                             <th>{{$t('static.overDue')}}</th>
