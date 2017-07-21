@@ -6,154 +6,50 @@
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <search-model :param="loadParam" v-if="loadParam.show"></search-model>
+    <!-- <search-model :param="loadParam" v-if="loadParam.show"></search-model> -->
     <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
      <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
     <set-supplier :param="supplierParam" v-if="supplierParam.show"></set-supplier>
     <set-blacklist :param="blacklistParam" v-if="blacklistParam.show"></set-blacklist>
     <language-model v-show="false"></language-model>
-
-
     <mglist-model style="height:100%">
         <!-- 头部搜索-->
         <div slot="top">
-            <div class="clear" style="margin-top:3px;margin-bottom:10px;">
-                <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户名称：</dt>
-                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                    </dd>
-                    <!-- 客户id -->
-                    <dt class="left transfer marg_top" style="margin-left:5px">{{$t("static.client_id")}}：</dt>
-                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.id" placeholder="{{$t('static.Enter_search')}}" @keyup.enter="selectSearch()">
-                    </dd>
-                </dl>
-               
-                <dl class="clear left transfer" v-if='showReg'>
-                    <div class="left">
-                        <dt class="left transfer marg_top">注册起止时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                    <div class="left">
-                        <dt class="left marg_top">~~</dt>
-
-                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
-                        </mz-datepicker>
-
-                    </div>
-                </dl>
-                <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">信用等级：</dt>
-                    <dd class="left">
-                        <select v-model="loadParam.creditLevel" class="form-control" @change="selectSearch()">
-                            <option value="">{{$t("static.please_select")}}</option>
-                            <option value="0">{{$t("static.none")}}</option>
-                            <option value="1">{{$t("static.one_star")}}</option>
-                            <option value="2">{{$t("static.two_star")}}</option>
-                            <option value="3">{{$t("static.three_star")}}</option>
-                            <option value="4">{{$t("static.four_star")}}</option>
-                            <option value="5">{{$t("static.five_star")}}</option>
-                        </select>
-                    </dd>
-                </dl>
-                <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户类型：</dt>
-                    <dd class="left" style="width:100px">
-                        <select v-model="loadParam.type" class="form-control" @change="selectSearch()">
-                            <option value="">{{$t("static.please_select")}}</option>
-                            <option value="0">Others 其它</option>
-                            <option value="1">Cooperatives 合作社</option>
-                            <option value="2">Drug Makers 药商</option>
-                            <option value="3">Factory 药厂</option>
-                            <option value="4">Private Use 个体户</option>
-                            <option value="5">Pharmacy 药店</option>
-                            <option value="6">Hospital 医院</option>
-                            <option value="7">Trading Company 贸易公司</option>
-                            <option value="8">Retail 零售商行</option>
-                            <option value="9">药农</option>
-                            <option value="10">介绍人</option>
-                            <option value="11">药贩子</option>
-                            <option value="12">产地药商</option>
-                            <option value="13">销地药商</option>
-                            <option value="14">Acupuncture Clinic 养生诊所</option>
-                            <option value="15">Chemical Company 化工厂</option>
-                            <option value="16">Cosmetics Company 化妆品厂</option>
-                            <option value="17">Extract Company 提取物厂</option>
-                            <option value="18">Food Company 食品厂</option>
-                            <option value="19">Laboratory for trial 实验室</option>
-                            <option value="20">Online Company 网上电商</option>
-                            <option value="21">Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商</option>
-                            <option value="22">Pharmaceutical producer of Western Medicine 西药生产商</option>
-                            <option value="23">Pieces Factory 饮片厂</option>
-                            <option value="24">Herb tea company 茶类公司</option>
-                        </select>
-                    </dd>
-                </dl>
-                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">手机归属地：</dt>
-                    <dd class="left">
-                        <select v-model="loadParam.phoneProvinceName" class="form-control" @change="selectSearch()">
-                            <option value="">全部</option>
-                            <option v-for="item in initProvince">{{item.cname}}</option>
-                        </select>
-                    </dd>
-                </dl>
-               
-            </div>
-        
-            <div class="clear" style="margin-top:3px;">
-                <dl class="clear left transfer">
-                    <dt class="left transfer marg_top" style="letter-spacing:3px">手机号：</dt>
-                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                    </dd>
-                </dl>
-               
-
-               
-               <!--  //部门搜索 -->
-               <dl class="clear left transfer" v-if="showReg">   
-                    <dt class="left  marg_top">{{$t('static.department')}}：</dt>
-                    <dd class="left"> 
-                        <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="请选择部门" style="cursor:pointer" readonly="true" @click="selectOrg()" />
-                    </dd>
-                </dl>
-
-                <dl class="clear left transfer" v-if='showTran'>
-                    <dt class="left transfer marg_top">{{$t('static.salesman')}}：</dt>
-                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" @click="selectEmployee()" placeholder="请选择业务员" style="width:120px">
-                    </dd>
-                </dl>
-                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">经营范围：</dt>
-                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.bizScope" placeholder="按回车键搜索" @keyup.enter="selectSearch()" style="width:120px">
-                    </dd>
-                </dl>
-                  <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">未跟进天数：</dt>
-                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.trackingDay" placeholder="按回车键搜索" @keyup.enter="selectSearch()" style="width:120px">
-                    </dd>
-                </dl>
-                <dl class="clear left transfer" style="line-height:30px">
+            <search-model>
+                <div slot="main">
+                    <erp-search title="客户名称" :value.sync="loadParam.name" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="客户ID" :value.sync="loadParam.ID" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-select title="客户类型" :value.sync="loadParam.type" :options="options.type" @on-change="selectSearch()"></erp-select>
+                    <erp-search title="手机号" :value.sync="loadParam.phone" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="部门" v-if="showReg" :value.sync="loadParam.orgName" @on-click="selectOrg()" readonly='readonly'></erp-search>
+                    <erp-search title="业务员" v-if='showTran' :value.sync="loadParam.employeeName" @on-click="selectEmployee()" readonly='readonly'></erp-search> 
+                    <dl class="clear left transfer" v-if='showReg'>
+                        <div class="left">
+                            <dt class="left transfer marg_top" style="font-weight:bold;color:#666;font-size:14px;">注册起止时间：</dt>
+                            <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
+                            </mz-datepicker>
+                        </div>
+                        <div class="left">
+                            <dt class="left marg_top">~~</dt>
+                            <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
+                            </mz-datepicker>
+                        </div>
+                    </dl>
+                </div>
+                <div slot="more">
+                    <erp-select title="手机号归属地" :value.sync="loadParam.phoneProvinceName" :options="options.provinceOptions" @on-change="selectSearch()"></erp-select>
+                    <erp-search title="经营范围" :value.sync="loadParam.bizScope" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="未跟进天数" :value.sync="loadParam.trackingDay" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-select title="信用等级" :value.sync="loadParam.creditLevel" :options="options.creditLevelOptions" @on-change="selectSearch()"></erp-select>
+                </div>
+                <div slot="handle">
+                    <dl class="clear left transfer" style="line-height:30px">
                     <dt class="left transfer marg_top">已成交：</dt>
-                    <label class="checkbox_unselect" style="background-position:1px 5px" v-bind:class="{'checkbox_unselect':!loadParam.orderSum,'checkbox_select':loadParam.orderSum}" id="client_ids" @click="selectOrderSum()"></label>
-                </dl>
-                <dd class="left" style="margin-left:20px">
+                        <label class="checkbox_unselect" style="background-position:1px 5px" v-bind:class="{'checkbox_unselect':!loadParam.orderSum,'checkbox_select':loadParam.orderSum}" id="client_ids" @click="selectOrderSum()"></label>
+                    </dl>
                     <button type="button" class="btn btn-default btn-success" style="border-radius:13%;width:70px;" @click="selectSearch()">搜索</button>
-                </dd>
-                <dd class="left" style="margin-left:20px">
                     <button type="button" class="btn btn-default btn-warning" style="border-radius:12%" @click="resetCondition()">清空条件</button>
-                </dd>
-                 <dd class="left" style="margin-left:20px">
-                 <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-                 </dd>
-                <dd class="pull-right" style="margin-right:20px;">
-
+                    <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                     <button type="button" class="btn btn-default btn-warning" v-if='showTran' @click="clientTransfer({
                         arr:[],
                         name:'test',
@@ -210,14 +106,10 @@
                                             key:'myCustomerList'
                                             })">{{$t("static.new")}}</button>
                         <button type="button" v-if='!showTran' class="btn btn-primary" @click="excelImport()">{{$t('static.upload_clients')}}</button>
-                       
-
-                </dd>
-            </div>
+                </div>
+            </search-model>
         </div>
-
      <!-- /*Middle Part*/ -->
-
         <div slot="form";>
              <div class="cover_loading">
                     <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -368,13 +260,13 @@ import deletebreedModel from '../../../components/serviceBaselist/breedDetailDia
 import alterinfoModel from '../../../components/clientRelate/clientUpdate'
 import transferModel from '../../../components/user/employeeOrOrg'
 import tipsdialogModel from '../../../components/tips/tipDialog'
-import searchModel from '../../../components/clientRelate/searchModel'
+//import searchModel from '../../../components/clientRelate/searchModel'
 import setSupplier from '../setSupplier.vue'
 import setBlacklist from '../setBlacklist.vue'
 import importCustomerModel from '../customerExcelImport.vue'
 import common from '../../../common/common'
-import changeMenu from '../../../components/tools/tabs/tabs.js'
 import mglistModel from '../../mguan/mgListComponent.vue'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import filter from '../../../filters/filters'
 import updatetrackingModel from '../../../components/tips/auditDialog'
 import vSelect from '../../tools/vueSelect/components/Select'
@@ -382,7 +274,7 @@ import vSelect from '../../tools/vueSelect/components/Select'
 import employeeModel from '../searchEmpInfo'
 import languageModel from '../../tools/language'
 import selectorgModel from '../../../components/tips/treeDialog'
-
+import {creditLevelOptions,bizTypeOptions,provinceOptions} from '../../../common/searchData.js'
 
 import {
     initAllCustomerlist,
@@ -415,7 +307,7 @@ export default {
         alterinfoModel,
         transferModel,
         tipsdialogModel,
-        searchModel,
+        //searchModel,
         mglistModel,
         importCustomerModel,
         employeeModel,
@@ -448,6 +340,11 @@ export default {
     props:['param'],
     data() {
         return {
+            options:{
+                creditLevelOptions:creditLevelOptions,
+                type:bizTypeOptions,
+                provinceOptions:provinceOptions
+            },
             pageID:'',//页面id
             showTran:'',//划转
             showSall:'',//全选

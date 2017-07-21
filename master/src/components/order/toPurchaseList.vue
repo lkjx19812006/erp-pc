@@ -106,6 +106,7 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 show: false,
+                pageSize:'15',
                 cur: 1,
                 all: 1,
                 total: 0,
@@ -115,6 +116,7 @@ export default {
                 sellEmployeeName: "",
                 breedId: "",
                 breedName: "",
+                pageCallback:this.pageCallback,
             },
             employeeParam: {
                 show: false,
@@ -230,7 +232,11 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
             this.getOrderLinkList(this.loadParam);
-        }
+        },
+        pageCallback:function(data){
+            this.loadParam.pageSize = data
+            this.getOrderLinkList(this.loadParam)
+      }
 
     },
 

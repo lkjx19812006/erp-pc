@@ -217,7 +217,7 @@
             <pagination :combination="loadParam" slot="page"></pagination>
         </mglist-model>
         <!-- 左侧部门 -->
-        <mglist-model style="width:20%;float:left">
+        <mglist-model style="width:20%;float:left;">
             <!-- 头部搜索 -->
             <div slot="top" style="height:42px;">
             </div>
@@ -638,6 +638,8 @@ export default {
 
 .trans_parten {
     text-align: left;
+    overflow-y: auto;
+    width: 380px;
 }
 
 .treeview {

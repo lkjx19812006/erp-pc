@@ -507,7 +507,7 @@ Vue.filter('customerType', function(val) { //客户类型
     } else if (val == 13) {
         return '销地药商';
     } else if (val == 14) {
-        return '养生诊所';
+        return '诊所';
     } else if (val == 15) {
         return '化工厂';
     } else if (val == 16) {
@@ -528,6 +528,8 @@ Vue.filter('customerType', function(val) { //客户类型
         return '饮片厂';
     } else if (val == 24) {
         return '茶类公司';
+    } else if (val == 25) {
+        return '种植基地';
     } else {
         return val;
     }
@@ -563,7 +565,7 @@ Vue.filter('customerTypeEn', function(val) { //客户类型
     } else if (val == 13) {
         return '销地药商 International Department ignored ';
     } else if (val == 14) {
-        return 'Acupuncture Clinic';
+        return 'Clinic';
     } else if (val == 15) {
         return 'Chemical Company';
     } else if (val == 16) {
@@ -584,6 +586,8 @@ Vue.filter('customerTypeEn', function(val) { //客户类型
         return 'Pieces Factory';
     } else if (val == 24) {
         return 'Herb tea company';
+    }else if (val == 25) {
+        return 'Planting base';
     } else {
         return val;
     }
