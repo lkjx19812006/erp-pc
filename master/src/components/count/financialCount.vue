@@ -45,22 +45,22 @@
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
-                        <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
-                        <dd class="left">
-                            <select v-model="loadParam.orderStatus" class="form-control" @change="search()">
-                                <option value="" selected="">{{$t('static.please_select')}}</option>
-                                 <option value="-1">{{$t('static.cancle_order')}}</option>
-                                <option value="0">{{$t('static.new_order')}}</option>
-                                <!-- <option value="10">{{$t('static.pending')}}</option> -->
-                                <option value="20">{{$t('static.waiting_order')}}</option>
-                                <option value="30">{{$t('static.awaiting_review')}}</option>
-                                <option value="40">{{$t('static.wait_owner_deliver')}}</option>
-                                <option value="50">{{$t('static.wait_receipt')}}</option>
-                                <option value="60">{{$t('static.receivedGood')}}</option>
-                                <option value="70">{{$t('static.order_over')}}</option>
-                            </select>
-                        </dd>
-                    </dl>
+                    <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
+                    <dd class="left">
+                        <select v-model="loadParam.orderStatus" class="form-control" @change="search()">
+                            <option value="" selected="">{{$t('static.please_select')}}</option>
+                            <option value="-1">{{$t('static.cancle_order')}}</option>
+                            <option value="0">{{$t('static.new_order')}}</option>
+                            <!-- <option value="10">{{$t('static.pending')}}</option> -->
+                            <option value="20">{{$t('static.waiting_order')}}</option>
+                            <option value="30">{{$t('static.awaiting_review')}}</option>
+                            <option value="40">{{$t('static.wait_owner_deliver')}}</option>
+                            <option value="50">{{$t('static.wait_receipt')}}</option>
+                            <option value="60">{{$t('static.receivedGood')}}</option>
+                            <option value="70">{{$t('static.order_over')}}</option>
+                        </select>
+                    </dd>
+                </dl>
                 <button class="new_btn left transfer pull-left btn-clear" @click="resetCondition()">{{$t('static.clear_all')}}</button>
                 <button class="new_btn left transfer pull-left btn-search" @click="search()">{{$t('static.search')}}</button>
             </div>
@@ -264,7 +264,7 @@ export default {
                 startTime: "",
                 endTime: "",
                 isOverdue: '',
-                orderStatus:''
+                orderStatus: ''
             },
             employeeParam: {
                 show: false,
@@ -326,7 +326,7 @@ export default {
             this.loadParam.customerEmail = '';
             this.loadParam.startTime = '';
             this.loadParam.endTime = '';
-            this.loadParam.orderStatus='';
+            this.loadParam.orderStatus = '';
             this.getFinancialList(this.loadParam);
         },
         changeCur: function(storageParam) { //

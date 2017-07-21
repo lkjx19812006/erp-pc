@@ -752,37 +752,37 @@ Vue.filter('subtime2', function(val) { //将时间的分秒后面的去掉
 })
 
 
-function format(time, format){ 
-    var t = new Date(time); 
-    var tf = function(i){
+function format(time, format) {
+    var t = new Date(time);
+    var tf = function(i) {
         return (i < 10 ? '0' : '') + i
-    }; 
-    return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){ 
-        switch(a){ 
-            case 'yyyy': 
-            return tf(t.getFullYear()); 
-            break; 
-            case 'MM': 
-            return tf(t.getMonth() + 1); 
-            break; 
-            case 'mm': 
-            return tf(t.getMinutes()); 
-            break; 
-            case 'dd': 
-            return tf(t.getDate()); 
-            break; 
-            case 'HH': 
-            return tf(t.getHours()); 
-            break; 
-            case 'ss': 
-            return tf(t.getSeconds()); 
-            break; 
-            }; 
-        }); 
-} 
+    };
+    return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a) {
+        switch (a) {
+            case 'yyyy':
+                return tf(t.getFullYear());
+                break;
+            case 'MM':
+                return tf(t.getMonth() + 1);
+                break;
+            case 'mm':
+                return tf(t.getMinutes());
+                break;
+            case 'dd':
+                return tf(t.getDate());
+                break;
+            case 'HH':
+                return tf(t.getHours());
+                break;
+            case 'ss':
+                return tf(t.getSeconds());
+                break;
+        };
+    });
+}
 
 Vue.filter('formatTime', function(time) { //毫秒转化成时间    
-        return format(time, 'yyyy-MM-dd HH:mm:ss');
+    return format(time, 'yyyy-MM-dd HH:mm:ss');
 })
 
 
@@ -1499,14 +1499,14 @@ Vue.filter("freightType", function(val) { //运费支付人
     }
 })
 
-Vue.filter("newCustomerType",function(val){
+Vue.filter("newCustomerType", function(val) {
     if (val == 0) {
         return "初始";
     } else if (val == 1) {
         return "买方";
     } else if (val == 2) {
         return "卖方";
-    } else if (val ==3){
+    } else if (val == 3) {
         return "既买又卖"
     }
 })
