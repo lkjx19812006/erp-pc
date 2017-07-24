@@ -9,7 +9,8 @@
         return{
             orgParam:{
                 url:'/intention/org/list',
-                id:2
+                id:2,
+                key:'orgIntentionList'
             }
             
         }
