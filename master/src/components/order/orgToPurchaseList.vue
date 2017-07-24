@@ -115,6 +115,7 @@ export default {
                 sellEmployeeName: "",
                 breedId: "",
                 breedName: "",
+                pageCallback:this.pageCallback,
             },
             employeeParam: {
                 show: false,
@@ -230,8 +231,11 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
             this.getOrderLinkList(this.loadParam);
-        }
-
+        },
+        pageCallback:function(data){
+            this.loadParam.pageSize = data
+            this.getOrderLinkList(this.loadParam)
+      }
     },
 
     events: {

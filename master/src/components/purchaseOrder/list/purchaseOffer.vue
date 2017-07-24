@@ -27,8 +27,8 @@
                     </dd> -->
                 </dl>
                 <dl class="clear left transfer" style="margin-left:50px">
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+                    <button type="button" class="btn btn-success" height="24" width="24" @click="selectSearch()">搜索</button>
+                    <button type="button" class="btn btn-warning" height="24" width="24" @click="resetCondition()">清空条件</button>
                 </dl>
                 <dd class="pull-right" style="margin-right:10px">
                     <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
@@ -73,6 +73,7 @@
                         <td>{{item.inquire | inquire}}</td>
                         <td>
                             <button class="btn btn-success btn-xs" @click.stop="detailClick(item.id,item.customerId)">报价</button>
+                            <button class="btn btn-info btn-xs" @click.stop="viewPdf(item.id)">查看PDF</button>
                         </td>
                     </tr>
                 </tbody>
@@ -95,7 +96,8 @@ import {
     initPurchaseOfferList
 } from '../../../vuex/getters'
 import {
-    getPurchaseOrderList
+    getPurchaseOrderList,
+    openOfferPdf
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -110,7 +112,8 @@ export default {
             initPurchaseOfferList
         },
         actions: {
-            getPurchaseOrderList
+            getPurchaseOrderList,
+            openOfferPdf
         }
     },
     data() {
@@ -149,6 +152,10 @@ export default {
                 employeeId: '',
                 employeeName: ''
             },
+            pdfParam:{
+                id:'',
+                callback:this.pdfCallback
+            },
             checked: false
         }
     },
@@ -176,6 +183,13 @@ export default {
         },
         selectEmployee: function() {
             this.employeeParam.show = true;
+        },
+        viewPdf:function(id){
+            this.pdfParam.id = id
+            this.openOfferPdf(this.pdfParam)
+        },
+        pdfCallback:function(url){
+            window.open(url)
         }
 
     },

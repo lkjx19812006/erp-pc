@@ -22,6 +22,7 @@
           <option value="30">30</option>
           <option value="60">60</option>
           <option value="100">100</option>
+          <option value="200">200</option>
         </select>
       </p>
       <p style="float:left;line-height:1.42857143;color:#777;margin:8px 10px 0 10px">{{$t('static.jump_to')}}:</p>

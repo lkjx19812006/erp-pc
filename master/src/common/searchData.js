@@ -88,7 +88,7 @@ export const creditLevelOptions = [ //信用星级
                 {value:'5',text:'static.five_star'}
 			]
 
-export const provinceOptions = [
+export const provinceOptions = [ // 省份
             { "value": "北京", "text": "北京(beijing)" },
             { "value": "天津", "text": "天津(tianjin)" },
             { "value": "河北", "text": "河北(hebei)" },
@@ -124,3 +124,9 @@ export const provinceOptions = [
             { "value": "香港", "text": "香港(xianggang)" },
             { "value": "澳门", "text": "澳门(aomen)" }
 		]
+
+export const offerSource = [ //报价来源
+            { "value": "", "text": "全部" },
+            { "value": "0", "text": "业务员" },
+            { "value": "1", "text": "客户" }
+        ]

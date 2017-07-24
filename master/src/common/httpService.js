@@ -91,7 +91,8 @@ var httpService = new Vue({
         },
         commonPOST:function(body,url){
         	var _self = this
-        	url = url?url:'/front/handle/control.do'
+        	url = url?url:'/front/handle/control.do';
+            body = this.commonBody(body)
         	return new Promise(function(resolve,reject){
         		axios.post(_self.addSID(url), body).then(function (response) {//vue-resource无法抓取403错误，所以用axios
 				  	_self.getDate();//获取时间戳
