@@ -48,6 +48,7 @@
                         <th>发布日期</th>
                         <th>询价时间</th>
                         <th>过期时间</th>
+                        <th>审核进度</th>
                         <th>采购单来源</th>
                         <th>采购内容描述</th>
                         <th>备注</th>
@@ -78,6 +79,7 @@
                         <td>{{item.pubdate}}</td>
                         <td>{{item.shelveTime}}</td>
                         <td>{{item.duedate}}</td>
+                        <td style="color:red">{{item.offerProcess}}</td>
                         <td>{{item.source | indentSource}}</td>
                         <td>
                             <Poptip placement="left" trigger="hover">

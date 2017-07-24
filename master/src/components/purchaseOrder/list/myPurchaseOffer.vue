@@ -7,81 +7,52 @@
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
-            <div class="clear" style="margin-top:3px;">
-                <dl class="clear left transfer">
-                    <div class="btn-group left" style="margin-right:10px" v-if="param.accept">
-                        <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.accept===''}" @click="clickAccept('')">
-                            全部
-                        </button>
-                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='0'}" @click="clickAccept('0')">
-                            待处理
-                        </button>
-                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='1'}" @click="clickAccept('1')">
-                            已采用
-                        </button>
-                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='2'}" @click="clickAccept('2')">
-                            未采用
-                        </button>
-                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='3'}" @click="clickAccept('3')">
-                            待采用
-                        </button>
-                    </div>
-                    <!-- <div class="btn-group left" style="margin-right:10px">
-                        <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.onSell===''}" @click="clickOnSell('')">
-                            全部
-                        </button>
-                        <button type="button" class="btn btn-default" style="width:100px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='1'}" @click="clickOnSell('1')">
-                            申请上架中
-                        </button>
-                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='2'}" @click="clickOnSell('2')">
-                            已上架
-                        </button>
-                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='-2'}" @click="clickOnSell('-2')">
-                            上架失败
-                        </button>
-                        <button type="button" class="btn btn-default" style="width:100px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='3'}" @click="clickOnSell('3')">
-                            申请下架中
-                        </button>
-                        <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.onSell==='4'}" @click="clickOnSell('4')">
-                            已下架
-                        </button>
-                    </div> -->
-                    <div class="left" v-if="param.offerEmployee">
-                        <dt class="left transfer marg_top">报价业务员：</dt>
-                        <dd class="left margin_right">
-                            <input type="text" class="form-control" v-model="loadParam.offerEmployeeName" placeholder="按回车键搜索" @click="selectEmployee()" readonly="readonly">
+            <search-model>
+                <div slot="main">
+                    <erp-search title="报价业务员" :value.sync="loadParam.offerEmployeeName" @on-click="selectEmployee('offer')" readonly="readonly"></erp-search>
+                    <erp-search title="求购业务员" :value.sync="loadParam.buyEmployeeName" @on-click="selectEmployee('buy')" readonly="readonly"></erp-search>
+                    <erp-search title="品种" :value.sync="loadParam.breedName" @on-click="breedSearch()" readonly="readonly"></erp-search>
+                    <erp-select title="来源" :value.sync="loadParam.source" :options="options.offerSource"></erp-select>
+                    <!-- <erp-select title="审核状态" :value.sync="loadParam.source" :options="options.offerSource"></erp-select> -->
+                    <dl class="clear left transfer">
+                        <dt class="left transfer marg_top">报价时间：</dt>
+                        <dd class="left">
+                            <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss" width="168">
+                            </mz-datepicker>
+                            ~
                         </dd>
-                    </div>
-                    <div class="left" v-if="param.breedId">
-                        <dt class="left transfer marg_top">品种：</dt>
-                        <dd class="left margin_right">
-                            <input type="text" class="form-control" v-model="loadParam.breedName" placeholder="按回车键搜索" @click="breedSearch()" readonly="readonly">
+                        <dd class="left">
+                            <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss" width="168">
+                            </mz-datepicker>
                         </dd>
-                    </div>
-                    <div class="left">
-                        <dt class="left transfer marg_top">来源：</dt>
-                        <dd class="left margin_right">
-                            <select class="form-control" v-model="loadParam.source">
-                                <option value=''>全部</option>
-                                <option value="0">业务员</option>
-                                <option value="1">客户</option>
-                                <!-- <option value="2">库存信息</option>
-                                <option value="3">供应意向</option> -->
-                            </select>
-                        </dd>
-                    </div>
-                </dl>
-                <button type="button" class="btn btn-success" @click="todayOffer()">今日报价</button>
-                <button type="button" class="btn btn-success" @click="weekOffer()">本周报价</button>
-                <button type="button" class="btn btn-info" @click="selectSearch()">搜索</button>
-                <button type="button" class="btn btn-primary" style="width:75px" @click="resetCondition()">
-                    清空条件
-                </button>
-                <button type="button" class="btn btn-success" style="width:100px" @click="batchAccept()" v-if="param.init=='initMyIndentOfferList'">
-                    批量处理
-                </button>
-            </div>
-            <div class="clear" style="margin-top:3px;">
+                    </dl>
+                </div>
+                <div slot="handle">
+                    <button type="button" class="btn btn-success" @click="todayOffer()">今日报价</button>
+                    <button type="button" class="btn btn-success" @click="weekOffer()">本周报价</button>
+                    <button type="button" class="btn btn-info" @click="selectSearch()">搜索</button>
+                    <button type="button" class="btn btn-primary" style="width:75px" @click="resetCondition()">清空条件</button>
+                    <button type="button" class="btn btn-success" style="width:100px" @click="batchAccept()" v-if="param.init=='initMyIndentOfferList'">批量处理</button>
+                </div>
+            </search-model>
+            <div class="left">
+                <div class="btn-group left" style="margin-right:10px" v-if="param.accept">
+                    <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.accept===''}" @click="clickAccept('')">
+                        全部
+                    </button>
+                    <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='0'}" @click="clickAccept('0')">
+                        待处理
+                    </button>
+                    <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='1'}" @click="clickAccept('1')">
+                        已采用
+                    </button>
+                    <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='2'}" @click="clickAccept('2')">
+                        未采用
+                    </button>
+                    <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.loadParam.accept==='3'}" @click="clickAccept('3')">
+                        待采用
+                    </button>
+                </div>
                 <div class="btn-group left" style="margin-right:10px" v-if="param.init=='initAllIndentOfferList'">
                     <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.loadParam.effective===''}" @click="clickEffective('')">
                         全部
@@ -93,19 +64,8 @@
                         无效意向报价
                     </button>
                 </div>
-                <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">报价时间：</dt>
-                    <dd class="left">
-                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss" class="a">
-                        </mz-datepicker>
-                        ~
-                    </dd>
-                    <dd class="left">
-                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss" class="a">
-                        </mz-datepicker>
-                    </dd>
-                </dl>
             </div>
+            
         </div>
         <!--中间列表-->
         <div slot="form">
@@ -117,21 +77,14 @@
                     <tr>
                         <th v-if="param.init=='initMyIndentOfferList'" style="width:100px;"></th>
                         <th>报价时间</th>
-                        <!-- <th>报价类型</th> -->
-                        <th v-if="param.init=='initAllIndentOfferList'">供应商名称</th>
-                        
+                        <th v-if="param.init=='initAllIndentOfferList'">供应商名称</th> 
                         <th>报价业务员</th>
                         <th>求购业务员</th>
                         <th>求购客户</th>
                         <th>品种/产地</th>
-                        
-                        <!-- <th>产地</th> -->
-                        <!-- <th>数量</th> -->
                         <th style="width:220px;">价格/数量</th>
                         <th>规格</th>
                         <th>报价来源/客户端</th>
-                        <!-- <th>报价来源</th> -->
-                        <!-- <th>备注</th> -->
                         <th>是否采纳</th>
                         <th>原因</th>
                         <th v-if="param.init=='initMyIndentOfferList'">处理报价</th>
@@ -149,9 +102,7 @@
                         <td @click.stop="" style="width:100px;">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
-                        <td>{{item.otime | date}}</td>
-                        <!-- <td>{{item.source | offerType}}</td> -->
-                        
+                        <td>{{item.otime.substr(0,19)}}</td>
                         <td>{{item.offerEmployeeName}}</td>
                         <td>{{item.buyEmployeeName}}</td>
                         <td><a @click="clickDetail(item.id)">{{item.buyCustomerName}}</a></td>
@@ -159,9 +110,6 @@
                             <p style="font-size: 16px;">{{item.breedName}}</p>
                             <p style="color:#666">产地：{{item.location | province}}</p>
                         </td>
-                        
-                        <!-- <td></td> -->
-                        <!-- <td>{{item.number}}{{item.unit | Unit}}</td> -->
                         <td>
                             <p style="font-size: 16px;text-align:left;color:#ec971f;">{{item.price}}￥/{{item.unit | Unit}}</p>
                             <p style="text-align:left;">数量：{{item.number}}{{item.unit | Unit}}</p>
@@ -170,15 +118,6 @@
                         <td style="text-align:left">
                             <span :style="{color:item.source==0?'red':''}">{{item.source | offerType}}({{item.clients | indentSource}})</span>
                         </td>
-                        <!-- <td>{{item.source | offerType}}</td> -->
-                        <!-- <td>
-                            <Poptip placement="left" trigger="hover">
-                                <span>{{item.description | textDisplay '5'}}</span>
-                                <div class="api" slot="content">
-                                    {{item.description}}
-                                </div>
-                            </Poptip>
-                        </td> -->
                         <td>{{item.accept | offerAccept}}</td>
                         <td>
                             <Poptip placement="left" trigger="hover">
@@ -193,7 +132,7 @@
                         </td>
                     </tr>
                     <tr v-show="param.init=='initAllIndentOfferList'" v-for="item in initAllIndentOfferList">
-                        <td>{{item.otime | date}}</td>
+                        <td>{{item.otime.substr(0,19)}}</td>
                         <!-- <td>{{item.source | offerType}}</td> -->
                         <td>{{item.offerCustomerName}}</td>
                         
@@ -252,6 +191,7 @@ import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import common from '../../../common/common'
+import {offerSource} from '../../../common/searchData.js'
 import mglistModel from '../../mguan/mgListComponent.vue'
 import util from '../../tools/util.js'
 import {
@@ -289,6 +229,9 @@ export default {
     },
     data() {
         return {
+            options:{
+                offerSource
+            },
             loadParam: {
                 loading: false,
                 show: false,
@@ -302,6 +245,8 @@ export default {
                 key: '',
                 offerEmployee: "",
                 offerEmployeeName: "",
+                buyEmployeeName:'',
+                buyEmployee:'',
                 breedId: "",
                 breedName: "",
                 accept: "",
@@ -309,7 +254,8 @@ export default {
                 effective: "",
                 startTime: "",
                 endTime: "",
-                source:''
+                source:'',
+                buyOroffer:''
             },
             detailParam: {
                 show: false,
@@ -390,8 +336,9 @@ export default {
         breedSearch: function() {
             this.breedSearchParam.show = true;
         },
-        selectEmployee: function() {
+        selectEmployee: function(data) {
             this.employeeParam.show = true;
+            this.loadParam.buyOroffer = data
         },
         selectSearch: function() {
             this.checked = false;
@@ -464,8 +411,14 @@ export default {
             this.selectSearch();
         },
         a: function(employee) {
-            this.loadParam.offerEmployee = employee.employeeId;
-            this.loadParam.offerEmployeeName = employee.employeeName;
+            if(this.loadParam.buyOroffer == 'offer'){
+                this.loadParam.offerEmployee = employee.employeeId;
+                this.loadParam.offerEmployeeName = employee.employeeName;
+            }else if(this.loadParam.buyOroffer == 'buy'){
+                this.loadParam.buyEmployee = employee.employeeId;
+                this.loadParam.buyEmployeeName = employee.employeeName;
+            }
+            
             this.selectSearch();
         },
     },

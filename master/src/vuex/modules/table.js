@@ -869,7 +869,7 @@ const state = {
         "contractList": { arr: [], show: false }
     },
     purchaseDetail: { "intentionList": { arr: [], show: false } },
-    indentOfferList: [],
+    indentOfferList: [{ checked: false }, { checked: false }, { checked: false }, { checked: false },{ checked: false }, { checked: false }],
     myIndentOfferList: [],
     allIndentOfferList: [],
     purchaseOfferDetail: {},

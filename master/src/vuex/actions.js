@@ -173,7 +173,7 @@ export const test = ({ dispatch }, data) => {
         biz_method: 'querySuggestList',
         biz_param: data
     }
-    httpService.commonPOST(httpService.commonBody(body))
+    httpService.commonPOST(body)
         .then((res) => {
             console.log(res)
         }, (error) => {
@@ -7343,6 +7343,9 @@ export const getOffersByIndentId = ({ dispatch }, param) => { //根据意向ID�
         var result = res.json().result;
         let list = result.list;
         list.key = param.key;
+        list.forEach(function(item){
+            item.checked = false
+        })
         dispatch(types.INDENT_OFFER_DATA, list);
 
     }, (res) => {
@@ -7382,7 +7385,9 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
     if (param.source) {
         body.source = param.source
     }
-
+    if(param.buyEmployee){
+        body.buyEmployee = param.buyEmployee
+    }
     Vue.http({
         method: 'POST',
         url: url,
@@ -12103,7 +12108,7 @@ export const getFeedbackList = ({ dispatch }, data) => {
             name: data.name
         }
     }
-    httpService.commonPOST(httpService.commonBody(body))
+    httpService.commonPOST(body)
         .then((res) => {
             data.total = res.biz_result.total
             data.all = res.biz_result.pages
@@ -12122,7 +12127,7 @@ export const handleFeedbackInfo = ({ dispatch }, data) => {
             message: data.message
         }
     }
-    httpService.commonPOST(httpService.commonBody(body))
+    httpService.commonPOST(body)
         .then((res) => {
             data.callback(res)
             console.log(res)
@@ -12141,10 +12146,50 @@ export const transferPurchaseOrder = ({ dispatch }, data) => {
             offerOrgs: data.offerOrgs
         }
     }
-    httpService.commonPOST(httpService.commonBody(body))
+    httpService.commonPOST(body)
         .then((res) => {
             data.callback(res.msg)
         }, (error) => {
             data.callback(res.msg)
         })
 }
+
+export const openOfferPdf = ({dispatch},data) => {
+    var body = {
+        id: data.id
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/indent/downPDF',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        data.callback(res.json().result)
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const handleOfferAudit = ({ dispatch }, data) => {
+    let body = {
+        biz_module: 'erpIntentionOfferService',
+        biz_method: 'offerValidate',
+        biz_param: {
+            ids: data.auditIds,
+            validate: data.validate,
+            validateDescription:data.comment
+        }
+    }
+    httpService.commonPOST(body)
+        .then((res) => {
+            console.log(res)
+            data.callback(res.msg)
+        }, (error) => {
+            data.callback(res.msg)
+        })
+} 

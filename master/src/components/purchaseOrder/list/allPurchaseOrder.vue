@@ -10,7 +10,7 @@
 
             <search-model>
                 <div slot="main">
-                    <!-- <div class="left" style="margin-right:10px;">
+                    <div class="left" style="margin-right:10px;">
                         <Badge count="5">
                             <div class="btn-group left">
                                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-success': this.loadParam.auditing===''}" @click="isAuditing('')">
@@ -21,7 +21,7 @@
                                 </button>
                             </div>
                         </Badge>
-                    </div> -->
+                    </div>
                     <erp-search title="客户名称" :value.sync="loadParam.customerName" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="客户电话" :value.sync="loadParam.customerPhone" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="采购单ID" :value.sync="loadParam.purchaseId" @on-keyenter="selectSearch()"></erp-search>

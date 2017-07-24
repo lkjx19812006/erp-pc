@@ -7,6 +7,7 @@
         <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
         <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
+        <offer-audit :param="auditingData" v-if="auditingData.show"></offer-audit>
         <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con" v-show="param.show">
             <div @click.stop="param.show=false" class="top-title">
@@ -274,12 +275,18 @@
                                           <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                             报价信息（{{initIndentOfferList.length}}）
                                           </a>
+                                          <span class="right">
+                                            <Checkbox :checked='selectAll' @click.prevent="checkAll()">全选</Checkbox>
+                                            <button class="btn btn-success" @click="auditing()">审核</button>
+                                          </span>
+                                          
                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="initIndentOfferList.length>0">
                                         <div class="panel-body panel-set">
                                             <table class="table  contactSet">
                                                 <thead>
+                                                    <th style="width:30px;">勾选</th>
                                                     <th>报价时间</th>
                                                     <th>报价类型</th>
                                                     <th>供应商名称</th>
@@ -297,6 +304,10 @@
                                                 <tbody>
                                                     <tr v-for="(index,item) in initIndentOfferList">
                                                         <!-- 意向信息 -->
+                                                        <td style="width:30px;">
+                                                            <Checkbox @click="singleSelect(index,item)" :checked="item.checked"></Checkbox>
+
+                                                        </td>
                                                         <td>{{item.otime | date}}</td>
                                                         <td>
                                                             {{item.source | offerType}}
@@ -346,6 +357,7 @@
 </template>
 <script>
 import cartModel from './purchaseOrderCart.vue'
+import offerAudit from './offerAudit.vue'
 import employeeModel from '../clientRelate/searchEmpInfo'
 import breedsearchModel from '../intention/breedsearch'
 import tipsdialogModel from '../tips/tipDialog'
@@ -381,6 +393,7 @@ export default {
         detailModel,
         offerAccept,
         filter,
+        offerAudit
     },
     props: ['param'],
     data() {
@@ -463,7 +476,14 @@ export default {
                 link: "/intention/offers/",
                 id: "",
             },
-
+            selectAll:false,
+            auditingData:{
+                show:false,
+                validate:'',
+                auditIds:[],
+                comment:'',
+                callback:this.auditCallback
+            },
         }
     },
     vuex: {
@@ -586,7 +606,6 @@ export default {
 
         clickType: function(type) {
             this.intentionOrOffer = type;
-            console.log(this.initClientDetail)
         },
         clickAccept: function(accept) {
             this.indentOfferParam.accept = accept;
@@ -637,6 +656,51 @@ export default {
                 this.orderParam.district = '';
                 this.orderParam.show = true;
             }
+        },
+        singleSelect:function(index,item){
+            this.$store.state.table.indentOfferList[index].checked = !this.$store.state.table.indentOfferList[index].checked;
+            for(let i = 0;i<this.$store.state.table.indentOfferList.length;i++){//判断是否全部选择
+                if(!this.$store.state.table.indentOfferList[i].checked){
+                    this.selectAll = false
+                    return
+                }else{
+                    this.selectAll = true
+                }
+            }
+        },
+        checkAll:function(){
+            this.selectAll = !this.selectAll
+            let _this = this
+            if(this.selectAll){
+                _this.auditingData.auditIds = []
+                this.$store.state.table.indentOfferList.forEach(function(item){
+                    item.checked = true
+                })
+            }else{
+                _this.auditingData.auditIds = []    
+                this.$store.state.table.indentOfferList.forEach(function(item){
+                    item.checked = false
+                })
+            }
+        },
+        auditing:function(){
+            this.auditingData.auditIds = []
+            for(let i = 0;i<this.$store.state.table.indentOfferList.length;i++){
+                if(this.$store.state.table.indentOfferList[i].checked){
+                    this.auditingData.auditIds.push(this.$store.state.table.indentOfferList[i].id)
+
+                }
+            }
+            if(this.auditingData.auditIds.length==0){
+                this.tipsParam.name = '请至少选择一个报价列表'
+                this.tipsParam.show = true
+            }else{
+                this.auditingData.show = true
+            }
+        },
+        auditCallback:function(msg){
+            this.tipsParam.name = msg
+            this.tipsParam.show = true
         },
         callback: function(name) {
             this.tipsParam.show = true;
@@ -696,7 +760,6 @@ export default {
         this.getClientDetail(clientParam);
         this.getPurchaseOrderDetail(this.param);
         this.getOffersByIndentId(this.indentOfferParam);
-
     }
 }
 </script>
