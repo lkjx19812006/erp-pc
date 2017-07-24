@@ -9,7 +9,8 @@
         return{
             allParam:{
                 url:'/intention/',
-                id:3
+                id:3,
+                key:'allIntentionList'
             }
             
         }

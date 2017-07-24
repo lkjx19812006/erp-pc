@@ -442,8 +442,7 @@
                                              key:'myIntentionList'
                                              })">删除
                             </button>
-                            <button v-if="item.onSell==item.inType"  class="btn btn-success btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,0)">上架审核</button>
-                             <button v-else="item.onSell==1"  v-show='showUp' class="btn btn-success btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,0)">上架审核</button>
+                            <button v-if="item.onSell==1&&item.inType==1||item.onSell==1&&showUp"  class="btn btn-success btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,0)">上架审核</button>
                             <button v-if="item.onSell==3" v-show='showUp' class="btn btn-warning btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,1)">下架审核</button>
                             <button v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='!showOwn' class="btn btn-success btn-xs" height="24" width="24" @click="up($index,item.id,1)">申请上架</button>
                             <button class="btn btn-warning btn-xs" v-show='!showOwn' v-if="item.onSell==2" @click="up($index,item.id,3)">申请下架</button>
@@ -595,7 +594,7 @@ export default {
                 all: 7,
                 id: '',
                 link: this.param.url,
-                key: 'myIntentionList',
+                key: this.param.key,
                 type: '', //类型
                 especial: '', //特殊
                 preSell: '', //是否预售

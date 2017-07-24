@@ -9,7 +9,8 @@
         return{
             myParam:{
                 url:'/intention/employee/list',
-                id:1
+                id:1,
+                key:'myIntentionList'
             }
             
         }
