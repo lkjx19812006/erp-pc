@@ -294,11 +294,11 @@
                                             报价信息（{{initIndentOfferList.length}}）
                                           </a>
                                         <span  class="right">
-                                         <Checkbox :checked='selectAll' @click.prevent="checkAll()">全选</Checkbox>
+                                         <Checkbox :checked='selectAll' @click.prevent="checkAll()" v-if="param.key=='allIndent'||param.key=='myIndent'">全选</Checkbox>
                                           <span  v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">
                                             <button class="btn btn-success" @click="auditing()">审核</button>
                                           </span>
-                                          <button class="btn btn-primary" @click="batchAccept()">批量处理</button>
+                                          <button class="btn btn-primary" @click="batchAccept()"  v-if="param.key=='myIndent'">批量处理</button>
                                          </span> 
                                          
                                           
@@ -327,10 +327,13 @@
                                                 <tbody>
                                                     <tr v-for="(index,item) in initIndentOfferList">
                                                         <!-- 意向信息 -->
-                                                        <td style="width:30px;">
+                                                        <td style="width:30px;"  v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">
                                                             <Checkbox @click.prevent="singleSelect(index,item)" :checked="item.checked" v-if="item.source!=1"></Checkbox>
                                                             <input type="checkbox" v-else @click.prevent="errorTips()">
                                                         </td>
+                                                        <td @click.stop="" style="width:100px;" v-if="param.key=='myIndent'">
+                                                        <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
+                                                    </td>
                                                         <td>{{item.otime | date}}</td>
                                                         <td>
                                                             {{item.source | offerType}}
@@ -700,14 +703,17 @@ export default {
 
             let _this = this
             let sign = false
-            this.$store.state.table.indentOfferList.forEach(function(item){ //判断列表中是否包含客户报价
+            if(this.param.key=='allIndent'){
+              this.$store.state.table.indentOfferList.forEach(function(item){ //判断列表中是否包含客户报价
                     if(item.source == 1){
                         _this.tipsParam.name = '客户报价暂不需审核，请勾选业务员报价'
                         _this.tipsParam.show = true
                         sign = true
                         return
                     }
-                })
+                })  
+            }
+            
             if(!sign){
                 this.selectAll = !this.selectAll
                 if(this.selectAll){
