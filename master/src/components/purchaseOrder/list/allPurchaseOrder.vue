@@ -22,7 +22,7 @@
                                 </button>
                                 
                             </div>
-                            <span class="tagPoint" >{{loadParam.auditNum}}
+                            <span class="tagPoint" >{{loadParam.auditNum>100?'99+':loadParam.auditNum}}
                     </div>
                     <erp-search title="客户名称" :value.sync="loadParam.customerName" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="客户ID" :value.sync="loadParam.customerId" @on-keyenter="selectSearch()"></erp-search> 
@@ -396,7 +396,10 @@ dl {
     white-space: normal;
 }
 .tagPoint{
-    padding: 1px 2px;
+    width: 25px;
+    height:25px;
+    text-align: center;
+    line-height: 25px;
     position: absolute;
     background: #ed3f14;
     color:#fff;
