@@ -7,20 +7,22 @@
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
-
+    
             <search-model>
                 <div slot="main">
-                    <div class="left" style="margin-right:10px;">
-                        <Badge count="5">
+
+                    <div class="left" style="margin-right:10px;position:relative;">
                             <div class="btn-group left">
                                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-success': this.loadParam.auditing===''}" @click="isAuditing('')">
                                     全部
                                 </button>
-                                <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-success': this.loadParam.auditing==='0'}" @click="isAuditing('0')">
-                                    待审核
+                                
+                                <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-success': this.loadParam.auditing==='1'}" @click="isAuditing('1')">
+                                    待审核</span>
                                 </button>
+                                
                             </div>
-                        </Badge>
+                            <span class="tagPoint" >{{loadParam.auditNum}}
                     </div>
                     <erp-search title="客户名称" :value.sync="loadParam.customerName" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="客户电话" :value.sync="loadParam.customerPhone" @on-keyenter="selectSearch()"></erp-search>
@@ -173,7 +175,8 @@ export default {
                 org: '',
                 orgName: '',
                 purchaseId: '',
-                auditing:''
+                auditing:'1',
+                auditNum:''
             },
             detailParam: {
                 show: false,
@@ -213,6 +216,7 @@ export default {
     methods: {
         isAuditing:function(data){
             this.loadParam.auditing = data
+            this.selectSearch()
         },
         detailClick: function(id, customerId) {
             this.detailParam.id = id;
@@ -385,6 +389,17 @@ dl {
     max-width: 400px;
     color: #3399ff;
     white-space: normal;
+}
+.tagPoint{
+    padding: 1px 2px;
+    position: absolute;
+    background: #ed3f14;
+    color:#fff;
+    border-radius: 50%;
+    font-size: 8px;
+    top: -10px;
+    right: -10px;
+    z-index: 10;
 }
 .ivu-checkbox-inner{
     width: 20px!important;

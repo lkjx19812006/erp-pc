@@ -248,6 +248,16 @@
                                                 <option value="1">客户</option>
                                             </select>
                                         </dd>
+                                        <dt class="left transfer marg_top">审核状态：</dt>
+                                        <dd class="left margin_right">
+                                            <select type="text" class="form-control" v-model="indentOfferParam.validate" @change="selectSearch()" style="width: 100px;">
+                                                <option value="">全部</option>
+                                                <option value="0">未审核</option>
+                                                <option value="1">审核中</option>
+                                                <option value="2">审核通过</option>
+                                                <option value="3">审核不通过</option>
+                                            </select>
+                                        </dd>
                                         <div class="btn-group" style="margin-left:10px">
                                             <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept===''}" @click="clickAccept('')">
                                                 全部
@@ -297,6 +307,7 @@
                                                     <th>数量</th>
                                                     <th>价格</th>
                                                     <th>备注</th>
+                                                    <th>审核状态</th>
                                                     <th>是否采纳</th>
                                                     <th>原因</th>
                                                     <th v-if="param.key=='myIndent'">报价处理</th>
@@ -327,6 +338,7 @@
                                                                 </div>
                                                             </Poptip>
                                                         </td>
+                                                        <td>{{item.validate | Audit}}</td>
                                                         <td>
                                                             {{item.accept | offerAccept}}
                                                         </td>
@@ -425,7 +437,8 @@ export default {
                 breedId: "",
                 breedName: "",
                 accept: "",
-                source:""
+                source:"",
+                validate:''
             },
             tipsParam: {
                 show: false,
@@ -699,6 +712,7 @@ export default {
             }
         },
         auditCallback:function(msg){
+            this.selectSearch(this.indentOfferParam);
             this.tipsParam.name = msg
             this.tipsParam.show = true
         },
@@ -767,7 +781,7 @@ export default {
 .top-title {
     position: fixed;
     z-index: 1081;
-    width: 950px;
+    width: 1100px;
     right: 0;
     left: 0;
 }
@@ -778,7 +792,7 @@ export default {
 
 .modal_con {
     z-index: 1081;
-    width: 1000px;
+    width: 1120px;
 }
 
 .client_body {

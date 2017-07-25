@@ -18,7 +18,7 @@
             <search-model>
                 <div slot="main">
                     <erp-search title="客户名称" :value.sync="loadParam.name" @on-keyenter="selectSearch()"></erp-search>
-                    <erp-search title="客户ID" :value.sync="loadParam.ID" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="客户ID" :value.sync="loadParam.id" @on-keyenter="selectSearch()"></erp-search>
                     <erp-select title="客户类型" :value.sync="loadParam.type" :options="options.type" @on-change="selectSearch()"></erp-select>
                     <erp-search title="手机号" :value.sync="loadParam.phone" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="部门" v-if="showReg" :value.sync="loadParam.orgName" @on-click="selectOrg()" readonly='readonly'></erp-search>

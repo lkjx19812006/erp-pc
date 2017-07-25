@@ -6692,6 +6692,9 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
     if (param.purchaseId) {
         url += '&id=' + param.purchaseId;
     }
+    if(param.auditing){
+        url +='&indentValidate='+param.auditing
+    }
     Vue.http({
         method: 'GET',
         url: url,
@@ -6713,7 +6716,9 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
-
+        if(param.auditing == '1'){
+            param.auditNum = res.json().result.total
+        }
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -6743,6 +6748,7 @@ export const editDescription = ({ dispatch }, param) => { //编辑报价描述
         console.log('提交失败')
     })
 }
+
 
 export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详情
     param.loading = true;
@@ -7328,6 +7334,9 @@ export const getOffersByIndentId = ({ dispatch }, param) => { //根据意向ID�
     if(param.source){
         body.source = param.source
     }
+    if(param.validate){
+        body.validate = param.validate
+    }
     Vue.http({
         method: 'POST',
         url: url,
@@ -7387,6 +7396,9 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
     }
     if(param.buyEmployee){
         body.buyEmployee = param.buyEmployee
+    }
+    if(param.validate){
+        body.validate = param.validate
     }
     Vue.http({
         method: 'POST',
@@ -12170,6 +12182,28 @@ export const openOfferPdf = ({dispatch},data) => {
         }
     }).then((res) => {
         data.callback(res.json().result)
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getMyOfferList = ({dispatch},data) => { //采购单报价专区中查看我的报价
+    var body = {
+        indentId: data.id,
+        breedId:data.breedId
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/intention/offer/queryMyOffer2Indent',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+       dispatch('DETAIL_MYOFFER_LIST',res.json().result.list)
     }, (res) => {
         console.log('fail');
     });
