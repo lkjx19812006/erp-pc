@@ -36,6 +36,12 @@
                             </dd>
                         </dl>
                         <dl class="clear left transfer">
+                           <dt class="left transfer marg_top">{{$t('static.client_id')}}：</dt>
+                           <dd class="left">
+                              <input type="text"  class="form-control" v-model="loadParam.customerId"  @keyup.enter="selectSearch()"/>
+                           </dd>
+                        </dl>
+                        <dl class="clear left transfer">
                             <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
                             <dd class="left">
                                 <input type="text" class="form-control" v-model="loadParam.consigneePhone" @keyup.enter="selectSearch()" />
@@ -108,6 +114,7 @@
                             <th>{{$t('static.order_type')}}</th>
                             <th>{{$t('static.trading_patterns')}}</th>
                             <th>{{$t('static.sample_order')}}</th>
+                            <th>{{$t('static.client_id')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.breed')}}</th>
                             <th>{{$t('static.transcation_amount')}}</th>
@@ -139,6 +146,7 @@
                             <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
                             <td v-if="item.sample==0">{{$t('static.no')}}</td>
                             <td v-if="item.sample==1">{{$t('static.yes')}}</td>
+                            <td>{{item.customer}}</td>
                             <td><a @click="clickOn({
                                   show:true,
                                   id:item.id,
@@ -307,6 +315,7 @@ export default {
                 clients: '',
                 dataStatus: '',
                 validate: 2,
+                customerId:'',
                 customerName: '',
                 customerPhone: '',
                 no: '',
@@ -540,6 +549,7 @@ export default {
             this.loadParam.endTime = "";
             this.loadParam.consigneePhone = "";
             this.loadParam.consignee = "";
+            this.loadParam.customerId='';
             this.loadParam.customerPhone = "";
             this.loadParam.customerName = "";
             this.loadParam.orderStatus = "";

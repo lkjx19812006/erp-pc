@@ -17,6 +17,12 @@
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">{{$t('static.client_id')}}：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerId" @keyup.enter="intentionSearch()" />
+                    </dd>
+                </dl>
+                <dl class="clear left transfer">
                     <dt class="left transfer marg_top">{{$t('static.client_name')}}：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerName" @keyup.enter="intentionSearch()" />
@@ -56,6 +62,7 @@
                 <thead>
                     <tr>
                         <th>{{$t('static.type')}}</th>
+                        <th>{{$t('static.client_id')}}</th>
                         <th>{{$t('static.client_name')}}</th>
                         <th>{{$t('static.client_email')}}</th>
                         <th>{{$t('static.salesman')}}</th>
@@ -82,6 +89,7 @@
                             <div v-if="item.especial==1&&item.type==0">{{$t('static.emergency')}}</div>
                             <div v-if="item.especial==1&&item.type==1">{{$t('static.low_cost')}}</div>
                         </td>
+                        <td>{{item.customerId}}</td>
                         <td class="underline" @click="clickOn(item.id)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
@@ -186,6 +194,7 @@ export default {
                 employeeName: '',
                 breedId: '',
                 breedName: '',
+                customerId:'',
                 customerName: '',
                 customerEmail: '',
                 inquire: ''
@@ -382,6 +391,7 @@ export default {
         },
         resetCondition: function() {
             this.loadParam.employeeName = '';
+            this.loadParam.customerId='';
             this.loadParam.customerName = '';
             this.loadParam.breedId = '';
             this.loadParam.breedName = '';

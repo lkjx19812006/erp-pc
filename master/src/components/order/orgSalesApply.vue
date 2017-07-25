@@ -31,6 +31,12 @@
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
+                      <dt class="left transfer marg_top">{{$t('static.client_id')}}：</dt>
+                      <dd class="left">
+                         <input type="text"  class="form-control" v-model="loadParam.customer"  @keyup.enter="selectSearch()"/>
+                      </dd>
+                   </dl> 
+                <dl class="clear left transfer">
                     <dt class="left transfer marg_top">{{$t('static.client_name')}}：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerName" @keyup.enter="selectSearch()" />
@@ -59,6 +65,7 @@
                     <tr>
                         <th>{{$t('static.date')}}</th>
                         <th>{{$t('static.aftersales_type')}}</th>
+                        <th>{{$t('static.client_id')}}</th>
                         <th>{{$t('static.client_name')}}</th>
                         <th>{{$t('static.client_phone')}}</th>
                         <th>{{$t('static.breed')}}</th>
@@ -79,6 +86,7 @@
                             <span v-if="item.type==1">{{$t('static.reutrned')}}</span>
                             <span v-if="item.type==2">{{$t('static.reutrned')}}&{{$t('static.replacement')}}</span>
                         </td>
+                        <td>{{item.customer}}</td>
                         <td><a @click="details({
                     id:item.id,
                     show:true,
@@ -181,6 +189,7 @@ export default {
                 link: '/order/after/sales/list/org',
                 orderDesc: '',
                 customerName: '',
+                customer:'',
                 customerPhone: '',
                 orderNo: '',
                 orderType: '',
@@ -223,6 +232,7 @@ export default {
         },
         resetTime: function() {
             this.loadParam.orderDesc = '';
+            this.loadParam.customer='';
             this.loadParam.customerName = '';
             this.loadParam.customerPhone = '';
             this.loadParam.orderNo = '';

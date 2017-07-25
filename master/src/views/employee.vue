@@ -105,6 +105,7 @@
                         <tr>
                             <th></th>
                             <th>姓名</th>
+                            <th>所属大区/子公司</th>
                             <th>英文名</th>
                             <th>工号</th>
                             <th>部门</th>
@@ -148,6 +149,7 @@
                                 url:'/employee/',
                                 key:'employeeList'
                                })">{{item.name}}</td>
+                            <td>{{item.supOrgName}}</td>
                             <td>{{item.ename}}</td>
                             <td @dblclick.stop="">{{item.no}}</td>
                             <td>{{item.orgName}}</td>
@@ -596,8 +598,9 @@ export default {
         common('tab', 'table_box', 1);
     },
     created() {
+           this.getOrgList(this.loadParam);
         changeMenu(this.$store.state.table.isTop, this.getEmployeeList, this.loadParam, localStorage.employeeParam);
-        this.getOrgList(this.loadParam);
+     
     },
     filter: (filter, {})
 }

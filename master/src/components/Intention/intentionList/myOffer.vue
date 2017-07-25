@@ -15,6 +15,12 @@
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">会员ID：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerId" placeholder="按回车键搜索" @keyup.enter="offerSearch()">
+                    </dd>
+                </dl>
+                <dl class="clear left transfer">
                     <dt class="left transfer marg_top">会员手机：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.userPhone" placeholder="按回车键搜索" @keyup.enter="offerSearch()">
@@ -54,6 +60,7 @@
                     <tr>
                         <th>报价时间</th>
                         <th>所属交易员</th>
+                        <th>客户ID</th>
                         <th>报价客户</th>
                         <th>联系方式</th>
                         <th>品种名</th>
@@ -69,6 +76,7 @@
                     <tr v-for="item in initMyOfferList">
                         <td>{{item.ctime}}</td>
                         <td>{{item.employeeName}}</td>
+                        <td>{{item.customerId}}</td>
                         <td><a href="javascript:void(0);" @click="showDetail(item.id)">{{item.customerName}}</a></td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.breedName}}</td>
@@ -157,7 +165,8 @@ export default {
                 userPhone: '',
                 startTime: '',
                 endTime: '',
-                total: 0
+                total: 0,
+                customerId:''
             },
             tipsParam: {
                 name: '',
@@ -251,6 +260,7 @@ export default {
             this.offerSearch();
         },
         resetCondition: function() {
+            this.loadParam.customerId='';
             this.loadParam.breedName = '';
             this.loadParam.spec = '';
             this.loadParam.fullname = '';
@@ -397,8 +407,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 170px;
-    min-width: 170px;
+    width: 120px;
+    min-width: 120px;
 }
 
 .api {

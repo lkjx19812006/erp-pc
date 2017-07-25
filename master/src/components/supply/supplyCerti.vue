@@ -17,6 +17,12 @@
               </dd>
             </dl>
             <dl class="clearfix">
+              <dt>客户ID：</dt>
+              <dd>
+                <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.customerId" @keyup.enter="searchProduct()"/>
+              </dd>
+            </dl>
+            <dl class="clearfix">
               <dt>描述：</dt>
               <dd>
                 <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.description"  @keyup.enter="searchProduct()"/>
@@ -42,6 +48,7 @@
             <thead>
               <tr>
                 <th>文件名称</th>
+                <th>客户ID</th>
                 <th>客户名称</th>
                 <th>文件类型</th>
                 <th>所属文件</th>
@@ -53,6 +60,7 @@
             <tbody>
                 <tr v-for="item in initFileslist">
                   <td>{{item.name}}</td>
+                  <td>{{item.bizId}}</td>
                   <td>{{item.cname}}</td>
                   <td>{{item.fileType}}</td>
                   <td>{{item.bizType}}</td>
@@ -155,7 +163,8 @@
           total:0,
           name:'',
           cname:'',
-          description:''/*,
+          description:'',
+          customerId:''/*,
           bizScope:'',
           provinceName:'',
           province:'',
@@ -202,6 +211,7 @@
       reset:function(){
         this.loadParam.name='';
         this.loadParam.description='';
+        this.loadParam.customerId='';
         this.getFilesList(this.loadParam);
       },
       clickBig:function(img){

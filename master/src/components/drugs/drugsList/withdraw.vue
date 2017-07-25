@@ -6,6 +6,7 @@
             <!-- 头部搜索 -->
             <div slot="top">
                 <div class="clear" style="margin-top:10px;">
+        
                     <dl class="clear left">
                         <dt class="left marg_top" style="letter-spacing:3px">客户名：</dt>
                         <dd class="left">
@@ -47,6 +48,7 @@
                 <table class="table table-hover table_color table-striped " v-cloak id="tab">
                     <thead>
                         <tr>
+                            <th>{{$t('static.client_id')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>客户手机</th>
                             <th>{{$t('static.account_number')}}</th>
@@ -61,6 +63,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="item in initRolloutlist">
+                            <td>{{item.moneyId}}</td>
                             <td>
                                 <a @click.stop="clickOn({
                                       show:true,
@@ -144,7 +147,8 @@ export default {
                 bank: '',
                 startTime: '',
                 endTime: '',
-                total: 0
+                total: 0,
+                moneyId:''
             },
             checked: false,
             detailParam: {
@@ -167,6 +171,7 @@ export default {
         },
         resetCondition: function() {
             this.loadParam.name = '';
+            this.loadParam.moneyId='';
             this.loadParam.startTime = '';
             this.loadParam.endTime = '';
             this.loadParam.bank = '';
@@ -243,7 +248,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 170px;
-    min-width: 170px;
+    width: 150px;
+    min-width: 150px;
 }
 </style>

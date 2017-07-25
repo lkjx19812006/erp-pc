@@ -10,7 +10,6 @@
                         <input type="text" v-model="loadParam.name" class="form-control" placeholder="按回车搜索" @keyup.enter="selectSearch()"/>
                    </dd>
                 </dl>
-
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">公司名称：</dt>
                    <dd class="left">
@@ -132,6 +131,7 @@ export default {
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
+                id:'',
                 cur: 1,
                 all: 8,
                 total:0,

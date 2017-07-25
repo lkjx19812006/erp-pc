@@ -57,7 +57,11 @@
                         <h4 class="section_title">基本信息</h4>
                         <div class="panel panel-default" style="border:none">
                             <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                <label class="col-md-6 col-sm-6 col-xs-6">
+                                <label class="col-md-12 col-sm-12 col-xs-12">
+                                    <span class="title_layout"><Icon type="ios-time" class="icon_s"></Icon>客户ID</span>
+                                    <span class="f_weight">：{{initPurchaseDetail.customerId}}</span>
+                                </label><br>
+                                <label class="col-md-12 col-sm-12 col-xs-12">
                                     <span class="title_layout"><Icon type="person-stalker" class="icon_s"></Icon>姓名</span>
                                     <span class="f_weight">：{{initPurchaseDetail.customerName}}({{initPurchaseDetail.customerPhone}})</span>
                                 </label>
@@ -277,6 +281,7 @@
                                           </a>
                                           <span class="right">
                                             <Checkbox :checked='selectAll' @click.prevent="checkAll()">全选</Checkbox>
+                                            <button class="btn btn-primary" @click="batchAccept()">批量处理</button>
                                             <button class="btn btn-success" @click="auditing()">审核</button>
                                           </span>
                                           
@@ -682,6 +687,22 @@ export default {
                     item.checked = false
                 })
             }
+        },
+        batchAccept: function() {
+            let list = this.initIndentOfferList;
+            let offerIds = [];
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].checked) {
+                    offerIds.push(list[i].id);
+                }
+            }
+            if (offerIds.length <= 0) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "请至少选择一条报价！";
+                return;
+            }
+            this.offerAcceptParam.id = offerIds.join(",");
+            this.offerAcceptParam.show = true;
         },
         auditing:function(){
             this.auditingData.auditIds = []

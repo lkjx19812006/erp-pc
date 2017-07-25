@@ -180,8 +180,8 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th>供应商名称</th>
-                        <th>供应商ID</th>
+                        <th>供应商ID</th> 
+                        <th>供应商名称</th>   
                         <th>联系人</th>
                         <th>联系人职位</th>
                         <th>联系人电话</th>
@@ -202,6 +202,7 @@
                     <tr>
                     </tr>
                     <tr v-for="item in initSupplyCustomerlist" :style="{background:(item.originalEmployee!=-1?'lightYellow':'')}">
+                        <td>{{item.id}}</td> 
                         <td class="underline" @click="clickOn({
                                       id:item.id,
                                       sub:$index,
@@ -210,8 +211,7 @@
                                       name:item.name,
                                       url:'/customer/',
                                       key:'supplyCustomerList'
-                                      })">{{item.name}}</td>
-                        <td>{{item.id}}</td>              
+                                      })">{{item.name}}</td>       
                         <td>{{item.mainContact}}</td>
                         <td>{{item.position}}</td>
                         <td>{{item.mainPhone}}</td>

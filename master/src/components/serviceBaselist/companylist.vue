@@ -40,6 +40,7 @@
                         <input type="text" v-model="loadParam.name" class="form-control" placeholder="按回车搜索" @keyup.enter="selectSearch()" />
                     </dd>
                 </dl>
+
                 <dl class="clear left transfer">
                     <dt class="left transfer marg_top">所在省：</dt>
                     <dd class="left">
@@ -176,6 +177,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 8,
+                id:'',
                 name: '',
                 conType: '',
                 province: '',
@@ -233,6 +235,7 @@ export default {
             this.getCompanyData(this.loadParam);
         },
         resetCondition: function() {
+            this.loadParam.id='';
             this.loadParam.name = '';
             this.loadParam.conType = '';
             this.loadParam.conProvince = '';
