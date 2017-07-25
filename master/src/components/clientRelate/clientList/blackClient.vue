@@ -7,6 +7,18 @@
         <!-- 头部搜索-->
         <div slot="top">
             <div class="my_enterprise col-xs-1">{{$t('static.blacklist')}}</div>
+             <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">客户名称：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
+                </dl>
+                 <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">客户ID：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.id" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
+                </dl>
             <button class="new_btn transfer" @click="clientTransferWhite()">{{$t('static.out_of_blacklist')}}</button>
         </div>
         <!--中间列表-->
@@ -23,6 +35,7 @@
                         <th>{{$t('static.salesman')}}</th>
                         <th>{{$t('static.create_time')}}</th>
                         <th>{{$t('static.recent_contact')}}</th>
+                        <th>{{$t('static.client_id')}}</th>
                         <th>{{$t('static.client_name')}}</th>
                         <th>{{$t('static.transaction_num')}}</th>
                         <th>{{$t('static.client_type')}}</th>
@@ -45,6 +58,7 @@
                         <td>{{item.employeeName}}</td>
                         <td>{{item.ctime|timeFilters}}</td>
                         <td>{{item.lastOrderTime|timeFilters}}</td>
+                        <td>{{item.id}}</td>
                         <td class="underline" @click="clickOn({
                       id:item.id,
                       sub:$index,
@@ -119,6 +133,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                id:'',
                 link: '/customer/',
                 key: 'blackCustomerList',
                 name: '',
@@ -134,7 +149,9 @@ export default {
                 city: '',
                 cityName: '',
                 blacklist: 1,
-                total: 0
+                total: 0,
+                customerName:'',
+                customerId:''
             },
             searchParam: {
                 show: false,

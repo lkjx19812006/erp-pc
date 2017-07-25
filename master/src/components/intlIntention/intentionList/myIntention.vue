@@ -19,6 +19,12 @@
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">{{$t('static.client_id')}}：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerId" @keyup.enter="intentionSearch()" />
+                    </dd>
+                </dl>
+                <dl class="clear left transfer">
                     <dt class="left transfer marg_top">{{$t('static.client_name')}}：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerName" @keyup.enter="intentionSearch()" />
@@ -61,6 +67,7 @@
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
                         <th>{{$t('static.type')}}</th>
+                        <th>{{$t('static.client_id')}}</th>
                         <th>{{$t('static.client_name')}}</th>
                         <th>{{$t('static.client_email')}}</th>
                         <th style="width:200px;min-width: 200px">{{$t('static.commodity_items')}}</th>
@@ -86,6 +93,7 @@
                             <div v-if="item.especial==1&&item.type==0">{{$t('static.emergency')}}</div>
                             <div v-if="item.especial==1&&item.type==1">{{$t('static.low_cost')}}</div>
                         </td>
+                        <td>{{item.customerId}}</td>
                         <td class="underline" @click="clickOn(item.id)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.names}}</td>
@@ -214,6 +222,7 @@ export default {
                 employeeName: '',
                 breedId: '',
                 breedName: '',
+                customerId:'',
                 customerName: '',
                 customerEmail: '',
                 inquire: ''
@@ -466,6 +475,7 @@ export default {
         },
         resetCondition: function() {
             this.loadParam.employeeName = '';
+            this.loadParam.customerId='';
             this.loadParam.customerName = '';
             this.loadParam.breedId = '';
             this.loadParam.inquire = '';

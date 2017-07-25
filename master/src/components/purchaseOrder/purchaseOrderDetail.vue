@@ -57,7 +57,11 @@
                         <h4 class="section_title">基本信息</h4>
                         <div class="panel panel-default" style="border:none">
                             <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                <label class="col-md-6 col-sm-6 col-xs-6">
+                                <label class="col-md-12 col-sm-12 col-xs-12">
+                                    <span class="title_layout"><Icon type="ios-time" class="icon_s"></Icon>客户ID</span>
+                                    <span class="f_weight">：{{initPurchaseDetail.customerId}}</span>
+                                </label><br>
+                                <label class="col-md-12 col-sm-12 col-xs-12">
                                     <span class="title_layout"><Icon type="person-stalker" class="icon_s"></Icon>姓名</span>
                                     <span class="f_weight">：{{initPurchaseDetail.customerName}}({{initPurchaseDetail.customerPhone}})</span>
                                 </label>
@@ -289,10 +293,14 @@
                                           <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                             报价信息（{{initIndentOfferList.length}}）
                                           </a>
-                                          <span class="right" v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">
-                                            <Checkbox :checked='selectAll' @click.prevent="checkAll()">全选</Checkbox>
+                                        <span  class="right">
+                                         <Checkbox :checked='selectAll' @click.prevent="checkAll()">全选</Checkbox>
+                                          <span  v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">
                                             <button class="btn btn-success" @click="auditing()">审核</button>
                                           </span>
+                                          <button class="btn btn-primary" @click="batchAccept()">批量处理</button>
+                                         </span> 
+                                         
                                           
                                         </h4>
                                     </div>
@@ -300,7 +308,7 @@
                                         <div class="panel-body panel-set">
                                             <table class="table  contactSet">
                                                 <thead>
-                                                    <th style="width:30px;" v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">勾选</th>
+                                                    <th style="width:30px;">勾选</th>
                                                     <th>报价时间</th>
                                                     <th>报价类型</th>
                                                     <th>供应商名称</th>
@@ -319,7 +327,7 @@
                                                 <tbody>
                                                     <tr v-for="(index,item) in initIndentOfferList">
                                                         <!-- 意向信息 -->
-                                                        <td style="width:30px;" v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">
+                                                        <td style="width:30px;">
                                                             <Checkbox @click.prevent="singleSelect(index,item)" :checked="item.checked" v-if="item.source!=1"></Checkbox>
                                                             <input type="checkbox" v-else @click.prevent="errorTips()">
                                                         </td>
@@ -716,7 +724,36 @@ export default {
             }
             
         },
+         checkedAllbox: function() {
+            this.checked = !this.checked;
+            if (this.checked) {
+                this.$store.state.table.myIndentOfferList.forEach(function(item) {
+                    item.checked = true;
+                })
+            } else {
+                this.$store.state.table.myIndentOfferList.forEach(function(item) {
+                    item.checked = false;
+                })
+            }
+        },
+        batchAccept: function() {
+            let list = this.initIndentOfferList;
+            let offerIds = [];
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].checked) {
+                    offerIds.push(list[i].id);
+                }
+            }
+            if (offerIds.length <= 0) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "请至少选择一条报价！";
+                return;
+            }
+            this.offerAcceptParam.id = offerIds.join(",");
+            this.offerAcceptParam.show = true;
+        },
         auditing:function(){
+
             this.auditingData.auditIds = []
             for(let i = 0;i<this.$store.state.table.indentOfferList.length;i++){
                 if(this.$store.state.table.indentOfferList[i].checked){

@@ -59,6 +59,12 @@
                                 </select>
                             </dd>
                         </dl>
+                         <dl class="clear left transfer">
+                            <dt class="left transfer marg_top">客户ID</dt>
+                            <dd class="left">
+                                <input type="text" class="form-control" v-model="loadParam.customerId"  placeholder="按回车键搜索" @keyup.enter="selectSearch()" />
+                            </dd>
+                        </dl>
                         <dl class="clear left transfer">
                             <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
                             <dd class="left">
@@ -177,6 +183,7 @@
                             <th>{{$t('static.order_type')}}</th>
                             <th>{{$t('static.trading_patterns')}}</th>
                             <th>{{$t('static.sample_order')}}</th>
+                            <th>{{$t('static.client_id')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.breed')}}</th>
                             <th>商品图片</th>
@@ -217,6 +224,7 @@
                                 <div v-if="item.sample==0">{{$t('static.no')}}</div>
                                 <div v-if="item.sample==1">{{$t('static.yes')}}</div>
                             </td>
+                            <td>{{item.customer}}</td>
                             <td><a @click="clickOn({
                                         show:true,
                                         id:item.id,
@@ -556,6 +564,7 @@ export default {
                 customerName: '',
                 customerPhone: '',
                 no: '',
+                customerId:'',
                 endTime: '',
                 startTime: '',
                 mode: '',
@@ -1016,6 +1025,7 @@ export default {
             this.loadParam.clients = "";
             this.loadParam.payWay = "";
             this.loadParam.sample = "";
+            this.loadParam.customerId="";
             this.getEmpolyeeOrder(this.loadParam);
         }
     },

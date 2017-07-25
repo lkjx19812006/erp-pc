@@ -23,6 +23,12 @@
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">客户ID：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerId" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
+                </dl>
+                <dl class="clear left transfer">
                     <dt class="left transfer marg_top">客户手机：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
@@ -213,6 +219,8 @@
                         <th>类型</th>
                         <th>发布日期</th>
                         <th v-if='showOwn'>所属业务员</th>
+                        <th v-if='showCustomer'>客户ID</th>
+                        <th v-if='showBox'>会员ID</th>
                         <th v-if='showCustomer'>客户名称</th>
                         <th v-if='showBox'>会员名称</th>
                         <!-- <th>主要联系人</th> -->
@@ -248,6 +256,7 @@
                         </td>
                         <td>{{item.pubdate|subtime}}</td>
                         <td v-if='showOwn'>{{item.employeeName}}</td>
+                        <td>{{item.customerId}}</td>
                         <td v-if='showCustomer' class="underline" @click.stop="detailClick({
                               id:item.id,
                               sub:$index,
@@ -611,6 +620,7 @@ export default {
                 breedId: '',
                 breedName: '',
                 customerName: '',
+                customerId: '',
                 customerPhone: '',
                 location: '',
                 label: ''
@@ -974,6 +984,7 @@ export default {
             this.loadParam.onSell = '';
             this.loadParam.advance = '';
             this.loadParam.customerName = '';
+            this.loadParam.customerId = '';
             this.loadParam.breedId = '';
             this.loadParam.breedName = '';
             this.loadParam.customerPhone = '';

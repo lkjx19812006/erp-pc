@@ -119,8 +119,8 @@
                     <tr>
                         <th style="min-width: 40px;">
                         </th>
-                        <th>{{$t('static.client_name')}}</th>
                         <th>{{$t('static.client_id')}}</th>
+                        <th>{{$t('static.client_name')}}</th>     
                         <th>{{$t('static.contact')}}</th>
                         <th>{{$t('static.position')}}</th>
                         <th>{{$t('static.cellphone')}}</th>
@@ -159,6 +159,7 @@
                         <td @click.stop="" style="min-width: 40px">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
+                        <td>{{item.id}}</td>
                         <td style="color:#4D79DB;font-weight:bold;" @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -170,7 +171,6 @@
                                 key:'myCustomerList',
                                 registerSource:true
                                 })">{{item.name}}</td>
-                        <td>{{item.id}}</td>
                         <td>{{item.mainContact}}</td>
                         <td>{{item.mainPosition}}</td>
                         <td>{{item.mainPhone}}</td>
