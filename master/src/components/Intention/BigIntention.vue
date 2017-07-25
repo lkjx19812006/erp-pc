@@ -442,7 +442,7 @@
                                              key:'myIntentionList'
                                              })">删除
                             </button>
-                            <button v-if="item.onSell==1" v-show='showUp' class="btn btn-success btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,0)">上架审核</button>
+                            <button v-if="item.onSell==item.inType==1&&param.key=='myIntentionList'||item.onSell==1&&showUp"   class="btn btn-success btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,0)">上架审核</button>
                             <button v-if="item.onSell==3" v-show='showUp' class="btn btn-warning btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,1)">下架审核</button>
                             <button v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='!showOwn' class="btn btn-success btn-xs" height="24" width="24" @click="up($index,item.id,1)">申请上架</button>
                             <button class="btn btn-warning btn-xs" v-show='!showOwn' v-if="item.onSell==2" @click="up($index,item.id,3)">申请下架</button>
@@ -583,10 +583,8 @@ export default {
             functionShow: '', //是否显示 我的意向页面的新建按钮
             showOwn: '',
             showOperate: '',
-            showOthers: '', //存储不同页面 表格th 是否显示的变量 showOwn:是否显示：所属业务员---showOthers：其他的th
             showBox: '', //显示注册册用户意向的勾选框
             showCustomer: '', //注册客户意向隐藏客户名称
-            showOPin: '',
             showUp: '', //上架审核
             loadParam: {
                 loading: true,
@@ -1064,29 +1062,27 @@ export default {
             this.sampleOrderParam.ctime = item.ctime;
         },
         //变量true false控制函数
-        changeBool: function(a, b, c, d, e, f, g, h) {
+        changeBool: function(a, b, c, e, f, h) {
             this.functionShow = a;
             this.showCustomer = b;
             this.showOwn = c;
-            this.showOthers = d;
             this.showOperate = e;
             this.showBox = f;
-            this.showOPin = g;
             this.showUp = h;
         },
         //显示隐藏功能键
         funBtn: function() {
             if (this.param.id == 1) {
-                this.changeBool(true, true, false, true, true, false, true, false)
+                this.changeBool(true, true, false,  true, false,  false)
                 changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.myIntentionParam);
             } else if (this.param.id == 2) {
-                this.changeBool(true, true, true, true, true, false, false, true)
+                this.changeBool(true, true, true,true, false,  true)
                 changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.orgIntentionParam);
             } else if (this.param.id == 3) {
-                this.changeBool(false, true, false, true, false, false, true, false)
+                this.changeBool(false, true, false,  false, false,  false)
                 changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.allIntentionParam);
             } else {
-                this.changeBool(true, false, true, false, true, true, false, false)
+                this.changeBool(true, false, true,  true, true, false)
                 changeMenu(this.$store.state.table.isTop, this.getIntentionList, this.loadParam, localStorage.userIntentionParam);
             }
         },

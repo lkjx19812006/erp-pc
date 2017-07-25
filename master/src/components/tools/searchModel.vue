@@ -16,7 +16,7 @@
                 	<slot name="handle"></slot>
                 </div>
             </div>
-            <div class="more_search" style="margin-top:3px;" v-show="isMore" transition="search">
+            <div class="more_search" style="margin-top:-10px;" v-show="isMore" transition="search">
 	        	<slot name="more"></slot>
 	        </div>        
         </div>
@@ -70,7 +70,7 @@
 		width: 100% 
 	}
 	.more_fa{
-		padding-top:15px;
+		padding-top:7px;
 		float: left
 	}
 	.more{
