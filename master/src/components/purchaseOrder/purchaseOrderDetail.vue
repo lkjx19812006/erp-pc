@@ -838,6 +838,11 @@ export default {
         let clientParam = {
             id: this.param.customerId
         }
+        if(this.param.key=='myIndent'){
+            this.indentOfferParam.querySource = 1
+        }else if(this.param.key == 'allIndent'){
+            this.indentOfferParam.querySource = 2
+        }
         this.getClientDetail(clientParam);
         this.getPurchaseOrderDetail(this.param);
         this.getOffersByIndentId(this.indentOfferParam);
