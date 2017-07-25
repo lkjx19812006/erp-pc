@@ -5,17 +5,17 @@
         <div slot="top">
             <div class="clear">
                 <dl class="clear left transfer">
-                        <dt class="left  marg_top">客户ID：</dt>
-                        <dd class="left">
-                            <input type="text" style="width:120px" class="form-control" v-model="loadParam.customerId" placeholder="请输入客户ID" @keyup.enter="search()" />
-                        </dd>
-                    </dl>
+                    <dt class="left  marg_top">客户ID：</dt>
+                    <dd class="left">
+                        <input type="text" style="width:120px" class="form-control" v-model="loadParam.customerId" placeholder="请输入客户ID" @keyup.enter="search()" />
+                    </dd>
+                </dl>
                 <dl class="clear left transfer">
-                        <dt class="left  marg_top">{{$t('static.customerName')}}：</dt>
-                        <dd class="left">
-                            <input type="text"  style="width:120px" class="form-control" v-model="loadParam.customerName" placeholder="请输入客户名称" @keyup.enter="search()" />
-                        </dd>
-                    </dl>
+                    <dt class="left  marg_top">{{$t('static.customerName')}}：</dt>
+                    <dd class="left">
+                        <input type="text" style="width:120px" class="form-control" v-model="loadParam.customerName" placeholder="请输入客户名称" @keyup.enter="search()" />
+                    </dd>
+                </dl>
                 <dl class="clear left transfer">
                     <div class="left">
                         <dt class="left transfer marg_top">起止时间：</dt>
@@ -40,7 +40,6 @@
                         <input type="text" class="form-control" v-model="loadParam.employeeName" readonly="true" style="cursor:pointer;width:148px" placeholder="请选择业务员" @click="selectEmployee()" />
                     </dd>
                 </dl>
-               
                 <dl class="clear left transfer">
                     <dt class="left transfer marg_top">是否逾期：</dt>
                     <dd class="left">
@@ -52,22 +51,22 @@
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
-                        <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
-                        <dd class="left">
-                            <select v-model="loadParam.orderStatus" class="form-control" @change="search()">
-                                <option value="" selected="">{{$t('static.please_select')}}</option>
-                                 <option value="-1">{{$t('static.cancle_order')}}</option>
-                                <option value="0">{{$t('static.new_order')}}</option>
-                                <!-- <option value="10">{{$t('static.pending')}}</option> -->
-                                <option value="20">{{$t('static.waiting_order')}}</option>
-                                <option value="30">{{$t('static.awaiting_review')}}</option>
-                                <option value="40">{{$t('static.wait_owner_deliver')}}</option>
-                                <option value="50">{{$t('static.wait_receipt')}}</option>
-                                <option value="60">{{$t('static.receivedGood')}}</option>
-                                <option value="70">{{$t('static.order_over')}}</option>
-                            </select>
-                        </dd>
-                    </dl>
+                    <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
+                    <dd class="left">
+                        <select v-model="loadParam.orderStatus" class="form-control" @change="search()">
+                            <option value="" selected="">{{$t('static.please_select')}}</option>
+                            <option value="-1">{{$t('static.cancle_order')}}</option>
+                            <option value="0">{{$t('static.new_order')}}</option>
+                            <!-- <option value="10">{{$t('static.pending')}}</option> -->
+                            <option value="20">{{$t('static.waiting_order')}}</option>
+                            <option value="30">{{$t('static.awaiting_review')}}</option>
+                            <option value="40">{{$t('static.wait_owner_deliver')}}</option>
+                            <option value="50">{{$t('static.wait_receipt')}}</option>
+                            <option value="60">{{$t('static.receivedGood')}}</option>
+                            <option value="70">{{$t('static.order_over')}}</option>
+                        </select>
+                    </dd>
+                </dl>
             </div>
             <div class="btn-group pull-left">
                 <button class="btn btn-default" v-bind:class="{ 'btn-warning': currentView==1}" @click="clickChange(1)">应收账款</button>
@@ -76,7 +75,6 @@
             <button class="btn btn-primary   transfer pull-right" style="margin-left:50px;margin-right:20px" @click="search()">{{$t('static.refresh')}}</button>
             <button class="new_btn  transfer pull-right btn-clear" @click="resetCondition()">{{$t('static.clear_all')}}</button>
             <button class="new_btn  transfer pull-right btn-search" @click="search()">{{$t('static.search')}}</button>
-            
         </div>
         <div slot="form">
             <div class="cover_loading">
@@ -94,8 +92,8 @@
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.orderTradeTime')}}</th>
                             <th>{{$t('static.order_status')}}</th>
-                            <th>{{$t('static.orderFicount')}}<span class="countColor" > (￥{{initFinancialCountTotal.sum.amount}})</span></th>
-                            <th>{{$t('static.backAmount')}} <span class="countColor" > (￥{{initFinancialCountTotal.sum.received}})</span></th>
+                            <th>{{$t('static.orderFicount')}}<span class="countColor"> (￥{{initFinancialCountTotal.sum.amount}})</span></th>
+                            <th>{{$t('static.backAmount')}} <span class="countColor"> (￥{{initFinancialCountTotal.sum.received}})</span></th>
                             <th>{{$t('static.chargeAmount')}} <span class="countColor"> (￥{{initFinancialCountTotal.sum.unreceived}})</span></th>
                             <th>{{$t('static.billDate')}}</th>
                             <th>{{$t('static.dueDate')}}</th>
@@ -276,7 +274,7 @@ export default {
                 startTime: "",
                 endTime: "",
                 isOverdue: '',
-                orderStatus:''
+                orderStatus: ''
             },
             employeeParam: {
                 show: false,
@@ -338,7 +336,7 @@ export default {
             this.loadParam.customerEmail = '';
             this.loadParam.startTime = '';
             this.loadParam.endTime = '';
-            this.loadParam.orderStatus='';
+            this.loadParam.orderStatus = '';
             this.getFinancialList(this.loadParam);
         },
         changeCur: function(storageParam) { //
@@ -457,9 +455,10 @@ export default {
     color: #A27603;
     line-height: 30px;
 }
-table .countColor{
-  color:#F5741F;
-  font-weight:bold;
+
+table .countColor {
+    color: #F5741F;
+    font-weight: bold;
 }
 
 #table_box table td a:last-child,

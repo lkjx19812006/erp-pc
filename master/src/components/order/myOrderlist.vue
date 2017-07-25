@@ -291,7 +291,7 @@
                                     </div>
                                 </Poptip>
                             </td>
-                            <td >
+                            <td>
                                 <button class="btn btn-primary btn-xs" v-if="(item.validate==0||item.validate==-2)&&item.orderStatus!==-1" @click="updateOrder({
                                         show:true,
                                         id:item.id,

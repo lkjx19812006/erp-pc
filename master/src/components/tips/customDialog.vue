@@ -39,7 +39,6 @@ export default {
             } else if (this.param.comments.split(',').indexOf(text) == -1) { //拼接
                 this.param.comments += text + ',';
             }
-
         },
     },
     created() {

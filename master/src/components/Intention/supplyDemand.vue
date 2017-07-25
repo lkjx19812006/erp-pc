@@ -49,14 +49,14 @@
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.spec}}</td>
-                        <td>{{item.unit}}</td>
+                        <td>{{item.unit | unit}}</td>
                         <td>{{item.price}}</td>
                         <td>{{item.location | province}}</td>
                         <td>{{item.number}}</td>
-                        <td>{{item.country}}</td>
-                        <td>{{item.province}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.district}}</td>
+                        <td>{{item.countryName}}</td>
+                        <td>{{item.provinceName}}</td>
+                        <td>{{item.cityName}}</td>
+                        <td>{{item.districtName}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.advance}}</td>
                         <td>{{item.invoic | invoicstate}}</td>
@@ -68,7 +68,7 @@
                             <div v-if="item.sampling==1">是</div>
                         </td>
                         <td>{{item.sampleNumber}}</td>
-                        <td>{{item.sampleUnit}}</td>
+                        <td>{{item.sampleUnit | unit}}</td>
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.ctime | date}}</td>
                         <td>{{item.validate | intentionAudit}}</td>

@@ -192,6 +192,7 @@ import {
     FINANCIAL_COUNT_TOTAL,
     USER_FEEDBACK_INFO,
     DETAIL_MYOFFER_LIST
+
 } from '../mutation-types'
 
 
@@ -345,7 +346,7 @@ const state = {
         //订单列表
         userOrderList: [],
         myOrderList: [],
-        detailMyOfferList:[],
+        detailMyOfferList: [],
         orgOrderList: [{
             "id": "5726ea3bf22125bcdcff7820",
             "type": 0,
@@ -870,7 +871,7 @@ const state = {
         "contractList": { arr: [], show: false }
     },
     purchaseDetail: { "intentionList": { arr: [], show: false } },
-    indentOfferList: [{ checked: false }, { checked: false }, { checked: false }, { checked: false },{ checked: false }, { checked: false }],
+    indentOfferList: [{ checked: false }, { checked: false }, { checked: false }, { checked: false }, { checked: false }, { checked: false }],
     myIndentOfferList: [],
     allIndentOfferList: [],
     purchaseOfferDetail: {},
@@ -1154,7 +1155,7 @@ const state = {
     logisticsCountList: [],
     logisticsCountTotal: {},
     userFeedbackInfo: [],
-    financialCountTotal:{}
+    financialCountTotal: {}
 }
 
 const mutations = {
@@ -2588,10 +2589,10 @@ const mutations = {
     [USER_FEEDBACK_INFO](state, data) {
         state.userFeedbackInfo = data
     },
-     [FINANCIAL_COUNT_TOTAL](state, data) {
+    [FINANCIAL_COUNT_TOTAL](state, data) {
         state.financialCountTotal = data;
     },
-    [DETAIL_MYOFFER_LIST](state,data){
+    [DETAIL_MYOFFER_LIST](state, data) {
         state.basicBaseList.detailMyOfferList = data
     }
 
