@@ -26,7 +26,6 @@ export const getCharList = (state) => {
 }
 
 export const initLogin = (state) => {
-    console.log(state.table.login)
     return JSON.parse(JSON.stringify(state.table.login));
 }
 

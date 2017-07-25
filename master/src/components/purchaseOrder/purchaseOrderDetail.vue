@@ -289,7 +289,7 @@
                                           <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                             报价信息（{{initIndentOfferList.length}}）
                                           </a>
-                                          <span class="right" v-if="param.key=='allIndent'">
+                                          <span class="right" v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">
                                             <Checkbox :checked='selectAll' @click.prevent="checkAll()">全选</Checkbox>
                                             <button class="btn btn-success" @click="auditing()">审核</button>
                                           </span>
@@ -300,7 +300,7 @@
                                         <div class="panel-body panel-set">
                                             <table class="table  contactSet">
                                                 <thead>
-                                                    <th style="width:30px;" v-if="param.key=='allIndent'">勾选</th>
+                                                    <th style="width:30px;" v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">勾选</th>
                                                     <th>报价时间</th>
                                                     <th>报价类型</th>
                                                     <th>供应商名称</th>
@@ -319,7 +319,7 @@
                                                 <tbody>
                                                     <tr v-for="(index,item) in initIndentOfferList">
                                                         <!-- 意向信息 -->
-                                                        <td style="width:30px;" v-if="param.key=='allIndent'">
+                                                        <td style="width:30px;" v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">
                                                             <Checkbox @click.prevent="singleSelect(index,item)" :checked="item.checked" v-if="item.source!=1"></Checkbox>
                                                             <input type="checkbox" v-else @click.prevent="errorTips()">
                                                         </td>
@@ -386,8 +386,8 @@ import {
     initPurchaseDetail,
     initClientDetail,
     initIntentionDetail,
-    initIndentOfferList
-
+    initIndentOfferList,
+    initLogin
 } from '../../vuex/getters'
 import {
     getPurchaseOrderDetail,
@@ -441,7 +441,7 @@ export default {
                 breedId: "",
                 breedName: "",
                 accept: "",
-                source:"",
+                source:"0",
                 validate:''
             },
             tipsParam: {
@@ -508,7 +508,8 @@ export default {
             initPurchaseDetail,
             initClientDetail,
             initIntentionDetail,
-            initIndentOfferList
+            initIndentOfferList,
+            initLogin
         },
         actions: {
             getPurchaseOrderDetail,
@@ -716,7 +717,6 @@ export default {
             
         },
         auditing:function(){
-            console.log(this.initPurchaseDetail.intentionList.arr)
             this.auditingData.auditIds = []
             for(let i = 0;i<this.$store.state.table.indentOfferList.length;i++){
                 if(this.$store.state.table.indentOfferList[i].checked){

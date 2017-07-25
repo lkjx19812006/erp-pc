@@ -19,6 +19,7 @@
                         <th>价格</th>
                         <th>数量</th>
                         <th>单位</th>
+                        <th>审核状态</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,12 +31,13 @@
                         <td>{{item.price}}元</td>
                         <td>{{item.number}}</td>
                         <td>{{item.unit | unit}}</td>
+                        <td>{{item.validate | Audit}}</td>
                     </tr>
                 </tbody>
             </table>
-            <div class="edit_footer">
+            <!-- <div class="edit_footer">
                 <button type="button" class="btn  btn-confirm" @click="param.show=false">{{$t('static.confirm')}}</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -102,16 +104,6 @@ export default {
     width: 700px;
 }
 
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 70px 30px;
-}
-
-.editsection {
-    width: 100%;
-    box-sizing: border-box;
-}
 
 .edit_footer {
     position: absolute;
