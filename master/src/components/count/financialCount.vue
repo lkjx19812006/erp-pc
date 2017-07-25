@@ -7,13 +7,13 @@
                 <dl class="clear left transfer">
                     <dt class="left  marg_top">客户ID：</dt>
                     <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.customerId" placeholder="请输入客户名称" @keyup.enter="search()" />
+                        <input type="text" style="width:120px" class="form-control" v-model="loadParam.customerId" placeholder="请输入客户ID" @keyup.enter="search()" />
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
                     <dt class="left  marg_top">{{$t('static.customerName')}}：</dt>
                     <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="请输入客户名称" @keyup.enter="search()" />
+                        <input type="text" style="width:120px" class="form-control" v-model="loadParam.customerName" placeholder="请输入客户名称" @keyup.enter="search()" />
                     </dd>
                 </dl>
                 <dl class="clear left transfer">

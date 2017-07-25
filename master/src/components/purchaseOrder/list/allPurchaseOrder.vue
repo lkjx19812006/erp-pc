@@ -16,9 +16,9 @@
                                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-success': this.loadParam.auditing===''}" @click="isAuditing('')">
                                     全部
                                 </button>
-                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': this.loadParam.auditing==='2'}" @click="isAuditing('2')">
+                                <!-- <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': this.loadParam.auditing==='2'}" @click="isAuditing('2')">
                                     已审核
-                                </button>
+                                </button> -->
                                 <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-success': this.loadParam.auditing==='1'}" @click="isAuditing('1')">
                                     待审核</span>
                                 </button>
