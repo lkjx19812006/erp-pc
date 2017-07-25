@@ -7,22 +7,27 @@
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
-
+    
             <search-model>
                 <div slot="main">
-                    <div class="left" style="margin-right:10px;">
-                        <Badge count="5">
+
+                    <div class="left" style="margin-right:10px;position:relative;">
                             <div class="btn-group left">
                                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-success': this.loadParam.auditing===''}" @click="isAuditing('')">
                                     全部
                                 </button>
-                                <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-success': this.loadParam.auditing==='0'}" @click="isAuditing('0')">
-                                    待审核
+                                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': this.loadParam.auditing==='2'}" @click="isAuditing('2')">
+                                    已审核
                                 </button>
+                                <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-success': this.loadParam.auditing==='1'}" @click="isAuditing('1')">
+                                    待审核</span>
+                                </button>
+                                
                             </div>
-                        </Badge>
+                            <span class="tagPoint" >{{loadParam.auditNum>100?'99+':loadParam.auditNum}}
                     </div>
                     <erp-search title="客户名称" :value.sync="loadParam.customerName" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="客户ID" :value.sync="loadParam.customerId" @on-keyenter="selectSearch()"></erp-search> 
                     <erp-search title="客户电话" :value.sync="loadParam.customerPhone" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="采购单ID" :value.sync="loadParam.purchaseId" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="采购品种" :value.sync="loadParam.purchaseContent" @on-keyenter="selectSearch()"></erp-search>
@@ -56,6 +61,7 @@
                         <th style="width:30px;">勾选</th>
                         <th>采购单ID</th>
                         <th>采购单类型</th>
+                        <th>客户ID</th>
                         <th>客户名称</th>
                         <th>客户手机</th>
                         <th>业务员</th>
@@ -77,6 +83,7 @@
                         </td>
                         <td>{{item.id}}</td>
                         <td>{{item.type | indentType}}</td>
+                        <td>{{item.customerId}}</td>
                         <td>
                             <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
@@ -173,7 +180,9 @@ export default {
                 org: '',
                 orgName: '',
                 purchaseId: '',
-                auditing:''
+                customerId:'',
+                auditing:'1',
+                auditNum:'',
             },
             detailParam: {
                 show: false,
@@ -213,6 +222,7 @@ export default {
     methods: {
         isAuditing:function(data){
             this.loadParam.auditing = data
+            this.selectSearch()
         },
         detailClick: function(id, customerId) {
             this.detailParam.id = id;
@@ -227,6 +237,7 @@ export default {
             this.employeeParam.show = true;
         },
         resetCondition: function() { //清除搜索条件
+            this.loadParam.customerId='';
             this.loadParam.source = '';
             this.loadParam.inquire = '';
             this.loadParam.offer = '-1';
@@ -385,6 +396,20 @@ dl {
     max-width: 400px;
     color: #3399ff;
     white-space: normal;
+}
+.tagPoint{
+    width: 25px;
+    height:25px;
+    text-align: center;
+    line-height: 25px;
+    position: absolute;
+    background: #ed3f14;
+    color:#fff;
+    border-radius: 50%;
+    font-size: 8px;
+    top: -10px;
+    right: -10px;
+    z-index: 10;
 }
 .ivu-checkbox-inner{
     width: 20px!important;

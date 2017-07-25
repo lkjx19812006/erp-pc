@@ -12,6 +12,7 @@
             <search-model>
                 <div slot="main">
                     <erp-search title="客户名称" :value.sync="loadParam.customerName" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="客户ID" :value.sync="loadParam.customerId" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="客户电话" :value.sync="loadParam.customerPhone" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="采购单ID" :value.sync="loadParam.purchaseId" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="采购品种" :value.sync="loadParam.purchaseContent" @on-keyenter="selectSearch()"></erp-search>
@@ -42,13 +43,14 @@
                         <th style="min-width:60px"></th>
                         <th>采购单ID</th>
                         <th>采购单类型</th>
+                        <th>客户ID</th>
                         <th>客户名称</th>
                         <th>客户手机</th>
                         <th>业务员</th>
                         <th>发布日期</th>
                         <th>询价时间</th>
                         <th>过期时间</th>
-                        <th>审核进度</th>
+                        <!-- <th>审核进度</th> -->
                         <th>采购单来源</th>
                         <th>采购内容描述</th>
                         <th>备注</th>
@@ -71,6 +73,7 @@
                         </td>
                         <td>{{item.id}}</td>
                         <td>{{item.type | indentType}}</td>
+                        <td>{{item.customerId}}</td>
                         <td>
                             <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
@@ -79,7 +82,7 @@
                         <td>{{item.pubdate}}</td>
                         <td>{{item.shelveTime}}</td>
                         <td>{{item.duedate}}</td>
-                        <td style="color:red">{{item.offerProcess}}</td>
+                        <!-- <td style="color:red">{{item.offerProcess}}</td> -->
                         <td>{{item.source | indentSource}}</td>
                         <td>
                             <Poptip placement="left" trigger="hover">
@@ -172,6 +175,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                customerId:'',
                 total: "",
                 link: '/indent/queryEmployeeList',
                 key: 'myPurchaseList',
@@ -181,7 +185,8 @@ export default {
                 customerName: '',
                 customerPhone: '',
                 purchaseContent: '',
-                purchaseId: ''
+                purchaseId: '',
+                querySource:'1'
             },
             createParam: {
                 show: false,
@@ -274,6 +279,7 @@ export default {
             //this.offerParam.show = true
         },
         resetCondition: function() { //清除搜索条件
+            this.loadParam.customerId='';
             this.loadParam.source = '';
             this.loadParam.inquire = '';
             this.loadParam.offer = '-1';

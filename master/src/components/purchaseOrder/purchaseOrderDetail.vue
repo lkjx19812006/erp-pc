@@ -57,7 +57,11 @@
                         <h4 class="section_title">基本信息</h4>
                         <div class="panel panel-default" style="border:none">
                             <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                <label class="col-md-6 col-sm-6 col-xs-6">
+                                <label class="col-md-12 col-sm-12 col-xs-12">
+                                    <span class="title_layout"><Icon type="ios-time" class="icon_s"></Icon>客户ID</span>
+                                    <span class="f_weight">：{{initPurchaseDetail.customerId}}</span>
+                                </label><br>
+                                <label class="col-md-12 col-sm-12 col-xs-12">
                                     <span class="title_layout"><Icon type="person-stalker" class="icon_s"></Icon>姓名</span>
                                     <span class="f_weight">：{{initPurchaseDetail.customerName}}({{initPurchaseDetail.customerPhone}})</span>
                                 </label>
@@ -238,7 +242,11 @@
                                         </dd>
                                         <dt class="left transfer marg_top">品种：</dt>
                                         <dd class="left margin_right">
-                                            <input type="text" class="form-control" v-model="indentOfferParam.breedName" placeholder="按回车键搜索" @click="breedSearch()" readonly="readonly" style="width: 100px;">
+                                            <select class="form-control" v-model="indentOfferParam.breedId" @change="selectSearch()">
+                                                <option v-for="item in initPurchaseDetail.intentionList.arr" :value="item.breedId">
+                                                    {{item.breedName}}
+                                                </option>
+                                            </select>
                                         </dd>
                                         <dt class="left transfer marg_top">报价来源：</dt>
                                         <dd class="left margin_right">
@@ -246,6 +254,16 @@
                                                 <option value="">全部</option>
                                                 <option value="0">业务员</option>
                                                 <option value="1">客户</option>
+                                            </select>
+                                        </dd>
+                                        <dt class="left transfer marg_top">审核状态：</dt>
+                                        <dd class="left margin_right">
+                                            <select type="text" class="form-control" v-model="indentOfferParam.validate" @change="selectSearch()" style="width: 100px;">
+                                                <option value="">全部</option>
+                                                <option value="0">未审核</option>
+                                                <option value="1">审核中</option>
+                                                <option value="2">审核通过</option>
+                                                <option value="3">审核不通过</option>
                                             </select>
                                         </dd>
                                         <div class="btn-group" style="margin-left:10px">
@@ -275,10 +293,14 @@
                                           <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                             报价信息（{{initIndentOfferList.length}}）
                                           </a>
-                                          <span class="right">
-                                            <Checkbox :checked='selectAll' @click.prevent="checkAll()">全选</Checkbox>
+                                        <span  class="right">
+                                         <Checkbox :checked='selectAll' @click.prevent="checkAll()">全选</Checkbox>
+                                          <span  v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">
                                             <button class="btn btn-success" @click="auditing()">审核</button>
                                           </span>
+                                          <button class="btn btn-primary" @click="batchAccept()">批量处理</button>
+                                         </span> 
+                                         
                                           
                                         </h4>
                                     </div>
@@ -297,6 +319,7 @@
                                                     <th>数量</th>
                                                     <th>价格</th>
                                                     <th>备注</th>
+                                                    <th>审核状态</th>
                                                     <th>是否采纳</th>
                                                     <th>原因</th>
                                                     <th v-if="param.key=='myIndent'">报价处理</th>
@@ -305,8 +328,8 @@
                                                     <tr v-for="(index,item) in initIndentOfferList">
                                                         <!-- 意向信息 -->
                                                         <td style="width:30px;">
-                                                            <Checkbox @click="singleSelect(index,item)" :checked="item.checked"></Checkbox>
-
+                                                            <Checkbox @click.prevent="singleSelect(index,item)" :checked="item.checked" v-if="item.source!=1"></Checkbox>
+                                                            <input type="checkbox" v-else @click.prevent="errorTips()">
                                                         </td>
                                                         <td>{{item.otime | date}}</td>
                                                         <td>
@@ -327,6 +350,7 @@
                                                                 </div>
                                                             </Poptip>
                                                         </td>
+                                                        <td>{{item.validate | Audit}}</td>
                                                         <td>
                                                             {{item.accept | offerAccept}}
                                                         </td>
@@ -370,8 +394,8 @@ import {
     initPurchaseDetail,
     initClientDetail,
     initIntentionDetail,
-    initIndentOfferList
-
+    initIndentOfferList,
+    initLogin
 } from '../../vuex/getters'
 import {
     getPurchaseOrderDetail,
@@ -425,7 +449,8 @@ export default {
                 breedId: "",
                 breedName: "",
                 accept: "",
-                source:""
+                source:"0",
+                validate:''
             },
             tipsParam: {
                 show: false,
@@ -491,7 +516,8 @@ export default {
             initPurchaseDetail,
             initClientDetail,
             initIntentionDetail,
-            initIndentOfferList
+            initIndentOfferList,
+            initLogin
         },
         actions: {
             getPurchaseOrderDetail,
@@ -618,7 +644,9 @@ export default {
             this.employeeParam.show = true;
         },
         selectSearch: function() {
+
             this.getOffersByIndentId(this.indentOfferParam);
+            console.log("触发")
         },
         resetCondition: function() {
             console.log(this.indentOfferParam.source)
@@ -669,21 +697,63 @@ export default {
             }
         },
         checkAll:function(){
-            this.selectAll = !this.selectAll
+
             let _this = this
-            if(this.selectAll){
-                _this.auditingData.auditIds = []
-                this.$store.state.table.indentOfferList.forEach(function(item){
-                    item.checked = true
+            let sign = false
+            this.$store.state.table.indentOfferList.forEach(function(item){ //判断列表中是否包含客户报价
+                    if(item.source == 1){
+                        _this.tipsParam.name = '客户报价暂不需审核，请勾选业务员报价'
+                        _this.tipsParam.show = true
+                        sign = true
+                        return
+                    }
                 })
-            }else{
-                _this.auditingData.auditIds = []    
-                this.$store.state.table.indentOfferList.forEach(function(item){
-                    item.checked = false
+            if(!sign){
+                this.selectAll = !this.selectAll
+                if(this.selectAll){
+                    _this.auditingData.auditIds = []
+                    this.$store.state.table.indentOfferList.forEach(function(item){
+                        item.checked = true
+                    })
+                }else{
+                    _this.auditingData.auditIds = []    
+                    this.$store.state.table.indentOfferList.forEach(function(item){
+                        item.checked = false
+                    })
+                }
+            }
+            
+        },
+         checkedAllbox: function() {
+            this.checked = !this.checked;
+            if (this.checked) {
+                this.$store.state.table.myIndentOfferList.forEach(function(item) {
+                    item.checked = true;
+                })
+            } else {
+                this.$store.state.table.myIndentOfferList.forEach(function(item) {
+                    item.checked = false;
                 })
             }
         },
+        batchAccept: function() {
+            let list = this.initIndentOfferList;
+            let offerIds = [];
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].checked) {
+                    offerIds.push(list[i].id);
+                }
+            }
+            if (offerIds.length <= 0) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "请至少选择一条报价！";
+                return;
+            }
+            this.offerAcceptParam.id = offerIds.join(",");
+            this.offerAcceptParam.show = true;
+        },
         auditing:function(){
+
             this.auditingData.auditIds = []
             for(let i = 0;i<this.$store.state.table.indentOfferList.length;i++){
                 if(this.$store.state.table.indentOfferList[i].checked){
@@ -698,7 +768,12 @@ export default {
                 this.auditingData.show = true
             }
         },
+        errorTips:function(){
+            this.tipsParam.name = '客户报价暂不需审核'
+            this.tipsParam.show = true
+        },
         auditCallback:function(msg){
+            this.selectSearch(this.indentOfferParam);
             this.tipsParam.name = msg
             this.tipsParam.show = true
         },
@@ -757,6 +832,11 @@ export default {
         let clientParam = {
             id: this.param.customerId
         }
+        if(this.param.key=='myIndent'){
+            this.indentOfferParam.querySource = 1
+        }else if(this.param.key == 'allIndent'){
+            this.indentOfferParam.querySource = 2
+        }
         this.getClientDetail(clientParam);
         this.getPurchaseOrderDetail(this.param);
         this.getOffersByIndentId(this.indentOfferParam);
@@ -767,7 +847,7 @@ export default {
 .top-title {
     position: fixed;
     z-index: 1081;
-    width: 950px;
+    width: 1100px;
     right: 0;
     left: 0;
 }
@@ -778,7 +858,7 @@ export default {
 
 .modal_con {
     z-index: 1081;
-    width: 1000px;
+    width: 1120px;
 }
 
 .client_body {

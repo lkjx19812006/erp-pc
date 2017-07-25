@@ -18,6 +18,12 @@
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
+                        <dt class="left transfer marg_top" style="letter-spacing:3px">客户ID：</dt>
+                        <dd class="left">
+                            <input type="text" class="form-control" v-model="loadParam.customerId" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                        </dd>
+                    </dl>
+                    <dl class="clear left transfer">
                         <dt class="left transfer marg_top" style="letter-spacing:3px">客户手机：</dt>
                         <dd class="left">
                             <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
@@ -107,6 +113,7 @@
                             <th>类型</th>
                             <th>所属业务员</th>
                             <th>客户名称</th>
+                            <th>客户ID</th>
                             <th>客户手机号</th>
                             <th>品种名称</th>
                             <th>资格资质</th>
@@ -182,6 +189,7 @@
                                 image_t_show:'',
                                 duedate:item.duedate
                                 })">{{item.customerName}}</td>
+                            <td>{{item.customerId}}</td>
                             <td>{{item.customerPhone}}</td>
                             <td @click="match(item)" style="cursor:pointer;color:#fa6705">{{item.breedName}}</td>
                             <td>{{item.qualification | qualify}}</td>
@@ -372,6 +380,7 @@ export default {
                 breedName: '',
                 customerName: '',
                 customerPhone: '',
+                customerId:'',
                 location: '',
                 label: ''
             },
@@ -567,6 +576,7 @@ export default {
             this.loadParam.breedId = '';
             this.loadParam.breedName = '';
             this.loadParam.customerPhone = '';
+            this.loadParam.customerId='';
             this.loadParam.location = '';
             this.loadParam.label = '';
             this.getIntentionList(this.loadParam);

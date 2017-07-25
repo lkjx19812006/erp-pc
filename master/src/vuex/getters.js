@@ -26,7 +26,6 @@ export const getCharList = (state) => {
 }
 
 export const initLogin = (state) => {
-    console.log(state.table.login)
     return JSON.parse(JSON.stringify(state.table.login));
 }
 
@@ -344,6 +343,9 @@ export const initSupplyDemandList = (state) => {
 /*--报价信息--*/
 export const initMyOfferList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.myOfferList));
+}
+export const initDetailMyOfferList = (state) => {//采购单报价专区中查看我的报价
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.detailMyOfferList));
 }
 export const initOrgOfferList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.orgOfferList));

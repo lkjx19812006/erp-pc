@@ -18,6 +18,12 @@
                         <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
                 </dl>
+                 <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">客户ID：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.id" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                    </dd>
+                </dl>
                 <dl class="clear left transfer">
                     <dt class="left transfer marg_top">手机省：</dt>
                     <dd class="left">
@@ -40,6 +46,7 @@
                         </mz-datepicker>
                     </div>
                 </dl>
+
                 <dd class="left" style="margin-left:20px">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
                 </dd>
@@ -138,6 +145,7 @@
                             <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->全选
                         </th>
                         <th>创建时间</th>
+                        <th>客户ID</th>
                         <th>客户名称</th>
                         <th>客户类型</th>
                         <th>联系人</th>
@@ -174,6 +182,7 @@
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
                         <td>{{item.ctime|timeFilters}}</td>
+                        <td>{{item.id}}</td>
                         <td class="underline" @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -346,6 +355,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                id:'',
                 link: '/customer/undistributed',
                 key: 'unCustomerList',
                 name: '',
@@ -434,6 +444,7 @@ export default {
             this.loadParam.show = true;
         },
         resetCondition: function() {
+            this.loadParam.id='';
             this.loadParam.name = '';
             this.loadParam.phone = '';
             this.loadParam.employeeId = '';

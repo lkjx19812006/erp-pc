@@ -9,13 +9,19 @@
         <div slot="top">
             <div class="clear pull-left">
                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">会员名：</dt>
+                    <dt class="left transfer marg_top">客户姓名：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.fullname" placeholder="按回车键搜索" @keyup.enter="offerSearch()">
                     </dd>
                 </dl>
+                 <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">客户ID：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerId" placeholder="按回车键搜索" @keyup.enter="offerSearch()">
+                    </dd>
+                </dl>
                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">会员手机：</dt>
+                    <dt class="left transfer marg_top">客户手机：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.userPhone" placeholder="按回车键搜索" @keyup.enter="offerSearch()">
                     </dd>
@@ -54,6 +60,7 @@
                     <tr>
                         <th>报价时间</th>
                         <th style="min-width:120px">所属交易员</th>
+                        <th>报价客户ID</th>
                         <th style="min-width:120px">报价客户</th>
                         <th>联系方式</th>
                         <th>品种名</th>
@@ -67,6 +74,7 @@
                     <tr v-for="item in initOrgOfferList">
                         <td>{{item.ctime}}</td>
                         <td style="min-width:120px">{{item.employeeName}}</td>
+                        <td>{{item.customerId}}</td>
                         <td style="min-width:120px"><a href="javascript:void(0);" @click="showDetail(item.id)">{{item.customerName}}</a></td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.breedName}}</td>
@@ -147,7 +155,8 @@ export default {
                 fullname: '',
                 startTime: '',
                 endTime: '',
-                total: 0
+                total: 0,
+                customerId:''
             },
             tipsParam: {
                 name: '',
@@ -236,6 +245,7 @@ export default {
         },
         resetCondition: function() {
             this.loadParam.breedName = '';
+            this.loadParam.customerId='';
             this.loadParam.spec = '';
             this.loadParam.fullname = '';
             this.loadParam.startTime = '';

@@ -1097,6 +1097,9 @@ export const getFinancialList = ({ dispatch }, param) => { //财务应收应付�
     if (param.employeeId != "") {
         body.employeeId = param.employeeId;
     }
+    if (param.customerId != "") {
+        body.customerId = param.customerId;
+    }
     if (param.customerName != "") {
         body.customerName = param.customerName;
     }
@@ -1951,6 +1954,9 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         if (key == 'id' && param[key] !== '') {
             url += '&id=' + param[key];
         }
+        if (key == 'customerId' && param[key] !== '') {
+            url += '&customerId=' + param[key];
+        }
         if (key == 'startTime' && param[key] !== '') {
             url += '&startTime=' + param[key];
         }
@@ -2230,6 +2236,9 @@ export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列
     if (param.name && param.name !== '') {
         url += '&name=' + param.name;
     }
+    if (param.moneyId && param.moneyId !== '') {
+        url += '&moneyId=' + param.moneyId;
+    }
     if (param.userPhone && param.userPhone !== '') {
         url += '&phone=' + param.userPhone;
     }
@@ -2486,7 +2495,7 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
     const body = {
         employee: param.employee,
         page: param.cur,
-        pageSize: 15,
+        pageSize: 15
     }
     for (var key in param) {
         if (key == 'consignee' && param[key] != '') {
@@ -2494,6 +2503,9 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
         }
         if (key == 'clients' && param[key] != '') {
             body.clients = param[key];
+        }
+        if (key == 'customerId' && param[key] != '') {
+            body.customerId = param[key];
         }
         if (key == 'id' && param[key] != '') {
             body.id = param[key];
@@ -2587,6 +2599,9 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
         }
         if (key == 'id' && param[key] != '') {
             body.id = param[key];
+        }
+        if (key == 'customerId' && param[key] != '') {
+            body.customerId = param[key];
         }
         if (key == 'mode' && param[key] != '') {
             body.mode = param[key];
@@ -5332,6 +5347,9 @@ export const getProductList = ({ dispatch }, param) => { //供应商产品列表
     if (param.employeeId) {
         clienturl = clienturl + '&employeeId=' + param.employeeId;
     }
+    if (param.cid) {
+        clienturl = clienturl + '&cid=' + param.cid;
+    }
     if (param.description) {
         clienturl = clienturl + '&description=' + param.description;
     }
@@ -6668,6 +6686,9 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
     if (param.customerName) {
         url += '&customerName=' + param.customerName;
     }
+    if (param.customerId) {
+        url += '&customerId=' + param.customerId;
+    }
     if (param.customerPhone) {
         url += '&customerPhone=' + param.customerPhone;
     }
@@ -6692,6 +6713,9 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
     if (param.purchaseId) {
         url += '&id=' + param.purchaseId;
     }
+    if (param.auditing) {
+        url += '&indentValidate=' + param.auditing
+    }
     Vue.http({
         method: 'GET',
         url: url,
@@ -6713,7 +6737,9 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
-
+        if (param.auditing == '1') {
+            param.auditNum = res.json().result.total
+        }
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -6743,6 +6769,7 @@ export const editDescription = ({ dispatch }, param) => { //编辑报价描述
         console.log('提交失败')
     })
 }
+
 
 export const getPurchaseOrderDetail = ({ dispatch }, param) => { //采购单详情
     param.loading = true;
@@ -7131,6 +7158,9 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         if (search == 'customerName' && param[search] !== '') {
             url += '&customerName=' + param.customerName
         }
+        if (search == 'customerId' && param[search] !== '') {
+            url += '&customerId=' + param.customerId
+        }
         if (search == 'location' && param[search] !== '') {
             url += '&location=' + param.location
         }
@@ -7325,8 +7355,14 @@ export const getOffersByIndentId = ({ dispatch }, param) => { //根据意向ID�
     if (param.accept) {
         body.accept = param.accept;
     }
+    if (param.querySource) {
+        body.querySource = param.querySource;
+    }
     if (param.source) {
         body.source = param.source
+    }
+    if (param.validate) {
+        body.validate = param.validate
     }
     Vue.http({
         method: 'POST',
@@ -7385,8 +7421,14 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
     if (param.source) {
         body.source = param.source
     }
+    if (param.buyCustomer) {
+        body.buyCustomer = param.buyCustomer
+    }
     if (param.buyEmployee) {
         body.buyEmployee = param.buyEmployee
+    }
+    if (param.validate) {
+        body.validate = param.validate
     }
     Vue.http({
         method: 'POST',
@@ -7489,6 +7531,9 @@ export const getOfferList = ({ dispatch }, param) => { //报价信息列表以�
     }
     if ('userPhone' in param && param.userPhone !== '') {
         url += '&userPhone=' + param.userPhone
+    }
+    if ('customerId' in param && param.customerId !== '') {
+        url += '&customerId=' + param.customerId
     }
     if ('spec' in param && param.spec !== '') {
         url += '&spec=' + param.spec
@@ -7609,6 +7654,9 @@ export const getIntlIntentionList = ({ dispatch }, param) => { //国际意向列
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     if (param.breedName !== '') {
         url += '&names=' + param.breedName;
+    }
+    if (param.customerId !== '') {
+        url += '&customerId=' + param.customerId;
     }
     if (param.employeeName !== '') {
         url += '&employeeName=' + param.employeeName;
@@ -8076,6 +8124,9 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => { //国际�
     }
     if (param.employeeName !== '') {
         url += '&employeeName=' + param.employeeName;
+    }
+    if (param.customerId !== '') {
+        url += '&customerId=' + param.customerId;
     }
     if (param.customerName !== '') {
         url += '&customerName=' + param.customerName;
@@ -8778,6 +8829,9 @@ export const getFilesList = ({ dispatch }, param) => { //供应商文件列表
     param.loading = true;
     if (param.name) {
         url = url + '&name=' + param.name;
+    }
+    if (param.customerId) {
+        url = url + '&customerId=' + param.customerId;
     }
     if (param.description) {
         url = url + '&description=' + param.description;
@@ -10643,6 +10697,9 @@ export const getMyContractList = ({ dispatch }, param) => { //补充合同列表
         if (seach == 'orderDesc' & param[seach] !== '') {
             url += '&orderDesc=' + param.orderDesc
         }
+        if (seach == 'customer' & param[seach] !== '') {
+            url += '&customer=' + param.customer
+        }
         if (seach == 'customerName' & param[seach] !== '') {
             url += '&customerName=' + param.customerName
         }
@@ -10727,6 +10784,9 @@ export const getSalesApplyList = ({ dispatch }, param) => { //售后申请列表
     for (var seach in param) {
         if (seach == 'orderDesc' & param[seach] !== '') {
             url += '&orderDesc=' + param.orderDesc
+        }
+        if (seach == 'customer' & param[seach] !== '') {
+            url += '&customer=' + param.customer
         }
         if (seach == 'customerName' & param[seach] !== '') {
             url += '&customerName=' + param.customerName
@@ -12169,6 +12229,28 @@ export const openOfferPdf = ({ dispatch }, data) => {
         }
     }).then((res) => {
         data.callback(res.json().result)
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getMyOfferList = ({ dispatch }, data) => { //采购单报价专区中查看我的报价
+    var body = {
+        indentId: data.id,
+        breedId: data.breedId
+    }
+    Vue.http({
+        method: 'POST',
+        url: '/crm/api/v1/intention/offer/queryMyOffer2Indent',
+        body: body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        dispatch('DETAIL_MYOFFER_LIST', res.json().result.list)
     }, (res) => {
         console.log('fail');
     });

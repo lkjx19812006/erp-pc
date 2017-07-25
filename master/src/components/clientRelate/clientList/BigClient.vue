@@ -18,7 +18,7 @@
             <search-model>
                 <div slot="main">
                     <erp-search title="客户名称" :value.sync="loadParam.name" @on-keyenter="selectSearch()"></erp-search>
-                    <erp-search title="客户ID" :value.sync="loadParam.ID" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="客户ID" :value.sync="loadParam.id" @on-keyenter="selectSearch()"></erp-search>
                     <erp-select title="客户类型" :value.sync="loadParam.type" :options="options.type" @on-change="selectSearch()"></erp-select>
                     <erp-search title="手机号" :value.sync="loadParam.phone" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="部门" v-if="showReg" :value.sync="loadParam.orgName" @on-click="selectOrg()" readonly='readonly'></erp-search>
@@ -119,8 +119,8 @@
                     <tr>
                         <th style="min-width: 40px;">
                         </th>
-                        <th>{{$t('static.client_name')}}</th>
                         <th>{{$t('static.client_id')}}</th>
+                        <th>{{$t('static.client_name')}}</th>     
                         <th>{{$t('static.contact')}}</th>
                         <th>{{$t('static.position')}}</th>
                         <th>{{$t('static.cellphone')}}</th>
@@ -159,6 +159,7 @@
                         <td @click.stop="" style="min-width: 40px">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
+                        <td>{{item.id}}</td>
                         <td style="color:#4D79DB;font-weight:bold;" @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -170,7 +171,6 @@
                                 key:'myCustomerList',
                                 registerSource:true
                                 })">{{item.name}}</td>
-                        <td>{{item.id}}</td>
                         <td>{{item.mainContact}}</td>
                         <td>{{item.mainPosition}}</td>
                         <td>{{item.mainPhone}}</td>

@@ -46,6 +46,12 @@
                 </dd>
             </dl>
             <dl class="clearfix">
+                <dt>供应商ID：</dt>
+                <dd>
+                    <input type="text"  class="form-control" placeholder="按回车搜索" class="search_input"  v-model="loadParam.cid"  @keyup.enter="searchProduct()"/>
+                </dd>
+            </dl>
+            <dl class="clearfix">
                 <button class="btn btn-default transfer"  @click="searchProduct()">搜索</button>
                 <button class="btn btn-default"  @click="reset()">清空条件</button>
             </dl>
@@ -65,6 +71,7 @@
             <thead>
                 <tr>
                   <th>产品类型</th>
+                  <th>供应商ID</th>
                   <th>供应商名称</th>
                   <th>品种名称</th>
                   <th>产品名称</th>
@@ -84,7 +91,8 @@
             </thead>
             <tbody>
             <tr v-for="item in initProductlist">
-              <td>{{item.type}}</td>     
+              <td>{{item.type}}</td> 
+              <td>{{item.cid}}</td>    
               <td class="underline"  @click="supplyOn({
                             id:item.cid,
                             sub:$index,
@@ -233,6 +241,7 @@
           name:'',
           type:'',
           cName:'',
+          cid:'',
           breedId:'',
           breedName:'',
           total:0,
@@ -296,6 +305,7 @@
         this.loadParam.cName = "";
         this.loadParam.breedName = "";
         this.loadParam.breedId = "";
+        this.loadParam.cid="";
         this.getProductList(this.loadParam);
       },
       createSearch:function(){

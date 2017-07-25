@@ -2,7 +2,7 @@
     <div class="nav_tab">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" v-for="item in tabs">
-                <div v-link="item.url" role="tab" data-toggle="tab" class="{{$route.path==item.url?'active_font':''}}" @click="setIsTop()">{{item.cname}}<span @click.stop="closeTab($index)" class="glyphicon glyphicon-remove" style="padding-left: 6px;"></span></div>
+                <div v-link="item.url" role="tab" data-toggle="tab" :class="$route.path==item.url?'active_font':''" @click="setIsTop()">{{item.cname}}<span @click.stop="closeTab($index)" class="glyphicon glyphicon-remove" style="padding-left: 6px;"></span></div>
             </li>
         </ul>
     </div>

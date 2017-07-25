@@ -5,6 +5,18 @@
         <div slot="top">
             <div class="clear">
                 <dl class="clear left transfer">
+                    <dt class="left  marg_top">客户ID：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerId" placeholder="请输入客户名称" @keyup.enter="search()" />
+                    </dd>
+                </dl>
+                <dl class="clear left transfer">
+                    <dt class="left  marg_top">{{$t('static.customerName')}}：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="请输入客户名称" @keyup.enter="search()" />
+                    </dd>
+                </dl>
+                <dl class="clear left transfer">
                     <div class="left">
                         <dt class="left transfer marg_top">起止时间：</dt>
                         <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
@@ -26,12 +38,6 @@
                     <dt class="left  marg_top">{{$t('static.salesman')}}：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.employeeName" readonly="true" style="cursor:pointer;width:148px" placeholder="请选择业务员" @click="selectEmployee()" />
-                    </dd>
-                </dl>
-                <dl class="clear left transfer">
-                    <dt class="left  marg_top">{{$t('static.customerName')}}：</dt>
-                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="请输入客户名称" @keyup.enter="search()" />
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
@@ -61,14 +67,14 @@
                         </select>
                     </dd>
                 </dl>
-                <button class="new_btn left transfer pull-left btn-clear" @click="resetCondition()">{{$t('static.clear_all')}}</button>
-                <button class="new_btn left transfer pull-left btn-search" @click="search()">{{$t('static.search')}}</button>
             </div>
             <div class="btn-group pull-left">
                 <button class="btn btn-default" v-bind:class="{ 'btn-warning': currentView==1}" @click="clickChange(1)">应收账款</button>
                 <button class="btn btn-default" v-bind:class="{ 'btn-warning': currentView==0}" @click="clickChange(0)">应付账款</button>
             </div>
-            <button class="btn btn-primary pull-right" style="margin-right:70px" @click="search()">{{$t('static.refresh')}}</button>
+            <button class="btn btn-primary   transfer pull-right" style="margin-left:50px;margin-right:20px" @click="search()">{{$t('static.refresh')}}</button>
+            <button class="new_btn  transfer pull-right btn-clear" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+            <button class="new_btn  transfer pull-right btn-search" @click="search()">{{$t('static.search')}}</button>
         </div>
         <div slot="form">
             <div class="cover_loading">
@@ -82,11 +88,12 @@
                             <col />
                         </colgroup>
                         <thead>
+                            <th>{{$t('static.client_id')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.orderTradeTime')}}</th>
                             <th>{{$t('static.order_status')}}</th>
-                            <th>{{$t('static.orderFicount')}}<span class="countColor" > (￥{{initFinancialCountTotal.sum.amount}})</span></th>
-                            <th>{{$t('static.backAmount')}} <span class="countColor" > (￥{{initFinancialCountTotal.sum.received}})</span></th>
+                            <th>{{$t('static.orderFicount')}}<span class="countColor"> (￥{{initFinancialCountTotal.sum.amount}})</span></th>
+                            <th>{{$t('static.backAmount')}} <span class="countColor"> (￥{{initFinancialCountTotal.sum.received}})</span></th>
                             <th>{{$t('static.chargeAmount')}} <span class="countColor"> (￥{{initFinancialCountTotal.sum.unreceived}})</span></th>
                             <th>{{$t('static.billDate')}}</th>
                             <th>{{$t('static.dueDate')}}</th>
@@ -104,6 +111,7 @@
                         </colgroup>
                         <tbody>
                             <tr v-for="item in initFinancialCountTotal.list" style="cursor:pointer">
+                                <td>{{item.customerId}}</td>
                                 <td>{{item.customerName}}</td>
                                 <td>{{item.tradeTime|subtime2}}</td>
                                 <td>{{item.orderStatus|orderstatus}}</td>
@@ -145,6 +153,7 @@
                             <col />
                         </colgroup>
                         <thead>
+                            <th>{{$t('static.client_id')}}</th>
                             <th>{{$t('static.supplier_name')}}</th>
                             <th>{{$t('static.orderTradeTime')}}</th>
                             <th>{{$t('static.order_status')}}</th>
@@ -167,6 +176,7 @@
                         </colgroup>
                         <tbody>
                             <tr v-for="item in initFinancialCountTotal.list" style="cursor:pointer">
+                                <td>{{item.customerId}}</td>
                                 <td>{{item.customerName}}</td>
                                 <td>{{item.tradeTime|subtime2}}</td>
                                 <td>{{item.orderStatus|orderstatus}}</td>
@@ -427,8 +437,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    min-width: 150px;
-    width: 150px;
+    min-width: 140px;
+    width: 140px;
     padding: 7px 0;
 }
 
@@ -445,9 +455,10 @@ export default {
     color: #A27603;
     line-height: 30px;
 }
-table .countColor{
-  color:#F5741F;
-  font-weight:bold;
+
+table .countColor {
+    color: #F5741F;
+    font-weight: bold;
 }
 
 #table_box table td a:last-child,
