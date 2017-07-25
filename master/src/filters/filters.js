@@ -920,7 +920,7 @@ Vue.filter('Audit', function(val) { //寄样审核
         return '初始状态';
     }
     if (val == 0) {
-        return '初始状态';
+        return '未审核';
     }
     if (val == 1) {
         return '申请审核';

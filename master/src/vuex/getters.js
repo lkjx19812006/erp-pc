@@ -345,6 +345,9 @@ export const initSupplyDemandList = (state) => {
 export const initMyOfferList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.myOfferList));
 }
+export const initDetailMyOfferList = (state) => {//采购单报价专区中查看我的报价
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.detailMyOfferList));
+}
 export const initOrgOfferList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.orgOfferList));
 }

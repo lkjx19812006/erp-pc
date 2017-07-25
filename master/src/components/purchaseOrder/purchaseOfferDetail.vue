@@ -1,6 +1,7 @@
 <template>
     <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+    <my-offer :param="myOfferParam" v-if="myOfferParam.show"></my-offer>
     <div>
         <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con" v-show="param.show">
@@ -49,6 +50,7 @@
                                                     <th>规格</th>
                                                     <th>上架状态</th>
                                                     <th>报价人数</th>
+                                                    <th>我的报价</th>
                                                     <th>报价</th>
                                                 </thead>
                                                 <tbody>
@@ -83,8 +85,12 @@
                                                         <td v-if="!item.purchaseOffer">{{item.onSell | onsell}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.offerNumber}}</td>
                                                         <td v-if="!item.purchaseOffer">
-                                                            <a @click="offer(item)">报价</a>
+                                                            <a @click="showMyOffer(item)">({{item.myOfferTotalToIndent}})</a>
                                                         </td>
+                                                        <td v-if="!item.purchaseOffer">
+                                                            <a @click="offer(item)" class="btn btn-success btn-xs">报价</a>
+                                                        </td>
+                                                        
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -100,6 +106,7 @@
     </div>
 </template>
 <script>
+import myOffer from './myOffer.vue'
 import offerModel from './offer.vue'
 import tipsdialogModel from '../tips/tipDialog'
 import pressImage from '../../components/imagePress'
@@ -121,6 +128,7 @@ export default {
         tipsdialogModel,
         pressImage,
         filter,
+        myOffer
     },
     props: ['param'],
     data() {
@@ -147,6 +155,11 @@ export default {
                 description: "",
                 location: "",
                 images: "",
+            },
+            myOfferParam:{
+                show:false,
+                id:'',
+                breedId:''
             },
             tipsParam: {
                 show: false,
@@ -228,6 +241,11 @@ export default {
             this.offerParam.intentionId = item.id;
             this.offerParam.show = true;
 
+        },
+        showMyOffer:function(item){
+            this.myOfferParam.show = true
+            this.myOfferParam.breedId = item.breedId
+            this.myOfferParam.id = this.param.id
         },
         callback: function(name) { //如无特殊情况，统一使用这个函数作为回调函数
             this.tipsParam.name = name;

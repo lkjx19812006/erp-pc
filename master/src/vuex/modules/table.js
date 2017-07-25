@@ -190,8 +190,8 @@ import {
     LOGISTICS_COUNT_LIST,
     LOGISTICS_COUNT_TOTAL,
     FINANCIAL_COUNT_TOTAL,
-    USER_FEEDBACK_INFO
-    
+    USER_FEEDBACK_INFO,
+    DETAIL_MYOFFER_LIST
 } from '../mutation-types'
 
 
@@ -345,6 +345,7 @@ const state = {
         //订单列表
         userOrderList: [],
         myOrderList: [],
+        detailMyOfferList:[],
         orgOrderList: [{
             "id": "5726ea3bf22125bcdcff7820",
             "type": 0,
@@ -2589,6 +2590,9 @@ const mutations = {
     },
      [FINANCIAL_COUNT_TOTAL](state, data) {
         state.financialCountTotal = data;
+    },
+    [DETAIL_MYOFFER_LIST](state,data){
+        state.basicBaseList.detailMyOfferList = data
     }
 
 }

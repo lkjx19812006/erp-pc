@@ -13,8 +13,8 @@
                     <erp-search title="报价业务员" :value.sync="loadParam.offerEmployeeName" @on-click="selectEmployee('offer')" readonly="readonly"></erp-search>
                     <erp-search title="求购业务员" :value.sync="loadParam.buyEmployeeName" @on-click="selectEmployee('buy')" readonly="readonly"></erp-search>
                     <erp-search title="品种" :value.sync="loadParam.breedName" @on-click="breedSearch()" readonly="readonly"></erp-search>
-                    <erp-select title="来源" :value.sync="loadParam.source" :options="options.offerSource"></erp-select>
-                    <!-- <erp-select title="审核状态" :value.sync="loadParam.source" :options="options.offerSource"></erp-select> -->
+                    <erp-select title="来源" :value.sync="loadParam.source" :options="options.offerSource" @on-change="selectSearch()"></erp-select>
+                    <erp-select title="审核状态" :value.sync="loadParam.validate" :options="options.auditOptions" @on-change="selectSearch()"></erp-select>
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top">报价时间：</dt>
                         <dd class="left">
@@ -87,6 +87,7 @@
                         <th>品种/产地</th>
                         <th style="width:220px;">价格/数量</th>
                         <th>规格</th>
+                        <th>审核状态</th>
                         <th>报价来源/客户端</th>
                         <th>是否采纳</th>
                         <th>原因</th>
@@ -120,6 +121,7 @@
                             <p style="text-align:left;">数量：{{item.number}}{{item.unit | Unit}}</p>
                         </td>
                         <td>{{item.spec}}</td>
+                        <td>{{item.validate | Audit}}</td>
                         <td style="text-align:left">
                             <span :style="{color:item.source==0?'red':''}">{{item.source | offerType}}({{item.clients | indentSource}})</span>
                         </td>
@@ -157,6 +159,7 @@
                             <p style="text-align:left;">数量：{{item.number}}{{item.unit | Unit}}</p>
                         </td>
                         <td>{{item.spec}}</td>
+                        <td>{{item.validate | Audit}}</td>
                         <td style="text-align:left">
                             <span :style="{color:item.source==0?'red':''}">{{item.source | offerType}}({{item.clients | indentSource}})</span>
                         </td>
@@ -197,7 +200,7 @@ import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import common from '../../../common/common'
-import {offerSource} from '../../../common/searchData.js'
+import {offerSource,auditOptions} from '../../../common/searchData.js'
 import mglistModel from '../../mguan/mgListComponent.vue'
 import util from '../../tools/util.js'
 import {
@@ -236,7 +239,8 @@ export default {
     data() {
         return {
             options:{
-                offerSource
+                offerSource,
+                auditOptions
             },
             loadParam: {
                 loading: false,
@@ -262,7 +266,8 @@ export default {
                 endTime: "",
                 source:'',
                 buyOroffer:'',
-                buyCustomer:''
+                buyCustomer:'',
+                validate:''
             },
             detailParam: {
                 show: false,
