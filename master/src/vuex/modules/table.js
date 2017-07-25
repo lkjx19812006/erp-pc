@@ -191,7 +191,7 @@ import {
     LOGISTICS_COUNT_TOTAL,
     FINANCIAL_COUNT_TOTAL,
     USER_FEEDBACK_INFO
-    
+
 } from '../mutation-types'
 
 
@@ -869,7 +869,7 @@ const state = {
         "contractList": { arr: [], show: false }
     },
     purchaseDetail: { "intentionList": { arr: [], show: false } },
-    indentOfferList: [{ checked: false }, { checked: false }, { checked: false }, { checked: false },{ checked: false }, { checked: false }],
+    indentOfferList: [{ checked: false }, { checked: false }, { checked: false }, { checked: false }, { checked: false }, { checked: false }],
     myIndentOfferList: [],
     allIndentOfferList: [],
     purchaseOfferDetail: {},
@@ -1153,7 +1153,7 @@ const state = {
     logisticsCountList: [],
     logisticsCountTotal: {},
     userFeedbackInfo: [],
-    financialCountTotal:{}
+    financialCountTotal: {}
 }
 
 const mutations = {
@@ -2587,7 +2587,7 @@ const mutations = {
     [USER_FEEDBACK_INFO](state, data) {
         state.userFeedbackInfo = data
     },
-     [FINANCIAL_COUNT_TOTAL](state, data) {
+    [FINANCIAL_COUNT_TOTAL](state, data) {
         state.financialCountTotal = data;
     }
 

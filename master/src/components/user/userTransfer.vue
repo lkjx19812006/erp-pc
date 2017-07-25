@@ -163,7 +163,7 @@
                                 </div>
                                 <!-- 信用等级 -->
                                 <div class="client-detailInfo  col-md-6">
-                                    <label>{{$t('static.credit_rating')}}</label>{{param.creditLevel}}
+                                    <label>{{$t('static.credit_rating')}}</label>
                                     <select class="form-control edit-input" v-model="param.creditLevel">
                                         <option value="1" selected>{{$t('static.one_star')}}</option>
                                         <option value="2">{{$t('static.two_star')}}</option>

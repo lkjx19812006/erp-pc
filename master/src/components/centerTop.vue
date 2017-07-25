@@ -9,7 +9,7 @@
                 <language-model> </language-model>
             </div>
             <div class="right head_info clearfix">
-                <span style="float:left;margin:15px 10px 0 0 ">{{initLogin.name}}</span>
+                <span style="float:left;margin:15px 10px 0 0 ">{{initLogin.name}}<span v-if="!initEmployeeDetail.weixinId" style="color:red">（未绑定微信）</span></span>
                 <img src="/static/images/head.png" class="left" height="52" width="52" @click="show=!show" />
                 <div class="component_action" v-show="show">
                     <ul>
@@ -83,6 +83,7 @@ export default {
                 wechat: '',
                 goodfield: '',
                 name: '',
+                weixinId: '',
                 image_f_show: '',
                 path: '',
                 id: this.initLogin.id
@@ -125,6 +126,7 @@ export default {
             this.personalParam.name = this.initEmployeeDetail.name;
             this.personalParam.email = this.initEmployeeDetail.email;
             this.personalParam.photo = this.initEmployeeDetail.photo;
+            this.personalParam.weixinId = this.initEmployeeDetail.weixinId;
             this.personalParam.url = '/employee/';
             this.personalParam.key = 'employeeList';
             this.personalParam.title = 'first';
@@ -146,7 +148,7 @@ export default {
             this.tabs.splice(index, 1);
         }
     },
-    created() {  
+    created() {
         this.getEmployeeDetail(this.loadParam);
     }
     /*events:{

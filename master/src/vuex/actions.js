@@ -1100,11 +1100,11 @@ export const getFinancialList = ({ dispatch }, param) => { //财务应收应付�
     if (param.customerName != "") {
         body.customerName = param.customerName;
     }
-    if(param.isOverdue != ""){
-        body.isOverdue=Number(param.isOverdue);
+    if (param.isOverdue != "") {
+        body.isOverdue = Number(param.isOverdue);
     }
-    if(param.orderStatus != ""){
-        body.orderStatus=Number(param.orderStatus);
+    if (param.orderStatus != "") {
+        body.orderStatus = Number(param.orderStatus);
     }
 
     Vue.http({
@@ -3042,12 +3042,12 @@ export const getOrderLinkList = ({ dispatch }, param) => { //获取“待采购�
     param.loading = true;
     let body = {
         page: param.cur,
-        
+
     }
-    if(param.pageSize){
+    if (param.pageSize) {
         body.pageSize = param.pageSize
-    }else{
-         body.pageSize = 15
+    } else {
+        body.pageSize = 15
     }
     if (param.sellEmployee) {
         body.sellEmployee = param.sellEmployee;
@@ -5150,7 +5150,7 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         if (search == 'orderSum' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&orderSum=' + param.orderSum
         }
-         if (search == 'orgId' && param[search] !== '' && param[search] != 'undefined') {
+        if (search == 'orgId' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&orgId=' + param.orgId
         }
     }
@@ -7325,7 +7325,7 @@ export const getOffersByIndentId = ({ dispatch }, param) => { //根据意向ID�
     if (param.accept) {
         body.accept = param.accept;
     }
-    if(param.source){
+    if (param.source) {
         body.source = param.source
     }
     Vue.http({
@@ -7343,7 +7343,7 @@ export const getOffersByIndentId = ({ dispatch }, param) => { //根据意向ID�
         var result = res.json().result;
         let list = result.list;
         list.key = param.key;
-        list.forEach(function(item){
+        list.forEach(function(item) {
             item.checked = false
         })
         dispatch(types.INDENT_OFFER_DATA, list);
@@ -7385,7 +7385,7 @@ export const getIndentOffers = ({ dispatch }, param) => { //获取我收到的�
     if (param.source) {
         body.source = param.source
     }
-    if(param.buyEmployee){
+    if (param.buyEmployee) {
         body.buyEmployee = param.buyEmployee
     }
     Vue.http({
@@ -8953,7 +8953,6 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
         orgcode: param.orgcode,
         privilege: param.privilege,
         gender: param.gender,
-        wechat: param.wechat,
         goodfield: param.goodfield,
         photo: param.photo
     }
@@ -12154,7 +12153,7 @@ export const transferPurchaseOrder = ({ dispatch }, data) => {
         })
 }
 
-export const openOfferPdf = ({dispatch},data) => {
+export const openOfferPdf = ({ dispatch }, data) => {
     var body = {
         id: data.id
     }
@@ -12182,7 +12181,7 @@ export const handleOfferAudit = ({ dispatch }, data) => {
         biz_param: {
             ids: data.auditIds,
             validate: data.validate,
-            validateDescription:data.comment
+            validateDescription: data.comment
         }
     }
     httpService.commonPOST(body)
@@ -12192,4 +12191,4 @@ export const handleOfferAudit = ({ dispatch }, data) => {
         }, (error) => {
             data.callback(res.msg)
         })
-} 
+}

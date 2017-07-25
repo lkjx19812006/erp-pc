@@ -46,7 +46,7 @@
                         </div>
                         <div v-if="param.selectCustomer" style="margin-top:15px">
                             <label class="editlabel">选择客户<span v-if="$validation.customername.required" class="system_danger">必填项</span></label>
-                            <input type="text" v-model='param.customerName' class="form-control edit-input" style="width:95%" readonly="readonly" @click="searchCustomer(param.customerName,param.customerId,param.customerPhone)" v-validate:customername="['required']"/>
+                            <input type="text" v-model='param.customerName' class="form-control edit-input" style="width:95%" readonly="readonly" @click="searchCustomer(param.customerName,param.customerId,param.customerPhone)" v-validate:customername="['required']" />
                         </div>
                         <div style="margin-top:15px">
                             <img src="/static/images/breedinfo@2x.png" style="display:inline" />
@@ -55,7 +55,7 @@
                         <!-- 求购药材图片不需要上传 -->
                         <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto" v-if="this.param.type===0&&this.param.preSell==0&&(this.param.especial===0||this.param.especial===1)">
                             <label class="editlabel">药材图片</label>
-                            <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" boxid="box1" ></press-image>
+                            <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" boxid="box1"></press-image>
                         </div>
                         <!-- 供应意向药材图片需要上传 -->
                         <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto" v-else>
@@ -65,16 +65,16 @@
                                 </span>
                             </label>
                             <input type="text" v-show="false" v-model="param.images" v-validate:image="{required:true}">
-                            <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" boxid="box1" ></press-image>
+                            <press-image :value.sync="param.images" :type.sync="type" :param="imageParam" boxid="box1"></press-image>
                         </div>
                         <!-- 当为预售资源时，进口资质和检测报告需要上传 -->
                         <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                             <label class="editlabel">进口资质</label>
-                            <press-image :value.sync="param.importQualityImages" :type.sync="type" :param="importQualityParam" boxid="box2" ></press-image>
+                            <press-image :value.sync="param.importQualityImages" :type.sync="type" :param="importQualityParam" boxid="box2"></press-image>
                         </div>
                         <div v-if="param.type==1&&param.especial==1&&param.preSell==1" class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                             <label class="editlabel">检测报告</label>
-                            <press-image :value.sync="param.testReportImages" :type.sync="type" :param="testReportParam" boxid="box3" ></press-image>
+                            <press-image :value.sync="param.testReportImages" :type.sync="type" :param="testReportParam" boxid="box3"></press-image>
                         </div>
                         <div class="editpage">
                             <div class="editpageleft">
@@ -87,6 +87,17 @@
                                 <div class="editpage-input" style="width:80%">
                                     <label class="editlabel">单价<span class="system_danger" v-if="$validation.price.money">请输入不超过小数点两位的数字</span></label>
                                     <input type="number" v-model='param.price' v-validate:price="['money']" class="form-control edit-input" value="{{param.price}}" style="display:-webkit-inline-box" /><span v-show="param.unit">元/{{param.unit | Unit}}</span>
+                                </div>
+                                <div class="editpage-input" v-if="param.preSell!=1">
+                                    <label class="editlabel">国家
+                                        <span v-if="param.type==1" style="color:#2d8cf0">(资源属于哪国)</span>
+                                        <span v-if="param.type==0" style="color:#2d8cf0">(求购客户属于哪国)</span>
+                                        <span v-if="!country.id" class="system_danger">必填项</span>
+                                    </label>
+                                    <div type="text" class="edit-input">
+                                        <v-select :debounce="250" :value.sync="country" :options="initCountrylist" placeholder="国" label="cname">
+                                        </v-select>
+                                    </div>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">包装</label>
@@ -167,9 +178,9 @@
                             <div class="editpageleft">
                                 <div class="editpage-input">
                                     <label class="editlabel">省</label>
-                                    <input type="text" v-if="!country.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                                    <!-- <input type="text" v-if="!country.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" /> -->
                                     <input type="text" v-show="false" v-model="province.cname">
-                                    <div v-if="country.id" type="text" class="edit-input">
+                                    <div type="text" class="edit-input">
                                         <v-select :debounce="250" :value.sync="province" :on-change="selectCity" :options="initProvince" placeholder="省" label="cname">
                                         </v-select>
                                     </div>
@@ -256,7 +267,7 @@
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">选择付款方式<span class="system_danger" v-if="$validation.payment.required">必填项</span></label>
-                                    <input type="text" v-model="validata.isPassed" v-show='false' v-validate:payment="{required:true}"/>
+                                    <input type="text" v-model="validata.isPassed" v-show='false' v-validate:payment="{required:true}" />
                                     <pay-type :width="'90%'" :param='param' :judge='validata'></pay-type>
                                 </div>
                             </div>
@@ -265,7 +276,9 @@
                         <div v-if="param.preSell===1" class="editpage">
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel">出口国家</label>
+                                    <label class="editlabel">出口国家
+                                        <span v-if="!country.id" class="system_danger">必填项</span>
+                                    </label>
                                     <div type="text" class="edit-input">
                                         <v-select :debounce="250" :value.sync="country" :options="initCountrylist" placeholder="国" label="cname">
                                         </v-select>
@@ -298,7 +311,7 @@
                                 <div class="editpage-input col-md-12" style="padding-left: 0px;padding-right: 30px;">
                                     <label class="editlabel">备注</label>
                                     <textarea class="form-control" v-model="param.description" rows="5" v-show="false"></textarea>
-                                    <mark-info :param="param" ></mark-info>
+                                    <mark-info :param="param"></mark-info>
                                 </div>
                             </div>
                             <div class="editpageright">
@@ -375,7 +388,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="createOrUpdateIntention()">确定</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&country.id" @click="createOrUpdateIntention()">确定</button>
                     <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
                 </div>
             </validator>
@@ -436,8 +449,8 @@ export default {
                 remain: true,
                 callback: this.callback
             },
-            validata:{//付款方式验证
-                isPassed:''
+            validata: { //付款方式验证
+                isPassed: ''
             },
             breedParam: {
                 show: false,
@@ -472,12 +485,8 @@ export default {
                 cname: ''
             },
             countryParam: {
-                loading: true,
-                show: false,
-                color: '#5dc596',
-                size: '15px',
+                country: 7,
                 cur: 1,
-                all: 7
             },
             provinceParam: {
                 loading: true,
@@ -776,7 +785,8 @@ export default {
         }
         if (this.param.country) {
             //以前是中文名，现在统一改成ID了
-            this.countryParam.country = this.param.country;
+            //this.param.country不代表交收地的国家了
+            //this.countryParam.country = this.param.country;
             this.countryParam.province = this.param.province;
             this.countryParam.city = this.param.city;
             this.countryParam.district = this.param.district;
