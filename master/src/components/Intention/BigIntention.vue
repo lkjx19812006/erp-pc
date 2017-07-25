@@ -257,7 +257,10 @@
                         </td>
                         <td>{{item.pubdate|subtime}}</td>
                         <td v-if='showOwn'>{{item.employeeName}}</td>
-                        <td>{{item.customerId}}</td>
+                        <td>
+                            <div v-if="item.customerId&&item.customerId!=-1">{{item.customerId}}</div>
+                            <div v-else>{{item.userId}}</div>
+                        </td>
                         <td v-if='showCustomer' class="underline" @click.stop="detailClick({
                               id:item.id,
                               sub:$index,
