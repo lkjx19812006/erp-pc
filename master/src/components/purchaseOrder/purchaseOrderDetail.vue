@@ -333,7 +333,7 @@
                                                         </td>
                                                         <td @click.stop="" style="width:100px;" v-if="param.key=='myIndent'">
                                                         <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
-                                                    </td>
+                                                         </td>
                                                         <td>{{item.otime | date}}</td>
                                                         <td>
                                                             {{item.source | offerType}}
@@ -730,18 +730,22 @@ export default {
             }
             
         },
-         checkedAllbox: function() {
-            this.checked = !this.checked;
-            if (this.checked) {
-                this.$store.state.table.myIndentOfferList.forEach(function(item) {
-                    item.checked = true;
-                })
+         onlyselected: function(index) { //单选
+            let _this = this;
+             this.$store.state.table.indentOfferList[index].checked = ! this.$store.state.table.indentOfferList[index].checked;
+            if (! this.$store.state.table.indentOfferList[index].checked) {
+                _this.checked = false;
             } else {
-                this.$store.state.table.myIndentOfferList.forEach(function(item) {
-                    item.checked = false;
+                _this.checked = true;
+                 this.$store.state.table.indentOfferList.forEach(function(item) {
+                    if (!item.checked) {
+                        _this.checked = false;
+                    }
                 })
             }
+
         },
+        
         batchAccept: function() {
             let list = this.initIndentOfferList;
             let offerIds = [];
