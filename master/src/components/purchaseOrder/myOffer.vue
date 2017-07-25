@@ -14,7 +14,7 @@
                     <tr>
                         <th>报价时间</th>
                         <th>供应商名称</th>
-                        <th>求购业务员</th>
+                        <!-- <th>求购业务员</th> -->
                         <th>产地</th>
                         <th>价格</th>
                         <th>数量</th>
@@ -26,7 +26,7 @@
                     <tr v-for="item in initDetailMyOfferList">
                         <td>{{item.otime.substr(0,19)}}</td>
                         <td>{{item.offerCustomerName}}</td>
-                        <td>{{item.buyCustomerName}}</td>
+                        <!-- <td>{{item.buyCustomerName}}</td> -->
                         <td>{{item.location | province}}</td>
                         <td>{{item.price}}元</td>
                         <td>{{item.number}}</td>

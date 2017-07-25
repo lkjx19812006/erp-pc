@@ -11,7 +11,7 @@
                 <div slot="main">
                     <erp-search title="客户ID" :value.sync="loadParam.buyCustomer" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="报价业务员" :value.sync="loadParam.offerEmployeeName" @on-click="selectEmployee('offer')" readonly="readonly"></erp-search>
-                    <erp-search title="求购业务员" :value.sync="loadParam.buyEmployeeName" @on-click="selectEmployee('buy')" readonly="readonly"></erp-search>
+                    <erp-search v-if="param.init=='initAllIndentOfferList'" title="求购业务员" :value.sync="loadParam.buyEmployeeName" @on-click="selectEmployee('buy')" readonly="readonly"></erp-search>
                     <erp-search title="品种" :value.sync="loadParam.breedName" @on-click="breedSearch()" readonly="readonly"></erp-search>
                     <erp-select title="来源" :value.sync="loadParam.source" :options="options.offerSource" @on-change="selectSearch()"></erp-select>
                     <erp-select title="审核状态" :value.sync="loadParam.validate" :options="options.auditOptions" @on-change="selectSearch()"></erp-select>
