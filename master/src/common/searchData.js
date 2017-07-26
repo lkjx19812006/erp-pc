@@ -57,6 +57,14 @@ export const auditOptions = [ //审核状态
                 {value:'3',text:'审核不通过'}
             ]
 
+export const offerAudit = [ //报价审核
+                {value:'',text:'全部'},
+                // {value:'0',text:'待审核'},
+                // {value:'1',text:'审核中'},
+                {value:'2',text:'审核通过'},
+                // {value:'3',text:'审核不通过'}
+            ]
+
 export const inquireOptions = [ //询价状态
                 {value:'0',text:'初始'},
                 {value:'1',text:'询价中'},
@@ -128,5 +136,5 @@ export const provinceOptions = [ // 省份
 export const offerSource = [ //报价来源
             { "value": "", "text": "全部" },
             { "value": "0", "text": "业务员" },
-            { "value": "1", "text": "客户" }
+            { "value": "1", "text": "供应商" }
         ]

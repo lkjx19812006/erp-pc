@@ -445,6 +445,7 @@ export default {
             this.supplierParam.customerIds = [];
             this.supplierParam.customerIds.push(id);
             this.supplierParam.callback = this.supplierCallback;
+            this.supplierParam.comments = ''
             this.supplierParam.show = true;
         },
         supplierCallback: function(name) {

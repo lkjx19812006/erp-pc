@@ -9,7 +9,7 @@
         <div slot="top">
             <div class="clear">
                 <dl class="clear left">
-                    <dt class="left  marg_top">{{$t('static.breed')}}：</dt>
+                    <dt class="left  marg_top">{{$t('static.breed')}}asdasdad：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
                     </dd>
@@ -190,6 +190,7 @@ export default {
                 id: '',
                 inquireId: '',
                 inquire: '',
+                offerStatus:'',
                 callback: this.detailCallback
             },
             breedSearchParam: {
@@ -258,6 +259,7 @@ export default {
             this.detailParam.index = index;
             this.detailParam.inquireId = item.id;
             this.detailParam.inquire = item.inquire;
+            this.detailParam.offerStatus = item.offerStatus?JSON.parse(item.offerStatus):item.offerStatus
             this.detailParam.show = true;
         },
         intentionSearch: function() {
