@@ -5569,7 +5569,7 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
         data.blacklist = param.blacklist;
     } else if (param.link == '/customer/setSupplier') {
         data.customerIds = param.customerIds;
-        if (!param.supplier) {
+        if (!param.supplier&&param.supplier!==0) {
             data.supplier = 1;
         } else {
             data.supplier = param.supplier;

@@ -9,19 +9,19 @@
         <div slot="top">
             <div class="clear pull-left">
                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户姓名：</dt>
+                    <dt class="left transfer marg_top">供应商：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.fullname" placeholder="按回车键搜索" @keyup.enter="offerSearch()">
                     </dd>
                 </dl>
                  <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户ID：</dt>
+                    <dt class="left transfer marg_top">供应商ID：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerId" placeholder="按回车键搜索" @keyup.enter="offerSearch()">
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户手机：</dt>
+                    <dt class="left transfer marg_top">供应商手机：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.userPhone" placeholder="按回车键搜索" @keyup.enter="offerSearch()">
                     </dd>
@@ -29,20 +29,20 @@
                 <dl class="clear left transfer">
                     <dt class="left transfer marg_top">报价时间：</dt>
                     <dd class="left">
-                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss" class="a">
+                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss" class="a" width="165">
                         </mz-datepicker>
                         ~
                     </dd>
                     <dd class="left">
-                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss" class="a">
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss" class="a" width="165">
                         </mz-datepicker>
                     </dd>
                 </dl>
                 <dl class="clear left transfer">
-                    <button type="button" class="btn btn-default" @click="todayOffer()">今日报价</button>
-                    <button type="button" class="btn btn-default" @click="weekOffer()">本周报价</button>
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="offerSearch()">搜索</button>
-                    <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
+                    <button type="button" class="btn btn-success" @click="todayOffer()">今日报价</button>
+                    <button type="button" class="btn btn-success" @click="weekOffer()">本周报价</button>
+                    <button type="button" class="btn btn-primary" height="24" width="24" @click="offerSearch()">搜索</button>
+                    <button class="btn btn-warning" @click="resetCondition()">清空条件</button>
                 </dl>
             </div>
             <div class="right">
@@ -60,8 +60,8 @@
                     <tr>
                         <th>报价时间</th>
                         <th style="min-width:120px">所属交易员</th>
-                        <th>报价客户ID</th>
-                        <th style="min-width:120px">报价客户</th>
+                        <th>报价供应商ID</th>
+                        <th style="min-width:120px">报价供应商</th>
                         <th>联系方式</th>
                         <th>品种名</th>
                         <td>图片</td>
@@ -382,8 +382,8 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 213px;
-    min-width: 213px;
+    width: 200px;
+    min-width: 150px;
 }
 
 .api {

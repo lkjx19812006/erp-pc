@@ -9,24 +9,27 @@
         <div slot="top">
             <search-model>
                 <div slot="main">
-                    <erp-search title="客户ID" :value.sync="loadParam.buyCustomer" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="供应商ID" :value.sync="loadParam.buyCustomer" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="报价业务员" :value.sync="loadParam.offerEmployeeName" @on-click="selectEmployee('offer')" readonly="readonly"></erp-search>
-                    <erp-search v-if="param.init=='initAllIndentOfferList'" title="求购业务员" :value.sync="loadParam.buyEmployeeName" @on-click="selectEmployee('buy')" readonly="readonly"></erp-search>
+                   
                     <erp-search title="品种" :value.sync="loadParam.breedName" @on-click="breedSearch()" readonly="readonly"></erp-search>
                     <erp-select title="来源" :value.sync="loadParam.source" :options="options.offerSource" @on-change="selectSearch()"></erp-select>
-                    <erp-select title="审核状态" :value.sync="loadParam.validate" :options="options.auditOptions" @on-change="selectSearch()"></erp-select>
+                    <erp-select title="审核状态" :value.sync="loadParam.validate" :options="options.offerAudit" @on-change="selectSearch()"></erp-select>
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top">报价时间：</dt>
                         <dd class="left">
-                            <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss" width="168">
+                            <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss" width="115">
                             </mz-datepicker>
                             ~
                         </dd>
                         <dd class="left">
-                            <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss" width="168">
+                            <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss" width="115">
                             </mz-datepicker>
                         </dd>
                     </dl>
+                </div>
+                <div slot="more">
+                     <erp-search v-if="param.init=='initAllIndentOfferList'" title="求购业务员" :value.sync="loadParam.buyEmployeeName" @on-click="selectEmployee('buy')" readonly="readonly"></erp-search>
                 </div>
                 <div slot="handle">
                     <button type="button" class="btn btn-success" @click="todayOffer()">今日报价</button>
@@ -200,7 +203,7 @@ import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import common from '../../../common/common'
-import {offerSource,auditOptions} from '../../../common/searchData.js'
+import {offerSource,offerAudit} from '../../../common/searchData.js'
 import mglistModel from '../../mguan/mgListComponent.vue'
 import util from '../../tools/util.js'
 import {
@@ -240,7 +243,7 @@ export default {
         return {
             options:{
                 offerSource,
-                auditOptions
+                offerAudit
             },
             loadParam: {
                 loading: false,
@@ -379,6 +382,7 @@ export default {
             this.loadParam.startTime = "";
             this.loadParam.endTime = "";
             this.loadParam.effective = "";
+            this.loadParam.validate = "";
             this.selectSearch();
         },
         clickDetail: function(id) {

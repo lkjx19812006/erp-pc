@@ -257,7 +257,10 @@
                         </td>
                         <td>{{item.pubdate|subtime}}</td>
                         <td v-if='showOwn'>{{item.employeeName}}</td>
-                        <td>{{item.customerId}}</td>
+                        <td>
+                            <div v-if="item.customerId&&item.customerId!=-1">{{item.customerId}}</div>
+                            <div v-else>{{item.userId}}</div>
+                        </td>
                         <td v-if='showCustomer' class="underline" @click.stop="detailClick({
                               id:item.id,
                               sub:$index,
@@ -452,7 +455,7 @@
                                              key:'myIntentionList'
                                              })">删除
                             </button>
-                            <button v-if="item.onSell==item.inType==1&&param.key=='myIntentionList'||item.onSell==1&&showUp" class="btn btn-success btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,0)">上架审核</button>
+                            <button v-if="item.onSell==1&&item.inType==1&&param.key=='myIntentionList'||item.onSell==1&&showUp" class="btn btn-success btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,0)">上架审核</button>
                             <button v-if="item.onSell==3" v-show='showUp' class="btn btn-warning btn-xs" height="24" width="24" @click="upOrDownAudit(item.id,1)">下架审核</button>
                             <button v-if="item.onSell===0||item.onSell==-2||item.onSell==4" v-show='!showOwn' class="btn btn-success btn-xs" height="24" width="24" @click="up($index,item.id,1)">申请上架</button>
                             <button class="btn btn-warning btn-xs" v-show='!showOwn' v-if="item.onSell==2" @click="up($index,item.id,3)">申请下架</button>

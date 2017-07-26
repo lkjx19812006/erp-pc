@@ -53,7 +53,6 @@ export default {
         },
         //确定
         confirm: function() {
-    
             this.customerTransferBlacklist(this.customParam);
         },
 

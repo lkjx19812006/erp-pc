@@ -242,7 +242,7 @@
                                         </dd>
                                         <dt class="left transfer marg_top">品种：</dt>
                                         <dd class="left margin_right">
-                                            <select class="form-control" v-model="indentOfferParam.breedId" @change="selectSearch()">
+                                            <select class="form-control" v-model="indentOfferParam.breedId" @change="selectSearch()" style="width:100px;">
                                                 <option v-for="item in initPurchaseDetail.intentionList.arr" :value="item.breedId">
                                                     {{item.breedName}}
                                                 </option>
@@ -261,7 +261,7 @@
                                             <select type="text" class="form-control" v-model="indentOfferParam.validate" @change="selectSearch()" style="width: 100px;">
                                                 <option value="">全部</option>
                                                 <option value="0">未审核</option>
-                                                <option value="1">审核中</option>
+                                                <!-- <option value="1">审核中</option> -->
                                                 <option value="2">审核通过</option>
                                                 <option value="3">审核不通过</option>
                                             </select>
@@ -271,13 +271,13 @@
                                                 全部
                                             </button>
                                             <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='0'}" @click="clickAccept('0')">
-                                                未处理
+                                                待处理
                                             </button>
                                             <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='1'}" @click="clickAccept('1')">
-                                                已接受
+                                                已采用
                                             </button>
                                             <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='2'}" @click="clickAccept('2')">
-                                                已拒绝
+                                                未采用
                                             </button>
                                             <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-warning': this.indentOfferParam.accept==='3'}" @click="clickAccept('3')">
                                                 待采用
@@ -329,7 +329,7 @@
                                                         <!-- 意向信息 -->
                                                         <td style="width:30px;"  v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">
                                                             <Checkbox @click.prevent="singleSelect(index,item)" :checked="item.checked" v-if="item.source!=1"></Checkbox>
-                                                            <input type="checkbox" v-else @click.prevent="errorTips()">
+                                                            <input type="checkbox" v-else @click.prevent="errorTips()" style="margin-right: 8px;">
                                                         </td>
                                                         <td @click.stop="" style="width:100px;" v-if="param.key=='myIndent'">
                                                         <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
@@ -452,7 +452,7 @@ export default {
                 breedId: "",
                 breedName: "",
                 accept: "",
-                source:"0",
+                source:"",
                 validate:''
             },
             tipsParam: {
@@ -659,6 +659,7 @@ export default {
             this.indentOfferParam.breedName = "";
             this.indentOfferParam.accept = ""
             this.indentOfferParam.source = ""
+            this.indentOfferParam.validate = ""
             this.selectSearch(this.indentOfferParam);
         },
         enfoldment: function(param) {
@@ -844,7 +845,9 @@ export default {
         }
         if(this.param.key=='myIndent'){
             this.indentOfferParam.querySource = 1
+            this.indentOfferParam.source = ''
         }else if(this.param.key == 'allIndent'){
+            this.indentOfferParam.source = '0'
             this.indentOfferParam.querySource = 2
         }
         this.getClientDetail(clientParam);

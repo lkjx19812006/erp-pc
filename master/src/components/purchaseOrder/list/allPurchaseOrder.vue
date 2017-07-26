@@ -7,24 +7,21 @@
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
-    
             <search-model>
                 <div slot="main">
-
                     <div class="left" style="margin-right:10px;position:relative;">
-                            <div class="btn-group left">
-                                <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-success': this.loadParam.auditing===''}" @click="isAuditing('')">
-                                    全部
-                                </button>
-                                <!-- <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': this.loadParam.auditing==='2'}" @click="isAuditing('2')">
-                                    已审核
-                                </button> -->
-                                <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-success': this.loadParam.auditing==='1'}" @click="isAuditing('1')">
-                                    待审核</span>
-                                </button>
-                                
-                            </div>
-                            <span class="tagPoint" >{{loadParam.auditNum>100?'99+':loadParam.auditNum}}
+                        <div class="btn-group left">
+                            <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-success': this.loadParam.auditing===''}" @click="isAuditing('')">
+                                全部
+                            </button>
+                            <!-- <button type="button" class="btn btn-default" v-bind:class="{ 'btn-success': this.loadParam.auditing==='2'}" @click="isAuditing('2')">
+                                已审核
+                            </button> -->
+                            <button type="button" class="btn btn-default" style="width:75px" v-bind:class="{ 'btn-success': this.loadParam.auditing==='1'}" @click="isAuditing('1')">
+                                待审核</span>
+                            </button>
+                        </div>
+                        <span class="tagPoint">{{loadParam.auditNum>100?'99+':loadParam.auditNum}}
                     </div>
                     <erp-search title="客户名称" :value.sync="loadParam.customerName" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="客户ID" :value.sync="loadParam.customerId" @on-keyenter="selectSearch()"></erp-search> 
@@ -99,20 +96,20 @@
                         <td>
                             <Poptip placement="left" trigger="hover">
                                 <span>{{item.buyDesc | textDisplay "8"}}</span>
-                                <div class="api" slot="content">
-                                    {{item.buyDesc}}
-                                </div>
-                            </Poptip>
+                        <div class="api" slot="content">
+                            {{item.buyDesc}}
+                        </div>
+                        </Poptip>
                         </td>
                         <td>{{item.comment}}</td>
                         <td>{{item.offer}}</td>
                         <td>{{item.inquire | inquire}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!--底部分页-->
-        <pagination :combination="loadParam" slot="page"></pagination>
+                        </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <!--底部分页-->
+                    <pagination :combination="loadParam" slot="page"></pagination>
     </mglist-model>
 </template>
 <script>
@@ -126,7 +123,11 @@ import selectorgModel from '../../tips/treeDialog'
 import employeeModel from '../../clientRelate/searchEmpInfo'
 import transferPurchase from '../transferPurchase'
 import tipsdialogModel from '../../tips/tipDialog'
-import {inquireOptions,purchaseSource,offerOptions} from '../../../common/searchData'
+import {
+    inquireOptions,
+    purchaseSource,
+    offerOptions
+} from '../../../common/searchData'
 import {
     initAllPurchaseList,
     initLogin
@@ -155,10 +156,10 @@ export default {
     },
     data() {
         return {
-            options:{
-                inquireOptions:inquireOptions,
-                purchaseSource:purchaseSource,
-                offerOptions:offerOptions
+            options: {
+                inquireOptions: inquireOptions,
+                purchaseSource: purchaseSource,
+                offerOptions: offerOptions
             },
             loadParam: {
                 loading: false,
@@ -180,9 +181,9 @@ export default {
                 org: '',
                 orgName: '',
                 purchaseId: '',
-                customerId:'',
-                auditing:'1',
-                auditNum:'',
+                customerId: '',
+                auditing: '1',
+                auditNum: '',
             },
             detailParam: {
                 show: false,
@@ -206,21 +207,21 @@ export default {
                 employeeId: '',
                 employeeName: ''
             },
-            transferParam:{
-                show:false,
-                transferPurchase:[],
-                callback:this.showTips
+            transferParam: {
+                show: false,
+                transferPurchase: [],
+                callback: this.showTips
             },
             tipsParam: {
                 show: false,
                 name: '',
                 alert: true
             },
-            selectAll:false
+            selectAll: false
         }
     },
     methods: {
-        isAuditing:function(data){
+        isAuditing: function(data) {
             this.loadParam.auditing = data
             this.selectSearch()
         },
@@ -237,7 +238,7 @@ export default {
             this.employeeParam.show = true;
         },
         resetCondition: function() { //清除搜索条件
-            this.loadParam.customerId='';
+            this.loadParam.customerId = '';
             this.loadParam.source = '';
             this.loadParam.inquire = '';
             this.loadParam.offer = '-1';
@@ -266,51 +267,51 @@ export default {
                 this.selectSearch(this.loadParam);
             }
         },
-        showTips:function(data){
+        showTips: function(data) {
             this.tipsParam.name = data
             this.tipsParam.show = true
             this.getPurchaseOrderList(this.loadParam)
         },
-        singleSelect:function($index,item){      
+        singleSelect: function($index, item) {
             this.$store.state.table.basicBaseList.allPurchaseList[$index].checked = !this.$store.state.table.basicBaseList.allPurchaseList[$index].checked;
-            for(let i = 0;i<this.$store.state.table.basicBaseList.allPurchaseList.length;i++){//判断是否全部选择
-                if(!this.$store.state.table.basicBaseList.allPurchaseList[i].checked){
+            for (let i = 0; i < this.$store.state.table.basicBaseList.allPurchaseList.length; i++) { //判断是否全部选择
+                if (!this.$store.state.table.basicBaseList.allPurchaseList[i].checked) {
                     this.selectAll = false
                     return
-                }else{
+                } else {
                     this.selectAll = true
                 }
             }
         },
-        checkAll:function(){
+        checkAll: function() {
             this.selectAll = !this.selectAll
             let _this = this
-            if(this.selectAll){
+            if (this.selectAll) {
                 _this.transferParam.transferPurchase = []
-                this.$store.state.table.basicBaseList.allPurchaseList.forEach(function(item){
+                this.$store.state.table.basicBaseList.allPurchaseList.forEach(function(item) {
                     item.checked = true
                 })
-            }else{
-                _this.transferParam.transferPurchase = []    
-                this.$store.state.table.basicBaseList.allPurchaseList.forEach(function(item){
+            } else {
+                _this.transferParam.transferPurchase = []
+                this.$store.state.table.basicBaseList.allPurchaseList.forEach(function(item) {
                     item.checked = false
                 })
             }
         },
-        tansfer:function(){
+        tansfer: function() {
             this.transferParam.transferPurchase = []
-            for(let i = 0;i<this.$store.state.table.basicBaseList.allPurchaseList.length;i++){
-                if(this.$store.state.table.basicBaseList.allPurchaseList[i].checked){
+            for (let i = 0; i < this.$store.state.table.basicBaseList.allPurchaseList.length; i++) {
+                if (this.$store.state.table.basicBaseList.allPurchaseList[i].checked) {
                     this.transferParam.transferPurchase.push(this.$store.state.table.basicBaseList.allPurchaseList[i].id)
                 }
             }
-            if(this.transferParam.transferPurchase.length==0){
+            if (this.transferParam.transferPurchase.length == 0) {
                 this.tipsParam.name = '请至少选择一个采购单'
                 this.tipsParam.show = true
-            }else{
+            } else {
                 this.transferParam.show = true
             }
-            
+
         }
     },
     events: {
@@ -324,7 +325,7 @@ export default {
             this.selectSearch(this.loadParam);
         }
     },
-    computed:{
+    computed: {
 
     },
     created() {
@@ -397,21 +398,23 @@ dl {
     color: #3399ff;
     white-space: normal;
 }
-.tagPoint{
+
+.tagPoint {
     width: 25px;
-    height:25px;
+    height: 25px;
     text-align: center;
     line-height: 25px;
     position: absolute;
     background: #ed3f14;
-    color:#fff;
+    color: #fff;
     border-radius: 50%;
     font-size: 8px;
     top: -10px;
     right: -10px;
     z-index: 10;
 }
-.ivu-checkbox-inner{
+
+.ivu-checkbox-inner {
     width: 20px!important;
     height: 20px!important;
 }
