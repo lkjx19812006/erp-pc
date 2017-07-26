@@ -308,7 +308,7 @@
                                         <div class="panel-body panel-set">
                                             <table class="table  contactSet">
                                                 <thead>
-                                                    <th style="width:30px;">勾选</th>
+                                                    <th style="width:30px;" v-if="param.key=='myIndent'||param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">勾选</th>
                                                     <th>报价时间</th>
                                                     <th>报价类型</th>
                                                     <th>供应商名称</th>
