@@ -370,6 +370,8 @@ export default {
             this.loadParam.buyCustomer="";
             this.loadParam.offerEmployee = "";
             this.loadParam.offerEmployeeName = "";
+            this.loadParam.buyEmployeeName = ''
+            this.loadParam.buyEmployee = ''
             this.loadParam.breedId = "";
             this.loadParam.breedName = "";
             this.loadParam.accept = "";
