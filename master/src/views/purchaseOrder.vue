@@ -16,11 +16,11 @@
         <div class="myOrder" v-if="$route.path.split('=')[1]==3">
             <purchase-offer></purchase-offer>
         </div>
-        <!-- 我的客户报价 -->
+        <!-- 我的供应商报价 -->
         <div class="myOrder" v-if="$route.path.split('=')[1]==4">
             <my-offer></my-offer>
         </div>
-        <!-- 部门客户报价 -->
+        <!-- 部门供应商报价 -->
         <div class="myOrder" v-if="$route.path.split('=')[1]==5">
             <org-offer></org-offer>
         </div>

@@ -9,7 +9,7 @@
         <div slot="top">
             <div class="clear">
                 <dl class="clear left">
-                    <dt class="left  marg_top">{{$t('static.breed')}}asdasdad：</dt>
+                    <dt class="left  marg_top">{{$t('static.breed')}}：</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
                     </dd>
