@@ -151,9 +151,9 @@
                                                                     <th></th>
                                                                     <th>报价时间</th>
                                                                     <th>报价类型</th>
-                                                                    <th v-if="param.key!='myIndent'">供应商名称</th>
-                                                                    <th v-if="param.key!='myIndent'">供应商ID</th>
-                                                                    <th v-if="param.key!='myIndent'">报价业务员</th>
+                                                                    <th>供应商名称</th>
+                                                                    <th>供应商ID</th>
+                                                                    <th>报价业务员</th>
                                                                     <th>所属部门</th>
                                                                     <th>品种</th>
                                                                     <th>规格</th>
@@ -187,9 +187,9 @@
                                                                         <td>
                                                                             {{offer.source | offerType}}
                                                                         </td>
-                                                                        <td v-if="param.key!='myIndent'">{{offer.offerCustomerName}}</td>
-                                                                        <td v-if="param.key!='myIndent'">{{offer.offerCustomer}}</td>
-                                                                        <td v-if="param.key!='myIndent'">{{offer.offerEmployeeName}}</td>
+                                                                        <td >{{offer.offerCustomerName}}</td>
+                                                                        <td >{{offer.offerCustomer}}</td>
+                                                                        <td >{{offer.offerEmployeeName}}</td>
                                                                         <td>{{offer.offerOrgName}}</td>
                                                                         <td>{{offer.breedName}}</td>
                                                                         <td>{{offer.spec}}</td>
@@ -321,8 +321,8 @@
                                                     <th style="width:30px;" v-if="param.key=='myIndent'||param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">勾选</th>
                                                     <th>报价时间</th>
                                                     <th>报价类型</th>
-                                                    <th v-if="param.key!='myIndent'">供应商名称</th>
-                                                    <th v-if="param.key!='myIndent'">报价业务员</th>
+                                                    <th >供应商名称</th>
+                                                    <th >报价业务员</th>
                                                     <th>品种</th>
                                                     <th>规格</th>
                                                     <th>产地</th>
@@ -349,8 +349,8 @@
                                                         <td>
                                                             {{item.source | offerType}}
                                                         </td>
-                                                        <td v-if="param.key!='myIndent'">{{item.offerCustomerName}}</td>
-                                                        <td v-if="param.key!='myIndent'">{{item.offerEmployeeName}}</td>
+                                                        <td >{{item.offerCustomerName}}</td>
+                                                        <td >{{item.offerEmployeeName}}</td>
                                                         <td><a @click="clickOfferDetail(item.id)">{{item.breedName}}</a></td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.location | province}}</td>

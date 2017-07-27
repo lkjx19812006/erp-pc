@@ -115,10 +115,10 @@
                             <span>{{item.offerEmployeeName}}</span>
                         </td> 
                         <td>
-                            <span v-if="item.source!='0'">{{item.buyEmployeeName}}</span>
+                            <span>{{item.buyEmployeeName}}</span>
                         </td>
                         <td>
-                            <span v-if="item.source!='0'">{{item.buyCustomer}}</span>
+                            <span>{{item.buyCustomer}}</span>
                         </td>
                         <td><a @click="clickDetail(item.id,'myOffer')">{{item.buyCustomerName}}</a></td>
                         <td style="text-align:left">
