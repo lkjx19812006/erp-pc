@@ -7298,6 +7298,9 @@ export const getOffersByIntentionId = ({ dispatch }, param) => { //根据意向I
     const body = {
         intentionId: param.id
     };
+    if(param.querySource){
+        body.querySource = param.querySource
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/intention/offer/queryByIntentionId',
