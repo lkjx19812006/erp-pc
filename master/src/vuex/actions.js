@@ -5569,7 +5569,7 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
         data.blacklist = param.blacklist;
     } else if (param.link == '/customer/setSupplier') {
         data.customerIds = param.customerIds;
-        if (!param.supplier) {
+        if (!param.supplier&&param.supplier!==0) {
             data.supplier = 1;
         } else {
             data.supplier = param.supplier;
@@ -7298,6 +7298,9 @@ export const getOffersByIntentionId = ({ dispatch }, param) => { //根据意向I
     const body = {
         intentionId: param.id
     };
+    if(param.querySource){
+        body.querySource = param.querySource
+    }
     Vue.http({
         method: 'POST',
         url: '/crm/api/v1/intention/offer/queryByIntentionId',

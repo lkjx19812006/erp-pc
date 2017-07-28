@@ -167,8 +167,9 @@
                                                 <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                             </span> 
                                             <!-- 确认报价 -->
-                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.items.arr[0].inquire!=3" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
-                                                确认报价
+                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.items.arr[0].inquire!=3" :disabled="param.offerStatus[0]==3" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
+                                                <span v-if="param.offerStatus[0]==3">已确认</span>
+                                                <span v-else>确认报价</span>
                                             </button>
                                         </h4>
                                     </div>
@@ -254,9 +255,9 @@
                                                         </td>
                                                         <td>
                                                             <!-- 寻求外部报价，如果已经寻求过外部报价，就不能再寻求了 -->
-                                                            <button v-if="!item.externalIntentionId&&item.inquire!=3" class="btn btn-info btn-xs" @click="askOuterOffer(item.id)">寻求外部报价</button>
+                                                            <!-- <button v-if="!item.externalIntentionId&&item.inquire!=3" class="btn btn-info btn-xs" @click="askOuterOffer(item.id)">寻求外部报价</button> -->
                                                             <!-- 查看外部报价 -->
-                                                            <button v-if="item.externalIntentionId" class="btn btn-orange btn-xs" @click="selectOuterOffer(item)">查看外部报价</button>
+                                                            <!-- <button v-if="item.externalIntentionId" class="btn btn-orange btn-xs" @click="selectOuterOffer(item)">查看外部报价</button> -->
                                                         </td>
                                                         <td>
                                                             <a v-if="(initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2)&&item.inquire !=3" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
@@ -289,7 +290,10 @@
                                                   <p class="pull-right" v-for="item in initIntlIntentionDetail.extractiveTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                               </span>
                                               <!-- 确认报价 -->
-                                              <button v-if="extractiveOfferConfirm&&initIntlIntentionDetail.extractive.arr.length>0&&initIntlIntentionDetail.extractive.arr[0].inquire!=3" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">确认报价</button>                                             
+                                              <button v-if="extractiveOfferConfirm&&initIntlIntentionDetail.extractive.arr.length>0&&initIntlIntentionDetail.extractive.arr[0].inquire!=3" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)" :disabled="param.offerStatus[2]==3">
+                                                <span v-if="param.offerStatus[2]==3">已确认</span>
+                                                <span v-else>确认报价</span>
+                                              </button>                                             
                                         </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.extractive.show&&initIntlIntentionDetail.extractive.arr.length>0">
@@ -380,9 +384,9 @@
                                                         </td>
                                                         <td>
                                                             <!-- 寻求外部报价，如果已经寻求过外部报价，就不能再寻求了 -->
-                                                            <button v-if="!item.externalIntentionId&&item.inquire!=3" class="btn btn-info btn-xs" @click="askOuterOffer(item.id)">寻求外部报价</button>
+                                                            <!-- <button v-if="!item.externalIntentionId&&item.inquire!=3" class="btn btn-info btn-xs" @click="askOuterOffer(item.id)">寻求外部报价</button> -->
                                                             <!-- 查看外部报价 -->
-                                                            <button v-if="item.externalIntentionId" class="btn btn-orange btn-xs" @click="selectOuterOffer(item)">查看外部报价</button>
+                                                            <!-- <button v-if="item.externalIntentionId" class="btn btn-orange btn-xs" @click="selectOuterOffer(item)">查看外部报价</button> -->
                                                         </td>
                                                         <!-- 报价 -->
                                                         <td>
@@ -414,7 +418,10 @@
                                             </span>
                                             <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                              <!-- 确认报价, -->
-                                            <button v-if="otherOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)">确认报价</button>
+                                            <button v-if="otherOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)" :disabled="param.offerStatus[1]==3">
+                                                <span v-if="param.offerStatus[1]==3">已确认</span>
+                                                <span v-else>确认报价</span>
+                                            </button>
                                          </h4>
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0">
@@ -786,7 +793,7 @@ export default {
             for (let i = 0; i < menus.length; i++) {
 
                 if (menus[i].url == path) {
-                    console.log(menus[i]);
+                    
                     for (let j = 0; j < menus[i].subcategory.length; j++) {
 
                         if (menus[i].subcategory[j].id == 120) {
@@ -813,7 +820,7 @@ export default {
             this.pictureParam.img = img;
         },
         enfoldment: function(param) {
-
+            console.log(this.initIntlIntentionDetail)
             if (this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length == 0) {
                 this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = true;
             }
@@ -1002,6 +1009,8 @@ export default {
         this.getOperation(JSON.parse(localStorage.menus), this.$route.path);
         this.getIntlIntentionDetail(this.param);
         this.getCurrencyList();
+        console.log(this.param)
+        
     },
     filter: (filter, {})
 }

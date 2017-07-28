@@ -63,9 +63,9 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th>{{$t('static.inquire_type')}}</th>
-                        <th>{{$t('static.commodity_items')}}</th>
+                        <th>{{$t('static.inquire_type')}}</th>                    
                         <th>{{$t('static.client_id')}}</th>
+                        <th>{{$t('static.commodity_items')}}</th>
                         <th>{{$t('static.client_name')}}</th>
                         <th>{{$t('static.client_email')}}</th>
                         <th>{{$t('static.salesman')}}</th>
@@ -190,6 +190,7 @@ export default {
                 id: '',
                 inquireId: '',
                 inquire: '',
+                offerStatus:'',
                 callback: this.detailCallback
             },
             breedSearchParam: {
@@ -258,6 +259,7 @@ export default {
             this.detailParam.index = index;
             this.detailParam.inquireId = item.id;
             this.detailParam.inquire = item.inquire;
+            this.detailParam.offerStatus = item.offerStatus?JSON.parse(item.offerStatus):item.offerStatus
             this.detailParam.show = true;
         },
         intentionSearch: function() {
