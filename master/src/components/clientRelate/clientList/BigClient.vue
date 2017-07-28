@@ -17,15 +17,16 @@
         <div slot="top">
             <search-model>
                 <div slot="main">
-                    <erp-search title="客户名称" :value.sync="loadParam.name" @on-keyenter="selectSearch()"></erp-search>
-                    <erp-search title="客户ID" :value.sync="loadParam.id" @on-keyenter="selectSearch()"></erp-search>
-                    <erp-select title="客户类型" :value.sync="loadParam.type" :options="options.type" @on-change="selectSearch()"></erp-select>
-                    <erp-search title="手机号" :value.sync="loadParam.phone" @on-keyenter="selectSearch()"></erp-search>
-                    <erp-search title="部门" v-if="showReg" :value.sync="loadParam.orgName" @on-click="selectOrg()" readonly='readonly'></erp-search>
-                    <erp-search title="业务员" v-if='showTran' :value.sync="loadParam.employeeName" @on-click="selectEmployee()" readonly='readonly'></erp-search> 
+                    <erp-search title="static.client_name" :value.sync="loadParam.name" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="static.client_id" :value.sync="loadParam.id" @on-keyenter="selectSearch()"></erp-search>
+                    
+                    <erp-select title="static.credit_rating" :value.sync="loadParam.creditLevel" :options="options.creditLevelOptions" @on-change="selectSearch()"></erp-select>
+                    <erp-search title="static.cellphone" :value.sync="loadParam.phone" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="static.department" v-if="showReg" :value.sync="loadParam.orgName" @on-click="selectOrg()" readonly='readonly'></erp-search>
+                    <erp-search title="static.salesman" v-if='showTran' :value.sync="loadParam.employeeName" @on-click="selectEmployee()" readonly='readonly'></erp-search> 
                     <dl class="clear left transfer" v-if='showReg'>
                         <div class="left">
-                            <dt class="left transfer marg_top" style="font-weight:bold;color:#666;font-size:14px;">注册起止时间：</dt>
+                            <dt class="left transfer marg_top" style="font-weight:bold;color:#666;font-size:14px;">{{$t(static.start_end)}}</dt>
                             <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
                             </mz-datepicker>
                         </div>
@@ -37,18 +38,18 @@
                     </dl>
                 </div>
                 <div slot="more">
-                    <erp-select title="手机号归属地" :value.sync="loadParam.phoneProvinceName" :options="options.provinceOptions" @on-change="selectSearch()"></erp-select>
-                    <erp-search title="经营范围" :value.sync="loadParam.bizScope" @on-keyenter="selectSearch()"></erp-search>
-                    <erp-search title="未跟进天数" :value.sync="loadParam.trackingDay" @on-keyenter="selectSearch()"></erp-search>
-                    <erp-select title="信用等级" :value.sync="loadParam.creditLevel" :options="options.creditLevelOptions" @on-change="selectSearch()"></erp-select>
+                    <erp-select title="static.phone_origin" :value.sync="loadParam.phoneProvinceName" :options="options.provinceOptions" @on-change="selectSearch()"></erp-select>
+                    <erp-search title="static.business_scope" :value.sync="loadParam.bizScope" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="static.not_tracking_day" :value.sync="loadParam.trackingDay" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-select title="static.client_type" :value.sync="loadParam.type" :options="options.type" @on-change="selectSearch()"></erp-select>
                 </div>
                 <div slot="handle">
                     <dl class="clear left transfer" style="line-height:30px">
-                    <dt class="left transfer marg_top">已成交：</dt>
+                    <dt class="left transfer marg_top">{{$t('static.dealed')}}：</dt>
                         <label class="checkbox_unselect" style="background-position:1px 5px" v-bind:class="{'checkbox_unselect':!loadParam.orderSum,'checkbox_select':loadParam.orderSum}" id="client_ids" @click="selectOrderSum()"></label>
                     </dl>
-                    <button type="button" class="btn btn-default btn-success" style="border-radius:13%;width:70px;" @click="selectSearch()">搜索</button>
-                    <button type="button" class="btn btn-default btn-warning" style="border-radius:12%" @click="resetCondition()">清空条件</button>
+                    <button type="button" class="btn btn-default btn-success" style="border-radius:13%;width:70px;" @click="selectSearch()">{{$t('static.search')}}</button>
+                    <button type="button" class="btn btn-default btn-warning" style="border-radius:12%" @click="resetCondition()">{{$t('static.clear_all')}}</button>
                     <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                     <button type="button" class="btn btn-default btn-warning" v-if='showTran' @click="clientTransfer({
                         arr:[],
@@ -56,9 +57,9 @@
                         employeeId:'',
                         orgId:'',
                         show:true
-                        })">划转</button>
-                    <button type="button" class="btn btn-default btn-warning" @click="clientTransferBlack()">加入黑名单</button>
-                    <button type="button" class="btn btn-default btn-success" @click="clientTransferSupplier()">提取供应商</button>
+                        })">{{$t('static.assigned_to_employee')}}</button>
+                    <button type="button" class="btn btn-default btn-warning" @click="clientTransferBlack()">{{$t('static.drag_into_blacklist')}}</button>
+                    <button type="button" class="btn btn-default btn-success" @click="clientTransferSupplier()">{{$t('static.make_them_become_supplier')}}</button>
                     <button type="button" v-if='!showTran' class="btn btn-success" @click="createCustomer({
                                             show:true,
                                             loading:false,
@@ -130,11 +131,11 @@
                         <th>{{$t('static.salesman')}}</th>
                         <th>{{$t('static.transaction_num')}}</th>
                         <th>{{$t('static.recent_contact')}}</th>
-                        <th>成交金额</th>
+                        <th>{{$t('static.transcation_amount')}}</th>
                         <th>{{$t('static.client_type')}}</th> 
                         <th>{{$t('static.client_origin')}}</th>
                         <th>{{$t('static.chengjiaoleix')}}</th>
-                        <th style="min-width:150px;">划转/来源</th>
+                        <th style="min-width:150px;">{{$t('static.assigned_to_employee')}}{{$t('static.customer_source')}}</th>
                         <!-- <th>{{$t('static.detailed_address')}}</th> -->
                         <th>{{$t('static.create_time')}}</th>
                         <th v-if="this.initLogin.orgId==29">跟进状态</th>
@@ -146,7 +147,7 @@
                         <th>
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids" @click="checkedAll()"></label>
                         </th>
-                        <th style="color:#fa6705;font-size: 14px">全选</th>
+                        <th style="color:#fa6705;font-size: 14px">{{$t("static.Select_all")}}</th>
                         <th colspan="18"></th>
                         <th v-if="this.initLogin.orgId==29"></th>
                         <th v-if="this.initLogin.orgId==29"></th>
@@ -230,17 +231,17 @@
                                                 employeeId:item.employeeId,
                                                 employeeName:item.employeeName,
                                                 orgId:item.orgId
-                                                })">编辑</a>
+                                                })">{{$t('static.edit')}}</a>
                                             
                                  <a class="btn btn-success btn-xs" v-show='!showTran' v-if="item['sort']==0" @click="setTop(item.id,1)">
                                     <Icon type="arrow-up-a"></Icon>
-                                    置顶
+                                    {{$t('static.setToTop')}}
                                 </a>
                                 <a class="btn btn-warning btn-xs" v-else @click="cancelTop(item.id,0)">
                                     <Icon type="arrow-down-a"></Icon>
-                                    取消置顶
+                                    {{$t('static.cancel_top')}}
                                 </a>
-                               <a v-if="this.initLogin.orgId==29" class="btn btn-success" style="padding:1px 5px;font-size: 12px;" @click="updateTracking(item,$index)">跟进</a>                          
+                               <a v-if="this.initLogin.orgId==29" class="btn btn-success" style="padding:1px 5px;font-size: 12px;" @click="updateTracking(item,$index)">{{$t('static.tracking')}}</a>                          
                         </td>
                     </tr>
                 </tbody>
@@ -783,7 +784,7 @@ export default {
     },
     ready() {
         
-      common('tab', 'table_box', 1);
+      //common('tab', 'table_box', 1);
     },
     filters: {
         timeFilters: function(mytime) {
@@ -844,7 +845,7 @@ export default {
 }
 #table_box table th,
 #table_box table td {
-    /* width: 107px; */
+    width: 100px; 
     min-width: 50px;
 }
 

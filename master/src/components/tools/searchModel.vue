@@ -7,7 +7,7 @@
             <div class="right">
             	<div class="more_fa" v-if="hasMore">
             		<a class="more " href="javascript:void(0);" @click="showMore()">
-	                	更多搜索
+	                	{{$t('static.more_search')}}
 	                	<Icon type="arrow-down-b" v-if='!isMore'></Icon>
 	                	<Icon type="arrow-up-b" v-else></Icon>
                 	</a>
