@@ -7581,6 +7581,9 @@ export const getOfferList = ({ dispatch }, param) => { //报价信息列表以�
     if (param.validate) {
         body.biz_param.validate = param.validate
     }
+    if(param.offerCustomer){
+       body.biz_param.offerCustomer = param.offerCustomer
+    }
     httpService.commonPOST(body)
         .then((res) => {
             var offer = res.biz_result.list;
