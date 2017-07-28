@@ -29,7 +29,7 @@
                             </dd>
                         </dl>
                         <dl class="clear left transfer">
-                            <dt class="left transfer marg_top">客户ID</dt>
+                            <dt class="left transfer marg_top">{{$t('static.client_id')}}</dt>
                             <dd class="left">
                                 <input type="text" class="form-control" v-model="loadParam.customerId"  placeholder="按回车键搜索" @keyup.enter="selectSearch()" />
                             </dd>
@@ -57,7 +57,7 @@
                                     <option value="">{{$t('static.please_select')}}</option>
                                     <option value="0">{{$t('static.purchase')}}</option>
                                     <option value="1">{{$t('static.sell')}}</option>
-                                    <option value="2">预售</option>
+                                    <option value="2">{{$t('static.the_pre_sale')}}</option>
                                 </select>
                             </dd>
                         </dl>
@@ -79,7 +79,7 @@
                             </dd>
                         </dl>
                         <dl class="clear left transfer">
-                            <dt class="left transfer marg_top">是否样品：</dt>
+                            <dt class="left transfer marg_top">{{$t('static.sample_order')}}：</dt>
                             <dd class="left">
                                 <select class="form-control" v-model="loadParam.sample" @change="selectSearch()">
                                     <option value="">{{$t('static.please_select')}}</option>

@@ -19,14 +19,13 @@
                 <div slot="main">
                     <erp-search title="static.client_name" :value.sync="loadParam.name" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="static.client_id" :value.sync="loadParam.id" @on-keyenter="selectSearch()"></erp-search>
-                    
                     <erp-select title="static.credit_rating" :value.sync="loadParam.creditLevel" :options="options.creditLevelOptions" @on-change="selectSearch()"></erp-select>
                     <erp-search title="static.cellphone" :value.sync="loadParam.phone" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="static.department" v-if="showReg" :value.sync="loadParam.orgName" @on-click="selectOrg()" readonly='readonly'></erp-search>
                     <erp-search title="static.salesman" v-if='showTran' :value.sync="loadParam.employeeName" @on-click="selectEmployee()" readonly='readonly'></erp-search> 
                     <dl class="clear left transfer" v-if='showReg'>
                         <div class="left">
-                            <dt class="left transfer marg_top" style="font-weight:bold;color:#666;font-size:14px;">{{$t(static.start_end)}}</dt>
+                            <dt class="left transfer marg_top" style="font-weight:bold;color:#666;font-size:14px;">{{$t('static.start_end')}}</dt>
                             <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
                             </mz-datepicker>
                         </div>
@@ -784,7 +783,7 @@ export default {
     },
     ready() {
         
-      //common('tab', 'table_box', 1);
+      common('tab', 'table_box', 1);
     },
     filters: {
         timeFilters: function(mytime) {
