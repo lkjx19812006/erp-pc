@@ -142,9 +142,9 @@
                                     <option value="0">{{$t('static.new')}}</option>
                                     <option value="1">{{$t('static.intention')}}</option>
                                     <option value="2">{{$t('static.quoted_price')}}</option>
-                                    <option value="3">样品申请</option>
-                                    <option value="4">库存</option>
-                                    <option value="5">待采购</option>
+                                    <option value="3">{{$t('static.sample_order')}} {{$t('static.applied')}}</option>
+                                    <option value="4">{{$t('static.stock')}}</option>
+                                    <option value="5">{{$t('static.wait_for_purchase')}}</option>
                                 </select>
                             </dd>
                         </dl>
@@ -161,9 +161,9 @@
                                 <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
                             </dd>
                         </dl>
-                        <button class="new_btn transfer"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">{{$t('static.export_order')}}</a></button>
-                        <button type="button" class="new_btn transfer" @click="resetTime()">{{$t('static.clear_all')}}</button>
-                        <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+                        <button class="btn btn-success" @click="selectSearch()">{{$t('static.search')}}</button>
+                        <button type="button" class="btn btn-warning" @click="resetTime()">{{$t('static.clear_all')}}</button>
+                        <a class="btn btn-info" href="/crm/api/v1/order/exportExcel?{{exportUrl}}">{{$t('static.export_order')}}</a>
                     </div>
                 </div>
             </div>
@@ -184,7 +184,7 @@
                             <th>{{$t('static.client_id')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.breed')}}</th>
-                            <th>商品图片</th>
+                            <th>{{$t('static.image')}}</th>
                             <th>{{$t('static.transcation_amount')}}</th>
                             <th>{{$t('static.wait_payment')}}</th>
                             <th>{{$t('static.paid')}}</th>
@@ -210,7 +210,7 @@
                             <td>
                                 <div v-if="item.type==1&&item.pre==0">{{$t('static.sell')}}</div>
                                 <div v-if="item.type==0&&item.pre==0">{{$t('static.purchase')}}</div>
-                                <div v-if="item.type==1&&item.pre==1">预售</div>
+                                <div v-if="item.type==1&&item.pre==1">{{$t('static.the_pre_sale')}}</div>
                             </td>
                             <td>
                                 <div v-if="item.mode==1">{{$t('static.together')}}</div>

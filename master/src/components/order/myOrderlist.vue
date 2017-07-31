@@ -214,7 +214,7 @@
                             <td>
                                 <div v-if="item.type==1&&item.pre==0">{{$t('static.sell')}}</div>
                                 <div v-if="item.type==0&&item.pre==0">{{$t('static.purchase')}}</div>
-                                <div v-if="item.type==1&&item.pre==1">预售</div>
+                                <div v-if="item.type==1&&item.pre==1">{{$('static.the_pre_sale')}}</div>
                             </td>
                             <td>
                                 <div v-if="item.mode==1">{{$t('static.together')}}</div>
