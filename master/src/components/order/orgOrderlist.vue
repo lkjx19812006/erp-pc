@@ -267,8 +267,8 @@
                                 <span v-if="item.sourceType==1">{{$t('static.intention')}}</span>
                                 <span v-if="item.sourceType==2">{{$t('static.quote')}}</span>
                                 <span v-if="item.sourceType==3">{{$t('static.sample_order')}}</span>
-                                <span v-if="item.sourceType==4">库存</span>
-                                <span v-if="item.sourceType==5">待采购</span>
+                                <span v-if="item.sourceType==4">{{$t('static.stock')}}}}</span>
+                                <span v-if="item.sourceType==5">{{$t('static.wait_for_purchase')}}}}</span>
                             </td>
                             <td>
                                 <div v-if="item.validate==0">{{$t('static.wait_approval')}}</div>
@@ -295,7 +295,7 @@
                                 </button> -->
                                 <!-- 订单划转到任意一个业务员 -->
                                 <button class="btn btn-warning btn-apply" v-if="(item.orderStatus==0||item.orderStatus==10)&&item.validate==0" @click="transferToEmployee(item,$index)">
-                                    划转
+                                    {{$t('static.assigned_to_employee')}}
                                 </button>
                                 <!-- 审核 -->
                                 <button class="btn btn-warning btn-apply" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">

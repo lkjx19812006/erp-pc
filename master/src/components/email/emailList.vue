@@ -5,14 +5,14 @@
         <div slot="top">
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">邮箱：</dt>
+                   <dt class="left transfer marg_top">{{$t('static.email')}}：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.emailNo" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
                 </dl>
 
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">收件人：</dt>
+                   <dt class="left transfer marg_top">{{$t('static.consignee')}}：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.receiveNo" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
@@ -20,7 +20,7 @@
 
                 <dl class="clear left transfer">
                     <div class="left">
-                        <dt class="left transfer marg_top">起止时间：</dt>
+                        <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
                         <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
@@ -36,21 +36,21 @@
 
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">主题：</dt>
+                   <dt class="left transfer marg_top">{{$t('static.theme')}}：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.theme" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
                 </dl>
 
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">发件人：</dt>
+                   <dt class="left transfer marg_top">{{$t('static.sender')}} {{$t('static.email')}}：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.sendNo" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
                 </dl>
 
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">发件人姓名：</dt>
+                   <dt class="left transfer marg_top">{{$t('static.sender')}}：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.sendName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
@@ -58,10 +58,10 @@
                 
                 
                 <dd class="left transfer">
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">{{$t("static.search")}}</button>
+                    <button type="button" class="btn btn-success" height="24" width="24" @click="selectSearch()">{{$t("static.search")}}</button>
                 </dd>
                 <dd class="left">
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">{{$t("static.clear_all")}}</button>
+                    <button type="button" class="btn btn-warning" height="24" width="24" @click="resetCondition()">{{$t("static.clear_all")}}</button>
                 </dd>
 
                 <dd class="pull-right" style="margin-right:20px">
@@ -78,13 +78,13 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>   
-                        <th>邮箱</th>
-                        <th>主题</th>
-                        <th>发件人</th>
-                        <th>发件人姓名</th>
-                        <th>收件人</th>
-                        <th>发送时间</th>
-                        <th>收件时间</th>  
+                        <th>{{$t('static.email')}}</th>
+                        <th>{{$t('static.theme')}}</th>
+                        <th>{{$t('static.refresh')}}</th>
+                        <th>{{$t('static.sender')}}</th>
+                        <th>{{$t('static.consignee')}}</th>
+                        <th>{{$t('static.sender')}} {{$t('static.date')}}</th>
+                        <th>{{$t('static.consignee')}} {{$t('static.date')}}</th>  
                     </tr>
                 </thead>
                 <tbody>

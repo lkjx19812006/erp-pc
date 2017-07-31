@@ -126,9 +126,9 @@
                                     <option value="0">{{$t('static.new')}}</option>
                                     <option value="1">{{$t('static.intention')}}</option>
                                     <option value="2">{{$t('static.quoted_price')}}</option>
-                                    <option value="3">样品申请{{$t('static.quoted_price')}}</option>
+                                    <option value="3">{{$t('static.sample_order')}} {{$t('static.applied')}}</option>
                                     <option value="4">{{$t('static.stock')}}</option>
-                                    <option value="5">待采购</option>
+                                    <option value="5">{{$t('static.wait_for_purchase')}}</option>
                                 </select>
                             </dd>
                         </dl>
