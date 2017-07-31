@@ -88,6 +88,7 @@
                                             employeeName:this.initLogin.name,
                                             orgId:this.initLogin.orgId,
                                             orgName:'',
+                                            freshCallback:this.selectSearch,
                                             contacts:[
                                                 {
                                                     mainContact:'',
@@ -117,7 +118,7 @@
                 <table class="table table-hover table_color table-striped " v-cloak id="tab">
                     <thead>
                     <tr>
-                        <th style="min-width: 40px;">
+                        <th style="min-width: 48px;">
                         </th>
                         <th>{{$t('static.client_id')}}</th>
                         <th>{{$t('static.client_name')}}</th>     
@@ -156,7 +157,7 @@
                 <tbody>
              
                     <tr v-for="item in initAllCustomerlist" :style="{background:(item.originalEmployee!=-1?'lightYellow':'')};" style="cursor:pointer">
-                        <td @click.stop="" style="min-width: 40px">
+                        <td @click.stop="" style="min-width: 45px">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
                         <td>{{item.id}}</td>
@@ -445,7 +446,7 @@ export default {
             },
             createParam: {
                 show: false,
-                name: ''
+                name: '',
             },
             searchParam: {
                 show: false,

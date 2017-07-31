@@ -5206,7 +5206,6 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         if (param.link == "/customer/suppliers") {
             localStorage.supplyClientParam = JSON.stringify(param);
         }
-
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -5864,6 +5863,9 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
     }).then((res) => {
         if (data.callback) {
             data.callback(res.json().msg);
+        }
+        if(data.freshCallback){
+            data.freshCallback()
         }
         if (res.json().msg == 'success') {
             data.transStatus = 1;
@@ -8156,6 +8158,9 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
         param.show = false;
         if (param.callback) {
             param.callback(res.json().msg);
+        }
+        if(param.freshCallback){
+           param.freshCallback()
         }
         var object = res.json().result;
         object.especial = 0;
