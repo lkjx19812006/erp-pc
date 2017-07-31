@@ -7542,11 +7542,16 @@ export const getOfferList = ({ dispatch }, param) => { //报价信息列表以�
     //param.loading = true;
     let body = {
         biz_module: 'erpIntentionOfferService',
-        biz_method: 'queryMySendOffer',
+
         biz_param: {
             page:param.cur,
             pageSize:15,
         }
+    }
+    if(param.key == 'myOfferList'){
+        body.biz_method = 'queryMySendOffer'
+    }else if(param.key == 'orgOfferList'){
+        body.biz_method = 'queryOrgSendOffer'
     }
     if (param.breedId) {
         body.biz_param.breedId = param.breedId;

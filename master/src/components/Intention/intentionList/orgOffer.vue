@@ -12,7 +12,7 @@
             <search-model>
                 <div slot="main">
                     <erp-search title="static.supplier_id" :value.sync="loadParam.offerCustomer" @on-keyenter="selectSearch()"></erp-search>
-                    <erp-search title="static.quatation_name" :value.sync="loadParam.offerEmployeeName" @on-click="selectEmployee('offer')" readonly="readonly"></erp-search>
+                    <erp-search title="报价业务员" :value.sync="loadParam.offerEmployeeName" @on-click="selectEmployee('offer')" readonly="readonly"></erp-search>
                     <erp-search title="品种" :value.sync="loadParam.breedName" @on-click="breedSearch()" readonly="readonly"></erp-search>
                     <erp-select title="来源" :value.sync="loadParam.source" :options="options.offerSource" @on-change="offerSearch()"></erp-select>
                     <dl class="clear left transfer">
