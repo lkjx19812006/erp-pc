@@ -2,9 +2,9 @@
 	<div class="code_box">
 		<img src="../../../../static/images/qrcode_s.png" class="qrcode_small"/>
 		<div class="qrcode_big">
-			<img :src="'http://api.k780.com:88/?app=qr.get&data=test&level=L&size=4'" >
+			<img :src="'http://api.k780.com:88/?app=qr.get&data='+url+id+'&level=L&size=5'" class="qrcode_img">
 			<div class="arrow">
-				<Icon type="play" size='30'></Icon>
+				<Icon type="play" size='20'></Icon>
 			</div>
 		</div>
 		
@@ -14,19 +14,19 @@
 <script>
 	export default{
 		data(){
-			return {
+			return {  
 
 			}
 		},
 		props:{
-			// title:{
-			// 	type:String,
-			// 	default:''
-			// },
-			// value:{
-			// 	type:[String,Number],
-			// 	default:''
-			// },
+			url:{
+				type:String,
+				default:'http://192.168.1.142:81/htm5/%23/needDetails/'
+			},
+			id:{
+				type:[String,Number],
+				default:''
+			},
 		},
 		methods:{
 			handleChange:function(event){
@@ -54,21 +54,26 @@
 	.qrcode_small {
 		
 	}
+	.qrcode_img{
+		border-radius: 10px;
+		width: 130px;
+	}
 	.qrcode_big{
 		position: absolute;
-		overflow: hidden;
 		top:-40px;
 		left: -120px;
-		visibility:hidden;
+		visibility: hidden;
 		box-shadow: 0px 0px 20px #888;
 		border-radius: 10px;
-		z-index: 9999;
+		z-index: 5000;
 	}
 	.arrow{
 		width: 20px;
 		height: 100%;
-		position: absolute; 
-		color:#f0f;
-		right: -20px;
+		position: absolute;  
+		color:#fff;
+		z-index: 5001;
+		right: -15px;
+		top: 30%;
 	}
 </style>
