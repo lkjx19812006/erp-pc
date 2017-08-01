@@ -8,8 +8,8 @@
             <pulse-loader :loading="loginParam.loading" :color="color" :size="size"></pulse-loader>
         </div>
         <validator name="validation">
-            <div class="container modal_con">
-                <div class="model-header">
+            <div class="container modal_con login_box">
+                <div class="model-header ">
                     <div class="pull-left" style="font-size:16px;margin:10px">{{$t('static.systemlogin')}}</div>
                     <div class="pull-right" style="font-size:16px;margin:10px;color:#FA6705;width:100px">
                         <language-model></language-model>
@@ -34,9 +34,9 @@
                         <!-- <span class="pull-left" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="checked=!checked"></span>
                     <span class="pull-left">记住密码</span> -->
                         <!-- <span v-if="validation.valid" class="pull-left system_danger">请输入账号和密码</span> -->
-                        <button type="button" class="btn btn-default btn-close" v-if="$validation.valid" @click="confirm()">{{$t('static.submit')}}</button>
+                        <button type="button" class="btn btn-success" v-if="$validation.valid" @click="confirm()">{{$t('static.submit')}}</button>
                         <div v-else>
-                            <button type="button" class="btn btn-default btn-close" disabled="disabled">{{$t('static.submit')}}</button>
+                            <button type="button" class="btn btn-warning" disabled="disabled">{{$t('static.submit')}}</button>
                             <span class="pull-left system_danger">{{$t('static.account_or_password')}}</span>
                         </div>
                     </div>
@@ -213,6 +213,10 @@ export default {
     top: 50%;
     margin-top: -213px;
     background-color: #fff;
+
+}
+.login_box{
+    box-shadow: 5px 5px 10px #888;
 }
 
 .form-control {
