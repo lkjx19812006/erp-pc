@@ -8,7 +8,7 @@
         </Radio-group>
         <div style="clear:both" v-if="accept==2">
             <span style="float:left;font-size:12px">不采用原因：</span>
-            <i-select style="width:200px;float:left" :model.sync="mainComment">
+            <i-select style="width:250px;float:left" :model.sync="mainComment">
                 <i-option v-for="item in refuseTexts" :value="item.text" @click="selectText(item.text,$index)">{{item.text}}</i-option>
             </i-select>
             <i-select style="width:150px;float:left;margin-left:10px" v-if="showSub" :model.sync="subComment">
@@ -17,7 +17,7 @@
         </div>
         <div style="clear:both" v-if="accept==3">
             <span style="float:left;font-size:12px">待采用原因：</span>
-            <i-select style="width:200px;float:left" :model.sync="waitComment">
+            <i-select style="width:250px;float:left" :model.sync="waitComment">
                 <i-option v-for="item in waitTexts" :value="item">{{item}}</i-option>
             </i-select>
         </div>

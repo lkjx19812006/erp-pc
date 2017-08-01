@@ -2,7 +2,7 @@
     <div>
         <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
         <createorder-model :param="createParam" v-if="createParam.show"></createorder-model>
-        <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
+        <detail-model :param="detailParam" v-if="detailParam.show"  @evaluate-add="selectSearch"></detail-model>
         <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
         <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
         <deliver-goods :param="deliverParam" v-if="deliverParam.show"></deliver-goods>
@@ -228,7 +228,9 @@
                             <td><a @click="clickOn({
                                         show:true,
                                         id:item.id,
+                                        isEvaluate:item.isEvaluate,
                                         loading:true,
+                                        int:item.intl,
                                         key:'orderDetail',
                                         orderStatus:item.orderStatus,
                                         contact:'/order/myList'
@@ -401,11 +403,21 @@
                                     <button class="btn btn-warning btn-xs" @click="deliverGoods(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.verifier==item.employee">{{$t('static.shipped')}}
                                     </button>
                                     <!-- 销售订单发货流程end -->
-                                    <button class="btn btn-success btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==0&&(item.logistics==3||item.logistics==2)">{{$t('static.quality_satisfied')}}
+                                    <button class="btn btn-success btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==60&&(item.logistics==3||item.logistics==2)&&showHide(item)">{{$t('static.quality_satisfied')}}
                                     </button>
-                                    <button class="btn btn-success btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70&&item.type==0">{{$t('static.order_over')}}
+                                    <button class="btn btn-success btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==70&&item.type==0">{{$t('static.order_over')}}
                                     </button>
-                                    <button class="btn btn-success btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==60&&item.type==1&&(item.logistics==3||item.logistics==2)">{{$t('static.quality_satisfied')}}
+                                    <button class="btn btn-primary btn-xs"  @click="clickOn({
+                                        show:true,
+                                        id:item.id,
+                                        isEvaluate:item.isEvaluate,
+                                        loading:true,
+                                        int:item.intl,
+                                        key:'orderDetail',
+                                        orderStatus:item.orderStatus,
+                                        contact:'/order/myList'
+                                     })" v-if="item.orderStatus==60&&item.intl==1&&item.isEvaluate==0&&(item.logistics==3||item.logistics==2)">
+                                     {{$t('static.go_evaluate')}}
                                     </button>
                                     <button class="btn btn-danger btn-xs" @click="addContract({
                                             show:true,
@@ -419,7 +431,7 @@
                                             link:applyContract,
                                             titles:this.$t('static.supply_contract'),
                                             images:''
-                                          })" v-if="item.orderStatus==60&&(item.logistics==3||item.logistics==2)">{{$t('static.supply_contract')}}
+                                          })" v-if="item.orderStatus==60&&(item.logistics==3||item.logistics==2)&&showHide(item)">{{$t('static.supply_contract')}}
                                     </button>
                                     <button class="btn btn-danger btn-xs" @click="afterSales({
                                             show:true,
@@ -437,8 +449,9 @@
                                             link:afterSalesApply,
                                             titles:this.$t('static.apply_sales'),
                                             images:''
-                                          })" v-if="item.orderStatus==60&&(item.logistics==3||item.logistics==2)">{{$t('static.apply_sales')}}
+                                          })" v-if="item.orderStatus==60&&(item.logistics==3||item.logistics==2)&&showHide(item)">{{$t('static.apply_sales')}}
                                     </button>
+    
                                     <!-- <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==2" style="background:#fff;color:#eea236;padding:1px 5px;">确认收货
                                         </button> -->
                                     <button class="btn btn-danger btn-xs" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1">{{$t('static.pending_payment')}}</button>
@@ -738,6 +751,13 @@ export default {
         }
     },
     methods: {
+        showHide:function(v){
+          if(v.intl==v.isEvaluate){
+            return true;
+          }else{
+            return false;
+          }
+        },
         selectSearch: function() {
             this.getEmpolyeeOrder(this.loadParam);
         },

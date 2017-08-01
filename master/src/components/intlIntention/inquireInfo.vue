@@ -32,6 +32,7 @@
                            <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th> 
                            <th>{{$t('static.quatation_name')}}</th>
                            <th>{{$t('static.comment')}}</th>
+                           <th>{{$t('static.evaluation')}}</th>
                            <th>{{$t('static.create_time')}}</th>  
                          </tr>
                      </thead>
@@ -44,6 +45,15 @@
                              <td>{{item.number}}（{{item.unit | Unit}}）</td>
                              <td>{{item.offererName}}</td>
                              <td>{{item.comment}}</td>
+                             <td>
+                              <Poptip placement="top" trigger="hover">
+                              <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                              <span v-else>{{$t('static.unvalued')}}</span>
+                              <div class="api" slot="content" style="color:green">
+                                  {{item.evaluation}}
+                              </div>
+                              </Poptip>
+                              </td>
                              <td>{{item.ctime}}</td>
                                            
                          </tr>
@@ -52,6 +62,50 @@
                 <!--  <div style="padding-left:25%">
                      <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed()">添加药材信息</div>   
                  </div>   --> 
+                 <div style="margin-top:5px;margin-bottom: 5px;">
+                   <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
+                   <h5 style="display:inline">{{$t('static.extractive_information')}}</h5>
+                </div> 
+                 <table class="table table-hover table_color table-striped ">
+                     <thead>
+                         <tr>
+                           <th>{{$t('static.breed')}}</th> 
+                           <th>{{$t('static.currency')}}</th>
+                           <th>{{$t('static.cost_price')}}</th>
+                           <th>{{$t('static.quoted_price')}}</th>
+                           <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th> 
+                           <th>{{$t('static.quatation_name')}}</th>
+                           <th>{{$t('static.comment')}}</th>
+                           <th>{{$t('static.evaluation')}}</th>
+                           <th>{{$t('static.create_time')}}</th>  
+                         </tr>
+                     </thead>
+                     <tbody>
+                         <tr v-for="item in initIntlIntentionInquireDetail.otherOffers">
+                             <td v-if="item.type==2">{{item.itemName}}</td>
+                             <td v-if="item.type==2">{{item.currency | Currency}}</td>
+                             <td v-if="item.type==2">{{item.origPrice}}</td>
+                             <td v-if="item.type==2">{{item.price}}</td>
+                             <td v-if="item.type==2">{{item.number}}（{{item.unit | Unit}}）</td>
+                             <td v-if="item.type==2">{{item.offererName}}</td>
+                             <td v-if="item.type==2">{{item.comment}}</td>
+                             <td v-if="item.type==2">
+                              <Poptip placement="top" trigger="hover">
+                              <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                              <span v-else>{{$t('static.unvalued')}}</span>
+                              <div class="api" slot="content" style="color:green">
+                                  {{item.evaluation}}
+                              </div>
+                              </Poptip>
+                              </td>
+                             <td v-if="item.type==2">{{item.ctime}}</td>
+                                           
+                         </tr>
+                     </tbody>
+                 </table>
+        
+
+
                   <div style="margin-top:25px;margin-bottom: 5px;">
                    <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
                    <h5 style="display:inline">{{$t('static.other_quotations')}}</h5>
@@ -64,16 +118,26 @@
                            <th>{{$t('static.currency')}}</th>
                            <th>{{$t('static.expense_explanation')}}</th>
                            <th>{{$t('static.comment')}}</th>
+                           <th>{{$t('static.evaluation')}}</th>
                            <th>{{$t('static.create_time')}}</th>  
                          </tr>
                      </thead>
                      <tbody>
                          <tr v-for="item in initIntlIntentionInquireDetail.otherOffers">
-                             <td>{{item.cost}}</td>
-                             <td>{{item.currency | Currency}}</td>
-                             <td>{{item.costDesc}}</td>
-                             <td>{{item.comment}}</td>
-                             <td>{{item.ctime}}</td>
+                             <td v-if="item.type==1">{{item.cost}}</td>
+                             <td v-if="item.type==1">{{item.currency | Currency}}</td>
+                             <td v-if="item.type==1">{{item.costDesc}}</td>
+                             <td v-if="item.type==1">{{item.comment}}</td>
+                             <td v-if="item.type==1">
+                            <Poptip placement="top" trigger="hover">
+                            <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                            <span v-else>{{$t('static.unvalued')}}</span>
+                            <div class="api" slot="content" style="color:green">
+                                {{item.evaluation}}
+                            </div>
+                            </Poptip>
+                            </td v-if="item.type==1">
+                             <td v-if="item.type==1">{{item.ctime}}</td>
                              
                          </tr>
                      </tbody>

@@ -3731,8 +3731,16 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             if (!goods) {
                 goods = [];
             }
+            var goodsArr=[];
+             for (var i = 0; i < orderDetail.goods.length; i++) {
+                    orderDetail.goods[i].checked=false;
+                    goodsArr.push(orderDetail.goods[i]);
+                    console.log("sdfgdsfds",goodsArr)
+            }
+
             orderDetail.goods = {};
-            orderDetail.goods.arr = goods;
+            orderDetail.goods.arr = goodsArr;
+            orderDetail.goods.selected=[];
             orderDetail.goods.show = true;
             orderDetail.goods.total = 0;
             for (var i in orderDetail.goods.arr) {
@@ -5600,6 +5608,65 @@ export const customerTransferBlacklist = ({ dispatch }, param) => { //客户转�
         console.log('fail');
     });
 }
+
+export const evaluateInquire = ({ dispatch }, param) => { //国际询价评价
+     const data = {}; 
+     //订单评价
+     if(param.page==1){
+       data.orderGoodsIds=param.ids;
+        data.orderId=param.orderId; 
+    }else{//国际询价
+        data.intentionId = param.intentionId;
+        data.ids = param.ids;
+    } 
+        data.evaluation = param.comments;
+
+
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+         if (param.callback) {
+            param.callback(res.json().msg);
+        }
+        console.log(res)
+    }, (res) => {
+  
+        console.log('fail');
+    });
+}
+//确认评价
+export const confirmEvaluation = ({ dispatch }, param) => { 
+     const data = {}; 
+        data.id = param.id;
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        if (param.callback) {
+            param.callback(res.json().msg);
+        }
+        console.log(res)
+    }, (res) => {
+  
+        console.log('fail');
+    });
+}
+
 
 export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及搜索
     param.loading = true;
@@ -7814,8 +7881,14 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
             intent.inquires.show = false;
 
             var offers = intent.offers;
+            var offersArr = [];
+            for (var i = 0; i < intent.offers.length; i++) {
+            intent.offers[i].checked=false;                    
+            offersArr.push(intent.offers[i]);        
+            }
+
             intent.offers = {};
-            intent.offers.arr = offers;
+            intent.offers.arr = offersArr;
             intent.offers.show = false;
             //intent.offers.arr = offers;
 
@@ -7834,9 +7907,15 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
             var itemsArr = [];
 
             for (var i = 0; i < intent.items.length; i++) {
+
                 if (intent.items[i].type == 0) {
+                     intent.items[i].checked=false;
+                    
                     itemsArr.push(intent.items[i]);
+                    console.log("sdfgdsfds",itemsArr)
+
                 } else if (intent.items[i].type == 1) {
+                     intent.items[i].checked=false;
                     extractiveArr.push(intent.items[i]);
                 }
             }
@@ -7847,6 +7926,9 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
             intent.extractive = {};
             intent.extractive.arr = extractiveArr;
             intent.extractive.show = false;
+            intent.extractive.selected=[];
+            intent.items.selected=[];
+            intent.offers.selected=[];
             dispatch(types.INTLINTENTION_DETAIL_DATA, intent);
         }
         if (param.key == 'orderList') { //意向详情生成订单

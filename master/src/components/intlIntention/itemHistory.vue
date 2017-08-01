@@ -34,6 +34,7 @@
                            <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                            <th>{{$t('static.quatation_name')}}</th> 
                            <th>{{$t('static.comment')}}</th> 
+                           <th>{{$t('static.evaluation')}}</th>
                            <th>{{$t('static.create_time')}}</th> 
                            
                          </tr>
@@ -48,6 +49,15 @@
                              <td>{{item.number}}（{{item.unit | Unit}}）</td>
                              <td>{{item.offererName}}</td>
                              <td>{{item.comment}}</td>
+                             <td>
+                              <Poptip placement="top" trigger="hover">
+                              <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                              <span v-else>{{$t('static.unvalued')}}</span>
+                              <div class="api" slot="content" style="color:green">
+                                  {{item.evaluation}}
+                              </div>
+                              </Poptip>
+                              </td>
                              <td>{{item.ctime}}</td>
                              
                              

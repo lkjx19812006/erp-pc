@@ -724,8 +724,8 @@ export default {
                 index: [],
                 onSell: 0
             },
-            deleteParam: {
-                show: false
+            deleteParam : {
+               show: false
             },
             editParam: {
                 show: false

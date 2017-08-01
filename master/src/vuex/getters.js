@@ -922,3 +922,8 @@ export const initFinancialCountTotal = (state) => {
  console.log(JSON.parse(JSON.stringify(state.table.financialCountTotal)))
     return JSON.parse(JSON.stringify(state.table.financialCountTotal))
 }
+//国际询价评价
+export const initInquireEvaluate = (state) => {
+ console.log(JSON.parse(JSON.stringify(state.table.inquireEvaluate)))
+    return JSON.parse(JSON.stringify(state.table.inquireEvaluate))
+}
