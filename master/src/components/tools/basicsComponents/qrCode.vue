@@ -1,7 +1,7 @@
 <template>
 	<div class="code_box">
-		<img src="../../../../static/images/qrcode_s.png" class="qrcode_small"/>
-		<img :src="'http://api.k780.com:88/?app=qr.get&data=test&level=L&size=4'" class="qrcode_big">
+		<!-- <img src="../../../../static/images/qrcode_s.png" class="qrcode_small"/>
+		<img :src="'http://api.k780.com:88/?app=qr.get&data=test&level=L&size=4'" class="qrcode_big"> -->
 	</div>
 </template>
 
