@@ -138,6 +138,7 @@
                                                     <th>质量要求</th>
                                                     <th>竞争性指标</th>
                                                     <th>报价人数</th>
+                                                    <!-- <th>二维码</th> -->
                                                     <th>报价信息</th>
                                                 </thead>
                                                 <tbody>
@@ -235,6 +236,9 @@
                                                         <td v-if="!item.purchaseOffer">{{item.quality}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.mainStandard}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.offerNumber}}</td>
+                                                        <!-- <td v-if="!item.purchaseOffer">
+                                                            <erp-qrcode></erp-qrcode>
+                                                        </td> -->
                                                         <td v-if="!item.purchaseOffer"><a @click="getIntentionInfo(item.id,$index)">报价信息</a></td>
                                                     </tr>
                                                 </tbody>

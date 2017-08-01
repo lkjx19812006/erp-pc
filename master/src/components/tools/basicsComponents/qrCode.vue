@@ -1,7 +1,13 @@
 <template>
 	<div class="code_box">
-		<!-- <img src="../../../../static/images/qrcode_s.png" class="qrcode_small"/>
-		<img :src="'http://api.k780.com:88/?app=qr.get&data=test&level=L&size=4'" class="qrcode_big"> -->
+		<img src="../../../../static/images/qrcode_s.png" class="qrcode_small"/>
+		<div class="qrcode_big">
+			<img :src="'http://api.k780.com:88/?app=qr.get&data=test&level=L&size=4'" >
+			<div class="arrow">
+				<Icon type="play" size='30'></Icon>
+			</div>
+		</div>
+		
 	</div>
 </template>
 
@@ -50,11 +56,19 @@
 	}
 	.qrcode_big{
 		position: absolute;
-		top:-120px;
-		left: -10px;
+		overflow: hidden;
+		top:-40px;
+		left: -120px;
 		visibility:hidden;
-		box-shadow: 0px 0px 10px #888;
-		border-radius: 5px;
-		z-index: 2000;
+		box-shadow: 0px 0px 20px #888;
+		border-radius: 10px;
+		z-index: 9999;
+	}
+	.arrow{
+		width: 20px;
+		height: 100%;
+		position: absolute; 
+		color:#f0f;
+		right: -20px;
 	}
 </style>
