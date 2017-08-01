@@ -15,6 +15,7 @@ import fullCalendar from 'vue-fullcalendar';
 import InfiniteLoading from 'vue-infinite-loading';
 import erpSearch from './components/tools/basicsComponents/erpSearch.vue'
 import erpSelect from './components/tools/basicsComponents/erpSelect.vue'
+import erpQrcode from './components/tools/basicsComponents/qrCode.vue'
 import searchModel from './components/tools/searchModel.vue'
 
 /*import alert from 'vue-strap/src/alert'*/
@@ -33,6 +34,7 @@ Vue.component('InfiniteLoading', InfiniteLoading);
 Vue.component('erpSearch',erpSearch)
 Vue.component('erpSelect',erpSelect)
 Vue.component('searchModel',searchModel)
+Vue.component('erpQrcode',erpQrcode)
 Vue.directive('echarts', require('./directives/echarts'));
 
 // Vue.use(VueValidator)
