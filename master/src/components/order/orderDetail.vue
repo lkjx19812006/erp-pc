@@ -13,7 +13,7 @@
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
         <purchase-model :param="purchaseParam" v-if="purchaseParam.show"></purchase-model>
         <chance-detail-model :param="chanceParam" v-if="chanceParam.show"></chance-detail-model>
-        <evaluate-model  :param="evaluateParam" v-if="evaluateParam.show"></evaluate-model>
+        <evaluate-model :param="evaluateParam" v-if="evaluateParam.show"></evaluate-model>
         <shadow-model :param="param">
             <div class="cover_loading">
                 <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
@@ -125,15 +125,14 @@
                                        <button class="btn right" style="color:black;font-weight:bolder;margin-left:30px" disabled="" v-if="param.isEvaluate==1">{{$t('static.evaluation_confirmed')}}</button> 
                                       <span class="pull-right" style="color:#000;line-height:27px;font-size: 13px;">{{$t('static.breed')}}{{$t('static.total')}}：{{initOrderDetail.goods.total}} {{initOrderDetail.currency | Currency}}</span>
                                   </h4>
-
                                     </div>
                                     <div class="panel-collapse" v-if="initOrderDetail.goods.arr.length!==null" v-show="initOrderDetail.goods.show">
                                         <div class="panel-body panel-set">
-                                        <span style="display:inline-block;width:100%;height:32px;text-align:right;padding-right:7px;" v-if="param.int==1&&initOrderDetail.orderStatus==60&&param.isEvaluate==0">
+                                            <span style="display:inline-block;width:100%;height:32px;text-align:right;padding-right:7px;" v-if="param.int==1&&initOrderDetail.orderStatus==60&&param.isEvaluate==0">
                                          <input type="checkbox"  @change="changeTitleChecked(data,$event)" :checked="title1">{{$t('static.Select_all')}}
                                             <button class="btn btn-success" @click="batchAccept()" >{{$t('static.Batch_evaluation')}}</button>
                                             </span>
-                                            <table class="table  contactSet"  style="border-top:1px solid #eee">
+                                            <table class="table  contactSet" style="border-top:1px solid #eee">
                                                 <thead>
                                                     <th style="width:30px;" v-if="param.int==1&&initOrderDetail.orderStatus==60&&param.isEvaluate==0">{{$t('static.selected')}}</th>
                                                     <th>{{$t('static.breed')}}</th>
@@ -145,7 +144,6 @@
                                                     <th v-if="initOrderDetail.type == 1">{{$t('static.price')}}</th>
                                                     <th v-if="initOrderDetail.type == 0">采购价格</th>
                                                     <th v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==0">{{$t('static.cost_price')}}</th>
-
                                                     <th v-if="initOrderDetail.orderStatus==60">药典合格</th>
                                                     <th v-if="initOrderDetail.orderStatus==60">内控合格</th>
                                                     <th v-if="initOrderDetail.orderStatus==60&&initOrderDetail.sample==1">是否成交</th>
@@ -155,9 +153,9 @@
                                                 <tbody>
                                                     <tr v-for="item in initOrderDetail.goods.arr">
                                                         <td @click.stop="" style="width:100px;" v-if="param.int==1&&initOrderDetail.orderStatus==60&&param.isEvaluate==0">
-                                                        <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
-                                                        </td>  
-                                                        <td>                                                            
+                                                            <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
+                                                        </td>
+                                                        <td>
                                                             <a v-if="item.sourceType == 1" @click="showIntent(item.sourceId)" href="javascript:void(0);">{{item.breedName}}</a>
                                                             <span v-else>{{item.breedName}}</span>
                                                         </td>
@@ -178,15 +176,15 @@
                                                             <a href="javascript:void(0);" @click="editQa(item,initOrderDetail.sample,'sample')">{{item.sampleTraded | isDeal}}</a>
                                                         </td>
                                                         <td v-if="param.int==1&&initOrderDetail.orderStatus==60">
-                                                        <Poptip placement="top" trigger="hover">
-                                                        <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                                                        <span v-else>{{$t('static.unvalued')}}</span>
-                                                        <div class="api" slot="content" style="color:green">
-                                                            {{item.evaluation}}
-                                                        </div>
-                                                        </Poptip>
+                                                            <Poptip placement="top" trigger="hover">
+                                                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                                <span v-else>{{$t('static.unvalued')}}</span>
+                                                                <div class="api" slot="content" style="color:green">
+                                                                    {{item.evaluation}}
+                                                                </div>
+                                                            </Poptip>
                                                         </td>
-                                                        <td style="color:blue;cursor:pointer" @click="addEval(item.id)"  v-if="param.int==1&&initOrderDetail.orderStatus==60&&param.isEvaluate==0">{{$t('static.evaluate')}}</td>
+                                                        <td style="color:blue;cursor:pointer" @click="addEval(item.id)" v-if="param.int==1&&initOrderDetail.orderStatus==60&&param.isEvaluate==0">{{$t('static.evaluate')}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -259,7 +257,7 @@
                                     </div>
                                 </div>
                                 <!-- “待采购” -->
-                                <div v-if="initOrderDetail.type==1&&initOrderDetail.intl===0" class="panel panel-default">
+                                <div v-if="initOrderDetail.type==1" class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title clearfix" @click="enfoldment({
                                         link:'',
@@ -830,7 +828,7 @@ export default {
     props: ['param'],
     data() {
         return {
-            title1:'',
+            title1: '',
             sourceType: {
                 0: 'PC',
                 1: 'android',
@@ -866,8 +864,8 @@ export default {
                 alert: true,
                 name: ''
             },
-            confirmParam : {
-               show: false
+            confirmParam: {
+                show: false
             },
             divideParam: {
                 show: false,
@@ -912,15 +910,15 @@ export default {
                 key: "orderDetail",
                 callback: this.getOrderDetail
             },
-            chanceParam:{
-                show:false,
-                loading:false,
-                id:''
+            chanceParam: {
+                show: false,
+                loading: false,
+                id: ''
             },
-             evaluateParam:{
-                show:false,
-                ids:[],
-                intentionId:this.param.id
+            evaluateParam: {
+                show: false,
+                ids: [],
+                intentionId: this.param.id
             }
         }
     },
@@ -957,78 +955,78 @@ export default {
             }
 
         },
-         removeByValue:function(arr, val) {
-          for(var i=0; i<arr.length; i++) {
-            if(arr[i] == val) {
-              arr.splice(i, 1);
-              break;
-            }
-          }
-        },
-        loopTitle:function(){   //initOrderDetail.goods.arr
-            var that = this;
-            var allDetail=this.$store.state.table.orderDetail;
-               allDetail.goods.arr.every(function (item) {
-                if(allDetail.goods.selected.length==allDetail.goods.arr.length){
-                       that.title1=true;  
-                }else{
-                      that.title1=false; 
+        removeByValue: function(arr, val) {
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] == val) {
+                    arr.splice(i, 1);
+                    break;
                 }
-           })
+            }
         },
-         onlyselected: function(sub) {
-             var allDetail=this.$store.state.table.orderDetail;
+        loopTitle: function() { //initOrderDetail.goods.arr
+            var that = this;
+            var allDetail = this.$store.state.table.orderDetail;
+            allDetail.goods.arr.every(function(item) {
+                if (allDetail.goods.selected.length == allDetail.goods.arr.length) {
+                    that.title1 = true;
+                } else {
+                    that.title1 = false;
+                }
+            })
+        },
+        onlyselected: function(sub) {
+            var allDetail = this.$store.state.table.orderDetail;
             const _this = this;
-             allDetail.goods.arr[sub].checked = !allDetail.goods.arr[sub].checked;
+            allDetail.goods.arr[sub].checked = !allDetail.goods.arr[sub].checked;
             if (!allDetail.goods.arr[sub].checked) {
                 _this.checked = false;
-                  this.removeByValue(allDetail.goods.selected,allDetail.goods.arr[sub].id);  
-                  this.loopTitle();
+                this.removeByValue(allDetail.goods.selected, allDetail.goods.arr[sub].id);
+                this.loopTitle();
             } else {
                 _this.checked = true;
-                 allDetail.goods.selected.push(allDetail.goods.arr[sub].id);
-                  this.loopTitle(); 
-                  allDetail.goods.arr.forEach(function(item) {
+                allDetail.goods.selected.push(allDetail.goods.arr[sub].id);
+                this.loopTitle();
+                allDetail.goods.arr.forEach(function(item) {
                     if (!item.checked) {
                         _this.checked = false;
                     }
-                })}
+                })
+            }
         },
-        changeTitleChecked : function (data,event) {
-            var allDetail=this.$store.state.table.orderDetail;
+        changeTitleChecked: function(data, event) {
+            var allDetail = this.$store.state.table.orderDetail;
             var _this = this;
-          if (event.target.checked === true) {
-             this.title1=true;
-            console.log("sadasda",this.title1)
-            allDetail.goods.arr.forEach(function (item,i) {
-            allDetail.goods.arr[i].checked=true && allDetail.goods.selected.push(item.id);
-           })
-          }else {
-               this.title1=false;
-               allDetail.goods.arr.forEach(function (item,i) {
-               allDetail.goods.arr[i].checked=false;
-               allDetail.goods.selected.length=0;
-              })
-          }
-         
+            if (event.target.checked === true) {
+                this.title1 = true;
+                console.log("sadasda", this.title1)
+                allDetail.goods.arr.forEach(function(item, i) {
+                    allDetail.goods.arr[i].checked = true && allDetail.goods.selected.push(item.id);
+                })
+            } else {
+                this.title1 = false;
+                allDetail.goods.arr.forEach(function(item, i) {
+                    allDetail.goods.arr[i].checked = false;
+                    allDetail.goods.selected.length = 0;
+                })
+            }
+
         },
-         batchAccept: function(arr) {
-           this.title1=false;
-            var allDetail=this.$store.state.table.orderDetail;
-           if (allDetail.goods.selected.length <= 0 ) {
-            this.tipsParam.show = true;
-            this.tipsParam.name = "请至少选择一条报价！";
-            return;
-           }
-           else{
-            this.evaluateParam.ids=allDetail.goods.selected;
-           }      
-           this.evaluateParam.link='/order/evaluateOrder';
-           this.evaluateParam.show=true;
-           this.evaluateParam.callback = this.evaluateCallback;
-           this.evaluateParam.orderId=this.param.id;
-           this.evaluateParam.page=1;
-           this.evaluateParam.callback = this.evaluateCallback;
+        batchAccept: function(arr) {
+            this.title1 = false;
+            var allDetail = this.$store.state.table.orderDetail;
+            if (allDetail.goods.selected.length <= 0) {
+                this.tipsParam.show = true;
+                this.tipsParam.name = "请至少选择一条报价！";
+                return;
+            } else {
+                this.evaluateParam.ids = allDetail.goods.selected;
+            }
+            this.evaluateParam.link = '/order/evaluateOrder';
+            this.evaluateParam.show = true;
+            this.evaluateParam.callback = this.evaluateCallback;
+            this.evaluateParam.orderId = this.param.id;
+            this.evaluateParam.page = 1;
+            this.evaluateParam.callback = this.evaluateCallback;
         },
         editPurchase: function() {
             this.purchaseParam.goods = this.initOrderDetail.goods.arr;
@@ -1094,22 +1092,22 @@ export default {
             this.confirmParam = param;
             this.confirmParam.callback = this.confirmCallback;
         },
-       confirmCallback: function(name) {
+        confirmCallback: function(name) {
             this.confirmParam.show = false;
             this.showTips(name);
             this.$emit('evaluate-add', '');
-           
+
         },
         //添加评价
-        addEval:function(v){
-        console.log("SAdsadsadsadsadsadsaftfv",v)
-        this.evaluateParam.ids=[]
-        this.evaluateParam.link='/order/evaluateOrder';
-        this.evaluateParam.ids.push(v);
-        this.evaluateParam.orderId=this.param.id;
-        this.evaluateParam.show=true;
-        this.evaluateParam.page=1;
-        this.evaluateParam.callback = this.evaluateCallback;
+        addEval: function(v) {
+            console.log("SAdsadsadsadsadsadsaftfv", v)
+            this.evaluateParam.ids = []
+            this.evaluateParam.link = '/order/evaluateOrder';
+            this.evaluateParam.ids.push(v);
+            this.evaluateParam.orderId = this.param.id;
+            this.evaluateParam.show = true;
+            this.evaluateParam.page = 1;
+            this.evaluateParam.callback = this.evaluateCallback;
         },
         evaluateCallback: function(name) {
             this.evaluateParam.show = false;
@@ -1179,7 +1177,7 @@ export default {
             this.editParam.type = type
             this.editParam.id = this.initOrderDetail.id
         },
-        showIntent:function(id){
+        showIntent: function(id) {
             this.chanceParam.id = id
             this.chanceParam.show = true
 
@@ -1190,7 +1188,7 @@ export default {
 
     },
     created() {
-        console.log("asgudash",this.param)
+        console.log("asgudash", this.param)
         this.getOrderDetail(this.param);
         this.getLinkOrder(this.param);
     }
