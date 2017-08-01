@@ -80,8 +80,8 @@
                 <tbody>
                     <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer">
                         <td>{{item.inquireType}}</td>
-                        <td>{{item.customerId}}</td>
                         <td>{{item.names}}</td>
+                        <td>{{item.customerId}}</td>
                         <td class="underline" @click="clickOn(item,$index)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
@@ -359,7 +359,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    min-width: 170px;
-    width: 170px;
+    min-width: 155px;
+    width: 155px;
 }
 </style>

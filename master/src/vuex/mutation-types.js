@@ -308,3 +308,5 @@ export const USER_FEEDBACK_INFO = 'USER_FEEDBACK_INFO' //用户反馈信息
 export const FINANCIAL_COUNT_TOTAL = 'FINANCIAL_COUNT_TOTAL' //财务应付应收统计详情合计信息
 export const DETAIL_MYOFFER_LIST = 'DETAIL_MYOFFER_LIST' //报价专区详情中查看我的报价信息
 
+export const INQUIRE_EVALUATE = 'INQUIRE_EVALUATE' //国际询价-我的询价中对已报价评论
+

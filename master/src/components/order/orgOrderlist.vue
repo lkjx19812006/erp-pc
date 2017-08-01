@@ -225,6 +225,7 @@
                             <td><a @click="clickOn({
                                   show:true,
                                   id:item.id,
+                                  int:item.intl,
                                   loading:false,
                                    key:'orderDetail',
                                   orderStatus:item.orderStatus,
