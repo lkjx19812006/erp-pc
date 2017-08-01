@@ -70,7 +70,7 @@ export default {
             },
             //不采用原因
             refuseTexts: [{
-                text: "样品规格不符合客户要求",
+                text: "样品规格不符合要求",
                 sub: [{
                     text: "形状不好"
                 }, {
@@ -81,7 +81,7 @@ export default {
                     text: "其他"
                 }]
             }, {
-                text: "大货规格不符合客户要求",
+                text: "大货规格不符合要求",
                 sub: [{
                     text: "形状不好"
                 }, {
@@ -92,7 +92,7 @@ export default {
                     text: "其他"
                 }]
             }, {
-                text: "样品质量不符合客户要求",
+                text: "样品质量不符合要求",
                 sub: [{
                     text: "含量不够"
                 }, {
@@ -105,7 +105,7 @@ export default {
                     text: "其他"
                 }]
             }, {
-                text: "大货质量不符合客户要求",
+                text: "大货质量不符合要求",
                 sub: [{
                     text: "含量不够"
                 }, {
@@ -121,12 +121,12 @@ export default {
             }, {
                 text: "交货方式无法达成一致",
                 sub: [{
-                    text: "距离太远，客户不愿跨地区采购 "
+                    text: "距离太远，不方便跨地区采购 "
                 }, {
                     text: "其他"
                 }]
             }, {
-                text: "价格过高，客户不接受此价格",
+                text: "价格过高，不符合市场行情",
                 sub: [{
                     text: "报价不符合市场价格 "
                 }, {
@@ -150,7 +150,7 @@ export default {
                     text: "其他"
                 }]
             }, {
-                text: "资质不符合客户要求",
+                text: "资质不符合要求",
                 sub: [{
                     text: "其他"
                 }]
