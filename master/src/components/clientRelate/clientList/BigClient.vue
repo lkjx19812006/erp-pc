@@ -19,14 +19,13 @@
                 <div slot="main">
                     <erp-search title="static.client_name" :value.sync="loadParam.name" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="static.client_id" :value.sync="loadParam.id" @on-keyenter="selectSearch()"></erp-search>
-                    
                     <erp-select title="static.credit_rating" :value.sync="loadParam.creditLevel" :options="options.creditLevelOptions" @on-change="selectSearch()"></erp-select>
                     <erp-search title="static.cellphone" :value.sync="loadParam.phone" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="static.department" v-if="showReg" :value.sync="loadParam.orgName" @on-click="selectOrg()" readonly='readonly'></erp-search>
                     <erp-search title="static.salesman" v-if='showTran' :value.sync="loadParam.employeeName" @on-click="selectEmployee()" readonly='readonly'></erp-search> 
                     <dl class="clear left transfer" v-if='showReg'>
                         <div class="left">
-                            <dt class="left transfer marg_top" style="font-weight:bold;color:#666;font-size:14px;">{{$t(static.start_end)}}</dt>
+                            <dt class="left transfer marg_top" style="font-weight:bold;color:#666;font-size:14px;">{{$t('static.start_end')}}</dt>
                             <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
                             </mz-datepicker>
                         </div>
@@ -89,6 +88,7 @@
                                             employeeName:this.initLogin.name,
                                             orgId:this.initLogin.orgId,
                                             orgName:'',
+                                            freshCallback:this.selectSearch,
                                             contacts:[
                                                 {
                                                     mainContact:'',
@@ -118,7 +118,7 @@
                 <table class="table table-hover table_color table-striped " v-cloak id="tab">
                     <thead>
                     <tr>
-                        <th style="min-width: 40px;">
+                        <th style="min-width: 48px;">
                         </th>
                         <th>{{$t('static.client_id')}}</th>
                         <th>{{$t('static.client_name')}}</th>     
@@ -157,7 +157,7 @@
                 <tbody>
              
                     <tr v-for="item in initAllCustomerlist" :style="{background:(item.originalEmployee!=-1?'lightYellow':'')};" style="cursor:pointer">
-                        <td @click.stop="" style="min-width: 40px">
+                        <td @click.stop="" style="min-width: 45px">
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
                         <td>{{item.id}}</td>
@@ -446,7 +446,7 @@ export default {
             },
             createParam: {
                 show: false,
-                name: ''
+                name: '',
             },
             searchParam: {
                 show: false,
@@ -784,7 +784,7 @@ export default {
     },
     ready() {
         
-      //common('tab', 'table_box', 1);
+      common('tab', 'table_box', 1);
     },
     filters: {
         timeFilters: function(mytime) {

@@ -8,7 +8,7 @@
 	        class="form-control erp_input"
 	        :style="{width:width+'px'}"
 	        v-model="value" 
-	        placeholder="按回车键搜索"
+	        :placeholder="$t('static.Enter_search')"
 	        :disabled="disabled"
 	        :readonly="readonly"
 	        @change="handleChange" 

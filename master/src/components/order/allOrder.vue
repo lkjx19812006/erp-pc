@@ -28,7 +28,7 @@
                             </dd>
                         </dl>
                         <dl class="clear left transfer">
-                            <dt class="left transfer marg_top">客户ID</dt>
+                            <dt class="left transfer marg_top">{{$t('static.client_id')}}</dt>
                             <dd class="left">
                                 <input type="text" class="form-control" v-model="loadParam.customerId"  placeholder="按回车键搜索" @keyup.enter="selectSearch()" />
                             </dd>
@@ -77,7 +77,7 @@
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
-                        <dt class="left transfer marg_top">是否样品：</dt>
+                        <dt class="left transfer marg_top">{{$t('static.sample_order')}}：</dt>
                         <dd class="left">
                             <select class="form-control" v-model="loadParam.sample" @change="selectSearch()">
                                 <option value="">{{$t('static.please_select')}}</option>
@@ -94,13 +94,13 @@
                     </dl>
                     <dl class="clear left transfer">
                         <div class="left">
-                            <dt class="left transfer marg_top">起止时间：</dt>
-                            <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
+                            <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
+                            <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss" width="115">
                             </mz-datepicker>
                         </div>
                         <div class="left">
                             <dt class="left marg_top">~~</dt>
-                            <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
+                            <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss" width="115">
                             </mz-datepicker>
                         </div>
                     </dl>
@@ -118,14 +118,14 @@
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
-                        <dt class="left transfer marg_top">审核状态：</dt>
+                        <dt class="left transfer marg_top">{{$t('static.review_status')}}：</dt>
                         <dd class="left">
                             <select v-model="loadParam.validate" class="form-control" @change="selectSearch()">
                                 <option value="">{{$t('static.please_select')}}</option>
-                                <option value="0">未审核</option>
-                                <option value="1">审核中</option>
-                                <option value="2">审核通过</option>
-                                <option value="-2">审核未通过</option>
+                                <option value="0">{{$t('static.wait_approval')}}</option>
+                                <option value="1">{{$t('static.approving')}}</option>
+                                <option value="2">{{$t('static.approved')}}</option>
+                                <option value="-2">{{$t('static.unapproved')}}</option>
                             </select>
                         </dd>
                     </dl>
@@ -138,31 +138,31 @@
                                 <option value="0">{{$t('static.new')}}</option>
                                 <option value="1">{{$t('static.intention')}}</option>
                                 <option value="2">{{$t('static.quoted_price')}}</option>
-                                <option value="3">样品申请</option>
-                                <option value="4">库存</option>
-                                <option value="5">待采购</option>
+                                <option value="3">{{$t('static.sample_order')}} {{$t('static.applied')}}</option>
+                                <option value="4">{{$t('static.stock')}}</option>
+                                <option value="5">{{$t('static.wait_for_purchase')}}</option>
                             </select>
                         </dd>
                     </dl>
                     <dl class="clear left transfer">
-                        <dt class="left transfer marg_top">部门：</dt>
+                        <dt class="left transfer marg_top">{{$t('static.department')}}：</dt>
                         <dd class="left">
                             <input type="text" class="form-control" v-model="loadParam.orgName" placeholder="请选择部门" readonly="true" @click="selectOrg()" />
                         </dd>
                     </dl>
                     <!-- 单个业务员搜索 -->
                     <dl class="clear left transfer">
-                        <dt class="left transfer marg_top" style="letter-spacing:3px">所属业务员：</dt>
+                        <dt class="left transfer marg_top" style="letter-spacing:3px">{{$t('static.salesman')}}：</dt>
                         <dd class="left">
                             <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" readonly="true" @click="selectEmployee()">
                         </dd>
                     </dl>
-                    <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
-                    <button type="button" class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
-                    <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+                    <a href="/crm/api/v1/order/exportExcel?{{exportUrl}}" class="btn btn-info" @click="selectSearch()">{{$t('static.export_order')}}</a>
+                    <button class="btn btn-warning" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                    <button class="btn btn-primary" @click="selectSearch()">{{$t('static.search')}}</button>
                 </div>
                 <div class="right">
-                    <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+                    <button class="btn btn-success" @click="selectSearch()">{{$t('static.refresh')}}</button>
                 </div>
             </div>
             <!-- 中间列表 -->
@@ -181,7 +181,7 @@
                             <th>{{$t('static.client_id')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.breed')}}</th>
-                            <th>商品图片</th>
+                            <th>{{$t('static.image')}}</th>
                             <th>{{$t('static.transcation_amount')}}</th>
                             <th>{{$t('static.wait_payment')}}</th>
                             <th>{{$t('static.paid')}}</th>

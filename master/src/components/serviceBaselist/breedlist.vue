@@ -200,7 +200,7 @@ export default {
             this.breedParam.callback = this.callback;
         },
         callback: function(title) {
-            console.log(title)
+            this.getBreedData(this.loadParam)
             this.tipsParam.show = true;
             this.tipsParam.alert = true;
             this.tipsParam.name = title;

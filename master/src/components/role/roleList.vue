@@ -94,11 +94,12 @@
                     <ul v-for="item in list.result" class="clear">
                         <li>
                             <div class="clear">
-                                <p class="line_text" v-bind:class="{'line_text':!list.result[$index].show,'select_line_text':list.result[$index].show}" @click="selectShow(list.result[$index])">{{list.result[$index].cname}}</p>
+                                <p class="line_text" v-bind:class="{'line_text':!list.result[$index].show,'select_line_text':list.result[$index].show}" @click="selectShow(list.result[$index])">{{item.cname}}({{item.ename}})</p>
                                 <!-- 二级目录 -->
                                 <div v-for="subItem in list.result[$index].subcategory" class="sub_second clear">
-                                    <p v-if="subItem.type==0" class="line_text" v-bind:class="{'line_text':!subItem.show,'select_line_text':subItem.show}" @click="selectShow(subItem)">{{subItem.cname}}</p>
+                                    <p v-if="subItem.type==0" class="line_text" v-bind:class="{'line_text':!subItem.show,'select_line_text':subItem.show}" @click="selectShow(subItem)">{{subItem.cname}}({{subItem.ename}})</p>
                                 </div>
+                                
                             </div>
                         </li>
                     </ul>
@@ -200,7 +201,7 @@ export default {
             this.editMenuParam.icon = '';
             this.editMenuParam.pid = '';
             this.editMenuParam.remark = '';
-            this.editMenuParam.type = 0; // 0/1 页面/功能 
+            this.editMenuParam.type = 0; // 0/1 页面/功能
             this.editMenuParam.sys = this.loadParam.sys;
             this.editMenuParam.url = '';
             this.editMenuParam.callback = this.callback;
@@ -215,7 +216,7 @@ export default {
             this.editMenuParam.pid = '';
             this.editMenuParam.remark = '';
             this.editMenuParam.sys = this.loadParam.sys;
-            this.editMenuParam.type = 1; // 0/1 页面/功能 
+            this.editMenuParam.type = 1; // 0/1 页面/功能
             this.editMenuParam.url = '';
             this.editMenuParam.callback = this.functionCallback;
         },
@@ -232,7 +233,7 @@ export default {
                 this.editMenuParam.icon = this.initScopeDetail.icon;
                 this.editMenuParam.pid = this.initScopeDetail.pid;
                 this.editMenuParam.remark = this.initScopeDetail.remark;
-                this.editMenuParam.type = this.initScopeDetail.type; // 0/1 页面/功能 
+                this.editMenuParam.type = this.initScopeDetail.type; // 0/1 页面/功能
                 this.editMenuParam.url = this.initScopeDetail.url;
                 this.editMenuParam.id = this.initScopeDetail.id;
                 this.editMenuParam.sys = this.loadParam.sys;
@@ -252,7 +253,7 @@ export default {
                 this.deleteParam = item;
                 this.deleteParam.show = true;
                 this.deleteParam.title = '菜单';
-                this.deleteParam.type = this.initScopeDetail.type; // 0/1 页面/功能 
+                this.deleteParam.type = this.initScopeDetail.type; // 0/1 页面/功能
                 this.deleteParam.id = this.initScopeDetail.id;
                 this.deleteParam.callback = this.callback;
             }

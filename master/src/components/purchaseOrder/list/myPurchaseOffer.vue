@@ -9,7 +9,7 @@
         <div slot="top">
             <search-model>
                 <div slot="main">
-                    <erp-search title="供应商ID" :value.sync="loadParam.buyCustomer" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="客户ID" :value.sync="loadParam.buyCustomer" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="报价业务员" :value.sync="loadParam.offerEmployeeName" @on-click="selectEmployee('offer')" readonly="readonly"></erp-search>
                    
                     <erp-search title="品种" :value.sync="loadParam.breedName" @on-click="breedSearch()" readonly="readonly"></erp-search>

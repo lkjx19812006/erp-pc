@@ -5206,7 +5206,6 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         if (param.link == "/customer/suppliers") {
             localStorage.supplyClientParam = JSON.stringify(param);
         }
-
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -5864,6 +5863,9 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
     }).then((res) => {
         if (data.callback) {
             data.callback(res.json().msg);
+        }
+        if(data.freshCallback){
+            data.freshCallback()
         }
         if (res.json().msg == 'success') {
             data.transStatus = 1;
@@ -6746,6 +6748,21 @@ export const getPurchaseOrderList = ({ dispatch }, param) => { //采购单列表
     })
 }
 
+export const getWaitforAuditNumber = ({ dispatch }, param) => { //获取待审核数量
+    var url = apiUrl.clientList + '/indent/queryList?&page=1&pageSize=15&indentValidate=1';
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        param.auditNum = res.json().result.total
+    }, (res) => {
+        console.log('提交失败')
+    })
+}
 
 export const editDescription = ({ dispatch }, param) => { //编辑报价描述
     var url = apiUrl.clientList + "/intention/offerDescription"
@@ -7524,8 +7541,79 @@ export const handleOfferAccept = ({ dispatch }, param) => { //根据意向ID获�
 }
 
 export const getOfferList = ({ dispatch }, param) => { //报价信息列表以及搜索
-    param.loading = true;
-    var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
+    //param.loading = true;
+    let body = {
+        biz_module: 'erpIntentionOfferService',
+
+        biz_param: {
+            page:param.cur,
+            pageSize:15,
+        }
+    }
+    if(param.key == 'myOfferList'){
+        body.biz_method = 'queryMySendOffer'
+    }else if(param.key == 'orgOfferList'){
+        body.biz_method = 'queryOrgSendOffer'
+    }
+    if (param.breedId) {
+        body.biz_param.breedId = param.breedId;
+    }
+    if (param.offerEmployee) {
+        body.biz_param.offerEmployee = param.offerEmployee;
+    }
+    if (param.accept) {
+        body.biz_param.accept = param.accept;
+    }
+    if (param.onSell) {
+        body.biz_param.onSell = param.onSell;
+    }
+    if (param.startTime) {
+        body.biz_param.startTime = param.startTime;
+    }
+    if (param.endTime) {
+        body.biz_param.endTime = param.endTime;
+    }
+    if (param.effective) {
+        body.biz_param.effective = param.effective;
+    }
+    if (param.source) {
+        body.biz_param.source = param.source
+    }
+    if (param.buyCustomer) {
+        body.biz_param.buyCustomer = param.buyCustomer
+    }
+    if (param.buyEmployee) {
+        body.biz_param.buyEmployee = param.buyEmployee
+    }
+    if (param.validate) {
+        body.biz_param.validate = param.validate
+    }
+    if(param.offerCustomer){
+       body.biz_param.offerCustomer = param.offerCustomer
+    }
+    httpService.commonPOST(body)
+        .then((res) => {
+            var offer = res.biz_result.list;
+            for (var i in offer) {
+                offer[i].checked = false;
+                offer[i].show = false;
+            }
+            offer.key = param.key;
+            dispatch(types.OFFER_LIST_DATA, offer);
+            param.all = res.biz_result.pages;
+            param.total = res.biz_result.total;
+            param.loading = false;
+            if (param.link == "/intention/employee/offers") {
+                localStorage.myOfferParam = JSON.stringify(param);
+            }
+            if (param.link == "/intention/org/offers") {
+                localStorage.orgOfferParam = JSON.stringify(param);
+            }
+        }, (res) => {
+            console.log('fail');
+            param.loading = false;
+    })
+    /*var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     if ('fullname' in param && param.fullname !== '') {
         url += '&fullname=' + param.fullname
     }
@@ -7546,8 +7634,8 @@ export const getOfferList = ({ dispatch }, param) => { //报价信息列表以�
     }
     if ('endTime' in param && param.endTime !== '') {
         url += '&endTime=' + param.endTime
-    }
-    Vue.http({
+    }*/
+    /*Vue.http({
         method: 'GET',
         url: url,
         emulateJSON: true,
@@ -7575,7 +7663,7 @@ export const getOfferList = ({ dispatch }, param) => { //报价信息列表以�
     }, (res) => {
         console.log('fail');
         param.loading = false;
-    })
+    })*/
 }
 
 export const getMsgList = ({ dispatch }, param) => { //留言信息列表以及搜索
@@ -8070,6 +8158,9 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
         param.show = false;
         if (param.callback) {
             param.callback(res.json().msg);
+        }
+        if(param.freshCallback){
+           param.freshCallback()
         }
         var object = res.json().result;
         object.especial = 0;

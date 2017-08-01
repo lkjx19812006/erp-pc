@@ -6,7 +6,7 @@
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer" >
                     <!-- <div class="client-detailInfo col-xs-6"> -->
-                    <dt class="left transfer marg_top">日期：</dt>
+                    <dt class="left transfer marg_top">{{$t('static.date')}}：</dt>
                     <mz-datepicker :time.sync="loadParam.date" format="yyyy-MM-dd HH:mm:ss">
                     </mz-datepicker>
                     <!-- </div> -->
@@ -30,12 +30,12 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th>业务员</th>
-                        <th>日期</th>
-                        <th>邮箱</th>
-                        <th>发件数量</th>
-                        <th>收件数量</th>
-                        <th>是否离职</th>
+                        <th>{{$t('static.salesman')}}业务员</th>
+                        <th>{{$t('static.date')}}日期</th>
+                        <th>{{$t('static.email')}}邮箱</th>
+                        <th>{{$t('static.sender')}} {{$t('static.quantity')}}发件数量</th>
+                        <th>{{$t('static.consignee')}} {{$t('static.quantity')}}收件数量</th>
+                        <th>{{$t('static.email')}}>是否离职</th>
                     </tr>
                 </thead>
                 <tbody>
