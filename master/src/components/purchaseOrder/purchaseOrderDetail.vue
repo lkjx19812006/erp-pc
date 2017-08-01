@@ -60,7 +60,8 @@
                                 <label class="col-md-12 col-sm-12 col-xs-12">
                                     <span class="title_layout"><Icon type="ios-time" class="icon_s"></Icon>客户ID</span>
                                     <span class="f_weight">：{{initPurchaseDetail.customerId}}</span>
-                                </label><br>
+                                </label>
+                                <br>
                                 <label class="col-md-12 col-sm-12 col-xs-12">
                                     <span class="title_layout"><Icon type="person-stalker" class="icon_s"></Icon>姓名</span>
                                     <span class="f_weight">：{{initPurchaseDetail.customerName}}({{initPurchaseDetail.customerPhone}})</span>
@@ -73,7 +74,6 @@
                                     <span class="title_layout"><Icon type="location" class="icon_s"></Icon>交货地</span>
                                     <span class="f_weight">：{{initPurchaseDetail.provinceName}}{{initPurchaseDetail.cityName}}{{initPurchaseDetail.districtName}}</span>
                                 </label>
-                                
                                 <label class="col-md-12 col-sm-12col-xs-12">
                                     <span class="title_layout"><Icon type="social-yen" class="icon_s"></Icon>付款方式</span>
                                     <span class="f_weight">：{{initPurchaseDetail.paymentWay}}</span>
@@ -86,10 +86,8 @@
                                     <span class="title_layout"><Icon type="information-circled" class="icon_s"></Icon>备注</span>
                                     <span class="f_weight">：{{initPurchaseDetail.comment}}</span>
                                 </label>
-                                 
                             </ul>
                         </div>
-
                         <!-- 其他信息 -->
                         <!-- <h4 class="section_title">其他</h4>
                         <div class="panel panel-default" style="border:none">
@@ -187,9 +185,9 @@
                                                                         <td>
                                                                             {{offer.source | offerType}}
                                                                         </td>
-                                                                        <td >{{offer.offerCustomerName}}</td>
-                                                                        <td >{{offer.offerCustomer}}</td>
-                                                                        <td >{{offer.offerEmployeeName}}</td>
+                                                                        <td>{{offer.offerCustomerName}}</td>
+                                                                        <td>{{offer.offerCustomer}}</td>
+                                                                        <td>{{offer.offerEmployeeName}}</td>
                                                                         <td>{{offer.offerOrgName}}</td>
                                                                         <td>{{offer.breedName}}</td>
                                                                         <td>{{offer.spec}}</td>
@@ -211,7 +209,8 @@
                                                                                 <div class="api" slot="content">
                                                                                     {{offer.validateDescription}}
                                                                                 </div>
-                                                                            </Poptip></td>
+                                                                            </Poptip>
+                                                                        </td>
                                                                         <td>
                                                                             {{offer.accept | offerAccept}}
                                                                         </td>
@@ -321,8 +320,8 @@
                                                     <th style="width:30px;" v-if="param.key=='myIndent'||param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">勾选</th>
                                                     <th>报价时间</th>
                                                     <th>报价类型</th>
-                                                    <th >供应商名称</th>
-                                                    <th >报价业务员</th>
+                                                    <th>供应商名称</th>
+                                                    <th>报价业务员</th>
                                                     <th>品种</th>
                                                     <th>规格</th>
                                                     <th>产地</th>
@@ -338,19 +337,19 @@
                                                 <tbody>
                                                     <tr v-for="(index,item) in initIndentOfferList">
                                                         <!-- 意向信息 -->
-                                                        <td style="width:30px;"  v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">
+                                                        <td style="width:30px;" v-if="param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">
                                                             <Checkbox @click.prevent="singleSelect(index,item)" :checked="item.checked" v-if="item.source!=1"></Checkbox>
                                                             <input type="checkbox" v-else @click.prevent="errorTips()" style="margin-right: 8px;">
                                                         </td>
                                                         <td @click.stop="" style="width:30px;" v-if="param.key=='myIndent'">
-                                                        <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
-                                                         </td>
+                                                            <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
+                                                        </td>
                                                         <td>{{item.otime | date}}</td>
                                                         <td>
                                                             {{item.source | offerType}}
                                                         </td>
-                                                        <td >{{item.offerCustomerName}}</td>
-                                                        <td >{{item.offerEmployeeName}}</td>
+                                                        <td>{{item.offerCustomerName}}</td>
+                                                        <td>{{item.offerEmployeeName}}</td>
                                                         <td><a @click="clickOfferDetail(item.id)">{{item.breedName}}</a></td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.location | province}}</td>
@@ -450,7 +449,7 @@ export default {
                 offerId: "", //表示被选中的报价ID
                 index: "",
                 getOffers: this.getOffers,
-                querySource:''
+                querySource: ''
             },
             breedSearchParam: {
                 show: false
@@ -472,8 +471,8 @@ export default {
                 breedId: "",
                 breedName: "",
                 accept: "",
-                source:"",
-                validate:''
+                source: "",
+                validate: ''
             },
             tipsParam: {
                 show: false,
@@ -524,13 +523,13 @@ export default {
                 link: "/intention/offers/",
                 id: "",
             },
-            selectAll:false,
-            auditingData:{
-                show:false,
-                validate:'',
-                auditIds:[],
-                comment:'',
-                callback:this.auditCallback
+            selectAll: false,
+            auditingData: {
+                show: false,
+                validate: '',
+                auditIds: [],
+                comment: '',
+                callback: this.auditCallback
             },
         }
     },
@@ -572,7 +571,7 @@ export default {
                     }
                 }
                 //this.getIntentionDetail(this.intentionParam);
-                if(this.param.key == "myIndent"){
+                if (this.param.key == "myIndent") {
                     this.intentionParam.querySource = "1"
                 }
                 this.getOffersByIntentionId(this.intentionParam);
@@ -712,56 +711,56 @@ export default {
                 this.orderParam.show = true;
             }
         },
-        singleSelect:function(index,item){
+        singleSelect: function(index, item) {
             this.$store.state.table.indentOfferList[index].checked = !this.$store.state.table.indentOfferList[index].checked;
-            for(let i = 0;i<this.$store.state.table.indentOfferList.length;i++){//判断是否全部选择
-                if(!this.$store.state.table.indentOfferList[i].checked){
+            for (let i = 0; i < this.$store.state.table.indentOfferList.length; i++) { //判断是否全部选择
+                if (!this.$store.state.table.indentOfferList[i].checked) {
                     this.selectAll = false
                     return
-                }else{
+                } else {
                     this.selectAll = true
                 }
             }
         },
-        checkAll:function(){
+        checkAll: function() {
 
             let _this = this
             let sign = false
-            if(this.param.key=='allIndent'){
-              this.$store.state.table.indentOfferList.forEach(function(item){ //判断列表中是否包含客户报价
-                    if(item.source == 1){
+            if (this.param.key == 'allIndent') {
+                this.$store.state.table.indentOfferList.forEach(function(item) { //判断列表中是否包含客户报价
+                    if (item.source == 1) {
                         _this.tipsParam.name = '客户报价暂不需审核，请勾选业务员报价'
                         _this.tipsParam.show = true
                         sign = true
                         return
                     }
-                })  
+                })
             }
-            
-            if(!sign){
+
+            if (!sign) {
                 this.selectAll = !this.selectAll
-                if(this.selectAll){
+                if (this.selectAll) {
                     _this.auditingData.auditIds = []
-                    this.$store.state.table.indentOfferList.forEach(function(item){
+                    this.$store.state.table.indentOfferList.forEach(function(item) {
                         item.checked = true
                     })
-                }else{
-                    _this.auditingData.auditIds = []    
-                    this.$store.state.table.indentOfferList.forEach(function(item){
+                } else {
+                    _this.auditingData.auditIds = []
+                    this.$store.state.table.indentOfferList.forEach(function(item) {
                         item.checked = false
                     })
                 }
             }
-            
+
         },
-         onlyselected: function(index) { //单选
+        onlyselected: function(index) { //单选
             let _this = this;
-             this.$store.state.table.indentOfferList[index].checked = ! this.$store.state.table.indentOfferList[index].checked;
-            if (! this.$store.state.table.indentOfferList[index].checked) {
+            this.$store.state.table.indentOfferList[index].checked = !this.$store.state.table.indentOfferList[index].checked;
+            if (!this.$store.state.table.indentOfferList[index].checked) {
                 _this.checked = false;
             } else {
                 _this.checked = true;
-                 this.$store.state.table.indentOfferList.forEach(function(item) {
+                this.$store.state.table.indentOfferList.forEach(function(item) {
                     if (!item.checked) {
                         _this.checked = false;
                     }
@@ -769,7 +768,7 @@ export default {
             }
 
         },
-        
+
         batchAccept: function() {
             let list = this.initIndentOfferList;
             let offerIds = [];
@@ -786,27 +785,27 @@ export default {
             this.offerAcceptParam.id = offerIds.join(",");
             this.offerAcceptParam.show = true;
         },
-        auditing:function(){
+        auditing: function() {
 
             this.auditingData.auditIds = []
-            for(let i = 0;i<this.$store.state.table.indentOfferList.length;i++){
-                if(this.$store.state.table.indentOfferList[i].checked){
+            for (let i = 0; i < this.$store.state.table.indentOfferList.length; i++) {
+                if (this.$store.state.table.indentOfferList[i].checked) {
                     this.auditingData.auditIds.push(this.$store.state.table.indentOfferList[i].id)
 
                 }
             }
-            if(this.auditingData.auditIds.length==0){
+            if (this.auditingData.auditIds.length == 0) {
                 this.tipsParam.name = '请至少选择一个报价列表'
                 this.tipsParam.show = true
-            }else{
+            } else {
                 this.auditingData.show = true
             }
         },
-        errorTips:function(){
+        errorTips: function() {
             this.tipsParam.name = '客户报价暂不需审核'
             this.tipsParam.show = true
         },
-        auditCallback:function(msg){
+        auditCallback: function(msg) {
             this.selectSearch(this.indentOfferParam);
             this.tipsParam.name = msg
             this.tipsParam.show = true
@@ -866,10 +865,10 @@ export default {
         let clientParam = {
             id: this.param.customerId
         }
-        if(this.param.key=='myIndent'){
+        if (this.param.key == 'myIndent') {
             this.indentOfferParam.querySource = 1
             this.indentOfferParam.source = ''
-        }else if(this.param.key == 'allIndent'){
+        } else if (this.param.key == 'allIndent') {
             this.indentOfferParam.source = '0'
             this.indentOfferParam.querySource = 2
         }
@@ -951,9 +950,11 @@ section article {
 .table>thead>tr>th {
     text-align: center;
 }
-.icon_s{
-    margin-right:5px;
+
+.icon_s {
+    margin-right: 5px;
 }
+
 .edit-detail {
     border: 1px solid #ddd;
     border-radius: 3px;
@@ -992,15 +993,18 @@ section article {
 .api {
     color: #3399ff;
 }
-.f_weight{
+
+.f_weight {
     font-weight: normal
 }
-.title_layout{
+
+.title_layout {
     display: inline-block;
     width: 85px;
     text-align: left
 }
-.title_layout>Icon{
+
+.title_layout>Icon {
     text-align: left
 }
 </style>

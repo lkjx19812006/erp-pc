@@ -94,7 +94,7 @@
                             <div v-if="item.especial==1&&item.type==1">{{$t('static.low_cost')}}</div>
                         </td>
                         <td>{{item.customerId}}</td>
-                        <td class="underline" @click="clickOn(item.id)">{{item.customerName}}</td>
+                        <td class="underline" @click="clickOn(item.id,item.inquire)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.names}}</td>
                         <td>{{item.countryName}}</td>
@@ -109,6 +109,7 @@
                             <div v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</div>
                             <div v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</div>
                             <div v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</div>
+                            <div v-if="item.inquire==3" style="color:black;font-weight:bolder">{{item.remainTime}}</div>
                         </td>
                         <td>
                             <div v-if="item.validate==0">{{$t('static.initial')}}</div>
@@ -130,14 +131,14 @@
                                 key:'myIntlIntentionList'
                                 })"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" />
                             </div>
-                            <div style="display:inline-block;margin-right:7px" v-if="item.offerTime >= 1" @click.stop="newOrder(item,$index)"><img src="/static/images/{{$t('static.img_adopt')}}.png" alt="生成订单" />
+                            <div style="display:inline-block;margin-right:7px" v-if="item.remainTime=='已评价'"  @click.stop="newOrder(item,$index)"><img src="/static/images/{{$t('static.img_adopt')}}.png" alt="生成订单" />
                             </div>
                             <div v-if="item.inquire===0||item.inquire===3" style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑" /></div>
                             <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_inquire')}}.png" alt="询价" /></div>
                             <div v-if="item.inquire===3&&item.validate===2" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
                             <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item,$index)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
                             <!-- 再次询价申请 -->
-                            <div v-if="item.inquire===3&&(item.validate===-2||item.validate===0)" style="display:inline-block;margin-right:7px" @click="againInquire(item.id)">
+                            <div v-if="item.remainTime=='已评价'" style="display:inline-block;margin-right:7px" @click="againInquire(item.id)">
                                 <button class="requestBtn btn btn-success">{{$t('static.Request_again')}}</button>
                             </div>
                         </td>
@@ -235,7 +236,8 @@ export default {
                 key: 'intentionDetail',
                 show: false,
                 loading: true,
-                id: ''
+                id: '',
+                inquire:''
             },
             createOrderParam: {
                 show: false,
@@ -436,8 +438,9 @@ export default {
             this.cancelIntlIntentionInquire(this.cancelInquireParam);
         },
 
-        clickOn: function(id) {
+        clickOn: function(id,inquire) {
             this.detailParam.id = id;
+            this.detailParam.inquire=inquire;
             this.detailParam.show = true;
         },
 
@@ -615,7 +618,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 98px;
-    min-width: 98px;
+    width: 85px;
+    min-width: 85px;
 }
 </style>

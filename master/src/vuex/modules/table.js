@@ -191,7 +191,8 @@ import {
     LOGISTICS_COUNT_TOTAL,
     FINANCIAL_COUNT_TOTAL,
     USER_FEEDBACK_INFO,
-    DETAIL_MYOFFER_LIST
+    DETAIL_MYOFFER_LIST,
+    INQUIRE_EVALUATE
 
 } from '../mutation-types'
 
@@ -703,6 +704,8 @@ const state = {
         intlIntentionList: [
 
         ],
+        //国际询价评价
+        inquireEvaluate:{},
         intlIntentionInquireList: [
             { "id": "7", "intentionId": "58228a6688e87dc057d5e969", "inquire": 1, "inquireType": "FOB&CIF", "comment": "卖报的小行家", "ctime": "2016-11-09 10:31:51" }
         ],
@@ -2594,7 +2597,10 @@ const mutations = {
     },
     [DETAIL_MYOFFER_LIST](state, data) {
         state.basicBaseList.detailMyOfferList = data
-    }
+    },
+     [INQUIRE_EVALUATE](state, data) {
+        state.inquireEvaluate = data;
+    },
 
 }
 

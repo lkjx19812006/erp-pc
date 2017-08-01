@@ -194,6 +194,7 @@
                                                     <th>{{$t('static.inquiry_state')}}</th>
                                                     <th>外部意向上下架状态</th>
                                                     <!-- <th colspan="4">操作</th> -->
+                                                    <th>{{$t('static.evaluation')}}</th>
                                                     <th></th>
                                                     <th></th>
                                                     <th></th>
@@ -252,6 +253,15 @@
                                                         <td>
                                                             <span v-if="!item.externalIntentionId">未生成外部意向</span>
                                                             <span v-else>{{item.externalIntentionOnSell | onsell}}</span>
+                                                        </td>
+                                                        <td>
+                                                        <Poptip placement="top" trigger="hover">
+                                                        <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                        <span v-else>{{$t('static.unvalued')}}</span>
+                                                        <div class="api" slot="content" style="color:green">
+                                                            {{item.evaluation}}
+                                                        </div>
+                                                        </Poptip>
                                                         </td>
                                                         <td>
                                                             <!-- 寻求外部报价，如果已经寻求过外部报价，就不能再寻求了 -->
@@ -317,6 +327,7 @@
                                                     <th>{{$t('static.inquiry_state')}}</th>
                                                     <th>外部意向上下架状态</th>
                                                     <!-- <th colspan="4">操作</th> -->
+                                                    <th>{{$t('static.evaluation')}}</th>
                                                     <th></th>
                                                     <th></th>
                                                     <th></th>
@@ -383,6 +394,15 @@
                                                             <span v-else>{{item.externalIntentionOnSell | onsell}}</span>
                                                         </td>
                                                         <td>
+                                                        <Poptip placement="top" trigger="hover">
+                                                        <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                        <span v-else>{{$t('static.unvalued')}}</span>
+                                                        <div class="api" slot="content" style="color:green">
+                                                            {{item.evaluation}}
+                                                        </div>
+                                                        </Poptip>
+                                                        </td>
+                                                        <td>
                                                             <!-- 寻求外部报价，如果已经寻求过外部报价，就不能再寻求了 -->
                                                             <!-- <button v-if="!item.externalIntentionId&&item.inquire!=3" class="btn btn-info btn-xs" @click="askOuterOffer(item.id)">寻求外部报价</button> -->
                                                             <!-- 查看外部报价 -->
@@ -432,6 +452,7 @@
                                                     <th>{{$t('static.expense')}}</th>
                                                     <th>{{$t('static.currency')}}</th>
                                                     <th>{{$t('static.comment')}}</th>
+                                                    <th>{{$t('static.evaluation')}}</th>
                                                     <th></th>
                                                     <th></th>
                                                 </thead>
@@ -441,6 +462,15 @@
                                                         <td>{{item.cost}}</td>
                                                         <td>{{item.currency | Currency}}</td>
                                                         <td>{{item.comment}}</td>
+                                                        <td>
+                                                        <Poptip placement="top" trigger="hover">
+                                                        <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                        <span v-else>{{$t('static.unvalued')}}</span>
+                                                        <div class="api" slot="content" style="color:green">
+                                                            {{item.evaluation}}
+                                                        </div>
+                                                        </Poptip>
+                                                        </td>
                                                         <td>
                                                             <a v-if="initIntlIntentionDetail.inquire !=3&&param.inquire!=3" style="cursor:pointer" @click="editOtherOffer(item,$index)">
                                                                 <img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑" />
