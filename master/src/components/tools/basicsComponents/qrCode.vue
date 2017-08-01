@@ -1,0 +1,74 @@
+<template>
+	<div class="code_box">
+		<img src="../../../../static/images/qrcode_s.png" class="qrcode_small"/>
+		<div class="qrcode_big">
+			<img :src="'http://api.k780.com:88/?app=qr.get&data=test&level=L&size=4'" >
+			<div class="arrow">
+				<Icon type="play" size='30'></Icon>
+			</div>
+		</div>
+		
+	</div>
+</template>
+
+<script>
+	export default{
+		data(){
+			return {
+
+			}
+		},
+		props:{
+			// title:{
+			// 	type:String,
+			// 	default:''
+			// },
+			// value:{
+			// 	type:[String,Number],
+			// 	default:''
+			// },
+		},
+		methods:{
+			handleChange:function(event){
+				this.$emit('on-change',event)
+			},
+			handleClick:function(event){
+				this.$emit('on-click',event)
+			}
+		},
+		computed:{
+			
+		},
+		created(){
+
+		}
+	}
+</script>
+<style scoped>
+	.code_box {
+		position: relative;
+	}
+	.code_box:hover .qrcode_big{
+		visibility:visible;
+	}
+	.qrcode_small {
+		
+	}
+	.qrcode_big{
+		position: absolute;
+		overflow: hidden;
+		top:-40px;
+		left: -120px;
+		visibility:hidden;
+		box-shadow: 0px 0px 20px #888;
+		border-radius: 10px;
+		z-index: 9999;
+	}
+	.arrow{
+		width: 20px;
+		height: 100%;
+		position: absolute; 
+		color:#f0f;
+		right: -20px;
+	}
+</style>

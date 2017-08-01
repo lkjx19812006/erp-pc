@@ -1,4 +1,5 @@
 <template>
+  <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
   <div>
     <p class="employee_right_title clear">
       <span class="left">{{$t('static.offer_message')}}</span>
@@ -14,14 +15,14 @@
       <div class="employee_message_view" v-for="item in backloglist" @click='selectIndex=$index' :class="{actColor:$index===selectIndex}">
         <div class="message_view_left">
           <span>标题：{{item.title}}
-                                <label v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)" style="position:relative; bottom:-3px; float:right" v-if="loadparam.type==0">
-                                </label>
+                               <!--  <label v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)" style="position:relative; bottom:-3px; float:right" v-if="loadparam.type==0">
+                                </label> -->
                             </span>
           <p>内容：{{item.message }}</p>
           <time>{{item.mtime}}</time>
-          <div class="message_view_right">
-            <a @click="showDetail(item)">{{$t('static.details')}}</a>
-          </div>
+          <!-- <div class="message_view_right">
+            <a @click="showDetail(item.bizId,'myOffer')">{{$t('static.details')}}</a>
+          </div> -->
         </div>
         <div class="message_view_right" v-if="item.bizType=='order_validate'">
         </div>
@@ -30,19 +31,28 @@
   </div>
 </template>
 <script>
+import detailModel from '../intention/offerDetail'
 import {
   finishFlow,
   getBacklogList
 } from '../../vuex/actions'
 export default {
   components: {
-
+    detailModel
   },
   props: ['loadparam', 'backloglist'],
   data() {
     return {
       title: '',
-      selectIndex: null
+      selectIndex: null,
+      detailParam: {
+            show: false,
+            loading: true,
+            idOrName: true,
+            link: "/intention/offers/",
+            id: "",
+            intoType:''
+        },
     }
   },
   vuex: {
@@ -53,11 +63,14 @@ export default {
   },
   methods: {
     refresh() {
-      console.log('asdasdadas');
+     
     },
-    showDetail(item) {
-      console.log(item);
-    }
+    showDetail: function(id,type) {
+            
+            this.detailParam.id = id;
+            this.detailParam.intoType = type
+            this.detailParam.show = true;
+        },
   }
 }
 </script>
