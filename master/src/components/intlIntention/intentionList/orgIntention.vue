@@ -106,6 +106,8 @@
                             <div v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</div>
                             <div v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</div>
                             <div v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</div>
+                            <div v-if="item.inquire==3" style="color:black;font-weight:bolder">{{item.remainTime}}</div>
+
                         </td>
                         <td>
                             <div v-if="item.validate==0">{{$t('static.initial')}}</div>
