@@ -9,7 +9,7 @@
         <inquireagain-model :param="inquireAgainParam" v-if="inquireAgainParam.show"></inquireagain-model>
         <delfile-model :param="delFileParam" v-if="delFileParam.show"></delfile-model>
         <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-        <evaluate-model  :param="evaluateParam" v-if="evaluateParam.show"></evaluate-model>
+        <evaluate-model :param="evaluateParam" v-if="evaluateParam.show"></evaluate-model>
         <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
             <div class="top-title">
@@ -97,11 +97,10 @@
                                     </div>
                                 </div>
                             </div>
-                         
                         </article>
                     </div>
                     <div class="col-md-12 client-detail">
-                     <h4 class="section_title" style="margin:15px 0">{{$t('static.related_information')}} 
+                        <h4 class="section_title" style="margin:15px 0">{{$t('static.related_information')}} 
                       <div style="width:100%;height:35px;text-align:right;padding-right:7px"  v-if="param.inquire==3">
                       <input id="all-checked"
                               type="checkbox"
@@ -110,7 +109,6 @@
                             > {{$t('static.Select_all')}}
                              <button class="btn btn-primary" @click="batchAccept(1)" >{{$t('static.evaluate_all')}}</button>
                              </div></h4>
-
                         <article>
                             <div class="panel-group">
                                 <!-- 询价记录 -->
@@ -130,7 +128,7 @@
                                     </div>
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
                                         <div class="panel-body panel-set">
-                                            <table class="table contactSet"  style="border-top:1px solid #eee">
+                                            <table class="table contactSet" style="border-top:1px solid #eee">
                                                 <thead>
                                                     <th>{{$t('static.inquire_type')}}</th>
                                                     <th>{{$t('static.destination')}}/{{$t('static.postcodes')}}</th>
@@ -188,16 +186,15 @@
                                               <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                         </h4>
                                     </div>
-                                   
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.items.show&&initIntlIntentionDetail.items.arr.length>0">
                                         <div class="panel-body panel-set">
-                                         <span style="display:inline-block;width:100%;height:32px;text-align:right;padding-right:7px;"  v-if="param.inquire==3">
+                                            <span style="display:inline-block;width:100%;height:32px;text-align:right;padding-right:7px;" v-if="param.inquire==3">
                                          <input type="checkbox"  @change="changeTitleChecked(data,$event,'items','offerId')" :checked="title1">{{$t('static.Select_all')}}
                                             <button class="btn btn-primary" @click="batchAccept('items')" >{{$t('static.Batch_evaluation')}}</button>
                                             </span>
                                             <table class="table contactSet" style="border-top:1px solid #eee">
                                                 <thead>
-                                                    <th style="width:30px;"  v-if="param.inquire==3">{{$t('static.selected')}}</th>
+                                                    <th style="width:30px;" v-if="param.inquire==3">{{$t('static.selected')}}</th>
                                                     <th>{{$t('static.breed')}}</th>
                                                     <th>{{$t('static.origin')}}</th>
                                                     <th>{{$t('static.specification')}}</th>
@@ -216,14 +213,13 @@
                                                     <th>{{$t('static.evaluation')}}</th>
                                                     <th>{{$t('static.handle')}}</th>
                                                 </thead>
-
                                                 <tbody>
                                                     <tr v-for="(index,item) in initIntlIntentionDetail.items.arr">
-                                                    <td @click.stop="" style="width:100px;"  v-if="param.inquire==3">
-                                                      <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index,'items')"></label>
-                                                       </td>  
-                                                      <!--  <input type="checkbox"  value="{{item.offerId}}" checked="{{item.checked}}" v-model="selectArr" >   -->
-                                                     <!--  <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>{{item.checked}} -->
+                                                        <td @click.stop="" style="width:100px;" v-if="param.inquire==3">
+                                                            <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,'items')"></label>
+                                                        </td>
+                                                        <!--  <input type="checkbox"  value="{{item.offerId}}" checked="{{item.checked}}" v-model="selectArr" >   -->
+                                                        <!--  <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>{{item.checked}} -->
                                                         <td>
                                                             <a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a>
                                                         </td>
@@ -259,13 +255,13 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                        <Poptip placement="top" trigger="hover">
-                                                        <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                                                        <span v-else>{{$t('static.unvalued')}}</span>
-                                                        <div class="api" slot="content" style="color:green">
-                                                            {{item.evaluation}}
-                                                        </div>
-                                                        </Poptip>
+                                                            <Poptip placement="top" trigger="hover">
+                                                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                                <span v-else>{{$t('static.unvalued')}}</span>
+                                                                <div class="api" slot="content" style="color:green">
+                                                                    {{item.evaluation}}
+                                                                </div>
+                                                            </Poptip>
                                                         </td>
                                                         <td>
                                                             <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
@@ -295,17 +291,16 @@
                                               <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                         </h4>
                                     </div>
-                                   
                                     <div class="panel-collapse" v-show="!initIntlIntentionDetail.extractive.show&&initIntlIntentionDetail.extractive.arr.length>0">
                                         <div class="panel-body panel-set">
-                                         <span style="display:inline-block;width:100%;height:32px;text-align:right;padding-right:7px;"  v-if="param.inquire==3">
+                                            <span style="display:inline-block;width:100%;height:32px;text-align:right;padding-right:7px;" v-if="param.inquire==3">
                                           <input  type="checkbox"  :checked="title2" @change="changeTitleChecked(data,$event,'extractive','offerId')">{{$t('static.Select_all')}}
                                           <!--   <Checkbox :checked='selectAll' @click.prevent="checkAll()" >{{$t('static.Select_all')}}</Checkbox> -->
                                             <button class="btn btn-primary" @click="batchAccept('extractive')" >{{$t('static.Batch_evaluation')}}</button>
                                             </span>
                                             <table class="table contactSet" style="border-top:1px solid #eee">
                                                 <thead>
-                                                <th style="width:30px;"  v-if="param.inquire==3">{{$t('static.selected')}}</th>
+                                                    <th style="width:30px;" v-if="param.inquire==3">{{$t('static.selected')}}</th>
                                                     <th>{{$t('static.breed')}}</th>
                                                     <th>{{$t('static.origin')}}</th>
                                                     <th>{{$t('static.specification')}}</th>
@@ -325,13 +320,13 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="item in initIntlIntentionDetail.extractive.arr">
-                                                    <td @click.stop="" style="width:100px;"  v-if="param.inquire==3">
-                                                        <!-- 
+                                                        <td @click.stop="" style="width:100px;" v-if="param.inquire==3">
+                                                            <!-- 
                                                         <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"></label> -->
-                                                    <!--     <input type="checkbox" value="{{item.offerId}}" v-model="selectArr" >  -->
-                                                        <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index,'extractive')"></label>
-                                                       </td>  
-                                                         </td>
+                                                            <!--     <input type="checkbox" value="{{item.offerId}}" v-model="selectArr" >  -->
+                                                            <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,'extractive')"></label>
+                                                        </td>
+                                                        </td>
                                                         <td>
                                                             <a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a>
                                                         </td>
@@ -368,17 +363,17 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                        <Poptip placement="top" trigger="hover">
-                                                        <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                                                        <span v-else>{{$t('static.unvalued')}}</span>
-                                                        <div class="api" slot="content" style="color:green">
-                                                            {{item.evaluation}}
-                                                        </div>
-                                                        </Poptip>
+                                                            <Poptip placement="top" trigger="hover">
+                                                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                                <span v-else>{{$t('static.unvalued')}}</span>
+                                                                <div class="api" slot="content" style="color:green">
+                                                                    {{item.evaluation}}
+                                                                </div>
+                                                            </Poptip>
                                                         </td>
                                                         <td>
                                                             <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0  &&initIntlIntentionDetail.inquireTime>1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
-                                                             <a style="color:blue" v-if="param.inquire==3" @click="addEval(item.offerId)">{{$t('static.evaluate')}}</a>
+                                                            <a style="color:blue" v-if="param.inquire==3" @click="addEval(item.offerId)">{{$t('static.evaluate')}}</a>
                                                         </td>
                                                     </tr>
                                             </table>
@@ -406,17 +401,16 @@
                                             <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                          </h4>
                                     </div>
-                                   
                                     <div class="panel-collapse" v-show="initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0&&(initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1)">
                                         <div class="panel-body panel-set">
-                                         <span style="display:inline-block;width:100%;height:32px;text-align:right;padding-right:7px;"  v-if="param.inquire==3">
+                                            <span style="display:inline-block;width:100%;height:32px;text-align:right;padding-right:7px;" v-if="param.inquire==3">
                                           <input :id="data.listTitle" type="checkbox"   :checked="title3" @change="changeTitleChecked(data,$event,'offers','id')">{{$t('static.Select_all')}}
                                          <!--    <Checkbox :checked='selectAll' @click.prevent="checkAll()" >{{$t('static.Select_all')}}</Checkbox> -->
                                             <button class="btn btn-primary" @click="batchAccept('offers')" >{{$t('static.Batch_evaluation')}}</button>
                                             </span>
                                             <table class="table contactSet" style="border-top:1px solid #eee">
                                                 <thead>
-                                                <th style="width:30px;"  v-if="param.inquire==3">{{$t('static.selected')}}</th>
+                                                    <th style="width:30px;" v-if="param.inquire==3">{{$t('static.selected')}}</th>
                                                     <th>{{$t('static.expense_explanation')}}</th>
                                                     <th>{{$t('static.expense')}}</th>
                                                     <th>{{$t('static.currency')}}</th>
@@ -428,26 +422,24 @@
                                                 <tbody>
                                                     <tr v-for="item in initIntlIntentionDetail.offers.arr">
                                                         <!-- <td><img :src="item.path" /></td> -->
-                                                        <td @click.stop="" style="width:100px;"  v-if="param.inquire==3">
-                                                         <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index,'offers')"></label>
-                                                   
-                                                         </td>
-
+                                                        <td @click.stop="" style="width:100px;" v-if="param.inquire==3">
+                                                            <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,'offers')"></label>
+                                                        </td>
                                                         <td>{{item.costDesc}}</td>
                                                         <td>{{item.cost}}</td>
                                                         <td>{{item.currency | Currency}}</td>
                                                         <td>{{item.total}}</td>
                                                         <td>{{item.comment}}</td>
                                                         <td>
-                                                        <Poptip placement="top" trigger="hover">
-                                                        <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                                                        <span v-else>{{$t('static.unvalued')}}</span>
-                                                        <div class="api" slot="content" style="color:green">
-                                                            {{item.evaluation}}
-                                                        </div>
-                                                        </Poptip>
+                                                            <Poptip placement="top" trigger="hover">
+                                                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                                <span v-else>{{$t('static.unvalued')}}</span>
+                                                                <div class="api" slot="content" style="color:green">
+                                                                    {{item.evaluation}}
+                                                                </div>
+                                                            </Poptip>
                                                         </td>
-                                                        <td v-if="param.inquire"><a style="color:blue" v-if="param.inquire==3"  @click="addEval(item.id)">{{$t('static.evaluate')}}</a></td>
+                                                        <td v-if="param.inquire"><a style="color:blue" v-if="param.inquire==3" @click="addEval(item.id)">{{$t('static.evaluate')}}</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -598,12 +590,12 @@ export default {
     },
     data() {
         return {
-            topTitle:'',
-            title1:'',
-            title2:'',
-            title3:'',
-            isShowListItem : false,
-            selectArr:[],
+            topTitle: false,
+            title1: false,
+            title2: false,
+            title3: false,
+            isShowListItem: false,
+            selectArr: [],
             changeShow: true,
             loadParam: {
                 loading: true,
@@ -662,10 +654,10 @@ export default {
                 category: '',
                 index: '',
             },
-            evaluateParam:{
-                show:false,
-                ids:[],
-                intentionId:this.param.id
+            evaluateParam: {
+                show: false,
+                ids: [],
+                intentionId: this.param.id
             }
         }
     },
@@ -682,140 +674,140 @@ export default {
         }
     },
     methods: {
-        removeByValue:function(arr, val) {
-          for(var i=0; i<arr.length; i++) {
-            if(arr[i] == val) {
-              arr.splice(i, 1);
-              break;
+        removeByValue: function(arr, val) {
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] == val) {
+                    arr.splice(i, 1);
+                    break;
+                }
             }
-          }
         },
-        titleStatus:function(a,b,c){
-            this.title1=a;
-            this.title2=b;
-            this.title3=c;
+        titleStatus: function(a, b, c) {
+            this.title1 = a;
+            this.title2 = b;
+            this.title3 = c;
         },
-        loopTitle:function(ar){
+        loopTitle: function(ar) {
             var that = this;
-            var allDetail=this.$store.state.table.basicBaseList.intlIntentionDetail;
-            if(ar=='items'){
-               allDetail[ar].arr.every(function (item) {
-                if(allDetail[ar].selected.length==allDetail[ar].arr.length){
-                       that.title1=true;  
-                }else{
-                      that.title1=false; 
-                }
+            var allDetail = this.$store.state.table.basicBaseList.intlIntentionDetail;
+            if (ar == 'items') {
+                allDetail[ar].arr.every(function(item) {
+                    if (allDetail[ar].selected.length == allDetail[ar].arr.length) {
+                        that.title1 = true;
+                    } else {
+                        that.title1 = false;
+                    }
                 })
-           }else if(ar=='extractive'){
-               allDetail[ar].arr.every(function (item) {
-                if(allDetail[ar].selected.length==allDetail[ar].arr.length){
-                       that.title2=true;  
-                }else{
-                      that.title2=false; 
-                }
+            } else if (ar == 'extractive') {
+                allDetail[ar].arr.every(function(item) {
+                    if (allDetail[ar].selected.length == allDetail[ar].arr.length) {
+                        that.title2 = true;
+                    } else {
+                        that.title2 = false;
+                    }
                 })
-           }else if(ar=='offers'){
-               allDetail[ar].arr.every(function (item) {
-                if(allDetail[ar].selected.length==allDetail[ar].arr.length){
-                       that.title3=true;  
-                }else{
-                       that.title3=false; 
-                }
+            } else if (ar == 'offers') {
+                allDetail[ar].arr.every(function(item) {
+                    if (allDetail[ar].selected.length == allDetail[ar].arr.length) {
+                        that.title3 = true;
+                    } else {
+                        that.title3 = false;
+                    }
                 })
-           }
+            }
         },
-         onlyselected: function(sub,ar) {
-             var allDetail=this.$store.state.table.basicBaseList.intlIntentionDetail;
+        onlyselected: function(sub, ar) {
+            var allDetail = this.$store.state.table.basicBaseList.intlIntentionDetail;
             const _this = this;
             console.log(ar)
-             allDetail[ar].arr[sub].checked = !allDetail[ar].arr[sub].checked;
+            allDetail[ar].arr[sub].checked = !allDetail[ar].arr[sub].checked;
             if (!allDetail[ar].arr[sub].checked) {
                 _this.checked = false;
-                _this.topTitle=false;
-                if(ar=='offers'){
-                  this.removeByValue(allDetail[ar].selected,allDetail[ar].arr[sub].id);  
-                  this.loopTitle(ar); 
-                }else{
-                  this.removeByValue(allDetail[ar].selected,allDetail[ar].arr[sub].offerId); 
-                  this.loopTitle(ar); 
+                _this.topTitle = false;
+                if (ar == 'offers') {
+                    this.removeByValue(allDetail[ar].selected, allDetail[ar].arr[sub].id);
+                    this.loopTitle(ar);
+                } else {
+                    this.removeByValue(allDetail[ar].selected, allDetail[ar].arr[sub].offerId);
+                    this.loopTitle(ar);
                 };
             } else {
                 _this.checked = true;
-                if(ar=='offers'){
-                 allDetail[ar].selected.push(allDetail[ar].arr[sub].id);
-                  this.loopTitle(ar); 
-                }else{
-                   allDetail[ar].selected.push(allDetail[ar].arr[sub].offerId);  
-                   this.loopTitle(ar);
+                if (ar == 'offers') {
+                    allDetail[ar].selected.push(allDetail[ar].arr[sub].id);
+                    this.loopTitle(ar);
+                } else {
+                    allDetail[ar].selected.push(allDetail[ar].arr[sub].offerId);
+                    this.loopTitle(ar);
                 }
                 this.isAllChecked();
                 allDetail[ar].arr.forEach(function(item) {
                     if (!item.checked) {
                         _this.checked = false;
                     }
-                })}
-        },
-        changeTitleChecked : function (data,event,list,type) {
-            var allData=this.$store.state.table.basicBaseList.intlIntentionDetail;
-           var _this = this;
-          if (event.target.checked === true) {
-            if(list=='items'){
-                this.title1=true;
-            }else if(list=='extractive'){
-                this.title2=true;
-            }else if(list=='offers'){
-                this.title3=true;
+                })
             }
-             this.isAllChecked();
-            console.log("sadasda",this.title1)
-            allData[list].arr.forEach(function (item,i) {
-            allData[list].arr[i].checked=true && allData[list].selected.push(item[type]);
-           })
-          }else {
-               this.topTitle=false;
-               allData[list].arr.forEach(function (item,i) {
-               allData[list].arr[i].checked=false;
-               allData[list].selected.length=0;
-               console.log("dfgsdgfdgdsfds",allData[list])
-              })
-          }
-         
         },
-        changeAllChecked : function (event) {
-           var allData=this.$store.state.table.basicBaseList.intlIntentionDetail;
+        changeTitleChecked: function(data, event, list, type) {
+            var allData = this.$store.state.table.basicBaseList.intlIntentionDetail;
+            var _this = this;
             if (event.target.checked === true) {
-                 allData.items.arr.forEach(function (item,i) {
-                  allData.items.arr[i].checked=true &&  allData.items.selected.push(item.offerId);
+                if (list == 'items') {
+                    this.title1 = true;
+                } else if (list == 'extractive') {
+                    this.title2 = true;
+                } else if (list == 'offers') {
+                    this.title3 = true;
+                }
+                this.isAllChecked();
+                console.log("sadasda", this.title1)
+                allData[list].arr.forEach(function(item, i) {
+                    allData[list].arr[i].checked = true && allData[list].selected.push(item[type]);
                 })
-                 allData.extractive.arr.forEach(function (item,i) {
-                  allData.extractive.arr[i].checked=true &&  allData.extractive.selected.push(item.offerId);
+            } else {
+                this.topTitle = false;
+                allData[list].arr.forEach(function(item, i) {
+                    allData[list].arr[i].checked = false;
+                    allData[list].selected.length = 0;
+                    console.log("dfgsdgfdgdsfds", allData[list])
                 })
-                allData.offers.arr.forEach(function (item,i) {
-                  allData.offers.arr[i].checked=true &&  allData.offers.selected.push(item.id);
+            }
+
+        },
+        changeAllChecked: function(event) {
+            var allData = this.$store.state.table.basicBaseList.intlIntentionDetail;
+            if (event.target.checked === true) {
+                allData.items.arr.forEach(function(item, i) {
+                    allData.items.arr[i].checked = true && allData.items.selected.push(item.offerId);
                 })
-                this.titleStatus(true,true,true);
+                allData.extractive.arr.forEach(function(item, i) {
+                    allData.extractive.arr[i].checked = true && allData.extractive.selected.push(item.offerId);
+                })
+                allData.offers.arr.forEach(function(item, i) {
+                    allData.offers.arr[i].checked = true && allData.offers.selected.push(item.id);
+                })
+                this.titleStatus(true, true, true);
+            } else {
+                allData.items.arr.forEach(function(item, i) {
+                    allData.items.arr[i].checked = false;
+                });
+                allData.extractive.arr.forEach(function(item, i) {
+                    allData.extractive.arr[i].checked = false;
+                });
+                allData.offers.arr.forEach(function(item, i) {
+                    allData.offers.arr[i].checked = false;
+                });
+                allData.items.selected.length = 0
+                allData.extractive.selected.length = 0;
+                allData.offers.selected.length = 0;
+                this.titleStatus(false, false, false);
             }
-            else {
-                 allData.items.arr.forEach(function (item,i) {
-                   allData.items.arr[i].checked=false; 
-                 });
-                  allData.extractive.arr.forEach(function (item,i) {
-                   allData.extractive.arr[i].checked=false;
-                 });
-                   allData.offers.arr.forEach(function (item,i) {
-                   allData.offers.arr[i].checked=false;
-                 });
-                   allData.items.selected.length=0
-                   allData.extractive.selected.length=0;
-                   allData.offers.selected.length=0;
-                   this.titleStatus(false,false,false);
+        },
+        isAllChecked: function() {
+            if (this.title1 == true && this.title2 == true && this.title3 == true) {
+                this.topTitle = true;
             }
-            },
-        isAllChecked : function () {
-           if(this.title1==true&&this.title2==true&&this.title3==true){
-            this.topTitle=true;
-            }
-           
+
         },
         clickBig: function(img) {
             this.pictureParam.show = true;
@@ -836,12 +828,12 @@ export default {
 
         },
         //添加评价
-        addEval:function(v){
-            this.evaluateParam.ids=[]
-          this.evaluateParam.link='/intlIntention/evaluateOffer';
-          this.evaluateParam.ids.push(v);
-          this.evaluateParam.show=true;
-         this.evaluateParam.callback = this.evaluateCallback;
+        addEval: function(v) {
+            this.evaluateParam.ids = []
+            this.evaluateParam.link = '/intlIntention/evaluateOffer';
+            this.evaluateParam.ids.push(v);
+            this.evaluateParam.show = true;
+            this.evaluateParam.callback = this.evaluateCallback;
         },
         evaluateCallback: function(name) {
             this.evaluateParam.show = false;
@@ -890,37 +882,36 @@ export default {
             this.getIntlIntentionDetail(this.param);
         },
         batchAccept: function(arr) {
-           this.topTitle=false;
-           this.titleStatus(false,false,false);
-            var allDetail=this.$store.state.table.basicBaseList.intlIntentionDetail
-           if(arr!=1){
+            this.topTitle = false;
+            this.titleStatus(false, false, false);
+            var allDetail = this.$store.state.table.basicBaseList.intlIntentionDetail
+            if (arr != 1) {
                 console.log(arr)
-              if (allDetail[arr].selected.length <= 0 ) {
-                this.tipsParam.show = true;
-                this.tipsParam.name = "请至少选择一条报价！";
-                return;
-               }else{
-                console.log("hhh",allDetail.items.selected)
-                this.evaluateParam.ids=allDetail[arr].selected;
-               }   
-        }
-        else{
-                var arr1=allDetail.items.selected;
-                var arr2=allDetail.extractive.selected;
-                var arr3=allDetail.offers.selected;
-               this.evaluateParam.ids=arr1.concat(arr2).concat(arr3);   
-               console.log("7684165dfgdsfgsdfhs",this.evaluateParam.ids) 
-            
+                if (allDetail[arr].selected.length <= 0) {
+                    this.tipsParam.show = true;
+                    this.tipsParam.name = "请至少选择一条报价！";
+                    return;
+                } else {
+                    console.log("hhh", allDetail.items.selected)
+                    this.evaluateParam.ids = allDetail[arr].selected;
+                }
+            } else {
+                var arr1 = allDetail.items.selected;
+                var arr2 = allDetail.extractive.selected;
+                var arr3 = allDetail.offers.selected;
+                this.evaluateParam.ids = arr1.concat(arr2).concat(arr3);
+                console.log("7684165dfgdsfgsdfhs", this.evaluateParam.ids)
+
             }
-           this.evaluateParam.link='/intlIntention/evaluateOffer';
-           this.evaluateParam.show=true;
-          this.evaluateParam.callback = this.evaluateCallback;
+            this.evaluateParam.link = '/intlIntention/evaluateOffer';
+            this.evaluateParam.show = true;
+            this.evaluateParam.callback = this.evaluateCallback;
         },
 
     },
-    watch:{
-        initIntlIntentionDetail:function(newval,oldval){
-            console.log("yyy",newval,oldval)
+    watch: {
+        initIntlIntentionDetail: function(newval, oldval) {
+            console.log("yyy", newval, oldval)
         }
     },
     created() {
