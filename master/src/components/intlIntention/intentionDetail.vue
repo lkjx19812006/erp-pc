@@ -236,7 +236,7 @@
                                                         <td>{{item.offererName}}</td>
                                                         <td>{{item.offerComment}}</td>
                                                         <td>
-                                                            <div v-if="item.again==1">已再次询价</div>
+                                                            <div v-if="item.again==1"> {{$t('static.inquiry_again')}}</div>
                                                         </td>
                                                         <td>
                                                             <div v-if="item.offerAgain==1" style="color:red">
@@ -320,6 +320,7 @@
                                                     <th>{{$t('static.quatiton_time')}}</th>
                                                     <th>询价状态</th>
                                                     <th>{{$t('static.evaluation')}}</th>
+                                                    <th>{{$t('static.inquiry_state')}}</th>
                                                     <!-- <th></th> -->
                                                     <th>{{$t('static.handle')}}</th>
                                                 </thead>

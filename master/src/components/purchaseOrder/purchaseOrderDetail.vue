@@ -161,8 +161,10 @@
                                                                     <th>数量</th>
                                                                     <th>价格</th>
                                                                     <th>备注</th>
+                                                                    <th>审核状态</th>
+                                                                    <th>审核原因</th>
                                                                     <th>是否采纳</th>
-                                                                    <th>原因</th>
+                                                                    <th>采纳原因</th>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="(sub,offer) in item.offers.arr">
@@ -185,9 +187,9 @@
                                                                         <td>
                                                                             {{offer.source | offerType}}
                                                                         </td>
-                                                                        <td>{{offer.offerCustomerName}}</td>
-                                                                        <td>{{offer.offerCustomer}}</td>
-                                                                        <td>{{offer.offerEmployeeName}}</td>
+                                                                        <td >{{offer.offerCustomerName}}</td>
+                                                                        <td >{{offer.offerCustomer}}</td>
+                                                                        <td >{{offer.offerEmployeeName}}</td>
                                                                         <td>{{offer.offerOrgName}}</td>
                                                                         <td>{{offer.breedName}}</td>
                                                                         <td>{{offer.spec}}</td>
@@ -202,6 +204,14 @@
                                                                                 </div>
                                                                             </Poptip>
                                                                         </td>
+                                                                        <td>{{offer.validate | Audit}}</td>
+                                                                        <td>
+                                                                            <Poptip placement="top" trigger="hover">
+                                                                                <span>{{offer.validateDescription | textDisplay '5'}}</span>
+                                                                                <div class="api" slot="content">
+                                                                                    {{offer.validateDescription}}
+                                                                                </div>
+                                                                            </Poptip></td>
                                                                         <td>
                                                                             {{offer.accept | offerAccept}}
                                                                         </td>
@@ -253,7 +263,7 @@
                                             <select type="text" class="form-control" v-model="indentOfferParam.source" @change="selectSearch()" style="width: 100px;">
                                                 <option value="">全部</option>
                                                 <option value="0">业务员</option>
-                                                <option value="1">客户</option>
+                                                <option value="1">供应商</option>
                                             </select>
                                         </dd>
                                         <dt class="left transfer marg_top">审核状态：</dt>
@@ -311,8 +321,8 @@
                                                     <th style="width:30px;" v-if="param.key=='myIndent'||param.key=='allIndent'&&this.initLogin.safeCode.indexOf('P504-F573,')!=-1">勾选</th>
                                                     <th>报价时间</th>
                                                     <th>报价类型</th>
-                                                    <th>供应商名称</th>
-                                                    <th>报价业务员</th>
+                                                    <th >供应商名称</th>
+                                                    <th >报价业务员</th>
                                                     <th>品种</th>
                                                     <th>规格</th>
                                                     <th>产地</th>
@@ -320,6 +330,7 @@
                                                     <th>价格</th>
                                                     <th>备注</th>
                                                     <th>审核状态</th>
+                                                    <th>审核原因</th>
                                                     <th>是否采纳</th>
                                                     <th>原因</th>
                                                     <th v-if="param.key=='myIndent'">报价处理</th>
@@ -331,15 +342,15 @@
                                                             <Checkbox @click.prevent="singleSelect(index,item)" :checked="item.checked" v-if="item.source!=1"></Checkbox>
                                                             <input type="checkbox" v-else @click.prevent="errorTips()" style="margin-right: 8px;">
                                                         </td>
-                                                        <td @click.stop="" style="width:100px;" v-if="param.key=='myIndent'">
+                                                        <td @click.stop="" style="width:30px;" v-if="param.key=='myIndent'">
                                                         <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                                                          </td>
                                                         <td>{{item.otime | date}}</td>
                                                         <td>
                                                             {{item.source | offerType}}
                                                         </td>
-                                                        <td>{{item.offerCustomerName}}</td>
-                                                        <td>{{item.offerEmployeeName}}</td>
+                                                        <td >{{item.offerCustomerName}}</td>
+                                                        <td >{{item.offerEmployeeName}}</td>
                                                         <td><a @click="clickOfferDetail(item.id)">{{item.breedName}}</a></td>
                                                         <td>{{item.spec}}</td>
                                                         <td>{{item.location | province}}</td>
@@ -354,6 +365,14 @@
                                                             </Poptip>
                                                         </td>
                                                         <td>{{item.validate | Audit}}</td>
+                                                        <td>
+                                                            <Poptip placement="top" trigger="hover">
+                                                                <span>{{item.validateDescription | textDisplay '5'}}</span>
+                                                                <div class="api" slot="content">
+                                                                    {{item.validateDescription}}
+                                                                </div>
+                                                            </Poptip>
+                                                        </td>
                                                         <td>
                                                             {{item.accept | offerAccept}}
                                                         </td>
@@ -430,7 +449,8 @@ export default {
                 id: "",
                 offerId: "", //表示被选中的报价ID
                 index: "",
-                getOffers: this.getOffers
+                getOffers: this.getOffers,
+                querySource:''
             },
             breedSearchParam: {
                 show: false
@@ -552,6 +572,9 @@ export default {
                     }
                 }
                 //this.getIntentionDetail(this.intentionParam);
+                if(this.param.key == "myIndent"){
+                    this.intentionParam.querySource = "1"
+                }
                 this.getOffersByIntentionId(this.intentionParam);
             }
         },

@@ -348,6 +348,7 @@ export default {
                 duedate: '',
                 source: '',
                 pack: '',
+                freshCallback:this.intentionSearch,
                 items: [
 
                 ]

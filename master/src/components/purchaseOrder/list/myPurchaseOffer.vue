@@ -9,12 +9,12 @@
         <div slot="top">
             <search-model>
                 <div slot="main">
-                    <erp-search title="供应商ID" :value.sync="loadParam.buyCustomer" @on-keyenter="selectSearch()"></erp-search>
+                    <erp-search title="客户ID" :value.sync="loadParam.buyCustomer" @on-keyenter="selectSearch()"></erp-search>
                     <erp-search title="报价业务员" :value.sync="loadParam.offerEmployeeName" @on-click="selectEmployee('offer')" readonly="readonly"></erp-search>
                    
                     <erp-search title="品种" :value.sync="loadParam.breedName" @on-click="breedSearch()" readonly="readonly"></erp-search>
                     <erp-select title="来源" :value.sync="loadParam.source" :options="options.offerSource" @on-change="selectSearch()"></erp-select>
-                    <erp-select title="审核状态" :value.sync="loadParam.validate" :options="options.offerAudit" @on-change="selectSearch()"></erp-select>
+                    <!-- <erp-select title="审核状态" :value.sync="loadParam.validate" :options="options.offerAudit" @on-change="selectSearch()"></erp-select> -->
                     <dl class="clear left transfer">
                         <dt class="left transfer marg_top">报价时间：</dt>
                         <dd class="left">
@@ -91,6 +91,7 @@
                         <th style="width:220px;">价格/数量</th>
                         <th>规格</th>
                         <th>审核状态</th>
+                        <th>审核原因</th>
                         <th>报价来源/客户端</th>
                         <th>是否采纳</th>
                         <th>原因</th>
@@ -110,11 +111,16 @@
                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index,item.id)"></label>
                         </td>
                         <td>{{item.otime.substr(0,19)}}</td>
-                        <td>{{item.offerEmployeeName}}</td>
-                        
-                        <td>{{item.buyEmployeeName}}</td>
-                        <td>{{item.buyCustomer}}</td>
-                        <td><a @click="clickDetail(item.id)">{{item.buyCustomerName}}</a></td>
+                        <td>
+                            <span>{{item.offerEmployeeName}}</span>
+                        </td> 
+                        <td>
+                            <span>{{item.buyEmployeeName}}</span>
+                        </td>
+                        <td>
+                            <span>{{item.buyCustomer}}</span>
+                        </td>
+                        <td><a @click="clickDetail(item.id,'myOffer')">{{item.buyCustomerName}}</a></td>
                         <td style="text-align:left">
                             <p style="font-size: 16px;">{{item.breedName}}</p>
                             <p style="color:#666">产地：{{item.location | province}}</p>
@@ -125,6 +131,14 @@
                         </td>
                         <td>{{item.spec}}</td>
                         <td>{{item.validate | Audit}}</td>
+                        <td>
+                            <Poptip placement="top" trigger="hover">
+                                <span>{{item.validateDescription | textDisplay '5'}}</span>
+                                <div class="api" slot="content">
+                                    {{item.validateDescription}}
+                                </div>
+                            </Poptip>
+                        </td>
                         <td style="text-align:left">
                             <span :style="{color:item.source==0?'red':''}">{{item.source | offerType}}({{item.clients | indentSource}})</span>
                         </td>
@@ -149,7 +163,7 @@
                         <td>{{item.offerEmployeeName}}</td>
                         <td>{{item.buyEmployeeName}}</td>
                         <td>{{item.buyCustomer}}</td>
-                        <td><a @click="clickDetail(item.id)">{{item.buyCustomerName}}</a></td>
+                        <td><a @click="clickDetail(item.id,'allOffer')">{{item.buyCustomerName}}</a></td>
                         <td style="text-align:left">
                             <p style="font-size: 16px;">{{item.breedName}}</p>
                             <p style="color:#666">产地：{{item.location | province}}</p>
@@ -163,6 +177,14 @@
                         </td>
                         <td>{{item.spec}}</td>
                         <td>{{item.validate | Audit}}</td>
+                        <td>
+                            <Poptip placement="top" trigger="hover">
+                                <span>{{item.validateDescription | textDisplay '5'}}</span>
+                                <div class="api" slot="content">
+                                    {{item.validateDescription}}
+                                </div>
+                            </Poptip>
+                        </td>
                         <td style="text-align:left">
                             <span :style="{color:item.source==0?'red':''}">{{item.source | offerType}}({{item.clients | indentSource}})</span>
                         </td>
@@ -278,6 +300,7 @@ export default {
                 idOrName: true,
                 link: "/intention/offers/",
                 id: "",
+                intoType:''
             },
             breedSearchParam: {
                 show: false
@@ -385,9 +408,11 @@ export default {
             this.loadParam.validate = "";
             this.selectSearch();
         },
-        clickDetail: function(id) {
-            this.detailParam.show = true;
+        clickDetail: function(id,type) {
+            
             this.detailParam.id = id;
+            this.detailParam.intoType = type
+            this.detailParam.show = true;
         },
         offerAccept: function(item) {
             this.offerAcceptParam.id = item.id;

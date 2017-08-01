@@ -28,7 +28,7 @@
                                     <option value="">{{$t('static.please_select')}}</option>
                                     <option value="0">{{$t('static.purchase')}}</option>
                                     <option value="1">{{$t('static.sell')}}</option>
-                                    <option value="2">预售</option>
+                                    <option value="2">{{$t('static.the_pre_sale')}}</option>
                                 </select>
                             </dd>
                         </dl>
@@ -50,7 +50,7 @@
                             </dd>
                         </dl>
                         <dl class="clear left transfer">
-                            <dt class="left transfer marg_top">是否样品：</dt>
+                            <dt class="left transfer marg_top">{{$t('static.sample_order')}}:</dt>
                             <dd class="left">
                                 <select class="form-control" v-model="loadParam.sample" @change="selectSearch()">
                                     <option value="">{{$t('static.please_select')}}</option>
@@ -60,7 +60,7 @@
                             </dd>
                         </dl>
                          <dl class="clear left transfer">
-                            <dt class="left transfer marg_top">客户ID</dt>
+                            <dt class="left transfer marg_top">{{$t('static.client_id')}}</dt>
                             <dd class="left">
                                 <input type="text" class="form-control" v-model="loadParam.customerId"  placeholder="按回车键搜索" @keyup.enter="selectSearch()" />
                             </dd>
@@ -80,26 +80,19 @@
                         </dl> -->
                         <dl class="clear left transfer">
                             <div class="left">
-                                <dt class="left transfer marg_top">起止时间：</dt>
-                                <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
+                                <dt class="left transfer marg_top">{{$t('static.start_end')}}：</dt>
+                                <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss" width="115">
                                 </mz-datepicker>
                             </div>
                             <div class="left">
                                 <dt class="left marg_top">~~</dt>
-                                <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
+                                <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss" width="115">
                                 </mz-datepicker>
                             </div>
                         </dl>
                     </div>
                 </div>
                 <div class="clear">
-                    <div class="right">
-                        <!-- 新建销售订单 -->
-                        <button v-if="initLogin.safeCode.indexOf('P27-F577,')!=-1" class="btn btn-success transfer" @click="newOrder(1)">{{$t('static.new')}}{{$t('static.sell')}}</button>
-                        <!-- 新建采购订单 -->
-                        <button v-if="initLogin.safeCode.indexOf('P27-F578,')!=-1" class="btn btn-info transfer" @click="newOrder(0)">{{$t('static.new')}}{{$t('static.purchase')}}</button>
-                        <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-                    </div>
                     <div class="left">
                         <dl class="clear left transfer">
                             <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
@@ -133,9 +126,9 @@
                                     <option value="0">{{$t('static.new')}}</option>
                                     <option value="1">{{$t('static.intention')}}</option>
                                     <option value="2">{{$t('static.quoted_price')}}</option>
-                                    <option value="3">样品申请</option>
-                                    <option value="4">库存</option>
-                                    <option value="5">待采购</option>
+                                    <option value="3">{{$t('static.sample_order')}} {{$t('static.applied')}}</option>
+                                    <option value="4">{{$t('static.stock')}}</option>
+                                    <option value="5">{{$t('static.wait_for_purchase')}}</option>
                                 </select>
                             </dd>
                         </dl>
@@ -164,8 +157,16 @@
                                 <input type="text" class="form-control" v-model="loadParam.no" @keyup.enter="selectSearch()" />
                             </dd>
                         </dl>
-                        <button type="button" class="new_btn" @click="resetTime()">{{$t('static.clear_all')}}</button>
-                        <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+                        <div class="right">
+                            <button type="button" class="btn btn-warning" @click="resetTime()">{{$t('static.clear_all')}}</button>
+                            <button class="btn btn-success" @click="selectSearch()">{{$t('static.search')}}</button>
+                            <!-- 新建销售订单 -->
+                            <button v-if="initLogin.safeCode.indexOf('P27-F577,')!=-1" class="btn btn-success transfer" @click="newOrder(1)">{{$t('static.new')}}{{$t('static.sell')}}</button>
+                            <!-- 新建采购订单 -->
+                            <button v-if="initLogin.safeCode.indexOf('P27-F578,')!=-1" class="btn btn-info transfer" @click="newOrder(0)">{{$t('static.new')}}{{$t('static.purchase')}}</button>
+                            <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -186,7 +187,7 @@
                             <th>{{$t('static.client_id')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.breed')}}</th>
-                            <th>商品图片</th>
+                            <th>{{$t('static.image')}}</th>
                             <th>{{$t('static.transcation_amount')}}</th>
                             <th>{{$t('static.cost')}}{{$t('static.total')}}</th>
                             <th>{{$t('static.wait_payment')}}</th>
@@ -213,7 +214,7 @@
                             <td>
                                 <div v-if="item.type==1&&item.pre==0">{{$t('static.sell')}}</div>
                                 <div v-if="item.type==0&&item.pre==0">{{$t('static.purchase')}}</div>
-                                <div v-if="item.type==1&&item.pre==1">预售</div>
+                                <div v-if="item.type==1&&item.pre==1">{{$('static.the_pre_sale')}}</div>
                             </td>
                             <td>
                                 <div v-if="item.mode==1">{{$t('static.together')}}</div>
@@ -276,7 +277,7 @@
                                 <span v-if="item.sourceType==1">{{$t('static.intention')}}</span>
                                 <span v-if="item.sourceType==2">{{$t('static.quote')}}</span>
                                 <span v-if="item.sourceType==3">{{$t('static.sample_order')}}</span>
-                                <span v-if="item.sourceType==4">库存</span>
+                                <span v-if="item.sourceType==4">{{$t('static.stock')}}</span>
                                 <span v-if="item.sourceType==5">待采购</span>
                             </td>
                             <td>
@@ -356,15 +357,15 @@
                                 <div v-if="item.orderStatus<60">
                                     <!-- 普通订单（非预售）处于1阶段时，可以直接取消 -->
                                     <button class="btn btn-danger btn-xs" v-if="item.orderStatus>=0&&item.validate<=0&&(item.pre!=1||(item.pre==1&&item.type==0))" @click="cancelOrder(item.id,$index)">
-                                        取消订单
+                                        {{$t('static.cancel_order')}}
                                     </button>
                                     <!-- 预售订单处于1阶段时，需要走流程 -->
                                     <button class="btn btn-primary btn-base" v-if="item.orderStatus>=0&&item.validate<=0&&item.pre==1&&item.type==1&&item.cancel==0" @click="cancelOrderByFlow(item.id)">
-                                        申请取消订单
+                                        {{$t('static.applyToCancelOrder')}}
                                     </button>
                                     <!-- 所有订单处于3阶段时，需要走流程 -->
                                     <button class="btn btn-primary btn-base" v-if="item.orderStatus>=0&&item.validate==2&&item.cancel==0" @click="cancelOrderByFlow(item.id)">
-                                        申请取消订单
+                                       {{$t('static.applyToCancelOrder')}}
                                     </button>
                                 </div>
                                 <div v-if="item.validate==2">
@@ -476,9 +477,9 @@
                                     <img src="/static/images/{{$t('static.deadline')}}.png" title="订单已过期" alt="订单已过期" />
                                 </a>
                                 <!-- 申请审核,当订单开始取消后，不能再申请 -->
-                                <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)&&item.cancel==0">{{$t('static.review_application')}}</button>
-                                <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2&&(item.orderStatus==0||item.orderStatus==70)&&item.cancel==0">{{$t('static.reapply')}}</button>
-                                <button class="btn btn-warning btn-xs" @click="showRecord(item)" v-if="item.validate!=0">审核记录</button>
+                                <button class="btn btn-info btn-xs" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)&&item.cancel==0">{{$t('static.review_application')}}</button>
+                                <button class="btn btn-info btn-xs" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2&&(item.orderStatus==0||item.orderStatus==70)&&item.cancel==0">{{$t('static.reapply')}}</button>
+                                <button class="btn btn-warning btn-xs" @click="showRecord(item)" v-if="item.validate!=0">{{$t('static.records')}}</button>
                             </td>
                         </tr>
                     </tbody>
@@ -1120,7 +1121,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 80px;
+    width: 100px;
     min-width: 50px;
 }
 

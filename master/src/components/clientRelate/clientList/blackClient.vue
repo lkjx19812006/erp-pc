@@ -8,13 +8,13 @@
         <div slot="top">
             <div class="my_enterprise col-xs-1">{{$t('static.blacklist')}}</div>
              <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户名称：</dt>
+                    <dt class="left transfer marg_top">{{$t('static.client_name')}}</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
                 </dl>
                  <dl class="clear left transfer">
-                    <dt class="left transfer marg_top">客户ID：</dt>
+                    <dt class="left transfer marg_top">{{$t('static.client_id')}}</dt>
                     <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.id" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                     </dd>
@@ -45,7 +45,7 @@
                         <th>{{$t('static.client_origin')}}</th>
                         <th>{{$t('static.detailed_address')}}</th>
                         <th>{{$t('static.main_product')}}</th>
-                        <th>拉黑原因</th>
+                        <th>{{$t('static.reason')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -301,7 +301,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    width: 122px;
-    min-width: 122px;
+    width: 110px;
+    min-width: 80px;
 }
 </style>

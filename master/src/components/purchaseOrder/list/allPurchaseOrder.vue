@@ -134,6 +134,7 @@ import {
 } from '../../../vuex/getters'
 import {
     getPurchaseOrderList,
+    getWaitforAuditNumber
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -152,6 +153,7 @@ export default {
         },
         actions: {
             getPurchaseOrderList,
+            getWaitforAuditNumber
         }
     },
     data() {
@@ -182,7 +184,7 @@ export default {
                 orgName: '',
                 purchaseId: '',
                 customerId: '',
-                auditing: '1',
+                auditing: '',
                 auditNum: '',
             },
             detailParam: {
@@ -330,6 +332,7 @@ export default {
     },
     created() {
         this.getPurchaseOrderList(this.loadParam);
+        this.getWaitforAuditNumber(this.loadParam)
     },
     ready() {
         common('tab', 'table_box', 1);

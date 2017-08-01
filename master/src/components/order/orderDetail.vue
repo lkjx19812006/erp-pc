@@ -51,7 +51,7 @@
                                         <hr style="height:1px;border-color:#ccc" />
                                         <!-- 订单 -->
                                         <div class="clearfix">
-                                            <p class="btn btn-primary btn-xs">订单信息</p>
+                                            <p class="btn btn-primary btn-xs">{{$t('static.order_info')}}</p>
                                         </div>
                                         <div class="clearfix">
                                             <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
@@ -82,7 +82,7 @@
                                         </div>
                                         <hr style="height:1px;border-color:#ccc" />
                                         <div class="clearfix">
-                                            <p class="btn btn-primary btn-xs">收货信息</p>
+                                            <p class="btn btn-primary btn-xs">{{$t('static.consignee')}}</p>
                                         </div>
                                         <div class="clearfix">
                                             <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
@@ -92,7 +92,7 @@
                                         </div>
                                         <hr style="height:10px;border-color:#ccc" />
                                         <div class="clearfix">
-                                            <p class="btn btn-primary btn-xs">成交信息</p>
+                                            <p class="btn btn-primary btn-xs">{{$t('static.transcation_amount')}}</p>
                                         </div>
                                         <div class="clearfix">
                                             <mg-label :title="$t('static.transcation_amount')" style="color:red">{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</mg-label>
@@ -142,7 +142,7 @@
                                                     <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                                     <th>{{$t('static.quality')}}</th>
                                                     <th>{{$t('static.order_source')}}</th>
-                                                    <th v-if="initOrderDetail.type == 1">销售价格</th>
+                                                    <th v-if="initOrderDetail.type == 1">{{$t('static.price')}}</th>
                                                     <th v-if="initOrderDetail.type == 0">采购价格</th>
                                                     <th v-if="this.initLogin.orgId !=='11'&&initOrderDetail.type==1&&initOrderDetail.intl==0">{{$t('static.cost_price')}}</th>
 

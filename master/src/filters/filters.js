@@ -1298,7 +1298,7 @@ Vue.filter('offerType', function(val) { //报价类型
     if (val === 0) {
         return "业务员";
     } else if (val == 1) {
-        return "客户";
+        return "供应商";
     } else if (val == 2) {
         return "库存信息";
     } else {
@@ -1507,9 +1507,9 @@ Vue.filter("newCustomerType", function(val) {
     if (val == 0) {
         return "初始";
     } else if (val == 1) {
-        return "买方";
+        return "买家";
     } else if (val == 2) {
-        return "卖方";
+        return "卖家";
     } else if (val == 3) {
         return "既买又卖"
     }
