@@ -310,3 +310,5 @@ export const DETAIL_MYOFFER_LIST = 'DETAIL_MYOFFER_LIST' //报价专区详情中
 
 export const INQUIRE_EVALUATE = 'INQUIRE_EVALUATE' //国际询价-我的询价中对已报价评论
 
+export const EVALUATION_HISTORY = 'EVALUATION_HISTORY'//订单详情页 商品的评价记录
+

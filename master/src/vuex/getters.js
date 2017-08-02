@@ -927,3 +927,7 @@ export const initInquireEvaluate = (state) => {
  console.log(JSON.parse(JSON.stringify(state.table.inquireEvaluate)))
     return JSON.parse(JSON.stringify(state.table.inquireEvaluate))
 }
+//订单商品评价历史
+export const initevalHistory = (state) => { //
+    return JSON.parse(JSON.stringify(state.table.evaluationHistory));
+}

@@ -66,7 +66,9 @@
                                                 <option value="0">{{$t('static.after_making_the_order')}}</option>
                                                 <option value="20">{{$t('static.signing_contract')}}</option>
                                                 <option value="50">{{$t('static.after_delivery')}}</option>
+                                                <option value="70">{{$t('static.after_passing_inspection')}}</option>
                                                 <option value="60">{{$t('static.confirm_receipt')}}</option>
+
                                             </select>
                                         </div>
                                         <!--  <div class="editpage-input col-md-6">
