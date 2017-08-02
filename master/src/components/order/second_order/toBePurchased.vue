@@ -16,7 +16,8 @@
                         <h4 style="text-align: left;font-size: 14px;">商品及待采购信息</h4>
                         <table class="table table-hover table_color table-striped ">
                             <thead>
-                                <tr>
+                                <tr>    
+                                    <th>勾选</th>
                                     <th>品种</th>
                                     <th>数量</th>
                                     <th>展开采购信息</th>
@@ -24,6 +25,9 @@
                             </thead>
                             <tbody>
                                 <tr v-for="item in param.list">
+                                    <td v-if="!item.toBePurchased">
+                                        <Checkbox :checked='selectAll' @click.prevent="checkAll()" ></Checkbox>
+                                    </td>
                                     <td v-if="!item.toBePurchased">{{item.breedName}}</td>
                                     <td v-if="!item.toBePurchased">{{item.number}}{{item.unit | Unit}}</td>
                                     <td v-if="!item.toBePurchased">
@@ -75,6 +79,35 @@
                         </table>
                     </div>
                 </div>
+                <div class="edit-model">
+                    <div>
+                        <h4 style="text-align: left;font-size: 14px; padding-right: 20px;">请选择采购业务员
+                            <a class="right" href="javascript:void(0);" @click="selectEmployee()">
+
+                                <Icon type="person-add" size="20"></Icon>
+                                添加
+                            </a>
+                        </h4>
+                        <table class="table table-hover table_color table-striped ">
+                            <thead>
+                                <tr>    
+                                    <th>采购员</th>
+                                    <th>品种</th>
+                                    <th>待采购数量</th>
+                                </tr>
+                            </thead>
+                             <tbody>
+                                <tr v-for="item in param.list">
+                                    <td v-if="!item.toBePurchased"></td>
+                                    <td v-if="!item.toBePurchased">
+                                        <a>添加</a>
+                                    </td>
+                                    <td v-if="!item.toBePurchased"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="close()">{{$t('static.cancel')}}</button>
                     <button type="button" class="btn  btn-confirm" @click="confirm()">{{$t('static.confirm')}}</button>
@@ -113,6 +146,12 @@ export default {
     },
     data() {
         return {
+            personsData:[
+                {
+                    employee:'',
+
+                }
+            ],
             tipsParam: {
                 show: false,
                 alert: true,
@@ -226,7 +265,7 @@ export default {
         },
     },
     created() {
-
+        console.log(this.param)
 
     }
 }
@@ -243,6 +282,9 @@ export default {
 
 .edit-model {
     padding: 10px 5px;
+    height: 300px;
+    border:1px solid #ccc;
+    overflow-y: auto
 }
 
 .edit_footer {

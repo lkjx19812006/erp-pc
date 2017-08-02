@@ -29,12 +29,12 @@
 			},
 		},
 		methods:{
-			handleChange:function(event){
+			/*handleChange:function(event){
 				this.$emit('on-change',event)
 			},
 			handleClick:function(event){
 				this.$emit('on-click',event)
-			}
+			}*/
 		},
 		computed:{
 			
