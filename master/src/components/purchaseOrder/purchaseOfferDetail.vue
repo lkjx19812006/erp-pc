@@ -50,6 +50,7 @@
                                                     <th>规格</th>
                                                     <th>上架状态</th>
                                                     <th>报价人数</th>
+                                                    <th>二维码</th>
                                                     <th>我的报价</th>
                                                     <th>报价</th>
                                                 </thead>
@@ -84,6 +85,9 @@
                                                         <td v-if="!item.purchaseOffer">{{item.spec}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.onSell | onsell}}</td>
                                                         <td v-if="!item.purchaseOffer">{{item.offerNumber}}</td>
+                                                        <td v-if="!item.purchaseOffer">
+                                                            <erp-qrcode :id='item.id'></erp-qrcode>
+                                                        </td>
                                                         <td v-if="!item.purchaseOffer">
                                                             <a @click="showMyOffer(item)">({{item.myOfferTotalToIndent}})</a>
                                                         </td>
