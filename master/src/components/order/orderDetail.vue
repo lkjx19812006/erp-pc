@@ -1018,7 +1018,6 @@ export default {
             var _this = this;
             if (event.target.checked === true) {
                 this.title1 = true;
-                console.log("sadasda", this.title1)
                 allDetail.goods.arr.forEach(function(item, i) {
                     allDetail.goods.arr[i].checked = true && allDetail.goods.selected.push(item.id);
                 })
@@ -1120,7 +1119,6 @@ export default {
         },
         //添加评价
         addEval: function(v) {
-            console.log("SAdsadsadsadsadsadsaftfv", v)
             this.evaluateParam.ids = []
             this.evaluateParam.link = '/order/evaluateOrder';
             this.evaluateParam.ids.push(v);
@@ -1186,7 +1184,6 @@ export default {
             this.getOrderDetail(this.param);
         },
         editQa: function(item, data, type) {
-            console.log(this.initOrderDetail)
             this.editParam.show = true
             this.editParam.breedName = item.breedName
             this.editParam.qa_standard = item.qaStandard
@@ -1208,7 +1205,6 @@ export default {
 
     },
     created() {
-        console.log("asgudash", this.param)
         this.getOrderDetail(this.param);
         this.getLinkOrder(this.param);
     }
