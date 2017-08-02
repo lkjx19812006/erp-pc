@@ -22,13 +22,13 @@
                          <tr v-for="item in initevalHistory">
                          <td>{{item.ctime}}</td>  
                               <td>
-                              <Poptip placement="top" trigger="hover">
-                              <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '20'}}</span>
-                              <span v-else>{{$t('static.unvalued')}}</span>
-                              <div class="api" slot="content" style="color:green">
-                                  {{item.evaluation}}
-                              </div>
-                              </Poptip>
+                              <Poptip placement="right-start" trigger="hover"  >
+                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '20'}}</span>
+                                <span v-else>{{$t('static.unvalued')}}</span>
+                               <div slot="content" style="color:green;white-space:normal;width:150px;">
+                                {{item.evaluation}}
+                                </div>
+                            </Poptip>
                               </td> 
                                  
                          </tr>

@@ -46,13 +46,13 @@
                              <td>{{item.offererName}}</td>
                              <td>{{item.comment}}</td>
                              <td>
-                              <Poptip placement="top" trigger="hover">
-                              <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                              <span v-else>{{$t('static.unvalued')}}</span>
-                              <div class="api" slot="content" style="color:green">
-                                  {{item.evaluation}}
-                              </div>
-                              </Poptip>
+                            <Poptip placement="right-start" trigger="hover" style="z-index:1000000" >
+                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                <span v-else>{{$t('static.unvalued')}}</span>
+                               <div slot="content" style="color:green;white-space:normal;width:150px;">
+                                {{item.evaluation}}
+                                </div>
+                            </Poptip> 
                               </td>
                              <td>{{item.ctime}}</td>
                                            
@@ -90,13 +90,13 @@
                              <td v-if="item.type==2">{{item.offererName}}</td>
                              <td v-if="item.type==2">{{item.comment}}</td>
                              <td v-if="item.type==2">
-                              <Poptip placement="top" trigger="hover">
-                              <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                              <span v-else>{{$t('static.unvalued')}}</span>
-                              <div class="api" slot="content" style="color:green">
-                                  {{item.evaluation}}
-                              </div>
-                              </Poptip>
+                            <Poptip placement="right-start" trigger="hover"  >
+                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                <span v-else>{{$t('static.unvalued')}}</span>
+                               <div slot="content" style="color:green;white-space:normal;width:150px;">
+                                {{item.evaluation}}
+                                </div>
+                            </Poptip>
                               </td>
                              <td v-if="item.type==2">{{item.ctime}}</td>
                                            
@@ -129,13 +129,13 @@
                              <td v-if="item.type==1">{{item.costDesc}}</td>
                              <td v-if="item.type==1">{{item.comment}}</td>
                              <td v-if="item.type==1">
-                            <Poptip placement="top" trigger="hover">
-                            <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                            <span v-else>{{$t('static.unvalued')}}</span>
-                            <div class="api" slot="content" style="color:green">
+                            <Poptip placement="right-start" trigger="hover"  >
+                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                <span v-else>{{$t('static.unvalued')}}</span>
+                               <div slot="content" style="color:green;white-space:normal;width:150px;">
                                 {{item.evaluation}}
-                            </div>
-                            </Poptip>
+                                </div>
+                             </Poptip>
                             </td v-if="item.type==1">
                              <td v-if="item.type==1">{{item.ctime}}</td>
                              
