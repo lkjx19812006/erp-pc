@@ -777,9 +777,9 @@ import credenceModel from '../order/createcredence'
 import disposeModel from '../order/orderStatus'
 import pictureModel from '../tips/pictureDialog'
 import employeeModel from '../clientRelate/searchEmpInfo'
-//import purchaseModel from './second_order/toBePurchased'
+import purchaseModel from './second_order/toBePurchased'
 
-import purchaseModel from './second_order/toBePurchased_test'//测试
+//import purchaseModel from './second_order/toBePurchased_test'//测试
 
 import dividedModel from './second_order/newDivided'
 import filter from '../../filters/filters'
@@ -1037,33 +1037,33 @@ export default {
             this.purchaseParam.orderLinkList = this.initOrderDetail.orderLinkList.arr;
             this.purchaseParam.orderLinkBack = [];
             //获取list
-            // let goods = this.purchaseParam.goods;
-            // let orderLinkList = this.purchaseParam.orderLinkList;
-            // let result = [];
-            // for (let i = 0; i < goods.length; i++) {
-            //     result.push(goods[i]);
-            //     let temp = [];
-            //     for (let k = 0; k < orderLinkList.length; k++) {
-            //         if (orderLinkList[k].sellGoodsId == goods[i].id) {
-            //             // 待报价条目所处的状态,0初始，1添加，2编辑,在actions中处理
-            //             //orderLinkList[k].flag = 0;
-            //             if (orderLinkList[k].id) {
-            //                 this.purchaseParam.orderLinkBack.push(orderLinkList[k]);
-            //             }
-            //             temp.push(orderLinkList[k]);
-            //         }
-            //     }
-            //     result.push({
-            //         arr: temp,
-            //         breedId: goods[i].breedId,
-            //         breedName: goods[i].breedName,
-            //         unit: goods[i].unit,
-            //         sellGoodsId: goods[i].id,
-            //         show: true,
-            //         toBePurchased: true, //表示这是一个“待采购”
-            //     });
-            // }
-            // this.purchaseParam.list = result;
+            let goods = this.purchaseParam.goods;
+            let orderLinkList = this.purchaseParam.orderLinkList;
+            let result = [];
+            for (let i = 0; i < goods.length; i++) {
+                result.push(goods[i]);
+                let temp = [];
+                for (let k = 0; k < orderLinkList.length; k++) {
+                    if (orderLinkList[k].sellGoodsId == goods[i].id) {
+                        // 待报价条目所处的状态,0初始，1添加，2编辑,在actions中处理
+                        //orderLinkList[k].flag = 0;
+                        if (orderLinkList[k].id) {
+                            this.purchaseParam.orderLinkBack.push(orderLinkList[k]);
+                        }
+                        temp.push(orderLinkList[k]);
+                    }
+                }
+                result.push({
+                    arr: temp,
+                    breedId: goods[i].breedId,
+                    breedName: goods[i].breedName,
+                    unit: goods[i].unit,
+                    sellGoodsId: goods[i].id,
+                    show: true,
+                    toBePurchased: true, //表示这是一个“待采购”
+                });
+            }
+            this.purchaseParam.list = result;
             this.purchaseParam.show = true;
         },
         applyInfo: function(item) {
