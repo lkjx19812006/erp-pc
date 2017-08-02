@@ -1,4 +1,5 @@
 <template>
+  <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
   <div>
     <p class="employee_right_title clear">
       <span class="left">{{$t('static.offer_message')}}</span>
@@ -21,6 +22,7 @@
           <time>{{item.mtime}}</time>
           <!-- <div class="message_view_right">
             <a @click="showDetail(item)">{{$t('static.details')}}</a>
+
           </div> -->
         </div>
         <div class="message_view_right" v-if="item.bizType=='order_validate'">
@@ -30,19 +32,28 @@
   </div>
 </template>
 <script>
+import detailModel from '../intention/offerDetail'
 import {
   finishFlow,
   getBacklogList
 } from '../../vuex/actions'
 export default {
   components: {
-
+    detailModel
   },
   props: ['loadparam', 'backloglist'],
   data() {
     return {
       title: '',
-      selectIndex: null
+      selectIndex: null,
+      detailParam: {
+            show: false,
+            loading: true,
+            idOrName: true,
+            link: "/intention/offers/",
+            id: "",
+            intoType:''
+        },
     }
   },
   vuex: {
@@ -53,11 +64,14 @@ export default {
   },
   methods: {
     refresh() {
-      console.log('asdasdadas');
+     
     },
-    showDetail(item) {
-      console.log(item);
-    }
+    showDetail: function(id,type) {
+            
+            this.detailParam.id = id;
+            this.detailParam.intoType = type
+            this.detailParam.show = true;
+        },
   }
 }
 </script>

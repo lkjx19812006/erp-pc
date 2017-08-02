@@ -14,11 +14,12 @@
 <script>
 	export default{
 		data(){
-			return {  
+			return {
 
 			}
 		},
 		props:{
+
 			url:{
 				type:String,
 				default:'http://192.168.1.142:81/htm5/%23/needDetails/'
@@ -35,6 +36,7 @@
 			handleClick:function(event){
 				this.$emit('on-click',event)
 			}*/
+
 		},
 		computed:{
 			
