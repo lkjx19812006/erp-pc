@@ -784,6 +784,9 @@ import disposeModel from '../order/orderStatus'
 import pictureModel from '../tips/pictureDialog'
 import employeeModel from '../clientRelate/searchEmpInfo'
 import purchaseModel from './second_order/toBePurchased'
+
+//import purchaseModel from './second_order/toBePurchased_test'//测试
+
 import dividedModel from './second_order/newDivided'
 import filter from '../../filters/filters'
 import tipsModel from '../tips/tipDialog'
@@ -1048,6 +1051,7 @@ export default {
             this.evaluateParam.callback = this.evaluateCallback;
         },
         editPurchase: function() {
+            console.log(this.initOrderDetail)
             this.purchaseParam.goods = this.initOrderDetail.goods.arr;
             this.purchaseParam.orderLinkList = this.initOrderDetail.orderLinkList.arr;
             this.purchaseParam.orderLinkBack = [];

@@ -16,7 +16,8 @@
                         <h4 style="text-align: left;font-size: 14px;">商品及待采购信息</h4>
                         <table class="table table-hover table_color table-striped ">
                             <thead>
-                                <tr>
+                                <tr>    
+                                    <th>勾选</th>
                                     <th>品种</th>
                                     <th>数量</th>
                                     <th>展开采购信息</th>
@@ -24,6 +25,9 @@
                             </thead>
                             <tbody>
                                 <tr v-for="item in param.list">
+                                    <td v-if="!item.toBePurchased">
+                                        <Checkbox :checked='selectAll' @click.prevent="checkAll()" ></Checkbox>
+                                    </td>
                                     <td v-if="!item.toBePurchased">{{item.breedName}}</td>
                                     <td v-if="!item.toBePurchased">{{item.number}}{{item.unit | Unit}}</td>
                                     <td v-if="!item.toBePurchased">
@@ -75,6 +79,7 @@
                         </table>
                     </div>
                 </div>
+                
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="close()">{{$t('static.cancel')}}</button>
                     <button type="button" class="btn  btn-confirm" @click="confirm()">{{$t('static.confirm')}}</button>
@@ -113,6 +118,12 @@ export default {
     },
     data() {
         return {
+            personsData:[
+                {
+                    employee:'',
+
+                }
+            ],
             tipsParam: {
                 show: false,
                 alert: true,
@@ -226,7 +237,7 @@ export default {
         },
     },
     created() {
-
+        console.log(this.param)
 
     }
 }
@@ -243,6 +254,7 @@ export default {
 
 .edit-model {
     padding: 10px 5px;
+    overflow-y: auto
 }
 
 .edit_footer {
