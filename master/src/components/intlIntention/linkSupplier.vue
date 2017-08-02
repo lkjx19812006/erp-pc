@@ -31,7 +31,7 @@
                                     <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="selectEmployee($index,item)"></label>
                                 </td>
                                 <td>{{item.cName}}</td>
-                                <td>{{item.price}}/{{item.unit}}</td>
+                                <td>{{item.price}}/{{item.unit | unit}}</td>
                                 <td>{{item.spec}}</td>
                                 <td>{{item.location | province}}</td>
                                 <td>{{item.inventory}}</td>

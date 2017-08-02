@@ -2398,6 +2398,28 @@ export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核
     })
 }
 
+export const getEvaluation = ({ dispatch }, param) => { //获取评论历史
+    const data = {
+        id:param.id
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var history=res.json().result;
+        dispatch(types.EVALUATION_HISTORY, history);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+ 
 export const getUserOrder = ({ dispatch }, param) => { //注册客户的订单列表
     param.loading = true;
     const body = {

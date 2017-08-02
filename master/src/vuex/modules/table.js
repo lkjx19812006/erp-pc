@@ -192,7 +192,8 @@ import {
     FINANCIAL_COUNT_TOTAL,
     USER_FEEDBACK_INFO,
     DETAIL_MYOFFER_LIST,
-    INQUIRE_EVALUATE
+    INQUIRE_EVALUATE,
+    EVALUATION_HISTORY
 
 } from '../mutation-types'
 
@@ -1158,7 +1159,8 @@ const state = {
     logisticsCountList: [],
     logisticsCountTotal: {},
     userFeedbackInfo: [],
-    financialCountTotal: {}
+    financialCountTotal: {},
+    evaluationHistory:[{evaluation:'sdsds'},{evaluation:'sdsds'},{evaluation:'sdsds'}]
 }
 
 const mutations = {
@@ -2601,6 +2603,9 @@ const mutations = {
      [INQUIRE_EVALUATE](state, data) {
         state.inquireEvaluate = data;
     },
+     [EVALUATION_HISTORY](state, data) {//订单商品评价历史
+        state.evaluationHistory = data
+    }
 
 }
 

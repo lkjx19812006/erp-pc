@@ -102,8 +102,7 @@
                     <div class="col-md-12 client-detail">
                         <h4 class="section_title" style="margin:15px 0">{{$t('static.related_information')}} 
                       <div style="width:100%;height:35px;text-align:right;padding-right:7px"  v-if="param.inquire==3">
-                      <input id="all-checked"
-                              type="checkbox"
+                      <input type="checkbox"
                               :checked="topTitle"
                               @change="changeAllChecked($event)"
                             > {{$t('static.Select_all')}}
@@ -255,16 +254,22 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <Poptip placement="top" trigger="hover">
+                                                            <Poptip placement="right-start" trigger="hover">
                                                                 <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
                                                                 <span v-else>{{$t('static.unvalued')}}</span>
-                                                                <div class="api" slot="content" style="color:green">
+                                                                <div slot="content" style="color:green;white-space:normal;width:150px;">
                                                                     {{item.evaluation}}
                                                                 </div>
                                                             </Poptip>
+                                                            <!--   <Tooltip placement="top">
+                                                            <i-button>多行</i-button>
+                                                            <div slot="content" style="color:green;width:100px;word-break:break-all; word-wrap:wrap;">
+                                                                {{item.evaluation}}
+                                                            </div>
+                                                                                                                     </Tooltip>  -->
                                                         </td>
                                                         <td>
-                                                            <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
+                                                            <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>1&&initIntlIntentionDetail.isEvaluate==1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
                                                             <a style="color:blue" v-if="param.inquire==3" @click="addEval(item.offerId)">{{$t('static.evaluate')}}</a>
                                                         </td>
                                                     </tr>
@@ -363,16 +368,16 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <Poptip placement="top" trigger="hover">
+                                                            <Poptip placement="right-start" trigger="hover">
                                                                 <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
                                                                 <span v-else>{{$t('static.unvalued')}}</span>
-                                                                <div class="api" slot="content" style="color:green">
+                                                                <div slot="content" style="color:green;white-space:normal;width:150px;">
                                                                     {{item.evaluation}}
                                                                 </div>
                                                             </Poptip>
                                                         </td>
                                                         <td>
-                                                            <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0  &&initIntlIntentionDetail.inquireTime>1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
+                                                            <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0  &&initIntlIntentionDetail.inquireTime>1&&item.isEvaluate==1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
                                                             <a style="color:blue" v-if="param.inquire==3" @click="addEval(item.offerId)">{{$t('static.evaluate')}}</a>
                                                         </td>
                                                     </tr>
@@ -431,10 +436,10 @@
                                                         <td>{{item.total}}</td>
                                                         <td>{{item.comment}}</td>
                                                         <td>
-                                                            <Poptip placement="top" trigger="hover">
+                                                            <Poptip placement="right-start" trigger="hover">
                                                                 <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
                                                                 <span v-else>{{$t('static.unvalued')}}</span>
-                                                                <div class="api" slot="content" style="color:green">
+                                                                <div slot="content" style="color:green;white-space:normal;width:150px;">
                                                                     {{item.evaluation}}
                                                                 </div>
                                                             </Poptip>
@@ -777,6 +782,7 @@ export default {
         changeAllChecked: function(event) {
             var allData = this.$store.state.table.basicBaseList.intlIntentionDetail;
             if (event.target.checked === true) {
+                this.topTitle=true;
                 allData.items.arr.forEach(function(item, i) {
                     allData.items.arr[i].checked = true && allData.items.selected.push(item.offerId);
                 })
@@ -786,8 +792,10 @@ export default {
                 allData.offers.arr.forEach(function(item, i) {
                     allData.offers.arr[i].checked = true && allData.offers.selected.push(item.id);
                 })
+                console.log("top="+this.topTitle);
                 this.titleStatus(true, true, true);
             } else {
+                this.topTitle=false;
                 allData.items.arr.forEach(function(item, i) {
                     allData.items.arr[i].checked = false;
                 });
@@ -837,7 +845,10 @@ export default {
         },
         evaluateCallback: function(name) {
             this.evaluateParam.show = false;
+            this.titleStatus(false, false, false);
+            this.topTitle=false;
             this.showTips(name);
+            this.$emit('evaluate-add', '');
             this.getIntlIntentionDetail(this.param);
         },
         showTips: function(name) {
@@ -882,8 +893,8 @@ export default {
             this.getIntlIntentionDetail(this.param);
         },
         batchAccept: function(arr) {
-            this.topTitle = false;
-            this.titleStatus(false, false, false);
+           // this.titleStatus(false, false, false);
+            console.log("是的咯就是电话",this.topTitle)
             var allDetail = this.$store.state.table.basicBaseList.intlIntentionDetail
             if (arr != 1) {
                 console.log(arr)
@@ -900,8 +911,11 @@ export default {
                 var arr2 = allDetail.extractive.selected;
                 var arr3 = allDetail.offers.selected;
                 this.evaluateParam.ids = arr1.concat(arr2).concat(arr3);
-                console.log("7684165dfgdsfgsdfhs", this.evaluateParam.ids)
-
+                if (this.evaluateParam.ids.length <= 0) {
+                    this.tipsParam.show = true;
+                    this.tipsParam.name = "请先选择全部报价！";
+                    return;
+                } 
             }
             this.evaluateParam.link = '/intlIntention/evaluateOffer';
             this.evaluateParam.show = true;

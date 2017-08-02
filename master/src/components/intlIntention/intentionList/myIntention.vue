@@ -1,6 +1,6 @@
 <template>
     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
-    <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
+    <detail-model :param.sync="detailParam" v-if="detailParam.show"   @evaluate-add="intentionSearch"></detail-model>
     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <create-model :param.sync="createParam" v-if="createParam.show"></create-model>
@@ -131,14 +131,14 @@
                                 key:'myIntlIntentionList'
                                 })"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" />
                             </div>
-                            <div style="display:inline-block;margin-right:7px" v-if="item.remainTime=='已评价'"  @click.stop="newOrder(item,$index)"><img src="/static/images/{{$t('static.img_adopt')}}.png" alt="生成订单" />
+                            <div style="display:inline-block;margin-right:7px"  v-if="item.offerTime >= 1&&item.isEvaluate==1" @click.stop="newOrder(item,$index)"><img src="/static/images/{{$t('static.img_adopt')}}.png" alt="生成订单" />
                             </div>
                             <div v-if="item.inquire===0||item.inquire===3" style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑" /></div>
                             <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_inquire')}}.png" alt="询价" /></div>
                             <div v-if="item.inquire===3&&item.validate===2" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
                             <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item,$index)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
                             <!-- 再次询价申请 -->
-                            <div v-if="item.remainTime=='已评价'" style="display:inline-block;margin-right:7px" @click="againInquire(item.id)">
+                            <div v-if="item.inquire===3&&(item.validate===-2||item.validate===0)&&item.isEvaluate==1" style="display:inline-block;margin-right:7px" @click="againInquire(item.id)">
                                 <button class="requestBtn btn btn-success">{{$t('static.Request_again')}}</button>
                             </div>
                         </td>

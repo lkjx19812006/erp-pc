@@ -130,7 +130,7 @@
                             <th>{{$t('static.order_status')}}</th>
                             <th>{{$t('static.order_source')}}</th>
                             <th>{{$t('static.review_status')}}</th>
-                            <th>{{$t('static.handle')}}</th>
+                          <!--   <th>{{$t('static.handle')}}</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -150,6 +150,7 @@
                             <td><a @click="clickOn({
                                   show:true,
                                   id:item.id,
+                                  int:item.intl,
                                   loading:true,
                                   key:'orderDetail',
                                   orderStatus:item.orderStatus,
@@ -193,54 +194,54 @@
                             </td>
                             <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                             <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
-                            <td v-if="item.validate==2">
-                                <button class="btn btn-danger" @click="applyOrder({
-                                    show:true,
-                                    id:item.id,
-                                    index:$index,
-                                    type:item.type,
-                                    pre:0,
-                                    consigner:item.consigner,
-                                    sourceType:0,
-                                    sample:item.sample,
-                                    intl:0,
-                                    customer:item.customer,
-                                    currency:item.currency,
-                                    consigner:item.consigner,
-                                    verifierName:item.verifierName,
-                                    consignee:item.consignee,
-                                    consigneePhone:item.consigneePhone,
-                                    customerPhone:item.consigneePhone,
-                                    zipCode:item.zipCode,
-                                    country:'',
-                                    province:'',
-                                    city:'',
-                                    district:'',
-                                    employee:item.employee,
-                                    customerName:item.customerName,
-                                    org:item.org,
-                                    orderStatus:0,
-                                    consigneeAddr:'',
-                                    comments:item.comments,
-                                    validate:0,
-                                    freight:0,
-                                    freightType:1,
-                                    incidentals:0,
-                                    incidentalsDesc:'',
-                                    preferential:0,
-                                    preferentialDesc:'',
-                                    status:item.status,
-                                    total:item.total,
-                                    cost:item.cost,
-                                    key:'myOrderList',
-                                    link:alterOrder,
-                                    url:'/order/',
-                                    goods:item.goods,
-                                    goodsBack:[]
-                                    },item.goods)" v-if="item.orderStatus==40&&item.link==''" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">生成采购订单
-                                </button>
-                                <button class="btn btn-default btn-gray" v-else>已生成采购订单</button>
-                            </td>
+                           <!--  <td v-if="item.validate==2">
+                               <button class="btn btn-danger" @click="applyOrder({
+                                   show:true,
+                                   id:item.id,
+                                   index:$index,
+                                   type:item.type,
+                                   pre:0,
+                                   consigner:item.consigner,
+                                   sourceType:0,
+                                   sample:item.sample,
+                                   intl:0,
+                                   customer:item.customer,
+                                   currency:item.currency,
+                                   consigner:item.consigner,
+                                   verifierName:item.verifierName,
+                                   consignee:item.consignee,
+                                   consigneePhone:item.consigneePhone,
+                                   customerPhone:item.consigneePhone,
+                                   zipCode:item.zipCode,
+                                   country:'',
+                                   province:'',
+                                   city:'',
+                                   district:'',
+                                   employee:item.employee,
+                                   customerName:item.customerName,
+                                   org:item.org,
+                                   orderStatus:0,
+                                   consigneeAddr:'',
+                                   comments:item.comments,
+                                   validate:0,
+                                   freight:0,
+                                   freightType:1,
+                                   incidentals:0,
+                                   incidentalsDesc:'',
+                                   preferential:0,
+                                   preferentialDesc:'',
+                                   status:item.status,
+                                   total:item.total,
+                                   cost:item.cost,
+                                   key:'myOrderList',
+                                   link:alterOrder,
+                                   url:'/order/',
+                                   goods:item.goods,
+                                   goodsBack:[]
+                                   },item.goods)" v-if="item.orderStatus==40&&item.link==''" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">生成采购订单
+                               </button>
+                               <button class="btn btn-default btn-gray" v-else>已生成采购订单</button>
+                           </td> -->
                         </tr>
                     </tbody>
                 </table>
