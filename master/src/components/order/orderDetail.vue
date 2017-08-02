@@ -181,12 +181,12 @@
                                                         </td>
 
                                                         <td v-if="param.int==1&&initOrderDetail.orderStatus==60" @click="checkHistory(item.id,item.breedName)">
-                                                        <Poptip placement="top" trigger="hover">
-                                                        <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                                                        <span v-else>{{$t('static.unvalued')}}</span>
-                                                        <div class="api" slot="content" style="color:green">
+                                                        <Poptip placement="right-start" trigger="hover"   >
+                                                            <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                            <span v-else>{{$t('static.unvalued')}}</span>
+                                                           <div slot="content" style="color:green;white-space:normal;width:150px;">
                                                             {{item.evaluation}}
-                                                        </div>
+                                                            </div>
                                                         </Poptip>
                                                         <p class="clickMore">{{$t('static.click_here_for')}}</p>
                                                         </td>
