@@ -808,6 +808,15 @@ export default {
             }
         },
         isAllChecked: function() {
+              if(this.$store.state.table.basicBaseList.intlIntentionDetail.items.arr.length==0){
+                this.title1=true;
+              }else if(this.$store.state.table.basicBaseList.intlIntentionDetail.extractive.arr.length==0){
+                this.title2=true;
+              }else if(this.$store.state.table.basicBaseList.intlIntentionDetail.offers.arr.length==0){
+                this.title3=true;
+              }
+
+
             if (this.title1 == true && this.title2 == true && this.title3 == true) {
                 this.topTitle = true;
             }
