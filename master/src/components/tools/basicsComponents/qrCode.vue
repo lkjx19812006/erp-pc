@@ -22,7 +22,7 @@
 
 			url:{
 				type:String,
-				default:'http://192.168.1.142:81/htm5/%23/needDetails/'
+				default:'http://apps.yaocaimaimai.com/htm5/%23/needDetails/'
 			},
 			id:{
 				type:[String,Number],
