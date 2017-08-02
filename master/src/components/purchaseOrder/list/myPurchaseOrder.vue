@@ -77,6 +77,7 @@
                         <td>
                             <a class="underline" @click.stop="detailClick(item.id,item.customerId)">{{item.customerName}}</a>
                         </td>
+                        
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.pubdate}}</td>

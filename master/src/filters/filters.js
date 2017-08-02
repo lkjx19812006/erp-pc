@@ -1511,6 +1511,6 @@ Vue.filter("newCustomerType", function(val) {
     } else if (val == 2) {
         return "卖家";
     } else if (val == 3) {
-        return "既买又卖"
+        return "买卖家"
     }
 })

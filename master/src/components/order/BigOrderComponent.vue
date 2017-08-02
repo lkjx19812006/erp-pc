@@ -9,24 +9,16 @@
         <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
         <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
-          <employee-model :param="transferParam" v-if="transferParam.show"></employee-model>
-          <cancel-model :param="cancelParam" v-if="cancelParam.show"></cancel-model>
-           <cancel-model :param="cancelFlowParam" v-if="cancelFlowParam.show"></cancel-model>
+        <employee-model :param="transferParam" v-if="transferParam.show"></employee-model>
+        <cancel-model :param="cancelParam" v-if="cancelParam.show"></cancel-model>
+        <cancel-model :param="cancelFlowParam" v-if="cancelFlowParam.show"></cancel-model>
         <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
         <language-model v-show="false"></language-model>
-
-
-       
         <applysend-model :param="applyParam" v-if="applyParam.show"></applysend-model>
         <reapply-model :param="reapplyParam" v-if="reapplyParam.show"></reapply-model>
         <record-model :param="recordParam" v-if="recordParam.show"></record-model>
         <contract-model :param="contractParam" v-if="contractParam.show"></contract-model>
         <saleapply-model :param="applicationParam" v-if="applicationParam.show"></saleapply-model>
-      
-
-
-
-
         <mglist-model>
             <!-- 头部搜索 -->
             <div slot="top">
@@ -172,7 +164,7 @@
                     <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
                 </div>
                 <div class="right">
-                 <button class="btn btn-default transfer" v-if='!showExport' @click="newOrder()">{{$t('static.new')}}</button>
+                    <button class="btn btn-default transfer" v-if='!showExport' @click="newOrder()">{{$t('static.new')}}</button>
                     <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                 </div>
             </div>
@@ -292,8 +284,8 @@
                                     </div>
                                 </Poptip>
                             </td>
-                        <!--   操作状态 -->
-                             <td v-if='!showonAll'>
+                            <!--   操作状态 -->
+                            <td v-if='!showonAll'>
                                 <button v-if='!showTransfer' class="btn btn-primary btn-xs" v-if="(item.validate==0||item.validate==-2)&&item.orderStatus!==-1" @click="updateOrder({
                                         show:true,
                                         id:item.id,
@@ -461,21 +453,19 @@
                                 <button v-show='!showTransfer' class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)&&item.cancel==0">{{$t('static.review_application')}}</button>
                                 <button v-show='!showTransfer' class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2&&(item.orderStatus==0||item.orderStatus==70)&&item.cancel==0">{{$t('static.reapply')}}</button>
                                 <button v-show='!showTransfer' class="btn btn-warning btn-xs" @click="showRecord(item)" v-if="item.validate!=0">审核记录</button>
-
-                            <!--      取消订单,在订单状态为20和70或者新建的订单还未申请审核可以取消，并说明原因 -->
+                                <!--      取消订单,在订单状态为20和70或者新建的订单还未申请审核可以取消，并说明原因 -->
                                 <button v-show='!showTransfer' class="btn btn-warning btn-apply" v-if="item.orderStatus==20||item.orderStatus==70||(item.orderStatus==0&&item.validate==0)" @click="cancelOrder(item.id,$index)">
                                     取消订单
                                 </button>
-                              <!--   审核取消订单,当取消状态是1时，需要部门主管审核 -->
-                               
+                                <!--   审核取消订单,当取消状态是1时，需要部门主管审核 -->
                                 <button v-show='!showTransfer' class="btn btn-warning btn-apply" v-if="item.cancel==1" @click="">
                                     审核取消订单
                                 </button>
-                               <!--  订单划转到任意一个业务员 -->
+                                <!--  订单划转到任意一个业务员 -->
                                 <button v-if='showTransfer' class="btn btn-warning btn-apply" v-if="(item.orderStatus==0||item.orderStatus==10)&&item.validate==0" @click="transferToEmployee(item,$index)">
                                     划转
                                 </button>
-                               <!--  审核 -->
+                                <!--  审核 -->
                                 <button class="btn btn-warning btn-apply" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
                                     {{$t('static.verified')}}
                                 </button>
@@ -489,26 +479,26 @@
             <!-- 底部分页 -->
             <pagination :combination="loadParam" slot="page"></pagination>
         </mglist-model>
-       <div style="font-size:14px;white-space: normal" v-if='showonAll'>
-           <span style="margin-left:1%;color:red">总金额：{{initAllOrderStatis.totalSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
-           <span style="margin-left:1%;color:red">已支付金额：{{initAllOrderStatis.prepaidSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
-           <span style="margin-left:1%;color:red">未支付金额：{{initAllOrderStatis.unpaidSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
-           <span style="margin-left:1%;">成本总金额：{{initAllOrderStatis.costSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
-           <span style="margin-left:1%;">商品总金额：{{initAllOrderStatis.amountSum  | money}} {{initAllOrderStatis.currency | Currency}}</span>
-           <span style="margin-left:1%;">订单数量：{{initAllOrderStatis.orderCount | money}}笔</span>
-           <span style="margin-left:1%;">特惠总金额：{{initAllOrderStatis.preferentialSum  | money}} {{initAllOrderStatis.currency | Currency}}</span>
-           <span style="margin-left:1%;">杂费总金额：{{initAllOrderStatis.incidentalsSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
-       </div>
+        <div style="font-size:14px;white-space: normal" v-if='showonAll'>
+            <span style="margin-left:1%;color:red">总金额：{{initAllOrderStatis.totalSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;color:red">已支付金额：{{initAllOrderStatis.prepaidSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;color:red">未支付金额：{{initAllOrderStatis.unpaidSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;">成本总金额：{{initAllOrderStatis.costSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;">商品总金额：{{initAllOrderStatis.amountSum  | money}} {{initAllOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;">订单数量：{{initAllOrderStatis.orderCount | money}}笔</span>
+            <span style="margin-left:1%;">特惠总金额：{{initAllOrderStatis.preferentialSum  | money}} {{initAllOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;">杂费总金额：{{initAllOrderStatis.incidentalsSum | money}} {{initAllOrderStatis.currency | Currency}}</span>
+        </div>
         <div style="font-size:14px;white-space: normal;" v-if='showMoney'>
-           <span style="margin-left:1%;color:red">{{$t('static.total_money')}}：{{initOrgOrderStatis.totalSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-           <span style="margin-left:1%;color:red">{{$t('static.paid_amount')}}：{{initOrgOrderStatis.prepaidSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-           <span style="margin-left:1%;color:red">{{$t('static.unpaid_amount')}}：{{initOrgOrderStatis.unpaidSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-           <span style="margin-left:1%;">{{$t('static.costprice')}}：{{initOrgOrderStatis.costSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-           <span style="margin-left:1%;">{{$t('static.order_total')}}：{{initOrgOrderStatis.amountSum  | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-           <span style="margin-left:1%;">{{$t('static.order_num')}}：{{initOrgOrderStatis.orderCount | money}}笔</span>
-           <span style="margin-left:1%;">{{$t('static.discount')}}：{{initOrgOrderStatis.preferentialSum  | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-           <span style="margin-left:1%;">{{$t('static.extra_total')}}：{{initOrgOrderStatis.incidentalsSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
-       </div>
+            <span style="margin-left:1%;color:red">{{$t('static.total_money')}}：{{initOrgOrderStatis.totalSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;color:red">{{$t('static.paid_amount')}}：{{initOrgOrderStatis.prepaidSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;color:red">{{$t('static.unpaid_amount')}}：{{initOrgOrderStatis.unpaidSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;">{{$t('static.costprice')}}：{{initOrgOrderStatis.costSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;">{{$t('static.order_total')}}：{{initOrgOrderStatis.amountSum  | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;">{{$t('static.order_num')}}：{{initOrgOrderStatis.orderCount | money}}笔</span>
+            <span style="margin-left:1%;">{{$t('static.discount')}}：{{initOrgOrderStatis.preferentialSum  | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+            <span style="margin-left:1%;">{{$t('static.extra_total')}}：{{initOrgOrderStatis.incidentalsSum | money}} {{initOrgOrderStatis.currency | Currency}}</span>
+        </div>
     </div>
 </template>
 <script>
@@ -552,7 +542,7 @@ import {
 } from '../../vuex/getters'
 import {
     getOrderList,
-    getOrderStatistical,     
+    getOrderStatistical,
     alterOrder,
     createOrder,
     orderStatu,
@@ -593,13 +583,13 @@ export default {
     },
     data() {
         return {
-            showonAll:'',//部门搜索只在全部订单显示
-            showExport:'',//是否显示导出订单
-            showTransfer:'',//操作状态中的划转只在org显示
-            orderPageID:'',//订单页id
-            showMoney:'',
-            key:['orgOrderList','allOrderList'],
-            url:['/order/myList','/order/sectionList','/order/'],
+            showonAll: '', //部门搜索只在全部订单显示
+            showExport: '', //是否显示导出订单
+            showTransfer: '', //操作状态中的划转只在org显示
+            orderPageID: '', //订单页id
+            showMoney: '',
+            key: ['orgOrderList', 'allOrderList'],
+            url: ['/order/myList', '/order/sectionList', '/order/'],
             loadParam: {
                 loading: true,
                 color: '#5dc596',
@@ -648,10 +638,10 @@ export default {
                 employeeName: '',
 
             },
-              applicationParam: {
+            applicationParam: {
                 show: false
             },
-              applyParam: {
+            applyParam: {
                 show: false,
                 orderId: '',
                 sub: '',
@@ -760,13 +750,13 @@ export default {
                 show: false,
                 img: ''
             },
-             contractParam: {
+            contractParam: {
                 show: false
             },
             updateorderParam: {
                 show: false
             },
-             transferParam: { //划转订单
+            transferParam: { //划转订单
                 show: false,
                 link: '/order/transferToEmployee',
                 callback: '',
@@ -774,7 +764,7 @@ export default {
                 id: '',
                 user: '' //在这里无效，主要是为了配合注册客户订单的划转
             },
-             employeeStatus: 0, //表示是哪个地方用到了选择业务员的模块,初始为0,1表示搜索，2表示划转订单
+            employeeStatus: 0, //表示是哪个地方用到了选择业务员的模块,初始为0,1表示搜索，2表示划转订单
             language: '',
             disposeParam: { //订单处理各个状态
                 show: false,
@@ -892,7 +882,7 @@ export default {
                 this.selectSearch();
             }
         },
-          newOrder: function() {
+        newOrder: function() {
             //新建订单时将一些之前填入的信息清空
             this.createParam.goods = [];
             this.createParam.total = "";
@@ -904,7 +894,7 @@ export default {
             this.createParam.callback = this.newBack;
         },
         //售后
-         afterSales: function(sales) {
+        afterSales: function(sales) {
             this.applicationParam = sales;
             this.applicationParam.show = true;
             this.applicationParam.callback = this.afterSalesBack;
@@ -916,7 +906,7 @@ export default {
             this.applicationParam.show = false;
             this.getEmpolyeeOrder(this.loadParam);
         },
-                // 点击申请收款弹出子弹框
+        // 点击申请收款弹出子弹框
         clickOn: function(param) {
             this.detailParam = param;
         },
@@ -925,7 +915,7 @@ export default {
             this.cancelFlowParam.orderId = orderId;
             this.cancelFlowParam.show = true;
         },
-         pendingOrder: function(item, sub) {
+        pendingOrder: function(item, sub) {
             item.show = !item.show;
             item.sub = sub;
             this.disposeParam = item;
@@ -1016,7 +1006,7 @@ export default {
             this.disposeParam.callback = this.orderBack;
         },
         //合同
-           addContract: function(contract) {
+        addContract: function(contract) {
             this.contractParam = contract;
             this.contractParam.show = true;
             this.contractParam.callback = this.orderBack;
@@ -1032,20 +1022,20 @@ export default {
             this.cancelParam.show = true;
         },
 
-      selectSearch: function() {
-        this.orderPageID=this.$route.query.id
-        console.log(this.orderPageID)
-      if(this.orderPageID==0){  
-       this.getEmpolyeeOrder(this.loadParam);  
-      }else if(this.orderPageID==1){
-       this.getOrgOrder(this.loadParam);
-       this.getOrderStatistical(this.loadParam);
-      }else if(this.orderPageID==2){
-    this.getOrderList(this.loadParam);
-    this.getOrderStatistical(this.loadParam);
-      }else{
-        console.log('nothing')
-      }
+        selectSearch: function() {
+            this.orderPageID = this.$route.query.id
+            console.log(this.orderPageID)
+            if (this.orderPageID == 0) {
+                this.getEmpolyeeOrder(this.loadParam);
+            } else if (this.orderPageID == 1) {
+                this.getOrgOrder(this.loadParam);
+                this.getOrderStatistical(this.loadParam);
+            } else if (this.orderPageID == 2) {
+                this.getOrderList(this.loadParam);
+                this.getOrderStatistical(this.loadParam);
+            } else {
+                console.log('nothing')
+            }
 
         },
         selectType: function(type) {
@@ -1059,7 +1049,7 @@ export default {
                 this.$store.state.table.basicBaseList.allOrderList[sub].show = true;
             }
         },
-          //订单划转到业务员
+        //订单划转到业务员
         transferToEmployee: function(item, itemSub) {
             //将employeeStatus置为2,表示是划转业务员
             this.employeeStatus = 2;
@@ -1069,7 +1059,7 @@ export default {
             this.transferParam.show = true;
             this.transferParam.itemSub = itemSub;
         },
-           transferCallback: function(name) {
+        transferCallback: function(name) {
             this.tipsParam.show = true;
             this.tipsParam.name = name;
             this.tipsParam.alert = true;
@@ -1134,35 +1124,35 @@ export default {
             this.auditParam.validate = 0;
             this.orderOrgAudit(this.auditParam);
         },
-          //变量true false控制函数
-        changeBool:function(a,b,c,d){
-          this.showonAll=a;
-          this.showExport=b;
-          this.showTransfer=c;
-          this.showMoney=d;
+        //变量true false控制函数
+        changeBool: function(a, b, c, d) {
+            this.showonAll = a;
+            this.showExport = b;
+            this.showTransfer = c;
+            this.showMoney = d;
         },
-            //显示隐藏功能键
-      funBtn:function(){
-          if(this.$route.query.id==0){
+        //显示隐藏功能键
+        funBtn: function() {
+            if (this.$route.query.id == 0) {
 
-           this.changeBool(false,false,false,false)
-            changeMenu(this.$store.state.table.isTop, this.getEmpolyeeOrder, this.loadParam, localStorage.myOrderParam);
-            this.language = localStorage.lang;
-          }else if(this.$route.query.id==1){
-          
-            this.changeBool(false,true,true,true)
-            changeMenu(this.$store.state.table.isTop, this.getOrgOrder, this.loadParam, localStorage.orgOrderParam);
-            changeMenu(this.$store.state.table.isTop, this.getOrderStatistical, this.loadParam, localStorage.orgOrderParam);
-        this.language = localStorage.lang;
-            console.log('hahah',this.loadParam.key)
-          }else if(this.$route.query.id==2){
-                 
-        changeMenu(this.$store.state.table.isTop, this.getOrderStatistical, this.loadParam, localStorage.allOrderParam);
-        this.language = localStorage.lang;
-            this.changeBool(true,true,true,false)
-          }else{
-            console.log("nothing")
-          }
+                this.changeBool(false, false, false, false)
+                changeMenu(this.$store.state.table.isTop, this.getEmpolyeeOrder, this.loadParam, localStorage.myOrderParam);
+                this.language = localStorage.lang;
+            } else if (this.$route.query.id == 1) {
+
+                this.changeBool(false, true, true, true)
+                changeMenu(this.$store.state.table.isTop, this.getOrgOrder, this.loadParam, localStorage.orgOrderParam);
+                changeMenu(this.$store.state.table.isTop, this.getOrderStatistical, this.loadParam, localStorage.orgOrderParam);
+                this.language = localStorage.lang;
+                console.log('hahah', this.loadParam.key)
+            } else if (this.$route.query.id == 2) {
+
+                changeMenu(this.$store.state.table.isTop, this.getOrderStatistical, this.loadParam, localStorage.allOrderParam);
+                this.language = localStorage.lang;
+                this.changeBool(true, true, true, false)
+            } else {
+                console.log("nothing")
+            }
         },
 
     },
@@ -1185,27 +1175,27 @@ export default {
     filter: (filter, {}),
     ready() {
         common('tab', 'table_box', 1);
-         this.orderPageID=this.$route.query.id
-         console.log(this.$route.query.id)
-      if(this.orderPageID==0){
-       this.loadParam.link=this.url[0]  
-       this.getEmpolyeeOrder(this.loadParam);  
-      }else if(this.orderPageID==1){
-        this.loadParam.link=this.url[1] 
-        this.employeeParam.orgId=this.initLogin.orgId
-       this.getOrgOrder(this.loadParam);
-       this.getOrderStatistical(this.loadParam);
-      }else if(this.orderPageID==2){
-       this.loadParam.link=this.url[2]  
-       this.getOrderList(this.loadParam);
-    this.getOrderStatistical(this.loadParam);
-      }else{
-        console.log('nothing')
-      }
+        this.orderPageID = this.$route.query.id
+        console.log(this.$route.query.id)
+        if (this.orderPageID == 0) {
+            this.loadParam.link = this.url[0]
+            this.getEmpolyeeOrder(this.loadParam);
+        } else if (this.orderPageID == 1) {
+            this.loadParam.link = this.url[1]
+            this.employeeParam.orgId = this.initLogin.orgId
+            this.getOrgOrder(this.loadParam);
+            this.getOrderStatistical(this.loadParam);
+        } else if (this.orderPageID == 2) {
+            this.loadParam.link = this.url[2]
+            this.getOrderList(this.loadParam);
+            this.getOrderStatistical(this.loadParam);
+        } else {
+            console.log('nothing')
+        }
     },
     created() {
         this.funBtn()
-        
+
         this.language = localStorage.lang;
     }
 }
@@ -1253,9 +1243,12 @@ export default {
     width: 100px;
     min-width: 100px;
 }
+
+
 /* #table_box table .btn{
     width:90px
 } */
+
 .order_table .table > ul >li img {
     margin: auto;
 }
