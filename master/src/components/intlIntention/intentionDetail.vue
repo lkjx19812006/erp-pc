@@ -724,7 +724,6 @@ export default {
         onlyselected: function(sub, ar) {
             var allDetail = this.$store.state.table.basicBaseList.intlIntentionDetail;
             const _this = this;
-            console.log(ar)
             allDetail[ar].arr[sub].checked = !allDetail[ar].arr[sub].checked;
             if (!allDetail[ar].arr[sub].checked) {
                 _this.checked = false;
@@ -765,7 +764,6 @@ export default {
                     this.title3 = true;
                 }
                 this.isAllChecked();
-                console.log("sadasda", this.title1)
                 allData[list].arr.forEach(function(item, i) {
                     allData[list].arr[i].checked = true && allData[list].selected.push(item[type]);
                 })
@@ -774,7 +772,6 @@ export default {
                 allData[list].arr.forEach(function(item, i) {
                     allData[list].arr[i].checked = false;
                     allData[list].selected.length = 0;
-                    console.log("dfgsdgfdgdsfds", allData[list])
                 })
             }
 
@@ -792,7 +789,6 @@ export default {
                 allData.offers.arr.forEach(function(item, i) {
                     allData.offers.arr[i].checked = true && allData.offers.selected.push(item.id);
                 })
-                console.log("top="+this.topTitle);
                 this.titleStatus(true, true, true);
             } else {
                 this.topTitle=false;
@@ -822,7 +818,6 @@ export default {
             this.pictureParam.img = img;
         },
         enfoldment: function(param) {
-            console.log(this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr);
             if (this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length == 0) {
                 this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = true;
             }
@@ -830,7 +825,6 @@ export default {
         },
         //获取询价详情
         getInquireInfo: function(id) {
-            console.log(id);
             this.inquireInfoParam.id = id;
             this.inquireInfoParam.show = true;
 
@@ -893,17 +887,13 @@ export default {
             this.getIntlIntentionDetail(this.param);
         },
         batchAccept: function(arr) {
-           // this.titleStatus(false, false, false);
-            console.log("是的咯就是电话",this.topTitle)
             var allDetail = this.$store.state.table.basicBaseList.intlIntentionDetail
             if (arr != 1) {
-                console.log(arr)
                 if (allDetail[arr].selected.length <= 0) {
                     this.tipsParam.show = true;
                     this.tipsParam.name = "请至少选择一条报价！";
                     return;
                 } else {
-                    console.log("hhh", allDetail.items.selected)
                     this.evaluateParam.ids = allDetail[arr].selected;
                 }
             } else {
@@ -922,11 +912,6 @@ export default {
             this.evaluateParam.callback = this.evaluateCallback;
         },
 
-    },
-    watch: {
-        initIntlIntentionDetail: function(newval, oldval) {
-            console.log("yyy", newval, oldval)
-        }
     },
     created() {
         this.getIntlIntentionDetail(this.param);
