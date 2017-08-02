@@ -55,7 +55,7 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo  col-md-6 col-xs-12">
-                                <label>{{param.nolist}}</label>
+                                <label><!-- {{param.nolist}} -->{{$t('static.landline')}}</label>
                                 <input type="text" class="form-control" v-model="param.extno" />
                             </div>
                             <div class="client-detailInfo  col-md-6 col-xs-12">

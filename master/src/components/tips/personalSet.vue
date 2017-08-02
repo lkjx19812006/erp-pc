@@ -38,7 +38,7 @@
                                     <input type="email" class="form-control" v-model="param.mobile" v-validate:phone="['phone']" />
                                 </div>
                                 <div class="client-detailInfo  col-md-6 col-xs-12">
-                                    <label>{{$t('static.ext_number')}}</label>
+                                    <label>{{$t('static.landline')}}</label>
                                     <input type="text" class="form-control" v-model="param.extno" />
                                 </div>
                                 <div class="client-detailInfo  col-md-6 col-xs-12">

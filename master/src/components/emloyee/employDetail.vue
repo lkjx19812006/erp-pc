@@ -28,7 +28,7 @@
                         </div>
                         <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6"><label>QQ:</label>{{param.qq}}
                         </div>
-                        <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6"><label>分机号:</label>{{param.extno}}</div>
+                        <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6"><label>座机号:</label>{{param.extno}}</div>
                         <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6"><label>是否在职:</label>{{param.leave | leaveTime}}
                         </div>
                         <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6"><label>入职时间:</label>{{param.entrydate}}</div>
