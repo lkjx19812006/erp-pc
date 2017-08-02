@@ -1,6 +1,6 @@
 <template>
     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
-    <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
+    <detail-model :param.sync="detailParam" v-if="detailParam.show"   @evaluate-add="intentionSearch"></detail-model>
     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <create-model :param.sync="createParam" v-if="createParam.show"></create-model>
