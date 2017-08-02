@@ -13,9 +13,8 @@
         <employee-model :param="employeeParam" v-if="employeeParam.show"></employee-model>
         <purchase-model :param="purchaseParam" v-if="purchaseParam.show"></purchase-model>
         <chance-detail-model :param="chanceParam" v-if="chanceParam.show"></chance-detail-model>
-        <evaluate-model  :param="evaluateParam" v-if="evaluateParam.show"></evaluate-model>
-        <evaluation-model  :param="historyParam" v-if="historyParam.show"></evaluation-model>
-
+        <evaluate-model :param="evaluateParam" v-if="evaluateParam.show"></evaluate-model>
+        <evaluation-model :param="historyParam" v-if="historyParam.show"></evaluation-model>
         <shadow-model :param="param">
             <div class="cover_loading">
                 <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
@@ -130,11 +129,13 @@
 
                                             </span>
 
+
                                             <button class="btn btn-primary right" style="margin-right:13px" v-if="param.int==1&&initOrderDetail.orderStatus==60&&param.isEvaluate==0"  @click.stop="confirm({
                                              id:param.id,
                                              show:true,
                                              url:'/order/confirmEvaluate',
                                              })">{{$t('static.confirm_evaluation')}}</button>
+
                                           <button class="btn right" style="color:black;font-weight:bolder;margin-right:13px" disabled="" v-if="param.isEvaluate==1">{{$t('static.evaluation_confirmed')}}</button> 
                                             <table class="table  contactSet"  style="border-top:1px solid #eee">
                                                 <thead>
@@ -160,7 +161,7 @@
                                                             <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}" @click="onlyselected($index)"></label>
                                                         </td>
                                                         <td>
-                                                            <a v-if="item.sourceType == 1" @click="showIntent(item.sourceId)" href="javascript:void(0);">{{item.breedName}}</a>
+                                                            <a v-if="item.sourceType == 1&&item.sourceId != ''" @click="showIntent(item.sourceId)" href="javascript:void(0);">{{item.breedName}}</a>
                                                             <span v-else>{{item.breedName}}</span>
                                                         </td>
                                                         <td>{{item.locationName}}</td>
@@ -179,16 +180,15 @@
                                                         <td v-if="initOrderDetail.orderStatus==60&&initOrderDetail.sample==1">
                                                             <a href="javascript:void(0);" @click="editQa(item,initOrderDetail.sample,'sample')">{{item.sampleTraded | isDeal}}</a>
                                                         </td>
-
                                                         <td v-if="param.int==1&&initOrderDetail.orderStatus==60" @click="checkHistory(item.id,item.breedName)">
-                                                        <Poptip placement="right-start" trigger="hover"   >
-                                                            <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                                                            <span v-else>{{$t('static.unvalued')}}</span>
-                                                           <div slot="content" style="color:green;white-space:normal;width:150px;">
-                                                            {{item.evaluation}}
-                                                            </div>
-                                                        </Poptip>
-                                                        <p class="clickMore">{{$t('static.click_here_for')}}</p>
+                                                            <Poptip placement="right-start" trigger="hover">
+                                                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                                <span v-else>{{$t('static.unvalued')}}</span>
+                                                                <div slot="content" style="color:green;white-space:normal;width:150px;">
+                                                                    {{item.evaluation}}
+                                                                </div>
+                                                            </Poptip>
+                                                            <p class="clickMore">{{$t('static.click_here_for')}}</p>
                                                         </td>
                                                         <td style="color:blue;cursor:pointer" @click="addEval(item.id)" v-if="param.int==1&&initOrderDetail.orderStatus==60&&param.isEvaluate==0">{{$t('static.evaluate')}}</td>
                                                     </tr>
@@ -924,13 +924,13 @@ export default {
                 loading: false,
                 id: ''
             },
-            historyParam:{
-                show:false
+            historyParam: {
+                show: false
             },
-             evaluateParam:{
-                show:false,
-                ids:[],
-                intentionId:this.param.id
+            evaluateParam: {
+                show: false,
+                ids: [],
+                intentionId: this.param.id
             }
         }
     },
@@ -954,12 +954,12 @@ export default {
         }
     },
     methods: {
-        checkHistory:function(v,w){
-        this.historyParam.show=true;
-        this.historyParam.id=v;
-        this.historyParam.name=w;
-        this.historyParam.url='/order/getHistoryEvaluation';
-        this.getEvaluation(this.historyParam);
+        checkHistory: function(v, w) {
+            this.historyParam.show = true;
+            this.historyParam.id = v;
+            this.historyParam.name = w;
+            this.historyParam.url = '/order/getHistoryEvaluation';
+            this.getEvaluation(this.historyParam);
         },
         enfoldment: function(param) {
             if (param.crete) {
@@ -1282,15 +1282,17 @@ section article {
 .table>thead>tr>th {
     text-align: center;
 }
-.clickMore{
-    margin-left:25px;
-    width:80px;
-    font-size:8px;
-    color:blue; 
-    -webkit-transform-origin-x:0;
+
+.clickMore {
+    margin-left: 25px;
+    width: 80px;
+    font-size: 8px;
+    color: blue;
+    -webkit-transform-origin-x: 0;
     -webkit-transform: scale(0.70);
     cursor: pointer;
 }
+
 
 /* .downloadbtn{
     display: inline-block;

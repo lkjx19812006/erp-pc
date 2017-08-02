@@ -254,15 +254,14 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                          <Poptip placement="right-start" trigger="hover"  >
-                                                              <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                                                              <span v-else>{{$t('static.unvalued')}}</span>
-                                                             <div slot="content" style="color:green;white-space:normal;width:150px;">
-                                                              {{item.evaluation}}
-                                                              </div>
-                                                          </Poptip>  
-
-                                                         <!--   <Tooltip placement="top">
+                                                            <Poptip placement="right-start" trigger="hover">
+                                                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                                <span v-else>{{$t('static.unvalued')}}</span>
+                                                                <div slot="content" style="color:green;white-space:normal;width:150px;">
+                                                                    {{item.evaluation}}
+                                                                </div>
+                                                            </Poptip>
+                                                            <!--   <Tooltip placement="top">
                                                             <i-button>多行</i-button>
                                                             <div slot="content" style="color:green;width:100px;word-break:break-all; word-wrap:wrap;">
                                                                 {{item.evaluation}}
@@ -270,7 +269,7 @@
                                                                                                                      </Tooltip>  -->
                                                         </td>
                                                         <td>
-                                                            <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>1&&item.isEvaluate==1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
+                                                            <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>1&&initIntlIntentionDetail.isEvaluate==1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
                                                             <a style="color:blue" v-if="param.inquire==3" @click="addEval(item.offerId)">{{$t('static.evaluate')}}</a>
                                                         </td>
                                                     </tr>
@@ -369,13 +368,13 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <Poptip placement="right-start" trigger="hover"  >
-                                                              <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                                                              <span v-else>{{$t('static.unvalued')}}</span>
-                                                             <div slot="content" style="color:green;white-space:normal;width:150px;">
-                                                              {{item.evaluation}}
-                                                              </div>
-                                                          </Poptip> 
+                                                            <Poptip placement="right-start" trigger="hover">
+                                                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                                <span v-else>{{$t('static.unvalued')}}</span>
+                                                                <div slot="content" style="color:green;white-space:normal;width:150px;">
+                                                                    {{item.evaluation}}
+                                                                </div>
+                                                            </Poptip>
                                                         </td>
                                                         <td>
                                                             <a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0  &&initIntlIntentionDetail.inquireTime>1&&item.isEvaluate==1"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a>
@@ -437,13 +436,13 @@
                                                         <td>{{item.total}}</td>
                                                         <td>{{item.comment}}</td>
                                                         <td>
-                                                            <Poptip placement="right-start" trigger="hover"  >
-                                                              <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                                                              <span v-else>{{$t('static.unvalued')}}</span>
-                                                             <div slot="content" style="color:green;white-space:normal;width:150px;">
-                                                              {{item.evaluation}}
-                                                              </div>
-                                                          </Poptip> 
+                                                            <Poptip placement="right-start" trigger="hover">
+                                                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                                <span v-else>{{$t('static.unvalued')}}</span>
+                                                                <div slot="content" style="color:green;white-space:normal;width:150px;">
+                                                                    {{item.evaluation}}
+                                                                </div>
+                                                            </Poptip>
                                                         </td>
                                                         <td v-if="param.inquire"><a style="color:blue" v-if="param.inquire==3" @click="addEval(item.id)">{{$t('static.evaluate')}}</a></td>
                                                     </tr>
