@@ -769,6 +769,13 @@ export default {
                 })
             } else {
                 this.topTitle = false;
+                if (list == 'items') {
+                    this.title1 = false;
+                } else if (list == 'extractive') {
+                    this.title2 = false;
+                } else if (list == 'offers') {
+                    this.title3 = false;
+                }
                 allData[list].arr.forEach(function(item, i) {
                     allData[list].arr[i].checked = false;
                     allData[list].selected.length = 0;
@@ -779,7 +786,7 @@ export default {
         changeAllChecked: function(event) {
             var allData = this.$store.state.table.basicBaseList.intlIntentionDetail;
             if (event.target.checked === true) {
-                this.topTitle=true;
+                this.topTitle = true;
                 allData.items.arr.forEach(function(item, i) {
                     allData.items.arr[i].checked = true && allData.items.selected.push(item.offerId);
                 })
@@ -791,7 +798,7 @@ export default {
                 })
                 this.titleStatus(true, true, true);
             } else {
-                this.topTitle=false;
+                this.topTitle = false;
                 allData.items.arr.forEach(function(item, i) {
                     allData.items.arr[i].checked = false;
                 });
@@ -808,13 +815,16 @@ export default {
             }
         },
         isAllChecked: function() {
-              if(this.$store.state.table.basicBaseList.intlIntentionDetail.items.arr.length==0){
-                this.title1=true;
-              }else if(this.$store.state.table.basicBaseList.intlIntentionDetail.extractive.arr.length==0){
-                this.title2=true;
-              }else if(this.$store.state.table.basicBaseList.intlIntentionDetail.offers.arr.length==0){
-                this.title3=true;
-              }
+            console.log("isAllChecked");
+            if (this.$store.state.table.basicBaseList.intlIntentionDetail.items.arr.length == 0) {
+                this.title1 = true;
+            }
+            if (this.$store.state.table.basicBaseList.intlIntentionDetail.extractive.arr.length == 0) {
+                this.title2 = true;
+            }
+            if (this.$store.state.table.basicBaseList.intlIntentionDetail.offers.arr.length == 0) {
+                this.title3 = true;
+            }
 
 
             if (this.title1 == true && this.title2 == true && this.title3 == true) {
@@ -849,7 +859,7 @@ export default {
         evaluateCallback: function(name) {
             this.evaluateParam.show = false;
             this.titleStatus(false, false, false);
-            this.topTitle=false;
+            this.topTitle = false;
             this.showTips(name);
             this.$emit('evaluate-add', '');
             this.getIntlIntentionDetail(this.param);
@@ -914,7 +924,7 @@ export default {
                     this.tipsParam.show = true;
                     this.tipsParam.name = "请先选择全部报价！";
                     return;
-                } 
+                }
             }
             this.evaluateParam.link = '/intlIntention/evaluateOffer';
             this.evaluateParam.show = true;

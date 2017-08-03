@@ -255,13 +255,13 @@
                                                             <span v-else>{{item.externalIntentionOnSell | onsell}}</span>
                                                         </td>
                                                         <td>
-                                                        <Poptip placement="top" trigger="hover">
-                                                        <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                                                        <span v-else>{{$t('static.unvalued')}}</span>
-                                                        <div class="api" slot="content" style="color:green">
-                                                            {{item.evaluation}}
-                                                        </div>
-                                                        </Poptip>
+                                                            <Poptip placement="top" trigger="hover">
+                                                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                                <span v-else>{{$t('static.unvalued')}}</span>
+                                                                <div class="api" slot="content" style="color:green">
+                                                                    {{item.evaluation}}
+                                                                </div>
+                                                            </Poptip>
                                                         </td>
                                                         <td>
                                                             <!-- 寻求外部报价，如果已经寻求过外部报价，就不能再寻求了 -->
@@ -394,13 +394,13 @@
                                                             <span v-else>{{item.externalIntentionOnSell | onsell}}</span>
                                                         </td>
                                                         <td>
-                                                        <Poptip placement="top" trigger="hover">
-                                                        <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                                                        <span v-else>{{$t('static.unvalued')}}</span>
-                                                        <div class="api" slot="content" style="color:green">
-                                                            {{item.evaluation}}
-                                                        </div>
-                                                        </Poptip>
+                                                            <Poptip placement="top" trigger="hover">
+                                                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                                <span v-else>{{$t('static.unvalued')}}</span>
+                                                                <div class="api" slot="content" style="color:green">
+                                                                    {{item.evaluation}}
+                                                                </div>
+                                                            </Poptip>
                                                         </td>
                                                         <td>
                                                             <!-- 寻求外部报价，如果已经寻求过外部报价，就不能再寻求了 -->
@@ -438,8 +438,8 @@
                                             </span>
                                             <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                              <!-- 确认报价, -->
-                                            <button v-if="otherOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)" :disabled="param.offerStatus[1]==3">
-                                                <span v-if="param.offerStatus[1]==3">已确认</span>
+                                            <button v-if="otherOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)" :disabled="initIntlIntentionDetail.offerStatus[1]==3">
+                                                <span v-if="initIntlIntentionDetail.offerStatus[1]==3">已确认</span>
                                                 <span v-else>确认报价</span>
                                             </button>
                                          </h4>
@@ -463,13 +463,13 @@
                                                         <td>{{item.currency | Currency}}</td>
                                                         <td>{{item.comment}}</td>
                                                         <td>
-                                                        <Poptip placement="top" trigger="hover">
-                                                        <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
-                                                        <span v-else>{{$t('static.unvalued')}}</span>
-                                                        <div class="api" slot="content" style="color:green">
-                                                            {{item.evaluation}}
-                                                        </div>
-                                                        </Poptip>
+                                                            <Poptip placement="top" trigger="hover">
+                                                                <span v-if="item.evaluation!=''">{{item.evaluation | textDisplay '4'}}</span>
+                                                                <span v-else>{{$t('static.unvalued')}}</span>
+                                                                <div class="api" slot="content" style="color:green">
+                                                                    {{item.evaluation}}
+                                                                </div>
+                                                            </Poptip>
                                                         </td>
                                                         <td>
                                                             <a v-if="initIntlIntentionDetail.inquire !=3&&param.inquire!=3" style="cursor:pointer" @click="editOtherOffer(item,$index)">
@@ -823,7 +823,7 @@ export default {
             for (let i = 0; i < menus.length; i++) {
 
                 if (menus[i].url == path) {
-                    
+
                     for (let j = 0; j < menus[i].subcategory.length; j++) {
 
                         if (menus[i].subcategory[j].id == 120) {
@@ -1040,7 +1040,7 @@ export default {
         this.getIntlIntentionDetail(this.param);
         this.getCurrencyList();
         console.log(this.param)
-        
+
     },
     filter: (filter, {})
 }
