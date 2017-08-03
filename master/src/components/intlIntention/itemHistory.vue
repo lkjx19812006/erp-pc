@@ -16,7 +16,7 @@
             <!-- <div class="cover_loading">
               <pulse-loader :loading="breedParam.loading" :color="color" :size="size"></pulse-loader>
             </div> -->
-             <section class="editsection" v-cloak>
+             <section class="editsection" v-cloak style="overflow-x:auto">
                  <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                 <div style="margin-top:25px">
                    <!-- <img src="/static/images/sellerinfo@2x.png" style="display:inline"/> -->

@@ -80,7 +80,7 @@
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <div class="module_table" v-if="currentView==1" id="tt" style="height:100%;">
+            <div class="module_table" v-if="currentView==1" id="tt">
                 <div class="table-head">
                     <table class="table table-hover table_color table-striped " v-cloak id="tab">
                         <colgroup>
@@ -392,16 +392,6 @@ export default {
     color: #fff;
 }
 
-.module_table {
-    border: 1px solid #ddd;
-    border-top: 0;
-    border-bottom: none;
-    padding: 0;
-    position: absolute;
-    width: 100%;
-    float: left;
-    overflow: hidden;
-}
 
 .transfer {
     margin-top: 10px;
@@ -437,7 +427,7 @@ export default {
 
 #table_box table th,
 #table_box table td {
-    min-width: 140px;
+    min-width: 110px;
     width: 140px;
     padding: 7px 0;
 }
@@ -465,9 +455,11 @@ table .countColor {
 #table_box table td p:last-child {
     border-bottom: none;
 }
-
+.table-head{
+    width:1662px;
+}
 .table-body {
-    width: 100%;
+    width: 1680px;
     height: 600px;
     overflow-y: scroll;
 }

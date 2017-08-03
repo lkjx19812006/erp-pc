@@ -123,13 +123,8 @@
                                     </div>
                                     <div class="panel-collapse" v-if="initOrderDetail.goods.arr.length!==null" v-show="initOrderDetail.goods.show">
                                         <div class="panel-body panel-set">
-                                            <span style="display:inline-block;width:91%;height:32px;text-align:right;padding-right:7px;" v-if="param.int==1&&initOrderDetail.orderStatus==60&&param.isEvaluate==0">
-                                            <input type="checkbox"  @change="changeTitleChecked(data,$event)" :checked="title1">{{$t('static.Select_all')}}
-                                            <button class="btn btn-success" @click="batchAccept()" >{{$t('static.Batch_evaluation')}}</button>
-
-                                            </span>
-
-
+                                        <div>
+                                           
                                             <button class="btn btn-primary right" style="margin-right:13px" v-if="param.int==1&&initOrderDetail.orderStatus==60&&param.isEvaluate==0"  @click.stop="confirm({
                                              id:param.id,
                                              show:true,
@@ -137,6 +132,12 @@
                                              })">{{$t('static.confirm_evaluation')}}</button>
 
                                           <button class="btn right" style="color:black;font-weight:bolder;margin-right:13px" disabled="" v-if="param.isEvaluate==1">{{$t('static.evaluation_confirmed')}}</button> 
+                                           <span class="right" style="display:inline-block;height:32px;text-align:right;padding-right:7px;" v-if="param.int==1&&initOrderDetail.orderStatus==60&&param.isEvaluate==0">
+                                            <input type="checkbox"  @change="changeTitleChecked(data,$event)" :checked="title1">{{$t('static.Select_all')}}
+                                            <button class="btn btn-success" @click="batchAccept()" >{{$t('static.Batch_evaluation')}}</button>
+
+                                            </span>
+                                          </div>
                                             <table class="table  contactSet"  style="border-top:1px solid #eee">
                                                 <thead>
                                                     <th style="width:30px;" v-if="param.int==1&&initOrderDetail.orderStatus==60&&param.isEvaluate==0">{{$t('static.selected')}}</th>
