@@ -202,7 +202,7 @@
                                             </button>
 
                                              <!--  申请确认 -->
-                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&param.inquire==2&&initIntlIntentionDetail.offerStatus[0]!=3" :disabled="initIntlIntentionDetail.offerStatus[0]==1" class="btn btn-base pull-right" @click.stop="applyOffer(0)"
+                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.inquire==2&&initIntlIntentionDetail.offerStatus[0]!=3" :disabled="initIntlIntentionDetail.offerStatus[0]==1" class="btn btn-base pull-right" @click.stop="applyOffer(0)"
                                             >
                                                 <span v-if="initIntlIntentionDetail.offerStatus[0]==1">{{$t('static.applied')}}</span>
                                                 <span v-else>{{$t('static.apply_for_confirmation')}}</span>
@@ -343,7 +343,7 @@
                                                 <span >{{$t('static.confirmed')}}</span>
                                             </button>
                                                <!--  申请确认 -->
-                                            <button v-if="extractiveOfferConfirm&&initIntlIntentionDetail.extractive.arr.length>0&&param.inquire==2&&initIntlIntentionDetail.offerStatus[2]!=3" :disabled="initIntlIntentionDetail.offerStatus[2]==1" class="btn btn-base pull-right" @click.stop="applyOffer(2)">
+                                            <button v-if="extractiveOfferConfirm&&initIntlIntentionDetail.extractive.arr.length>0&&initIntlIntentionDetail.inquire==2&&initIntlIntentionDetail.offerStatus[2]!=3" :disabled="initIntlIntentionDetail.offerStatus[2]==1" class="btn btn-base pull-right" @click.stop="applyOffer(2)">
                                                 <span v-if="initIntlIntentionDetail.offerStatus[2]==1">{{$t('static.applied')}}</span>
                                                 <span v-else>{{$t('static.apply_for_confirmation')}}</span>
                                             </button>                                           
@@ -488,7 +488,7 @@
                                                 <span>{{$t('static.confirmed')}}</span>
                                             </button>
                                              <!--  申请确认 -->
-                                            <button v-if="otherOfferConfirm&&param.inquire==2&&initIntlIntentionDetail.offerStatus[1]!=3" class="btn btn-base pull-right" :disabled="initIntlIntentionDetail.offerStatus[1]==1" @click.stop="applyOffer(1)">
+                                            <button v-if="otherOfferConfirm&&initIntlIntentionDetail.inquire==2&&initIntlIntentionDetail.offerStatus[1]!=3" class="btn btn-base pull-right" :disabled="initIntlIntentionDetail.offerStatus[1]==1" @click.stop="applyOffer(1)">
                                                 <span v-if="initIntlIntentionDetail.offerStatus[1]==1">{{$t('static.applied')}}</span>
                                                 <span v-else>{{$t('static.apply_for_confirmation')}}</span>
                                             </button>
