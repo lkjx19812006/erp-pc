@@ -36,7 +36,32 @@
             <section>
                 <div class="client-section clearfix" @click.stop="">
                     <div class="col-md-12">
-                        <h4 class="section_title">{{$t('static.detailed_information')}}</h4>
+                        <div class="section_title">
+                        <span style="font-size:16px;margin-right:60px">{{$t('static.details')}}</span>
+                        <!-- 原材料状态显示 -->
+                        <span>
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.offerStatus[0]==3"><i class="circle"></i><span style="margin-left:30px">{{$t('static.RMQP_confirmed')}}</span></span>   
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.offerStatus[0]!=3"><i class="circle"  style="background:url(/static/images/error.png) no-repeat;
+                        background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.RMQP_Nconfirmed')}}</span></span> 
+                        <span class="confirmStatus"  v-if="initIntlIntentionDetail.items.arr.length==0"><i class="circle"  style="background:url(/static/images/none.png) no-repeat;background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.RMQP_Zconfirmed')}}</span></span>
+                        </span>
+
+                        <!-- 提取物状态显示 -->
+                        <span>
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.extractive.arr.length>0&&initIntlIntentionDetail.offerStatus[2]==3"><i class="circle"></i><span style="margin-left:30px">{{$t('static.EQP_confirmed')}}</span></span>   
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.extractive.arr.length>0&&initIntlIntentionDetail.offerStatus[2]!=3"><i class="circle"  style="background:url(/static/images/error.png) no-repeat;
+                        background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.EQP_Nconfirmed')}}</span></span> 
+                        <span class="confirmStatus"  v-if="initIntlIntentionDetail.extractive.arr.length==0"><i class="circle"  style="background:url(/static/images/none.png) no-repeat;background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.EQP_Zconfirmed')}}</span></span>
+                        </span>
+
+                        <!-- 运费等其他状态显示 -->
+                        <span>
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.offers.arr.length>0&&initIntlIntentionDetail.offerStatus[1]==3"><i class="circle"></i><span style="margin-left:30px">{{$t('static.FOQP_confirmed')}}</span></span>   
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.offers.arr.length>0&&initIntlIntentionDetail.offerStatus[1]!=3"><i class="circle"  style="background:url(/static/images/error.png) no-repeat;
+                        background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.FOQP_Nconfirmed')}}</span></span> 
+                        <span class="confirmStatus"  v-if="initIntlIntentionDetail.offers.arr.length==0"><i class="circle"  style="background:url(/static/images/none.png) no-repeat;background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.FOQP_Zconfirmed')}}</span></span>
+                        </span>
+                        </div>
                         <article>
                             <div class="edit-detail">
                                 <div class="clearfix">
@@ -769,6 +794,13 @@ export default {
                 })
             } else {
                 this.topTitle = false;
+                if (list == 'items') {
+                    this.title1 = false;
+                } else if (list == 'extractive') {
+                    this.title2 = false;
+                } else if (list == 'offers') {
+                    this.title3 = false;
+                }
                 allData[list].arr.forEach(function(item, i) {
                     allData[list].arr[i].checked = false;
                     allData[list].selected.length = 0;
@@ -779,7 +811,7 @@ export default {
         changeAllChecked: function(event) {
             var allData = this.$store.state.table.basicBaseList.intlIntentionDetail;
             if (event.target.checked === true) {
-                this.topTitle=true;
+                this.topTitle = true;
                 allData.items.arr.forEach(function(item, i) {
                     allData.items.arr[i].checked = true && allData.items.selected.push(item.offerId);
                 })
@@ -791,7 +823,7 @@ export default {
                 })
                 this.titleStatus(true, true, true);
             } else {
-                this.topTitle=false;
+                this.topTitle = false;
                 allData.items.arr.forEach(function(item, i) {
                     allData.items.arr[i].checked = false;
                 });
@@ -808,13 +840,16 @@ export default {
             }
         },
         isAllChecked: function() {
-              if(this.$store.state.table.basicBaseList.intlIntentionDetail.items.arr.length==0){
-                this.title1=true;
-              }else if(this.$store.state.table.basicBaseList.intlIntentionDetail.extractive.arr.length==0){
-                this.title2=true;
-              }else if(this.$store.state.table.basicBaseList.intlIntentionDetail.offers.arr.length==0){
-                this.title3=true;
-              }
+            console.log("isAllChecked");
+            if (this.$store.state.table.basicBaseList.intlIntentionDetail.items.arr.length == 0) {
+                this.title1 = true;
+            }
+            if (this.$store.state.table.basicBaseList.intlIntentionDetail.extractive.arr.length == 0) {
+                this.title2 = true;
+            }
+            if (this.$store.state.table.basicBaseList.intlIntentionDetail.offers.arr.length == 0) {
+                this.title3 = true;
+            }
 
 
             if (this.title1 == true && this.title2 == true && this.title3 == true) {
@@ -849,7 +884,7 @@ export default {
         evaluateCallback: function(name) {
             this.evaluateParam.show = false;
             this.titleStatus(false, false, false);
-            this.topTitle=false;
+            this.topTitle = false;
             this.showTips(name);
             this.$emit('evaluate-add', '');
             this.getIntlIntentionDetail(this.param);
@@ -914,7 +949,7 @@ export default {
                     this.tipsParam.show = true;
                     this.tipsParam.name = "请先选择全部报价！";
                     return;
-                } 
+                }
             }
             this.evaluateParam.link = '/intlIntention/evaluateOffer';
             this.evaluateParam.show = true;
@@ -946,6 +981,25 @@ export default {
     color: #003077;
     margin-right: 5px;
 }
+.confirmStatus{
+   display:inline-block;
+   margin:0 10px;
+   font-size:12px;
+   line-height:27px;
+   position:relative;
+}
+.confirmStatus .circle{
+    display:inline-block;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:url(/static/images/correct.png) no-repeat;
+    background-size:20px 20px;
+    position:absolute;
+    top:50%;
+    margin-top:-10px;
+}
+
 
 section {
     background-color: #fff;

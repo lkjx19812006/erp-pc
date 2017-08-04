@@ -12,6 +12,7 @@
         <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
         <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
         <supply-model :param="supplyParam" v-if="supplyParam.show"></supply-model>
+        <confirm-model :param="confirmParam" v-if="confirmParam.show"></confirm-model>
         <outer-offer-model :param="outerOfferParam" v-if="outerOfferParam.show"></outer-offer-model>
         <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
         <div class="container modal_con modal_overall" v-show="param.show">
@@ -31,13 +32,31 @@
             <section>
                 <div class="client-section clearfix">
                     <div class="col-md-12">
-                  
                         <div class="section_title">
-                        <span style="font-size:16px;margin-right:70px">{{$t('static.details')}}</span>
-                        <span class="confirmStatus"><i class="circle"></i><span style="margin-left:30px">{{$t('static.RMQP_confirmed')}}</span></span>
-                        <span class="confirmStatus"><i class="circle" style="background:url(/static/images/error.png) no-repeat;
-    background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.EQP_confirmed')}}</span></span>
-                        <span class="confirmStatus"><i class="circle"></i><span style="margin-left:30px">{{$t('static.FOQP_confirmed')}}</span></span>
+                        <span style="font-size:16px;margin-right:60px">{{$t('static.details')}}</span>
+                        <!-- 原材料状态显示 -->
+                        <span>
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.offerStatus[0]==3"><i class="circle"></i><span style="margin-left:30px">{{$t('static.RMQP_confirmed')}}</span></span>   
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.offerStatus[0]!=3"><i class="circle"  style="background:url(/static/images/error.png) no-repeat;
+                        background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.RMQP_Nconfirmed')}}</span></span> 
+                        <span class="confirmStatus"  v-if="initIntlIntentionDetail.items.arr.length==0"><i class="circle"  style="background:url(/static/images/none.png) no-repeat;background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.RMQP_Zconfirmed')}}</span></span>
+                        </span>
+
+                        <!-- 提取物状态显示 -->
+                        <span>
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.extractive.arr.length>0&&initIntlIntentionDetail.offerStatus[2]==3"><i class="circle"></i><span style="margin-left:30px">{{$t('static.EQP_confirmed')}}</span></span>   
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.extractive.arr.length>0&&initIntlIntentionDetail.offerStatus[2]!=3"><i class="circle"  style="background:url(/static/images/error.png) no-repeat;
+                        background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.EQP_Nconfirmed')}}</span></span> 
+                        <span class="confirmStatus"  v-if="initIntlIntentionDetail.extractive.arr.length==0"><i class="circle"  style="background:url(/static/images/none.png) no-repeat;background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.EQP_Zconfirmed')}}</span></span>
+                        </span>
+
+                        <!-- 运费等其他状态显示 -->
+                        <span>
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.offers.arr.length>0&&initIntlIntentionDetail.offerStatus[1]==3"><i class="circle"></i><span style="margin-left:30px">{{$t('static.FOQP_confirmed')}}</span></span>   
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.offers.arr.length>0&&initIntlIntentionDetail.offerStatus[1]!=3"><i class="circle"  style="background:url(/static/images/error.png) no-repeat;
+                        background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.FOQP_Nconfirmed')}}</span></span> 
+                        <span class="confirmStatus"  v-if="initIntlIntentionDetail.offers.arr.length==0"><i class="circle"  style="background:url(/static/images/none.png) no-repeat;background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.FOQP_Zconfirmed')}}</span></span>
+                        </span>
                         </div>
                         <article>
                             <div class="edit-detail clearfix">
@@ -175,13 +194,17 @@
                                             </span> 
                                            
                                             <!-- 确认报价 -->
-                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.items.arr[0].inquire!=3" :disabled="param.offerStatus[0]==3" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
-                                                <span v-if="param.offerStatus[0]==3">{{$t('static.confirmed')}}</span>
-                                                <span v-else>{{$t('static.confirm_quotion')}}</span>
+                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.offerStatus[0]==1" :disabled="initIntlIntentionDetail.offerStatus[0]==3" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
+                                                <span>{{$t('static.confirm_quotion')}}</span>
                                             </button>
+                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.offerStatus[0]==3" :disabled="initIntlIntentionDetail.offerStatus[0]==3" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
+                                                <span >{{$t('static.confirmed')}}</span>
+                                            </button>
+
                                              <!--  申请确认 -->
-                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.items.arr[0].inquire!=3" :disabled="param.offerStatus[0]==3" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
-                                                <span v-if="param.offerStatus[0]==3">{{$t('static.applied')}}</span>
+                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&param.inquire==2&&initIntlIntentionDetail.offerStatus[0]!=3" :disabled="initIntlIntentionDetail.offerStatus[0]==1" class="btn btn-base pull-right" @click.stop="applyOffer(0)"
+                                            >
+                                                <span v-if="initIntlIntentionDetail.offerStatus[0]==1">{{$t('static.applied')}}</span>
                                                 <span v-else>{{$t('static.apply_for_confirmation')}}</span>
                                             </button>
                                         </h4>
@@ -313,13 +336,15 @@
                                                   <p class="pull-right" v-for="item in initIntlIntentionDetail.extractiveTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                               </span>
                                               <!-- 确认报价 -->
-                                              <button v-if="extractiveOfferConfirm&&initIntlIntentionDetail.extractive.arr.length>0&&initIntlIntentionDetail.extractive.arr[0].inquire!=3" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)" :disabled="param.offerStatus[2]==3">
-                                                <span v-if="param.offerStatus[2]==3">{{$t('static.confirmed')}}</span>
-                                                <span v-else>{{$t('static.confirm_quotion')}}</span>
-                                              </button>  
+                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.extractive.arr.length>0&&initIntlIntentionDetail.offerStatus[2]==1" :disabled="initIntlIntentionDetail.offerStatus[2]==3" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">
+                                                <span>{{$t('static.confirm_quotion')}}</span>
+                                            </button>
+                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.extractive.arr.length>0&&initIntlIntentionDetail.offerStatus[2]==3" :disabled="initIntlIntentionDetail.offerStatus[2]==3" class="btn btn-base pull-right" @click.stop="confirmOffer(2,initIntlIntentionDetail.id)">
+                                                <span >{{$t('static.confirmed')}}</span>
+                                            </button>
                                                <!--  申请确认 -->
-                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.items.arr[0].inquire!=3" :disabled="param.offerStatus[0]==3" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
-                                                <span v-if="param.offerStatus[0]==3">{{$t('static.applied')}}</span>
+                                            <button v-if="extractiveOfferConfirm&&initIntlIntentionDetail.extractive.arr.length>0&&param.inquire==2&&initIntlIntentionDetail.offerStatus[2]!=3" :disabled="initIntlIntentionDetail.offerStatus[2]==1" class="btn btn-base pull-right" @click.stop="applyOffer(2)">
+                                                <span v-if="initIntlIntentionDetail.offerStatus[2]==1">{{$t('static.applied')}}</span>
                                                 <span v-else>{{$t('static.apply_for_confirmation')}}</span>
                                             </button>                                           
                                         </h4>
@@ -456,13 +481,15 @@
                                             </span>
                                             <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                              <!-- 确认报价, -->
-                                            <button v-if="otherOfferConfirm" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)" :disabled="param.offerStatus[1]==3">
-                                                <span v-if="param.offerStatus[1]==3">{{$t('static.confirmed')}}</span>
-                                                <span v-else>{{$t('static.confirm_quotion')}}</span>
+                                            <button v-if="otherOfferConfirm&&initIntlIntentionDetail.offers.arr.length>0&&initIntlIntentionDetail.offerStatus[1]==1" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)" :disabled="initIntlIntentionDetail.offerStatus[1]==3">
+                                                <span>{{$t('static.confirm_quotion')}}</span>
+                                            </button>
+                                            <button v-if="otherOfferConfirm&&initIntlIntentionDetail.offers.arr.length>0&&initIntlIntentionDetail.offerStatus[1]==3" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)" :disabled="initIntlIntentionDetail.offerStatus[1]==3">
+                                                <span>{{$t('static.confirmed')}}</span>
                                             </button>
                                              <!--  申请确认 -->
-                                            <button v-if="itemOfferConfirm&&initIntlIntentionDetail.items.arr.length>0&&initIntlIntentionDetail.items.arr[0].inquire!=3" :disabled="param.offerStatus[0]==3" class="btn btn-base pull-right" @click.stop="confirmOffer(0,initIntlIntentionDetail.id)">
-                                                <span v-if="param.offerStatus[0]==3">{{$t('static.applied')}}</span>
+                                            <button v-if="otherOfferConfirm&&initIntlIntentionDetail.offers.arr.length>0&&param.inquire==2&&initIntlIntentionDetail.offerStatus[1]!=3" class="btn btn-base pull-right" :disabled="initIntlIntentionDetail.offerStatus[1]==1" @click.stop="applyOffer(1)">
+                                                <span v-if="initIntlIntentionDetail.offerStatus[1]==1">{{$t('static.applied')}}</span>
                                                 <span v-else>{{$t('static.apply_for_confirmation')}}</span>
                                             </button>
                                          </h4>
@@ -638,6 +665,7 @@ import delfileModel from '../tips/tipDialog'
 import tipsModel from '../../components/tips/tipDialog'
 import supplyModel from '../../components/clientRelate/clientDetail'
 import outerOfferModel from './outerOfferList'
+import confirmModel from './confirmApply'
 
 import {
     initIntlIntentionDetail,
@@ -670,7 +698,8 @@ export default {
         pictureModel,
         tipsModel,
         supplyModel,
-        outerOfferModel
+        outerOfferModel,
+        confirmModel
     },
     data() {
         return {
@@ -793,7 +822,9 @@ export default {
             supplyParam: {
                 show: false
             },
-
+             confirmParam: {
+                show: false
+            },
             conformParam: { //确认报价参数
                 id: 0,
                 offerType: 0,
@@ -842,13 +873,29 @@ export default {
         }
     },
     methods: {
+        applyOffer:function(type){
+         this.confirmParam.show= true;
+         this.confirmParam.id=this.param.id;
+         this.confirmParam.type=type;
+         this.confirmParam.link='/intlIntention/applyOfferConfirm';
+         this.confirmParam.callback = this.confirmCallback;
+        },
+        confirmCallback: function(name) {
+            this.confirmParam.show = false;
+            this.showTips(name);
+            this.getIntlIntentionDetail(this.param);
+        },
+         showTips: function(name) {
+            this.tipsParam.show = true;
+            this.tipsParam.name = name;
+            this.tipsParam.alert = true;
+        },
         getOperation: function(menus, path) {
             for (let i = 0; i < menus.length; i++) {
 
                 if (menus[i].url == path) {
                     
                     for (let j = 0; j < menus[i].subcategory.length; j++) {
-
                         if (menus[i].subcategory[j].id == 120) {
                             this.itemOfferConfirm = true;
                             continue;
@@ -1062,7 +1109,8 @@ export default {
         this.getOperation(JSON.parse(localStorage.menus), this.$route.path);
         this.getIntlIntentionDetail(this.param);
         this.getCurrencyList();
-        console.log(this.param)
+      
+
         
     },
     filter: (filter, {})
@@ -1088,8 +1136,8 @@ export default {
 }
 .confirmStatus{
    display:inline-block;
-   margin:0 20px;
-   font-size:13px;
+   margin:0 10px;
+   font-size:12px;
    line-height:27px;
    position:relative;
 }

@@ -14,12 +14,12 @@
                         <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
                     </dd>
                 </dl>
-                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">{{$t('static.client_id')}}：</dt>
-                   <dd class="left">
-                       <input type="text" class="form-control" v-model="loadParam.customerId" @keyup.enter="intentionSearch()" />
-                   </dd>
-                </dl> 
+                <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">{{$t('static.client_id')}}：</dt>
+                    <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerId" @keyup.enter="intentionSearch()" />
+                    </dd>
+                </dl>
                 <dl class="clear left transfer">
                     <dt class="left  marg_top">{{$t('static.client_name')}}：</dt>
                     <dd class="left">
@@ -63,7 +63,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th>{{$t('static.inquire_type')}}</th>                    
+                        <th>{{$t('static.inquire_type')}}</th>
                         <th>{{$t('static.client_id')}}</th>
                         <th>{{$t('static.commodity_items')}}</th>
                         <th>{{$t('static.client_name')}}</th>
@@ -168,7 +168,7 @@ export default {
                 breedId: '',
                 breedName: '',
                 employeeName: '',
-                customerId:'',
+                customerId: '',
                 customerName: '',
                 customerEmail: '',
                 inquire: '',
@@ -190,7 +190,7 @@ export default {
                 id: '',
                 inquireId: '',
                 inquire: '',
-                offerStatus:'',
+                offerStatus: '',
                 callback: this.detailCallback
             },
             breedSearchParam: {
@@ -259,7 +259,7 @@ export default {
             this.detailParam.index = index;
             this.detailParam.inquireId = item.id;
             this.detailParam.inquire = item.inquire;
-            this.detailParam.offerStatus = item.offerStatus?JSON.parse(item.offerStatus):item.offerStatus
+            this.detailParam.offerStatus = item.offerStatus ? JSON.parse(item.offerStatus) : item.offerStatus;
             this.detailParam.show = true;
         },
         intentionSearch: function() {
@@ -285,7 +285,7 @@ export default {
         },
         resetCondition: function() {
             this.loadParam.employee = '';
-            this.loadParam.customerId='';
+            this.loadParam.customerId = '';
             this.loadParam.customerName = '';
             this.loadParam.employeeName = '';
             this.loadParam.breedId = '';

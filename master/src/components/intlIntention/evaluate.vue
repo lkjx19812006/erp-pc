@@ -21,7 +21,7 @@ export default {
                 ids: "",
                 comments: "",
                 callback: "",
-                title: "您的评价",
+                title: "Your evaluation /你的评价",
                 show: true,
                 page:"",
                 //操作按钮
