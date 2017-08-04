@@ -52,10 +52,10 @@
 
                         <!-- 运费等其他状态显示 -->
                         <span>
-                        <span class="confirmStatus" v-if="initIntlIntentionDetail.offers.arr.length>0&&initIntlIntentionDetail.offerStatus[1]==3"><i class="circle"></i><span style="margin-left:30px">{{$t('static.FOQP_confirmed')}}</span></span>   
-                        <span class="confirmStatus" v-if="initIntlIntentionDetail.offers.arr.length>0&&initIntlIntentionDetail.offerStatus[1]!=3"><i class="circle"  style="background:url(/static/images/error.png) no-repeat;
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.offers.arr.length>=0&&initIntlIntentionDetail.offerStatus[1]==3"><i class="circle"></i><span style="margin-left:30px">{{$t('static.FOQP_confirmed')}}</span></span>   
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.offers.arr.length>=0&&initIntlIntentionDetail.offerStatus[1]!=3"><i class="circle"  style="background:url(/static/images/error.png) no-repeat;
                         background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.FOQP_Nconfirmed')}}</span></span> 
-                        <span class="confirmStatus"  v-if="initIntlIntentionDetail.offers.arr.length==0"><i class="circle"  style="background:url(/static/images/none.png) no-repeat;background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.FOQP_Zconfirmed')}}</span></span>
+                      <!--   <span class="confirmStatus"  v-if="initIntlIntentionDetail.offers.arr.length==0"><i class="circle"  style="background:url(/static/images/none.png) no-repeat;background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.FOQP_Zconfirmed')}}</span></span> -->
                         </span>
                         </div>
                         <article>
@@ -481,14 +481,14 @@
                                             </span>
                                             <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                              <!-- 确认报价, -->
-                                            <button v-if="otherOfferConfirm&&initIntlIntentionDetail.offers.arr.length>0&&initIntlIntentionDetail.offerStatus[1]==1" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)" :disabled="initIntlIntentionDetail.offerStatus[1]==3">
+                                            <button v-if="otherOfferConfirm&&initIntlIntentionDetail.offerStatus[1]==1" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)" :disabled="initIntlIntentionDetail.offerStatus[1]==3">
                                                 <span>{{$t('static.confirm_quotion')}}</span>
                                             </button>
-                                            <button v-if="otherOfferConfirm&&initIntlIntentionDetail.offers.arr.length>0&&initIntlIntentionDetail.offerStatus[1]==3" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)" :disabled="initIntlIntentionDetail.offerStatus[1]==3">
+                                            <button v-if="otherOfferConfirm&&initIntlIntentionDetail.offerStatus[1]==3" class="btn btn-base pull-right" @click.stop="confirmOffer(1,initIntlIntentionDetail.id)" :disabled="initIntlIntentionDetail.offerStatus[1]==3">
                                                 <span>{{$t('static.confirmed')}}</span>
                                             </button>
                                              <!--  申请确认 -->
-                                            <button v-if="otherOfferConfirm&&initIntlIntentionDetail.offers.arr.length>0&&param.inquire==2&&initIntlIntentionDetail.offerStatus[1]!=3" class="btn btn-base pull-right" :disabled="initIntlIntentionDetail.offerStatus[1]==1" @click.stop="applyOffer(1)">
+                                            <button v-if="otherOfferConfirm&&param.inquire==2&&initIntlIntentionDetail.offerStatus[1]!=3" class="btn btn-base pull-right" :disabled="initIntlIntentionDetail.offerStatus[1]==1" @click.stop="applyOffer(1)">
                                                 <span v-if="initIntlIntentionDetail.offerStatus[1]==1">{{$t('static.applied')}}</span>
                                                 <span v-else>{{$t('static.apply_for_confirmation')}}</span>
                                             </button>

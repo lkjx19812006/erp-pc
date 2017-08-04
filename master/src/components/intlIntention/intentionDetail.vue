@@ -56,10 +56,10 @@
 
                         <!-- 运费等其他状态显示 -->
                         <span>
-                        <span class="confirmStatus" v-if="initIntlIntentionDetail.offers.arr.length>0&&initIntlIntentionDetail.offerStatus[1]==3"><i class="circle"></i><span style="margin-left:30px">{{$t('static.FOQP_confirmed')}}</span></span>   
-                        <span class="confirmStatus" v-if="initIntlIntentionDetail.offers.arr.length>0&&initIntlIntentionDetail.offerStatus[1]!=3"><i class="circle"  style="background:url(/static/images/error.png) no-repeat;
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.offers.arr.length>=0&&initIntlIntentionDetail.offerStatus[1]==3"><i class="circle"></i><span style="margin-left:30px">{{$t('static.FOQP_confirmed')}}</span></span>   
+                        <span class="confirmStatus" v-if="initIntlIntentionDetail.offers.arr.length>=0&&initIntlIntentionDetail.offerStatus[1]!=3"><i class="circle"  style="background:url(/static/images/error.png) no-repeat;
                         background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.FOQP_Nconfirmed')}}</span></span> 
-                        <span class="confirmStatus"  v-if="initIntlIntentionDetail.offers.arr.length==0"><i class="circle"  style="background:url(/static/images/none.png) no-repeat;background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.FOQP_Zconfirmed')}}</span></span>
+                       <!--  <span class="confirmStatus"  v-if="initIntlIntentionDetail.offers.arr.length==0"><i class="circle"  style="background:url(/static/images/none.png) no-repeat;background-size:20px 20px;"></i><span style="margin-left:30px">{{$t('static.FOQP_Zconfirmed')}}</span></span> -->
                         </span>
                         </div>
                         <article>
