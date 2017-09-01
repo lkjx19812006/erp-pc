@@ -1541,8 +1541,9 @@ Vue.filter('filterLjlStatus', function (val) {
             str = '风控/报告/机构拒绝后重新注册';
             break;
         default:
-            str="未知状态"
-        break;
+            str = "未知状态"
+            break;
     }
     return str;
 })
+

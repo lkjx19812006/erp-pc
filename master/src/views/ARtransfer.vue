@@ -13,8 +13,8 @@
     data() {
       return {}
     },
-    components:{
-      langjinling
+    components: {
+      langjinling,
     },
     computed: {
       //通过计算属性 实时计算当前ID值 显示不同的页面内容
