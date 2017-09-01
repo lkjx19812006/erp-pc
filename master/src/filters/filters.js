@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-Vue.filter('categorystate', function(val) {
+Vue.filter('categorystate', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -9,7 +9,7 @@ Vue.filter('categorystate', function(val) {
     }
 });
 
-Vue.filter('telstate', function(val) {
+Vue.filter('telstate', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -30,7 +30,7 @@ function isJSON(str) {
     console.log('It is not a string!')
 }
 
-Vue.filter('specFilter_a', function(data) { //过滤规格
+Vue.filter('specFilter_a', function (data) { //过滤规格
     if (data && isJSON(data)) {
         data = JSON.parse(data)
         for (var key in data) {
@@ -41,7 +41,7 @@ Vue.filter('specFilter_a', function(data) { //过滤规格
     }
 })
 
-Vue.filter('specFilter_b', function(data) { //过滤片形
+Vue.filter('specFilter_b', function (data) { //过滤片形
     if (data) {
         data = JSON.parse(data)
         for (var key in data) {
@@ -50,7 +50,7 @@ Vue.filter('specFilter_b', function(data) { //过滤片形
     }
 })
 
-Vue.filter('Sample', function(val) { //是否样品
+Vue.filter('Sample', function (val) { //是否样品
     var val = val;
     if (val == 0) {
         return this.$t('static.no');
@@ -61,7 +61,7 @@ Vue.filter('Sample', function(val) { //是否样品
     }
 });
 
-Vue.filter('payMent', function(val) {
+Vue.filter('payMent', function (val) {
     var val = val;
     if (val == 0) {
         return '付款';
@@ -72,7 +72,7 @@ Vue.filter('payMent', function(val) {
     }
 });
 
-Vue.filter('bizType', function(val, bizType, type) {
+Vue.filter('bizType', function (val, bizType, type) {
     var val = val;
     var type = type;
     var bizType = bizType;
@@ -90,7 +90,7 @@ Vue.filter('bizType', function(val, bizType, type) {
         return val;
     }
 });
-Vue.filter('enbizType', function(val, bizType, type) {
+Vue.filter('enbizType', function (val, bizType, type) {
     var val = val;
     var type = type;
     var bizType = bizType;
@@ -109,7 +109,7 @@ Vue.filter('enbizType', function(val, bizType, type) {
     }
 });
 
-Vue.filter('assess', function(val, type, logistic, name, taskKey) { //订单状态判断
+Vue.filter('assess', function (val, type, logistic, name, taskKey) { //订单状态判断
     var val = val;
     var type = type;
     var logistic = logistic;
@@ -152,7 +152,7 @@ Vue.filter('assess', function(val, type, logistic, name, taskKey) { //订单状�
         return '';
     }
 });
-Vue.filter('Enassess', function(val, type, logistic, name, taskKey) { //订单状态判断英文展示
+Vue.filter('Enassess', function (val, type, logistic, name, taskKey) { //订单状态判断英文展示
     var val = val;
     var type = type;
     var logistic = logistic;
@@ -195,7 +195,7 @@ Vue.filter('Enassess', function(val, type, logistic, name, taskKey) { //订单�
         return '';
     }
 });
-Vue.filter('numberstate', function(val) {
+Vue.filter('numberstate', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -203,7 +203,7 @@ Vue.filter('numberstate', function(val) {
         return val;
     }
 });
-Vue.filter('leaveTime', function(val) {
+Vue.filter('leaveTime', function (val) {
     var val = val;
     if (val == 1) {
         return '在职';
@@ -214,7 +214,7 @@ Vue.filter('leaveTime', function(val) {
     }
 });
 
-Vue.filter('orderDescript', function(val) {
+Vue.filter('orderDescript', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -239,7 +239,7 @@ Vue.filter('orderDescript', function(val) {
     }
 });
 
-Vue.filter('iconstate', function(val) {
+Vue.filter('iconstate', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -247,7 +247,7 @@ Vue.filter('iconstate', function(val) {
         return '' + val;
     }
 });
-Vue.filter('isostate', function(val) {
+Vue.filter('isostate', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -256,25 +256,7 @@ Vue.filter('isostate', function(val) {
     }
 });
 
-Vue.filter('systemcode', function(val) {
-    var val = val;
-    if (val == null) {
-        return '无';
-    } else if (val == "") {
-        return '无';
-    } else {
-        return val;
-    }
-});
-Vue.filter('systemtype', function(val) {
-    var val = val;
-    if (val == null) {
-        return '无';
-    } else {
-        return val;
-    }
-});
-Vue.filter('systemdesc', function(val) {
+Vue.filter('systemcode', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -284,8 +266,26 @@ Vue.filter('systemdesc', function(val) {
         return val;
     }
 });
+Vue.filter('systemtype', function (val) {
+    var val = val;
+    if (val == null) {
+        return '无';
+    } else {
+        return val;
+    }
+});
+Vue.filter('systemdesc', function (val) {
+    var val = val;
+    if (val == null) {
+        return '无';
+    } else if (val == "") {
+        return '无';
+    } else {
+        return val;
+    }
+});
 
-Vue.filter('breedcode', function(val) {
+Vue.filter('breedcode', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -294,7 +294,7 @@ Vue.filter('breedcode', function(val) {
     }
 })
 
-Vue.filter('categorycode', function(val) {
+Vue.filter('categorycode', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -303,7 +303,7 @@ Vue.filter('categorycode', function(val) {
     }
 })
 
-Vue.filter('catestate', function(val) {
+Vue.filter('catestate', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -312,7 +312,7 @@ Vue.filter('catestate', function(val) {
     }
 })
 
-Vue.filter('employeestate', function(val) {
+Vue.filter('employeestate', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -321,7 +321,7 @@ Vue.filter('employeestate', function(val) {
     }
 })
 
-Vue.filter('qualify', function(val) {
+Vue.filter('qualify', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -331,7 +331,7 @@ Vue.filter('qualify', function(val) {
         return val;
     }
 })
-Vue.filter('codestate', function(val) {
+Vue.filter('codestate', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -341,7 +341,7 @@ Vue.filter('codestate', function(val) {
         return val;
     }
 })
-Vue.filter('entry', function(val) {
+Vue.filter('entry', function (val) {
     var val = val;
     if (val == null) {
         return '无';
@@ -352,7 +352,7 @@ Vue.filter('entry', function(val) {
     }
 
 })
-Vue.filter('levelstate', function(val) { //等级
+Vue.filter('levelstate', function (val) { //等级
     var val = val;
     if (val == null) {
         return '无';
@@ -362,7 +362,7 @@ Vue.filter('levelstate', function(val) { //等级
         return val;
     }
 })
-Vue.filter('chanceType', function(val) { //机会类型
+Vue.filter('chanceType', function (val) { //机会类型
     var val = val;
     if (val == null) {
         return '无';
@@ -372,7 +372,7 @@ Vue.filter('chanceType', function(val) { //机会类型
         return '求购';
     }
 })
-Vue.filter('chanceEspec', function(val) { //机会类型
+Vue.filter('chanceEspec', function (val) { //机会类型
     var val = val;
     if (val == null) {
         return '无';
@@ -382,7 +382,7 @@ Vue.filter('chanceEspec', function(val) { //机会类型
         return '特殊';
     }
 })
-Vue.filter('intlstata', function(val) { //是否国际
+Vue.filter('intlstata', function (val) { //是否国际
     var val = val;
     if (val == null) {
         return '无';
@@ -393,7 +393,7 @@ Vue.filter('intlstata', function(val) { //是否国际
     }
 })
 
-Vue.filter('coa', function(val) { //检测报告
+Vue.filter('coa', function (val) { //检测报告
     var val = val;
     if (val == null) {
         return '无';
@@ -403,7 +403,7 @@ Vue.filter('coa', function(val) { //检测报告
         return '有';
     }
 })
-Vue.filter('visitstate', function(val) { //是否上门看货
+Vue.filter('visitstate', function (val) { //是否上门看货
     var val = val;
     if (val == null) {
         return '无';
@@ -413,7 +413,7 @@ Vue.filter('visitstate', function(val) { //是否上门看货
         return '会';
     }
 })
-Vue.filter('invoicstate', function(val) { //发票
+Vue.filter('invoicstate', function (val) { //发票
     var val = val;
     if (val == null) {
         return '无发票';
@@ -425,7 +425,7 @@ Vue.filter('invoicstate', function(val) { //发票
         return '增值发票';
     }
 })
-Vue.filter('advanced', function(val) { //预付比例
+Vue.filter('advanced', function (val) { //预付比例
     var val = val;
     if (val == null) {
         return 'None';
@@ -458,7 +458,7 @@ Vue.filter('advanced', function(val) { //预付比例
         return '90%';
     }*/
 })
-Vue.filter('status', function(val) { //业务机会状态
+Vue.filter('status', function (val) { //业务机会状态
     var val = val;
     if (val == null) {
         return '不确定';
@@ -468,7 +468,7 @@ Vue.filter('status', function(val) { //业务机会状态
         return '通过';
     }
 })
-Vue.filter('country', function(val) { //国家
+Vue.filter('country', function (val) { //国家
     var val = val;
     if (val == null) {
         return '未说明';
@@ -476,7 +476,7 @@ Vue.filter('country', function(val) { //国家
         return val;
     }
 })
-Vue.filter('customerType', function(val) { //客户类型
+Vue.filter('customerType', function (val) { //客户类型
     var val = val;
     if (val == 0) {
         return '其他';
@@ -534,7 +534,7 @@ Vue.filter('customerType', function(val) { //客户类型
         return val;
     }
 })
-Vue.filter('customerTypeEn', function(val) { //客户类型
+Vue.filter('customerTypeEn', function (val) { //客户类型
     var val = val;
     if (val == 0) {
         return 'Others';
@@ -586,13 +586,13 @@ Vue.filter('customerTypeEn', function(val) { //客户类型
         return 'Pieces Factory';
     } else if (val == 24) {
         return 'Herb tea company';
-    }else if (val == 25) {
+    } else if (val == 25) {
         return 'Planting base';
     } else {
         return val;
     }
 })
-Vue.filter('classify', function(val) { //客户分类
+Vue.filter('classify', function (val) { //客户分类
     var val = val;
     if (val == '买') {
         return '采购商';
@@ -611,7 +611,7 @@ Vue.filter('classify', function(val) { //客户分类
     }
 })
 
-Vue.filter('customerScale', function(val) { //客户规模
+Vue.filter('customerScale', function (val) { //客户规模
     var val = val;
     if (val === '') {
         return '未知';
@@ -626,7 +626,7 @@ Vue.filter('customerScale', function(val) { //客户规模
     }
 })
 
-Vue.filter('customerNature', function(val) { //客户性质
+Vue.filter('customerNature', function (val) { //客户性质
     var val = val;
     if (val == 0) {
         return '个体户';
@@ -641,7 +641,7 @@ Vue.filter('customerNature', function(val) { //客户性质
     }
 })
 
-Vue.filter('enumlist', function(val) { //国家
+Vue.filter('enumlist', function (val) { //国家
     var val = val;
     var obj = {
         "TRACE": '跟进类型',
@@ -673,7 +673,7 @@ Vue.filter('enumlist', function(val) { //国家
 
 })
 
-Vue.filter('onsell', function(val) { //意向上下架
+Vue.filter('onsell', function (val) { //意向上下架
     var val = val;
     if (val == 0) {
         return '初始';
@@ -700,7 +700,7 @@ Vue.filter('onsell', function(val) { //意向上下架
     }
 })
 
-Vue.filter('intentionAudit', function(val) { //意向审核
+Vue.filter('intentionAudit', function (val) { //意向审核
     var val = val;
     if (val == 0) {
         return '初始';
@@ -728,7 +728,7 @@ Vue.filter('intentionAudit', function(val) { //意向审核
     }
 })
 
-Vue.filter('date', function(val) { //将时间的时分秒去掉
+Vue.filter('date', function (val) { //将时间的时分秒去掉
     var val = val;
     if (typeof val === 'string') {
         return val.split(' ')[0];
@@ -736,7 +736,7 @@ Vue.filter('date', function(val) { //将时间的时分秒去掉
         return val;
     }
 })
-Vue.filter('subtime', function(val) { //将时间的时分秒去掉
+Vue.filter('subtime', function (val) { //将时间的时分秒去掉
     var val = val;
     if (val) {
         val = val.substring(0, 10);
@@ -745,7 +745,7 @@ Vue.filter('subtime', function(val) { //将时间的时分秒去掉
     }
     return val;
 })
-Vue.filter('subtime2', function(val) { //将时间的分秒后面的去掉
+Vue.filter('subtime2', function (val) { //将时间的分秒后面的去掉
     var val = val;
     if (val) {
         val = val.substring(0, 16);
@@ -758,10 +758,10 @@ Vue.filter('subtime2', function(val) { //将时间的分秒后面的去掉
 
 function format(time, format) {
     var t = new Date(time);
-    var tf = function(i) {
+    var tf = function (i) {
         return (i < 10 ? '0' : '') + i
     };
-    return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a) {
+    return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
         switch (a) {
             case 'yyyy':
                 return tf(t.getFullYear());
@@ -785,12 +785,12 @@ function format(time, format) {
     });
 }
 
-Vue.filter('formatTime', function(time) { //毫秒转化成时间    
+Vue.filter('formatTime', function (time) { //毫秒转化成时间    
     return format(time, 'yyyy-MM-dd HH:mm:ss');
 })
 
 
-Vue.filter('dateTime', function(val, accurateTo) { //较正时间格式,accurateTo表示精确到哪一位（天或秒，默认天）
+Vue.filter('dateTime', function (val, accurateTo) { //较正时间格式,accurateTo表示精确到哪一位（天或秒，默认天）
     var result = "";
     var now = new Date(val);
     var year = now.getFullYear();
@@ -817,7 +817,7 @@ Vue.filter('dateTime', function(val, accurateTo) { //较正时间格式,accurate
 
 })
 
-Vue.filter('payfee', function(val) { //将金额保留小数点后两位
+Vue.filter('payfee', function (val) { //将金额保留小数点后两位
     var val = val;
     if (val === val.substring(0, val.indexOf(".") + 3)) {
         return val;
@@ -825,7 +825,7 @@ Vue.filter('payfee', function(val) { //将金额保留小数点后两位
         return val.substring(0, val.indexOf(".") + 3);
     }
 })
-Vue.filter('orderstatus', function(val) { //订单状态
+Vue.filter('orderstatus', function (val) { //订单状态
     var val = val;
     if (val == 0) {
         return '新建订单';
@@ -859,7 +859,7 @@ Vue.filter('orderstatus', function(val) { //订单状态
     }
 })
 
-Vue.filter('salesRecord', function(validate, task) { //订单退换货
+Vue.filter('salesRecord', function (validate, task) { //订单退换货
     if (validate == null) {
         return this.$t('static.awaiting_review');
     } else if (validate == 0) {
@@ -877,7 +877,7 @@ Vue.filter('salesRecord', function(validate, task) { //订单退换货
     }
 })
 
-Vue.filter('Auditing', function(val) { //订单审核
+Vue.filter('Auditing', function (val) { //订单审核
     var val = val;
     if (val == null) {
         return this.$t('static.wait_approval');
@@ -895,7 +895,7 @@ Vue.filter('Auditing', function(val) { //订单审核
         return val;
     }
 })
-Vue.filter('EnAuditing', function(val) { //订单审核
+Vue.filter('EnAuditing', function (val) { //订单审核
     var val = val;
     if (val == null) {
         return 'Waiting for an approval';
@@ -914,7 +914,7 @@ Vue.filter('EnAuditing', function(val) { //订单审核
     }
 })
 
-Vue.filter('Audit', function(val) { //寄样审核
+Vue.filter('Audit', function (val) { //寄样审核
     var val = val;
     if (val == null) {
         return '初始状态';
@@ -933,7 +933,7 @@ Vue.filter('Audit', function(val) { //寄样审核
     }
 })
 
-Vue.filter('drugsStatus', function(val) { //药款转出状态
+Vue.filter('drugsStatus', function (val) { //药款转出状态
     var val = val;
     if (val == 0) {
         return '申请审核';
@@ -948,7 +948,7 @@ Vue.filter('drugsStatus', function(val) { //药款转出状态
         return '转出成功';
     }
 })
-Vue.filter('transferStatus', function(val) { //药款转入状态
+Vue.filter('transferStatus', function (val) { //药款转入状态
     var val = val;
     if (val == 0) {
         return '待支付';
@@ -963,7 +963,7 @@ Vue.filter('transferStatus', function(val) { //药款转入状态
         return '支付失败';
     }
 })
-Vue.filter('payType', function(val) { //药款支付状态
+Vue.filter('payType', function (val) { //药款支付状态
     var val = val;
     if (val == 1) {
         return '支付宝支付';
@@ -976,7 +976,7 @@ Vue.filter('payType', function(val) { //药款支付状态
     }
 })
 
-Vue.filter('linktype', function(val) { //药款关联类型
+Vue.filter('linktype', function (val) { //药款关联类型
     var val = val;
     if (val == 0) {
         return '订单';
@@ -992,7 +992,7 @@ Vue.filter('linktype', function(val) { //药款关联类型
 })
 
 
-Vue.filter('requireAgain', function(val) { //询价状态
+Vue.filter('requireAgain', function (val) { //询价状态
     var val = val;
     if (val == 0) {
         return '请报价';
@@ -1004,7 +1004,7 @@ Vue.filter('requireAgain', function(val) { //询价状态
     }
 })
 
-Vue.filter('offerAgain', function(val) { // 报价状态
+Vue.filter('offerAgain', function (val) { // 报价状态
     var val = val;
     if (val == 0) {
         return '未报价';
@@ -1016,7 +1016,7 @@ Vue.filter('offerAgain', function(val) { // 报价状态
     }
 })
 
-Vue.filter('Currency', function(val) { //订单货币方式
+Vue.filter('Currency', function (val) { //订单货币方式
     var val = val;
     if (val == 1 || val === 0) {
         return 'CNY人民币';
@@ -1074,7 +1074,7 @@ Vue.filter('Currency', function(val) { //订单货币方式
 
 })
 
-Vue.filter('inquire', function(val) { //国际意向询价状态
+Vue.filter('inquire', function (val) { //国际意向询价状态
     var val = val;
     if (val === 0) {
         return '初始';
@@ -1090,7 +1090,7 @@ Vue.filter('inquire', function(val) { //国际意向询价状态
     }
 })
 
-Vue.filter('Unit', function(val) { //国际意向单位
+Vue.filter('Unit', function (val) { //国际意向单位
     var val = val;
     if (val == 1) {
         return '斤（HKG）';
@@ -1143,7 +1143,7 @@ Vue.filter('Unit', function(val) { //国际意向单位
 
 })
 
-Vue.filter('tracking', function(val) { //跟进状态
+Vue.filter('tracking', function (val) { //跟进状态
     var val = val;
     if (val === 0) {
         return '初始';
@@ -1162,7 +1162,7 @@ Vue.filter('tracking', function(val) { //跟进状态
 
 })
 
-Vue.filter('isnull', function(val) {
+Vue.filter('isnull', function (val) {
     var val = val;
     if (val === null) {
         return 0;
@@ -1170,7 +1170,7 @@ Vue.filter('isnull', function(val) {
         return val;
     }
 })
-Vue.filter('money', function(val) { //金额逗号隔开
+Vue.filter('money', function (val) { //金额逗号隔开
     var val = val;
     val = parseFloat((val + "").replace(/[^\d\.-]/g, "")).toFixed(2) + "";
     var l = val.split(".")[0].split("").reverse(),
@@ -1189,7 +1189,7 @@ Vue.filter('money', function(val) { //金额逗号隔开
 })
 
 
-Vue.filter('intentionSource', function(val) { //意向来源
+Vue.filter('intentionSource', function (val) { //意向来源
     var val = val;
     if (val == 1) {
         return "pc";
@@ -1204,7 +1204,7 @@ Vue.filter('intentionSource', function(val) { //意向来源
     }
 })
 
-Vue.filter('indentSource', function(val) { //采购单来源
+Vue.filter('indentSource', function (val) { //采购单来源
     var val = val;
     if (val === 0) {
         return "业务员导入";
@@ -1221,7 +1221,7 @@ Vue.filter('indentSource', function(val) { //采购单来源
     }
 })
 
-Vue.filter('file', function(val) { //文件后缀名获取
+Vue.filter('file', function (val) { //文件后缀名获取
     var val = val;
     var file = val.substring(val.lastIndexOf('.') + 1);
     if (file == "doc" || file == "docx") {
@@ -1238,7 +1238,7 @@ Vue.filter('file', function(val) { //文件后缀名获取
 
 });
 
-Vue.filter('isImage', function(val) { //判断是否图片
+Vue.filter('isImage', function (val) { //判断是否图片
     var val = val;
     var file = val.substring(val.lastIndexOf('.') + 1);
     if (file == "jpg" || file == "jpeg" || file == "png") {
@@ -1249,7 +1249,7 @@ Vue.filter('isImage', function(val) { //判断是否图片
 
 });
 
-Vue.filter('indentType', function(val) { //判断采购单类型
+Vue.filter('indentType', function (val) { //判断采购单类型
     var val = val;
     if (val === 0) {
         return "药厂采购单";
@@ -1261,7 +1261,7 @@ Vue.filter('indentType', function(val) { //判断采购单类型
 
 });
 
-Vue.filter('textDisplay', function(val, maxLength) { //文本内容显示，超过maxLength长度部分以...表示
+Vue.filter('textDisplay', function (val, maxLength) { //文本内容显示，超过maxLength长度部分以...表示
     var val = val;
     if (!val) {
         val = "";
@@ -1279,7 +1279,7 @@ Vue.filter('textDisplay', function(val, maxLength) { //文本内容显示，超�
 
 });
 
-Vue.filter('offerAccept', function(val) { //文本内容显示，超过maxLength长度部分以...表示
+Vue.filter('offerAccept', function (val) { //文本内容显示，超过maxLength长度部分以...表示
     var val = val;
     if (val === 0) {
         return "未处理";
@@ -1293,7 +1293,7 @@ Vue.filter('offerAccept', function(val) { //文本内容显示，超过maxLength
 
 });
 
-Vue.filter('offerType', function(val) { //报价类型
+Vue.filter('offerType', function (val) { //报价类型
     var val = val;
     if (val === 0) {
         return "业务员";
@@ -1307,7 +1307,7 @@ Vue.filter('offerType', function(val) { //报价类型
 
 });
 
-Vue.filter('intentionType', function(type, especial, preSell) { //意向类型
+Vue.filter('intentionType', function (type, especial, preSell) { //意向类型
 
     if (type === 1 && especial === 1 && preSell === 1) {
         return "预售资源";
@@ -1325,7 +1325,7 @@ Vue.filter('intentionType', function(type, especial, preSell) { //意向类型
 
 });
 
-Vue.filter("qaFilter", function(data) {
+Vue.filter("qaFilter", function (data) {
     if (data == "-1") {
         return "未知"
     }
@@ -1337,7 +1337,7 @@ Vue.filter("qaFilter", function(data) {
     }
 })
 
-Vue.filter("isDeal", function(data) {
+Vue.filter("isDeal", function (data) {
     if (data == "-1") {
         return "未知"
     }
@@ -1350,7 +1350,7 @@ Vue.filter("isDeal", function(data) {
 })
 
 
-Vue.filter('province', function(id) {
+Vue.filter('province', function (id) {
     if (id == 247) {
         return '北京'
     }
@@ -1457,7 +1457,7 @@ Vue.filter('province', function(id) {
     return "不限"
 })
 
-Vue.filter("paymentWay", function(val) {
+Vue.filter("paymentWay", function (val) {
     if (val === "") {
         return "未知";
     } else if (val == 0) {
@@ -1473,7 +1473,7 @@ Vue.filter("paymentWay", function(val) {
     }
 })
 
-Vue.filter("orderSource", function(val) { //订单来源
+Vue.filter("orderSource", function (val) { //订单来源
     if (val === "") {
         return "未知";
     } else if (val == 0) {
@@ -1493,7 +1493,7 @@ Vue.filter("orderSource", function(val) { //订单来源
     }
 })
 
-Vue.filter("freightType", function(val) { //运费支付人
+Vue.filter("freightType", function (val) { //运费支付人
     if (val === "") {
         return "未知";
     } else if (val == 0) {
@@ -1503,7 +1503,7 @@ Vue.filter("freightType", function(val) { //运费支付人
     }
 })
 
-Vue.filter("newCustomerType", function(val) {
+Vue.filter("newCustomerType", function (val) {
     if (val == 0) {
         return "初始";
     } else if (val == 1) {
@@ -1513,4 +1513,36 @@ Vue.filter("newCustomerType", function(val) {
     } else if (val == 3) {
         return "买卖家"
     }
+})
+
+//藍金灵状态过滤
+Vue.filter('filterLjlStatus', function (val) {
+    var str = '';
+    switch (val) {
+        case 'DEACTIVATED':
+            str = '未开通';
+            break;
+        case 'ACTIVATED':
+            str = '已开通';
+            break;
+        case 'ORGANIZATION_REFUSE':
+            str = '机构拒绝';
+            break;
+        case 'INFO_REFUSE':
+            str = '资料拒绝';
+            break;
+        case 'RC_REFUSE':
+            str = '风控拒绝';
+            break;
+        case 'REPORT_REFUSE':
+            str = '报告拒绝';
+            break;
+        case 'ALLOW_REGISTER':
+            str = '风控/报告/机构拒绝后重新注册';
+            break;
+        default:
+            str="未知状态"
+        break;
+    }
+    return str;
 })

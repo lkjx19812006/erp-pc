@@ -3,7 +3,7 @@
         <ul v-for="item in initCurrencylist">
             <li>{{item.name}}</li>
         </ul>
-        
+
     </div>
 </template>
 <script>
@@ -14,7 +14,7 @@ import {
 } from '../vuex/getters.js'
 import {
     getCurrencyList,
-    getClientcount 
+    getClientcount
 } from '../vuex/actions.js'
 export default {
     components: {
@@ -27,13 +27,13 @@ export default {
             employeeId:this.initLogin.id,
             loading:false
          }
-         
+
        }
     },
     vuex: {
         actions: {
             getCurrencyList,
-            getClientcount 
+            getClientcount
         },
         getters: {
             initCurrencylist,
@@ -42,13 +42,13 @@ export default {
         }
     },
     methods: {
-      
+
     },
     created() {
-       
+
     }
 }
 </script>
 <style scoped>
-  
+
 </style>

@@ -10,13 +10,14 @@ import treeview from './components/tree/tree.vue'
 import tabs from './components/tools/tabs/tabs.vue'
 import VueI18n from './filters/i18n'
 import iView from 'iview';
-import 'iview/dist/styles/iview.css';
+import '../node_modules/iview/dist/styles/iview.css'
 import fullCalendar from 'vue-fullcalendar';
 import InfiniteLoading from 'vue-infinite-loading';
 import erpSearch from './components/tools/basicsComponents/erpSearch.vue'
 import erpSelect from './components/tools/basicsComponents/erpSelect.vue'
 import erpQrcode from './components/tools/basicsComponents/qrCode.vue'
 import searchModel from './components/tools/searchModel.vue'
+import './filters/filters'
 
 /*import alert from 'vue-strap/src/alert'*/
 
@@ -31,10 +32,10 @@ Vue.component('treeview', treeview);
 Vue.component('tabs', tabs);
 Vue.component('full-calendar', fullCalendar);
 Vue.component('InfiniteLoading', InfiniteLoading);
-Vue.component('erpSearch',erpSearch)
-Vue.component('erpSelect',erpSelect)
-Vue.component('searchModel',searchModel)
-Vue.component('erpQrcode',erpQrcode)
+Vue.component('erpSearch', erpSearch)
+Vue.component('erpSelect', erpSelect)
+Vue.component('searchModel', searchModel)
+Vue.component('erpQrcode', erpQrcode)
 Vue.directive('echarts', require('./directives/echarts'));
 
 // Vue.use(VueValidator)
@@ -74,7 +75,7 @@ function getCookie(name) { //获取cookie
 }
 
 //路由拦截器判断是否登录
-router.beforeEach(function({ to, next }) {
+router.beforeEach(function ({ to, next }) {
     if (to.name == "login") {
         next();
     } else {
